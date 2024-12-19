@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resolution</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>40. Resolution</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Modelers often seek the shortest run times, the smallest tables, and the least resolution that they can get by with. This somewhat careless practice often begets errors of various sorts. So let's spend a little time looking at the areas of modeling where resolution makes a difference--or at least a potential difference--to the outcome of a modeling session.</p>
+  <p><b>1. Segmentation</b>: Every segment adds more time to each run of the NEC core. Hence, modelers tend to use the least number of segments that they think will do a minimal but adequate job. Of course, the test of whether a model is sufficiently segmented is the convergence test, which we noted in detail in the very first episode of this series.</p>
+  <center>
+    <img src="amod40-1.gif" width="463" height="188" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There are a number of areas in which we dare not use too few segments. <b>Fig. 1</b> shows just one sample that should suffice as a reminder for virtually all other cases. In this partial sketch of a common feed for two antenna elements, a single source segment may lead to inaccurate results. Hence, we normally employ at least 3 segments for the common section, and this action may result in quite short segments. The wires moving off from the junctions also require short section, close to a match for the segment lengths in the common wire. With uniform segmentation of the remainder of the antenna, we may end up with a very large model in terms of the number of segments. The modeler can length-taper the elements so that the far ends have longer segments. However, the test of whether a particular scheme of length-tapering (described in discussions of radial is recent episodes) is adequate is a comparison of the results with a uniformly segmented model. Hence, for at least part of our work, very large models for seemingly simple antennas may not be avoidable.</p>
+  <p>In some projects, we may be interested in the trends in the current magnitude and phase along elements, for example, in comparing long elements to very short ones or in comparing linear elements to loops of various shapes. Here again, a highly segmented set of elements--with attention to the relative equality of segment length among the items compared--can better reveal the finer details of the trends than truncated versions of the same models.</p>
+  <center>
+    <img src="amod40-2.gif" width="431" height="218" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Adequate segmentation is also required for precise placement of off-center sources and loads, as suggested in <b>Fig. 2</b>. A dipole that may yield very accurate results with only 11 segments does not provide the modeler with the ability to place an off-center source at exactly 14% of the distance from the element center toward one end. Likewise, a high number of segments are required to place loading inductors 23% of the distance from the element center outward towards the element ends. If one is analyzing an existing antenna that uses such placements, segmentation shortcuts will yield unreliable results.</p>
+  <p>Of course, the ultimate model-size cutting exercise occurs with vertical antennas when we attempt to avoid the construction of a radial system. See the last three entries to this series for ways to develop adequate radial systems.</p>
+  <p>Segmentation issues affect most of the tabular outputs available from NEC, including the values for currents and far-field strength. Near field and ground wave results are also affected. So it is impossible to over-stress the use of adequate segmentation--both in terms of numbers and in terms of other constraints that we have noted from time to time--in the development of an adequate model. Perhaps the one limitation of some entry-level software is that they place segmentation restrictions on the modeler who takes these notes seriously. Other entry-level software (such as NEC-Win Plus) and upgrades from the entry level, provide more than enough segments for the largest model one might imagine well into one's career.</p>
+  <p><b>2. Pattern Resolution</b>: A second arena in which resolution can make a large difference involves the far-field radiation patterns that we specify. <b>Fig. 3</b> is a screen grab (from NEC-Win Plus) of an azimuth pattern specification box. Among the matters that we can as users determine is the resolution of the pattern, that is, at what angular increments NEC will produce a table of values out of which the interface program creates a graph of the pattern.</p>
+  <center>
+    <img src="amod40-3.gif" width="332" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Three-dimensional patterns, available in some implementations of NEC (for example, NEC-Win Plus and EZNEC 3.0) require a relatively high value for the increment, somewhere between 3 and 5 degrees as the lowest value. Since the program must calculate all values for all bearings in the free-space sphere or the hemisphere over ground, excessive resolution encounters two problems. First, the higher the resolution, the longer the core run time. Second, because the result is presented as a single graphic, the result of maximum resolution would be a solid mass of dots and connecting lines that would obscure the view of useful detail.</p>
+  <center>
+    <img src="amod40-4.gif" width="350" height="440" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows a pair of 3-D patterns of a quad beam over ground, taken from NEC-Win Plus. The 10-degree resolution graphic provides more widely spaced lines for easier identification of portions of the pattern, especially those parts on the far side of the pattern. However, notice the level of distortion to the pattern relative to the 5-degree resolution version. Entire segments of the major lobes appear to be missing from the graphic. In contrast, the 5-degree version show much more detail, but at the expense of blurring the details, especially of the concentrated lobe structure to the rear of the pattern.</p>
+  <p>Even the 5-degree 3-D graphic shows strong signs of distortion relative to the actual pattern. The sharp corners taken by lines at intersections are unnatural to normal radiation patterns.</p>
+  <p>3-D patterns are both a convenience and often a useful way to cross check our identification of the strongest lobe or the deepest null of a pattern. In addition, we can rapidly survey a pattern for various oddities, such as lobes that increase in strength upward or downward, but which also change the azimuth bearing of maximum strength as we change the elevation angle as well.</p>
+  <p>However, the main work of far-field pattern analysis is usually a function of 2-dimension elevation and azimuth patterns. For these patterns, unless we have a special function in mind, we resort to the maximum resolution (or minimum increment) made available to us by a program. For many programs, this is 1 degree. However, some implementations of NEC, such as EZNEC, provide resolutions as fine as 0.1 degree. This degree of fineness requires a table with ten times the number of values as needed with 1-degree resolution, and the graphic calculations naturally take longer. However, the chief question for the modeler is this: when are they useful?</p>
+  <p>For most azimuth patterns, a resolution of 1 degree is more than adequate. For very regular patterns with few lobes and nulls, even a 5-degree resolution will yield a satisfactory azimuth pattern. Typical of the antennas able to use lower resolutions in azimuth patterns are the dipole, Yagi, and quad beam.</p>
+  <p>Until an wire reaches 10 to 15 wavelengths, a 1-degree resolution captures all of the relevant detail. Non-integer wavelength values (for example, 19.6 wavelengths) that show both emergent and declining lobes and nulls may require a slightly higher resolution to capture every detail of note. As well, complex wire arrays with equally complex phasing conditions among the wires may yield patterns with side and rear structures that benefit from resolutions less than 1 degree. However, these instances are fairly rare.</p>
+  <p>More commonly, the modeler requires better than 1-degree resolution with elevation patterns as the antenna height exceeds several wavelength above ground. Let's look at some elevation patterns at different resolution levels and different heights to get a feel for what occurs. We shall use the EZNEC 0.1-degree level, along with the more universal 1.0-degree level. Our subject antenna will be a simple horizontally polarized Yagi set for 299.7925 MHz, so that each wavelength is also 1 meter.</p>
+  <center>
+    <img src="amod40-5.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the elevation patterns for both degrees of resolution at an antenna height of 2 wavelengths. The patterns are indistinguishable to the eye. In fact, both patterns show an elevation angle of maximum radiation (TO angle) of 7 degrees (7.0 in the 0.1-degree system).</p>
+  <center>
+    <img src="amod40-6.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's elevate the antenna to 8 wavelengths. For those familiar only with HF antennas, an 8 wavelength height is virtually unthinkable. At 20 meters, we are speaking of 525' or so. However, at 300 MHz, the height is simply 8 meters or about 26' up. As we scan <b>Fig. 6</b>, there appears at first sight to be little difference between the patterns, and the TO angles (2 vs. 1.8 degrees) seem to confirm that the two patterns are virtually identical. However, look closely at the second lobe in the 1-degree resolution pattern. It should be stronger than the third--as shown by the 0.1-degree resolution pattern--but it is not. Slight irregularities in the lobe structure have begun to appear as a result of insufficient pattern resolution.</p>
+  <center>
+    <img src="amod40-7.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we further elevate the antenna to 10 wavelengths (10 m or 33' at 300 MHz), the irregularities become serious, as shown in <b>Fig. 7</b>. Note that in the 1-degree resolution version of the pattern, many lobes appear as straight-line to points rather than as rounded lobes. Note also that the lowest lobe, which should be the strongest and is the strongest in the 0.1-degree resolution pattern, is weaker than the lobes above it in the 1-degree resolution pattern. In fact, the pattern identifies the TO angle as 7 degrees rather than as the more nearly correct 1.4 degrees.</p>
+  <center>
+    <img src="amod40-8.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> carries the problem still further as we elevate the antenna to 12 wavelengths (12 m or 39'). The 1-degree pattern identifies the strongest lobe at 6 degrees up, whereas the 0.1-degree version places it at 1.2 degrees elevation. Note also that, although all 24 lobes from the ground up to 90 degrees (zenith) are present, the null structure has deteriorated significantly. Compare the two graphs with respect to the interior that shows the depth of nulls. Very often, this structure reveals inadequacies of resolution more evidently than tracing the outer perimeter of the lobes. An adequate pattern for an antenna producing a quite regular far field should show the relatively smooth curve of nulls displayed by the 0.1-degree resolution pattern. If this smooth curve is absent without other known cause, then suspect that the pattern resolution may be inadequate.</p>
+  <center>
+    <img src="amod40-9.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's jump to an antenna height of 20 wavelengths (20 m or about 66' at 300 MHz). We can count lobes in <b>Fig. 9</b> and see that the 1-degree resolution pattern shows only 28 of the 40 total lobes in the 0.1-degree version. Considerable portions of the fine structure of the pattern are missing, and the lower resolution pattern identifies the TO angle as 5 degrees. The more nearly correct value is 0.7 degrees.</p>
+  <center>
+    <img src="amod40-10.gif" width="440" height="440" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> enlarges the patterns to reveal just how much of the pattern detail has been lost by the 1-degree resolution pattern. Entire sections of the pattern show almost no nulling, and the lobes are irregularly spaced in many areas. Some wider lobes are actually two lobes with the null between having been missed by the lower resolution.</p>
+  <p>However, <b>Fig. 10</b> has a second message for the perceptive viewer. Although the outer limit of the lobe structure appears to form a smooth curve, just as we might expect, the inner structure of nulls is showing the first signs of deterioration. Nothing is seriously amiss yet, and the pattern is perfectly usable for all normal purposes. However, 20 wavelengths is a fairly low height for many UHF antenna installations. Hence, even the 0.1-degree resolution pattern table promises to reach a limit of usefulness at frequencies lower than the limit for the remainder of NEC calculations.</p>
+  <p>Vertically polarized antennas tend to show the same signs of inadequate pattern resolution, but in ways whose appearance varies from their horizontally polarized brethren. Therefore, let's look at a 3-element Yagi for 299.7925 MHz that is turned to be vertical. We shall be looking for signs of pattern deterioration that are similar to those we have thus far observed.</p>
+  <center>
+    <img src="amod40-11.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> forms our baseline, with the antenna 3 wavelengths in the air over average ground. Essentially, there is no difference between the two elevation patterns, and the lower (1-degree) resolution version is perfectly adequate for all normal purposes.</p>
+  <center>
+    <img src="amod40-12.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As we raise the antenna to 8 wavelengths (8 m or 26' at 300 MHz), the signs of inadequacy in the 1-degree pattern might elude us, especially if we focus upon the outer edge of the lobes in <b>Fig. 12</b>. However, in the 1-degree resolution pattern, notice the absence of a deep null between the first and second lobes, a sign that the degree of resolution is inadequate to pick up values close to the deepest null. By way of contrast, the interior structure of the 0.1-degree resolution pattern forms a smooth curve. The pattern of lobes and nulls for a vertically polarized antenna is different from that of a horizontally polarized antenna of the same general type. Hence, each polarization will show different outer and inner curves formed by the tips of the lobes and of the nulls.</p>
+  <center>
+    <img src="amod40-13.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>By the time we reach an antenna height of 12 wavelengths (12 m or 39'), the 1-degree resolution pattern in <b>Fig. 13</b> has severely deteriorated to the point of yielding inaccurate information. The higher resolution plot shows the TO angle at 1.2 degrees, with the next major lobe at 3.5 degrees. However, the 1-degree plot--while giving us an accurate 1 degree for the TO angle--reports the next major lobe at 6 degrees.
+  <center>
+    <img src="amod40-14.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our last pattern, <b>Fig. 14</b>, taken at an antenna height of 20 wavelengths, shows severe deterioration of both the interior and exterior curves. Contrasting the 0.1 and 1 degree resolution plots should provide ample guidance in detecting when pattern resolution is severely inadequate.</p>
+  <p><b>Conclusion</b></p>
+  <p>The adequacy and accuracy of the information that we derive from NEC models depends to a great degree upon our selections as users. In this episode, we have noted two general areas in which we are prone to use inadequate resolution: segmentation and pattern resolution. Both tendencies can yield unrecognized inaccurate results and should be avoided--without going to the wasteful extreme of using uninformative excess resolution.</p>
+  <p>We are also limited to some extent by extant implementations of NEC, only some of which provide either or both the pattern resolution needed for high UHF antennas or the number of segments adequate for large models. Therefore, if we are not going to develop our own interface systems for the available NEC cores, we must use care in selecting the software we buy. As in all such matters, we must match up the software capabilities to the set of anticipated tasks. If entry-level software fails to meet user needs, upgrading is certainly in order.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radiation Plots</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>48. Radiation Plots: Polar or Rectangular; Log or Linear</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The user of NEC or MININEC often has choices in how to graphically portray data. The choices (not all of which may be available within a particular program) generally consist of the following.</p>
+  <blockquote>
+    <p><b>1. Polar Plot: Logarithmic Scale</b></p>
+    <p><b>2. Polar Plot: Linear Scale</b></p>
+    <p><b>3. Rectangular Plot: Linear Scale</b></p>
+    <p><b>4. Rectangular Plot: Logarithmic Scale</b></p>
+  </blockquote>
+  <p>I have heard numerous arguments for and against each type of presentation. I shall forego all of them. Instead, let's pick an antenna whose plot has some relatively fine detail (in terms of secondary lobes of interest). Then, let's look at the free-space plots under each of the options listed above.</p>
+  <center>
+    <img src="amod48-1.gif" width="524" height="666" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> presents the .NEC file of a 12-element Yagi with a test frequency of 148 MHz. The linear elements extend from -X to +X, with the boom extending from a value of zero on the Y axis to positive Y-values. The dimensions are in meters. The boom length is 6.045 m long (about 19.8'). The 4.76-mm diameter (0.00238 m radius) elements are 0.1875" (3/16") rod. The material is standard aluminum (read from the LD lines), and the elements are presumed to be well insulated and isolated from any conductive materials in the boom that supports them. The environment is free space. As is usual for Yagis, the source or feedpoint is at the center of the second element from the rear. <b>Fig. 2</b> presents an outline sketch of the antenna.</p>
+  <center>
+    <img src="amod48-2.gif" width="640" height="190" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For the record, when modeled in NEC-4, the array has a free-space gain of 14.27 dBi, a worst-case front-to-back ratio of 23.14 dB, a source impedance of 43.9 - j 4.0 Ohms, and a 50-Ohm SWR of 1.17:1. The -3dB beamwidth is about 36 degrees. However, these figures do not tell us anything of the pattern shape: whether it has very significant secondary forward or rearward lobes or whether the pattern is clean and well controlled. To determine these matters, we can examine the tabular data provided by NEC or we can examine graphical plots of the data. The NEC core yields only the tables. All graphics are added by the programmer.</p>
+  <p>In the following notes, all patterns will be products GNEC by Nittany Scientific. My program choice for this exercise was simple: GNEC has both polar and rectangular plot capabilities. For linear plots, the user has the option of selecting maximum and minimum values for the plotting space.</p>
+  <p><b>The Logarithmic Polar Plot</b></p>
+  <center>
+    <img src="amod48-3.gif" width="672" height="644" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The logarithmic polar plot shown in <b>Fig. 3</b> was a creation of the American Radio Relay League somewhere in the distant past. This type of logarithmic plot is perhaps the most familiar of the common polar plotting styles used. In some software, plotting beyond the -40 dB point is shown, although in this GNEC plot, the line is cut off at this point. In principle, graphing can go on down to an infinitesimal value.</p>
+  <p>Every polar plot scheme is subject to a set of equations that determines the placement of the data points that make up the curve. The angle at which they occur is fixed by the data itself, but the distance from the plot center is a function of the equations used. The equations may be simple--as they are in linear plots--or complex, as in the present log plot. Note that plotting radiation strength in dB on a log scale results in a form--but not the only possible form--of a double log plot.</p>
+  <p>First, the plot in <b>Fig. 3</b> is normalized, which is to say that its outer ring is given a value of 1.0 for plot point calculation purposes. The maximum gain of the array is set equal to this value. Hence, the pattern just touches the outer ring. In normalized plots of radiation patterns recorded in dB, the outer ring is usually set to zero dB with inner rings set of -X dB each, where X is another matter of choice--usually of the software writer. Non-normalized plots are possible and often used, although the normalized plot permits the largest pattern that will fit within the outer ring of the graphic.</p>
+  <p>Second, we need to determine the point positions for any heading in terms of their distance from the plot center to the outer ring. Since the plot shows the headings of the -3 dB points for the pattern, we can illustrate the process used to generate the plot in <b>Fig. 3</b> with good simplicity. By using the -3 dB points, we have already made the first step. Let MG = the maximum gain of the pattern and GH = the gain at some new heading--in this case either 72 or 108 degrees.</p>
+  <center>
+    <img src="amod48e1.gif" width="236" height="46">
+  </center>
+  <p>EX is simply the difference between the maximum gain and the gain at the new heading. For our example, the gain at 72 and 108 degrees is close to 11.27 dBi.</p>
+  <p>The position of the dots for 72 and 108 degrees are determined by the next equation, in which VP = the value point as a decimal value relative to 1 and hence the distance away from the center of the plot toward the outer ring.</p>
+  <center>
+    <img src="amod48e2.gif" width="223" height="66">
+  </center>
+  <p>The -3 dB points will be about 0.84 of the way from the center toward the outer circle. In a similar manner, we calculate that the worst case front-to-back ratio point, 23.14 dB, will be at about 0.26 of the way from the center to the outer ring. Relative to the outer ring distance on the plot in <b>Fig. 3</b>, you can measure these distances with a ruler. The particular equation shown applies only to values of radiation strength given in terms of dB and requires modification for values given in terms of measured or calculated signal voltage.</p>
+  <p>Although the plots on most antenna modeling software mark the reference rings in 10 dB increments, there is nothing fixed about this practice. In fact, ARRL publications use 3 dB increments down through -12 dB with further -18 and -24 dB markers. Moreover, there is nothing fixed (except by tradition) about the equation itself. In non-normalized plots, the user may have a choice of selecting the value of the outer ring. In such cases, the adjustment of the pattern to the selection is simple arithmetic. The gain at every heading is calculated against the value set for the outer ring instead of against the maximum gain of the pattern.</p>
+  <p>The logarithmic scale is perhaps the most familiar of the many options for plotting a radiation pattern. It tends to enhance the forward lobe and to emphasize the beamwidth, especially of narrow-beamwidth arrays such as the subject 12-element Yagi. At the same time, it also tends to reduce the resolution of fine detail of weaker portions of the pattern.</p>
+  <p><b>The Linear Polar Plot</b></p>
+  <center>
+    <img src="amod48-4.gif" width="669" height="638" border="2" vspace="5" hspace="9">
+  </center>
+  <p>An alternative to the log polar plot is the linear polar plot, shown for our subject antenna in <b>Fig. 4</b>. Note that in this context, "linear" refers to a linear counting of decibels, which is already a logarithmic function relative to power or to voltage and/or current.</p>
+  <p>Because the plot steps from the center of the graphic toward the outer ring are linear, the -10-dB ring in <b>Fig. 4</b> are much closer to the outer ring than with the log plot in <b>Fig. 3</b>. The effect is to broaden the visual pattern and to enhance the detail of the plot with respect to weaker portions of the pattern. Compare the rearward portion of the plots in <b>Fig. 3</b> and <b>Fig. 4</b>, as well as the secondary lobes. Remember that both plots present the same data. The difference lies in the manner of presentation.</p>
+  <p>The plot in <b>Fig. 4</b> uses a scale that runs from 0 dB for the outer ring to -50 dB at the center. Unlike the log plot, a linear plot must specify both the outer ring and the center values. For a normalized pattern, the outer ring equals the maximum gain of the antenna under study. The minimum or plot-center value is a user choice. In this case, -50 dB provided a good visualization of the secondary lobe structure--and that fact determined the choice. As a point of comparison with the log plot, the -3 dB points on the 50-dB scale are .94 of the way toward the outer ring, while the worst-case front-to-back ratio point is .54 of the way from the center.</p>
+  <p>Linear polar plots are not automatically superior to log plots. Indeed, since the center point value is user selected (or in some cases, software selected without user choice), the utility of a linear polar plot depends upon the center value selected. It is possible to create virtually useless linear polar plots.</p>
+  <center>
+    <img src="amod48-4a.gif" width="673" height="645" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4A</b> shows a worthless linear polar plot of the subject antenna. It uses a center value of -185 dB and 35-dB steps in the rings. Since the free-space pattern of a horizontally polarized directional antenna with linear elements very often results in very high values of front-to-side ratio, an automated program can make unwise choices for the user. In <b>Fig. 4A</b>, the selected values spread the pattern to such extremes that differentiation of any detail is almost impossible. In short, the linear polar plot is not intrinsically better or worse than a log plot in showing any particular features of a pattern's shape or features.</p>
+  <p>Selecting a linear polar plot value set, then, is the most crucial step in generating a plot that does useful work in demonstrating salient points of the radiation pattern. Since the center point is user or software selected, its value must always be made accessible to the plot reader, either by a legend or by a plot-line label. Otherwise, the plot may become seriously misleading.</p>
+  <p>In non-normalized plots, the user once more selects the gain value assigned to the outer ring. Then the gain of the pattern at every heading becomes a percentage of the distance from the center to the gain value set into the outer ring. Since computer graphics programs tend to separate the setting of the polar plot space and rings from the assignment of data points within the rings, the value of the outer ring will usually be recorded in a separate alphanumeric entry, with the plot rings retaining the same labels, regardless of the outer ring value.</p>
+  <p><b>The Linear Rectangular Plot</b></p>
+  <center>
+    <img src="amod48-5.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows a rectangular plot of the radiation pattern data using a linear scale for the Y axis. Many analysts prefer the rectangular plot because it allows a comparison of signal strength (whatever the units happen to be) at every heading with only a glance at the reference lines across the plot from the Y-axis. The plot in <b>Fig. 5</b> has not been normalized. Indeed, normalization is more the exception than the rule with rectangular plots, because the practice often creates odd increments between values on the Y axis. Odd numbering of the Y-axis markers tends to defeat the easy determination of gain values for every heading.</p>
+  <p>The generation of a linear rectangular graph requires close attention by the user, especially to the Y-axis minimum and maximum value. Indeed, in some cases, the user may have to experiment with the selection of values to reveal all of the relevant data in sufficient detail. The selected value captures the low-level variations in strength near the front-to-side bearings without going to extremes. There are no further lobes to be revealed by carrying the 0, 180, and 260 degree values below the -50 dB point.</p>
+  <center>
+    <img src="amod48-5a.gif" width="600" height="440" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the graph shown, the minimum value could have been carried to -100 dB, as it was in <b>Fig. 5A</b>. However, the detail of the pattern for values between -30 and +20 dB would have been obscured by unneeded "scrunching." For example, in <b>Fig. 5A</b>, it is not easy to tell if the smallest side lobes of the forward pattern (between 0 and 180 degrees) show a peak or ar simply level. The determination is easy to make in <b>Fig. 5</b>.</p>
+  <p>The rectangular graph also provides the rationale for setting up the original model with the linear elements set on the +/-X axis. The result is to place the main lobe of the array on the Y axis in the wire set-up screen, that is, at a 90-degree heading. Although the other convention of laying elements on the +/-Y axis is often convenient for polar plots, the set-up used here presents the forward and rearward pattern details as complete lobe structures. In <b>Fig. 5</b>, one might have added the labels "forward" and "rear" to the left and right portions of the graph, respectively.</p>
+  <p>In short, creating a rectangular plot requires forethought that goes all the way back to the initial model set-up. Of course, this caution applies mostly to cases where one uses the graphic capabilities built into a given piece of software. If one exports the radiation pattern data to a spreadsheet, one can then manipulate either the plotting facility or the angular data. Thus, the resulting rectangular plot can have the appearance of <b>Fig. 5</b> (or any other that may fit a given antenna pattern), whatever the orientation of the initial model.</p>
+  <p><b>The Logarithmic Rectangular Plot</b></p>
+  <center>
+    <img src="amod48-6.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The Y-axis of a rectangular plot can be given a log scale. But the results may become "the plot that failed," as in <b>Fig. 6</b>. If you compare <b>Fig. 6</b> with <b>Fig. 5</b>, you will discover that only the portion of the graph in which gain values exceed 0 dB appear on the new plot. That is a problem with logarithms--they work with positive numbers. Such a problem would not exist if we were plotting signal strength in volts.</p>
+  <p>To achieve a proper logarithmic scale for the Y-axis of a rectangular plot would require exportation of the radiation pattern data, followed by a conversion of the entire lot of it into positive numbers. Then one might use that converted data with a log Y axis, although the labels might be reconverted to values corresponding to those on the original data table.</p>
+  <p>These last notes have made a small case for exporting data from the NEC output file to programs within which the data may be manipulated for the most effective presentation and study. Even the most competent antenna modeling software will have limitations and cannot anticipate all possible user needs or interesting results that call for special presentation. If it could anticipate all needs, we might simply set up a data bank of results and forget the modeling process itself.</p>
+  <p>In the end, the modeler should be prepared to go beyond the modeling software itself to develop effective graphics--whether for radiation patterns or any other facet of the data generated by the core. The forethought required for setting up a model in anticipation of graphing the results carries over into appropriate levels of after-thoughts to apply the best graphing techniques for data that will not fit prescribed patterns.</p>
+  <p>In the end, there is more to antenna modeling than can be written into the modeling software itself.</p>
+  <p>However, we began our work as a short dash through the various radiation pattern plotting options that we most use. Throughout, we have avoided arguments for or against any one of the many possibilities, since most of those argument presume sets of well-chosen user options for graphic minimum and maximum values. Instead, we have focused on two functions. One is the potential of each plotting scheme for presenting data in a form that is most easily read and most fruitfully studied. The other is the responsibility of the user to select plotting scale values that will achieve the goal of easy reading and useful examination.</p>
+  <p>There is no universal best plotting method for radiation patterns. However, for any given plotting goal, one may determine the best way among available methods for achieving a set of goals.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

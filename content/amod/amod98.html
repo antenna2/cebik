@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Planar Reflectors: Wire Grid vs. SM Patches</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>98. Planar Reflectors: Wire Grid vs. SM Patches</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In previous episodes of this series, we have by-passed one set of geometry commands: SP, SM, and SC. These commands are not available on the most popular entry level commercial versions of NEC-2 (such as NEC-Win Plus and EZNEC), although other versions of NEC-2 that a beginning or intermediate modeler might use (such as NEC2GO and 4NEC2) do allow access to the complete NEC-2 command set. In general, SP and SM, along with necessary extensions via SC, create surface patches and are found in specific advanced modeling problems tackled by relative advanced modelers using such programs as NEC-Win Pro, GNEC, or custom versions of NEC-2 and NEC-4.</p>
+  <p>However, a number of applications of SM (and its necessary extension card, SC) have begun to appear. For example, I have recently seen planar reflector and UHF horn models employ the SM command. Therefore, it may be useful to explore the simplest of the surface patch commands in order to grasp some of the requirements, advantages, and limitations of using it.</p>
+  <p><b>Surface Patch Basics</b></p>
+  <p>We create a surface patch with the SM command by defining its corner coordinates. The more general SP command permits a range of specific regular patch shapes, such as triangular, rectangular, and quadrilateral geometries, as well as a shapeless patch description. Wherever the specification of X, Y, and Z coordinates exceeds the 6 floating decimal places in a NEC-2 command line (unchanged in NEC-4), we must add an SC command to complete the coordinates. In addition, SP allows a succession of SC cards to complete complex structures with relative efficiency.</p>
+  <p>SM is a simpler command. It creates only a rectangular patch, but that patch consists of a user-specified number of patches defined in terms of the number of patches for both width and height. The SM command allows only the single SC command necessary to complete the coordinate entry. The following sample command lines provide an example of SM/SC structure.</p>
+  <pre>
+Cmd   I1                I2                 F1    F2     F3     F4     F5     F6
+      # Patches-Width   # Patches-Height   C1-X  C1-Y   C1-Z   C2-X   C2-Y   C2-Z
+SM    12                12                 0.    -.6    -.6    0.     .6     -.6
+
+Cmd   I1        I2        F1    F2    F3
+      Not Used  Not Used  C3-X  C3-Y  C3-Z
+SC    0         0         0.    .6    .6
+</pre>
+  <p>Defining a rectangular shape requires that we define three consecutive corners of the rectangle. Hence, we must use the SC entry for the third corner (C3), while the coordinates for the first two corners (C1 and C2) appear in the SM command. The integer entries of the SC card are unused and hence receive automatic zeroes. However, the integer entries of the SM command specify how many patches will exist along the width and height of the overall patch. For purposes of modeling, "width" means the line between corners 1 and 2, while height means the line between corners 2 and 3, regardless of the actual orientation of the patch within the Cartesian coordinate system.</p>
+  <p>We can find the fundamentals of using patches within the NEC-2 and NEC-4 manuals. The patch "formulation uses the Magnetic Field Integral Equation [MFIE], and is restricted to closed surfaces with non-vanishing enclosed volume. It is not applicable to a conducting plate or shell of zero thickness." Essentially, proper use of surface patches requires modeling the entire volume, even of a thin plate. "Theoretically the MFIE can be used for a thin box or cylinder, but the solution may become inaccurate due to the decreasing condition number of the matrix and the simple point matching and pulse current expansion used in the solution in NEC."</p>
+  <p>"As with wire modeling, patch size measured in wavelengths is very important for accuracy of the results. A minimum of about 25 patches should be used per square wavelength of surface area, with the maximum size for an individual patch about 0.04 square wavelengths." For a square patch, these terms translate into a minimum of about 5 patch widths per wavelength of edge dimension. A higher patch density up to reasonable numbers is usually desirable.</p>
+  <p>"In general, the use of surface patches is restricted to modeling voluminous bodies. The surface modeled must be closed since the patches only model the side of the surface from which their normals are directed outward." See <b>Fig. 1</b> for a simplified representation of a surface patch and its outward-directed unit normal vector. The arrow represents the outward-directed normal, the foundation for patch calculations. The complete NEC output file contains in the early geometry section a listing of surface patches created by an SM command. Included in the listing are the "COMPONENTS OF UNIT TANGENT VECTORS." The patches also have a current distribution table.</p>
+  <center>
+    <img src="amod98-1.gif" width="334" height="227" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The NEC manual also points out that "if a somewhat thin body, such as a box with one narrow dimension, is modeled with patches, the narrow sides (edges) must be modeled as well as the broad surfaces. Furthermore, the parallel surfaces on opposite sides cannot be too close together or severe numerical error will occur." The manual also strongly suggests that models employing new shapes be compared to experimental outcomes in order to establish the validity of the patch modeling.</p>
+  <p>Since we shall not use the SP command itself or attempt to attach a wire directly to a patch structure, we may use these extracts from the manual notes as a basis for our next steps into the use of SM commands.</p>
+  <p><b>Planar Reflectors: Wire-Grid or SM Patches</b></p>
+  <p>Let's begin our efforts with a single dipole that uses a planar reflector to provide directivity, that is, gain and a usable front-to-back ratio. The general outline--shown only in a facing view--appears in <b>Fig. 2</b>. The dipole is resonant at 300 MHz and the reflector dimensions are 1.2 by 1.2 meters (or wavelengths).</p>
+  <center>
+    <img src="amod98-2.gif" width="400" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The reflector consists of 12 units both horizontally and vertically. Ordinarily, we would construct the reflector with a wire-grid structure. The maximum length of each wire segment in the grid is 0.1 wavelength, and the wire diameter is the cell-wire length divided by PI. The radius is half this value, 0.0159 meter (or wavelength). The following model captures these elements.</p>
+  <pre>
+CM Dipole .175 m from planar reflector
+CM Planar Reflector 299.7925 MHz (WL=1 m)
+CM Y = 1.2 m;  Z = 1.2 m
+CM standard wire-grid:  Seg L = 0.1 m; redius = L/PI = 0.0159 m
+CE
+GW 1 12 0 -.6 0 0 .6 0 .0159
+GM 1 6 0 0 0 0 0 -.1 1 1 1 12
+GM 1 6 0 0 0 0 0 .1 1 1 1 12
+GW 12 12 0 0 -.6 0 0 .6 .0159
+GM 1 6 0 0 0 0 -.1 0 12 1 12 12
+GM 1 6 0 0 0 0 .1 0 12 1 12 12
+GW 24 11 .175 0 -.218 .175 0 .218 .004
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+EX 0 24 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The geometry entries up to but not including GW 24 define the planar reflector. You can simplify the structure, but the present model is one of a system of planar reflector models having a uniform horizontal and vertical center line set. Hence, the necessary wire replications occur on each side of these center wires.</p>
+  <p>The technique being applied to patch versions of the planar reflector is interesting because it directly violates the manual recommendation that requires the modeling of the reflector as a closed geometrical shape with volume. The operative theory behind the use of patch-based reflectors is that the surface is a perfect tangential reflecting surface. Hence, on this account, we need not be concerned with the remaining 5 surfaces of the reflector, but may deal only with the surface facing the driver element (or elements, in more complex planar reflector arrays).</p>
+  <p>If we accept this account, then we may replace the wire-grid structure with a simpler array of patches. The corresponding surface-patch or SM version of the model has the following appearance.</p>
+  <pre>
+CM Dipole .175 m from planar reflector
+CM Planar Reflector 299.7925 MHz (WL=1 m)
+CM Y = 1.2 m;  Z = 1.2 m
+CM SM patch: 10 patches/meter
+CE
+SM 12 12 0. -.6 -.6 0. .6 -.6
+SC 0 0 0. .6 .6
+GW 24 11 .175 0 -.218 .175 0 .218 .004
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+EX 0 24 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>We may enter the patch lines manually or use such help screens as may be available. The following sample help screen from GNEC allows entry of all of the 3 corner coordinate sets on one screen and it then creates both the SM and SC lines necessary for the NEC input file. The sample entries in <b>Fig. 3</b> apply to a model that we shall examine a little further on in this discussion.</p>
+  <center>
+    <img src="amod98-3.gif" width="353" height="244" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our fundamental question is how well the wire-grid and SM reflectors track each other. The answer to this question depends on how accurate the SM assumption is, namely, that the only relevant outward-directed normal vector for a planar reflector is from the surface directly facing the driving element(s). One way to approach that question is to overlay the resulting E-plane (theta) and H-plane (phi) patterns for the array. See <b>Fig. 4</b>. Note in the models that the driver dimensions and the driver spacing from the reflector do not change between models.</p>
+  <center>
+    <img src="amod98-4.gif" width="800" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the forward direction, there is no major difference, although the dashed lines for the wire-grid model show a slightly higher gain. The key differences lie in the rearward structure. In the theta pattern especially, the patch reflector does not show the full development of the quartering rearward sidelobes and may give an erroneous impression of the worst-case front-to-back ratio.</p>
+  <p>Nevertheless, the simple models used here suggest that the two types of reflectors are viable alternatives for at least preliminary modeling. I ran both models through a small range of reflector sizes, varying the width from 1.0 m to 1.4 m and then the height through the same range. The wire grid model shows a distinct peak using the 1.2 by 1.2 meter reflector. The following table compares the results for both the wire-grid and the patch reflectors. In the model designations, H means the horizontal reflector length at right angles to the dipole, while V means the vertical reflector length parallel to the dipole.</p>
+  <center>
+    <img src="amod98-table.gif" width="449" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain for the SM-patch 1.2 by 1.2 reflector is also the highest value among the set. However, the gain change from one reflector vertical width to the next, for a given horizontal length, is not as great as with the wire-grid models. The shallowness of the patch curves shows up clearly in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod98-5.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain values used in the table are corrected for the average gain test (AGT). For the patch models, the AGT values ranged from 0.974 up to 0.989. In contrast, the wire-grid models had AGT values of about 0.998 or better (where 1.0 is perfect, since the test was run with free-space models with no resistive losses). The AGT scores, plus an understanding of the ways in which using the SM-patch reflector violates the prescribed handling of patch constructs, strongly suggests that the SM-patch reflector models are secondary in precision to the wire-grid variety.</p>
+  <p>Nevertheless, the SM-patch models do afford reasonable first approximations of planar reflector results from wire-grid reflectors. They run about 4 times faster than wire-grid reflectors, and the input files are somewhat simpler.</p>
+  <p>Patch density within the SM/SC command lines does make some difference in the output reports. To check this aspect of the patch reflector, I varied the patch density of the basic 1.2 by 1.2-meter (wavelength) reflector from 10 patches/meter up to 15 patches/meter (with added check values of 6 and 20 patches/meter). The following table summarizes the reported values.</p>
+  <pre>
+  Variations in Performance Reports Due to Variations in Patch Density
+            Reflector: 1.2 by 1.2 Meters (Wavelengths)
+
+Patches/     Reported   Front-to-Back   Impedance         AGT      AGT-
+1.2 Meter    Gain dBi   Ratio dB        R+/-jX Ohms                dBi
+ 6           9.12       18.98           50.85 - j1.65     0.966    -0.14
+10           9.14       19.11           50.03 - j1.72     0.975    -0.11
+11           9.14       19.13           50.00 - j1.70     0.976    -0.10
+12           9.13       19.16           50.00 - j1.70     0.976    -0.11
+13           9.13       19.17           50.00 - j1.67     0.976    -0.10
+14           9.13       19.18           49.99 - j1.66     0.976    -0.10
+15           9.13       19.19           49.99 - j1.65     0.976    -0.10
+20           9.12       19.22           49.98 - j1.63     0.976    -0.10
+</pre>
+  <p>The significance of these variations depends on the uses to which we try to put the SM patch reflector models. The patch density of 10 per dimension is about 3 times the recommended minimum per unit area as measured in wavelengths. As a result, changes from one step to the next are small. As we increase the patch density above 10.dimension, gain decreases very slowly, while the front-to-back ratio increases at an equally slow rate. Increasing patch density has very little effect on the AGT value for the model.</p>
+  <p>While these facts are significant to the understanding of how SM-patch reflector models tend to respond to changes in the reflector geometry commands, they do not yield results that would impact a design or analysis situation. Given that SM-patch planar reflector models are at best first approximations of more accurate but more complex wire-grid models, we may consider the models fully converged at a patch density of 10 patches per linear wavelength.</p>
+  <p><b>Corner Reflectors: Wire-Grid or SM Patches</b></p>
+  <p>The SM-patch planar reflector illustrates the use of a single patch structure that simulates a single physical (conductive) plane structure. The SM/SC command set has also been used to simulate more complex structures, such as horns. Hence, the structure requires the use of multiple SM/AC command pairs to include all planes of the structure. In each case, the operating presumption (assuming that the modeler has appreciated the restrictions on the use of patches) is that the single outward-normal unit vector of the incomplete volume provides an adequate basis for the modeling effort.</p>
+  <p>We may test a multiple-SM structure using one-sided techniques with a model far simpler than a horn. A corner reflector of conventional design consists of 2 identical planes joined along one edge, usually called the apex. The angle between the planes is conventionally 90 degrees, although other angles are both feasible and desirable if we wish to optimize the gain potential of the array. <b>Fig. 6</b> outlines the basic construction of the corner array using a single dipole driver, regardless of whether we employ a wire-grid or an SM-patch model for the reflector surfaces.</p>
+  <center>
+    <img src="amod98-6.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our purposes involve only comparing one form of modeling with another, so we may select smaller reflector planes as illustrative models. In fact, each of the two reflector planes will consist of 1.0 by 1.0 meter wire or patch grids. Since the test frequency remains 300 MHz, the use of 10 units per linear dimension of the planes will yield 10 segments or 10 patches per wavelength. The wire-grid version of the model has the following appearance.</p>
+  <pre>
+CM Dipole .324 m from corner reflector
+CM Basic Corner Reflector: 299.7925 MHz; 1 m = 1 wl
+CM T1 = center line, T2, T3 = verticals + GM
+CM T4, T5 = horizontal centers + GM
+CM Density = 0.1 m x 0.1 m
+CM Size = 1.0 m x 2.0 m
+CE
+GW 1 10 0 0 -.5 0 0 .5 .0159
+GW 2 10 0 -.1 -.5 0 -.1 .5 .0159
+GM 0 9 0 0 0 0 -.1 0 2 1 2 10
+GW 3 10 0 0 0 0 -1 0 .0159
+GM 0 5 0 0 0 0 0 -.1 3 1 3 10
+GM 0 5 0 0 0 0 0 .1 3 1 3 10
+GM 0 0 0 0 45 0 0 0 2 1 0 0
+GW 4 10 0 .1 -.5 0 .1 .5 .0159
+GM 0 9 0 0 0 0 .1 0 4 1 4 10
+GW 5 10 0 0 0 0 1 0 .0159
+GM 0 5 0 0 0 0 0 -.1 5 1 5 10
+GM 0 5 0 0 0 0 0 .1 5 1 5 10
+GM 0 0 0 0 -45 0 0 0 4 1 0 0
+GW 101 11 .324 0 -.2119 .324 0 .2119 .004
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+EX 0 101 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The CM lines show some of the particulars of the structure, including the dipole distance from the apex of the corner reflector. This value will not change when we arrive at the SM/SC version of the model. As with the planar wire-grid reflector, the reflector plane modeling uses a horizontal center wire line in order to be able to change with ease the vertical height of the reflector, adding the same amount to the top and bottom. The vertical wires begin with an apex wire and an initial wire on each side of the apex. Then the initial side wires are replicated the proper number of times to arrive at the horizontal dimension for each plane. Of course, we rotate each plane 45 degrees to yield the 90-degree final angle. From the dipole (GW 101) onward, the model is straightforward. Note that the comment on reflector size gives the total size of the pair of reflector planes as if they were laid out in a single plane.</p>
+  <p>The SM/SC version of the corner reflector is deceptively simple.</p>
+  <pre>
+CM Dipole .324 m from corner reflector
+CM Basic Corner Reflector: 299.7925 MHz; 1 m = 1 wl
+CM SM panels
+CM Density = 0.1 m x 0.1 m
+CM Size = 1.0 m x 2.0 m
+CE
+GW 1 11 .324 0 -.2119 .324 0 .2119 .004
+SM 10 10 0 0 -.5 .7071068 .7071068 -.5
+SC 0 0 .7071068 .7071068 .5
+SM 10 10 .7071068 -.7071068 -.5 0 0 -.5
+SC 0 0 0 0 .5
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+EX 0 1 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>As we might expect, the same corner reflector requires only 2 SM/SC entry pairs to form the reflector planes. Of course, we must do some initial calculations to establish the corner points for each of the two planes so that each one is 45 degrees each side of the X-axis for this model. The only change to the dipole is to give it a tag number of 1, since there are no other wires in this version of the corner reflector.</p>
+  <p>However, the SM/SC entries deserve a bit closer attention. From the perspective of model symmetry, they do not use the same set of corners. However, from the perspective of patch construction, they do. <b>Fig. 7</b> illustrates the "right-hand rule" according to which we need to construct joining patches.</p>
+  <center>
+    <img src="amod98-7.gif" width="335" height="317" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we do not adhere to the right-hand rule, the resulting patterns yielded by the overall model will lead us to conclude that we cannot construct single-surface SM/SC corner reflectors at all. When properly constructed, the SM/SC model will produce comparable but not identical results relative to the wire-grid version of the array. <b>Fig. 8</b> provides an overlay of the theta (E-plane) and phi (H-plane) patterns for the subject structure.</p>
+  <center>
+    <img src="amod98-8.gif" width="800" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As with the single planar reflector, the SM/SC corner reflector does not show very significant differences in the forward gain. Rather, the key difference is that the SM/SC construct does not show the full development of the rearward lobes. Due to the operation of the corner array, there are also differences in the reported beamwidth, especially in the phi (H-plane) pattern. The following table shows the differences in numerical terms.</p>
+  <pre>
+       Variations in Performance Reports of Wire-Grid and Patch-Based Corner Reflectors
+                    Each Reflector Plane: 1.0 by 1.0 Meters (Wavelengths)
+
+Version     Reported   Front-to-Back   E-plane     H-plane     Impedance         AGT      AGT-
+            Gain dBi   Ratio dB        Beanwidth   Beamwidth   R+/-jX Ohms                dBi
+Wire-Grid   10.98      26.57           56 deg.     48 deg.     49.94 + j0.14     0.999    -0.01
+SM-Patch    10.75      24.15           56          52          47.37 - j1.65     0.970    -0.13
+</pre>
+  <p>As was the case with the single plane reflector, the corner reflector shows a significantly lower AGT value than we obtain for the wire-grid model. If we correct the gain value, it climbs to 10.88 dBi, somewhat closer to the wire-grid model value. However, using the AGT to correct the resistive portion of the source impedance results in 45.95 Ohms, a value that is further distant from the wire-grid value. Increasing the source resistance would require increasing the distance of the dipole from the reflector apex, which might correspond roughly to the radius of the wires in the wire-grid reflector.</p>
+  <p>Nevertheless, due to the fact that single-sided SM-SC planes can only partially simulate the operation of a physical structure, we must treat the SM-patch version of the corner reflector as a first approximation. It has the advantage of faster run times and simpler input models, but it does show lower AGT values and deficiencies in the development of certain parts of the array pattern, relative to wire-grid models.</p>
+  <p>Because the SM-patch reflector model is based on the assumption that only a single plane surface is relevant to array performance, the SM/SC model of plane reflective surfaces will always have limitations. First, it cannot apply at all to any array in which the assumption is not close to being correct. Second, as we have seen, even where the assumption is close to being correct, it is rarely if ever precisely correct.</p>
+  <p>However, as a speedy method of constructing first approximations of arrays and arriving at reasonable performance values, one-sided SM/SC planar surfaces have a useful role to play in some modeling enterprises. They can play that role well so long as we remember that the world of multiple surface patches is right-handed.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

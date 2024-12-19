@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Yagi, Stacking, HF Upper">
+  <title>Stacked Beams</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="middle" width="125" height="62" border="2" vspace="5" hspace="10">Some Notes on Stacked Beams<img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <h4>A. The Effects of Opposed Beams in a Stack</h4>Some beam stackers have experienced a rise in SWR if the beams are pointed in opposite directions. Others have not. The degree of SWR rise was not specified.
+  <p>To shed some light on this question, I ran a pair of identical beams through NEC-4. The individual beams, cut to be resonant at 14.175 MHz had the following free space properties:</p>
+  <pre>TO angle      Gain (dBi)     F-B ratio (dB)     Beamwidth      Feed Z
+ (degrees)                                       (degrees)      (R+/jX)
+  ---           8.1           26.6                62            25.5 - 0.1
+</pre>
+  <p>Here are the numbers for the beam alone at heights of 1 wl (70') and at 1.5 wl (105')</p>
+  <pre>70'
+  13           13.4           24.3                62            25.0 - 0.0
+105'
+   9           13.7           24.7                62            25.2 - 0.0
+</pre>
+  <p>(In all elevation plots, the outer ring is 18 dBi, to permit comparison of patterns for all the antennas plotted in these notes.)</p>
+  <center>
+    <img src="st1.gif" width="615" height="301">
+  </center>
+  <center>
+    <img src="st2.gif" width="606" height="292">
+  </center>
+  <p>The differential in elevation angles suggests that a switching system to permit use of Upper-Only, Lower-Only, and Both may be useful in sorting out signals by incoming/outgoing elevation paths.</p>
+  <p>Let's stack the beams and feed each separately to see if interaction changes anything. Remember, the beams are stacked just about 1/2 wl apart.</p>
+  <pre>Feed lower only:
+  14           13.3           21.5                62            25.7 - 1.0
+Feed upper only:
+   9           13.6           21.7                60            26.0 - 1.1
+Feed both:
+  10           15.8           20.8                62      Lower: 24.6 + 1.3
+                                                          Upper: 24.7 + 1.2
+</pre>
+  <center>
+    <img src="st3.gif" width="625" height="289">
+  </center>
+  <p>Notice that at 1/2 wl spacing, where the lower beam is 1 wl up, the only possibly significant change is a decrease in F-B ratio in the 3-4 dB range.</p>
+  <p>Now let's point the beams in opposite directions and see what a dual feed produces:</p>
+  <pre>
+  9            11.3           1.2                 60      Lower: 23.7 - 5.2
+                                                          Upper: 23.8 - 5.4
+</pre>
+  <p>Depending upon the sensitivity of the feed system to changes under 10% in Z and depending upon the basic match between antenna feed, antenna match and lines, and in which direction any small mismatch might go, one may well see a small rise in SWR. although 5+ ohms of reactance may not be considered much, at an R of 25 ohms, it is 20% of the R value. Although this does not change R significantly, it changes SWR more significantly. (See some older ARRL books for calculating SWR directly from Zo and R +/- jX.)</p>
+  <p>Some prefer to stack beams at a 5/8 wl spacing to maximize gain. So I raised the upper beam 9' to 114' to check the results. Easier on NEC than on a tower.</p>
+  <pre>Feed lower only:
+  12           14.2           18.8                64            24.4 + 0.1
+Feed upper only:
+   9           14.6           19.5                64            24.9 + 0.4
+Feed both:
+  10           16.2           17.4                62      Lower: 24.0 + 1.3
+                                                          Upper: 24.5 + 1.7
+</pre>
+  <center>
+    <img src="st4.gif" width="629" height="290">
+  </center>
+  <p>Notice the slight parasitical improvement in individual beam gain, as well as the higher stacked gain, relative to 1/2 wl spacing. However, notice also the continued degradation in F-B performance. You pays your money and you takes your choice.</p>
+  <p>Now let's point the beams in opposite directions and see what a dual feed produces:</p>
+  <pre>
+  9            11.9           0.9                 62      Lower: 21.2 - 1.7
+                                                          Upper: 22.0 - 1.5
+</pre>
+  <p>Although the reactance has not climbed very much, the feedpoint resistance is down about 12% or so. Again, depending upon the sensitivity of the matching system to changes of this order and in which direction any inaccuracies in match are directed, a rise in SWR can be expected in many cases. If a perfect 1:1 is initially established, a 1.2-1.3:1 may result-- noticeable, but not in any sense fatal.</p>
+  <p>However, I have idealized the case with a very nice 25-ohm natural feedpoint Z so that accurately cut feedlines can do all the matching. commercial beams have their own systems to place 50 ohms at the coax connection, and we construct phase lines from there. Sensitivity to 10-15% mismatches is thus not predictable by NEC alone. However, if one does not see that slight rise, one has to wonder if it is function of losses somewhere in the system.</p>
+  <p>All models done in NEC-4 over S-N .005/13 ground, with Al elements.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <h4>B. Mis-phasing of Stacked Beams</h4>About mis-phasing of stacked beams, there are two questions one can ask. 1. Is something wrong when stacked beams are mis-phased? 2. Can I do anything useful by reversing the phase of one of a stack of beams.
+  <p>To see what might happen, I modeled the same 3-element Al 20 meter beam as in the last example over S-N ground .005/13 on EZNEC/4. I added transmission lines--1/4 wl section joined to form a feedpoint. Since NEC feedlines are mathematical, not physical, I simply used the sections to transform the 25 ohm resonant Z of the individual beams to 100 ohms each, in parallel for a pair of beams making 50 ohms. This provided a baseline for watching variations.</p>
+  <p>The 3-3 stack used 1/2 wl separation, again at 70' and 105' (which may be translated for any upper HF band in terms of wavelengths of height and separation) Here are the results:</p>
+  <pre>
+TO angle      Gain (dBi)     F-B ratio (dB)     Beamwidth      Feed Z
+ (degrees)                                       (degrees)      (R+/jX)
+In-phase:
+  10           15.83           20.8               60           50.6 - 2.8
+</pre>
+  <center>
+    <img src="st3.gif" width="625" height="289">
+  </center>
+  <p>As predicted in model construction, the transmission line transformers yield a very matchable condition.</p>
+  <pre>Out-of-phase:
+  50           12.34           18.9               82 (oval)    45.9 + 6.4
+  25           11.47           28.8               66</pre>
+  <center>
+    <img src="st5.gif" width="629" height="295">
+  </center>
+  <p>Reverse phasing produces two major lobes in the elevation pattern at the indicated angles, each down at least 3.5 dB from the main lobe of the in- phase model. Both lobes are quite high relative to desired dx angles. However, such a configuration, if switchable, might be useful for a domestic contest. The upper lobes on the in-phase model are down by 9 dB or more.</p>
+  <p>I next tried a 3-3-3 stack at .5-1.0-1.5 wl (70'-105'-140'). I again used 1/4 wl transmission line transformers joined at a distant feedpoint, resulting in an anticipated baseline feedpoint impedance of 33.3 ohms R. since throughout the exercise I used 41 segments per 1/2 wl to ensure convergence without having to recheck each model, the 370-segment model was the limit of my efforts. Here are the results.</p>
+  <pre>
+TO angle      Gain (dBi)     F-B ratio (dB)     Beamwidth      Feed Z
+ (degrees)                                       (degrees)      (R+/jX)
+In-phase:
+    8          17.3            21.7               60           32.7 - 1.7
+</pre>
+  <center>
+    <img src="st6.gif" width="629" height="290">
+  </center>
+  <p>This result tallies well with expectations. Notable in the 3-beam stack is a return of some of the F-B ratio lost in the 2-beam stack. The stack has lesser lobes at 26 degrees (down 8.5 dB) and at 41 degrees (down 15 dB): these figures are given for comparison with lobes, both main and secondary, of the same stack with one of the beams out of phase with the other two.</p>
+  <pre>Highest out-of-phase:
+   17          13.5            21.3               62           33.8 + 1.2
+   36          13.2            29.2               68</pre>
+  <center>
+    <img src="st7.gif" width="627" height="297">
+  </center>
+  <p>Although the gain of each lobe is no more than that of a single beam, the elevation angles may also be useful for domestic work. The feedpoint impedance is quite usable.</p>
+  <pre>Middle out-of-phase:
+  55          13.3            14.5               88            27.7 + 8.0
+</pre>
+  <center>
+    <img src="st8.gif" width="627" height="288">
+  </center>
+  <p>This configuration may be least useful due to the very high angle of the main lobe. There are lesser lobes at 8 degrees (down 6 dB) and at 33 degrees (down 4.5 dB). The feedpoint impedance is down 18% on the resistance side, with a significant reactance, which may show an undesirable rise in SWR in a switched system, even after the anticipated 33 ohms is matched back to a 50-ohm cable.</p>
+  <pre>Lowest out-of-phase:
+   22          14.3            21.6              62             34.1 + 1.0 </pre>
+  <center>
+    <img src="st9.gif" width="622" height="292">
+  </center>
+  <p>This configuration shows lesser lobes at 7 degrees (down 4 dB) and at 28 degrees (down 3.5 dB). The feedpoint impedance is acceptable. The configuration may be useful as an alternative dx configuration, despite the loss of gain from in-phase maximum, since--under some circumstances-- capturing the proper elevation of signal angle may be more important than raw gain.</p>
+  <p>The exercise strongly suggests that a switchable phasing system may prove useful, depending upon one's operating goals and activities. Although some options may yield less than useful patterns, most of the patterns-- especially in terms of altered elevation angles of maximum radiation--have a certain utility.</p>
+  <p>I suspect that the upshot to consider is this: If you are going that high with that much rotatable metal, you might as well throw in a phase-reversal switching system, just in case . . .. Combined with a single-beam vs. stack switching system, great versatility in elevation angle may be achieved--even to the point of overkill for any one individual's operating needs.</p>
+  <p>And that is using only 3-element Yagis as the foundation. There is no reason to believe that results for larger individual beams cannot be extrapolated with reasonable reliability--or that 5/8 wl spacing will not show similar small gains above 1/2 wl spacing. In the latter case, however, phase reversal patterns might differ, since beam interaction differs a bit.</p>
+  <h4>C. Stacked Beams: The Rest of the Story</h4>Member of towertalk@contesting.com supplied information on their stacks, and I am indebted to this group of helpful hams for sharing the data. Although not absolutely complete, I have tried to model almost all the stacks "in principle." Here are the restrictions: the heights are in terms of a fraction of a wavelength, so you have to translate that into feet. That will allow you to equate a 10 or 15 meter installation with the modeled 20 meter antennas. Next, the model beams are 3 element "ideals" and you will have to estimate the amount of gain over the 3-element beam your 4, 5, 6, or 7, element beam has. The gain numbers will give you a basis for making relative judgments such as, "Will I gain anything by raising the top beam in my stack by another fraction of a wavelength?"
+  <p>In order to handle stacks with up to four beams, I reduced the number of segments per half wavelength in my NEC-4 models. (The program would have handled it, but available time was limited by other projects.) Hence, the tables below start from scratch with some baseline data. That will validate the comparisons.</p>
+  <p>Everything will be by way of tables, without commentary. Some unworthy options will be evident. Others may depend on two factors: a. your own readout of experience or IONCAP results for paths from your QTH to your targets, and b. what your operating activities and interests are and hence what your targets are. These are variables that method of moments cannot model.</p>
+  <p><b>1. Baseline 3-element Yagi Characteristics</b>: 1 antenna by height in wl:</p>
+  <pre>
+Height         TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ in wl         degrees   dBi       dB   degrees        R +/- jX ohms
+1/2            25        12.3      25.2      64        24.7 - 0.7
+5/8            21        12.9      24.9      64        25.9 + 0.1
+3/4            17        13.1      40.1      62        26.5 - 1.2
+7/8            15        13.3      29.0      62        25.5 - 1.6
+1              14        13.4      25.1      62        25.1 - 0.9
+1.5            9         13.7      25.3      62        25.3 - 0.9
+2              7         13.8      25.6      62        25.4 - 0.9
+2.5            6         13.8      25.9      62        25.5 - 0.9
+</pre>
+  <p>Note: This model chosen for its generally good performance as a 3-element Yagi plus the convenience of using simple transmission line modeling techniques for stacking beams with a resultant 50-ohm overall feed.</p>
+  <p><b>2. Two beams stack, single feed at various spacings</b>. Abbreviations: Both in = both in phase; both out = both, but out of phase; Top only = only top beam fed, but lower present in stack; Bot only = only bottom beam fed, although upper present in stack. A second line for an entry indicates a secondary elevation lobe worth noting.</p>
+  <p><b>2a. 2 beams at 1 wl and 1.5 wl up.</b></p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in        11        15.8      21.3      60        50.6 - 0.9
+Both out       50        12.3      18.5      82        45.0 + 7.5
+               25        11.5      28.8      66
+Top only        9        13.6      22.3      60        26.1 - 1.9
+Bot only       14        13.3      22.1      62        26.0 - 1.9
+</pre>
+  <p><b>2b. 2 beams at 1 wl and 1.63 wl up.</b></p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in        10        16.2      17.6      62        51.4 - 1.7
+Both out       47        12.7      23.1      76        49.0 + 6.5
+               23        12.5      31.4      64
+Top only        9        13.9      18.6      62        22.1 - 1.1
+Bot only       13        13.6      17.9      62        24.5 - 1.5
+</pre>
+  <p><b>2c. 2 beams at 1 wl and 2 wl up.</b></p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in         8        15.7      39.3      62        46.7 + 2.3
+Both out       20        14.7      22.2      62        51.9 + 1.4
+               39        12.9      26.6      70
+Top only        7        13.7      35.5      62        25.6 - 1.1
+Bot only       14        13.4      26.7      62        25.3 - 1.1
+</pre>
+  <p><b>2d. 2 beams at 0.7 and 1.4 wl up.</b> (This corresponds roughly to 50-55' lower and 100-110' upper on 20 meters.)</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in        11        15.7      15.0      64        50.7 - 5.7
+Both out       28        13.8      25.8      64        49.7 + 7.1
+               58         9.1      18.6      86
+Top only       10        13.9      16.4      64        24.4 - 0.8
+Bot only       18        13.2      18.9      64        25.5 - 0.2
+</pre>
+  <p>Whether the characteristics of 3-element Yagis in a stack can be reliably extrapolated to longer Yagis is an important question, since antennas with 4 to 7 elements are common choices among DXers and contesters. Therefore, I repeated the exercise with a 5-element Yagi model.</p>
+  <p><b>1. Baseline 5-element Yagi Characteristics</b>: 1 antenna by height in wavelengths:</p>
+  <pre>Height         TO angle  Gain      F-B  Beamwidth   Feedpoint Impedance
+ in wl         degrees   dBi       dB   degrees        R +/- jX ohms
+
+1              13        15.4      23.3      52        36.7 + 0.2
+1.5            9         15.8      23.4      52        36.7 + 0.2
+2              7         15.9      23.4      52        36.7 + 0.3
+2.5            6         16.0      23.4      52        36.7 + 0.3</pre>
+  <p><b>2-2. Two beams stack, single feed at various spacings</b>:</p>
+  <p><b>2a. 2 beams at 1 wl and 1.5 wl up</b>:</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in        10        17.2      18.0      50        48.4 + 2.3
+Both out       24        14.0      26.0      56        54.6 + 3.1
+               49        12.5      16.4      62
+Top only        9        14.7      19.4      50        36.0 - 2.0
+Bot only       15        14.4      21.0      50        36.0 - 2.0
+</pre>
+  <p><b>2b. 2 beams at 1 wl and 1.63 wl up</b>:</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in        10        17.4      15.6      50        51.0 + 0.1
+Both out       23        14.7      33.8      54        54.5 - 0.5
+               45        12.7      21.6      58
+Top only        8        15.1      16.4      50        35.1 + 0.1
+Bot only       14        14.8      18.0      52        35.5 - 0.1
+</pre>
+  <p><b>2c. 2 beams at 1 wl and 2 wl up</b>:</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in         8        17.9      25.1      52        50.3 + 0.5
+Both out       20        16.4      21.2      52        50.6 - 1.1
+               38        12.9      19.6      54
+Top only        7        16.0      25.4      52        36.9 + 0.1
+Bot only       13        15.4      24.4      52        36.9 + 0.1
+</pre>
+  <p><b>2d. 2 beams at 0.7 and 1.4 wl up</b>:</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+Both in        11        17.0      14.3      52        51.3 - 1.4
+Both out       27        15.6      44.5      54        53.3 - 2.1
+               55         7.0      15.6      62
+Top only        9        15.3      16.7      52        35.7 + 0.9
+Bot only       19        14.5      18.0      52        35.4 + 1.2
+</pre>
+  <p>Although the in-phase-fed 5-element stack has more gain than the 3- element stack, it is by no more than the advantage of one 5-element beam over one 3-element beam--about 2 dB or less. The 5-element Yagis appear to interact more strongly at spacings less than 1 wl, as evidenced by not only the larger reduction in front-to-back ratio for stacked beams fed in phase, but as well by the reduced performance figures of both the top and bottom beams when fed alone compared to single beams at the same height. Note also that the maximum in-phase-fed stack gain occurs at 1 wl separation, not at the 0.63 wl separation of the 3-element stack. On the other hand, the 5-element beams, when fed out of phase, yielded dominant lobes at lower elevation angles than the 3-element counterparts.</p>
+  <p>Two models do not make an assured conclusion. However, it is at least safe to say that long Yagis do not necessarily perform in stacks in a way identical to shorter Yagis.</p>
+  <p><b>3. 3 beams stacked at 1, 1.5, and 2 wl.</b> Added abbreviations: Top out = top out of phase with other two; Mid out = middle out of phase with other two; Bot out = bottom out of phase with other two; Mid only = middle beam only fed, but with other two present.</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+All in phase    9        17.25     22.3      60        50.3 - 0.9
+Top out        17        13.4      22.1      62        51.4 + 3.6
+               36        13.2      30.8      68
+Mid out        55        13.3      14.3      88        41.3 + 12.9
+               32         8.9      18.5      68
+Bot out        22        14.3      22.1      64        51.9 + 3.3
+                7        10.3      19.7      60
+Top only        7        13.6      24.5      60        26.2 - 2.1
+Mid only        9        13.6      19.0      60        26.7 - 3.2
+Bot only       14        13.3      23.1      62        25.8 - 2.0
+</pre>
+  <p><b>4. 4 beams stacked at 1, 1.5, 2, 2.5 wl up.</b> Beams are designated top, 2nd, 3rd, bot from top to bottom.</p>
+  <pre>
+Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+All in phase    7        18.3      21.3      60        49.8 - 2.6
+Top out        12        15.1      21.8      60        49.5 + 2.8
+               28        12.2      24.5      64
+2nd out        40        13.5      28.2      71        48.9 + 8.6
+                9        11.3      22.2      60
+3rd out         6        12.3      20.6      60        48.6 + 7.8
+               30        12.0      22.2      66
+Bot out        20        14.9      22.3      62        49.4 + 2.9
+                6        14.1      20.4      60
+Top 2 out      17        16.0      20.6      62        52.1 - 0.6
+               32        13.3      21.8      66
+Mid 2 out      26        14.4      24.8      64        52.2 + 2.3
+               43        13.7      29.8      74
+Top/3rd out    57        14.0      12.8      91        38.5 + 16.7
+Top only        6        13.7      21.3      60        25.5 - 0.3
+2nd only        7        13.5      20.2      60        26.5 - 3.4
+3rd only        9        13.4      21.4      60        26.5 - 3.2
+Bot only       14        13.2      23.8      62        25.8 - 2.0
+</pre>
+  <p>Note: "Top 2 out" above is equivalent to "Bot 2 out" and "Top/3rd" out is equivalent to "2nd/Bot out."</p>
+  <p><b>5. 2 beams at 1 wl height, horizontally spaced,</b> where spacing is given in wl fractions from tip to tip of the elements (add 1/2 wl for boom-to-boom spacing). Side ears represent side lobes similar to those from an EDZ-- only gain is given. Out of phase condition produces two lobes with a deep center null. "Split" = degrees each side of centerline of the lobes.</p>
+  <center>
+    <img src="st10.gif" width="640" height="480" border="2" vspace="5" hspace="10">
+  </center>
+  <center>
+    <img src="st11.gif" width="640" height="480" border="2" vspace="5" hspace="10">
+  </center>
+  <pre>Stack          TO angle  Gain      F-B  Beamwidth      Feedpoint
+Impedance
+ set-up        degrees   dBi       dB   degrees        R +/- jX ohms
+
+a. 1/4 wl sp
+In phase       13        16.1      22.8      32        50.3 - 0.6
+  side ears              -2.9
+Out of phase   13        13.4      39.8                48.2 + 4.2
+  split                                      28
+
+b. 1/2 wl sp
+In phase       14        16.5      22.3      26        49.6 + 0.1
+  side ears               5.8
+Out of phase   13        14.2      30.8                50.1 + 3.0
+  split                                      24
+
+c. 5/8 wl sp
+In phase       13        16.5      24.3      24        49.0 + 0.6
+  side ears               8.2
+Out of phase   13        14.6      27.9                50.4 + 2.4
+  split                                      22
+
+d. 1 wl sp
+In phase       13        16.4      26.5      18        49.3 + 1.9
+  side ears              11.7
+Out of phase   13        15.4      25.1                50.1 + 1.3
+  split                                      18
+</pre>
+  <p>Note that as the spacing grows wider, the out-of-phase split grows narrower, but the ears grow larger.</p>
+  <p>I hope this data is useful to you as a point of departure in your stack building and revision planning (used in conjunction with other data).</p>
+  <p><i>Updated 3-2-97. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#stacking'>Stacking</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

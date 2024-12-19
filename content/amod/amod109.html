@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dipoles: Variety and Modeling Hazards</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>109. Dipoles: Variety and Modeling Hazards<br>
+    Linear, V, and Folded Dipoles in MININEC</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the last episode, we explored modeling dipoles in NEC (-2 and -4). Along the way, we discovered (or re-discovered) some NEC limitations. Although we noted the use of MININEC along the way, we did not pause long enough to see clearly the degree to which MININEC (3.13) is subject to the same limitations, is subject too more severe limitations, or is able to overcome the noted limitations in NEC. Since many newer modelers (and a good number of quite experienced modelers) use MININEC, we should re-trace our steps, highlighting the alternative modeling program along the way.</p>
+  <p>Our focus is on the many forms of the dipole, understood in practical rather than textbook terms. For our purposes, a dipole is a center-fed resonant or near resonant antenna that is about 1/2 wavelength electrically. In fact, resonance defines what an electrical half wavelength is, since the forms in which we encounter dipoles are many. Among the types listed at the beginning of the last episode are the standard or linear dipole, the V or quadrant, the folded dipole, the fan dipole (usually a dual-band pair of dipoles with a common feedpoint), the bent or inverted-U, the hatted dipole, and the dipole with element fold-backs. In the course of looking at just the standard, V, and folded dipoles, we encountered enough potential modeling hazards to give us pause. We shall continue the NEC journey in the next episode, but for now, let's examine our initial dipoles with MININEC.</p>
+  <p>NEC calculating cores tend to show only small variations among them. Most result from developments at the LLNL source. Since NEC-2 is public domain, we find most variants in commands within its iterations. NEC-4 has undergone fewer post-release developments and shows much greater uniformity. In fact, there are only two commercial implementations of NEC-4. Public domain MININEC (version 3.13) has undergone far greater modification from a larger number of programmers. Originally written in Basic, the program is almost always found in one of the Windows languages these days. As well, raw MININEC had a considerable number of limitations that recent programming has overcome. However, not all programmers have attended to all limitations. For example, the MININEC ground calculation system has two major problems. First, when using a lossy ground, MININEC calculates the source impedance as if over perfect ground. Second, for any antenna with a horizontal component to the total far field pattern, the MININEC ground calculations become ever more inaccurate relative to antenna gain and impedance as the antenna drops below about 0.2 wavelength. Because MININEC uses a simplified reflection coefficient, little is possible to correct it. However, a few programs have successfully grafted the NEC Sommerfeld-Norton ground calculation system onto MININEC.</p>
+  <p>Less obvious but equally significant are certain errors that infect some MININEC calculations. First, MININEC begins to show an offset relative to both NEC-2 and NEC-4 calculations. Some, but not all, implementations of MININEC have introduced corrections for this offset. Second, MININEC uses a system of current "pulses," which are at segment junctions (in contrast to NEC's current placement at segment center regions). Hence, without correction or the use of a very large number of segments, MININEC models of angular antenna geometries can show significant error. In fact, the more acute the angle, the larger the error. Raw MININEC also shows some error for very close spaced wires, and this difficulty has undergone correction in many MININEC implementations. Finally, MININEC lacks the extensive command structure that we find in NEC. Hence, it is limited in the manipulations that we can perform on both the geometry and on the output. For example, it does not permit the use of elliptical plane waves and segment current analysis useful in receiving and radar reflection analysis. As well, we find no near-field analysis, inter-segment coupling analysis, transmission lines, or networks. To overcome these voids, a number of programmers have introduced adjunct programs to allow the modeler to perform calculations involving some of these elements while using the implementation of MININEC. Given that virtually no two implementations of MININEC resolve the same set of limitations in the same way, the program has well earned the distinction between "raw" and "cooked" versions. There is, of course, a revised "Expert MININEC" set of programs, but these proprietary efforts do not use the same algorithms as MININEC 3.13.</p>
+  <p>Since we cannot hope to treat every version of MININEC and still attend to the variety of dipoles and their limitations for modelers, I have chosen 2 from my small stock: Antenna Model (the most corrected version of MININEC commercially available) and MMANA (one of the least-revised versions with the virtue of being free). Because MININEC cores undergo such regular modification, it is significant to give the versions involved: V1.77 for MMANA and 2.0.0.595 for Antenna model. At the same time, I shall adhere to the basic structure of all antennas that we examined in the preceding episode. The test frequency is 28.0 MHz. The antenna elements--unless re-specified for a special test--will be 1" in diameter and be lossless. The environment will be free space.</p>
+  <p>For most NEC models, I used 41 segment per half wavelength. The fairly large number ensures convergence within NEC. The odd number of segments in a linear element places a centered source directly at the element center, since NEC places sources on segments and not on segment junctions. In MININEC, current pulses and therefore sources occur at segment junctions. Hence, to precisely center a source requires an even number of segments on the element. We shall normally use 40 segment.</p>
+  <p>With these preliminaries, we are ready to examine the baseline antenna for all other work, the linear or standard dipole.</p>
+  <p><i>The Standard Linear Dipole</i></p>
+  <p>The linear or standard dipole is the root antenna for all of these exercises. As in NEC, a MININEC model must adhere to certain limits on the ratio of the wire diameter or radius to the length of a segment. However, there appears to be no full agreement on the absolute limiting ratio. Antenna Model (AM) provides warnings if the segment falls below 1.25 the wire diameter. However, the program also provides an Average Gain Test (AGT) value as a second check on the model. AGT is not a standard MININEC feature, but an added provision of the AM programmers.</p>
+  <center>
+    <img src="amod109-1.gif" width="450" height="160" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the model geometry of the MININEC dipole. The markers indicate segment junctions. The NEC models used 41 segments, so the basic MININEC model will use 40 segments. The feedpoint appears on pulse 20, a fact that is informative: a pulse does not occur on the segment-1/end-1 point of the antenna. For initial comparisons, I used the same element length that yielded resonant antennas in NEC: 199.4" or 5.065 m. (My version of MMANA counts in meters.) The following table compares the results of NEC-2, NEC-4, AM, and MMANA models of the dipole at 28 MHz.</p>
+  <pre>
+Comparison of Linear Dipole Models in NEC-2, NEC-4 and MININEC
+All models use 1" diameter lossless driven elements in free space.  AGT data not
+available in MMANA.
+
+Core     Wire Length     Gain     Source Impedance     AGT     AGT-dB     Corrected
+         Inches          dBi      R +/- j X Ohms                          Gain dBi
+NEC
+NEC-2    +/-99.7         2.14     71.94 + j0.12        1.000    0.00      2.14
+NEC-4    +/-99.7         2.14     71.95 + j0.17        1.000    0.00      2.14
+MININEC
+A-M      +/-99.7         2.13     71.79 - j0.54        1.000    0.00      2.13
+MMANA    +/-99.7         2.12     70.48 - j5.46
+
+Note: Wire Length is the total half-element length from the center to the tip.
+</pre>
+  <p>Between the 2 NEC cores and AM, there is no difference. However, MMANA, a relatively uncorrected version of MININEC 3.13, reports a source impedance that indicates a slightly short length for the dipole. MMANA reports a resonant length of about 200.4" (5.10 m) with an impedance of 71.14 + j0.40 Ohms. The length differential is a bit over 0.5%: not a fatal difference, but an indicator of an offset that continues to grow more important with rising frequency.</p>
+  <p>The AGT is only one test of model adequacy. Equally important--especially in MININEC--is the convergence test. Basically, the convergence test provides information on the level of segmentation necessary for a given model's geometry. At some level of segmentation, successive increases in the number of segments per wire should not yield any significant changes in the reported gain or source impedance. There is no fixed level of adequate convergence, since the required level is normally a function of the use to which one puts a modeling task. However, there are some models that never converge, and convergence is a necessary condition of model adequacy. As well, some models arrive at good convergence with a low number of segments, while others require a higher segment density.</p>
+  <p>As a second mode of comparison, I altered the segment count in both the AM and MMANA dipoles, beginning with 10 and doubling that number in successive steps. The last step yields segment lengths that trigger the AM warning about the ratio of wire diameter to segment length. In all cases, the dipole remained at its initial 199.4" length. The following table compares results.</p>
+  <pre>
+A Comparison of Convergence Tests for a Linear Dipole in 2 Versions of MININEC
+AGT data not available for MMANA.
+
+Program     No. of        Gain     Source Impedance     Change in      AGT
+            Segments      dBi      R +/- j X Ohms       Resistance
+AM           10           2.10     70.08 - j1.31        ---            0.9981
+             20           2.12     71.34 - j0.96        1.26           0.9991
+             40           2.13     71.79 - j0.54        0.45           0.9996
+             80           2.13     71.92 - j0.53        0.13           0.9998
+            160           2.13     72.06 - j0.36        0.14           0.9999
+MMANA        10           2.10     67.95 - j9.73        ---
+             20           2.12     69.55 - j7.33        1.60
+             40           2.12     70.47 - j5.46        0.92
+             80           2.13     71.02 - j4.03        0.55
+            160           2.13     71.16 - j4.21        0.14
+</pre>
+  <p>For many purposes, both models might be considered to be adequately converged at the lowest segment density. However, it is clear that AM shows a higher level of convergence at lower levels of segmentation than does MMANA. We may note in passing that AM reports a more nearly ideal AGT value with increasing segmentation, although all 3 of the reported values round to 1.000. In the end, the point of the exercise is a. to stress the importance of running convergence tests, even on models using a simple geometry, and b. to note that different implementations of MININEC may shows differentials in the rate of convergence.</p>
+  <center>
+    <img src="amod109-2.gif" width="750" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> provides both 3-dimensional and E-plane patterns for the dipole. Although these plots come from AM, the E-plane pattern does not differ in MMANA. Note that the side nulls are exceptionally deep for the linear dipole, yielding a nearly indefinitely large front-to-side ratio. Do not expect such deep nulls if you place the model over ground. At very low heights, the E-plane pattern will be at best an oval. At height of about 1 wavelength or more, the pattern will resemble a peanut.</p>
+  <p><i>The V Dipole</i></p>
+  <p>The V dipole includes in principle any electrical half wavelength, near-resonant antenna with legs that do not form a 180-degree angle. Although Vs come in many angles and orientations, the test models use a 90-degree angle (also called a quadrant antenna when both legs are parallel to the ground).</p>
+  <p>In NEC, the construction of a V dipole model required attention to the placement of the source. The actual feedpoint of a physical V antenna will be at the apex of the angle formed by the 2 wires. In NEC, we might use an offset source on the first segment of one of the wires meeting at the apex. Alternatively, we might use a split source, which yields two offset sources. We sum the impedance reported by both. The third alternative is to use a short level 3-segment wire and to place the source on the center segment. The angled wires then connect to the ends of the level wire. Although any of the three methods may be adequate for general purpose modeling, only the 3-wire model produced near-ideal AGT values. Again, the antenna used relatively fat (1" or 25.4 mm) elements to reveal any latent limitations that thin wire models might not detect.</p>
+  <center>
+    <img src="amod109-3.gif" width="440" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In MININEC, modeling V dipoles is simpler, as shown in <b>Fig. 3</b>. Since the source appears at a pulse or a junction of 2 segments, we may place it directly at the apex of the V. The test models used 20 segments in each of the two wires. The following table compares the results for the NEC (-2 and -4) 3-wire model with the results for the AM and MMANA models. The AM model has priority in terms of setting the leg lengths. The MMANA model uses the AM dimensions to determine to what degree its reports may be at variance with the AM model reports.</p>
+  <pre>
+Comparison of V-Dipole Models in NEC-2, NEC-4, and MININEC
+All models use 1" diameter lossless elements in free space.
+
+Program    Core     Wire Length     Gain     Source Impedance     AGT     AGT-dB     Corrected
+                    Inches          dBi      R +/- j X Ohms                          Gain dBi
+3-Wire     NEC-2    +/-102.3        1.72     41.31 + j0.25        1.004    0.02      1.70
+           NEC-4    +/-102.3        1.73     41.26 + j0.00        1.005    0.02      1.71
+AM         MININEC  +/-104.65       1.76     44.32 - j0.68        1.002    0.01      1.75
+MMANA      MININEC  +/-104.65       1.75     43.54 + j2.67
+
+Note: Wire Length is the total half-element length from the apex to the tip in MININEC models
+and from the source point to the wire tips in the 3-wire NEC version.
+</pre>
+  <p>We cannot draw any immediate conclusions from the difference in wire length from the antenna center to the tip because the MININEC and NEC models have slightly different geometries. However, the MININEC model achieves an excellent AGT rating in AM with the single centered source and only 2 leg wires.</p>
+  <p>The MMANA V-dipole model seems to be more coincident with the AM model than was the MMANA linear dipole model. However, MININEC has two potential error sources at work. One is the frequency offset. The other is the corner effect. If both are uncorrected, then they may in some cases be additive and in other cases be partially canceling. These error sources do not self-identify. However, we may again perform a convergence test on the two MININEC models of the V in order to compare changes in the performance. In the following table, the segment entry indicates the total number of segments. Half appear in each leg of the V.</p>
+  <pre>
+A Comparison of Convergence Tests for a V Dipole in 2 Versions of MININEC
+AGT data not available for MMANA.
+
+Program     No. of        Gain     Source Impedance     Change in      AGT
+            Segments      dBi      R +/- j X Ohms       Resistance
+AM           10           1.79     42.59 - j47.98       ---            1.0081
+             20           1.77     43.80 - j15.69       1.21           1.0046
+             40           1.76     44.32 - j0.68        0.52           1.0025
+             80           1.76     44.55 + j6.03        0.23           1.0013
+            160           1.76     44.65 + j8.09        0.10           1.0009
+MMANA        10           1.76     41.56 - j23.24       ---
+             20           1.75     42.82 - j5.82        1.26
+             40           1.75     43.54 + j2.67        0.72
+             80           1.75     43.99 + j6.64        0.45
+            160           1.75     44.14 + j7.56        0.15
+</pre>
+  <p>Although the models show only small overall convergence test changes, the AM model is slightly more converged at lower segmentation levels than the MMANA model. AGT data are not available for the MMANA model. However, the AM models shows improving AGT values as the segmentation level increases, just as did the linear dipole model in AM. We may also note that the MMANA spread of reactance values is smaller than for AM. In this instance, the addition of segments to the model wires reduces the effect of the corner error tendency. Since most available versions of MININEC no longer have the very restricted total segment allowance that bothered DOS versions of the program, the use of many segments is no longer a hindrance to model construction or calculation speed, and accuracy improves in most cases. Although we must keep in mind that the MMANA model may be a product of two error tendencies that appear to partially cancel with the particular geometry of the present antenna, there is no reason not to use either MININEC model as the basis for building a V antenna (at least in free space).</p>
+  <center>
+    <img src="amod109-4.gif" width="750" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The models used for the V dipole extend their legs in the -Z direction (downward, in earth terms). Hence, they radiate side-to-side as well as broadside. Both the 3-dimensional and E-plane patterns in <b>Fig. 4</b> show the reduced depth of the side nulls. Since the patterns are normalized to the maximum gain of the antenna, we must consult the data tables to find the loss in maximum gain relative to a linear dipole that makes up the energy that fills in the side nulls.</p>
+  <p><i>Folded Dipoles</i></p>
+  <p>Both NEC-2 and NEC-4 handled the standard folded dipole well. The standard folded dipole employs driven and undriven long element sections that use wires having the same wire diameter. However, if we attempt to transform the feedpoint impedance by ratios other than 4:1, NEC models begin to fail. The degree of failure depended on the ratio of the two wire diameters, because NEC becomes error prone with angular junctions of wires with dissimilar diameters.</p>
+  <p>Modeling folded dipoles (and related structures, such as T matches and gamma matches) is an arena in which MININEC is superior to NEC. MININEC generally lacks any tendency toward error when we change the element diameters either along a linear section or at corners. To set up a MININEC folded dipooe, we use an even number of segments in the long element sections, since on one of those sections, we shall center a source. <b>Fig. 5</b> shows the general layout, along with the impedance transformation equation for reference.</p>
+  <center>
+    <img src="amod109-5.gif" width="450" height="200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the standard or 4:1-ratio folded dipole, all 4 wires will use 1" diameter lossless material, and the wires will be 2" apart. The alternative folded dipole uses 0.1" diameter elements for all wires except the 1" wire with the source segment. The MININEC long wires will use 40 segments, with 1-segment end wires. As we calculated in the last episode, the folded dipole should show a source impedance close to 132.5 Ohms. Let's run the MININEC models in both AM and MMANA and compare the results with those obtained from NEC-2 and NEC-4.</p>
+  <pre>
+Comparison of Folded-Dipole Models in NEC-2, NEC-4, and MININEC: Equal and Unequal Diameter Elements
+All models use 1" diameter lossless driven elements in free space.  Second elements are 1"
+or 0.1" diameter lossless wires.
+
+Diameters     Core     Wire Length     Gain     Source Impedance     AGT     AGT-dB     Corrected
+Driven/Other           Inches          dBi      R +/- j X Ohms                          Gain dBi
+1"/1"         NEC-2    +/-97.45        2.13     281.6 - j0.54        1.000    0.00      2.13
+              NEC-4    +/-97.45        2.13     281.5 - j0.96        1.000    0.00      2.13
+              AM       +/-97.70        2.13     281.9 + j0.35        1.000    0.00      2.13
+              MMANA    +/-97.70        2.11     278.6 + j37.92
+1"/0.1"       NEC-2    +/-99.2         4.34     230.2 - j10.59       1.662    2.21      2.13
+              NEC-4    +/-99.2         2.96     164.5 + j0.60        1.209    0.82      2.14
+              AM       +/-99.5         2.17     137.5 + j2.96        1.008    0.04      2.13
+              MMANA    +/-99.5         2.17     133.3 + j4.89
+              Calculated Impedance              132.5 (if a linear dipole = 70 Ohms)
+Note: Wire Length is the total half-element length from the center to the tip.
+</pre>
+  <p>The data are very interesting and in more ways than establishing that both versions of MININEC are superior to NEC in handling folded dipoles with unequal elements. Note that when we use unequal element sizes (1" and 0.1" or 25.4 mm and 2.54 mm), the two versions of MININEC produce results that are very similar to each other, differing by no more that the linear dipoles differed. In contrast, the folded dipole with equal-diameter elements shows resonance in AM but has a considerable reactive component in MMANA. One possible source of the reactive component is the fact that uncorrected MININEC has a sensitivity to very closely spaced wires. With a pair of 1" diameter elements, the surfaces of the wires are 1" apart. When we use the unequal elements, the separation increases to 1.55".</p>
+  <p>In any model, it is always good practice to align to the degree feasible the segment junctions in parallel wires, especially when they are closely spaced. In NEC, we saw significant differences in the reported results when we radically misaligned the segments, using combinations of 31 segments in one wire and 61 segments in the other for the standard equal-diameter folded dipole. MININEC shows considerably less sensitivity to misaligned segments than either NEC-2 or NEC-4. To demonstrate the lesser sensitivity, I assigned 30 segments to one wire and 60 to the other for both AM and MMANA models. The following table shows the results, along with the NEC data for reference.</p>
+  <pre>
+Comparison of Folded-Dipole Models in NEC-2 and NEC-4: Careless vs. Careful Segmentation
+All models use 1" diameter lossless elements in free space.
+
+Segments      Core     Wire Length     Gain     Source Impedance     AGT     AGT-dB     Corrected
+Driven/Other           Inches          dBi      R +/- j X Ohms                          Gain dBi
+61/31         NEC-2    +/-97.45        1.88     342.5 + j2.31        0.946   -0.24      2.12
+31/61                  +/-97.45        1.84     263.6 + j2.23        0.937   -0.28      2.13
+41/41                  +/-97.45        2.13     281.6 - j0.54        1.000    0.00      2.13
+61/31         NEC-4    +/-97.45        1.71     329.1 - j2.33        0.909   -0.41      2.12
+31/61                  +/-97.45        2.00     273.1 + j1.26        0.971   -0.13      2.12
+41/41                  +/-97.45        2.13     281.5 - j0.96        1.000    0.00      2.13
+60/30         AM       +/-97.70        2.13     285.8 - j1.77        1.002    0.01      2.12
+30/60                  +/-97.70        2.12     278.0 + j1.17        0.999   -0.01      2.13
+40/40                  +/-97.70        2.13     281.9 + j0.35        1.000    0.00      2.13
+60/30         MMANA    +/-97.70        2.12     282.3 + j38.95
+30/60                  +/-97.70        2.10     274.5 + j39.19
+40/40                  +/-97.70        2.11     278.6 + j37.92
+
+Note: Wire Length is the total half-element length from the center to the tip.
+</pre>
+  <p>The AM model shows only very small differences among its reported results, with gain deviations of no more than 0.01 dB relative to the well-aligned case. Although AGT correctives are not available for MMANA, its range of values are nearly as tightly clustered as the AM values. Since one example cannot certify the relative lack of sensitivity for all model geometries, good segment alignment remains good modeling practice, whatever core you may be using.</p>
+  <center>
+    <img src="amod109-6.gif" width="790" height="440" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows 3-dimensional and E-plane patterns in free space for the equal-diameter folded dipole, as modeled in AM. The MMANA E-plane pattern would be identical, as would be the patterns for the unequal-diameter versions of the antenna. Note that the side nulls are almost but not quite as deep as the side nulls for the simple linear dipole. Do not forget that even the short end-connection wires do radiate, even if only a little.</p>
+  <p><b>Conclusion to Part 2</b></p>
+  <p>We have caught up to the NEC dipoles with our MININEC models. By framing the MININEC models in an episode of their own, we have been able to see a bit of the difference between corrected and uncorrected versions of MININEC, although in the HF region, the differences are small. Some of the differences become very significant at VHF and UHF frequencies, such as the frequency offset. As well, we have been able to see some modeling applications for which MININEC is superior to NEC, especially for geometries similar to the unequal-diameter folded dipole. Those applications are more numerous than one might initially believe. For that reason, I keep versions of both NEC and MININEC at hand, using the most accurate tool for any given job. Of course, we have also seen that for a number of cases, it makes no differences whether we use NEC or MININEC.</p>
+  <p>Still, we have fallen behind in our journey through the variety of dipoles. We have yet to work with inverted Us and hatted dipoles. Farther down the trail, the zigzag and fold-back versions await us. And at the end of this trip--but certainly not the end of all dipole varieties--stands the fan dipole for multi-band use. From this point forward, we shall be able to deal with our dipole types using NEC and MININEC together. From the standpoint of identifying modeling pitfalls and work-arounds, the sojourn should prove interesting.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

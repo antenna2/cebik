@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dipoles: Variety and Modeling Hazards</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>110. Dipoles: Variety and Modeling Hazards<br>
+    Tapered-Diameter, Bent, and Hatted Dipoles</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>We have so far examined dipoles that are straight and uniform in diameter, as well as those that are center-bent to form a V. We also tackled folded dipoles. Our goal is not to give a lesson in dipoles, but to demonstrate modeling techniques and limitations that may even affect such a simple antenna. Throughout the first 2 parts of the sequence of episodes, we have treated dipoles as center-fed near-resonant half wavelength antennas, setting aside the textbook "short" dipole concept as outside our needs.</p>
+  <p>We devoted an entire episode to modeling dipoles in NEC and a second session covered modeling those same dipoles in MININEC. As we proceed through the remaining collection of dipoles, we shall handle both programs together, since we no longer need to provide any introductory orientation to them. However, we shall continue to group the programs, covering NEC-4 and NEC-2 together and likewise collecting the Antenna Model (AM) and MMANA versions of MININEC 3.13--as very refined and relatively raw forms of the basic core.</p>
+  <p><i>Tapered-Diameter Dipoles</i></p>
+  <p>When we looked at linear or standard dipoles, we gave them a uniform diameter throughout the element. However, in the HF region, we commonly encounter tubular dipoles (and similar elements in more complex arrays) that use a tapered-diameter (or a stepped-diameter) element. In general, a tapered-diameter element is one that--counting from the center or feedpoint--uses gradually smaller diameter portions of the element. We shall presume that the taper is symmetrical relative to the element center.</p>
+  <p><b>Fig. 1</b> shows the general set-up for a series of test models that we shall examine. For simplicity, we shall use only 2 different diameters in creating the dipoles, a fatter inner section, where inner means closer to the feedpoint, and a thinner outer section that extends to the element tip. Hence, the outer or larger diameter applies to the inner element section, and the inner or smaller diameter applies to the outer element section. For 2 of our tests, the inner 1" section of the dipole will be +/-50" (total 100"), while the last 2 tests will change that length, using +/-25" (total 50") in one case and +/-75" (total 150") in the other. In all cases, I shall vary the segment assignment so that the total number of segments in the NEC models is 41 and in the MININEC models is 40.</p>
+  <center>
+    <img src="amod110-1.gif" width="492" height="395" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For reference, the original uniform-diameter 1" dipoles are +/-99.7" (total 199.4") at the 28.0 MHz test frequency, using lossless wires in free space. One feature that we cannot fail to notice about the tapered-diameter elements is that every one of them is longer. The increased length is a function of the fact that the effective diameter of the total element is well under 1", requiring a longer element. We shall examine what counts as the effective diameter shortly. However, let's first tell a short story about NEC.</p>
+  <p>NEC-2 used current algorithms that created an inherent problem using tapered-diameter elements. In brief, NEC-2 could not yield reliable results for elements using tapered-diameter linear elements. NEC-4 revised the current algorithms to overcome the limitation. In fact, NEC-4 considerably improves the performance of the system for tapered-diameter elements, but it is not perfect. How imperfect it might be depends on several different factors. NEC-4 tends to be more perfect when the step between diameters is relatively small. Hence, we have the first case that uses a diameter step from 1.0" down to 0.875". If we use a larger step, say, from 1" to 0.5" as in the second case, then NEC-4 is less perfect. The perfection of NEC-4 results also rests on where along the dipole that the step occurs. In general, the higher the current in the region where the step occurs, the more imperfect the result will be. Hence, we have cases 3 and 4 that use the 1"-0.5" combination, but with different lengths of 1" tubing.</p>
+  <p>NEC-2 shows the same general pattern as NEC-4, but more extremely so. The first two sections of the following table create resonant directly modeled NEC-4 dipoles and then re-runs each of them with NEC-2. For the NEC-2 and NEC-4 directly modeled dipoles, the performance of the uniform-diameter dipole appears as a point of reference. In all cases, NEC-2 shows significant deviation from NEC-4. The higher the ratio of the two diameters, the greater the deviation. As well, the shorter the inner-fatter dipole section, the greater the deviation. Note that the NEC-2 AGT value is always higher than the NEC-4 value (except for the uniform-diameter reference dipole). In NEC-4, case 3 (with the short inner dipole section), we find an AGT value that deviates more than a little from the ideal. However, the NEC-2 value for the same case is much higher yet. Our justified conclusion is that raw NEC-2 is unreliable with tapered-diameter linear elements. While NEC-4 is superior, it has limitations.</p>
+  <pre>
+NEC Performance with Various Tapered-Diameter Elements
+
+Model    Method    Outer/Inner    Inner/Outer  Segment    Gain    Source Impedance    AGT    AGTdB
+                   Diameters      Length       Order      dBi     R +/- jX Ohms
+NEC-4
+1-1      Direct    1              99.7         41         2.14    71.94 + j0.12       1.000  0.00
+2-1                1/0.875        50/50.6      10-21-10   2.15    72.37 + j0.06       1.002  0.01
+2-2                1/0.5          50/54.5      10-21-10   2.20    74.10 - j0.12       1.010  0.04
+2-3                1/0.5          25/77.9      15-11-15   2.26    73.52 - j0.04       1.023  0.10
+2-4                1/0.5          75/28.3       5-31-5    2.16    72.85 - j0.01       1.003  0.01
+NEC-2
+1-1      Direct    1              99.7         41         2.14    71.95 + j0.17       1.000  0.00
+2-1                1/0.875        50/50.6      10-21-10   2.17    72.80 + j4.30       1.007  0.03
+2-2                1/0.5          50/54.5      10-21-10   2.30    76.10 + j19.43      1.033  0.14
+2-3                1/0.5          25/77.9      15-11-15   2.47    71.49 + j13.12      1.074  0.31
+2-4                1/0.5          75/28.3       5-31-5    2.20    76.15 + j15.71      1.009  0.04
+Leeson corrections (Apply to NEC-2 and to NEC-4 Models)
+2-1      Leeson    1/0.875        50/50.6      10-21-10   2.13    71.72 - j0.68       1.000  0.00
+2-2    Substitute  1/0.5          50/54.5      10-21-10   2.13    70.28 - j6.40       1.000  0.00
+2-3     Elements   1/0.5          25/77.9      15-11-15   2.13    70.58 - j5.51       1.000  0.00
+2-4                1/0.5          75/28.3       5-31-5    2.13    71.56 - j1.27       1.000  0.00
+Leeson Revised for Resonance
+2-1      Leeson    1/0.875        50/50.6      10-21-10   2.13    71.72 - j0.68       1.000  0.00
+2-2    Substitute  1/0.5          50/54.8      10-21-10   2.14    71.93 + j0.17       1.000  0.00
+2-3     Elements   1/0.5          25/78.45     15-11-15   2.14    71.90 + j0.02       1.000  0.00
+2-4                1/0.5          75/28.45      5-31-5    2.14    71.87 + j0.11       1.000  0.00
+
+Notes:  Outer and inner diameters in inches.  Inner and outer lengths are for each half of the
+element, with dimensions in inches.  Segmentation order is for the full elements for the left
+outer section, the middle section, and the right outer section.  All element wires are lossless, and
+the environment is free space.
+</pre>
+  <p>The standard method of providing more accurate results for linear tapered-diameter elements in both NEC-2 and NEC-4 is to use substitute uniform-diameter elements having the same impedance at the test frequency as the tapered-diameter elements. The equations used were developed by David Leeson, based on original work by Schelkunoff. (See Chapter 8 of <i>Physical Design of Yagi Antennas</i>.) When using the Leeson corrections, the program does not calculate with the originally modeled elements. Instead, it uses substitute elements having the calculated equivalent uniform diameter and length. <b>Fig. 2</b> shows case 3 in final form. The equivalent uniform diameter is about 0.56", just a little fatter than the smaller of the two materials used in the dipole with the short inner section. Note also that the tip length limit is shorter than the tapered element in the upper section. The modeler does not vary the uniform-diameter substitute element. Instead, he changes the dimensions of the physical tapered-diameter element parts to achieve the desired goal--in this case, resonance.</p>
+  <center>
+    <img src="amod110-2.gif" width="688" height="361" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The tapered- or stepped-diameter element corrections do have restrictions. There must be at least two wires in the group. At least two of the wires must have different diameters. All wires in the group must be collinear (in a straight line). All wires must be connected to each other. Both ends of the group must be open, or one end open and one connected to ground (a case that we shall not examine in these dipole notes). The group must be nearly resonant (within about 15% of half-wave resonance if both ends are open). Only one source is permitted in the group, and it must be at the center if the ends are open. If the ends are open and the center of the group is a wire or segment junction, the source must be a split source. The rules for loads are the same as for sources, except that two equal loads must be used wherever a split source would be used. A single transmission line can be connected to the group. If the ends of the group are open, the center of the group must be a segment center--not a segment or wire junction--and the transmission line can be connected only to this segment.</p>
+  <p>The third section of the table shows the corrections applied to the physical dimensions generated in the original NEC-4 models. With only a small diameter step, the model called 2-1 shows very similar results in NEC-4 with or without the corrections. Likewise, the model called 2-4--which uses a long inner section and a shorter tip--also displays similar impedance values for the uncorrected NEC-4 and the corrected versions. (Note that the table shows corrections using NEC-4 only. Corrected NEC-2 values are too close to the corrected NEC-4 values to require repetition. In fact, the 2 cores yield corrected values that are about as close together as the NEC-2 and NEC-4 values for model 1-1, the uniform-diameter dipole.)</p>
+  <p>The difficult cases are the second and third, both of which use a large diameter change between the two dipole sections, along with a shorter inner section. Although the gain report is not a problem, the source impedance is off the mark relative to establishing resonant lengths. Therefore, the final part of the table revises the physical tip length to yield corrected elements that are resonant. Comparing the outer-section lengths between the third and fourth parts of the table will give you an idea of what sort of adjustment these cases require--about 3/4" per dipole leg or about 1.5" overall.</p>
+  <p>One fair question that we might pose about the corrections is the method used to substantiate the essential correctness and adequacy of the equations. Part of the confirmation process involved comparing the corrected results with MININEC dipoles that we may directly model (without any correction) using the same stepped-diameter structure. Since MININEC uses current pulses located at segment junctions, it does not undergo the same errors with stepped-diameter elements experienced by NEC.</p>
+  <p>As a demonstration of MININEC's ability to handle tapered-diameter elements without need for correction. I took the final corrected structure lengths and created models in AM. The top portion of the following table shows the results. Only case 2-4 shows a significant deviation between the corrected NEC models and the MININEC model. However, for each case in which the source reactance report exceed +/-j1 Ohm, I revised the AM model to bring it within our working definition of resonance. In one case (model 2-3), I needed no revision. In two other cases, the tip-length revision was 0.2" or less.</p>
+  <pre>
+MININEC Performance with Various Tapered-Diameter Elements
+
+Model     Outer/Inner    Inner/Outer  Segment    Gain    Source Impedance    AGT    AGTdB
+          Diameters      Length       Order      dBi     R +/- jX Ohms
+AM
+1-1       1              99.7         40         2.13    71.79 - j0.54       1.000  0.00
+2-1       1/0.875        50/50.6      10-20-10   2.13    72.12 - j2.14       1.000  0.00
+2-1A      1/0.875        50/50.8      10-20-10   2.13    72.62 - j0.33       1.000  0.00
+2-2       1/0.5          50/54.8      10-20-10   2.16    75.30 - j1.38       1.000  0.00
+2-2A      1/0.5          50/54.9      10-20-10   2.16    75.56 - j0.51       1.000  0.00
+2-3       1/0.5          25/78.45     15-10-15   2.15    75.97 - j0.47       1.000  0.00
+2-4       1/0.5          75/28.45      5-30-5    2.14    72.09 - j4.33       1.000  0.00
+2-4A      1/0.5          75/29.0       5-30-5    2.17    73.35 - j0.06       1.000  0.00
+MMANA
+1-1       1              99.7         40         2.12    70.47 - j5.48
+2-1A      1/0.875        50/50.8      10-20-10   2.13    71.29 - j5.27
+2-2A      1/0.5          50/54.9      10-20-10   2.15    74.20 - j5.59
+2-3       1/0.5          25/78.45     15-10-15   2.15    74.76 - j5.22
+2-4A      1/0.5          75/29.0       5-30-5    2.14    71.97 - j5.20
+
+Notes:  Outer and inner diameters in inches.  Inner and outer lengths are for each half of the
+element, with dimensions in inches.  Segmentation order is for the full elements for the left
+outer section, the middle section, and the right outer section.  All element wires are lossless, and
+the environment is free space.  All models are direct.
+</pre>
+  <p>I re-created the revised MININEC models using MMANA. The lower part of the table shows the MMANA results. Note that there is a consistent -j5-Ohm reactance on all of the sources, the same value that applies to the MMANA version of the uniform-diameter dipole. In the last episode, we attributed this reactance--relative to resonance in the AM models--to an uncorrected frequency offset in raw MININEC 3.13. In all other respects, the results are consistent with those of AM.</p>
+  <p><i>Inverted-U Dipoles</i></p>
+  <p>The NEC element taper corrections apply only to straight or collinear elements. However, not all dipoles are straight. In fact, one very old design--with many contemporary applications--is the inverted U, a dipole using a straight or horizontal section with the outer parts of the element pointed vertically downward (or, in free space, in the -Z direction). Although the bent section may have the same diameter as the horizontal section, when we use a tubular inner or horizontal element, the verticals often use either smaller tubing or wire. Therefore, to see the effects of changing vertical leg sizes, I set up the variations shown in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod110-3.gif" width="544" height="205" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first option uses a horizontal length of +/-70" (total 140"), with the vertical legs long enough to achieve resonance. The second option shortens the horizontal dimension to +/-50" (total 100"), again with vertical legs long enough to resonate the dipole. For each option, I used 1", 0.5", and 0.1" diameter vertical end wires.</p>
+  <p>In the first table, we find the results for NEC-4 and NEC-2. Since the element corrections do not work with angular junctions in the elements, we only find the results for direct modeling. I resonated each models in NEC-4 and then re-ran it in NEC-2 to see the amount or variance created by the older core's lesser ability to handle junctions of wire with different diameters.</p>
+  <pre>
+NEC Performance with Various Inverted-U Dipoles
+
+Core     Horizontal     Vertical     Vertical       Gain    Source Impedance    AGT      AGTdB
+         Length         Diameter     Length/End     dBi     R +/- jX Ohms
+
+NEC-4    +/-70          1"           34.0           1.96    58.19 - j0.52       1.002     0.01
+NEC-2                                               1.96    58.35 + j0.43       1.002     0.01
+NEC-4    +/-70          0.5"         37.8           1.95    58.28 - j0.30       1.002     0.01
+NEC-2                                               1.94    60.91 + j16.55      1.001     0.01
+NEC-4    +/-70          0.1"         45.4           1.91    58.53 + j0.43       1.002     0.01
+NEC-2                                               1.90    65.69 + j45.32      1.002     0.01
+
+NEC-4    +/-50          1"           55.3           1.60    38.97 + j0.19       1.004     0.02
+NEC-2                                               1.60    39.06 + j1.16       1.004     0.02
+NEC-4    +/-50          0.5"         59.1           1.57    39.11 - j0.62       1.005     0.02
+NEC-2                                               1.56    40.48 + j17.46      1.006     0.03
+NEC-4    +/-50          0.1"         66.5           1.49    39.64 + j0.11       1.007     0.03
+NEC-2                                               1.49    43.32 + j48.20      1.015     0.06
+
+Notes:  All horizontal sections use 1" diameter wire.  Vertical legs use 1", 0.5", or 0.1" wire.
+All element wires are lossless, and the environment is free space.  All dimensions in inches.
+</pre>
+  <p>In both the long and short horizontal options, NEC-2 handles the 1" vertical end wires quite well, and the variance from NEC-4 values is minimal. The NEC-4 and NEC-2 AGT values are the same, and the source impedances vary by only about j1-Ohm reactance. However, as we reduce the diameter of the vertical end wires and create a higher ratio between the diameters of the horizontal and vertical wires, the variance increases dramatically. The variance level is almost independent of the horizontal length.</p>
+  <p>When we turn to MININEC, we once more find that we may use the program directly without concern for the difference in the element diameter. However, this statement presumes that we are using a version of MININEC with the angular problem and the frequency offset corrected. In the present case, the use of 40 segments in the half wavelength dipole overall is sufficient to overcome the corner problem by minimizing the corner shortening effect.</p>
+  <p>The following table presents the MININEC results, starting with models in AM that use the NEC-4 resonant dimensions. In every case, we find that MININEC produces slightly different results, even when both the horizontal and the vertical element sections have the same diameter. Therefore, the table includes revised AM models to bring the MININEC models to resonance. As we decrease the diameter of of the vertical wires, the NEC-4 dimensions work less and less well. In addition, shortening the horizontal section of the inverted U produces an increase in the amount by which the AM MININEC results deviate from the NEC-4 results. Since even NEC-4 has difficulty with wire junctions with different diameter wires, the MININEC results are the more reliable.</p>
+  <p>Before we complete our examination of the data in the new table, compare the AGT values for the MININEC models in AM with the values for the NEC-4 models. The AGT values for the NEC models appear to be very good or better for all models. However, the MININEC results suggest otherwise. The Average Gain Test is a necessary but not a sufficient condition of model adequacy. In this case, the AGT fails to reveal the inadequacies of the NEC-4 models when the horizontal and the vertical wires have very different diameters.</p>
+  <pre>
+MININEC Performance with Various Inverted-U Dipoles
+
+Core     Horizontal     Vertical     Vertical       Gain    Source Impedance    AGT
+         Length         Diameter     Length/End     dBi     R +/- jX Ohms
+
+AM       +/-70          1"           34.0           1.95    58.42 - j1.78       0.9989
+AM-Revised                           34.2           1.95    58.67 - j0.23       0.9989
+MMANA                                34.2           1.95    57.59 - j5.19
+AM       +/-70          0.5"         37.8           1.93    57.16 - j9.70       0.9989
+AM-Revised                           39.1           1.93    58.72 - j0.20       0.9989
+MMANA                                39.1           1.93    57.61 - j5.41
+AM       +/-70          0.1"         45.4           1.91    55.18 - j18.90      0.9989
+AM-Revised                           48.1           1.89    58.87 - j0.50       0.9989
+MMANA                                48.1           1.89    57.56 - j6.93
+
+AM       +/-50          1"           55.3           1.58    39.10 - j3.04       0.9989
+AM-Revised                           55.6           1.58    39.32 - j0.64       0.9989
+MMANA                                55.6           1.58    38.64 - j5.46
+AM       +/-50          0.5"         59.1           1.56    38.42 - j13.82      0.9989
+AM-Revised                           60.8           1.53    39.74 + j0.10       0.9989
+MMANA                                60.8           1.53    39.04 - j4.92
+AM       +/-50          0.1"         66.5           1.48    37.90 - j26.17      0.9989
+AM-Revised                           69.5           1.41    40.51 + j0.53       0.9989
+MMANA                                69.5           1.42    39.70 - j5.71
+
+Notes:  All horizontal sections use 1" diameter wire.  Vertical legs use 1", 0.5", or 0.1" wire.
+All element wires are lossless, and the environment is free space.  All dimensions in inches.
+</pre>
+  <p>The MMANA models all use the same dimensions as the revised AM models. As a result, they all show the same trend in the capacitive reactance at the feedpoint. As well, within about +/-j1 Ohms, the values are consistent with those for the linear dipoles using both uniform and tapered-diameter elements.</p>
+  <p>The gain differences between the inverted Us with longer and shorter horizontal sections seem numerically noticeable. However, operationally, the maximum gain difference is not as great as it might seem. <b>Fig. 4</b> compares the patterns for the two types of inverted Us in a free-space environment. The overlaid patterns show only a very small difference in maximum gain.</p>
+  <center>
+    <img src="amod110-4.gif" width="445" height="475" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Where the two types of inverted Us differ most noticeably from an operational perspective is in the depth of the side nulls. As the horizontal section grows shorter and the vertical legs become longer, we obtain more radiation off the dipole "ends," that is, in line with the horizontal wire. With a horizontal section that is about 70% of the overall dipole length, the side nulls are almost 20 dB weaker than the maximum broadside lobes. In contrast, as we shorten the horizontal section to about 50% of the total length and extend the vertical legs to compensate, the side nulls are down by under 10 dB (or about 1.5 S-units) relative to maximum gain. You may wish to compare these patterns to the patterns for the V dipole with its legs forming a 90-degree angle, that is, with each leg dropped 45 degrees from the presumed horizontal line of a linear dipole.</p>
+  <p><i>Hatted Dipoles</i></p>
+  <p>One type of shortened dipole tends to show less variance than the inverted-U: the hatted dipole. The inverted U uses a simple extension of the main wire, but in a different direction. All parts of the wire contribute to the antenna's radiation pattern. However, the hatted dipole uses a shortened main element along with symmetrical structures at each end to bring the entire structure to resonance. <b>Fig. 5</b> shows the outline of one type of hatted dipole. In this case, the end structures consist of 4 equal-length and equal-diameter spokes. We might also have used shorter spokes with a perimeter connecting the tips. We may increase the number of spokes for either assembly. Each increase in the number of spokes results in a decrease in spoke length (assuming that we make no changes in the horizontal element). Ultimately, we might use a circular solid surface as the end piece.</p>
+  <center>
+    <img src="amod110-5.gif" width="481" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One key to the hatted dipole is the fact that each spoke provides a current distribution path for the antenna. The current in each spoke at the junction with the horizontal element is I*1/n, where n is the number of spoke and I is the current magnitude in the main element at the junction. The lower portion of <b>Fig. 5</b> displays the current division graphically, but shows only 2 of the 4 spokes at each end of the dipole. The other key to the hat is its symmetrical structure. Since each spoke has the same current magnitude as every other spoke, the fields created tend to cancel out. Hence, the hatted dipole exhibits virtually no far-field radiation from the hat. The result is that, among all methods of loading dipoles in order to achieve resonance with a shorter length, the hatted dipole exhibits the highest gain and the highest resonant source resistance for any given horizontal section length.</p>
+  <p>Because the hat radiation is self-canceling, hatted dipoles tend to show considerably less variation between NEC-2 and NEC-4 models, and between NEC and MININEC models, than the inverted U and similar shortened dipoles with asymmetrical extensions of the horizontal element. To test this tendency, I created NEC and MININEC models of the hatted dipole with a horizontal length of +/-70" (total 140") for the 1" diameter material. The 4 spokes at each end use 0.1" diameter wires. Due to the shorter length of each spoke, they use 4 segments each so that their segment lengths are about the same as their segment lengths in the horizontal portion of the element. The following table summarizes the results of the tests.</p>
+  <pre>
+NEC and MININEC Performance with Hatted Dipoles
+
+Core             Spoke      Gain    Source Impedance    AGT        AGTdB
+                 Length     dBi     R +/- jX Ohms
+
+NEC-4            18.8       2.02    58.17 - j0.12       1.001       0.00
+NEC-2            18.8       2.02    59.59 + j8.81       1.000       0.00
+AM               18.8       2.01    56.78 - j11.26      0.999       0.00
+MMANA            18.8       2.01    55.72 - j16.33
+AM-Revised       19.6       2.01    58.48 - j0.37       0.9988     -0.01
+MMANA-Revised    19.6       2.07    57.37 - j5.62
+
+Notes:  All horizontal sections use 1" diameter wire and are +/-70".  Hat spokes use 0.1" wire.
+Each end hat uses 4 spokes (with other designs possible).  All element wires are lossless, and
+the environment is free space.  All dimensions in inches.
+</pre>
+  <p>The NEC-4 initial models called for 18.8" spokes to arrive at resonance. Note the nearly ideal values of AGT, despite the difference between the NEC-4 and NEC-2 source impedance values. The MININEC models showed some deviation from the NEC-4 models, so I created a revised resonant version of the AM MININEC model using 19.6" spokes. In both the original and the revised MININEC models, the MMANA version shows a -j5-Ohm offset in source impedance from the AM models, a value that has been consistent for all of the models reviewed in this episode.</p>
+  <p>Perhaps the most notable aspect of the NEC-MININEC comparison is the reduction in the differences between NEC-4 and MININEC for the hatted dipole. With a 70% horizontal 1" element, the MININEC model of the inverted-U showed an 18-Ohm differential in reactance. The hatted dipole, using the same horizontal element and the same diameter (0.1") end wires, shows a difference of only 10 Ohms reactance. Since MININEC does not react adversely to junctions of wires with different diameters, we might then conclude that NEC is less sensitive to such changes when we create symmetrical structures at the main element ends.</p>
+  <p>I noted that the hatted dipole is the most successful among all shortened dipoles in retaining the characteristics of a full-size linear sipole. We can confirm part of that claim in the reported gain values for the hatted dipole. Despite shortening the main element by about 30%, we lose only about 0.13-dB of gain. <b>Fig. 6</b> tells something of the rest of the story by showing 3-dimensional and E-plane patterns.</p>
+  <center>
+    <img src="amod110-6.gif" width="700" height="345" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Unlike the V dipole and the inverted U, the hatted dipole pattern shows deep side nulls that are very comparable to the side nulls of a full-size linear dipole in the same free-space environment. The depth of these side nulls is also confirmation that the hat structures on the ends of the dipole have virtually no far-field radiation. (If they had even small but noticeable radiation, the side nulls would have been much shallower.) Despite the improved performance of the hatted dipole, we rarely find them in use. Offsetting the improvements is the fact that placing hats at the outer ends of a dipole creates weight and wind resistance at a position that we least want it to appear.</p>
+  <p><b>Conclusion</b></p>
+  <p>In our survey of tapered-diameter, bent, and hatted dipoles, well-corrected MININEC has proven to provide the most reliable results. In many cases, the differences between NEC and MININEC are too small to matter. Even some numerically noticeable differences wash out in the variables of construction methods that we do not model in detail. Modeling is rarely a substitute for field testing and adjustment. Instead, modeling simply puts us much closer to the final adjustment values.</p>
+  <p>MININEC's superiority with some forms of dipole structures is not a sufficient reason to throw out NEC and buy new software. At the start of this sequence of episodes, I noted a number of features that even well-corrected versions of MININEC lack. As well, NEC has some performance advantages over MININEC in with some geometries. To explore these matters, we shall require one more leg on our journey. Next time, we shall explore zigzag, fold-back, and fan dipoles.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

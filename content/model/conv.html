@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>Modeling and Convergence Testing</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="25">Notes on Modeling and Convergence Testing <img src="../images/antbott.gif" align="right" width="150" height="77"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  Every commercial method of moments antenna modeling software manual warns the user to perform convergence testing to validate to the extent possible the reliability of the model. Many such packages also offer automatic wire segmentation, using algorithms developed from the basic NEC criteria for recommended minimum segment lengths. Unfortunately, for many users, the two facilities come into conflict, and convergence testing loses out. In fact, convergence testing should always take priority over the modeling speed made possible by automatic segmentation of wires.
+  <p>Convergence testing is the process of increasing the number of segments in each wire of a model until the program output values change by only insignificant amounts relative to the purpose of modeling. Notice that what counts as satisfactory convergence may vary according to what the modeler wants to get out of the exercise. Among the most used outputs are gain, front-to-back ratio, feedpoint impedance, and antenna current magnitudes and phases.</p>
+  <p>Every antenna model should be tested for convergence of results. Otherwise a model cannot be counted as a reliable indicator of antenna performance, with resultant uncertainties about construction, adjustment, or evaluation. However, convergence testing should only occur after certain basic good modeling practices have been employed. To the degree permitted by the antenna structure, antenna segments in parallel and almost parallel wires should be aligned. The wire containing the feedpoint should be examined to ensure the correct source type--single or split--according to the segmentation and desired source position. Segment length minimums should be checked at the highest frequency of interest. For greatest utility of all program outputs, segmentation should begin at one consistent end of each element and progress in the same direction until reaching the other end of the element. For some types of antennas with linear elements, the only difficulty posed by violating this practice may be reading the current levels and phases on each wire of the model. For antennas with phasing networks built into the model or with certain orders of complex geometry, almost all outputs may become erroneous if consistent wire construction practices are not followed.</p>
+  <p>Once the model is in good order, convergence testing can begin. Some models may show convergence with the first increase in segmentation. Some may require only 2 or 3 test steps. Others may require many steps. Finally, some models may never converge. A model that fails to converge over critical performance outputs cannot be considered reliable at any segmentation without some external standard.</p>
+  <p>Here are some examples of convergence results taken on EZNEC, which permits automatic segmentation at two levels: a level of absolute minimum numbers of segments per half wavelength (Smin) and a level of recommended or conservative numbers of segments per half wavelength (Scon). It is always tempting to model at the least possible number of segments, since every extra segments adds to the time required for NEC to make its matrix calculations. So we shall begin each sample model with the absolute minimum segmentation to see what happens. Besides Smin and Scon, we shall use the following abbreviations: Saligned = segments equalized in length and aligned with those of parallel elements; Sx## = the segmentation of Scon multiplied by the number ##.</p>
+  <p>1. A dipole element for 20 meters with many steps in diameter. Note: many versions of NEC-2 contain a stepped-element diameter correction algorithm, since NEC-2 produces unreliable results without it. NEC-4 handles stepped diameters directly. In this example, NEC-2 results are used. We shall look only at the feedpoint impedance of this free space model</p>
+  <pre>Model     Total Segmentation       Feedpoint Z (R +/- jX) in ohms
+Smin            9                       81.5 + 39.3
+Scon           15                       81.1 + 39.5
+S aligned      21                       81.3 + 40.2
+</pre>
+  <p>Clearly, for most purposes, such as building the antenna element in question, data produced by the minimal model is quite reliable. This is generally true of one-element linear antennas, although for multi- wavelength antennas, higher levels of segmentation may be needed.</p>
+  <p>2. To the element of example 1., we might install a center section 2 or more times the diameter of the adjacent sections to simulate boom mounting hardware.</p>
+  <pre>Model     Total Segmentation       Feedpoint Z (R +/- jX) in ohms
+Smin           11                       78.5 + 29.6
+Scon           15                       79.7 + 31.8
+S aligned      21                       80.0 + 32.5
+</pre>
+  <p>Although the model seems sufficiently reliable for most purposes at all level of segmentation, note the differentials in values for each step of increase. The decrease of difference between the Scon and S aligned levels is precisely the definition of convergence. Here, the difference may make no practical difference, but it might for an antenna of which this element is but one of many.</p>
+  <p>3. Let's look at a 5-element Yagi using the element in example 1 as the driven element.</p>
+  <pre>Model     Total               Gain      F-B Ratio      Feedpoint Z
+          Segmentation        in dBi    in dB          (R +/- jX) in ohms
+Smin            45            10.1      24.3           38.9 + 23.5
+Scon            69            10.2      23.9           38.4 + 22.8
+S aligned      102            10.2      23.7           38.4 + 22.6
+</pre>
+  <p>Since the Yagi elements are linear and gently tapered, the results achieve almost instant convergence at a practical level.</p>
+  <p>4. Lest we grow overconfident that convergence is an easy thing to achieve, consider the following 2-element beam using an extended double Zepp driven element and a pair of reflectors, one at each extremity of the driven element. The elements are quite closely spaced. These figures are for a height over medium ground of 50 feet on 20 meters. Elements are #12 copper wire and begin well aligned.</p>
+  <pre>Model     Total               Gain      F-B Ratio      Feedpoint Z
+          Segmentation        in dBi    in dB          (R +/- jX) in ohms
+Smin            24            12.9      12.1           93.6 - 1297
+Scon            46            12.8      12.5           80.3 - 1120
+S x 1.5         70            12.8      12.5           68.9 - 1016
+S x 2           92            12.8      12.4           66.6 -  992
+S x 2.5        114            12.8      12.4           64.9 -  976
+S x 3          138            12.8      12.4           62.5 -  956
+</pre>
+  <p>In this exercise, checking only the gain and front-to-back ratio would have misled us into thinking that the model had achieve convergence at an early stage--perhaps between the Scon and S x 1.5 levels. However, suppose we plan to stub-tune the antenna. Stub construction requires a reasonably accurate measurement or forecast of feedpoint impedance. This particular model achieves convergence at the 1.5-2% level only as we increase segmentation considerably. Had we used the feed impedance provided by the conservative auto-segmented model, our initial stub would have been way off the mark. In short, before ended a convergence test, be sure to check all of the relevant output data.</p>
+  <p>5. Let's try a single quad loop. To make matters interesting, we shall make it square, with the horizontal members made from 0.5" diameter tubing and the vertical members from #12 wire. We shall feed the center of the bottom horizontal section and place the whole thing in free space. Here is what we get within the limits of most ham versions of NEC-2.</p>
+  <pre>Model     Total               Gain      Feedpoint Z
+          Segmentation        in dBi    (R +/- jX) in ohms
+Scon            28            3.61      154 +  81
+S x 1.5         44            3.60      158 +  91
+S x 3           84            3.59      164 + 108
+S x 4.5        124            3.58      168 + 119
+S x 9          244            3.57      175 + 140
+S x 16         444            3.56      183 + 161
+[MININEC       240            3.61      137 -   6]
+[MININEC        56 (tapered lengths)
+                              3.61      137 -   2]
+</pre>
+  <p>In this example, convergence is never achieved with respect to feedpoint impedance, even though the gain stabilizes from the beginning. Consequently, there is no internal evidence produced by NEC-2 that any of the output data is reliable.</p>
+  <p>By importing an external standard, we can judge that the smallest segmentation produces outputs closest to reality for cases in which NEC-2 encounters angularly joined wires of different diameters. MININEC is the standard used here, and by its internally correlated figures it suggests that at any level, the feedpoint impedance figures of NEC-2 are unreliable for this type of case.</p>
+  <p>Knowing in what cases a modeling program yields unreliable data is just as important as making good use of reliable data. Convergence testing is one method of establishing the reliability of some data and the unreliability of other outputs.</p>
+  <p>The examples, may be multiplied, and perhaps from time to time, I shall add others. In the meantime, I hope this little survey clarifies the principles of convergence testing and helps make it a part of every modeling exercise.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

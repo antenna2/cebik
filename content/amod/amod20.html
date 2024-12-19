@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Average Gain Test</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>20. The Average Gain Test</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>We have noted in a past column (#1 of this series) the convergence test for model adequacy. In that test, we increase the number of segments per wavelength until the output reports no longer vary from one level of segmentation to the next by a significant amount. For some antenna, such as dipoles, converge may occur with as few as 10-15 segments per wavelength, while other antenna structures may require many times that figure. There are some antenna models that never converge. Convergence is considered a necessary but not a sufficient condition of model adequacy. A model may have its results converge and still be a poor model for reasons that convergence testing cannot reveal.</p>
+  <p>In addition to the convergence test, there is another important test of model adequacy: the Average Gain test. Like convergence testing, it is a necessary but not a sufficient condition of model adequacy. Although the raw data necessary for performing the test has always been in the NEC output file, only recently has it found its way into commercial implementations of NEC. I anticipate that it will be available in upcoming releases of NEC-Win Plus and EZNEC for Windows.</p>
+  <p>Essentially, we only need two numbers to perform the test: the input power and radiated power. For a lossless antenna, the input power and the average radiated power should be equal. Whatever the gain in one or more favored directions, it will be offset by nulls in other directions. Over the entire sphere of free space, the total amount of radiated power can never exceed the power supplied to the antenna. Hence, the ratio of average radiated power to supplied power should be 1. If the ratio differs by more than a small amount from 1, then the model may be considered suspect.</p>
+  <p>The conditions under which an adequate model will show an Average Power Gain (G<sub>AVE</sub>) of 1 also establish the conditions for performing the Average Gain test. The model is set in free space. (We shall look at setting the model over perfect ground in a moment.) The wire material must be perfect or lossless. All "real" or resistive parts of loads, networks, and transmission lines must also be set to zero (which may require in a parallel R-L-C load a very high value for the parallel resistance).</p>
+  <p>For test purposes, the model is run by taking a regular sample of the radiation pattern every few degrees, and the results are averaged. (Note: for these tests, the sample is taken as a power and not as a power ratio, although one can be easily converted to the other.) The result is a statistically fair reading of the average radiated power. To calculate the average power gain, we simply apply the following simple equation:</p>
+  <center>
+    <img src="amod20e1.gif" width="263" height="76">
+  </center>
+  <p>where G<sub>AVE</sub> is the average power gain, P<sub>RAD</sub> is the radiated power as averaged, and P<sub>IN</sub> is the input power as calculated from source information.</p>
+  <p>What about k? For a free space model, k = 1. However, if the test lossless model is placed over perfect ground, then k = 2.</p>
+  <p>The results will not vary by much if the only loss in the antenna is wire loss for high conductivity materials of reasonably large diameters. However, for the most reliable figure of merit, the test is best run on a wholly lossless version of the model being tested.</p>
+  <p>The average gain figure that results from the test may be higher or lower than 1.0. One proposed gradation of model merit uses the following dividing points:</p>
+  <pre>G<sub>AVE</sub> Value Range                   Significance
+0.95 - 1.05                   Model is considered to have passed the test
+                              and is likely to be highly accurate.
+0.90 - 0.95 and 1.05 - 1.10   Model is quite usable for most purposes.
+0.80 - 0.90 and 1.10 - 1.20   Model may be useful, but adequacy can be
+                              improved.
+&lt;0.80 and &gt;1.20               Model is subject to question and should be
+                              refined.</pre>
+  <p>The user may develop more strict limits for the adequacy of a model based on the specific tasks within which the model plays a role.</p>
+  <p>Most models that deviate in the test from an average gain of 1 show an inverse correlation between errors in gain and in the resistive component of the source impedance. As the gain climbs, the source impedance decreases, and vice versa. For limited purposes, the average gain value derived from the test can be used to correct both figures, using the following equations:</p>
+  <center>
+    <img src="amod20e2.gif" width="586" height="79">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="amod20e3.gif" width="504" height="72">
+  </center>
+  <p>Obviously, an average gain value that is greater than 1 will increase the input resistance and decrease the gain. Values less than 1 will do the opposite. In no case should such corrections be applied and used unless the model has first been established as a good model relative to tests other than the Average Gain test. As we shall see, the Average Gain test can identify some questionable models, but certainly not all of them.</p>
+  <p><b>Some Test Cases</b></p>
+  <p>To familiarize ourselves with the average gain test and its utility, let's look at a few test cases. All of them were tested for average gain using the NEC-Win Plus implementation of the test, which rewrites a given model to establish the necessary lossless conditions. All of the models were run in free space.</p>
+  <p><b>1. A folded dipole with elements having different diameters.</b> <b>Fig. 1</b> shows the folded dipole we shall test, using the model shown in the lower portion of the drawing.</p>
+  <center>
+    <img src="amod20-1.gif" width="364" height="228" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The test model uses a #12 wire for the source with a 1" wire as the continuous element. With the ratio of wire diameters given, the source impedance should be transformed by a factor of over 7 relative to a standard dipole, or something around 530 Ohms. (Standard equations for calculating the impedance transformation of a folded dipole--taking into account both wire diameters and the spacing between wires--can be found in the <i>ARRL Antenna Book</i>.) The free space antenna gain should be that of a standard folded dipole, in the 2.1 to 2.2 dBi range. NEC-2 returns a gain of 0.97 and a source impedance of under 400 Ohms for a model that is resonant and which reports the approximately correct values when modeled carefully in MININEC. (MININEC returns a free space gain of 2.2 dBi and a feedpoint impedance of about 530 Ohms for this test case.)</p>
+  <p>The Average Gain test yields a value of 0.75, indicating a highly untrustworthy NEC model. Note, however, that in this case, NEC returns values for gain and for impedance that are both less than one might reasonably anticipate from models of other folded dipoles and from calculations of the impedance transformation for the wire diameter ratios and wire spacing. Nonetheless, as a figure of merit, the Average Gain test correctly characterizes the model.</p>
+  <p><b>2. Close spaced elements of unequal length</b>. The basic set-up for this condition appears in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod20-2.gif" width="356" height="105" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A resonant 1" diameter 14 MHz dipole is placed close to an unfed wire, also 1" diameter, approximately resonant on 21 MHz. NEC reports the 14 MHz free space gain and feedpoint impedance of this configuration in the following pattern:</p>
+  <pre>Spacing in inches        Gain in dBi         Feedpoint Z (R +/- jX Ohms)
+     12                       2.2                 75 - j 0.3
+      4                       2.4                 74 + j 2.8
+      2                       3.3                 61 - j 0.1</pre>
+  <p>Passing all three versions of the model through the Gain Averaging test yields the following set of values:</p>
+  <pre>Spacing in inches        Average Gain
+     12                       1.0003
+      4                       1.0628
+      2                       1.2942</pre>
+  <p>With a spacing of 12", the model completely passes the test. The gain figure, which is very slightly high for a resonant dipole, is the maximum gain in the direction of the secondary element, and the configuration shows a front-to-back ratio of nearly 0.1 dB. Hence, everything is quite normal and usable.</p>
+  <p>The figure for the 4" spacing version suggests that the model is quite usable for most purposes. Here is a case where a user should feel free to reach a more strict requirement if the modeling task requires quite high precision--as do many studies that systematically track performance predictions from NEC. The model with 2" spacing is clearly unusable for anything except accounts such as this one that point out its dangerously over-estimated gain and underestimated feedpoint impedance. In this example, the use of the Average Gain to correct the numbers yields quite good results.</p>
+  <p><b>3. A 2-element 7.1 MHz Yagi with highly tapered element diameters.</b> The basic outline of the subject Yagi appears in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod20-3.gif" width="362" height="196" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From the center of each element outward, the prescribed element taper schedule is as follows (with all dimensions in inches):</p>
+  <pre>Element Diameter         Section Length
+     4.7                       12
+     2.25                     108
+     2.0                      120
+     1.0                       66
+     0.75                      69
+     0.5                      to tip</pre>
+  <p>The very large diameter center section simulates the effect of an element-to-boom mounting plate.</p>
+  <p>Without the Leeson corrections, NEC-2 returns for this 2-element Yagi a free space gain of about 6.2 dBi and a front-to-back ratio just above 8 dB. The feedpoint impedance is just about 43 Ohms. The Average Gain test returns a value of 1.25, indicating a model of highly dubious adequacy. By way of contrast, the model with substitute uniform diameter elements produced via the Leeson equations yields a gain of 5.8 dBi with a front-to-back ratio of about 10.6 dB. The feedpoint impedance is about 41 - j36 Ohms. Although the resistive component of this impedance appears to defy the correction function of the Average Gain test, it does not. Since the driver is highly reactive, it must be lengthened to achieve resonance, and this action will increase the resistive component of the impedance well above the level of the uncorrected source impedance. Likewise, shortening the uncorrected model's driver to yield about the same capacitive reactance as the corrected model will also lower the value of the resistive component of that impedance.</p>
+  <p><b>Some Other Test Cases</b></p>
+  <p>Although the three test cases we just ran generally confirm the utility of the Average Gain test, that test does not reveal every inadequate model. A few illustrations may be useful.</p>
+  <p><b>4. A quad loop with "fat" horizontal wires and "thin" vertical wires.</b> Let's construct a 10-meter quad loop like the one shown in the lower half of <b>Fig. 4</b>.</p>
+  <center>
+    <img src="amod20-4.gif" width="235" height="476" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Quad loops constructed entirely of 1" "fat wires" or of #12 "thin wires" both have bi-directional maximum free space gain values close to 3.3 dBi, with resonant feedpoint impedances between 125 and 130 Ohms. Suppose we construct a composite quad consisting of horizontal fat wires and vertical thin wires. NEC-2 reports the gain as about 3.6 dBi and the feedpoint impedance as 170 + j122 Ohms. By way of contrast, a MININEC model shows a feedpoint impedance closer to 135 Ohms, which is more in line with the mono-taper versions of the quad loop.</p>
+  <p>Interestingly, the Average Gain test produces a value of 0.9915, indicating a highly reliable model--at least so far as that test can indicate.</p>
+  <p>However, the quad with corner junctions of dissimilar diameter wires is an odd NEC model to be sure. Although its reported gain remains stable, the source impedance varies widely according to the number of segments per side. Some modelers believe that the most accurate results come not from the highest segmentation density, but from the lowest. Whatever the final verdict on the model, it is a case of a dubious model that the Average Gain test cannot catch.</p>
+  <p><b>5. A corner-fed non-symmetrical 40-meter triangle.</b> Suppose we construct a right-angle triangle of #12 AWG wire and feed it at the lower corner, as shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod20-5.gif" width="430" height="422" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Even at low segmentation densities, the Average Gain test returns values such as 0.96, indicating a highly reliable model. However, this model requires many segments for results to convergence, due largely to the lack of symmetry in current magnitude adjacent to the feedpoint. Unfortunately, the Average Gain test can give no clue as to what this model requires for reliable results.</p>
+  <p><b>6. A folded-X beam for 28.5 MHz.</b> Let's construct a folded-X beam using 1" wire for the X-portion and #18 wire for the "tails," as suggested in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod20-6.gif" width="312" height="285" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The folded X-beam is a highly unstable model in NEC-2. It will not converge at any level of segmentation density tried. The highly angular junctions of wires having very disparate diameters is the most likely source of the convergence failure. NEC-2 cannot provide any guidance for the dimensions of this antenna that will yield resonance and desired levels of gain and front-to-back characteristics. MININEC will provide the necessary guidance so long as the modeler gives due care to the sharp corners by using segment-length tapering techniques.</p>
+  <p>However, the Average Gain test certifies the folded X-beam model as reliable with a value of 0.9641.</p>
+  <p>The failure of the Average Gain test to reveal the defects of these last three examples is not a flaw of the test. Instead, these cases simply illustrate that passing the test is a necessary but not a sufficient condition of model adequacy. Adequate models will pass the test, but bad models will not always fail it.</p>
+  <p><b>Conclusion</b></p>
+  <p>The Average Gain test is a valuable addition to the collection of tests for evaluating the structural adequacy of our models. When combined with the convergence test, most models that go bad structurally can be detected. However, since each is a necessary but not sufficient condition of adequacy, there is no guarantee that some few models will pass both tests and still prove to be inadequate as models.</p>
+  <p>Notice that I qualified the idea of adequacy by referring to "structural" adequacy, that is, the basic geometry of the antenna. There are additional inadequacies that can result from using networks, transmission lines, and loads in less than optimal ways. Because any resistive component of these mathematical additions to the model will be eliminated for the purpose of running the Average Gain test, that test may not show flaws resulting from networks, transmission lines, and loads.</p>
+  <p>In the end, there may be no single test or battery of tests that will automatically detect all inadequate models. To the best of my knowledge, there has been no systematic attempt to identify and isolate the specific properties of antenna models which are likely to fail either the convergence test or the Average Gain test (or both). The small sample in this note is hardly even a beginning in that direction. In the end, knowing from experience when values are climbing or falling outside the boundaries of good sense and basic antenna theory is likely the last line of defense against an inadequate model. Nonetheless, the Average Gain test is a very useful addition to our repertoire of evaluative tools in modeling.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

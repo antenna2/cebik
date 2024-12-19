@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scaling Models</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>107. Scaling Models</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Scaing antennas from one frequency to another is common practice. In general, we wish to capture certain performance characteristics that we find at one frequency and transfer them to another. The most straightforward way to achieve this goal is to scale the antenna that has the desired characteristics.</p>
+  <p>We often need or desire to scale antenna models from one frequency to another. The techniques of model scaling are identical to those of direct antenna scaling, although the way in which we go about the task may differ with the implementation of NEC or MININEC that we are using. Many implementations of modeling cores have a pre-core-run facility for either full or partial model scaling. As well, we may use one of the commands within the full NEC command set to arrive at the same result--a sort of unadvertised special.</p>
+  <p><b>Basic Scaling</b></p>
+  <p>To scale a model from one frequency to another requires us to change the element length, the element spacing, and the element diameter (or radius) everywhere in a model or antenna. Let's call the general idea of something to change when scaling the "dimension." We shall have an old or starting set of dimensions and a new or final set of dimensions. The amount of change depends on the old frequency or wavelength and the new frequency or wavelength. The basic formula is simple:</p>
+  <pre>
+new wavelength       old frequency       new dimension
+--------------   =   -------------   =   -------------
+old wavelength       new frequency       old dimension
+</pre>
+  <p>Note that the dimension changes are directly proportional to the ratio of ratio of wavelengths and inversely proportional to the ratio of frequencies. Since we generally work with frequency in most initial thinking, we simply take the ratio of the old to the new frequency and multiply every old dimension by the value. The easy way to check on whether we are using the correct ratio is to remember that elements get shorter and thinner as we scale up in frequency and longer and fatter as we scale down in frequency.</p>
+  <p>Some implementations of NEC and MININEC allow you to enter the wire diameter as an AWG value. In many instances, we forget to scale the wire diameter along with the element length and spacing. The cure is to remember to look at the wire gauge or diameter before declaring that the scaling is complete. In some cases, very thin wire antenna elements will show only small performance changes if we forget to change the wire size and if we are only scaling over a limited frequency range--for example, converting a 14-MHz antenna design to 18 MHz. However, the fatter the element or the greater the scaling ratio, the more significant it becomes to make certain that we scale the element diameter or radius along with the other dimensions.</p>
+  <p>In NEC and MININEC, precise scaling will yield identical performance at both the old and the new frequencies only if certain model conditions exist. First, the antenna material should be "perfect" or "lossless." Even high conductivity materials such as copper show different working values of conductivity as we change frequency. The skin effect changes slowly as we change frequency--enough to show up in results that only make a relatively small frequency change during scaling. Second, the antenna environment should be free space or a perfect ground. Ground effects from any lossy ground change with frequency, again enough to show up in models that we scale over a relatively small range if the antenna is within a few wavelengths of the earth's surface.</p>
+  <p>In most cases, it is useful to remove material losses and a lossy ground from an antenna model prior to scaling. Then proceed with the scaling calculations and test the model using the new values--remembering to a. change the test frequency for the revised model and b. save the model under a revised file name. Once you are satisfied that the scaling operation is correct, you can add in the material loss factor (LD5) and the lossy or real ground constants (GN).</p>
+  <p><b>Sample Program Scaling Facilities</b></p>
+  <p>Many implementations of NEC and MININEC contain facilities to assist in the scaling process. Let's sample a full scaling facility and a partial scaling facility. For a subject antenna, we shall begin in all cases with a 2-element Yagi designed for 28.5 MHz. To further focus on the scaling activity, I have placed it in free space and used lossless elements. So our only project will be to scale the antenna to 14.25 MHz. The ratio of the old frequency to the new frequency is 2:1 to keep the arithmetic obvious.</p>
+  <p>We also have the option of manually calculating the new dimensions and manually entering them into the wire or GW entries. However, in some programs, such as EZNEC, we need not go through this process. Consider the 2 screens in <b>Fig. 1</b> taken from the initial 10-meter antenna model. The upper screen shows the wire entries with all dimensions in meters. The lower screen shows our design frequency.</p>
+  <center>
+    <img src="amod107-1.gif" width="688" height="348" border="2" vspace="5" hspace="9">
+  </center>
+  <p>EZNEC implements scaling through the frequency selection screen. Note the box marked "Rescale." Let's revise the frequency to 14.25 MHz and also click on the rescale box. The result will be the set of wire entries shown in <b>Fig. 2</b>. The user made none of the changes in the wire tables. Rather, the program made the necessary changes after the user entered the new frequency and checked the rescale box.</p>
+  <center>
+    <img src="amod107-2.gif" width="688" height="348" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Element length values appear in the Y-columns, with the spacing values in the X-columns. The program uses wire diameter as the entry dimension, and it has its own column. A quick comparison of <b>Fig. 1</b> and <b>Fig. 2</b> shows that EZNEC's scaling facility has doubled the element length, the element spacing, and the element diameter for the entire model geometry. The version of EZNEC on which I ran these models used NEC-4. For both models--the 10-meter and the 20-meter versions--the free-space gain reported as 6.28 dBi, with a 180-degree front-to-back ratio of 11.25 dB. In both cases, the feedpoint or source impedance was 32.59 - j0.30 Ohms.</p>
+  <p>Not all programs that provide scaling facilities scale everything. Consider the same model in its NEC-Win Plus form, as shown by the upper portion of <b>Fig. 3</b>. The 10-meter antenna has the same dimensions as the EZNEC model. Because NEC-Win Plus uses NEC-2, we expect very small changes in the output report values. The free-space gain is 6.28 with a front-to-back value of 11.25. The source impedance is 32.58 - j0.55 Ohms. The differences from the NEC-4 report are wholly insignificant.</p>
+  <center>
+    <img src="amod107-3.gif" width="640" height="578" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The lower portion of the figure shows the scaling screen that the user accesses by clicking on a special button near the top of the NEC-Win Plus screen. The screen contains a wealth of information on the scaling maneuver, showing both initial and final values before the user locks the changes into place. To use this screen effectively, I blocked the full wire lines for the model from the left to the right extremes. The blocking encompassed everything, including segmentation, coordinates, wire diameter, and wire material.</p>
+  <p>The scaling operation requires the user to enter the scaling factor, in this instance, 2.0. As well, the user must remember to change the model frequency before running the revised model. After making these changes and locking in the re-scaling, I ran the model. It returned a gain of 6.18 dBi, a front-to-back ratio of 11.72, and a source impedance of 33.57 - j70.01 Ohms. Something has gone astray, and in this case, it was carrying over operational expectations from one program to another.</p>
+  <center>
+    <img src="amod107-4.gif" width="640" height="293" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows us what went wrong by not reading the instructions appropriate to this implementation of NEC-2. The NEC-Win Plus scaling facility changes only the element lengths. However, as the X-column shows, it does not automatically change the spacing. As well, the diameter column shows that the program does not automate the diameter scaling. Hence, the model that gave us the aberrant results is not a true scaling of the original antenna. If we double both the element spacing and wire diameter, the corrected 20-meter scaling of the 10-meter Yagi produces the same output reports.</p>
+  <p>Different implementations of NEC and MININEC will handle re-scaling a model in ways that range from a totally manual operation to complete automation. Since scaling is such a simple arithmetic operation, it usually makes little difference how we make the required changes. The key is to make all of them.</p>
+  <p><b>The NEC GS Command</b> The GS command in the NEC set is so easy to use that most instruction sets tend to overlook it. Even the NEC manuals give it only brief treatment. The command structure has only 3 entries, two integers and one floating decimal.</p>
+  <pre>
+CMD      I1      I1      F1 (FSCALE)
+GS        0       0      0.3048
+</pre>
+  <p>The command's common use is to convert the units of measure in preceding geometry commands (such as GW) into meters, if they are not already in meters. The command must appear after all of the geometry commands that use an alternative unit of measure and before the GE or geometry section end command. NSI software provides a help screen for entering the scaling values, as shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod107-5.gif" width="305" height="276" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For manual entry of the conversion unit, the integer entries are zero. Some manuals say they are not used. However, some core versions have automated conversion entries. If I1 = 1, then the conversion is from feet to meters (0.3048). If I1 = 2, then the conversion is from inches to meters. In these cases, I2 and F1 might not appear, or I2 might be zero. However, if both I1 and I1 are zero, then F1 must have a conversion factor value. The user can insert any appropriate value. For example, if the geometry entries are in millimeters, then the value of F1 is 0.001.</p>
+  <pre>
+CM 2el Yagi 7.9/8.67/4.25 fs
+CE
+GW 1 21 0. 8.67 0. 0. -8.67 0. .04167
+GW 2 21 4.25 7.9 0. 4.25 -7.9 0. .04167
+GS 0 0 0.304800
+GE 0
+FR 0 1 0 0 28.5 0
+GN -1
+EX 0 2 11 0  1.00000  0.00000
+RP 0 1 361 1000 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>The sample model is essentially the same 2-element 10-meter Yagi, but with the 2 elements entered in feet. Hence, the conversion factor in the GS line is 0.3048. Since the dimensions are rounded, we shall find a very slight variance in the output reports, but at levels that are wholly insignificant. For example, the reported source impedance for the Yagi is 32.54 - j0.36 Ohms using the NEC-4 core.</p>
+  <p>Suppose that we enter our coordinates and wire radius in meters. Since we do not need to convert the units to meters, we might overlook the GS card. The top portion of <b>Fig. 6</b> shows the 10-meter Yagi entered in meters. However, the GS card is still useful to us in scaling the antenna to 14.25 MHz from its original frequency, 28.5 MHz. Note the "custom" conversion factor shown in <b>Fig. 5</b>. The lower portion of <b>Fig. 6</b> shows the revised and scaled Yagi model with the GS card used to do the scaling--along with the required revision of the FR entry.</p>
+  <center>
+    <img src="amod107-6.gif" width="598" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To confirm the correct functioning of the GS command, we may examine a 1-line extract from the NEC output report's "Segmentation Data" section that lists the coordinates of all segments in the model. The first line for one end of the GW1 command appears for both the pre-scaled and the post-scaled models. The Y-coordinate, the segments lengths, and the wire radius entries show the scaling accomplished by the GS command. Both models in NEC-4 report a gain of 6.28 dBi, a front-to-back ratio of 11.25 dB, and a source impedance of 32.58 - j0.33 Ohms.</p>
+  <pre>
+28.5-MHz Yagi Model
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   0.00000   2.51714   0.00000   0.25171    0.00000 -90.00000   0.01270     0    1    2      1
+14.25-MHz Yagi Model
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   0.00000   5.03429   0.00000   0.50343    0.00000 -90.00000   0.02540     0    1    2      1
+</pre>
+  <p><b>Other GS Potentials</b></p>
+  <p>The GS command scaling potential is not limited to simple one-shot frequency conversions. The following practice is one sample of what we may do with the command in a more systematic way. We shall initially enter all geometry commands in meters. We shall also change the subject antenna to a 6-element Yagi. However, our basic design will use a frequency of 299.7925 MHz. At this frequency, 1 meter = 1 wavelength. Our basic model might resemble the following lines.</p>
+  <pre>
+CM 6-el 300 Yagi
+CE
+GW 1 21 0. .251 0. 0. -.251 0. .001
+GW 2 21 .1251 .2484 0. .1251 -.2484 0. .001
+GW 3 21 .1705 .2312 0. .1705 -.2312 0. .001
+GW 4 21 .321 .225 0. .321 -.225 0. .001
+GW 5 21 .4617 .225 0. .4617 -.225 0. .001
+GW 6 21 .6713 .2167 0. .6713 -.2167 0. .001
+GE 0
+FR 0 11 0 0 295 1
+GN -1
+EX 0 2 11 0  1.00000  0.00000
+RP 0 1 361 1000 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>We may scale this Yagi to any frequency whatever using the GS command and one easy calculator step. The required GS custom conversion entry adheres to a simple equation where CF is the conversion factor.</p>
+  <pre>
+CF = 299.7925 / new frequency
+</pre>
+  <p>Suppose that we wish to scale the Yagi to 15 MHz. The value of CF is 19.986167 (or any usable rounding of that value). The revised model would have the following appearance.</p>
+  <pre>
+CM 6-el 300 Yagi
+CM Scaled to 15 MHz via GS
+CE
+GW 1 21 0. .251 0. 0. -.251 0. .001
+GW 2 21 .1251 .2484 0. .1251 -.2484 0. .001
+GW 3 21 .1705 .2312 0. .1705 -.2312 0. .001
+GW 4 21 .321 .225 0. .321 -.225 0. .001
+GW 5 21 .4617 .225 0. .4617 -.225 0. .001
+GW 6 21 .6713 .2167 0. .6713 -.2167 0. .001
+GS 0 0 19.986167
+GE 0
+FR 0 1 0 0 15 1
+GN -1
+EX 0 2 11 0  1.00000  0.00000
+RP 0 1 361 1000 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>Both models return a free-space gain of 10.28 dBi, a 180-degree front-to-back ratio of 31.12 dB, and a source impedance of 58.77 + j10.09 Ohms at 299.7925 MHz and at 15 MHz. The purpose of using the 6-element Yagi lies in the original model's frequency sweep specification. For a center frequency of about 300 MHz, the usable operating passband is about 10 MHz. Within that passband, the design has a free-space gain of at least 10.1 dBi, a 180-degree front-to-back ratio of 19.5 dB or higher, and a 50-Ohm SWR of under 1.3:1. When we apply the scaling conversion factor, we must also apply it to the operating passband. Hence, at 15 MHz, the equivalent passband is only about 0.5 MHz wide.</p>
+  <p>The scaling technique is perfectly general and may be useful in a variety of modeling activities. However, it also has limitations. Perhaps the most notable limit is the wire radius, which is just under 20 mm at 15 MHz. Unless we are very judicious in constructing our master models, we may still have to optimize them at other frequencies for changes in wire radius, as well as for tapered element diameter schedules in HF antennas. However, any method of scaling an antenna design will result in these same supplementary tasks.</p>
+  <p>One tendency among modelers is to freeze the potential for the GS command into an unbreakable habit. For example, some modelers believe that the GS command must precede the GE command and follow all other geometry commands. However, the command is more flexible than this over-simplified view. The GS command must simply follow the set of geometry commands that use a unit of measure other than meters. The following artificial sample mixes measures. GW1, the reflector, has its units in feet, while GW2, the driver, uses meters. We may as an exercise retain the mixed measures by inserting the GS card immediately after GW1 to convert its dimensions to meters. The following GW2 entry is unaffected by the action of the GS command.</p>
+  <pre>
+CM 2el Yagi 7.9/8.67/4.25 fs
+CE
+GW 1 21 0. 8.67 0. 0. -8.67 0. .04167
+GS 0 0 0.304800
+GW 2 21 1.295 2.408 0. 1.295 -2.408 0. .0127
+GE 0
+FR 0 1 0 0 28.5 0
+GN -1
+EX 0 2 11 0  1.00000  0.00000
+RP 0 1 361 1000 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>The technique just described has very limited application. Using a uniform set of coordinate measures throughout the geometry section of a model is always good practice. Nevertheless, the technique does illustrate that the GS command is a bit more flexible than we might have previously thought.</p>
+  <p>A more common situation might be to develop an initial model in a preferred set of units that are not meters. Then we might wish to scale the antenna. Although we shall use our simple 2-element Yagi as an illustration, the time factor required for manual revision of all geometry entries will increase very sharply for highly complex models. However, we might ease the task by using multiple GS cards. Consider the 28.5-MHz Yagi with its dimensions in feet. Next, we wish to scale the antenna to 14.25 MHz. The resulting model might have the following appearance.</p>
+  <pre>
+CM 2el Yagi 7.9/8.67/4.25 fs
+CM Scaled to 14.25 MHz via GS
+CE
+GW 1 21 0. 8.67 0. 0. -8.67 0. .04167
+GW 2 21 4.25 7.9 0. 4.25 -7.9 0. .04167
+GS 0 0 0.304800
+GS 0 0 2
+GE 0
+FR 0 1 0 0 14.25 0
+GN -1
+EX 0 2 11 0  1.00000  0.00000
+RP 0 1 361 1000 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>The example shows that we may use strings of GS entries to accomplish different tasks. We might also have combined the two conversion factors externally. However, Murphy's Law tells us that in 3 months, we will no longer be able to remember what the GS value of 0.6096 means. Sometimes, separate entries (each with an appropriate side notation) are more useful. The small time it takes to enter 2 GS commands can save much head-scratching time later on.</p>
+  <p><b>Conclusion</b></p>
+  <p>Frequency scaling of antenna designs has a wide range of uses. They encompass practical design work as well as systematic explorations of antenna properties at various frequencies. As noted early on, scaling best occurs using a free-space or perfect-ground environment, with other model variables introduced after verification of successful scaling.</p>
+  <p>The methods available to us for scaling designs also cover a considerable territory. We may manually calculate and enter scaled geometry values. We may use the facilities provided by the interface programming of the particular NEC or MININEC implementation that we are using. If we have access to the complete NEC command set, then we may achieve the same ends via the GS or geometry scaling command. The command is useful for more activities than just converting units of measure to meters. To confirm correct command use or to record the resulting coordinate and radius values, we must consult the NEC output report, using the segmentation-data section as our primary resource. I do not anticipate widespread use of the GS command for frequency scaling exercises in NEC. Nevertheless, it is useful to be aware of the command's potential and versatility.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

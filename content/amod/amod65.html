@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The 1/2-Wavelength Resonant Dipole as a Core Test Instrument</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>65. The 1/2-Wavelength Resonant Dipole as a Core Test Instrument</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the course of creating models, we occasionally enter into gray areas that border upon the limitations of the calculating core, whether that is NEC-2, NEC-4, or MININEC. Very often we simply plunge ahead with the model, despite that fact that it may be quite complex. We hope that any difficulties will show themselves.</p>
+  <p>Actually, the more complex the model, the more likely it is to mask the difficulties that we encounter. Consider a model of a log periodic dipole array (LPDA) that uses physical wires as the phase line. For normal phase lines using wires ranging from AWG #18 to AWG #10 or so, the phase line separation will be under 2". However, some element sections of the LPDA may be over 2" in diameter.</p>
+  <center>
+    <img src="amod65-1.gif" width="471" height="261" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As shown in <b>Fig. 1</b>, the most ordinary way to model an LPDA with physical wires as the phase line is to set the two wires of the line vertically. Each LPDA element is split in the center, with half connected to each line. For thinner LPDA elements, we encounter no potential problems, as evidenced by the upper portion of the sketch.</p>
+  <p>However, large-diameter center sections of an element can result in the case shown in the lower half of the figure. The element centerlines are separated by a large enough space that the core does not interpret them as forming a wire junction. However, the surface boundaries of each element pass each other and touch at the ends.</p>
+  <p>Modeling rules prohibit wires which penetrate the surface area of another wire. Had we use crossing wires, the surfaces of the two wires would have penetrated each other and we would have had an error in geometry. Even if we have a core which allows the run, the results would have been useless. I once encountered a model of an antenna with such errors that seemed to yield over 35 dBi gain. Only when I examined the model did I find the surface penetrations. The AGT for the model was over 1,000.0 (when perfection would have been 1.0), indicating that the true gain was minuscule.</p>
+  <p>However, our present case uses wires that abut at the ends. There is no end cap invoked, since the wires make a junction with another wire. The situation invokes no warnings or errors, and the core runs look sensible at first sight. Our question is whether these results are reliable.</p>
+  <p>To answer that question, we should go back to the simplest model possible and perform a series of tests on the situation itself. For that purpose, the dipole is ideal.</p>
+  <p><b>Some NEC Tests</b></p>
+  <p>The construction of a modeling test scenario requires some thought. Just making a resonant dipole will not do the job. There are numerous questions to pose.</p>
+  <p><i>1. What type of test will do the job?</i> Since the initial problem involves an LPDA phase line, which is an application of a transmission line, we shall eventually need to construct a physical transmission line connected to the center of a dipole. If we compare the source impedance of a simple model of a dipole of a given diameter with the impedance of any transmission line that is 1/2 wavelength long, we should be able to detect any significant problems created by the situation in <b>Fig. 1</b>.</p>
+  <p><i>2. What transmission line and what diameter dipole elements?</i> We need to be able to approach and then pass the limit of the two dipole halves abutting at the centerline of the dipole. If we use 0.5", 1.0", and 1.5" dipoles, we shall need a transmission line whose wires are separated by perhaps a little over an inch. If we use AWG #16 (0.0508" diameter) wire for the lines, we can obtain an impedance of 450 Ohms with a spacing of about 1.084". With a vertically oriented transmission line, the 0.5" dipole will be well short of overlap. The 1" element will almost but not quite touch. The 1.5" diameter element will overlap. For reference, we shall add a #16 wire dipole to the list as a baseline.</p>
+  <p>We shall use perfect or lossless wires for all parts of the test dipole models. A lossless transmission line wire will most closely approach a true velocity factor of 1.0, allowing us to use calculated values of 1/2 wavelength.</p>
+  <p><i>3. What frequency?</i> Since the problem arose in connection with models of LPDAs in the HF range, we may arbitrarily select 14 MHz as the test frequency. The test is not frequency dependent, but a middle HF frequency has some modeling advantages. First, it allows us to make fine discriminations in length simply by measuring everything in inches. Second, for the element diameters used, we have potentially sufficient numbers of segments available, given the recommended limit that the length of a NEC segment should be at least as large as the element diameter. For some tests, 1" long segments to match the separation of the transmission line wires will be possible. Since a dipole model converges far below this level of segmentation, we may use fewer segments for some initial models.</p>
+  <p>A wavelength at 14 MHz is 843.061". We shall use 1/2 wavelength transmission lines that are 421.531" long. The resonant length of the perfect-wire dipole, of course, will vary with the diameter of the element.</p>
+  <p><i>4. What test models should we generate?</i> <b>Fig. 2</b> shows the range of models that we shall examine.</p>
+  <center>
+    <img src="amod65-2.gif" width="469" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since we are working initially with NEC--specifically NEC-4--we shall look at two ways of feeding a dipole for reference. The simple dipole model will have 41 segments with the feedpoint or source at the center segment, in accord with the NEC system wherein the current center is the segment center. We shall also examine the same dipole using a dual-feed or split-feed system. Here, we shall use 42 segments, feeding the segments on either side of the centerline. This test will tell us something about the sensitivity of the model to minor changes in segmentation and feed arrangements.</p>
+  <p>We shall then apply to our simple single-feed dipole a 1/2 wavelength transmission line which we shall terminate in the shortest practical wire. We shall place the source on this 1-segment wire.</p>
+  <p>Finally, we shall construct two types of physical transmission lines. The first will be a vertically oriented or Z-axis line corresponding to modeling practices for LPDAs. The element inner ends will be displaced by 1.084" at their wire centerlines, and each inner end will terminate at 0.0 on its axis. This set-up will ensure that the 1.5" diameter elements will overlap as they touch at their ends, but will not form a wire junction. The second type of physical transmission line--used only as a check--will consist of two wires spaced horizontally in the plane of the length of the dipole. This line will effect a center spacing of 1.084" in the dipole.</p>
+  <p>The simple model results: The following table summarizes the results obtained for the simple models of a dipole using both single and split feed systems. Each dipole was resonated to under +/-0.01 Ohm reactance, and the dipole length (listed as a +/- value in inches) is carried out to more decimal places than we would ever need in practical modeling. However, we are not modeling a practical antenna, but checking the modeling system for certain sensitivities. Hence, the excess precision is warranted.</p>
+  <p>The table lists the dipole length, the resonant source impedance, and the Average Gain Test (AGT) value, given as both a relative gain value and in dB. The AGT value gives us both a relative merit rating, where 1.0 indicates perfection, and a set of correctives. The test is a necessary but not a sufficient condition of model adequacy. Hence, a perfect AGT rating suggests but does not guarantee an adequate model. For AGT values less than 1.0, the conversion of the value into a value in dB indicates how much the reported gain is below the likely actual gain value. An AGT greater than 1.0, when converted, indicates how much higher than the likely actual gain value the reported gain may be. As well, if the source reactance is very low, then multiplying the AGT numerical value by the reported source resistance will closely approximate the likely actual source resistance. (However, when the reactance grows higher, this latter corrective gradually fails.)</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 Single        +/- 204.900       72.10 - j 0.006         1.0         0.0
+#16 Split         +/- 204.874       72.17 + j 0.006         1.0         0.0
+
+0.5" Single       +/- 202.408       71.92 + j 0.001         1.0         0.0
+0.5" Split        +/- 202.350       71.95 + j 0.003         1.0         0.0
+
+1.0" Single       +/- 201.122       71.88 - j 0.006         1.0         0.0
+1.0" Split        +/- 201.040       71.89 - j 0.001         1.0         0.0
+
+1.5" Single       +/- 200.168       71.89 - j 0.003         1.0         0.0
+1.5" Split        +/- 200.060       71.86 - j 0.005         1.0         0.0</pre>
+  <p>With segment lengths varying from 9.53" to 9.99", these simple models give a fair account of NEC-4 modeling (and by extension, NEC-2, since nothing in them presses any of the problem areas in the earlier version of NEC). The difference in resonant length between the single and split feed versions of the model are most likely due to the additional segment needed to center the split source. As expected, such simple models show no calculable departure from a perfect AGT value.</p>
+  <p>The next table attaches to the center of the 41-segment model a 450-Ohm, velocity-factor=1.0 transmission line that is 421.531" long. It terminates in a perfect/lossless 1 segment wire that is about 2" long and has 1 segment. We place the source on this wire. The transmission line uses the TL facility of NEC. This facility creates non-physical, non-radiating mathematical lines that are lossless. (Perhaps future versions of NEC may replace this system with lossy line calculations by introducing the proper algorithms and allowing the user to introduce appropriate loss values.) Hence, the transmission line wires do not create any effects that would alter the radiation pattern. If the source wire is sufficiently small and distant from the dipole itself, it will have a completely negligible effect on the radiation pattern. The following table lists the resultant values for these runs.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 Single        +/- 204.900       72.10 - j 0.063         1.0         0.0
+
+0.5" Single       +/- 202.408       71.92 - j 0.061         1.0         0.0
+
+1.0" Single       +/- 201.122       71.88 - j 0.068         1.0         0.0
+
+1.5" Single       +/- 200.168       71.89 - j 0.063         1.0         0.0</pre>
+  <p>These tests introduce a systematic decrease in the source reactance of about 0.06 Ohm. The most likely cause is imprecision in the length of the transmission line. Other than this one change, the transmission line alters nothing else.</p>
+  <p>These result are exactly what we should have expected. Indeed, they comprise one reason why NEC modelers use the TL facility for most modeling enterprises involving transmission lines, including the modeling of LPDAs.</p>
+  <p>Finally, we are ready to model the dipole using physical wires for the transmission line. If you think that I expect difficulties, you are correct. However, in a test, we let those difficulties emerge where they might rather than imposing any preconceptions upon them.</p>
+  <p>The first transmission line consists of two parallel AWG #16 wires separated vertically by 1.084". The dipole consists of two halves, each joining one of the transmission line wires at a 90-degree angle. The far end of the transmission line has a 1-segment wire connecting the two wires. The source is placed on this wire.</p>
+  <p>For the 4 element diameters, we obtained the following NEC-4 results. Note that each entry shows at least two levels of segmentation. The smaller numbers follow the segmentation of the simple dipole models, using about 42 segments per half wavelength. This condition results in two segments--one on each transmission line adjacent to the source wire/segment--that are radically different in length than the source segment. NEC recommendations call for segments each side of the source segment having lengths about the same as each other and as the source segment. Therefore, the second entry shows the entire assembly segmented to produce segments about 1" long. We shall discuss procedures used for the the 1.5" diameter elements after reviewing the overall results.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 21/42/1       +/- 204.900       57.64 + j 0.909         1.251       0.97
+#16 205/421/1     +/- 204.900       77.38 - j 2.812         0.933       -0.30
+
+0.5" 21/42/1      +/- 202.408       60.65 + j 0.511         1.185       0.74
+0.5" 205/421/1    +/- 202.408       105.5 - j 1.382         0.684       -1.65
+
+1.0" 21/42/1      +/- 201.122       63.24 + j 0.291         1.135       0.55
+1.0" 205/421/1    +/- 201.122       151.2 - j 2.821         0.477       -3.22
+
+1.5" 21/42/1      +/- 200.168       65.87 + j 0.060         1.089       0.37
+1.5" 205/421/1*   +/- 200.168       137.4 - j 4.17          0.524       -2.81
+1.5" 133/281/1    +/- 200.168       170.7 - j 2.836         0.421       -3.76
+*  See text for an explanation of why this entry has a special difficulty.</pre>
+  <p>This table calls for a number of comments:</p>
+  <p><i>1. The 1.5" diameter case</i>: The program warned of a condition that many modelers overlook and under-appreciate: the penetration at an angular junction of the surface of one wire into the center of another wire. See <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod65-3.gif" width="434" height="430" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 1.5" wire surface penetrates along the last segment of the #16 wire for 0.75". With a segment length of about 1", the surface of the large element extends beyond the center of the #16-wire segment. The core itself does not stop the run, even though this condition is considered highly problematical to any model.</p>
+  <p>As a result, I developed the segmentation in the third line, keeping the segment lengths of the dipole and the transmission line roughly equal and using the shortest segment length that would avoid the warning. Indeed, the segment length in the transmission line wires is just over 1.50".</p>
+  <p><i>2. Angular junctions of wires having dissimilar diameters</i>: Once we go past the #16 wire model, we begin to see a pattern of results that reveals another shortcoming of NEC. NEC-2 produces worse results than NEC-4, but the NEC-4 results show that the models are highly unreliable. In some circumstances, an AGT value less than 0.95 or greater than 1.05 is considered beyond the realm of reliability, while in other situations, the limits might be set as 0.99 and 1.01. In almost all cases where we have a ratio of diameters greater than about 2:1, the AGT value falls outside of virtually any set of limits.</p>
+  <p>The situation has an interesting abnormality relative to our usual expectations for convergence testing. In a normal situation, we anticipate increasing the number of segments until we reach a reasonable level of convergence between one level of segmentation and the next. Once we achieve this goal, we consider the model converged and that the results will be as reliable as possible.</p>
+  <p>In the case of angular junctions of wires having dissimilar diameters, we encounter a reverse convergence situation. The lower the level of segmentation, the more accurate the results are relative to an actual antenna using the physical counterparts of the modeled wires. However, since we do not have, in most modeling exercises, the external standard against which to measure the adequacy of the results, we must rely upon the AGT. In this case, the values are wholly beyond the limits of confidence.</p>
+  <p><i>3. The case of #16 wire</i>: The reported values for the model composed wholly of #16 wire show better AGT ratings for the highly segmented model than for the model using fewer segments. Indeed, the larger model has a uniform diameter throughout, segment lengths very close to the length of the source segment, very adequate segment length to wire diameter ratios, and generally no other perceptible problems. However, the AGT rating of the "205/421/1" model is only 0.933. Something must be amiss.</p>
+  <p>NEC does have a sensitivity to closely spaced wires. We obtain the highest accuracy when we perfectly align the segment junctions, as is the case in the present model. However, the core is not perfectly comfortable with the parallel run of 1/2 wavelength wires. Exactly what constitutes the "imperfect comfort" I do not know except that it represents a limitation of NEC models.</p>
+  <p>The upshot of the exercise is this point: NEC models attempting to employ physical wires for both the elements and connecting transmission lines are likely to be less accurate than those using the TL facility available within the program. This point applies not only to cases like the dipole with the remote source at the end of a transmission line, but as well to LPDAs and other phased arrays.</p>
+  <p>Before we depart NEC models of dipoles with 1/2 wavelength transmission lines, let's briefly pause to look at the second type of line: one that splits the element but leaves it on a single plane. The gap created is once more 1.084" for our #16 450-Ohm line that is 1/2 wavelength or 421.531" long. Although we do not have to concern ourselves with the touching overlap of element wire ends, the results may be useful as a comparison in other respects with the vertically oriented transmission line.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 21/42/1       +/- 204.900       56.00 - j 3.970         1.282       1.08
+#16 205/421/1     +/- 204.900       76.29 - j 7.717         0.947       -0.25
+
+0.5" 21/42/1      +/- 202.408       58.89 - j 3.310         1.216       0.85
+0.5" 205/421/1    +/- 202.408       99.49 - j 6.399         0.723       -1.41
+
+1.0" 21/42/1      +/- 201.122       61.14 - j 3.184         1.170       0.68
+1.0" 205/421/1    +/- 201.122       131.3 - j 7.628         0.547       -2.62
+
+1.5" 21/42/1      +/- 200.168       63.32 - j 3.164         1.129       0.53
+1.5" 205/421/1    +/- 200.168       135.8 - j 8.688         0.528       -2.77</pre>
+  <p>In all cases, the AGT values are very comparable to those we met when looking at the vertically oriented transmission line. Making the transmission line horizontal does not overcome any of the difficulties previously encountered. We may add to those difficulties--for both types of transmission line--that for the 1" and the 1.5" diameter elements, using the higher level of segmentation, the segment length to wire diameter ratio is deficient. The 1" element yields a ratio of 0.98:1, while the 1.5" element shows a ratio of 0.65:1. Both of these cases are above the absolute minimum ratio of 0.5:1, but a well into the region of growing unreliability.</p>
+  <p>The interesting phenomenon with these models is the systematic increase in capacitive reactance. The models all use the same lengths as the ones we found to be resonant in the single-feed simple models. Still, they show up as short. Before we attribute the shortness to any particular cause, we should review other models, namely, ones that we might develop using MININEC 3.13, the public domain version of the alternative core.</p>
+  <p><b>Some MININEC Tests</b></p>
+  <p>Raw MININEC 3.13 would be wholly inadequate to the task of modeling a dipole with a 1/2 wavelength transmission line and a remote feedpoint/source. However, the core calculating program has undergone extensive modification by a number of implementers. Perhaps the most thorough-going set of modifications belongs to the Antenna Model package by Terisoft. The program has revised the algorithms to overcome limitations involving sharp angle at wire junctions, closely spaced wires, and increasing frequency. Over a set of models for which NEC-4 has known accuracy, Antenna Model has closely matched the reported outputs.</p>
+  <p>Like all MININEC programs, Antenna Model lacks the NEC TL facility and the Sommerfeld-Norton ground calculating system. The latter want has no relevance to the present set of tests, but the former absence does limit the number and type of tests that we may perform. <b>Fig. 4</b> shows the three tests that we can perform.</p>
+  <center>
+    <img src="amod65-4.gif" width="493" height="274" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The simplest set of models is a single-wire dipole fed at its center and resonated to the standards used for the NEC models. Since MININEC counts pulses, which occur at segment junctions and specified ends, we require 42 segments to feed that dipole at the exact center. As a check on the adequacy of the segmentation, we shall also increase the number of segments by 50% to 64. The following table provides the results of our initial work.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 42 Segs       +/- 204.9185      72.11 + j 0.002         0.9991      -0.004
+#16 64 Segs       +/- 204.9185      72.18 + j 0.247         0.9994      -0.003
+
+0.5" 42 Segs      +/- 202.475       72.02 - j 0.001         0.9981      -0.008
+0.5" 64 Segs      +/- 202.475       72.11 + j 0.252         0.9985      -0.007
+
+1.0" 42 Segs      +/- 201.231       72.06 - j 0.004         0.9974      -0.011
+1.0" 64 Segs      +/- 201.231       72.15 + j 0.243         0.9979      -0.009
+
+1.5" 42 Segs      +/- 200.280       72.14 + j 0.005         0.9966      -0.015
+1.5" 64 Segs      +/- 200.280       72.23 + j 0.202         0.9973      -0.012</pre>
+  <p>The simple dipole models appear to be sufficiently well converged to be useful for our further tests. The increase in segmentation yields a systematic increase in the feedpoint resistance and in the reactance in an inductive direction. Improvements in the AGT values are completely marginal. (All values would be 1.0 if carried out to only 2 decimal places.)</p>
+  <p>Based on the resonant lengths of the dipoles, we may now construct vertically oriented transmission lines using AWG #16 (0.0508" diameter) wire space 1.084". The lines will be 1/2 wavelength long or 421.531". We shall use three levels of segmentation for all tests. 21/42/2 indicates that each side of the dipole has 21 segments, each transmission line wire has 42 segments, and the connecting feedpoint wire has 2 segments in order to center the source. We shall also use a 42/84/2 scheme to check convergence. Finally, we shall use a 205/421/2 scheme to provide a high segmentation level. In MININEC, it is recommended that adjacent segments have no more than a 2:1 length ratio, which this scheme achieves.</p>
+  <p>However, we have limitations using the 1" and the 1.5" diameter elements. The recommended minimum segment length should not be less than 1.25 times the diameter of the wire. To achieve this standard, it was necessary to perform revised tests for maximum segmentation. The 1" diameter element used a 160/421/2 scheme, while the 1.5" diameter element used a 106/421/2 scheme. The results appear in the following table.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 21/42/2       +/- 204.9185      72.05 - j 21.69         0.9991      -0.004
+#16 42/84/2       +/- 204.9185      72.15 - j 9.874         0.9995      -0.002
+#16 205/421/2     +/- 204.9185      72.24 - j 0.867         0.9998      -0.001
+
+0.5" 21/42/2      +/- 202.475       71.98 - j 16.71         0.9981      -0.008
+0.5" 42/84/2      +/- 202.475       72.06 - j 7.456         0.9989      -0.005
+0.5" 205/421/2    +/- 202.475       72.21 - j 0.176         0.9994      -0.003
+
+1.0" 21/42/2      +/- 201.231       72.03 - j 15.38         0.9974      -0.011
+1.0" 42/84/2      +/- 201.231       72.11 - j 6.779         0.9984      -0.007
+1.0" 205/421/2    +/- 201.231       72.24 - j 0.256         0.9989      -0.005
+1.0" 160/421/2    +/- 201.231       72.24 - j 0.220         0.9989      -0.005
+
+1.5" 21/42/2      +/- 200.280       72.11 - j 14.70         0.9966      -0.015
+1.5" 42/84/2      +/- 200.280       72.16 - j 6.578         0.9979      -0.009
+1.5" 205/421/2    +/- 200.280       72.28 - j 0.456         0.9985      -0.007
+1.5" 106/421/2    +/- 200.280       72.24 - j 0.533         0.9985      -0.007</pre>
+  <p>Violating the length to diameter recommendation turns out to have no significance for the tests run here. More significant is the overall segmentation used. Segmentation levels that approach a level that allows the source wire segment to maintain the recommended margin with the segment lengths on the transmission line yield the most accurate results, using the simple dipole tests as a standard. Inadequate segmentation tends to introduce growing values of capacitive reactance into the source impedance and to yield slightly lower AGT values.</p>
+  <p>Overall, at every level of element diameter, the corrected MININEC algorithms yield highly usable results when we create dipoles with attached wire transmission lines. Unlike the NEC results, which strongly suggest that we avoid this route to modeling the dipoles (and by extension, other phased arrays with elements and transmission lines), an adequately corrected MININEC can easily and adequate model these situations. The AGT values strongly suggest--without guarantees, since the test is a necessary but not a sufficient condition of model adequacy--that the resulting models will be highly adequate in free space.</p>
+  <p>The NEC models showed enough deficiencies that they were unable to answer the initial question of this investigation. Does the overlap of element diameters that only touch at their ends create any danger of jeopardizing the adequacy of a model? The table above shows no signs that such problems will arise. The 1.5" elements yield results that fall very exactly in the progression of values for the element diameters that do not have any end-touching. For this class of cases, the touching of the inner element ends--where a wire junction does not form--appears to have no effect upon the outcome. Since MININEC uses pulses (appropriate segment ends) as the current centers, the special penetration problem that appears in NEC does not re-appear here.</p>
+  <p>Before we leave MININEC and our dipole tests, we should also test a horizontally oriented transmission line model. As with the NEC models, we shall split the dipole element and separate the two halves with a transmission line using #16 wire and a spacing of 1.084". The remaining dimensions of the model will be the same as in the previous model. As well, we shall employ the same set of segmentation levels as used previously. Here are the results.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+#16 21/42/2       +/- 204.9185      71.72 - j 27.85         0.9992      -0.003
+#16 42/84/2       +/- 204.9185      71.83 - j 15.54         0.9996      -0.002
+#16 205/421/2     +/- 204.9185      71.90 - j 6.654         0.9998      -0.001
+
+0.5" 21/42/2      +/- 202.475       71.63 - j 21.66         0.9981      -0.008
+0.5" 42/84/2      +/- 202.475       71.72 - j 11.91         0.9989      -0.005
+0.5" 205/421/2    +/- 202.475       71.84 - j 4.699         0.9994      -0.003
+
+1.0" 21/42/2      +/- 201.231       71.66 - j 19.89         0.9974      -0.011
+1.0" 42/84/2      +/- 201.231       71.74 - j 10.83         0.9984      -0.007
+1.0" 205/421/2    +/- 201.231       71.88 - j 4.164         0.9989      -0.005
+1.0" 160/421/2    +/- 201.231       71.86 - j 4.178         0.9989      -0.005
+
+1.5" 21/42/2      +/- 200.280       71.73 - j 18.89         0.9966      -0.015
+1.5" 42/84/2      +/- 200.280       71.78 - j 10.34         0.9979      -0.009
+1.5" 205/421/2    +/- 200.280       71.89 - j 4.034         0.9985      -0.007
+1.5" 106/421/2    +/- 200.280       71.85 - j 4.124         0.9985      -0.007</pre>
+  <p>Between the horizontal and vertical transmission line models, there is scarcely a change in any of the AGT values. The significant changes appear in the reactance at the source for each type of model. The higher the level of segmentation, the closer the model approaches resonance.</p>
+  <p>Perhaps the most comparable models between the NEC and the MININEC set are the highly segmented #16 AWG models using physical transmission lines. The following small table compares the NEC and MININEC models for horizontal transmission lines.</p>
+  <pre>El. Dia.          El. Length        Source Impedance              AGT
+Inches            Inches            R +/- jX Ohms           Relative    dB
+
+MININEC
+#16 205/421/2     +/- 204.9185      71.90 - j 6.654         0.9998      -0.001
+
+NEC
+#16 205/421/1     +/- 204.900       76.29 - j 7.717         0.947       -0.25</pre>
+  <p>Both models show the remnant capacitive reactance. In the NEC model, there is a modifying algorithm that handles the effects of a feedpoint gap wherever one places a source. That calculation is not a part of the separation of the element wire halves when we place a transmission line in the picture. The gap adjustment occurs at the remote source. It is possible that the difference creates the resulting capacitive reactance in the source impedance of the models, although I am at present uncertain whether there is a comparable calculation present in the MININEC algorithms.</p>
+  <p>The MININEC model achieves a higher AGT value, largely as a result of the corrections for closely spaced wires. At present, NEC cores do not have a correction or adjustment for errors that may e creep in due to the close spacing of long wire runs.</p>
+  <p><b>Conclusion</b></p>
+  <p>Our foray into modeling dipoles and transmission lines has turned up a number of interesting facets of modeling in both NEC and MININEC. All of the results are relevant to modeling any set of elements and associated transmission lines. The pursuit of an answer to a single question gradually yielded at least partial answers to a larger set of questions.</p>
+  <p>Although we focused the exercise on a single question, the general procedure is relevant to any complex modeling task that may press one or more of the limitations inherent in the available modeling cores. Wherever a model type is complex and the modeling strategies approach the fringes of the core capabilities, it is worthwhile to develop a test procedure to assess in advance the adequacy of the strategy. The results can save us from inadvertent misrepresentations of the potentials of an antenna design. As well, they may also give us fuller confidence in a particular strategy that passes all of our tests. Either way, testing modeling techniques in advance with relevant but simplified models is a worthwhile enterprise.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

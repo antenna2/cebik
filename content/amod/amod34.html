@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Second Medium</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>34. The Second Ground Medium</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Way back in the 11th column of this series, I discussed the use of the various types of ground available in both NEC and MININEC. What we by-passed at that time was the fact the these calculating cores permit the use of two ground media. Perhaps it is time to fill in that gap--at least partially. In this episode, we shall look at the use of using 2 ground media to define the ground beneath and away from the antenna.</p>
+  <p>In order to keep the discussion focused on using more than one ground medium, I shall restrict the discussion to Sommerfeld-Norton (S-N) high accuracy grounds found in NEC. Multiple media can be defined for both MININEC and NEC real grounds of all sorts, and it is even possible to place a NEC perfect ground beneath the immediate vicinity of the antenna. However, for the sake of focus, I shall stay with the one ground type and concentrate on the 2 ground media possible within NEC..</p>
+  <p>To define a single S-N ground, we simply follow the program directions for selecting the ground type and then plug in the values of conductivity (in Siemens per meter) and relative dielectric constant (or permittivity) that define a single medium. This medium pervades and defines the entire ground surface from coordinates 0, 0, 0 to the limits of the antenna's far field. In raw NEC terms, a typical card or entry would look like the following line (spaced out for identification of the entries):</p>
+  <pre>      GN    2     0           0  0        13    .005
+      Card  Gnd   Nr of       Zeros       D.C.  Cond.
+      Type  Type  Radials</pre>
+  <p>The "GN" card identifies both the ground type and medium. A type 2 ground is the Sommerfeld-Norton type. We set the number of NEC radials at zero (mandatory for a S-N ground). The following two columns are always zeros. The last two columns specify the relative dielectric constant and the conductivity: the values shown are those for what is commonly taken to be average ground. Note that the GN card accepts the values defining the medium in the reverse order of entry relative to the input system of most commercial implementations, which specify the entry of conductivity first. The ground definition is called in the NEC manual "an infinite ground plane," since it extends in every direction indefinitely. There are further columns, but if they are empty--as in this example--the program presumes that they have zero values. In many places around the NEC core, a zero value is interpreted as an absent value that then plays no role in the calculations or that triggers certain ways of handling the user input.</p>
+  <p>As a refresher on the general classification of ground values used in most common sources, I shall repeat a table appearing in the earlier column on grounds. Always substitute more precise values wherever known. The table represents an adaptation of values found in <i>The ARRL Antenna Book</i> (p. 3-6), which are themselves an adaptation of the table presented by Terman in <i>Radio Engineer's Handbook</i> (p. 709), taken from "Standards of Good Engineering Practice Concerning Standard Broadcast Stations," <i>Federal Register</i> (July 8, 1939), p. 2862. Terman's value for the conductivity of the worst soil listed is an order of magnitude lower than the value shown here.</p>
+  <pre>Soil Description                    Conductivity      Permittivity      Relative
+                                    in S/m            (Dielectric       Quality
+                                                       Constant)
+
+Fresh water                         0.001             80
+
+Salt water                          5.0               81
+
+Pastoral, low hills, rich
+soil, typical from Dallas,
+TX, to Lincoln, NE                  0.0303            20                Very Good
+
+Pastoral, low hills, rich
+soil, typical of OH and IL          0.01              14                Good
+
+Flat country, marshy, densely
+wooded, typical of LA near
+the Mississippi River               0.0075            12
+
+Pastoral, medium hills, and
+forestation, typical of MD,
+PA, NY (exclusive of mountains
+and coastline)                      0.006             13
+
+Pastoral, medium hills, and
+forestation, heavy clay soils,
+typical of central VA               0.005             13                Average
+
+Rocky soil, steep hills,
+typically mountainous               0.002             12-14             Poor
+
+Sandy, dry, flat, coastal           0.002             10
+
+Cities, industrial areas            0.001             5                 Very Poor
+
+Cities, heavy industrial areas,                                         Extremely
+high buildings                      0.001             3                  Poor</pre>
+  <p>As a reminder, the ground beneath a NEC model is homogenous, whatever the degree of ground penetration by a signal. Real ground may be stratified within the region of ground penetration, especially from the lower HF to the VLF portions of the radio spectrum. Penetration more significantly affects the propagation of signals from vertically polarized antennas than from horizontally polarized ones, but both types are affected to some degree. Any errors created by the difference between modeled homogenous ground and real stratified ground, however, tend to be greater for vertical antennas.</p>
+  <center>
+    <img src="amod34-1.gif" width="472" height="319" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows a 10-meter dipole at a height of 1 wavelength above ground. With a single ground medium, we obtain an elevation pattern like the one shown in <b>Fig. 2</b>. Everything in the pattern--including the gain, the elevation angle of the lowest lobe, and the number of lobes--should be familiar to even relatively new modelers.</p>
+  <center>
+    <img src="amod34-2.gif" width="555" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>So far, we have a modeling situation of no great interest or significance. However, there are numerous circumstances in which we may wish to simulate multiple ground media. As one hypothetical case, let's assume that the dipole we just examined is about 1 wavelength from the ocean.</p>
+  <p>Let us restrict ourselves for the moment to using a circle to define the limits of the inner medium. There are other possibilities, but mastering them one at a time will be the order of the day. If we happen to be interested in the radiation toward an inland location, we can use the single medium model. If we are interested in the radiation out to sea and beyond, we can use the next model to emerge.</p>
+  <p>When we use more than one medium, NEC calculates the current distribution and source impedance of the antenna based on the inner medium. The combined media play a role in the far field calculations. To specify a second medium, our GN card might look like the following entry:</p>
+  <pre>      GN    2     0           0  0        13    .005        81    5           10.7
+      Card  Gnd   Nr of       Zeros       D.C.  Cond.       D.C.  Cond.       Boundary
+      Type  Type  Radials                 [Inner Med.]      [Outer Med.]      Radius</pre>
+  <p>This card specifies two media, an inner and outer, with the inner medium having average soil values and the outer one having salt water values. The boundary radius tells us how far (in meters) from the coordinate system origin that the outer medium begins. Note that boundaries are always specified in terms of distance from the 0, 0, 0 point of the coordinate system, not necessarily from the antenna. Since we can alter the coordinates of the antenna elements, we can place it anywhere in the inner medium region.</p>
+  <p>To obtain a far field NEC-2 plot that takes account of the outer medium, we have to make a change in the requested plot or RP card. The normal mode has a value of 0 in the first integer slot of the RP card. For a radial boundary between 2 ground media, we change this number to 3. There are other values, but for 2 media with a radial boundary--the limits of this column--the 3 will cover all our work. (If we leave the value at 0, the far field will be calculated in NEC-2 using only the inner medium, as if it extended indefinitely. Wherever a commercial program does not ask for a user change to the radiation pattern set-up, it is made automatically when the user specifies a second medium.)</p>
+  <center>
+    <img src="amod34-3.gif" width="522" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> provides an elevation plot for the antenna in its new environment. Note the increase in gain for the lobe at 14 degrees. Note also the nearly "knife-edge" change in gain value within the second lobe. Reality would not likely in this kind of case provide such a sharp change in gain. However, the boundary between modeled ground media is a sharp change and shows up as such in the calculations. The lower values of signal strength at higher angles result from reflection from within the inner medium (at least in part). The approximate 45-degree elevation changeover point for the 1 wavelength boundary radius is no accident.</p>
+  <p>In this example, both ground media are at the same level, namely Z=0. However, we can go a step further in defining media by placing the outer level at a lower height by a defined amount. Let's assume that our salt water is a full wavelength below the ground beneath the antenna itself, which is above the ground by a wavelength. Then our GN card takes on this appearance:</p>
+  <pre>GN    2     0           0  0        13    .005        81    5           10.7        10.7
+Card  Gnd   Nr of       Zeros       D.C.  Cond.       D.C.  Cond.       Boundary    Neg.
+Type  Type  Radials                 [Inner Med.]      [Outer Med.]      Radius      Outer
+                                                                                    Height</pre>
+  <p>The new number (again in meters, even if user interface entry is in other units) represents the distance by which the outer medium surface is below the inner medium surface. A commercial program might call for a negative number as an input to remind the user that the outer medium can never be higher than the inner medium. However, the NEC card requires that this value of lower ground be entered on the card as a positive distance downward. 10.7 meters is about 1 wavelength at the 28 MHz test frequency for the model we are using.</p>
+  <center>
+    <img src="amod34-4.gif" width="525" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> presents the modeled elevation pattern for our old dipole in its revised environment. Note that the lowest lobe has dropped to 7 degrees, since the antenna is now about 2 wavelength above the medium most affecting far field patterns at elevation angles below 45 degrees. At that angle, the inner medium exerts the dominant effect. The model once more shows the knife-edge effect presented by the models sharp boundary--something unlikely in reality. However, the lower lobes are likely to be reasonably accurate with respect to a real situation.</p>
+  <p>Let's change the scenario to explore some other modeling results that you may expect from NEC calculations with multiple media. The first move is the change our dipole into a vertical dipole for 30 MHz and to set its lowest point about 3' above ground. <b>Fig. 5</b> shows the general scheme.</p>
+  <center>
+    <img src="amod34-5.gif" width="464" height="333" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Initially, let's set the antenna over a single ground medium defined as "very poor" (Cond. 0.001 S/m; D.C. 5).</p>
+  <center>
+    <img src="amod34-6.gif" width="550" height="398" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> presents the elevation pattern of the antenna over its very poor soil. Note the very modest gain figure for the antenna under these conditions.</p>
+  <p>Next, let's make a change. Let's place a modest ground screen or ionizing salts in the ground in an effort to improve its quality. Let's estimate that the result is ground that qualifies as very good (Cond. 0.0303 S/m; D.C. 20). We shall leave the overall playing field level, but make the radial boundary 1/4 wavelength from the point beneath the antenna. Outside the boundary, the ground values remain at the very poor level.</p>
+  <p>Now, a warning. What follows is what the NEC model reports and no more. No claim about reality is made for the purposes of this note.</p>
+  <center>
+    <img src="amod34-7.gif" width="532" height="391" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the elevation pattern of the antenna with the revised soil conditions. The antenna shows a tad less gain and a slight increase in the elevation angle of maximum radiation. The ground improvement did not extend to the major portion of the fresnel or reflection zone of the antenna and hence does not show an improvement in radiation at low levels. This result is typical of modeling outputs for vertical antennas that do not use a set of radials as both a ground plane and antenna element completion, such as the group of 1 wavelength loops fed as vertically polarized antennas. As a useful exercise to acquaint yourself with multiple ground media, you may wish to change the inner medium values across a range of values, including but not exceeding those for salt water. There are some reports that values higher than those for salt water may yield inaccurate modeling results.</p>
+  <p>For our next example, let's increase the frequency of our vertical dipole to 300 MHz to simulate another common situation: the placement of an antenna over a building top. To simplify matters, we can work in meters, since the nearly resonant vertical dipole is a bit shorter than 0.5 meters. Initially, we shall place the base of the antenna 5 meters above a single ground medium consisting of very good ground (Cond. 0.0303; D.C. 20).</p>
+  <center>
+    <img src="amod34-8.gif" width="522" height="389" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the elevation pattern for this model. Note the gain of nearly 6.5 dBi at an elevation angle of 2.5 degrees. (In working with antenna more than a very few wavelengths above the ground, you will often obtain greater accuracy by reducing the pattern steps from 1 degree to about 0.1 degree, especially for elevation patterns.) These values are typical for VHF vertical dipoles.</p>
+  <p>Now, let us make the case interesting. Let us assume that the antenna is 5 meters above a modestly tall building, perhaps 5 meters high. We shall assume--in order to preserve our simplified RP value of 3--that the building is circular and has a diameter of 10 meters, with the antenna mounted in the exact center. Beyond the building, the soil is very poor (Cond. 0.001; D.C. 5). <b>Fig. 9</b> illustrates that situation.</p>
+  <center>
+    <img src="amod34-9.gif" width="602" height="254" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The GN card for this antenna looks something like the following lines:</p>
+  <pre>GN    2     0           0  0        20    .0303       5     .001        5           5
+Card  Gnd   Nr of       Zeros       D.C.  Cond.       D.C.  Cond.       Boundary    Neg.
+Type  Type  Radials                 [Inner Med.]      [Outer Med.]      Radius      Outer
+                                                                                    Height</pre>
+  <center>
+    <img src="amod34-10.gif" width="520" height="383" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> provides the modeled elevation pattern for our VHF antenna atop the building. The "cliff" (as it is called in NEC manuals) results in a 1.2 dB gain for the antenna, with nearly half the elevation angle for the main lobe. As well, the increased radius (as a function of a wavelength) results in a lower angle for the transition between dominance by the inner and by the outer media--about 25 degrees.</p>
+  <p>As an exercise, to increase further your familiarity with modeling results using 2 media, you might place antennas of various sizes (or resonant frequencies)--both horizontal and vertical--over this building and compare the results with their counterparts using a single medium. For some HF antennas, do not be surprised to get knife-edge effects the cut a lobe into a stronger and weaker part.</p>
+  <p>Once more, reality may or may not exhibit the sharp change in pattern lobes. Remember that the roof top was considered a homogenous ground material having enough metal in it to simulate very good soil. Real buildings may range from very poor to even better than very good, depending on their composition and the frequency of the antennas involved. I chose the very good rating for the example with the assumption of there being a good bit of metal in the upper structure under the roof. In reality, both the amount and the arrangement of the metal may play a significant role is determining how good a ground medium a given roof top makes.</p>
+  <p>Let's perform an additional experiment. Remember that the coordinates for a ground medium be 0, 0, 0, the coordinate system origin. However, there is no restriction on where we place our antenna. Therefore, let's return to the 30 MHz vertical dipole and place it about 1 meter (3') above the inner medium, which simulates a circular roof top. Next, let's place it 0.1 m from the building edge by changing the X or Y coordinate by 4.9 m.</p>
+  <center>
+    <img src="amod34-11.gif" width="549" height="405" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> shows the results of our move in an elevation pattern for the antenna. The shift in antenna position results in a pattern displacement over the edge of the building. At the same time, we see the emergence of higher-angle energy in the direction over the building edge. Although the displacement is--for most purposes--hardly fatal to the new antenna placement, the practice of modeling the antenna position as exactly as possible over or on the inner medium shows its merits. However, beware of placing the antenna beyond the inner medium. Because NEC will calculate the impedances and current distribution based on the inner medium, the results may not be accurate.</p>
+  <p>We can specify the boundary between media as either a radius or a linear boundary. In NEC-2, the difference appears in the RP card, where the mode is specified as 2 rather than 3. The linear boundary occurs parallel to the Y axis as a value for X. To see the difference, let's look at two azimuth patterns of our 30 MHz vertical dipole. First, we shall examine a circular or radial cliff. With the antenna near the edge of the building--at 0.1 meter from the building edge, which is point X on <b>Fig. 12</b>--the alteration produced by the antenna position is a slight offset in the circular azimuth pattern.</p>
+  <center>
+    <img src="amod34-12.gif" width="557" height="542" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When the "cliff" is linear, it extends indefinitely and creates a larger change in the far field azimuth pattern. <b>Fig. 13</b> illustrates the pattern from our 5-meter tall building with the antenna 0.1 meter from the edge. As an exercise, one might wish to run a selection of models in which the only difference is the type of boundary between the inner and outer ground media.</p>
+  <center>
+    <img src="amod34-13.gif" width="532" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We have restricted ourselves to S-N ground using two media with a radial boundary between them. These are not the only possibilities that NEC offers. For example, if we change to the NEC fast or reflection coefficient ground system, we can create a set of radials beneath the antenna. We can also add our second medium by the use of a GD (Ground Description) card instead of expanding the content of the GN card. For example, if the 2-media GN card were to look like this:</p>
+  <pre>
+GN    2     0           0  0        20    .0303       5     .001        5           5
+Card  Gnd   Nr of       Zeros       D.C.  Cond.       D.C.  Cond.       Boundary    Neg.
+Type  Type  Radials                 [Inner Med.]      [Outer Med.]      Radius      Outer
+                                                                                    Height</pre>
+  <p>Then the corresponding pair of (NEC-2) GN and GD cards would have this appearance:</p>
+  <pre>
+GN    2     0           0  0        20    .0303
+Card  Gnd   Nr of       Zeros       D.C.  Cond.
+Type  Type  Radials                 [Inner Med.]
+
+GD       0  0  0  0      5       .001      5           5
+Card    (  Zeros   )     D.C.    Cond.     Boundary    Neg.
+Type                     [Outer Med.]      Radius      Outer Height</pre>
+  <p>(Note: in NEC-4, the first GD integer position--a zero in NEC-2--uses a 1 for a linear boundary, a 2 for a circular boundary, and a 0 for no second medium. This system replaces the options found in the RP card for NEC-2. A NEC-4 card for the current outer medium would begin GD 2 0 0 0. . ., with the remainder as shown.)</p>
+  <p>Whether one uses a single GN card or a GN-GD pair, the calculations would provide the same output. Commercial implementations of NEC tend to favor the use of the GD card for the second medium. Not all low-end programs allow the full spectrum of ground potentials. Multiple ground media may require advancement to a professional version of some programs.</p>
+  <p>Although we have not surveyed all of the ground type and descriptions available in NEC, perhaps this much of a start may be useful. It pays to be well-grounded in NEC's multi-media potentials.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>Reading a NEC Deck</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/antbott.gif" align="left" width="150" height="77">So You Want to Read a NEC Deck<img src="../images/yagicad.gif" align="right" width="125" height="62" border="2" vspace="5" hspace="25"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>Many users of ELNEC and EZNEC are unfamiliar with the basic elements of a standard .NEC input file. There may be some users of NEC-Win who are unfamiliar with the terms and layout of an EZNEC antenna description file (called a PD file for the abbreviated keystrokes used to generate it). So let's do a correlation between the two in order to show the basic terms of the NEC deck.</p>
+  <p>In most implementations, NEC uses a card-deck input file whose format goes back to the early days of FORTRAN, when punch cards provided computational inputs. For brevity, each card contain a labeled sequence of information, the individual parts separated by a delimiter. Since we Americans use "." as our decimal indicator, we use commas or spaces to separate information. European formats may vary.</p>
+  <p>To get us started, let's compare the antenna description file for a simple 2-element Yagi with the corresponding card deck. Then we can explain each type of card we encounter. If you wish, you can try your hand at correlating each element in the NEC deck to elements in the EZNEC antenna description file before reading beyond them.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <pre>                      EZNEC Antenna Description File
+2el Yagi 12M
+Frequency = 24.95  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 Ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn.-- End 1 (x,y,z : ft)  Conn.-- End 2 (x,y,z : ft)   Dia(in)  Segs
+1         -9.100,  0.000, 40.000       9.100,  0.000, 40.000  1.00E+00   11
+2         -8.800, -4.800, 40.000       8.800, -4.800, 40.000  1.00E+00   11
+3         -0.200,  0.000,  1.000       0.200,  0.000,  1.000     # 14     1
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     3 / 50.00   (  3 / 50.00)      1.000       0.000       V
+
+              --------------- LOADS ---------------
+Load      Wire      Wire #/Pct From End 1      R (Ohms)       X(Ohms)
+          Seg.     Actual      (Specified)
+1           6     2 / 50.00   (  2 / 50.00)       1.000       100.000
+
+                -------- TRANSMISSION LINES ---------
+Line  Wire #/% From End 1   Wire #/% From End 1    Length     Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)              Ohms Fact Norm
+1      1/50.0  (  1/50.0)    3/50.0  (  3/50.0)  Actual dist  50.0  0.66  N
+
+Ground type is Real, high-accuracy analysis
+Conductivity = .005 S/m    Diel. Const. = 13
+
+              --------------- MEDIA ---------------
+Medium       Conductivity(S/m)   Dielectric Const.    Ht(ft)   R Coord(ft)
+
+1                5.000E-03            13.00           0 (def)     0 (def)
+</pre><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <pre>                              .NEC Input File
+
+CM 2el Yagi 12M
+CE
+GW 1 11 -9.1 0 40 9.1 0 40 .04165
+GW 2 11 -8.8 -4.8 40 8.8 -4.8 40 .04165
+GW 3 1 -.2 0 1 .2 0 1 2.6706E-03
+GS 0 0 .3048
+GE 1
+GN 2 0 0 0 13 .005 0 0 0 0
+EX 0 3 1 0 1 0
+LD 4 2 6 6 1 100 0
+LD 5 1 1 11 2.4938E7
+LD 5 2 1 11 2.4938E7
+LD 5 3 1 1 2.4938E7
+TL 1 6 3 1 50 18.01 0 0 0 0
+FR 0 1 0 0 24.95 0
+RP 0 1 361 1000 76 0 1 1
+EN</pre>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>The antenna described by these two files is shown in Figure 1. It is a simple 2-element Yagi of relatively poor performance: Gain: 11.1 dBi; front-to-back: 11.1 dB; feedpoint impedance: 42 + j4 Ohms. I have purposely altered the antenna to include an inductive load in the reflector, thus making it physically shorter than the driven element. I have also run a 50-Ohm transmission line straight down to within 1' of the ground and created a source wire there. Otherwise, our NEC deck would be pretty skimpy.</p>
+  <center>
+    <img src="necdeck1.gif" width="630" height="390" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's look at each card in the deck and read out the information, cross checking it against the EZNEC file. In most cases, I have spread the data units out and labeled them beneath.</p>
+  <pre>1.  CM 2el Yagi 12M</pre>
+  <p>This is a comment card for storing information about the file in ASCII text. It does not enter into the calculations. You may have any number of comment cards, although some implementations limit them. In EZNEC, you may have only one CM card, called the "title."</p>
+  <pre>2.  CE</pre>
+  <p>This card is the "comment end" card, signaling that data for calculation follows.</p>
+  <pre>3.  GW    1    11   -9.1     0    40     9.1    0    40    .04165
+    GW    2    11   -8.8   -4.8   40     8.8  -4.8   40    .04165
+    GW    3     1    -.2     0     1      .2    0     1    2.6706E-03
+   Type  Tag  Segs  E1 X   E1 Y  E1 Z   E2 X  E2 Y  E2 Z    Radius</pre>
+  <p>Type GW cards describe the antenna geometry. Each antenna wire, or "Tag," has a separate numbered card or line (1, 2, and 3). The Segs (segmentation) entry tells how many segments the wire is divided into (11 each for Tags 1 and 2, 1 segment for Tag 3). Then come the Cartesian coordinates for End 1 and End 2 of each straight wire. Here, as in the EZNEC file, they are given in feet. Finally, the wire size is given as a radius (1/2 the diameter given in the EZNEC file. However, the EZNEC file lists the radius in inches. The NEC deck must use the same units throughout the GW cards, so a 1" diameter become a 0.04165' radius. The wire size figure for Tag 3 is the radius of #14 wire, in feet.)</p>
+  <pre>4.  GS    0    0    .3048
+   Type            Multiplier</pre>
+  <p>Although most implementations of NEC, such as NEC-Win and EZNEC, give the user a choice of common units of measure for setting up the antenna geometry, NEC itself calculates only in meters. In the last of its 4 columns, the "geometry scaling" card gives the multiplier needed to convert to meters.</p>
+  <pre>5.  GE    1
+   Type  End</pre>
+  <p>The "geometry end" type card signals the end of the wire set-up and prepares the way for other data that enter into the calculations.</p>
+  <pre>6.  GN    2      0    0    0    13    .005    0    0    0    0
+   Type  G-type               Die-C.  Cond.</pre>
+  <p>The ground parameter card specifies the type of ground calculation system and the necessary parameters to make the calculation. Here, we show a single medium, although a second medium can be set.</p>
+  <p>There are 4 types of ground systems used with NEC: -1 = free space; 0 = a finite ground with a reflection coefficient approximation (the "fast" ground in EZNEC); 1 = a perfectly conducting ground; and 2 (used here) specifies a finite ground using the Sommerfeld-Norton method of calculation for greatest accuracy. (In addition, EZNEC implements the MININEC ground calculation system.)</p>
+  <p>Finite ground conditions (cases 0 - 2) require two numbers to implement calculations. The first is a relative dielectric constant, usually given as an integer. Second is the conductivity in Siemens/meter (mhos/meter in older terminology). Both are generally derived from tables. The values shown represent a default presumption of medium earth conditions. Both numbers are omitted for perfect ground.</p>
+  <p>As with many cards in the NEC deck, there are unlabled "0" fields. Some of these represent fields simply left blank; others represent input positions for more specialized conditions not relevant to most common ham HF antennas. (Some may be relevant to VHF and UHF antennas.)</p>
+  <pre>7.   EX     0     3     1     0                1     0
+    Type  S-type Tag   Seg        Voltage:   Real  Imaginary</pre>
+  <p>The "exitation" or source information card allows for many types of exitation, of which only voltage sourcing is usually of HF ham use. Hence, the source-type is "0". The next two columns specify the placement of the source in terms of tag number and segment number in that wire. Here, the remote wire has only one segment, and the source is placed at its center. Many programs allow specification of the source at some distance from End-1 of the designated wire, and will then place the source as close to that point as segmentation permits.</p>
+  <p>For most ham uses, sources are either voltage or current. The latter is useful for scanning current levels along a wire, since a voltage source of "1" yields small fractions of an amp current, making scanning more difficult. Current sources may also be necessary for some advanced applications.</p>
+  <p>Nonetheless, both types of sources are voltage sources ultimately. The current source is generated by a voltage source set on a remote wire and transformed into a current source by a transmission line. The NEC deck will show the wire and line, while EZNEC stores this information internally.</p>
+  <p>Voltages are given in terms of X and Y ("real" and "imaginary") coordinates derived from inputs that can be given as a voltage and its phase angle. User current magnitude and phase angle inputs are converted to appropriate voltage values at the remote source wire.</p>
+  <p>In general, when converting among programs (for example, between EZNEC Pro and NEC-Win Pro), it is best to use a voltage source to avoid the possibility that one program cannot read the other's remote wire current source technique. Changing back to a current source can be done after file conversion is complete.</p>
+  <pre>8.    LD      4      2      6           6      1      100      0
+     Type  L-type   Tag   Start Seg   End Seg  R     L or X    C</pre>
+  <p>There are two types of loads to consider: concentrated element loading quantities and distributed element material loads. This card illustrates an inductive load added to the center of the reflector. Load types 0 through 3 represent categories of R-L-C combinations that can make up a load. This card shows a type 4 load, which is specified in terms of a series resistance and reactance in Ohms.</p>
+  <p>The "tag" and "segment" items locate the load at the midpoint of wire 2. Since there are start and end segment numbers, some loads may be distributed for more than a single section, but most ham antennas employ concentrated loading located within a single segment.</p>
+  <p>The final two values (1 and 100) specify the resistance and reactance of the load in Ohms. Capacitive reactance, of course, would be entered as a negative number.</p>
+  <pre>9.    LD       5      1      1         11        2.4938E7
+      LD       5      2      1         11        2.4938E7
+      LD       5      3      1          1        2.4938E7
+     Type   L-type   Tag  Start Seg End Seg    Conductivity</pre>
+  <p>Material losses are type-5 loads. As with other loads, the wire (tag) must be identified, along with the first and last segments to which the load applies. Note that these loads apply in addition to any lumped-constant loading of types 0 through 4.</p>
+  <p>To avoid confusion by newer modelers, EZNEC only refers to lumped constants as loads, preferring instead to call material loads "wire losses." EZNEC also expresses these losses as a function of resistivity and relative permitivity. However, the value of resistivity in this case, 4.0E-08 Ohms, is simply the reciprocal of the NEC deck conductivity value of 2.4938E7 mhos or Siemens. Additionally, EZNEC restricts antennas to one type of material per model, although the NEC deck permits a specification of a different conductivity value for each wire.</p>
+  <pre>10.    TL        1    6       3    1    50    18.01    0    0    0    0
+      Type Start tag/seg  End tag/seg   Zo    Length</pre>
+  <p>Transmission lines are not physical models in NEC, but mathematical constructs. Hence, they can have any length, regardless of the actual distance between their start and end points on wires. Special techniques are used for shorted and open stubs, but the example here runs a common coax line from the antenna proper to a short segment used a. to terminate the transmission line and b. to serve as the overall source point for the antenna system.</p>
+  <p>By now, the start and end wire and segment numbers are obvious. As in the EZNEC PD file, the next two columns specify the characteristic impedance of the line and its length. In EZNEC, this can be done in several ways, all of which translate into a final characteristic impedance and definite length in meters. In the PD file, the length was given as the actual distance between wires, 39', modified by the velocity factor of the line, .66. This results in an electrical length of 59.1' or 18.01 meters.</p>
+  <pre>11.    FR     0         1         0     0     24.95     0
+      Type  Stepping   No. of FQs            Start FQ  Increment</pre>
+  <p>Antennas are modeled at one or more frequencies. If a single frequency is used, as in this example, the information needed is limited. "Frequency sweeping" requires more information.</p>
+  <p>Stepping can be non-linear (stepping = 1), but normal ham frequency sweeps are linear, changing frequency by the same amount each time. For sweeps, the user specifies the number of frequency steps, the start frequency, and the increment by which to step. For this single frequency model, the number of frequency steps is 1, and the increment is 0, while the modeled frequency is 24.95 MHz.</p>
+  <pre>12.  RP     0     1           361     1000     76     0     1       1
+   Type   Mode  No. Theta   No. Phi  Special  Theta  Phi  Th Inc  Ph Inc</pre>
+  <p>The report card specifies what output data is desired from the calculations. Mode "0" is the normal mode.</p>
+  <p>Horizontal angular changes are measured as "phi" degrees. Elevation angular changes are measured as "theta" degrees. Although most hams are used to counting elevation from the ground up, NEC counts theta angles from the zenith down.</p>
+  <p>This example specifies a report for one theta (elevation) angle, but a full circle of azimuth (phi) angles. Skipping the "Special" column for a moment, the theta angle is 76&deg; (or 90&deg; - 76&deg; for a 14&deg; elevation angle). The figure is a start figure, although only one theta angle has been specified. The azimuth or phi start angle is 0&deg;, but will pass through 361&deg; (to ensure a complete circle with a common value at each end of the progression). Both theta and phi are specified for increments of 1&deg; for good resolution.</p>
+  <p>The "Special" column contains 4 values that direct the calculations to produce certain types of outputs. 1000 is normally used for vertical, horizontal, and total non-normalized power gains with no averaging. Other outputs are available, and the user is usually interrogated in plain language for the desired output data and form by each program.</p>
+  <p>Users of NEC will sometimes be surprised to find that a symmetrical antenna, such as a Yagi, produces a main lobe identified by as much as 2&deg; to 3&deg; less than the expected bearing. Apparently, NEC identifies the first instance of the maximum power gain as the main lobe. Increasing the phi increment will often return the main lobe to its expected position.</p>
+  <pre>13.    EN</pre>
+  <p>EN signals the end of the .NEC file.</p>
+  <p>Hopefully, this brief trip through a short NEC deck will orient you to how the input files are constructed for use with NEC. Remember that the card explanations have not covered all the ways in which one may place data on a card of a given type. Only the most common kinds of data inputs for typical ham antenna installations have been illustrated.</p>
+  <p>Some programs, like EZNEC, do not generate a NEC deck, but instead communicates with the NEC-2 calculating engine via a number of binary files. (A NEC deck is available in EZNEC Pro with the NEC-4 calculating engine.) Some programs, like NEC-Win Plus, use alternative formatting methods--a spreadsheet file in this case, but also make available the option of saving the mode as a .NEC file. Others, like NEC-Win Pro or GNEC, make the deck an integral part of the modeling process. Getting used to the NEC deck can increase your ability to glean more from whatever program you choose as your basic modeling vehicle. Familiarity may also aid you in interpreting articles that present antenna modeling data in .NEC input file format. Patches, Green's functions, networks, and wire grids are beyond the scope of this introduction, but may be found in NOSC Technical Document 116, Volume 2, <i>Numerical Electromagnetics Code (NEC)--Method of Moments, Part III: User's Guide</i> (1981), which is the source of most of this data.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><i>Updated 3-30-1997, 04-21-2001. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

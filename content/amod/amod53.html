@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voltage and Current Sources: How?</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>53. Voltage and Current Sources: How?</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Programs such as NEC-Win Plus and EZNEC have a special feature that is not inherent to the NEC-2 core: the current source. In past columns, we have reviewed some of the significant uses of a current source. For example, by placing a current magnitude of 1.0 at a phase angle of 0.0 degrees on the source segment of the driver wire of a Yagi antenna, we can conveniently explore the relative current magnitude and phase angle at the center of each parasitic wire. For another example, if we have a phased array, we can simulate its operation by using multiple current sources, each set for the correct magnitude and phase angle. These two applications alone would justify the availability of a current source.</p>
+  <p>However, NEC-2 (and NEC-4) do not include a current source of the type used in these examples of applications. In fact, of all the potential modes of excitation, EZNEC and NEC-Win Plus implement only one: the standard voltage source that is in series with the wire segment on which we place it. So the question arises: how do we implement a current source?</p>
+  <p>Let's begin with the simplest case, a simple dipole with a single source at its center. <b>Fig. 1</b> shows an outline of our model.</p>
+  <center>
+    <img src="amod53-1.gif" width="382" height="146" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To set up this model, say in NEC-Win Plus, we would develop a simple wire entry, such as the one shown in <b>Fig. 2</b>. This particular example happens to be at a frequency of 50.5 MHz, with suitable wire diameter and wire material load values, but these will not play a significant role in this exercise.</p>
+  <center>
+    <img src="amod53-2.gif" width="640" height="279" border="2" vspace="5" hspace="9">
+  </center>
+  <p>More relevant to our interests is the registry of a single source for the model, at the far right of the wire entry screen. If we click on that entry, we open the source screen, shown in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod53-3.gif" width="320" height="246" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our entry for this model is a very standard default entry of a voltage magnitude of 1.0 and a voltage phase angle of 0.0 degrees. Indeed, for the model at hand, there is no good reason to use any other value pair.</p>
+  <p>The standard .NEC-format file for this model would look like the following lines of ASCII entries:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 6m dipole
+CE
+GW 1 21 0 -1.41732 5.936485 0 1.41732 5.936485 0.005588
+GS 0 0 1
+GE 0
+EX 0 1 11 0 1 0
+LD 5 1 1 21 5.8001E7
+FR 0 1 0 0 50.5 1
+RP 0 1 361 1000 90 0 1 1
+RP 0 361 1 1000 -270 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The GW entry is our wire, with the last entry giving the wire size as a radius. The EX entry is the source information, showing a source on segment 11 (out of 21) on wire 1 with a voltage value (at the far right) of 1.0 and a phase angle of 0.0 (minus the decimal places).</p>
+  <p>The output data of most relevance for our concerns is the "Antenna Input Parameters" section of the NEC output file. We normally encounter this information in tables that are easier to read, but let's look at the entries as they occur in the NEC-2 output file.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                          - - - ANTENNA INPUT PARAMETERS - - -
+
+   TAG   SEG.    VOLTAGE (VOLTS)         CURRENT (AMPS)         IMPEDANCE (OHMS)       ADMITTANCE (MHOS)      POWER
+   NO.   NO.    REAL        IMAG.       REAL        IMAG.       REAL        IMAG.       REAL       IMAG.     (WATTS)
+     1    11 1.00000E+00 0.00000E+00 1.36049E-02-9.46163E-04 7.31493E+01 5.08723E+00 1.36049E-02-9.46163E-04 6.80244E-03
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>This one line of data is the basis for a number of entries that we can find in the output data from NEC-Win Plus and EZNEC. The input or source consists of a voltage of 1.0 + j 0.0 volts. The resultant current is 0.0136 -j 0.000946 amps. Of course, by using the square root of the sum of squares, plus a tangent, we can convert these values into voltage and current magnitudes and their associated phase angles.</p>
+  <p>The source impedance is normally given in real and imaginary terms, which translate into a resistance and a reactance: 73.149 + j 5.087 Ohms.</p>
+  <p>The utility of using real and imaginary numbers for the impedance is that we can easily estimate the power at the source. Remember that NEC uses peak voltage and current values. NEC-Win Plus follows this procedure, so the source voltage that we entered was 1.0 volts peak. (EZNEC uses RMS entries for voltages and currents and internally correlates these with NEC input and output values.) Since power is I-squared * R, but in RMS terms, we must multiply the current by 0.7071068, or the current squared by 0.5. Hence, the power at the input is 0.00680 watts. (For maximum precision, we should convert the current into a magnitude and phase angle.)</p>
+  <p>This data also provides all that we need to determine the SWR relative to any standard impedance that we wish to input. NEC does not provide this data. Instead, the programs we have mentioned do the calculation using the data that we have just given.</p>
+  <p>With this much background on using a voltage source, we are ready to change the source to a current source. The input process is simple enough: we simply mark a box or (in EZNEC) change a letter in the source entry line. <b>Fig. 4</b> shows the relevant source box for our model.</p>
+  <center>
+    <img src="amod53-4.gif" width="320" height="246" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The user changes from a voltage to a current source with great ease, and sees no visible sign on the wire table that anything but a simple check-mark as changed. However, the model has changed significantly. In fact, if we look at the .NEC-format model generated by NEC-Win Plus, we can see considerable revision of the model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 6m dipole
+CE
+GW 1 21 0 -1.41732 5.936485 0 1.41732 5.936485 0.005588
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 1
+GE 0
+EX 0 30901 1 0 0.0 1.0
+LD 5 1 1 21 5.8001E7
+NT 30901 1 1 11 0 0 0 1 0 0
+FR 0 1 0 0 50.5 1
+RP 0 1 361 1000 90 0 1 1
+RP 0 361 1 1000 -270 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The first revision on the list of lines is the introduction of a new wire, #30901. NEC-Win Plus uses number above 30,000 for wires that will remain hidden from the user's view on the regular screens. However, the wires can always viewed by tabbing to the "NEC Code" page of the spreadsheet input system. In EZNEC, the file remains hidden unless one has the Pro version, which permits saving the model file in .NEC format.</p>
+  <p>The wire is a remote wire that is very short, very thin, and has only 1 segment. Like the wires that we use to terminate transmission lines, it is short, thin, and remote enough to not contribute detectably to the overall radiation of the essential wire geometry of the antenna.</p>
+  <p>The other new entry in the list is labeled NT, for network. A network is a two-port non-radiating construct that employs short-circuit matrix elements. We place a network between any two wire segments in the overall wire geometry and enter real and imaginary short-circuit admittance values. One of the wire segments may be a remote wires, such as 30901, which the NT line registers at the left as the first of the wires. The other wire is the former source segment on the dipole, segment 11 of wire 1.</p>
+  <p>Let's expose the hidden portions of the current source model fully by revising the usual model. Everywhere we see the entry 30901, we shall write 2. This involves the second GW card, the NT card, and the EX card. If we then import this file into NEC-Win Plus, we obtain a main screen that looks like <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod53-5.gif" width="640" height="293" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now the model file looks normal. We see that wire 2 has a source, to which we shall turn momentarily. Although the main screen does not show it, we now have a network whose entries can be viewed.</p>
+  <p>The ports of a network are labeled Y1 and Y2. If we place a set of admittance values across the Y1 terminals, we have Y11. Likewise, if we place values across the terminals of Y two, we have a Y22 value. A set of admittance values going from one port to the other bear the label Y12. <b>Fig. 6</b> shows the conventional sketch for such a port set up for the current source.</p>
+  <center>
+    <img src="amod53-6.gif" width="291" height="279" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The entries on the NT card following the wire and segment places are, in order, Y11, Y12, Y22, with a real and an imaginary value (conductance and susceptance, in usual electrical terms) for each entry. Note that the current source requires only a Y12 entry, with a value of 1 Mho (or 1 Siemens) in the imaginary slot. Networks, like transmission lines (TL), are in series with the wire segment and any LD load on it, but in parallel with other networks and sources.</p>
+  <center>
+    <img src="amod53-7.gif" width="356" height="373" border="2" vspace="5" hspace="9">
+  </center>
+  <p>By clicking on the network symbol on the main screen, we can see the network port entries, as shown in <b>Fig. 7</b>. We place zeroes where there are no entries. Since the admittance matrix is symmetric, we need not have an entry labeled Y21. Y12 does all the work. There we find the 1-Mho imaginary admittance entry.</p>
+  <center>
+    <img src="amod53-8.gif" width="320" height="246" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The current source requires one further revision to the standard voltage source entry, and we find this by opening the source screen for our revised model, shown in <b>Fig. 8</b>. Instead of entering a real value of 1.0 and an imaginary value of 0.0--which is equivalent to entering a voltage magnitude of 1.0 and a phase angle of 0.0 degrees--we enter a real voltage value of 0.0 and an imaginary value of 1.0, yielding a voltage magnitude of 1.0 at a phase angle of 90 degrees.</p>
+  <p>The fully revised model in .NEC format has the following appearance:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 6m dipole
+CE
+GW 1 21 0 -1.41732 5.936485 0 1.41732 5.936485 0.005588
+GW 2 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 1
+GE 0
+EX 0 2 1 0 0.0 1.0
+LD 5 1 1 21 5.8001E7
+NT 2 1 1 11 0 0 0 1 0 0
+FR 0 1 0 0 50.5 1
+RP 0 1 361 1000 90 0 1 1
+RP 0 361 1 1000 -270 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>By standard network theorems, the combination of the specified source and the network will yield a current of 1.0 at a phase angle of 0.0 degrees on the segment of the dipole that the user thought he or she had designated as the source in the original current-source model. Our substitute model has simply shown what goes on behind the scenes in a NEC program offering current sources.</p>
+  <p>With a voltage source, we were able to take data on the source voltage, current, impedance, and power directly from the "Antenna Input Parameters" line of the NEC output report. Now everything will surely look different and prevent us from picking up the data so easily without further calculation. In fact, the "Antenna Input Parameter" line of the new current-source model has the following appearance:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                                          - - - ANTENNA INPUT PARAMETERS - - -
+
+   TAG   SEG.    VOLTAGE (VOLTS)         CURRENT (AMPS)         IMPEDANCE (OHMS)       ADMITTANCE (MHOS)      POWER
+   NO.   NO.    REAL        IMAG.       REAL        IMAG.       REAL        IMAG.       REAL       IMAG.     (WATTS)
+     2    22 0.00000E+00 1.00000E+00-5.08723E+00 7.31493E+01 1.36049E-02-9.46163E-04 7.31493E+015.08723E+00 3.65746E+01
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The process of picking up data from the NEC output file for redisplay and possible reformatting in a program output is simply a matter of selecting the data needed. In fact, the data needed is fully present on the input parameter line, although not where we expect to find it. Let's do some label swapping. Swap the labels on the admittance and impedance entry pairs--but keep the real and imaginary parts as given. The impedance becomes 73.149 + j 5.087 Ohms.</p>
+  <p>Next, reverse the column labels of the voltage and the current. Convert each value into a magnitude and phase angle and subtract 90 degrees. (For our quick look at these tables, we may relabel the voltage as current and the current as voltage. Then, for each of these entry pairs, swap the real and imaginary labels. We would not use this short cut if we were actually calcuating voltages and currents in the program.) The result is a voltage of 73.148 - j 5.087 volts, and a current of 1.0 + j 0.0 amps.</p>
+  <p>Since the current is 1.0 peak, to find the power we take half the square of the current (that is, 0.5) and multiply it by the real part of the impedance, for a result of 36.575 watts, which is the value shown in the power column. If you prefer to take the magnitudes of I and E, multiplying them after converting from peak to RMS values, you will also get half of 73.149 or 36.575 watts. (A phase angle difference must also be taken into account, but it is too slight to affect the outcome significantly in this crude check calculation.)</p>
+  <p>It is possible to go through the network calculations, but the results will be the same as for our entry label swapping scheme. Although I do not have the internal program coding at hand, it is likely that most programs simply change flags for picking up certain data when a current source has been designated by the user.</p>
+  <p>Before leaving the subject, let's see if the system pans out with a few more models. For example, suppose that we have a turnstile antenna composed of two dipoles at right angles. Next, let us feed the two dipoles using current sources. In a perfect turnstile antenna, the two sources should have identical magnitudes and a 90-degree current phase shift between the two dipole sources. Except for a slight displacement owing to the need to make the two dipole wires pass each other without touching, we should obtain the same impedance for each dipole.</p>
+  <p>The following model, a hybrid of EZNEC and NEC-Win Plus, shows the structure of our turnstile dipole antenna.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 6m dipole turnstile
+CE
+GW 1,21,0.,-1.4351,6.096,0.,1.4351,6.096,.0008138
+GW 2,21,-1.4351,0.,6.1214,1.4351,0.,6.1214,.0008138
+GW 3,2,593.6486,593.6486,593.6486,593.6605,593.6605,593.6605,5.9365E-4
+GE 1
+LD 5,1,0,0,5.7471E+7,1.
+LD 5,2,0,0,5.7471E+7,1.
+FR 0,1,0,0,50.5
+GN 2,0,0,0,13.,.005
+EX 0,3,1,0,0.,1
+EX 0,3,2,0,-1,0
+NT 3,1,1,11,0.,0.,0.,1.,0.,0.
+NT 3,2,2,11,0.,0.,0.,1.,0.,0.
+RP 0,1,361,1000,76.,0.,0.,1.,0.
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Notice that EZNEC creates only one wire for the termination of the networks, but it has two segments, one for each source. The sources (EX lines) have been converted to 1.0 voltage peak value maximums. Since the current source that we specified as 1.0 at 0.0 degrees requires a remote voltage source of 0.0 at 90 degrees (or 0.0 + j 1.0 volts), the source that we specified as 1.0 at 90 degrees advances a further 90 degrees. Hence, its value is 1.0 at 180 degrees or -1.0 + j 0.0 volts. The network inputs for each source remain constant except for the terminating wire segment numbers.</p>
+  <p>The "Antenna Input Parameter" line of the NEC output report is the following entry:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                         - - - ANTENNA INPUT PARAMETERS - - -
+
+   TAG   SEG.    VOLTAGE (VOLTS)         CURRENT (AMPS)         IMPEDANCE (OHMS)        ADMITTANCE (MHOS)     POWER
+   NO.   NO.    REAL        IMAG.       REAL        IMAG.       REAL        IMAG.       REAL        IMAG.    (WATTS)
+     3    43 0.00000E+00 1.00000E+00 2.01009E+00 6.98866E+01 1.42971E-02 4.11214E-04 6.98866E+01-2.01009E+003.49433E+01
+     3    44-1.00000E+00 0.00000E+00-6.96795E+01 1.83212E+00 1.43415E-02 3.77089E-04 6.96795E+01-1.83212E+003.48398E+01
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The impedance for each dipole is about 69.87 and 69.68 Ohms, respectively--as read from the admittance column. With the current magnitude squared and halved (after reading it from the voltage columns), the power is 34.94 and 34.84 watts, respectively, using the real portion of the impedances. Again, reading current from the voltage columns (while reversing the real and imaginary headings) we can see that the currents are 90 degrees apart. If in fact, programs do use the data flagging technique for picking up values (and, as noted, I do not assert that they do in the absence of access to proprietary codes), it is likely that they convert the real and imaginary values as given into a magnitude and phase and for each and then subtract 90 degrees.</p>
+  <p>One more example should suffice for our rudimentary demonstration of how we obtain current sources from voltage source. Consider a dipole, just as we have been working with, but having one addition. The center of the dipole connects through a transmission line (TL) to a short source wire. We shall treat the sort wire as a current source segment. The resulting .NEC-format file looks like the following one.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 6m dipole with 1/4-wl TL
+CE
+GW 1 21 0 -1.41732 5.936485 0 1.41732 5.936485 0.005588
+GW 2 1 -0.0127 0 2.54 0.0127 0 2.54 0.000635
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 1
+GE 0
+EX 0 30901 1 0 0.0 1.0
+LD 5 1 1 21 5.8001E7
+NT 30901 1 2 1 0 0 0 1 0 0
+TL 1 11 2 1 70 1.484122 0 0 0 0
+FR 0 1 0 0 50.5 1
+RP 0 1 361 1000 90 0 1 1
+RP 0 361 1 1000 -270 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The now-familiar remote source wire, 30901, is evident, as are the network and excitation entries. The 70-Ohm transmission line is 1.484 meters long (about 0.25 wavelength), as we read the TL card. The interesting part of this model is the fact that we have two remote wires--a visible one that is the user source wire and a normally invisible one that is the program source because the user has selected a current source. By virtue of the fact that a 70-Ohm line is not a perfect match for a nearly resonant dipole, we should expect some transformation in the impedance at the source.</p>
+  <p>Again, we can turn to the "Antenna Input Parameters" line for values.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                         - - - ANTENNA INPUT PARAMETERS - - -
+
+   TAG   SEG.    VOLTAGE (VOLTS)         CURRENT (AMPS)         IMPEDANCE (OHMS)       ADMITTANCE (MHOS)      POWER
+   NO.   NO.    REAL        IMAG.       REAL        IMAG.       REAL        IMAG.       REAL       IMAG.     (WATTS)
+ 30901    23 0.00000E+00 1.00000E+00 4.73228E+00 6.66507E+01 1.49283E-02 1.05993E-03 6.66507E+01-4.73228E+00 3.33253E+01
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Reading the impedance from the admittance position, we find a 66.65-Ohm real part and a -4.73-Ohm imaginary part. I-squared-R gives us 33.33 watts of power. We reversed the heading of the voltage and current columns, converting each to a magnitude and phase angle, and then subtracting 90 degrees. However, because the real part of the impedance is more than an order of magnitude greater than the imaginary part, any further calculations we might make with these values would not be seriously hurt by a simplified scan of values. This easy situation, of course, will not always--indeed, not even commonly--be the case for examples more complex than our simple dipole system.</p>
+  <p>The reason for setting forth the last model is that there is another section of the NEC output report that we can sometimes confuse with the "Antenna Input Parameters" portion. The "Structure Excitation" section contains some values the appear to be candidates for our source calculations using a current source. However, they are not suitable for the task.</p>
+  <p>If these notes familiarize you with the terms of a current source--as constructed out of a voltage source and a network--then they will have served their purpose.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

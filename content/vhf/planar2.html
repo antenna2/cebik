@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Planar Reflector">
+  <title>Planar Reflectors Part 2: Phased Dipoles and Rectangles</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/planar.gif" align="left" width="100" height="83" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"> Planar Reflectors<br>
+    Part 2: Phased Dipoles and Rectangles</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In part 1 of this exercise, we explored models of a planar reflector using vertical and horizontal dimensions that varied from 1.0 to 2.0 wavelengths per side. The test frequency was 299.7925 MHz so that a wavelength equaled 1 meter. The overall goal of the set of tests was to determine if there is an "ideal" size of planar reflector relative to the particular driver used to complete the simple array.</p>
+  <p>In the initial test set, we used a single dipole as the driver. We set its length and spacing from the reflector to achieve a 50-Ohm feedpoint impedance. (The dipole diameter was 8 mm, which has a major effect on the length and a minor effect on the required spacing from the reflector.) We set the dipole vertically relative to the reflector dimensions so that the free-space E-plane corresponds to the vertical reflector length and the H-plane corresponds to the horizontal reflector length. By surveying reflector sizes in a matrix of dimensional variations, we reached the following tentative conclusions.</p>
+  <p>1. Although the feedpoint resistance and reactance show some interesting data curves, the range of variation is so small as to allow the conclusion that the feedpoint impedance does not change materially with changes in reflector size.</p>
+  <p>2. The SWR passband is a function of the driver diameter and not a function of the reflector size.</p>
+  <p>3. For maximum gain, there is an ideal reflector size, namely 1.2 m (wavelength) by 1.2 m (wavelength). Horizontal variations from 1.0 m to 1.6 m show only a small reduction in gain, although variations in the vertical dimension show more evident gain reductions.</p>
+  <p>4. The larger the horizontal dimension, the higher the initial front-to-back ratio with the smaller vertical dimensions. However, a 20-dB front-to-back ratio is easily achieved at the ideal vertical dimension of 1.2 m (wavelength), with a horizontal dimension of 1.6 m (wavelength). Still, with the ideal horizontal dimension for maximum gain (1.2 m or wavelength), the front-to-back ratio is well above 18 dB.</p>
+  <p>The data accumulated for the dipole driver left us with a number of questions for which we require further investigation.</p>
+  <p>1. The ideal reflector horizontal dimension is 1.2 m (wavelength) in the initial test. This dimension extends the reflector 0.6 m (wavelength) each side of the dipole. If we replace the dipole with a more complex driver, will the extension remain constant or will the overall horizontal reflector length remain constant-- or neither?</p>
+  <p>2. The dipole that we used had a diameter of 8 mm and a length of 0.436-m (wavelength). The ideal reflector vertical dimension--in line with the dipole--was 1.2 m (wavelength). The extension of the reflector beyond the dipole at each end was 0.382 m. The remaining question is whether the vertical dimension of the ideal reflector is a function of the dipole length or a function of the frequency of operation. If the vertical dimension is a function of frequency, then the dimension should remain relatively unchanged if we use drivers with different vertical dimensions. If the reflector vertical length is a function of the driver length, then it would likely vary if we use drivers with, for example, significantly shorter vertical dimensions.</p>
+  <p>3. The resistance and reactance--along with the SWR passband--proved to be functions of the driver's physical and electrical properties and did not vary significantly as we changed the dimensions of the reflector. Will these feedpoint properties prove to be generic to the reflector-driver array or will they change if we use a more complex driver?</p>
+  <p>The interest in using a more complex driver owes in part to the structure of a planar reflector array. With a simple dipole driver, we obtained a maximum free-space gain of 9.31 dBi, about the level of a 4-element Yagi of good design. However, the planar reflector and its driver form a 3-dimensional structure, in contrast to the essentially 2-dimensional Yagi structure. If we can replace the driver with one that yields more gain, we might increase the justification for using a 3-D structure, especially in light of the fact that we can produce a relatively strong antenna by mounting the reflector directly to the support mast.</p>
+  <p><b>The Next Step</b></p>
+  <p>In this episode, we shall begin some explorations of more complex drivers that yield more gain than a simple dipole. The drivers included in this part of the study will include the following ones.</p>
+  <blockquote>
+    1. A pair of in-phase-fed dipoles.
+    <p>2. A single side-fed rectangle.</p>
+    <p>3. A double rectangle.</p>
+  </blockquote>
+  <p>Phased dipoles will provide a bi-directional pattern and hence higher maximum gain than a single dipole. A side-fed rectangle uses a wire loop about 1 wavelength total to effectively provide two shortened dipoles for which the horizontal wires then provide the requisite phasing. If we place two rectangles end to end and use a common side, then we effectively have three dipoles in phase. The rectangles provide the shorter vertical dimension by which we can approach an answer to our question on the ideal vertical dimension for the reflector. Each of the arrays has a different horizontal dimension, and that fact will give us a start toward answering the question of the reflector's horizontal dimension. The variations among the driving requirements for the 3 new study drivers will provide a test of whether the resistance, reactance, and beamwidth functions remain as constant as for the simple dipole driver. Finally, we shall be able to see if we acquire sufficient gain increase to warrant the extra construction effort.</p>
+  <p>Our modeling procedure, described more fully in Part 1, simplifies the data collection. We have already established that the AGT scores for the driver plus wire-grid reflector fall in the high-confidence range, since the reflector is not connected directly to the fed element. Hence, the modeling results should provide good general guidance relative to the questions that we have posed.</p>
+  <p>Data gathering for a matrix of 36 models is simplified by the modeling strategy used in Part 1. The 36 reflectors are already modeled as numerical Green's files. A sample for the H1.2 by V1.4 reflector results in the following NGF file.</p>
+  <pre>CM Planar Reflector 299.7925 MHz (WL=1 m)
+CM Y = 1.2 m;  Z = 1.4 m
+CM standard wire-grid:  Seg L = 0.1 m; radius = L/PI = 0.0159 m
+CM NGF file:  R-H12-V14
+CE
+GW 1 12 0 -.6 0 0 .6 0 .0159
+GM 1 7 0 0 0 0 0 -.1 1 1 1 12
+GM 1 7 0 0 0 0 0 .1 1 1 1 12
+GW 12 14 0 0 -.7 0 0 .7 .0159
+GM 1 6 0 0 0 0 -.1 0 12 1 12 14
+GM 1 6 0 0 0 0 .1 0 12 1 12 14
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+WG R-H12-V14.WGF
+EN </pre>
+  <p>The reflector files are identical except for the dimensions and segmentation of the center wires for each reflector size and for the number of replications in the corresponding GM commands. Although I was prepared to create further reflector models using larger dimensions, this set of tests did not require them.</p>
+  <p>Each new driver requires a master model for its elements, as well as excitation specification and output requests. The only variation among the models is the GF line that calls up the pertinent reflector. Hence, the modeler may use 36 models or a single modeled varied 36 times. The choice rests upon whether one needs to go back and review the data in the NEC output file after recording the initial outcome. All modeling for this study used GNEC with its NEC-4D core. However, NEC-2 should provide comparable results, although one may wish to invoke the EK command for situations where the segment length to wire radius ratio is less than about 8:1.</p>
+  <p><b>2 In-Phase-Fed Dipoles Plus a Planar Reflector</b></p>
+  <p>If we place 2 dipoles 1/2 wavelength apart and feed them in phase, we obtain a bi-directional H-plane pattern with a maximum gain that is considerably higher than we can achieve with a single dipole. The maximum gain occurs at right angles to the plane formed by the 2 dipoles, that is, broadside to the pair. The directions that are in line with the dipoles show deep far-field pattern nulls. If we place the dipoles forward of a planar reflector, we should be able to capitalize on a good portion of that gain improvement. <b>Fig. 1</b> shows the general outline of the scheme.</p>
+  <center>
+    <img src="planar2-1.gif" width="500" height="441" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The separation of the dipoles is 0.5 m (wavelength). The dipole lengths are 0.466 m (wavelength) each, using the same 8 mm element diameter that we applied to the single dipole. However, the separation of the dipoles from the reflector by 0.25 m (wavelength) requires some explanation, since we used a separation of 0.175 m for the single dipole.</p>
+  <p>Feeding two dipoles in phase in most installations will require equal lengths of a feedline from the individual dipoles to a center point between them. I shall continue to assume a 50-Ohm main feedline impedance. Hence, when we join the feedpoints in parallel at the center point, each should show 100 Ohms. In general, we can obtain this impedance value in two ways. First, we can place the individual dipoles away from the reflector at a position that yields a 50-Ohm impedance. Then we can run 70.71-Ohm 1/4 wavelength matching sections from each feedpoint to the center junction. This strategy will yield the required 100-Ohm impedance for the parallel junction, but has a number of practical problems. First, constructing a 70-Ohm feedline as a parallel line is not practical with round wires. Flat surfaces can achieve this characteristic impedance with very close spacing. To maintain the spacing, we generally need to use a supporting surface or substrate which will reduce the velocity factor to less than 1.0. However, the distance from each dipole to the centerline is a physical 1/4 wavelength. Hence, for lines with a velocity factor of less than 1.0, the line will not reach. Using 3/4 wavelength lines may be impractical if we wish to avoid unwanted interactions with the lines.</p>
+  <p>For this exercise, I chose an alternative procedure. By setting the dipoles farther away from the reflector, we can obtain a 100-Ohm feedpoint impedance at resonance. Then we can run 100-Ohm lines to the center junction. The velocity factor no longer makes a significant difference to array operation, since the lines are not effecting an impedance transformation. We lose a small increment of gain in the greater spacing between the reflector and the driver assembly, but we gain a considerable amount of construction simplification.</p>
+  <pre>CM In-Phase Dipoles .25 m from planar reflector
+CM Planar Reflector 299.7925 MHz (WL=1 m)
+CM Y = 1.0 m;  Z = 1.0 m
+CM standard wire-grid:  Seg L = 0.1 m; radius = L/PI = 0.0159 m
+CM NGF file:  R-H10-V10
+CE
+GF 0 R-H10-V10.WGF
+GW 24 11 .25 -.25 -.233 .25 -.25 .233 .004
+GW 25 11 .25 .25 -.233 .25 .25 .233 .004
+GE 0 -1 0
+EX 0 24 6 0 1 0
+EX 0 25 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN </pre>
+  <p>The sample model file--which calls up the smallest reflector--illustrates the ease of data gathering with the techniques used and confirms the dimensions used for the study of in-phase-fed dipole drivers. Note that data gathering allowed each driver to be independent to confirm the 100-Ohm individual feedpoint impedance.</p>
+  <p>I shall not present resistance, reactance, and beamwidth graphs, since those in Part 1 accurately reflect the behavior of the in-phase-fed dipoles. At the design frequency, the feedpoint resistance varies by only about 2 Ohms maximum, with a similar 2 Ohm variation in reactance across all 36 reflector models. The feedpoint reactance is minimum at the reflector vertical height that yields maximum gain. The feedpoint resistance is minimum with a vertical reflector height 1 increment larger. The E-plane beamwidth varies between 56 degrees and 78 degrees across the span of reflectors, with the tallest reflectors showing the widest beamwidth values. The E-plane beamwidth narrows at the reflector height for maximum gain by 4 degrees relative to the values for adjacent reflector vertical sizes. The major difference in the E-plane beamwidth behavior, relative to the single dipole driver, is that we find a larger increase in beamwidth as we move from a vertical height of 1.4 m (wavelength) to 1.6 m (wavelength). For the single dipole driver, the increase between these reflector sizes was not distinguishable from a smooth curve. However, for the dual driver, the increase is 6 to 8 degrees, which amounts to a noticeable jump.</p>
+  <p>Of course, the H-plane beamwidth values differ from those associated with the single dipole driver. The dipole driver showed values between 82 and 104 degrees, with signs of forward lobe splitting at the widest beamwidths. The pattern focus associated with the in-phase-fed dipole pair yields nearly constant beamwidth values that vary only between 54 and 60 degrees. For any reflector horizontal dimension, the variation over the span of vertical dimensions is only 4 degrees.</p>
+  <center>
+    <img src="planar2-2.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the data for the free-space gain of the dual-dipole array for the entire data set. As I did in Part 1, I have assigned different horizontal reflector dimensions to different graph lines and assigned the changes in reflector height to the X-axis. Perhaps the most striking fact is that the maximum gain occurs with a vertical reflector dimension of 1.2 m (wavelength). The highest gain occurs with a horizontal dimension of 1.6 m (wavelength). Maximum gain is 10.85 dBi, about 1.54 dB higher than we obtained with the single dipole driver. However, horizontal reflector sizes from 1.4 m to 1.8 m are too closely nested with the maximum value to represent detectable differences. As we increase the horizontal dimension of the reflector, the gain decreases more rapidly once we pass the vertical reflector height of maximum gain. The increasing rate of decrease is evident from the slope of the lines for the horizontally largest reflectors.</p>
+  <p>If we use the horizontal dimension of 1.6 m as the peak gain size, then the extension of the reflector on either side of the dipole pair is about 0.55 m. Within the limits of the increments of reflector size change that we are using (0.2 m), the extension is comparable to the extension each side of the single dipole (0.6 m) for maximum gain. The vertical dimension of maximum gain (1.2 m) remains unchanged from the single-dipole value.</p>
+  <center>
+    <img src="planar2-3.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The twin-dipole driver array shows peak values of front-to-back ratio--in <b>Fig. 3</b>--within the range of vertical dimensions for the reflector, at least for the two smallest reflectors horizontally. These peaks differ from the single dipole curves in Part 1, where for all reflector sizes horizontally, the front-to-back curves remained on an up-swing through the vertical limit of the exercise. As well, with only a single dipole driver, the widest reflectors actually showed a leveling or downward trend in the front-to-back ratio for the two widest reflectors. However for the dual-dipole driver, the front-to-back ratio continues its upward swing through all of the widths of reflector.</p>
+  <p>The key to the difference lies in the narrower H-plane beamwidth of the dual-dipole driver itself. In essence, the rearward energy is more focused toward the reflector, resulting in a faster rise in the front-to-back ratio. With a single driver element that has an omni-directional pattern without the reflector, the array requires more horizontal area, relative to any vertical size, to reflect the energy forward and therefore to effect a high front-to-back ratio. However, this account is at best partial, since the rise in the front-to-back ratio is actually slower for each increment of vertical increase as we make the reflector wider (horizontally longer). This latter phenomenon holds true of both drivers, at least within the exercise limits for reflector size.</p>
+  <p>One advantage of in-phase-feeding the dual dipoles is extended operating bandwidth. With a single dipole driver, the array showed a 9.7% operating passband between 2:1 50-Ohm SWR points using the 8-mm diameter element. With 2 dipoles of the same diameter, the array shows a 26% operating passband between 50-Ohm 2:1 SWR points, as shown in <b>Fig. 4</b>. As with the single driver system, the SWR curves coincide within very tiny limits for all reflector sizes. As virtually always, the SWR increases more rapidly below the design frequency than above it.</p>
+  <center>
+    <img src="planar2-4.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The broader SWR bandwidth for the array allows the user to take advantage of the fact that other performance figures also change slowly across the passband. The following table shows the modeled performance of the array at the limits of its SWR coverage. For this exercise, I remodeled the highest gain version of the array using the TL facility to create two 100-Ohm lines to a central junction. The junction wire is the model feedpoint.</p>
+  <pre>Frequency         Free-Space        Front-to-Back         Impedance
+MHz               Gain dBi          Ratio dB              R +/- jX Ohms
+270               10.45             18.94                 36.4 + j26.6
+300               10.85             19.15                 51.1 + j 0.9
+349               11.00             19.97                 25.1 - j 5.4</pre>
+  <p>Because the beamwidths for the dual-dipole driver differ from those for the single-dipole driver, we may usefully examine a set of free-space patterns for the array. <b>Fig. 5</b> shows a set of roughly evolutionary E-plane patterns, that is, patterns that are aligned with the plane of the individual dipoles.</p>
+  <center>
+    <img src="planar2-5.gif" width="852" height="830" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The top two patterns, plus the one on the lower left, show the progression of pattern development from below, through, and above the maximum gain point until we achieve a maximum front-to-back ratio. These patterns come from a smaller reflector horizontally in order to be able to show the maximum front-to-back ratio. Note the emergence and development of a new set of rearward lobes during the progression. As we increase the horizontal dimension of the reflector, we do not reach the point of maximum front-to-back ratio, but we do increase the beamwidth slightly. The lower right pattern shows that condition, with its array of 5 roughly equal-strength rearward lobes. Note that under these conditions, the gain is down by about a dB from its maximum possible value, but the worst-case front-to-back ratio value improves.</p>
+  <center>
+    <img src="planar2-6.gif" width="852" height="830" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the H-plane, the same first 3 patterns show a different sort of development, with only 1 significant rearward lobe. As we pass through and beyond the maximum gain point for the array, the lobe diminishes until it disappears in the maximum front-to-back plot. As we increase the horizontal dimension of the reflector, the rearward deep null cannot appear within the exercise limits. However, with the widest and tallest reflector used, the rearward quadrants take on a rounded appearance in the 30-dB front-to-back ratio category, which exceeds the worst-case values for the other patterns.</p>
+  <p>The end result is that selecting the reflector size for maximum gain may not achieve the maximum front-to-back values possible when we measure the entire rear area. Hence, the designation of the 1.6-m (horizontal) by 1.2-m (vertical) reflector as optimal applies only to forward gain. An array designer may give to the rearward lobes whatever weight the design specifications may demand. What the current test array has in common with the original simple model is this: maximum gain does not occur at the same reflector size as maximum front-to-back ratio.</p>
+  <p><b>A Side-Fed Rectangle Plus the Planar Reflector</b></p>
+  <p>Builders who do not wish to contend with the complexities (both electrical and physical) of a phasing system for dual dipoles have a number of potential substitutes. Among the simplest is a single 1 wavelength resonant rectangle, with shorter vertical sides and a longer horizontal dimension. When fed at the center of one of the vertical sections, the array simulates a pair of phased vertical dipoles. The end vertical sections are less than 1/2 wavelength apart, and so the rectangle does not achieve the full gain of the dipole pair. Nevertheless, the rectangle requires only a single feedpoint and thus simplifies the feed system.</p>
+  <p>The question is how much gain we may retain and still have an array that balances spacing from the reflector with the rectangle shape for a 50-Ohm feedpoint. Rectangles tend to show increased gain with shorter vertical sections and longer horizontal sections that better approximate the optimal half wavelength spacing. However, as we shorten the vertical dimensions, the resonant impedance tends to decrease. In principle, one might select almost any rectangle proportions and achieve a 50-Ohm impedance by judicious selection of the driver-to-reflector spacing. However, as we increase the spacing, we reduce array gain. Hence, any set of dimensions will be a compromise.</p>
+  <p>For this exercise, I chose a set of rectangle dimensions that permitted closer spacing to the reflector (0.186 m) and a rectangle that is 2.1 times horizontally wider than it is vertically high. The vertical sections are 0.172 m and the horizontal dimension is 0.362 m for 50-Ohm resonance at the test frequency. <b>Fig. 7</b> shows the general outlines of the antenna in front of its reflector. For the rectangle, the wire diameter was reduced to 4 mm to reflect what are likely to be actual construction practices.</p>
+  <center>
+    <img src="planar2-7.gif" width="500" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following lines show a sample master model for the rectangle.</p>
+  <pre>CM Rectangle 0.186 m from planar reflector
+CM Planar Reflector 299.7925 MHz (WL=1 m)
+CM Y = 1.0 m;  Z = 1.0 m
+CM standard wire-grid:  Seg L = 0.1 m; radius = L/PI = 0.0159 m
+CM NGF file:  R-H10-V10
+CE
+GF 0 R-H10-V10.WGF
+GW 24 5 .186 -.181 -.086 .186 -.181 .086 .002
+GW 25 9 .186 -.181 .086 .186 .181 .086 .002
+GW 26 5 .186 .181 .086 .186 .181 -.086 .002
+GW 27 9 .186 .181 -.086 .186 -.181 -.086 .002
+GE 0 -1 0
+EX 0 24 3 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN</pre>
+  <p>The behavior of the rectangle with respect to the source impedance at the test frequency does not vary enough to call for comment, except in one category. With the single and dual dipole drivers, we were able to correlate the most capacitively reactive value to the maximum gain point along any of the reflector size variations. However, the minimum resistance value at the feedpoint did not correlate to anything specific. With the rectangle, one can detect a partial correlation with a slight increase in the H-plane beamwidth. The correlation is tentative for two reasons. First, the increase is small and does not show for every level of horizontal dimension as we pass one or two steps of vertical increase beyond the maximum gain reflector size. Second, the beamwidth is recorded in integers and hence only shows itself if the beamwidth increase is sufficiently great. As noted, the H-plane beamwidth is very stable over the range of reflector sizes. Hence, confirmation of the correlation would require further refinements in the data gathered.</p>
+  <p>However, for the rectangle, we shall not achieve quite the gain level of the dual-dipole driver. Therefore, the H-plane (but not the E-plane) beamwidth is somewhat wider over the entire range of reflector sizes. The average increase is about 10 degrees (from an average in the upper 50s to an average in the upper 60s). Hence, the peak value has a better chance to show itself--and does in most of the data gathered from the models.</p>
+  <center>
+    <img src="planar2-8.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Despite the fact that the vertical dimension of the rectangle is less than half that of either type of dipole driver, the peak gain occurs with a reflector vertical dimension of 1.2 m (wavelength), as shown in <b>Fig. 8</b>. The ideal reflector size (for maximum gain) is 1.4 m (wavelength). Since the rectangle is 0.362-m wide, we have about 0.52-m overhang of reflector beyond the rectangle at maximum gain. This figure correlates well with the 0.6-m value for the single dipole and the 0.55-m value for the dual-dipole driver, when each is set against the reflector size that shows maximum gain.</p>
+  <p>In all other respects, the gain curves replicate the appearance of those for the other driver systems. The maximum free-space gain for the rectangle is 10.37 dBi, about a half-dB less than for the dual-dipole driver. We expected this result from the increased H-plane beamwidth figures.</p>
+  <center>
+    <img src="planar2-9.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The front-to-back curves in <b>Fig. 9</b> also add pieces to the puzzle of planar reflector array performance. The peak front-to-back value for the horizontally smallest reflector occurs between the recorded point--about a vertical height of 1.7 m. The next size larger horizontally does not reach a peak front-to-back value within the exercise limits. In contrast, the dual-dipoles reach a peak front-to-back value at a vertical height of 1.6 m with the 1.0-m horizontal reflector size and also reached a peak value within the scope of the reflector sizes for the next larger horizontal dimension.</p>
+  <p>The lower gain of the rectangle coincides naturally with the wider H-plane beamwidth. As we saw when comparing the single and dual dipole drivers, narrower beamwidths tend to show greater energy focus to the rear toward the reflector and hence a higher front-to-back ratio at its peak. As we gradually reduce the focus, that is, widen the beamwidth, we require a larger reflector vertically to reach the peak 180-degree front-to-back ratio within a given horizontal dimension.</p>
+  <p>The rectangle, besides showing slightly reduced gain relative to the dual-dipole driver, has a second disadvantage: a much narrower 50-Ohm SWR operating pass band. <b>Fig. 10</b> shows the data.</p>
+  <center>
+    <img src="planar2-10.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 2:1 passband extends from about 293 to 307 MHz, for a 4.7% operating bandwidth. Performance checks beyond the SWR passband suggest that the gain and front-to-back ratio hold up equally to the dual-dipole array. For many applications a 4.7% passband may be more than sufficient. However, the amateur 70-cm band is about 6.8% wide. Hence, one might well have to increase the wire diameter of the rectangle in order to provide full-band coverage. The comparison in Part 1 among wire sizes will be a general guide to expected levels of SWR passband improvement with fatter rectangle construction.</p>
+  <p>Throughout this exercise, I have been using lossless (perfect) wire for all of the models. One may question the practice, since real wire will have losses. Therefore, I rewrote the maximum gain model for the rectangle to apply copper wire losses to both the rectangle and to the reflector. The following 2-line table provides the results.</p>
+  <pre>Material      Free-Space      Front-to-Back      Impedance          E-BW         H-BW
+              Gain dBi        Ratio dB           R +/- jX Ohms      degrees      degrees
+Perfect       10.37           19.43              49.76 + j 0.39     56           63
+Copper        10.36           19.43              49.96 + j 0.57     56           63</pre>
+  <p>At the test frequency (about 300 MHz), the smallest wire diameter is still large as a function of a wavelength. Hence, skin effect, while mathematically noticeable, is not significant relative to array performance.</p>
+  <p><b>A Double-Rectangle Plus a Planar Reflector</b></p>
+  <p>An alternative to the single rectangle as a driver that does not require the fabrication of transmission lines is the double rectangle. <b>Fig. 11</b> shows the general outline of the new driver with its planar reflector.</p>
+  <center>
+    <img src="planar2-11.gif" width="497" height="446" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The double rectangle consists of two rectangles with one common vertical side shared by both. The feedpoint is the center of the middle vertical section of the driver. Like the single rectangle, the vertical sections form phased dipoles, with the horizontal wires acting as phase lines. Radiation from the horizontal sections is nearly (but not quite completely) self-canceling. Since the dipoles are short and the spacing less than 1/2 wavelength between pairs of verticals, we cannot realize all of the gain that we might get from properly phased full-size dipoles. However, we might obtain enough to equal at least a pair of phased full size dipoles.</p>
+  <p>An added difficulty to overcome in the basic design is the fact that the feedpoint impedance of an optimized double rectangle (without a reflector) is around 16 Ohms, using 4-mm wire for the elements at our test frequency. As a result, the driver must be further from the reflector than in any other array so far: 0.235 m (wavelength). In addition, just as an optimized Bobtail curtain is vertically shorter than its optimized little brother, the half-square, so too the double rectangle will be shorter than the single rectangle. In this case, the height is 0.1492 m (wavelength), about 13% shorter than the driver we just examined. The overall length (horizontal dimension) is 0.7 m (wavelength). The following lines show a sample model of the double-rectangle driver.</p>
+  <pre>CM Double rectangle 0.235 m from planar reflector
+CM Planar Reflector 299.7925 MHz (WL=1 m)
+CM Y = 1.0 m;  Z = 1.0 m
+CM standard wire-grid:  Seg L = 0.1 m; radius = L/PI = 0.0159 m
+CM NGF file:  R-H10-V10
+CE
+GF 0 R-H10-V10.WGF
+GW 24 5 .235 0 -.0746 .235 0 .0746 .002
+GW 25 12 .235 0 .0746 .235 .35 .0746 .002
+GW 26 12 .235 0 -.0746 .235 .35 -.0746 .002
+GW 27 5 .235 .35 -.0746 .235 .35 .0746 .002
+GW 28 12 .235 0 .0746 .235 -.35 .0746 .002
+GW 29 12 .235 0 -.0746 .235 -.35 -.0746 .002
+GW 30 5 .235 -.35 -.0746 .235 -.35 .0746 .002
+GE 0 -1 0
+EX 0 24 3 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN</pre>
+  <p>Once established, the dimensions yield a 50-Ohm impedance that remains constant within 1.5 Ohm resistance and 1 Ohm reactance across the span of reflector sizes at the test frequency. Otherwise put, the 50-Ohm SWR never exceeds 1.03:1 in the models used in the exercise. The beamwidth values are virtually identical to those for the dual-dipole driver, with one small exception: the H-plane beam width tends to show a small (2 degree) peak when the vertical dimension is about 1.6 m, consistently one increment of vertical height larger than the reflector size that shows the minimum feedpoint resistance. The E-plane beamwidth minimum value continues to coincide with the vertical height needed for maximum gain.</p>
+  <center>
+    <img src="planar2-12.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The peak gain occurs, as shown in <b>Fig. 12</b>, with a reflector that is 1.6 m horizontally and 1.2 m vertically. However, the peak gain values for horizontal dimensions between 1.4 m and 2.0 m are so tightly grouped, that the difference in gain among them is not distinguishable. Equally difficult to distinguish is the rate of decrease as we increase the vertical dimension of the reflector. Only the two narrowest reflectors show distinct lines in the graph. The gain values generally coincide with those for the in-phase-fed dual dipole driver, although the rate of decrease after the peak value is a bit more rapid for the double rectangle. The horizontal extension of the reflector when using the peak gain size is 0.45 m past each outer vertical wire, a slightly smaller amount than for the other arrays. However, the convergence of the peak gain values for the 1.6-m and 1.8-m wide reflectors suggests that a true peak gain occurs in the vicinity of about 1.7 m for the reflector horizontal dimension. If that holds true, then the required extension would be closer to 0.5 m, or about the same as for the single rectangle and well within the cluster of extensions required by any of the arrays that we have so far surveyed.</p>
+  <center>
+    <img src="planar2-13.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 180-degree front-to-back ratio of the double rectangle shows peaks for the two narrowest reflectors within the range of the reflector sizes tested. With a horizontal dimension of 1.0 m, the front-to-back peaks with a vertical dimension of 1.6 m, and with a horizontal of 1.2 m, the peak occurs with a vertical that is 1.8 m. In all of the wider reflectors, the peak front-to-back ratio occurs at or above a vertical dimension of 2.0 m. Note that, just as the gain peak values converge tightly at a single reflector vertical dimension, the front-to-back peak values also converge into a tight group at or slightly above a vertical dimension of 2.0 m.</p>
+  <center>
+    <img src="planar2-14.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 50-Ohm SWR operating passband extends from about 290 to 311 MHz, a 7% passband, using the 4-mm double rectangle. The passband is wider than the one for the single rectangle, but still considerably smaller than the passband for the phase-fed vertical dipoles. Increasing the wire size to 8 mm (and adjusting the rectangle dimensions and spacing accordingly) would extend the passband, but it would not approach the wide-band capabilities of the phase-fed dipole driver.</p>
+  <p>Using the center vertical section of the double rectangle as the driving point is not only a convenience, but it also ensures a symmetrical H-plane pattern. A typical pattern appears in the left portion of <b>Fig. 15</b>. Theoretically, we can also feed the array on one end. The end-fed version would have the advantage of presenting a higher resonant impedance for similarly sized driver assemblies. The result would be a closer spacing of the driver from the reflector and a resulting increase in gain. However, see the right portion of <b>Fig. 15</b>.</p>
+  <center>
+    <img src="planar2-15.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Even using perfect or lossless wire, side-fed double rectangles that are optimized for maximum gain are not correctly sized to yield ideal currents among the vertical elements. Ideally, a double rectangle coincides with basic phased dipole theory when the center vertical has twice the current magnitude of the outer verticals. When we use the center element as the feedpoint, the error introduced by the slightly short spacing of the verticals is equal on both end verticals. Hence, the pattern is symmetrical. However, when we use the end wire as the feedpoint, the error accumulates down the line, and the pattern shows an asymmetrical form.</p>
+  <p><b>Tentative Conclusions</b></p>
+  <p>Our further exploration of planar reflector arrays yields a number of tentative conclusions, although some of them appear to be sufficiently justified to be used as generalizations.</p>
+  <blockquote>
+    1. The feedpoint properties of any driver so far, once established, remain the same regardless of the reflector size.
+    <p>2. The ideal maximum gain height of the reflector is about 1.2 m (wavelength), regardless of the driver vertical or horizontal dimension.</p>
+    <p>3. The ideal maximum gain reflector is one that extends horizontally beyond the driver system by about 0.5 m to 0.6 m (or wavelength).</p>
+    <p>4. The rectangular drivers provide simpler array construction, but much narrower 50-Ohm SWR operating passbands than the phase-fed dual dipole driver.</p>
+    <p>5. So far, the phase-fed dual dipole driver and the double rectangle provide the maximum gain from the array.</p>
+    <p>6. In none of the arrays does the maximum front-to-back ratio coincide with the maximum gain in terms of reflector size. If we use a front-to-rear ratio, averaging the rearward gain across the 180 degrees of rearward directions, it appears that the larger the reflector, the lower the average rearward gain and the higher the front-to-rear ratio.</p>
+  </blockquote>
+  <p>Planar reflector arrays have used a wide variety of driver assemblies. Some of them are based upon the quad loop as a driver, in both single and multiple versions. Therefore, before we freeze these conclusions, we should undertake at least one more round of modeling and data gathering.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-01-2005. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>February, 2005. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="planar3.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 3</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#planar-reflector'>Planar Reflector</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

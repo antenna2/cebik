@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Matching">
+  <title>The 75-Ohm 1/4 Wavelength Matching Section</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10">ANTENNAS FROM THE GROUND UP<img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>24.Two Zs for a Quarter<br>
+    or The 75-Ohm 1/4 Wavelength Matching Section</h3>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <p>In numerous projects, writers will specify the use of a 1/4 wavelength matching section of 70-to 75-ohm coax between the antenna feedpoint and the 50-ohm coax run to the shack. A typical installation is illustrated in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="gup24-1.gif" width="288" height="550" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's see how these matching sections do their work. These types of matching sections are handy and easy to make, so you may find them useful in future antenna projects.</p>
+  <p><b>The Raw vs. the Matched Antenna</b>: Let's start by comparing the feedpoint impedance of a 10-meter quad, both with and without the matching section. The figures are based on a quad beam that is self-resonant just below 28.25 MHz. The 1/4 wavelength section of 75-ohm, 0.66 velocity factor coax was cut for 28.5 MHz and turned out to be 68.3" long. All SWR figures are relative to 50 ohms.</p>
+  <pre>............................................................................
+Frequency        Without matching section              With matching section
+  in MHz         Feed Z           SWR                  Feed Z           SWR
+                 (R+/-jX)                              R+/-jX)
+28.00            70.6 - j29.2     1.81                 66.6 + j27.4     1.73
+28.25            96.8 + j 3.4     1.94                 58.1 - j 2.5     1.17
+28.50            125.1 + j25.9    2.63                 43.1 - j 9.0     1.28
+28.75            150.1 + j39.4    3.23                 35.0 - j 8.5     1.51
+29.00            168.6 + j47.7    3.67                 30.7 - j 7.1     1.68
+29.25            180.8 + j54.8    3.97                 28.3 - j 6.0     1.81
+29.50            188.2 + j63.1    4.22                 26.6 - j 5.4     1.91
+29.75            192.6 + j73.6    4.45                 25.1 - j 5.2     2.02
+............................................................................</pre>
+  <p>Without the matching section, the SWR for the quad is high enough so that the automatic shut down feature of most current solid state rigs would reduce rig output to almost nothing. With the matching section, the SWR within 10 meters permits normal operation.</p>
+  <p>As the unmatched impedances go up, the matched impedances go down. This gives us a clue as to how the matching section operates. Every length of coax of any characteristic impedance (ZO) is an impedance transformer. For odd lengths, the transformation is complex.</p>
+  <p>However, when a length of coax is exactly 1/4 wavelength long at a given frequency, the transformation is simple, especially if the impedance to be transformed is wholly resistive. We can use a calculator to handle this equation:</p>
+  <center>
+    <img src="gup24e1.gif" width="108" height="68">
+  </center>
+  <p>where Zin is the impedance at the junction of the matching section and the main 50-ohm line, ZO is the characteristic impedance of the matching section line, and Zant is the feedpoint impedance of the antenna.</p>
+  <p><b>The Approximate and the Exact</b>: This little formula is only approximate in the real world. For example, with the quad, there is a reactive part of the antenna feedpoint impedance in every line of the table. The equation presumes a purely resistive impedance. If we want to calculate the actual impedance transformation for complex antenna feedpoint impedances, we would have to use something like this equation:</p>
+  <center>
+    <img src="gup24e2.gif" width="246" height="138">
+  </center>
+  <p>where ZO, Zin, and Zant have the same meanings as in the simple equation, and L is the electrical length of the matching section in degrees. A quarter wavelength line is exactly 90 degrees long, since a full wavelength is 360 electrical degrees. Additionally, the quarter wavelength line will be shorter than a full quarter wavelength in free space because every transmission line has a shortening effect called velocity factor (VF), which is always 1.0 or less. In our table, the VF of the 75-ohm matching section is 0.66.</p>
+  <p>Because this equation for Zin requires that we separate the "real" and the "imaginary" (j) terms and perform other operations to obtain the desired values, we sometimes use a pair of equations that will directly calculate the input impedance in terms of R and jX, the resistance and reactance respectively. These are handy, since we usually are given the antenna feedpoint impedance in terms of R and jX.</p>
+  <center>
+    <img src="gup24e3.gif" width="310" height="141">
+  </center>
+  <center>
+    <img src="gup24e4.gif" width="395" height="138">
+  </center>
+  <p>where Rant and Xant replace Zant and Rin and Xin replaces Zin. Although these equations look formidable, they easily separate into parts for placement in a BASIC language computer program. However, that work has already been done in a program called "Transmission Line Performance" in the <a href="../radio.html#HAMCALC">HAMCALC</a> collection, available from VE3ERP.</p>
+  <p>These equations are for lossless lines, and no line is ever completely lossless. However, the losses in quarter wavelength matching sections are negligible in practice and can be bypassed. In theory, we ought also to use the full formulas for all calculations, because the matching section is only an exact 1/4 wavelength at 28.5 MHz and nowhere else. However, if the reactances are not too high and the frequency span is not too great, the simple equation makes a good approximation. As we look at the table, for a single ham band and for reactance values less than half the resistive values, the simple equation works well enough for antenna building.</p>
+  <p>We can illustrate the effects of accounting for the reactance and for the fact that our matching section is only 1/4 wavelength long at one frequency with the following graph (<b>Fig. 2</b>).</p>
+  <center>
+    <img src="gup24-2.gif" width="640" height="505" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Using the impedance values from the quad table, we can look at the situation in 3 steps. Step 1 uses only the resistive component of the feedpoint impedance and true 1/4 wavelength matching lines for each frequency checked. This line yields over-optimistically low SWR values across 10 meters. Step 2 includes the reactance at the antenna feedpoint, but again uses true 1/4 wavelength matching section lines for each frquency check point. This is the top line.</p>
+  <p>Step three uses both the resistive and reactive components of the feedpoint impedance, but restricts the matching section to a line that is 1/4 wavelength long at 28.5 MHz. Below this frequency, the line is a bit short (about 88 degrees at 28 MHz). The antenna impedance is not transformed a full 90 degrees worth, and the resulting impedance presents a slightly lower SWR to the 50-ohm feedline at the low end of the band. Likewise, at the upper end of the band, the matching section is a bit long (nearly 94 degrees at 29.75 MHz) which yields an impedance transformation that is more than from a 90-degree line. The SWR at the 50-ohm line junction is slightly lower than with a true 1/4 wavelength line. The effect is slight but definite, as the middle line of the graph clearly shows.</p>
+  <p>Remember that for purely resistive impedances, a 2:1 50-ohm SWR accommodates an impedance range of 25 to 100 ohms. This resistive range shrinks when we combine reactances with resistance. However, note the 4:1 range of impedance that these SWR limits can handle. (Also remember that the 2:1 ratio is somewhat arbitrary as a set of limits. It's chief effect is noted by automated power reduction circuits in transceivers. Apart from this, there would be little difference in radiated power between, say, SWRs of 1.8 and 2.5.)</p>
+  <p>With a 1/4 wavelength 75-ohm matching section, again in purely resistive terms, we can take antenna feedpoint impedances between just above 56 ohms up to 225 ohms and transform them to values that fit the 50-ohm 2:1 SWR limits--again, a 4:1 range. Notice that our quad does not reach 225 ohms when the matched SWR exceeds 2:1, but notice also that there is considerable reactance that accompanies the resistive value at 29.75 MHz.</p>
+  <p>Likewise, at 28 MHz, we would expect the antenna impedance of 70.6 ohms to yield about an 80-ohm figure instead of the 66.9-ohm figure that actually emerges. However, not only do we have reactance at the antenna feedpoint, but as well the matching section is shorter than 1/4 wavelength at this frequency. Hence, the impedance does not undergo a full quarter wavelength transformation. (Likewise, above 28.5 MHz, the impedance undergoes more than a 1/4 wavelength transformation.)</p>
+  <p>These are the finer points of using a 1/4 wavelength matching section that affect the matching range by just a little bit and throw the actual impedances somewhat off the calculated results from the simple formula. But the simple formula works well enough for most ham antennas. To be on the safe side, let's express the limits conservatively: if you have a range of antenna feedpoint impedances from about 80 to 200 ohms, then a 1/4 wavelength section of 75-ohm coax will transform them to values appropriate to a 50-ohm feedline and transceiver system.</p>
+  <p><b>Cutting the Matching Section</b>: A question many folks ask is how precisely the matching section line must be cut. Does the length of the pin in the connector make a difference? Should I try to be precise to a quarter, eighth, or sixteenth of an inch?</p>
+  <p>Actually, if you are within an inch or two of the correct length at 10 meters (with appropriate expansions as the frequency goes down and contractions as the frequency goes up), you will not notice the difference.</p>
+  <p>For the quad example, I calculated the impedances and SWR figures for matching sections based on design frequencies of 28, 28.5, and 29 MHz, hoping to make another graph. However, the graph lines could not be separated. The maximum difference in SWR anywhere across the band was 0.06, a truly insignificant difference. Yet the matching section length varied by 2.5 inches, and we can all be more precise than 2.5" of length.</p>
+  <p>As a guide to cutting, we might note the following: most antennas show a steeper rise in feedpoint impedance on one side of resonance than on the other. Cut your line to a frequency on the shallow-rise side of resonance. Better yet, obtain a calculation program or a version of NEC-2 or better (which permit modeling of lossless transmission lines) and experiment with lengths until you obtain the desired or best SWR curve for your operating.</p>
+  <p><b>Other Applications</b>: 50-ohm and 75-ohm coax cables are the ones most easily obtained by hams, even though other values are available from manufacturers. However, this fact does not limit us to matching only values above 50-ohms to our 50-ohm system. If you cut 2 lengths of 75-ohm cable to 1/4 wavelength and connect them in parallel (center conductor to center conductor and braid to braid at both ends), you have a 37.5-ohm cable. If we plug this value into the simple equation, we find that we can match impedances values below 50- ohms up to values within the 2:1 50-ohm SWR limits. This is useful for Yagis and other antennas that often have feedpoint impedances in the 20-35 ohm range. The double line can be a bit bulky, but that is about its only significant disadvantage over other matching methods.</p>
+  <center>
+    <img src="gup24-3.gif" width="384" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Consider another situation illustrated in <b>Fig. 3</b>: At certain wire antenna heights below 1/2 wavelength, the feedpoint impedance of a dipole is not 70 ohms, but more like 80-95 ohms. The 75-ohm matching section would transform these values to a 70-60 ohm range. However, we can broaden the range over which these values apply by first running a section of 50-ohm cable that is 1/2 wavelength long or a multiple of 1/2 wavelength (allowing, of course, for the cable&thorn;s velocity factor). Cut the 50-ohm cable for a frequency at the band center, such as 7.15 MHz for a 40-meter dipole. Since the cable is short at the low end of the band, the impedance will be higher than at the antenna at the same frequency. Equally, since the cable is long at the high end of the band, the impedance will also be higher than at the antenna terminals. The result will be band edge values closer to 100-120 ohms.</p>
+  <p>Now, if we plug in our 1/4 wavelength 75-ohm matching section, we have lower SWR values across the band than we would have by placing the 75-ohm matching section at the antenna terminals. In fact, such a system can, with some dipole heights on 80 meters, cover more than 4/5 of the band with under 2:1 SWR.</p>
+  <p><b>Flexibility and Limitations</b>: 75-ohm quarter wavelength matching sections (and derivatives) make up a quite flexible array of methods for adapting 50-ohm transmission line to antennas that do not present 50-ohms at their feedpoint terminals. However, they do have some major limitations. Because a length of coax is 1/4 wavelength long at only one frequency, this technique is for monoband antennas only. If you have a multiband antenna, you will have to use some other method of matching your 50-ohm coax/transceiver system to the antenna.</p>
+  <p>Likewise, the transformations become far more complex the higher the reactance at the antenna feedpoint. Hence, the quarter wavelength matching system is also only for low- reactance matching situations, such as the one shown in the table for the quad. If you have higher reactances, you may need a different matching system.</p>
+  <p>But where the 1/4 wavelength matching section is suited to the task, it is simple, inexpensive, low-loss, and effective. Those are pretty good credentials for any matching scheme.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 05-02-2001. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="groundup.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to series index page</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#matching'>Matching</a></p><br>
+</body>
+</html>

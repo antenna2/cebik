@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>NEC and Reciprocity</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>NEC and Reciprocity</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>In these notes, we shall examine a relatively simple-sounding question: Does NEC honor the reciprocity theorem as applied to antennas? We shall look at two demonstrations that we might use to satisfy ourselves that the popular wire-antenna modeling program does honor the theorem. One method of demonstation will not be accessible to those using some entry-level NEC implementations, such as EZNEC or NEC-Win Plus. Therefore, we shall add a second demonstation that, although less graphically complete, should satisfy any user that reciprocity applies to NEC models. In the process of setting up these demonstrations, I have striven to keep to an absolute minimum any software user calculations that are external to the NEC program. In fact, we shall need only one simple equation, letting NEC's calculations do the reminder of the work. Indeed, these notes are less about the foundations and validity of the reciprocity theorem and more about NEC itself.</p>
+  <p><b>What is Reciprocity?</b></p>
+  <p><i>The ARRL Antenna Book</i> (20th Ed., p. 2-1) contains a beginner's discursive explanation of reciprocity. "In the same fashion that a loudspeaker can act as a microphone, a radio antenna also follows the principle of reciprocity. In other words, an antenna can transmit as well as receive signals." This brief extract follows on an explanation of an antenna as a "special transducer" capable of converting RF current into propagating electromagnetic waves and converting intercepted waves into electrical current. The context is the very beginning of a chapter called "Antenna Fundamentals." Hence, we should not expect mathematical sophistication. Indeed, at this stage of the volume's exposition, the discussion is unprepared to answer many questions that arise within a radio operator's experience. For example, in 2-way HF communication, we very often find that there are differences in the received strengths of an outgoing signal and an incoming signal. From the initial description of reciprocity, we cannot tell if the differences are a function of how the antenna works in transmit and receive modes or a function of what happens to the electromagnetic waves between the transmitting and receiving sites, that is, a function of HF radio wave propagation.</p>
+  <p>More mathematically inclined readers may wish to consult various college-level antenna texts. I keep a small number on my shelf as references, for example, Stutzman and Thiele, <i>Antenna Theory and Design</i> (2nd Ed., pp. 404-409), and Balanis, <i>Antenna Theory: Analysis and Design</i> (2nd Ed., pp. 127-132). I have listed the most relevant pages of each text for a reason. Balanis discusses reciprocity early in the text's development, but Stutzman and Thiele defer the treatment until late in the text. We shall have occasion to note the Stutzman and Thiele treatment later.</p>
+  <p>Both treatments share a common kernel, the development of antenna reciprocity from the the Lorentz reciprocity theorem, which itself derives from Maxwell's equations. (Those comfortable with calculs may wish to compare the Stutzman and Thiele equation 9-36 with Balanis' equation 3-66. Because my goal is to minimize necessary reader math in these notes, I shall not reproduce the equation here, especially since it is so readily available elsewhere.)</p>
+  <p>A better-known text among amateur radio operators is Kraus, <i>Antennas</i> (2nd Ed., pp. 410-413). One interesting aspect of the Kraus treatment is that he uses a different starting point for his development of reciprocity. He begins with the Rayleigh-Helmholtz reciprocity theorem as generalized in the 1920s by J. R. Carson. (Rayleigh's initial context of sound is not unrelated to the ARRL basic analogy between antennas and loudspeakers.) Without ado, Kraus expresses the theorem in the following terms: "If an emf is applied to the terminals of an antenna A and the current measured at the trerminals of another antenna B, then an equal current (in both amplitude amd phase) will be obtained at the terminals of antenna A if the same emf is applied to the terminals of antenna B." (p.411) Krause goes on to note some of the limiting conditions in which the theorem applies. Of course, the frequency of the applied emf (or voltage) must by the same, and the media must be "linear, passive and also isotropic." For our purposes in evaluating whether NEC honors reciprocity, the following note is critical: "An important consequence of this theorem is the fact that under these conditions the transmitting and receiving patterns of an antenna are the same."</p>
+  <p>The last note that I cited from Kraus gives us something that we can test in various ways within the context of NEC software solely by examining the NEC output report. Sometimes, we shall even be able to use graphical representations of selected output data to illustrate the results.</p>
+  <p><b>NEC Transmit and Receive Patterns</b></p>
+  <p>We may use NEC itself to establish the transmit and receive patterns are the same. However, the entry-level software used by most modelers gives no clue to a proper answer to the question. Most entry-level software restricts the user to only one of the excitation possibilities, the direct voltage source (EX0) (or an indirect current source). For example, we might encounter a 6-element Yagi modeled in free space. The following lines define the model in ASCII format.</p>
+  <pre>
+CM 6-el 2M Yagi
+CE
+GW 1 21 -.514604 0. 0. .514604 0. 0. .0024
+GW 2 21 -.5075174 .257302 0. .5075174 .257302 0. .0024
+GW 3 21 -.4746752 .3637788 0. .4746752 .3637788 0. .0024
+GW 4 21 -.461137 .6585204 0. .461137 .6585204 0. .0024
+GW 5 21 -.461137 .9469628 0. .461137 .9469628 0. .0024
+GW 6 21 -.443992 1.377137 0. .443992 1.377137 0. .0024
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+FR 0 1 0 0 146. 0
+GN -1
+EX 0 2 11 0 1 0.
+RP 0 1 361 1500 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>The EX command line specifies that we apply a voltage source to the center segment of wire 2. In most entry-level programs, we then request a radiation pattern (RP0). Since the antenna is in free space, we request an azimuth pattern, which is technically an E-plane pattern. The result appears in <b>Fig. 1</b>. Note that the wire entries place the element spacing values in the Y columns, while the elements extend in the +X and -X directions. The conventions of the software used here (NSI's GNEC) place 0 degrees at the top of the polar plot. The pattern is a phi pattern (where a true azimuth pattern would increase the degree values clockwise). Hence, the main lobe of the antenna points to the left at 90 degrees phi.</p>
+  <center>
+    <img src="recip-1.gif" width="625" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The side panel in the figure provides the analytical data to accompany the normalized plot on a logarithmic scale. One reason that I selected this antenna was its free-space gain value of just over 10 dBi. For data-gathering purposes, the XNDA specification in the RP0 command is 1500. When N=5, the radiation pattern portion of the NEC output file produces an additional table. It lists for each value of phi and theta the antenna gain normalized to the peak gain of the antenna. The bearing of peak gain will read 0 dB, and all other gain values will be negative, indicating how much below the peak gain they are, as recording in dB. However, even a pattern like this one does not show why the antenna is or is not reciprocal, or even what reciprocity might mean.</p>
+  <p>An antenna is reciprocal if its receiving pattern and its transmitting pattern are the same. We ordinarily record the transmitting pattern in dBi, or dB relative to an isotropic source. Normalized, the gain appears relative to a peak value of 0 dB. The counterpart to transmitting gain would be receiving sensitivity. More advanced versions of NEC offer a number of options for deriving receiving patterns. They involve the EX1 command for linear antennas, that is, providing the antenna with external excitation in the form of linear plane waves. We systematically rotate the excitation around the antenna in a series of steps. Then we invoke the PT command to record the relative current at a selected point--our former feedpoint. <b>Fig. 2</b> shows in simplified form with only 8 positions for the EX1 command how the development of receiving patterns differs from the development of transmit patterns.</p>
+  <center>
+    <img src="recip-2.gif" width="650" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>EX1 is only one of three types of excitation that are external to the antenna geometry.</p>
+  <blockquote>
+    <p>EX 1: incident plane wave, linear polarization</p>
+    <p>EX 2: incident plane wave, right hand (thumb along the incident vector) elliptic polarization</p>
+    <p>EX 3: incident plane wave, left hand (thumb along the incident vector) elliptic polarization</p>
+  </blockquote>
+  <p>Both of the elliptical polarization options are useful when simulating signal sources from helical and similar antennas. Linear polarization simulates from antennas that we normally classify over ground as either vertically or gorizontally polarized, both of which are forms of linear polarization. For reference, the following line shows the meaning of the entries within an EX1 command. Note that as we change the type of excitation from EX0 through EX5, the leanings for the integer and floating decimals will change. See the NEC-4 manual for other forms of excitation.</p>
+  <pre>
+Com  I1   I2     I3     I4   F1        F2        F3         F4    F5   F6    F7
+ID   Type # Thta # Phi  Not  Th angle  Ph angle  Eta        Theta Phi  Axis  El. field
+          angles angles used to vector to vector pol. angle step  step ratio V/m
+EX   1    1      8      0    90        0         90         0     45   0     0
+</pre>
+  <p>The sample entry is for a linear plane wave. Hence, F6 is 0 by non-relevance. F7 also has a 0, but that value indicates a default value of 1 V/m. In some problems designed to ferret out coupling potentials among wires, you may use a specific value that closely approximates the value from the source signal at the structure being examined in model form.</p>
+  <p>Most of the remaining entries define incident plane waves as a calculation loop within NEC (with some properties resembling the loop operation of frequency sweeps using the FR command). In the sample, for the sake of clarity, there is only one theta angle: 90 degrees. This angle is parallel to the plane of the antenna elements. The sample specifies 8 phi-angle (azimuth-angle) steps at 45-degree increments, thus providing samples evenly spaced in the element plane. The entry corresponds to the simplified situation shown in <b>Fig. 2</b>.</p>
+  <p>The F3 entry, called Eta, under linear polarization is easy to memorize. With a value of 0, the polarization is in the +/-Z direction--vertically polarized for antennas over ground. If F3 is 90, the polarization is in the X-Y plane--horizontally polarized for antennas over ground. The sample in free space uses horizontal polarization for simplicity, but there is no restriction against checking results when cross-polarized or with the polarization set to intermediate angles. When using EX 2 or EX 3, elliptical polarization, the entry changes its meaning and defines the major ellipse axis. (Remember that true circular polarization is simply a special case of elliptical polarization having equal axes.)</p>
+  <blockquote>
+    <p>[<b>Special Note for NEC-2 Users</b>: The structure of the NEC-2 plane-wave excitation entry is slightly different than the NEC 4 entry. It has the following structure:</p>
+    <pre>
+Com  I1   I2     I3     I4   F1        F2        F3         F4    F5   F6
+ID   Type # Thta # Phi  Not  Th angle  Ph angle  Eta        Theta Phi  Axis
+          angles angles used to vector to vector pol. angle step  step ratio
+EX   1    1      8      0    90        0         90         0     45   0
+</pre>
+    <p>Note that the NEC-2 version lacks the F7 floating point entry for the electrical field strength, and the default value of 1 V/m always applies. Only 1 incident plane wave is allowed at a time (that is, before a succeeding execution step). If excitation types are mixed before a succeeding execution step, then the program will use only the last excitation type encountered.]</p>
+  </blockquote>The second command necessary to produce a receiving pattern is PT (technically, Printing Options for Currents on Wires). The options of interest are the following ones:
+  <blockquote>
+    <p>PT 1: Currents printed in a format designed for a receiving pattern.</p>
+    <p>PT 2: Currents printed in a format designed for a receiving pattern, plus a normalized value for the last segment's current.</p>
+    <p>PT 3: Only the normalized current is printed.</p>
+  </blockquote>
+  <p>Our present interest lies in the PT entries followed by positive integers. The general format is as follows.</p>
+  <pre>
+Com  I1    I2     I3       I4
+ID   Type  Tag #  1st Seg  Last Seg
+PT   2     2      1        11
+</pre>
+  <p>The I2 through I4 entries are necessary only for PT 0 through PT 3. In this instance, the sample request asks both for the data on Tag 2, Segments 1 - 11, and for the normalized value of the data on segment 11. To make sense of this entry, refer to the initial model. Tag 2 represents the Yagi driver, and segment 11 is the segment connected to the feedline--a source segment in the transmitting mode and the focal segment in the receiving mode.</p>
+  <p>From the EX1 and PT3 commands, we can construct a model that will provide us with the receiving counterpart of the transmitted radiation pattern for our 6-element Yagi. The following lines show the model in .NEC format. Note that NEC has a limitation in how large a receiving matrix may be. Therefore, the data generation has two parts, one from -90 to +90 degrees, the other from 90 to 270 degrees. <b>Fig. 1</b> tells us why we selected the division of the work, since peak gain occurs at a phi heading of 90 degrees. Since we shall request normalized data, each section of data must contain a peak gain/current point, which occurs at 90 degrees phi. The program then normalizes the data against this value. The PT3 command allows us to capture only the normalized current in dB at a selected segment, in this case, the same segment that we formerly used as the transmit source or feedpoint.</p>
+  <pre>
+CM 6-el 2M Yagi
+CE
+GW 1 21 -.514604 0. 0. .514604 0. 0. .0024
+GW 2 21 -.5075174 .257302 0. .5075174 .257302 0. .0024
+GW 3 21 -.4746752 .3637788 0. .4746752 .3637788 0. .0024
+GW 4 21 -.461137 .6585204 0. .461137 .6585204 0. .0024
+GW 5 21 -.461137 .9469628 0. .461137 .9469628 0. .0024
+GW 6 21 -.443992 1.377137 0. .443992 1.377137 0. .0024
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+PT 3 2 11 11
+EX 1 1 181 0 90 0 90 0 1 0 0
+XQ
+PT 3 2 11 11
+EX 1 1 181 0 -90 180 90 0 1 0 0
+XQ
+EN
+</pre>
+  <p>The data for both the transmitting pattern and the receiving pattern can be transferred to a spreadsheet for graphing. For both sets of data, we have 361 data points (from 0 to 360 degrees phi). <b>Table 1</b> provides a glimpse of the data from 0 to 120 degrees for the 6-element Yagi in free space at 146 MHz. Three data points call for attention: 0, 180, and 360 degrees. Each of these points represents a free-space side null. Values for these nulls have two properties that are problematical for graphing. First, they may have very large negative values. Graphing such values may result is severe compression of the upper part of the graph. Second, the values are subject to large variations with very small differences in the rounded values of numbers that go into their development. For the sake of graphing, I have set these numbers to an artificially high value of -100 dB.</p>
+  <center>
+    <img src="recip-t1.gif" width="769" height="550" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we conjoined the two graphs--one for the transmitting pattern and one for the receiving pattern--we obtain a result like <b>Fig. 3</b>.</p>
+  <center>
+    <img src="recip-3.gif" width="774" height="516" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Computer-generated graphs "write" the curve for one color and then overwrite it with the second color line. The result for our test case is the nearly complete disappearance of the red line beneath the green. A few red "dots" appear as verification that the line is present. However, as both the graph and the table suggest, the normalized pattern graphs are as identical as one might find in any data generation system. In short, within the limits of our ability to calculate and present the results, the patterns for transmitting gain and for receiving sensitivity are the same. From the perspective of NEC, the antenna performance is reciprocal with respect to transmitting and receiving.</p>
+  <p><b>An Alternative Procedure Using only EX0 and RP0</b></p>
+  <p>Early in the notes, I mentioned that the Stutzman and Thiele text reserves treatment of recprocity until late in their work, specifically the chapter devoted to antenna measurements. In this context, the identity or radiated and received patterns becomes significant insofar as it allows us to set up four equivalent test procedures for determining the pattern of a linear antenna. <b>Fig. 4</b> shows the possibilities.</p>
+  <center>
+    <img src="recip-4.gif" width="528" height="367" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let us suppose that we have a reasnably complex antenna with an equally complex radiation pattern. Our 6-element, 146-MHz Yagi will do well in this regard. In order to obtain the pattern, we shall need not only the test antenna, but as well a second antenna that we may use to transmit a standard unvarying signal or to receive a signal from the test antenna. We may place the test antenna in a fixed position and rotate the second antenna around it, as suggested by the upper two parts of <b>Fig. 4</b>. This arrangement tends to be mechanically complex, costly, and inconvenient for all but the crudest measurements, such as in a walk-around. However, periodic checks made of fixed broadcast antennas tend to use this system with checks at selected points around the compass. If we use the second antenna in the transmit mode, then we replicate the receive model that we have just concluded. For models, the techniques is equally applicable in both NEC-2 and NEC-4.</p>
+  <p>The lower two options in <b>Fig. 4</b> represent procedures that a more common to HF and VHF antenna range testing by manufacturers. We may let the test antenna transmit while rotating it, and receive the signal of varying strength at the second antenna. Alternatively, we may let the test antenna receiving while rotating, using the second antenna as a transmitted signal source.</p>
+  <p>For horizontally polarized antennas over ground, the second antenna is normally a dipole. A dipole that is resonant at the test frequency has known properties and performs very close to an ideal dipole, despite the use of common cxonductive materials and the shortening that accompanies a non-infinitesimal diameter. Since the early days of antenna experimentation, it has served as both a reference antenna and as a signal source or recpetion aerial.</p>
+  <p>For reliable pattern data, the two antennas need to be well separated. At lower frequencies, one needs to be concerns about Rayleigh limits for the far field. In a VHF model, we can simply set the two antennas apart by a wide distance. In the model that we shall use, the separation will be 1 mile (5280' or 63360"). Since a wavelength at 146 MHz is between 80" and 81", the antennas will be over 750 wavelengths apart. In order to assure that we have enough current on the receive antenna elements to register, we may set the transmit power at an arbitrary 1000 W.</p>
+  <p>To further simplify the set-up, we shall set the two antennas in a free-space environment. Our goal is to demonstrate a reciprocity between transmitted and received patterns, so we need not be concerned by introducing an intervening variable, such as the ground.</p>
+  <pre>
+CM 6-el 2M Yagi and dipole
+CE
+GW 1,21,-.6885686,.514604,0.,-.6885686,-.514604,0.,.0023813
+GW 2,21,-.4312666,.5075174,0.,-.4312666,-.5075174,0.,.0023813
+GW 3,21,-.3247898,.4746752,0.,-.3247898,-.4746752,0.,.0023813
+GW 4,21,-.0300482,.461137,0.,-.0300482,-.461137,0.,.0023813
+GW 5,21,.2583942,.461137,0.,.2583942,-.461137,0.,.0023813
+GW 6,21,.6885684,.443992,0.,.6885684,-.443992,0.,.0023813
+GW 7,21,1609.344,-.48641,0.,1609.344,.48641,0.,.0023813
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+FR 0,1,0,0,146.
+GN -1
+EX 0,7,11,0,1.,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <p>The model that we require, in .NEC format, looks very much like the initial model for the the original 6-eleent Yagi, with only a few changes. First, we have added the dipole that is 1 mile away from the Yagi. Second, we have provided the dipole with the source (Wire 7, Segment 11). To reverse the transmit and receive functions, we need only place the source on Wire 2, Segment 11.</p>
+  <p>For the sake of the doemnstation, we shall need some data about the Yagi in free space. <b>Fig. 5</b> provides a free-sapace radiation pattern and performance data from an EZNEC model. The only differences between the pattern shown and <b>Fig. 1</b> are that fact that the new pattern derives from EZNEC software, the main lobe extends along the X-axis, and the EZNEC graphic convention is to place 0 degrees phi horizontally to the right.</p>
+  <center>
+    <img src="recip-5.gif" width="500" height="450" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Thge figure includes some data that we shall later use, including the maximum forward gain in dBi, the 180-degree front-to-back ratio, the front-to-sidelone ratio, and phi angles for the half-power points. (The sidelobes for this model are actually the rear quartering lobes, but they will serve our needs quite well.) We shall use all of this data to establish a coincidence between tra smit and receive patterns using only the standard entry-level RP0 request for a radiation pattern.</p>
+  <p>Although I have shown the model in .NEC format, it will run on EZNEC, which simplifies the process of rotating the 6 wires that form the Yagi. In EZNEC, we shall be rotating the antenna in 10-degree increments from 0 degrees phi to 180 degrees phi. In addfition, EZNEC has a provision for setting the power level of the transmitting antenna, a facility that relieves us of the need to calculate the correct voltage to achieve that power level. We shall make two sets of model runs, one with the Yagi transmitting and one with the dipole transmitting. <b>Fig. 6</b> shows the outline of the model set-up, although only a few Yagi positions appear for clarity. The figure also includes the free-space patterns of the two antennas, derived when each in in a transmit mode.</p>
+  <center>
+    <img src="recip-6.gif" width="580" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Except as a check to see that we have in fact rotated the Yagi by 10 degrees for each run of the model, we shall not initially examine the output data. The radiation pattern will show essentially the same values wherever we point it when we use it in the transmit mode. Instead, we shall use some data that is readily available even in entry-level software, although too few modelers ever even look at it. We shall look at the current magnitude and phase angle on a certain wire and segment. The relevant segment is the one that would have the source in the transmit mode, but which does not have a source in the receive mode. Many modeler would place a load on this segment, one that corresponds to the segment's impedance when in the transmit mode. Because our initial tests will seek only a clear indication of the pattern shape, we may overlook the load, but we shall add one eventually.</p>
+  <p>The required current magnitrude and phase data appear in the NEC output report. Entry-level software, such as EZNEC and NEC-Win Plus, provide this data in special tables extracted from the output file. NEC itself uses peak values of voltage and current. EZNEC is somewhat unique in converting these values to RMS values. Hence, the numbers in the EZNEC current table will be related to the values in the NEC output table by a constant factor (1.414), which will not affect our ultimate evaluation of the pattern shape. One limitation of the current table is that for values that require engineering notation (for example, 1.2E-5), the table limits the entry to two significant digits. We shall keep that fact in mind when we perform a few simple external calculations on the data that we obtain.</p>
+  <center>
+    <img src="recip-t2.gif" width="321" height="497" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 2</b> provides the data that we gather from our experiment. For each row in the table, we rotate the Yagi by 10 degrees counterclockwise (in the phi direction). The middle columns record the current on the second antenna "feedpoint" segment when we provide the Yagi feedpoint with a voltage source equivalent to a supply power level of 1 kW. The right-hand columns record the current on the Yagi "feedpoint" segment when we provide the second antenna feedpoint with a voltage source equivalent to a supply power level of 1 kW. We only need to gather data between 0 and 180 degrees since the pattern is symmetrical. In certain other cases, we may wish to extend the survey for a full 360 degrees.</p>
+  <p>Although the phase angles for the two situations tightly coincide, the current magnitude entries do not. However, we would find an invariant adjustment factor between the two sets of current magnitudes. The difference results from the fact that each feedpoint requires a different source voltage to obtain the requisite 1-kW power level. The Yagi impedance is about 50+j9 Ohms, but the second antenna, a resonant dipole, has a feedpoint impedance of 72+j1 Ohms. This difference will make no difference to our evaluation of the patterns as we swap positions for the transmitted and received signals.</p>
+  <p>We might try to create a semblance of a polar plot using the data in the table, although it would have likely not be a pretty affair. Instead, we may evaluate the patterns against the radiation plot for the Yagi that appears in <b>Fig. 4</b>. The critical data in that plot use gain values in dB, for example, for the 180-degree front-to-back ratio and for the front-to-sidelobe ratio. We only have current magnitudes with which to work. However, we may obtain usable values in dB by reference to the common equation:</p>
+  <center>
+    <img src="recip-e1.gif" width="219" height="54">
+  </center>
+  <p>Our only question will be what values to use for I1 and for I2. For I1, lets use the current for zero degrees. To obtain a value for the 180-degree front-to-back ratio, we use the current for 180 degrees. In passing, we may not the the pattern in <b>Fig. 5</b> shows a higher gain at 180 degrees than on either side of that heading, and the <b>Table 2</b> record of data shows the same small increase in terms of the current magnitude. Compare the values for 170 and 180 degrees.</p>
+  <center>
+    <img src="recip-t3.gif" width="257" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 3</b> shows the calculated front-to-back ratios from erach data set along with the NEC data for the radiation pattern. Since the current value for 180 degrees uses only 2 significant digits, the values coincide closely with the NEC report. Moreover, the values for the two test situations are very close to each other.</p>
+  <p>With caution, we may apply the same technique to obtain a front-to-sidelobe value from the test data in <b>Table 2</b>. If we check <b>Fig. 4</b>, we find that the peak sidelobe gain occurs at 126 degrees. Our data only includes values for 120 and 130 degrees. However, these values are the dame in both sets of columns and the pattern does not show much change across the 10-degree span. Hence, we may plug the tabular datas as I2 values into our simple equation and obtain the next set of calculated data in <b>Table 3</b>. Remembering that the current data is only good to 2 significant digits, the result coincide remarkable well.</p>
+  <p>Without resorting to any sort of plotting exercise, we may perform one further test. The data for <b>Fig. 4</b> show that the half-power beamwidth limit is 26.3 degrees from the heading of the main forward lobe. We have data only for 20 degrees and 30 degrees. If we use the 20-degree values for I2, we should obtain a value less than 3 dB. The result using the data for 30 degrees should be greater than 3 dB. <b>Table 3</b> confirms this anticipated result. More significantly for this test, the values derived from the reversal of transmit and receive antennas tighly coincides.</p>
+  <p>The sum of these tests is that NEC produces within very close limits equivalent patterns in the test situation when the test Yagi transmits and when it receives. Even though we may be limited within entry-level software in the commands to which we have access, we can still confirm reciprocity of transmit and receive pattern shapes using the tools available.</p>
+  <p>We have not tried to determine the forward gain of the Yagi in the test situation. To obtain this data, we shall require a modified test situation. <b>Fig. 7</b> shows its general outlines.</p>
+  <center>
+    <img src="recip-7.gif" width="520" height="325" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At the top, we see our familiar test situation, except that this further test will require no rotation. We point the Yagi direcly at the second antenna. The lower portion of the figure shows that we have replaced the Yagi with a resonant dipole. For this test, we shall let the test antenna serve as a transmitter. We shall fit the second antenna with a 72-Ohm load resistor at its feedpoint segment. Now let's take current readings at the second antenna's feedpoint in both situations. When the Yagi transmits 1kW, the current is 1.57E-3 A at -13.98 degrees. When we replace the Yagi with the dipole, we obtain 6.2E-4 A at -10.24 degrees. Since we are working with such a limited number of significant digits we may ignore the slight difference in phase angle and use the two current values as I1 and I2 in our conversion equation. We obtain a value of about 8.1 dBd(r), that is gain over a dipole in a modeled range situation. Since we know that the dipole (with a significant diameter and made from real materials) has a free-space gain of 2.1 dBi, we may add this value to the calculated values to obtain a free-space gain of 10.2 dBi for the Yagi. The value reported by NEC for the transmit pattern in <b>Fig. 4</b> is 10.23 dBi.</p>
+  <p>We would have obtained very similar results had we omitted the load resistor in the receiving antenna (that is, a gain of 8.1 dBd(r)). Whichever way we set up the problem, we need to be consistent with the remote antenna's load resistor. With this result, we may declare--at least for the moment--that the case is closed.</p>
+  <p><b>Conclusion</b></p>
+  <p>We have examined a certain question, namely, whether or not NEC calcuations honor reciprocity between transmit and receive patterns. We used two basic techniques of modeling to arrive at an answer. The first technique required access to all NEC commands so that we could produce normalized receiving patterns. The second technique used only commands that are available within the most rudimentary entry-level software. In both cases, we obtained results that confirm reciprocity within a free-space environment, that is, an environment that does not introduce intervening variables.</p>
+  <p>Although the demonstrations should be sufficient to establish a confidence in NEC's adherence to reciprocity in its calculations, we have not exhausted all the the tests that we might perform. There are more complex tests (or demonstrations) involving the use of ground and numerous other variables that we might throw into the model set-up. Those cases each hold an interest. However, for the moment and within the scope of these notes, we have shown some easily replicated modeling experiments that demonstrate reciprocity within NEC.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 06-14-2007. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

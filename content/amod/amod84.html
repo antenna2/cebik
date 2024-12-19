@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GA: Creating and Moving Arcs</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>84. GA: Creating and Moving Arcs</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episode 69 of this series, I showed a way to create approximations of circles that used up to 16 sides via the equations facility of NEC-Win Plus. In that exercise, I was not only showing some easy techniques of polygon formation, but as well comparing the quality of circle approximations. The basic equations-page facet of the model appears in <b>Fig. 1</b>. Note that I have translated the dimensions from the original ones in inches for 146 MHz into meters for 300 MHz.</p>
+  <center>
+    <img src="amod84-1.gif" width="640" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although the equations page appears simple enough, the model itself requires 16 wire and 48 segments, at 3 segments per wire. A standard ASCII NEC input file for the formulation appears in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod84-2.gif" width="775" height="550" border="2" vspace="5" hspace="9">
+  </center>
+  <p>You may wish to review column #69 for further details of the technique, especially if you do not have access to a version of NEC-2 having the complete command set. In this column, I want to review one of those seemingly more esoteric commands. As a sample, examine <b>Fig. 3</b>, which contrasts the 16-sided simulation of a circle with one having 90 sides with 1 segment per side. Obviously, the right-hand view of the antenna is much closer to a "perfect" circle--perhaps even more perfect than anything we might build. The question for this column is how we can build the circle.</p>
+  <center>
+    <img src="amod84-3.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The requisite command is GA, Wire Arc Specification. The line is the same in both NEC-2 and NEC-4 and has the following appearance:</p>
+  <pre>GA    1    5    10    50    75    .001
+      I1   I2   F1    F2    F3    F4
+      ITG  NS   RADA  ANG1  ANG2  RAD</pre>
+  <p>The line begins (after the identification of the command) with the tag (or wire) number, followed by the number of segments: the two occupy the two integer places. All of the segments will have the same tag number, although constructing the arc with just the GW facility would give each segment a new wire or tag number, since each segment will have a different angle as well as coordinate set.</p>
+  <p>RADA specifies the radius of the arc relative to a perfect circle with its center at 0, 0, 0 on the coordinate system. The radius axis is relative to the Y-axis and hence will take a positive X value. The arc extends from ANG1 through ANG2 as measured relative to the X axis in the +/-Z direction around the Y-axis. Both ANG1 and ANG2 are in degrees. The angles move clockwise relative to the X-axis. RAD is the radius of the wire.</p>
+  <p>Therefore, the sample line specifies Tag 1 with 5 segments. The arc radius is ten (units of measure). The arc extends between 50 and 75 degrees "vertically," that is from 50 degrees from the X-axis to 75 degrees relative to the X-axis. You may, if you wish in a free-space model, begin with a negative angle.</p>
+  <p>Since we are not limited in segment length, except by the rules governing segment-length-to-wire-radius ratios, we can in principle create very close approximations of smooth arcs simply by increasing the number of segments in the GA command. The GA command gives us the ability to fabricate some interesting structures, so let's take a few steps in that direction.</p>
+  <center>
+    <img src="amod84-4.gif" width="507" height="241" border="2" vspace="5" hspace="9">
+  </center>
+  <p>First, we shall create a simple 90-degree arc using the specifications shown in the GA line in <b>Fig. 4</b>. Here we create a simple arc with 11 segments. Note that the arc extends from -45 to +45 degrees. The radius of 0.303 meters is not accidental. It yields a nearly resonant dipole when fed at segment 6 at the frequency specified in the FR line. In the E-plane, the gain is just under 2 dB, with a feedpoint impedance of about 65 Ohms. These values will be sensible to anyone who has modeled an inverted-Vee wire antenna, which brings its ends toward each other, but with straight-line legs.</p>
+  <p>The individual segments within Tag 1 are more interesting than the straight-line segments of an inverted-Vee, as evidenced by the extract from the NEC output report.</p>
+  <pre>                                - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+
+ SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+ NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+   1   0.22841   0.00000  -0.19792   0.04323   49.09091   0.00000   0.00100     0    1    2      1
+   2   0.25425   0.00000  -0.16340   0.04323   57.27273   0.00000   0.00100     1    2    3      1
+   3   0.27492   0.00000  -0.12555   0.04323   65.45455   0.00000   0.00100     2    3    4      1
+   4   0.28999   0.00000  -0.08515   0.04323   73.63636   0.00000   0.00100     3    4    5      1
+   5   0.29915   0.00000  -0.04301   0.04323   81.81818   0.00000   0.00100     4    5    6      1
+   6   0.30223   0.00000   0.00000   0.04323   90.00000   0.00000   0.00100     5    6    7      1
+   7   0.29915   0.00000   0.04301   0.04323   81.81818 180.00000   0.00100     6    7    8      1
+   8   0.28999   0.00000   0.08515   0.04323   73.63636 180.00000   0.00100     7    8    9      1
+   9   0.27492   0.00000   0.12555   0.04323   65.45455 180.00000   0.00100     8    9   10      1
+  10   0.25425   0.00000   0.16340   0.04323   57.27273 180.00000   0.00100     9   10   11      1
+  11   0.22841   0.00000   0.19792   0.04323   49.09091 180.00000   0.00100    10   11    0      1</pre>
+  <p>Note that the X-coordinate for the center of the 6th segment is 0.30223, although we specified a radius of 0.303. The deficit is due to the fact the segment 6 is a straight wire that cuts off very slightly the curve of a true arc. As the Seg. Length column shows, the command calculates the arc so that all segments have the same length.</p>
+  <p>The orientation of the arc is not especially useful. However, we may move it anywhere we wish via the GM command. Suppose that we wish to point the open side of the arc straight up and bring the bottom of the arc to a ground or Z=0 level. We can do so by using the GM command shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod84-5.gif" width="507" height="276" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The GM line specifies that we rotate the arc 90 degrees around the Y-axis so that the wire ends are upward. That rotation will bring the bottom of the arc below Z=0, so we may raise it on the Z-axis by the radius of the arc. The resulting segmentation table appears in the model output report.</p>
+  <pre>                                - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+
+ SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+ NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+   1  -0.19792   0.00000   0.07459   0.04323  -40.90909   0.00000   0.00100     0    1    2      1
+   2  -0.16340   0.00000   0.04875   0.04323  -32.72727   0.00000   0.00100     1    2    3      1
+   3  -0.12555   0.00000   0.02808   0.04323  -24.54545   0.00000   0.00100     2    3    4      1
+   4  -0.08515   0.00000   0.01301   0.04323  -16.36364   0.00000   0.00100     3    4    5      1
+   5  -0.04301   0.00000   0.00385   0.04323   -8.18182   0.00000   0.00100     4    5    6      1
+   6   0.00000   0.00000   0.00077   0.04323    0.00000   0.00000   0.00100     5    6    7      1
+   7   0.04301   0.00000   0.00385   0.04323    8.18182   0.00000   0.00100     6    7    8      1
+   8   0.08515   0.00000   0.01301   0.04323   16.36364   0.00000   0.00100     7    8    9      1
+   9   0.12555   0.00000   0.02808   0.04323   24.54545   0.00000   0.00100     8    9   10      1
+  10   0.16340   0.00000   0.04875   0.04323   32.72727   0.00000   0.00100     9   10   11      1
+  11   0.19792   0.00000   0.07459   0.04323   40.90909   0.00000   0.00100    10   11    0      1</pre>
+  <p>We can see from the table that the ends of the arc are stretched symmetrically across the Y-axis from -X to +X. Segment lengths remain unchanged by the translation and rotation exercise. However, note the Z-value for Segment 6. Instead of being zero, it is 0.00077. A true arc would rest at Z=0. However, because segment 6 is a straight line, it remain shy of zero by the same amount that the identical position in the first model remained shy of the specified arc radius. For both models, note that the alpha orientation angle increases by 8.18182 degrees with each segment. <b>Fig. 6</b> provides NEC-Vu representations of the two arcs. Note that in the right-hand case, the axes are conventionalized to the center of the sketch and do not show the fact that the entire arc is above Z=0.</p>
+  <center>
+    <img src="amod84-6.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>So far, we have been exercising the GA and GM commands only far enough to orient us to their use to create and position a desired arc. We have not yet built anything interesting. Let's build something.</p>
+  <center>
+    <img src="amod84-7.gif" width="514" height="298" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the model of an "umbrella" reflector with a dipole driver. We recognize the GA line. The only difference between this line and our first model is that the number of segments is 10. The reduction is to place a segment junction at the center of the arc. The significant line is the GM command. It specifies that we shall increment the tag numbers by 1 and create 4 new structures identical to the entirety of the first. The third entry in the line specifies a rotation angle of 36 degrees for each new structure around the X-axis. By this means, we can create 5 full arcs or a 10-spoke "umbrella." Since we gave each arc 10 segments, each arc will join at the junction of segments 5 and 6. <b>Fig. 8</b> shows the results of our modeling.</p>
+  <center>
+    <img src="amod84-8.gif" width="325" height="325" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For this model, the umbrella ribs represent a reflector. Hence, the GW line with the tag number of 6 sets a near-resonant dipole ahead of the umbrella. for this exercise, I have not optimized the position of the driver relative to the reflector. Nor have I experimented with optimizing the arc size for maximum performance from the array.</p>
+  <center>
+    <img src="amod84-9.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Nevertheless, even this rough and ready construct exhibits a reasonable 2-element parasitic beam pattern, as revealed by <b>Fig. 9</b>. The free-space gain is 5.1 dBi, with a 9.9-dB front-to-back ratio. The feedpoint impedance is 61 Ohms resistive, since the spacing between the reflector and the driver center is about 0.75 wavelength.</p>
+  <p>Note that we have achieved this performance even though the reflector is circular rather than parabolic and is even smaller across then the dipole driver. The possibilities for experimenting with other radii of reflector arcs as well as different distances between the reflector and driver centers are nearly endless. Included in these experiments would be the reduction in the number of ribs or arcs, since only the two arcs most closely aligned with the driver carry significant current.</p>
+  <p>It is now time to use GA to create a complete circle, as promised at the beginning of this exercise. To make a complete circle with 90 segments, we need only modify our very first model, as shown in <b>Fig. 10</b>.</p>
+  <center>
+    <img src="amod84-10.gif" width="516" height="256" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In this GA line, we specify a full 360-degree arc, that is, a circle. For simplicity, I specified ANG1 as 0 and ANG2 as 360. The arc has the 90 segments shown back in <b>Fig. 3</b>, with a source on the bottom-most segment (Segment 68, as noted in the EX line of the model). Let's run this model and compare the results with those that we obtained from the 16-sided approximation of a circular quad elements.</p>
+  <pre>
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Comparison of a 16-Sided and a 90-Sided Approximation of a Resonant Circular Loop
+
+       Model                 Free-Space           Feedpoint Impedance
+                             Gain dBi             R +/- jX Ohms
+       16 sides              3.63                 140.2 + j 0.0
+       90 sides              3.68                 142.3 - j 0.7
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+</pre>
+  <p>Given that a square loop shows a gain of about 3.39 dBi with a resonant feedpoint impedance of about 125 Ohms, we see that the closer approximation of a true circle continues the upward progression of values. However, the values differ by under 1.5%, making the 16-sided approximation a fair representation of a circle. On the other hand, given the simplicity of the circular loop using the GA command, the original method of creating the 16-sided figure now seems cumbersome.</p>
+  <p>Single quad loops have applications, but multi-element quad beams are more common, at least for amateur-band operations. Let's take one final construction step and compare a pair of typical 2-element quad beam models.</p>
+  <center>
+    <img src="amod84-11.gif" width="880" height="406" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> shows a NEC model of an optimized 2-element square quad beam for 299.8 MHz in free space with no element loading. The square quad beam model requires 8 wires (with 21 segments each in this model). For ease of modification, the model driver element is centered at X=0, Y=0, and Z=0, with the reflector spaced along the Y-axis. Modifying this array requires that we change at least 8 values to change the length or circumference for each element.</p>
+  <p>Alternatively, one might develop a set of equations and use variables for the element corner positions and for the reflector position relative to the driver. However, the modeling software must have a model by equation facility to do this. In fact, this model was derived from a more complex set of equations for which the user need enter only the design frequency and the element diameter. However, those equations do not cross over into the .NEC format input file. So the user must employ (at the time of writing) 2 programs--one with equation and variable facilities and one able to work in NEC-4 in this case.</p>
+  <center>
+    <img src="amod84-12.gif" width="520" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 12</b>, we have a circular quad that uses the GA command to create the two requisite circles of wires. The driver line is simply a revision of our earlier single element circular loop. The reflector line begins with a circular loop created by the GA command and then uses the GM command to move the loop (Tag 2) the proper distance from the driver. Each loop has 90 segments.</p>
+  <center>
+    <img src="amod84-13.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 13</b> compares the two structures. The square quad beam has 168 segments using 8 wires or tags. The circular quad beam has 180 segments in two tags. However, as the models indicate, the circular structure has only 3 values that might require modification after the initial formation of the model. To change the driver circumference--and the length of every wire segment within it--we need change only the value of the driver (Tag 1) radius. A similar operation on Tag 2 changes the reflector size. We can change the element spacing simply by altering the GM card Y-axis translation value. In effect, we may easily optimize the design of circular quad beams because the variables are built into the GA and GM commands.</p>
+  <p>In episode 69, I suggested that the slight (0.3-dB) gain advantage of a circular loop over a square loop would be a 1-time matter. We should not expect to see the gain advantage increase arithmetically with every parasitic loop that we might add to a more elaborate quad. The following table tends to confirm the suggestion, since it presents the result of hand optimizing the circular quad beam for driver resonance and for maximum front-to-back ratio (in excess of 40 dB) at the design frequency.</p>
+  <pre>
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+               Comparison of 299.8-MHz 2-Element Square and Circular Quad Beams in Free-Space
+
+Quad          Driver Cir.    Reflector Cir.       Space          Gain   Front-Back    Feedpoint Impedance
+              meters         meters               meters         dBi    Ratio dB      R +/- j X Ohms
+Square        1.0233         1.1159               0.1657         7.17   46.25         142.2 - j 1.3
+Circular      0.9877         1.0820               0.1665         7.37   42.17         160.2 - j 0.4
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+</pre>
+  <p>Immediately apparent is the fact that the circumference of the circular elements is smaller than the circumference of the square elements for equivalent performance properties. If you examine the current distribution on the square elements, you may discover part of the reason. At the square quad loop corners, we find a higher current level than would be found on a pair of 1/2 wavelength linear elements at equivalent positions. In contrast, the current distribution takes on a smoother curve with the circular loops. In addition to using elements with smaller circumference values, the circular loop requires slightly wider spacing than its square counterpart. Both models use a 0.001-m wire radius.</p>
+  <p>As was the case with the single loops, the circular array has a higher resonant feedpoint impedance than the square quad beam, about 13% higher. The 180-degree front-to-back ratios are comparable. The circular quad beam has a gain advantage of only 0.2 dB over its square comparator. <b>Fig. 14</b>--the free-space E-plane patterns for both arrays--suggests that the difference is operationally insignificant.</p>
+  <center>
+    <img src="amod84-14.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The performance of a parasitic array is a complex interaction of element diameter, size (circumference), and spacing. Hence, one might be able to tweak the values for slightly better performance out of either quad. However, such improvements would not likely translate into actual performance from a physical version of the antenna, since construction variables would tend to be larger than the percentage of change made to any of the variables in the design. The bottom line is that the shape we choose for a quad beam is more a function of mechanical demands at any given frequency than it is of the electrical superiority of one shape over another.</p>
+  <p>However, deciding quad array matters is secondary in this exercise. Our basic premise was that the GA command--especially when combined with the GM command--gives us the ability to construct interesting and potentially useful structures. It does so in a manner that allows easy user control over design modifications, which is always a desirable feature of a model. The umbrella reflector and the 2-element circular quad beam are but two samples that help demonstrate the ease of construction and modification.</p>
+  <p>In the course of this series, we have had occasion to cover many of the geometry commands that are not normally available on entry-level software. However, several still remain as potential subjects for future columns.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

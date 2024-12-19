@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Planar Reflector">
+  <title>Planar Reflectors Part 4: Rod or Bar Reflectors</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/planar.gif" align="left" width="100" height="83" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"> Planar Reflectors<br>
+    Part 4: Rod or Bar Reflectors</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the first 3 parts of this study of planar reflectors, we employed wire-grid simulations of closely spaced screens or solid surfaces. Over the life span of planar reflector use, bars or rods have substituted for solid or screen surface. Bars pass the wind easily while having a somewhat better durability than screens, at least in the realm of commercial manufacture. The bars are normally aligned with the dominant polarization of the driving element. For many applications, we would find the bars set horizontally, relative to the earth's surface. However, because anticipated applications of planar reflectors in the 21st century will largely involve services such as the amateur FM repeater system, I have set all drivers vertically. Hence, the bars of a reflector will follow suit.</p>
+  <p>In the literature on reflectors using planar surfaces, beginning with Kraus, we find an assumption that a set of bars will simulate a solid surface or a closely spaces screen if we use bars that are large enough in diameter and spaced closely enough. <b>Fig. 1</b> shows the key elements in effecting an equivalence between our wire-grid reflectors and a reflector based on bars or rods.</p>
+  <center>
+    <img src="planar4-1.gif" width="629" height="346" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The reflector outer dimensions will be the same for both versions. We can also find some recommendations for the rod diameter and spacing, although they are derived from corner-reflector applications. In general, the rod diameter should be at least 0.02 wavelength at the highest frequency used. As well, the spacing between rods should be no greater than 0.125 wavelength at the highest frequency used. Since these recommendations appear in rather vague format, we can assume that the spacing is center-to-center of the rods. As in past episodes, we shall use 299.9725 MHz as the test frequency so that 1 m = 1 wavelength. All conductors will be without loss.</p>
+  <p>Using these or similar bar dimensions, we can create models of rod-based reflectors that hold none of the misgivings that we spent a good bit of time overcoming in the preceding 3 planar episodes. The modeled rods will have the same dimensions as actual rods. Their spacing is great enough to meet any NEC requirements for highly accurate results. Moreover, the reflector models will be relatively small in terms of the number of segments required.</p>
+  <p>Therefore, we are positioned to test our set of planar reflector drivers with the alternative style of reflector. We shall examine the following drivers:</p>
+  <blockquote>
+    1. A single dipole,
+    <p>2. 2 dipoles fed in phase,</p>
+    <p>3. A single side-fed rectangle,</p>
+    <p>4. A double rectangle fed on the center vertical element,</p>
+    <p>5. A bobtail curtain, and</p>
+    <p>6. A double diamond driver.</p>
+  </blockquote>
+  <p>Because we have extensive data already at hand, we shall be able to take some short-cuts in the investigation in terms of locating the reflector sizes for maximum array gain. Hence, we may by-pass some extensive graphing in favor of a number of short tables that we can easily scan. Nevertheless, we shall want to make the new survey sufficiently complete so that if aberrant behavior does appear, we shall be certain to catch it. (In fiction and theater, a sentence like the preceding one is called "foreshadowing," setting the stage for the discovery of some aberrant behavior.)</p>
+  <p>Before we actually conduct our survey, we have a preliminary task. I noted that the recommendations for the diameter and spacing of the rods in the reflector carried with them a bit of vagueness, since they apparently have emerged from antenna practice at least a half century ago and have little justification other than what might then have passed for successful designs. We are positioned to do a bit of verification to determine if the recommendations result in the best possible reflector designs. We may also discover that there are factors in addition to just rod diameter and spacing that enter into the considerations of designing a rod-based reflector that is equivalent to the wire-grid structures.</p>
+  <p><b>Establishing Rod-Based Reflector Design</b></p>
+  <p>Modeling a planar reflector composed of bars is not difficult. The following lines establish a Green's file for the set of bars composing the reflector. The reflector consists of a center bar plus equal numbers of bars on each side of center.</p>
+  <pre>CM Rod Planar Reflector: 299.7925 MHz; 1 m = 1 wl
+CM Size = 1.0 m x 1.0 m
+CE
+GW 1 10 0 0 -.5 0 0 .5 .015
+GM 0 5 0 0 0 0 -.1 0 1 1 1 10
+GM 0 5 0 0 0 0 .1 0 1 1 1 10
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+WG pr-v10-h10.WGF
+EN </pre>
+  <p>The GW line allows any level of segmentation needed for the rod length and centers the initial wire at Z=0 for free-space models. The last entry in the line indicates the wire radius, in this case, 0.015 m (wavelength). The following GM lines replicate the wire as many times as needed (here 5 on each side) at the selected interval, center-to-center (here 0.1 m). The GW line in this model uses 10 0.1-m segments so that the segment length equals the center-to-center spacing. The reflector is not connected to the driver, so replicating the segmentation used on a driver assembly is not necessary. Tests using up to three times the segment density per rod yield results that are insignificantly different from the test level of segmentation on the reflector wires.</p>
+  <p>The simple model shown allows for any vertical dimension desired, as well as for any number of rods, normally expanded by one on each end with each incremental change to the reflector. As in earlier test models, the need for a finite number of tests suggests that increments of 0.2 m (wavelength) in each dimension provide enough test points for general guidance.</p>
+  <p>The next step in the process of is to find a vehicle for determining the optimal wire radius (diameter) for the rods and their optimal spacing. Previous work with a simple dipole and the wire-grid reflector indicated that a reflector that is 1.2 m by 1.2 m yields approximately the maximum gain achievable from the dipole when it is spaced 0.175 m from the reflector. A rod-based reflector should yield closely similar results. Therefore, I set up three reflectors as an initial test. Each used a height of 1.2 m. The horizontal dimension--produced by the GM lines in terms of the number of wires and the increment between them--was based on the use of a total of 11, 13, and 15 wires, with a spacing of 0.12 m, 0.1m, and 0.857 m, respectively. Each reflector surveyed reflector wire radii from 0.005 m through 0.025 m in 0.005-m increments.</p>
+  <pre>CM Dipole
+CE
+GF 0 pr5-v12-h12-r005.WGF
+GW 101 11 .1495 0 -.2188 .1495 0 .2188 .004
+GE 0 -1 0
+EX 0 101 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN </pre>
+  <p>The GF line calls up the relevant reflector file. The file name indicates the structure of the relevant reflector. the initial "pr5" designation indicates 5 reflector wires each side of the center wire, for a total of 11 wires and a spacing of 0.12 m between them. The "v12-h12" portion indicates of vertical and horizontal outer dimensions. The final entry, "r005" represents a wire radius of 0.005 m.</p>
+  <p>The GW line specifies the dipole for that reflector. As in the wire-grid reflector tests, the dipole has a diameter of 8 mm. For each case, the dipole length and spacing from its reflector was adjusted to a 50-Ohm impedance, as registered by a 50-Ohm SWR no greater than 1.01:1. The following table provides the dimensions of the dipole and its spacing from the reflector for each of the test cases. The dipole is always centered both horizontally and vertically with respect to the reflector, where "vertical" represents the +/- Z axis, and "horizontal" represents the Y-axis. Reflector-dipole spacing is on the X-axis.</p>
+  <pre>11-Wire Reflector:  0.12-m center-to-center reflector rod spacing
+Reflector Wire     Dipole Spacing from     Dipole Length
+Radius m/wl        Reflector m/wl          m/wl
+0.005              0.1495                  0.4376
+0.01               0.1625                  0.437
+0.015              0.1745                  0.4368 *
+0.02               0.177                   0.4366
+0.025              0.181                   0.4366
+13-Wire Reflector:  0.1-m center-to-center reflector rod spacing
+Reflector Wire     Dipole Spacing from     Dipole Length
+Radius m/wl        Reflector m/wl          m/wl
+0.005              0.1564                  0.4372
+0.01               0.168                   0.4368
+0.015              0.1745                  0.4368 *
+0.02               0.1795                  0.4368
+0.025              0.1835                  0.4368
+15-Wire Reflector:  0.0857-m center-to-center reflector rod spacing
+Reflector Wire     Dipole Spacing from     Dipole Length
+Radius m/wl        Reflector m/wl          m/wl
+0.005              0.1615                  0.4370
+0.01               0.171                   0.4368 *
+0.015              0.177                   0.4368 *
+0.02               0.1815                  0.4368
+0.025              0.185                   0.4368</pre>
+  <p>Several features of this limited table are noteworthy. First, as we increase the number of wires and decrease the spacing between them, the dipole length stabilizes at 0.4368 m more quickly, that is, at a smaller reflector-wire radius. Second, as we increase the number of reflector wires and decrease their spacing, the required distance between the reflector and the dipole increases for any given reflector-wire radius. Thus, the number of wires in the reflector--or their spacing--has a bearing on the required distance from the reflector to the dipole to achieve a 50-Ohm impedance. Third, note the starred entries. For each of these entries, the distance between the reflector and the dipole most closely approximates the required spacing using the wire-grid model: 0.175 m. All of these entries call for a dipole that is 0.4368 m long. The corresponding dipole with a wire grid reflector is also 0.4368 m when the dipole is corrected to lower its SWR from the values in the tables in earlier episodes.</p>
+  <p>The following table provides the performance data that accompanies the dimension listed above. (Space prevents me from using a single table to place all of the dimensional and performance data values on single lines.) The tables (throughout this exercise) use the 180-degree front-to-back ratio. E-BW and H-BW are the E-plane and H-plane half-power beamwidths, respectively.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   9.31           18.33             54         80         49.72 - j0.15   1.01
+
+11-Wire Reflector:  0.12-m center-to-center reflector rod spacing
+Reflector Wire     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+Radius m/wl        Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+0.005              9.13           14.16             54         76         50.16 - j0.02   1.00
+0.01               9.26           16.57             54         76         50.04 + j0.03   1.00
+0.015              9.28 *         17.79             54         78         50.21 + j0.05   1.00
+0.02               9.26           18.31             54         80         50.21 - j0.12   1.00
+0.025              9.24           18.40             54         80         49.95 - j0.06   1.00
+13-Wire Reflector:  0.1-m center-to-center reflector rod spacing
+Reflector Wire     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+Radius m/wl        Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+0.005              9.19           15.59             54         76         50.05 - j0.05   1.00
+0.01               9.26           17.47             54         78         50.13 - j0.09   1.00
+0.015              9.27 *         18.24             54         80         50.01 + j0.09   1.00
+0.02               9.24           18.47             54         80         50.01 + j0.14   1.00
+0.025              9.21           18.36             54         80         49.01 + j0.16   1.00
+15-Wire Reflector:  0.0857-m center-to-center reflector rod spacing
+Reflector Wire     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+Radius m/wl        Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+0.005              9.22           16.52             54         76         50.15 - j0.07   1.00
+0.01               9.26 *         17.93             54         78         50.00 - j0.02   1.00
+0.015              9.25 *         18.42             54         80         50.02 + j0.07   1.00
+0.02               9.23           18.49             54         80         50.06 + j0.10   1.00
+0.025              9.19           18.31             54         82         50.03 + j0.10   1.00</pre>
+  <p>The starred entries represent more than just the fact that the spacing between reflector and the dipole is close to the same as for the wire-grid version of the planar array. As well, these entries also indicate a performance level that is closest to the performance reported for the wire-grid model. The tiny gain differential (0.04 dB at its minimum for the 13-wire reflector) is not a function of differences in average gain test scores. All of the rod-based reflectors using a 0.015-m radius rod wire have an Average Gain Test value that shows a 0.015 dB gain deficit in the reported value. The wire-grid Average Gain Test value shows a 0.013 dB gain deficit, eliminating any differential in the reported and adjusted values for the two model types. Operationally, all of this fine tuning would make no sense at all. However, in this exercise, we are striving to correlate model data reports, and using the full extent of the raw and adjusted data--even to 4 significant figures--makes eminent sense.</p>
+  <p>The reflector model using reflector-wires with a 0.015-m radius and also using a 0.1-m spacing turns out to most closely approach the wire-grid version of the array, including gain, front-to-back ratio, and both E-plane and H-plane beamwidths. As well, the required dipole dimensions are the same as in the wire-grid model. Note that in the past 3 episodes, we took considerable pains to establish the internal validity of that model. Hence, using its closest rod-based analog to the wire-grid makes good sense--and also provides an easy way to obtain the same increments between horizontal dimensions as we used when testing wire-grid reflectors.</p>
+  <p>The data suggest that--at least with respect to NEC-models of planar arrays--reflector rod spacing should be only slightly less than the 0.125 wavelength value found in recommendations. However, the rod diameter--0.03 wavelength in the data just shown--is about 50% greater than the value used in older recommendations. However, the values that we shall use in this set of tests are derived for a specific feedpoint impedance: 50 Ohms. The tests used here do not establish that the same rod-based reflector specifications apply equally to all feedpoint impedances. Also clear is that within the scope of this test, the distance from the reflector to the dipole also plays a role in the reflector performance in the balance between the feedpoint impedance and the performance reports. This factor finds no mention in any literature that has crossed my path.</p>
+  <p><b>Testing the Drivers</b></p>
+  <p>The reflectors that we shall use in testing each of the drivers will use 0.1-m spacing between 0.015-m radius rods. Hence, the horizontal dimension of the reflector will use the same steps as the wire-grid models used--0.2 m per step. The vertical dimension will use the same steps, even though we have the freedom to use any step whatsoever.</p>
+  <p>Our survey can be significantly simplified relative to the hunting expedition that formed the work we did with wire-grid models. Establishing the proper size for the reflector rod assembly also established the fact that the peak gain performance of wire-grid reflector models and bar reflector models shows a close coincidence. Therefore, we need not replicate the entire data series between 1.0 and 2.0 m (wavelengths) for each dimension. Instead, we may simply surround the most likely reflector dimensions with enough possibilities to establish the gain peak dimensions for the bar reflectors. Each reflector will go though vertical dimensions of 1.0, 1.2, and 1.4 m, with horizontal dimensions including one increment above and one increment below the size that yielded maximum gain. As we proceed, we shall keep an eye open for anomalous results. In practical terms, the reduced data gathering will allow us to use some simple tables rather than extensive graphs.</p>
+  <p><i>1. A Single Dipole Driver</i></p>
+  <p>Although we have already established some aspects of peak performance using a simple dipole driver, we have not run it through the series of alternative reflector sizes. The key dimensions for the array used in these bar-reflector tests appear in <b>Fig. 2</b>. The corresponding wire-grid dipole used a 0.175-m spacing as the only difference in array dimensions.</p>
+  <center>
+    <img src="planar4-2.gif" width="502" height="447" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the data to follow, the "Reflector Size" column uses a truncated system to record the size. For example, V10-H12 indicates a vertical dimension of 1.0 m and a horizontal dimension of 1.2 m. These values translate to a 13-rod reflector where each vertical rod is 1.2-m long. An H-value of 14 would have 15 rods, and an H-value of 20 would have 21 rods.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   9.31           18.33             54         80         49.72 - j0.15   1.01
+
+Reflector Size     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+V10-H10            8.78           17.64             60         82         50.33 + j0.90   1.02
+V10-H12            8.89           18.67             60         80         50.17 + j0.76   1.02
+V10-H14            8.89           19.94             60         80         50.04 + j0.81   1.02
+
+V12-H10            9.16           17.75             54         80         50.18 + j0.18   1.01
+V12-H12            9.27 *         18.24             54         80         50.01 + j0.09   1.00
+V12-H14            9.23           19.12             54         82         49.92 + j0.18   1.00
+
+V14-H10            9.18           19.83             54         86         49.68 + j0.11   1.01
+V14-H12            9.16           20.19             56         90         49.55 - j0.11   1.01
+V14-H14            9.14           19.98             56         90         49.37 - j0.05   1.01
+</pre>
+  <p>The starred entry indicates the highest gain achievable from the single-dipole driver version of the planar reflector, with the very same dimensions as we encountered with the wire-grid version. In fact, the 2:1 50-Ohm SWR bandwidth is also identical for this size reflector: about 9.7%. Indeed, the rod-based reflector is so well-behaved, the one can scarcely distinguish the patterns between it and the wire-grid reflector, as shown in <b>Fig. 3</b>. If there are any differences, they lie in the rearward quadrants, showing especially as a pair of slight "bulges" in the pattern for the bar reflector. However, note the complete absence of such bulges in the wire-grid H-plane pattern.</p>
+  <center>
+    <img src="planar4-3.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There can be little doubt that for the single-dipole driver, the use of a rod-based reflector is completely acceptable for virtually any application in which we might use the wire-grid reflector or its closely spaced screen or solid surface physical implementations. Of course, we have used a carefully selected set of bars with respect to their diameter and spacing.</p>
+  <p><i>2. 2 Dipoles Fed in Phase</i></p>
+  <p>The dual-dipole driver that we fed in phase in Part 2 of this series is also adjustable to the use of a rod-based reflector. <b>Fig. 3</b> provides the essential dimensions. The only change that we needed to make was to lengthen the dipoles from 0.466 m to 0.4682 m. As with the single dipole, the driver diameter remains 8 mm.</p>
+  <center>
+    <img src="planar4-4.gif" width="500" height="441" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wire-grid version of this modeled planar array required a reflector that was vertically 1.2 m by horizontally 1.8 m to achieve maximum gain. Once more, we may simplify the data gathering by surrounding this reflector size in the rod-based version with adjacent sizes. The following table provides the results.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       100-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   10.82          19.56             58         54         97.77 - j2.25   1.03
+
+Reflector Size     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+V10-H14            10.44          18.33             62         54         101.9 + j1.51   1.02
+V10-H16            10.49          18.78             62         54         101.8 + j1.42   1.02
+V10-H18            10.49          19.35             62         54         101.7 + j1.45   1.02
+
+V12-H14            10.76          19.06             58         54         100.1 - j0.06   1.00
+V12-H16            10.79 *        19.23             58         54         99.99 - j0.17   1.00
+V12-H18            10.76          19.68             58         56         99.92 - j0.16   1.00
+
+V14-H14            10.69          21.21             60         56         98.13 + j0.87   1.02
+V14-H16            10.74          20.44             60         56         98.00 + j0.81   1.02
+V14-H18            10.69          20.66             60         58         97.92 + j0.84   1.02
+</pre>
+  <p>The dual-dipole driver array with a rod reflector tracks the wire-grid version extremely well, with one exception. Maximum gain in the rod-reflector version occurs with a horizontal dimension of 1.6 m, one increment smaller than with the wire-grid reflector. However, the change in gain for either version of the array is very small (about 0.03 dB) as we move either way horizontally from the maximum gain dimension. Hence, small variables, such as the alignment of the dipoles with the rods of the reflector may alter the peak reflector dimension slightly.</p>
+  <center>
+    <img src="planar4-5.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As revealed in <b>Fig. 5</b>, the patterns of the wire-grid and rod reflector versions of the dual-dipole driver array are even more tightly matched than those for the single dipole array. As well, both types of reflectors yield the same SWR bandwidth: 26%. For the VHF and lower UHF region, where barred reflectors may prove more practical in some applications than screens or solid surfaces, the dual-dipole driver array, phased as describe in Part 2, provides both performance and bandwidth that matches what we might obtain from a solid or screen reflector.</p>
+  <p><i>3. A Single Side-Fed Rectangle</i></p>
+  <p>With the single side-fed rectangle driver, we change the element diameter from 8 mm to 4 mm (that is, from more than 1/4" down to between 1/8" and 3/16"). This move would reflect building tendencies at the 300-MHz test frequency. In the conversion of the rectangle from a wire-grid reflector to a set of rods, only the spacing of the driver from the reflector changed--by 3 mm. <b>Fig. 6</b> shows the essential dimensions for the rectangle with its new reflector.</p>
+  <center>
+    <img src="planar4-6.gif" width="500" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wire-grid version achieved maximum gain with a reflector that was 1.2-m high by 1.4-m long. As the following table shows, the same size rod-based reflector also produces maximum gain for the single-rectangle driver. The two maximum-gain versions of the array also have the very same 50-Ohm SWR bandwidth: a somewhat narrow 4.7%. However, it also shows something else that will prove more interesting.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       100-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   10.37          19.43             56         63         49.76 + j0.39   1.01
+
+Reflector Size     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+V10-H12            9.87           18.99             62         62         49.96 - j1.06   1.02
+V10-H14            9.93           19.44             62         62         49.90 - j1.13   1.02
+V10-H16            9.92           20.09             62         62         49.85 - j1.11   1.02
+V10-H18            9.88           20.71             62         63         49.84 - j1.08   1.02
+
+V12-H12            10.12          19.14             56         59         50.23 + j0.20   1.01
+V12-H14            10.23 *        19.11             56         59         49.98 + j0.15   1.00
+V12-H16            10.23 *        19.53             56         59         49.87 + j0.32   1.01
+V12-H18            10.15          20.27             56         61         49.95 + j0.45   1.01
+
+V14-H12            7.93           26.46             96         99         57.41 - j20.3   1.49
+V14-H14            9.12           30.87             78         80         52.02 - j4.07   1.09
+V14-H16            8.20           16.96             82         85         66.82 + j12.7   1.44
+V14-H18            10.46          14.06             44         37         57.27 - j19.8   1.48
+</pre>
+  <p>The table has 4 lines per vertical reflector size because the peak gain of the array occurs at two adjacent sizes: 1.4 m and 1.6 m horizontally. With vertical sizes of either 1.0 m or 1.2 m, the array shows performance virtually identical to the wire-grid version. However, if we increase the vertical dimension of the rods to 1.4 m, the array's behavior changes radically. Every increment of horizontal size shows a major shift in performance, rather than the more evolutionary changes that we encounter with the vertically smaller reflectors and with every array surveyed so far. At a vertical height of 1.4 m, the wire-grid array is well-behaved. <b>Fig. 7</b> contrasts wire-grid and rod reflector performance for a size of 1.4 m vertically and 1.2 m horizontally.</p>
+  <center>
+    <img src="planar4-7.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Maximum gain in either plane does not occur in a direct forward direction with the rod-reflector. E-plane peak gain is 7 degrees off axis, while H-plane maximum gain is 20 degrees off axis. As the beamwidth numbers will suggest, the pattern shape will change with each increment of horizontal dimension increase. Also notable in the H-plane (side-to-side, if the array is used with a vertical orientation) pattern is the absence of nulls at 90 degrees to the forward bearing. Instead, we find large side lobes the maximum headings for which are slightly behind the 90-degree points. (You may remember that I pointed out tiny bulges in the E-plane pattern for the single dipole driver.)</p>
+  <p>Rather than speculate on the source of the odd behavior, it may be best to temporarily withhold judgment and gather more data. We still have 3 more drivers to canvass.</p>
+  <p><i>4. A Double Rectangle Fed on the Center Vertical Element</i></p>
+  <p>The double rectangle, fed at the center of the middle vertical element, required no change of any dimension when transferred from the wire-grid to the bar-based reflector. <b>Fig. 8</b> provides the dimensions used for this array.</p>
+  <center>
+    <img src="planar4-8.gif" width="497" height="446" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Except for the factor of balance, the double rectangle shares many properties in common with the single rectangle. However, as the following table demonstrates, it falls in the category of very well-behaved arrays when used with a rod reflector.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       100-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   10.90          19.31             58         54         49.58 - j0.37   1.01
+
+Reflector Size     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+
+V10-H14            10.49          18.85             64         54         51.26 - j0.10   1.03
+V10-H16            10.53          18.99             64         52         51.25 - j0.13   1.03
+V10-H18            10.54          19.29             64         52         51.23 - j0.13   1.02
+
+V12-H14            10.77          19.36             58         52         50.32 - j0.29   1.01
+V12-H16            10.83 *        19.18             58         52         50.25 - j0.29   1.01
+V12-H18            10.82          20.36             58         52         50.24 - j0.23   1.01
+
+V14-H14            10.68          21.07             62         52         49.83 + j0.11   1.00
+V14-H16            10.69          20.17             62         52         49.96 + j0.05   1.00
+V14-H18            10.63          21.32             64         54         49.70 - j0.02   1.01
+</pre>
+  <p>The data curves are smooth, even for the same span of 1.4-m vertical reflectors across which the single rectangle showed erratic behavior. Indeed, the double rectangle varies in no significant way, whichever type of reflector accompanies it. <b>Fig. 9</b> demonstrates how closely the two reflector types are in terms of the resulting E-plane and H-plane patterns for the highest-gain reflector sizes.</p>
+  <center>
+    <img src="planar4-9.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At worst, the rod-reflector produces the same sort of bulges just past the side bearings as the single dipole, although they have now grown into "jowls." The 7% SWR bandwidth is also identical to the SWR curve for the wire-grid version.</p>
+  <p><i>5. A Bobtail Curtain</i></p>
+  <p>The bobtail curtain holds the distinction of being the only driver in our collection that is horizontally symmetrical, but vertically asymmetrical. Consisting of three phased vertical monopoles with a single horizontal phasing wire between each pair, it will be open-ended in either the up or down direction. For our exercise, we have closed the top (+Z) portion of our models. <b>Fig. 10</b> shows the relevant dimensions of the array, including the one change needed to set the impedance at 50 Ohms as we changed reflectors: the spacing between the reflector and the driver decreased from 0.185 m to 0.180 m.</p>
+  <center>
+    <img src="planar4-10.gif" width="501" height="445" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The bobtail curtain, over the relevant subset of reflector sizes, shows many of the same characteristics with a rod reflector as it showed with a wire-grid reflector, including a 7% 50-Ohm SWR bandwidth. The list of similarities also includes the range of angular tilt to the E-plane patterns. However, as the following table shows, we once more encounter difficulties when we change the reflector height to 1.4 m.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       100-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   11.31          21.45             58         48         49.95 + j3.23   1.07
+
+Reflector Size     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+
+V10-H18            10.93          21.00             62         46         51.02 - j1.62   1.04
+V10-H20            10.94          21.11             62         44         51.02 - j1.62   1.04
+V10-H22            10.94          21.24             62         44         51.02 - j1.62   1.04
+
+V12-H18            11.19          21.25             57         44         50.13 + j0.08   1.00
+V12-H20            11.21 *        21.23             57         44         50.11 + j0.11   1.00
+V12-H22            11.20          21.40             57         44         50.13 + j0.14   1.00
+
+V14-H18            9.74           31.26             79         60         53.54 - j4.51   1.12
+V14-H20            10.44          33.70             70         52         51.76 + j5.68   1.12
+V14-H22            9.78           19.25             69         52         64.52 + j15.6   1.45
+</pre>
+  <p>Although the data for a 1.4-m high rod-reflector appears simply to trade a bit of gain for a vastly improved 180-degree front-to-back ratio, the situation is not nearly so simple. As <b>Fig. 11</b> shows, the rearward quadrants again show the considerable development of side-to-rear lobes that do not show up in 180-degree front-to-back numbers. In the case shown, for a 2.0-m reflector horizontally, the 33-dB 180-degree value gives way to worst-case values that are far less than 20 dB. As well, the rearward lobe development has a strong front-to-side component in common with the single rectangle.</p>
+  <center>
+    <img src="planar4-11.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The data suggest that we now have two aberrant cases among our driver assemblies, at least with respect to rod reflectors with a 1.4-m (wavelength) vertical dimension.</p>
+  <p><i>6. A Double Diamond Driver</i> The final candidate on our list of drivers to go with a planar reflector is the double diamond. To effect the transition to a rod reflector, we need only reduce the spacing from the reflector from 0.148 m to 0.146 m, a 2-mm difference that allows the feedpoint impedance to be very close to 50 Ohms resistive. <b>Fig. 12</b> shows all of the essential dimensions.</p>
+  <center>
+    <img src="planar4-12.gif" width="501" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wire-grid version of this array reached maximum gain with a vertical dimension of 1.2 m and a horizontal dimension of 1.6 m. Since the rod-reflector version shows equal peak values at two successive horizontal increments, I have add a fourth line to each of the table categories.</p>
+  <pre>
+Reference Wire-Grid Reflector
+                   Free-Space     Front-to-Back     E-BW       H-BW       Impedance       100-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+                   11.13          21.22             56         52         49.63 - j0.65   1.02
+
+Reflector Size     Free-Space     Front-to-Back     E-BW       H-BW       Impedance       50-Ohm
+                   Gain dBi       Ratio dB          degrees    degrees    R +/- jX Ohms   SWR
+V10-H14            10.69          20.49             60         52         50.44 + j1.02   1.02
+V10-H16            10.73          20.75             60         52         50.42 + j1.00   1.02
+V10-H18            10.73          21.14             60         52         50.41 + j1.00   1.02
+V10-H20            10.70          22.47             60         52         50.41 + j1.01   1.02
+
+V12-H14            10.97          20.96             56         52         50.00 + j1.42   1.03
+V12-H16            11.02 *        20.88             56         50         49.93 + j1.41   1.03
+V12-H18            11.02 *        21.19             56         52         49.91 + j1.46   1.03
+V12-H20            10.98          21.67             56         52         49.94 + j1.50   1.03
+
+V14-H14            11.13          18.96             52         48         54.83 + j11.3   1.26
+V14-H16            10.66          16.42             52         50         65.57 + j13.1   1.42
+V14-H18            9.84           40.62             74         68         52.02 + j3.90   1.09
+V14-H20            10.48          29.52             64         60         54.65 + j11.51  1.27
+</pre>
+  <p>The double diamond driver is both horizontally and vertically balanced. Nevertheless, it shows problems when the reflector grows to 1.4 m vertically. The table shows the numerical deviations from the kinds of values we would expect from a wire-grid reflector. <b>Fig. 13</b> shows a comparison of both E-plane and H-plane patterns for a vertical reflector height of 1.4 m and a horizontal dimension of 1.6 m. The E-plane pattern shows considerably more rearward radiation for the rod reflector than for the wire-grid version. The H-plane pattern shows the rear quadrant lobe development, a pattern that is roughly common to all three of the arrays that produce problems when the rod reflector is 1.4-m high.</p>
+  <center>
+    <img src="planar4-13.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In common also with the other problem drivers, the double diamond shows the same erratic progression of values, unlike the smooth progressions with shorter reflectors. <b>Fig. 14</b> translates the set of numerical values into patterns that show the same erratic development as we change the horizontal dimension of the rod reflector. On the left is a wire-grid version of the model, and it shows an orderly and tight progression from one reflector increment to the next. However, the rod-reflector version on the right displays the erratic growth and shrinkage of the H-plane pattern.</p>
+  <center>
+    <img src="planar4-14.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Conclusions and Recommendations</b></p>
+  <p>We may reach some tentative conclusions regarding the use of bar reflectors as substitutes for solid-surface or closely spaced screen reflectors in planar arrays.</p>
+  <blockquote>
+    1. The bar diameter should be about 0.03 wavelength, with an inter-rod spacing of about 0.1 wavelength for best results. However, variations on these dimensions are permissible to the extent that they allow the driver to reach its proper impedance (using the 50-Ohm level that is common to the entire exercise) with the same approximate spacing as it would have with a wire-grid reflector.
+    <p>2. The single dipole, the phase-fed pair of dipoles, and the double rectangle drivers are stable for all tested vertical reflector dimensions and perform very much like their wire-grid counterparts. However, the single rectangle, the bobtail curtain, and the double diamond should be used with great caution for vertical reflector dimensions greater than 1.2 m (wavelength).</p>
+  </blockquote>
+  <p>These conclusions handle the obvious outcomes of the data gathering, but they do not touch our remaining question of why the vertical dimension of 1.4 wavelength yields aberrant array behavior. Let's begin by examining the current distribution on wire grid and rod reflectors.</p>
+  <center>
+    <img src="planar4-15.gif" width="800" height="325" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 15</b> provides a glimpse into the current distribution over the reflector, using 1.4 wavelengths as the vertical height and 1.6 wavelengths as the horizontal dimension. To set the current distribution in bolder relief, I set the maximum value at 7.5E-2 for the brightest red. The value is less than the peak current at the feedpoint of the drivers involved. Hence, the dipoles at the far right will show no color change until well along their length, since the feedpoint region has a higher current level than the level set for bright red. In the double diamonds, only the short common feedpoint segment shows an equivalently high current magnitude, while the multiple paths of the upper and lower legs show more modest currents. However, note that both double diamonds share the same color distribution--and hence, the same current magnitude distribution--across their structures.</p>
+  <p>More significant for our work is the current distribution on the reflector segments of the models. The wire-grid model on the far left shows an almost uniformly low current level throughout, with only a slight rise in current magnitude immediately behind the double diamond--as indicated by a slightly lighter shade of blue. The well-behaved phase-fed dipoles at the right show a similar pattern, even though the reflector elements are now rods. The model segments closest to the dipole centers are technically 1 shade of blue lighter than the remaining segments, but that difference is too little to show on the small graphics. The conclusion that we can draw from the left and right current distribution graphics is that for most stable operation, the driver must illuminate the reflector in a relatively uniform manner.</p>
+  <p>The center model's morass of color illustrates what happens when we do not achieve relatively uniform illumination. The individual rods act like individual parasitic elements coupled to the driver. Hence, we find current peaks that exceed the levels at most places on the double diamond structure itself. The current in each region of each rod will be a function not only of the direct coupling from the driver, but also of inter-element coupling among the rods.</p>
+  <p>Why the vertical dimension of 1.4 wavelengths marks a point of sensitivity also relates to the length of the rods: given the element diameters, they are approaching 3/2 wavelengths. The shorter vertical dimensions show less tendency to this effect. The aberrant behavior also disappears when we use a vertical dimension of 1.6 m (wavelengths), although this value carries the array further away from its optimal gain size. Rod length, however, is at most a necessary but not a sufficient condition to the aberrant behavior of the reflector. For only some of the driver assemblies is it a problem.</p>
+  <p>The remaining factor necessary to trigger the unwanted effect is what we might call "over-coupling" between the driver and the reflector rods, where over-coupling is a mutual function of two factors. One of them is rod length. The other one is the spacing of the driver to the reflector, relative to the independent gain of the driver apart from the reflector effects. Let's review some of the data that we have encountered. All of the data will be for reflectors that are associated with the highest gain obtainable for each driver and hence will vary in size from line to line in the following table.</p>
+  <pre>
+Driver Type                Maximum Free-        Driver Spacing from
+                           Space Gain dBi       Reflector m/wl
+Single Dipole               9.27                0.1745
+Phase-Fed Dipole Pair      10.79                0.25
+Single Rectangle           10.23                0.183
+Double Rectangle           10.83                0.235
+Bobtail Curtain            11.21                0.185
+Double Diamond             11.02                0.148
+</pre>
+  <p>Of the complex drivers having the equivalent of two or more elements, the well-behaved types have reflector-to-driver spaces well over 0.23 wavelength. Complex drivers showing aberrant behavior use distances well below 0.19 wavelength. The one exception to this general progression is the simple single-dipole driver, with its lesser gain--at least 1 dB below the next lowest level. The reflector-to-driver spacing, early on noted as significant in the selection of proper rod diameter and inter-rod spacing, is the most common factor among the arrays susceptible to a 1.4-m rod length sensitivity and those immune to the effect.</p>
+  <p>Undoubtedly, other factors may play a role in the problematical situation. For example, the independent beamwidth of the driver may yield greater or lesser coupling to a region of a rod, and it may be in some measure apart from the maximum gain of the driver when away from the reflector. There is, of course, a limit to the independence of beamwidth and maximum gain in driver assemblies, since two are normally intimately linked.</p>
+  <p>The goal here is not to provide a final answer to the limitations of rod-based reflectors. Rather, these notes are simply designed to set the limitations into a perspective on driver assemblies that we may wish to use with reflectors of various sizes. Rod behavior is not identical to wire-grid or solid surface behavior, which shows good immunity from parasitic coupling or over-coupling effects. Regardless of the limitations, we can derive the maximum achievable gain from any of the drivers by holding the rod length to optimal levels.</p>
+  <p>Or, we may simply use a solid surface or closely spaced screen in lieu of the rods that have occupied our efforts in this episode.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 05-01-2005. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>April, 2005. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#planar-reflector'>Planar Reflector</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

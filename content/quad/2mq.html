@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, VHF / UHF">
+  <title>In Pursuit of Better VHF Quad Beams</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/quad.gif" align="left" width="91" height="91" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">
+    In Pursuit of Better VHF Quad Beams<br>
+    A Work in Progress</h1>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>In both commercial and home-brew circles, quad beams have long vied with Yagis as the means to a high performance antenna array. Indeed, that very competition has very likely robbed the quad of the independent study necessary to establish its properties well-enough to capitalize effectively on them. In contrast, the development of antenna modeling and optimizing software has contributed to whole new generations of Yagis that effectively utilize parasitic relationships to develop both better patterns and wider operating bandwidth in virtually of all of critical categories.</p>
+  <p>With the exception of only a few investigators, such as Bob Haviland, W4MB, Dan Handelsman, N2DT, and David Jefferies, most quad designers have relied upon one of two methods to develop new antennas. The first method is the set of antique equations, long printed in The ARRL Antenna Book. This design method--which pays absolutely no attention to the diameter of the element wires--yields reasonably accurate thin-wire HF quads that are exceptionally narrow-banded. Neither their SWR curves nor their front-to-back curves will hold up to modern standards across even the HF wide ham bands. Yagis have set a standard of less than 2:1 SWR across a band like 20 or 15 meters, with a front-to-back ratio of at least 20 dB across those bands. Equation-designed quads using the old formulas simply cannot yield antennas that meet such performance standards.</p>
+  <p>The second method of development is trial and error, with emphasis upon error. Chief among the errors is the attempt to keep the boom length for any given number of elements as short as possible. If this initial temptation is overcome, there seems reticence to extend the quad boom longer than necessary for a Yagi with the same number of elements. The results have been narrow-banded quad beams, often with performance deficiencies, especially in the front-to-back category.</p>
+  <p>So I think that we must return to the starting line and redevelop our thinking about quads from scratch. In this work-in-progress, I shall take a long look at 2- and 3-element quad beams, with some observations about 4-element beams. Although I have some 5- and 6-element designs in my collection of models, they are not sufficiently well-developed to admit of systematic discussion. Hence, these notes represent the first part of yet-to-be finished business.</p>
+  <p>However, along the way, you will note some recurrent themes that I might as well summarize at the outset.</p>
+  <p>1. Quad antennas, whether single loops or arrays, are narrow-band arrays by nature--contrary to the long standing myth about them. Because quads often offer a very wide SWR curve in some configurations, the entire set of antennas has received the unwarranted categorization as "low-Q" devices. Unfortunately, this has misled many builders into believing that the quad is a non-critical antenna so that careful construction is not really necessary.</p>
+  <p>In effect, compared to properly design Yagis, the quad array with the same number of elements is a narrow-band antenna. Its front-to-back performance falls off more than 2.5 times as fast as the SWR curve deteriorates. Although some users claim they only care about the gain, the design challenge for me is to discover what it takes to obtain superior performance in all major categories across a given band.</p>
+  <p>2. The physical specifications for a quad array are critically dependent upon the diameter of the elements that compose them. I shall show along the way just how much the quad is dependent in raw performance (such as gain) upon element diameter as much as it is dependent upon the loop circumference for each of the elements and upon the element spacing. The element-diameter factor is elusive in trial-and-error design exercises, but can become clear when optimizing basic quad designs becomes a systematic enterprise. In fact, we shall show that monoband 2-, 3-, and 4-element quad design is amenable to computerized calculations requiring only the element diameter and the design frequency as inputs.</p>
+  <p>3. For optimal performance, the parasitic coupling of quad elements requires considerably more spacing than equivalent coupling of linear elements in Yagi design. Indeed, beyond a certain point, the boom length of an optimized quad with reasonably wide-band performance characteristics may be the limiting factor in comparisons with Yagis of similar performance capabilities. At this point, I might estimate the break-even point to be somewhere between 4 and 5 elements. However, this estimate is very tentative, as the work is nowhere near complete.</p>
+  <p>4. The theoretical gain of a quad over a Yagi with a similar number of elements cannot be attained if the quad elements are significantly smaller in diameter than the Yagi elements. HF quads suffer most in the regard, since the #12 to #16 AWG wire we generally use is often less than 0.1 the diameter of typical Yagi elements for the same frequencies. However, VHF quads suffer similarly when they use thin wire, while the Yagis with which they compete employ aluminum rod or tubing. In many cases, the wire quad will lose up to half of the theoretic advantage over a single linear element solely in terms of wire losses. If we wish a quad to achieve its full theoretical potential relative to Yagis, we shall have to use "Yagi-size" elements.</p>
+  <p>The themes I have just enumerated are more fully developed in a series of articles appearing in AntenneX starting in October, 2000. However, we shall see significant confirming evidence as we look at VHF quad design. For the purposes of keeping everything coherent, all of the quads examined here have a design frequency of 146 MHz. In terms of properties, I have set the 2-meter band in the U.S. (144-148 MHz) as the design bandwidth for both the SWR bandwidth curve and the front-to-back bandwidth curve. Front-to-back figures will be given as the 180-degree front-to-back value, although we shall examine the rear quadrant performance in more detail in the text.</p>
+  <h3>2-Element Quad Beam Design</h3>
+  <center>
+    <img src="2mq-1.gif" width="402" height="424" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To fully appreciate a 2-element quad beam, sketched in <b>Fig. 1</b> for reference, it may be useful to make a few comparisons to comparable 2-element Yagi behavior. In a 2-element driver-reflector configuration, a Yagi exhibits maximum front-to-back ratio in the region of about 0.1 to 0.12 wavelengths spacing, with element lengths optimized. The peak front-to-back ratio is low--about 12 dB--and the curve is shallow as we increase the spacing.</p>
+  <p>The behavior of the Yagi represents a limit for parasitic operation of two 1/2 wavelength linear elements. It is possible to derive much higher front-to-back ratios for any pair of such elements by any one of many methods of phase-feeding both center-points. In fact, for any spacing and set of near-1/2 wavelength element lengths, we can find a set of relative current magnitudes and phases for the two elements to achieve at least 50 dB of 180-degree front-to-back ratio. However, parasitically, the mutual coupling between elements is not sufficient to achieve more than the approximate 12 dB figure at the optimal spacing.</p>
+  <p>A quad loop may--for this exercise--be thought of as two dipoles bent so that the ends meet each other. In this configuration, the current distribution along each of the two dipoles is different from that of a linear dipole. The current at the square loop corners--which approximates the distance from the center to the mid-points of a linear element--is about 14% higher with double the phase shift of the current on the corresponding points of a linear element. The net result is a high level of mutual coupling between elements. Since the optimal distance for achieving maximum front-to-back ratio is a function of coupling, we should expect that the element spacing for a quad would have to be greater than for a driver-reflector Yagi. It is: in the neighborhood of 0.17 wavelengths.</p>
+  <p>For both the Yagi and the quad, the exact spacing required for maximum front-to-back ratio is a function of two other variables: the element lengths and the element diameter. As the element diameter increases, the quad loop lengths (for maximum front-to-back ratio combined with driver resonance) increase and the required spacing between elements increases. It is possible to derive a series of antenna models using NEC--which is highly accurate in this kind of exercise--that track the array dimensions for any element diameter ("wire size") from 3.16E-5 up to 1E-2 wavelengths. Subjecting the results to regression analysis results in a series of equations suitable for automated design of a 2-element quad beam having maximum front-to-back ratios of more than 50 dB. Such a program, in GW Basic format for structural transparency, appears in <b>Appendix 1</b> of this study. One need only enter the element diameter and the design frequency to derive 2-element quad dimensions and some basic performance data.</p>
+  <p>At VHF, few will be tempted to build a quad using wire in the 3.16E-5 range--somewhere in the #80 AWG range. However, the program is calibrated for 3 to 300 MHz, and quads in the 1300 kHz range have been developed from the automated process. There are a few cautions to observe. The program lists a design frequency gain that is correct for about 30 MHz. Since skin effect and its resultant losses do not change linearly with the change in element diameter, the actual gain of an array will be higher than predicted for frequencies significantly lower than 30 MHz and be lower than predicted for frequencies higher than the median. As well, changing antenna materials will result in small deviations from the predictions, especially for very thin element quads. The result of these material changes will be minimal with elements larger than 1E-3 wavelengths in diameter.</p>
+  <p><b>Table 1</b> lists the wires sizes that we shall sample in this study, arranged in an overall 8:1 total ratio in 2:1 increments. The smallest size is just barely thinner than #14 AWG (0.0641"). The largest size (0.5") represent a practical limit to modeling accuracy for the exercise, as the diameter approaches 1E-2 wavelengths. The common logs for the wire diameters (in wavelengths) are also listed, since the properties of antennas tend to vary more directly with the common log of wire size than with the size itself.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  Table 1:  Wire Sizes Used in This Study
+
+Wire Size in Inches      Wire Size in             Common Log
+                         Wavelengths              of Wire Size
+     0.0625              0.0007731                -3.1118
+     0.125               0.0015462                -2.8107
+     0.25                0.0030925                -2.5097
+     0.5                 0.0061849                -2.2087
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>My concern to develop the automated program for maximum front-to-back 2-element quads stems from the fact that the maximum front-to-back configuration also yields the widest operating bandwidth for this array type, where bandwidth includes both 2:1 SWR and &gt;20 dB front-to-back ratio. <b>Table 2</b> lists the resultant quad designs based on this analysis.
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+           Table 2:  Calculated Data for 2-Element Quads Modeled
+
+Unless otherwise specified, all antennas are designed for a center
+frequency of 146 MHz.  Also, all models use aluminum wire and hence will
+show slightly less gain than predicted by the GW BAsic program, which is
+calibrated for perfect (lossless) wire.  Models are calibrated for
+resonance in NEC-2.  NEC-4 will show a very slight (operationally
+insignificant) frequency shift for resonance.
+
+1.                                 2.
+Wire Diameter:           0.0625"        Wire Diameter:           0.125"
+Reflector Circumference: 88.480"        Reflector Circumference: 89.672"
+Driver Circumference:    82.304"        Driver Circumference:    82.584"
+Refl-Driver Spacing:     13.140"        Refl-Driver Spacing:     13.324"
+Feedpoint Impedance:     141.1 Ohms        Feedpoint Impedance:     142.3 Ohms
+Free-Space Gain:         7.06 dBi       Free-Space Gain:         7.11 dBi
+&lt; 2:1 swr bandwidth:     18.17 mhz      &lt; 2:1 swr bandwidth:     20.78 mhz
+&gt;20 dB F-B Bandwidth:    3.45 MHz       &gt;20 dB F-B Bandwidth:    4.19 MHz
+
+3.                                 4.
+Wire Diameter:           0.25"          Wire Diameter:           0.5"
+Reflector Circumference: 91.304"        Reflector Circumference: 93.608"
+Driver Circumference:    83.064"        Driver Circumference:    83.936"
+Refl-Driver Spacing:     13.493"        Refl-DriverSpacing:      13.718"
+Feedpoint Impedance:     145.0 Ohms        Feedpoint Impedance:     150.4 Ohms
+Free-Space Gain:         7.14 dBi       Free-Space Gain:         7.17 dBi
+&lt; 2:1 swr bandwidth:     24.63 mhz      &lt; 2:1 swr bandwidth:     31.11 mhz
+&gt;20 dB F-B Bandwidth:    5.29 MHz       &gt;20 dB F-B Bandwidth:    6.87 MHz
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The dimensional growth of the array with increasing element diameter is clear in the table. The feedpoint impedances are resonant at the design frequency within +/-1 Ohm reactance. We can summarize a number of the other features of the table better in a selection of graphs that capture frequency sweeps of each design across the 2-meter band. For example, <b>Fig. 2</b> records not only the free-space gain of the array at the design frequency at the design frequency, but as well the rate of change of gain across the band. As one might expect, the fatter the element, the lower the rate of gain change, thus ensuring more equal gain at both band edges. While commenting on element diameter, one should not that, contrary to experience with linear elements, closed loops tend to grow larger with increasing diameter elements and to have higher feedpoint impedances.</p>
+  <center>
+    <img src="2mq-2.gif" width="648" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> extracts the 180-degree front-to-back data, which reflect also the &gt; 20 dB bandwidth entry in the <b>Table 2</b>. Note that the front-to-back bandwidth--when held to this standard--does not exceed 4 MHz until the element diameter reaches 0.125", and with a mid-band design frequency, does not exceed 20 dB at the low end of the band until we use a 0.25" diameter element. We shall shortly explore why it is best to design quad arrays for a position about 1/3rd up from the bottom of the desired operating passband.</p>
+  <center>
+    <img src="2mq-3.gif" width="648" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The SWR curves (relative to the resonant impedance of each array) for these 2-element optimized arrays, as shown in <b>Fig. 4</b>, present little concern to the builder. They are the reason so many builders classify the quad as a "low-Q" antenna, although the front-to-back curves--even for these fat-element arrays--show the inaccuracy of that claim.</p>
+  <center>
+    <img src="2mq-4.gif" width="647" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The use of 180-degree front-to-back values was necessary to achieve maximum operating bandwidth for the antenna. However, these values should not be mistaken for the overall performance in the rear quadrants of a 2-element quad. <b>Fig. 5</b> shows free-space azimuth patterns for the low end of the band for the thinnest and thickest elements used in this study. Note that in each case, the worst-case front-to-back ratio just approaches 18 dB--which tends to hold for all models used across the band. What does not appear as rearward gain in one direction tends to show up as gain in another direction within the rear quadrants. Thus, there is an overall limit to rear quadrant performance for any 2-element single-feed quad array.</p>
+  <center>
+    <img src="2mq-5.gif" width="640" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>While we are comparing the thinnest and thickest elements in our collection of models, let's look more closely at the wider-band performance of the array--especially at the front-to-back ratio and at the SWR curves. <b>Fig. 6</b> presents the data for each parameter from 140 through 175 MHz, with each array having a design frequency of 146 MHz. Note that the front-to-back curves fall off much more rapidly below design frequency than above it, although the two curves parallel each other closely. With respect to SWR, we would correctly anticipate a steeper curve for the thinner element model. However, for both the 0.625" and 0.5" model, the curves are both more shallow above design frequency than below. The lesson of these curves is simple: for a given desired operational passband, design the quad array for a frequency about 1/3rd the way up from the lower end of that passband in order to achieve roughly equal values of SWR and front-to-back ratio at both ends of the passband. The loss of gain from using this procedure will be rather slight.</p>
+  <center>
+    <img src="2mq-6.gif" width="645" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The actual resonant frequency of the driver is, for small changes in loop diameters, relatively independent of changes in front-to-back ratio--which is largely controlled by the spacing and loop diameter of the reflector. Hence, for special purposes, one may place the resonant frequency of the driver almost anywhere within a passband without moving the frequency of maximum front-to-back ratio significantly. In short, the 2-element quad array can be customized within reason to the builder's desires.</p>
+  <p>Although 2-element quads for 2-meters are "small potatoes" by most array standards, it is necessary to understand the properties of these basic arrays in order to better understand the properties of larger quads. Therefore, let's add a director and see what happens.</p>
+  <h3>3-Element Quad Beam Design</h3>The addition of a director to a quad array introduces a plethora of new variables into beam design. Not only must we account for the spacing between individual elements, we must also account for the relative spacing between driver-director and driver-reflector. Consequently, the number of design variables increases exponentially as we add elements to the array. Little wonder that many builders seek out a simple standard by which to build these antennas.
+  <p>In my own efforts to optimize 3-element quad arrays, I selected two criteria initially: gain and operating bandwidth. Initially, I gave precedence to operating bandwidth, using the &gt;20 dB front-to-back standard. Later, I turned to gain as the paramount criterion, with reasonably-wide bandwidth as the secondary standard. The results proved interesting. For the wire sizes we have selected as most relevant to 2-meter arrays, the arrays ranged between 32" and 36" long. This value is nearly 30% longer than most 3-element 2-meter quads, but the results turn out to be very consistent in each category for operating properties. <b>Table 3</b> lists the resultant arrays for both wide-band and for high-gain applications.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+           Table 3:  Calculated Data for 3-Element Quads Modeled
+
+Unless otherwise specified, all antennas are designed for a center
+frequency of 146 MHz.  Also, all models use aluminum wire and hence will
+show slightly less gain than predicted by the GW BAsic program, which is
+calibrated for perfect (lossless) wire.  Models are calibrated for
+resonance in NEC-2.  NEC-4 will show a very slight (operationally
+insignificant) frequency shift for resonance.
+
+1.  Wire Diameter:                           0.0625"
+                              Wide-Band                High-Gain
+Reflector Circumference:      87.088"                  86.736"
+Driver Circumference:         82.320"                  83.040"
+Director Circumference:       75.92"                   79.336"
+Refl-Driver Spacing:          13.155"                  14.244"
+Driver-Dir Spacing:           22.759"                  18.033"
+Total Boom Length:            35.914"                  32.277"
+Feedpoint Impedance:          74.3 Ohms                54.5 Ohms
+Free-Space Gain:              8.87 dBi                 9.36 dBi
+&lt;2:1 swr bandwidth:           5.72 mhz                 3.91 mhz
+&gt;20 dB F-B Bandwidth:         2.77 MHz                 2.41 MHz
+
+2.  Wire Diameter:                           0.125"
+                              Wide-Band                High-Gain
+Reflector Circumference:      88.008"                  87.512"
+Driver Circumference:         82.632"                  83.352"
+Director Circumference:       75.824"                  79.296
+Refl-Driver Spacing:          13.323"                  14.193"
+Driver-Dir Spacing:           22.234"                  18.050"
+Total Boom Length:            35.557"                  32.243"
+Feedpoint Impedance:          72.4 Ohms                52.1 Ohms
+Free-Space Gain:              8.99 dBi                 9.48 dBi
+&lt;2:1 swr bandwidth:           6.44 mhz                 4.31 mhz
+&gt;20 dB F-B Bandwidth:         3.27 MHz                 2.77 MHz
+
+3.  Wire Diameter:                           0.25"
+                              Wide-Band                High-Gain
+Reflector Circumference:      89.256"                  88.552"
+Driver Circumference:         83.056"                  83.752"
+Director Circumference:       75.568"                  79.240"
+Refl-Driver Spacing:          13.521"                  14.150"
+Driver-Dir Spacing:           21.760"                  18.024"
+Total Boom Length:            35.281"                  32.174"
+Feedpoint Impedance:          71.7 Ohms                50.2 Ohms
+Free-Space Gain:              9.07 dBi                 9.57 dBi
+&lt;2:1 swr bandwidth:           7.43 mhz                 4.84 mhz
+&gt;20 dB F-B Bandwidth:         3.96 MHz                 3.28 MHz
+
+4.  Wire Diameter:                           0.5"
+                              Wide-Band                High-Gain
+Reflector Circumference:      90.960"                  90.032"
+Driver Circumference:         83.624"                  84.272"
+Director Circumference:       75.040"                  79.104"
+Refl-Driver Spacing:          13.693"                  14.133"
+Driver-Dir Spacing:           21.194"                  17.869"
+Total Boom Length:            34.887"                  32.002"
+Feedpoint Impedance:          71.5 Ohms                49.0 Ohms
+Free-Space Gain:              9.13 dBi                 9.63 dBi
+&lt;2:1 swr bandwidth:           8.72 mhz                 5.63 mhz
+&gt;20 dB F-B Bandwidth:         4.95 MHz                 4.03 MHz
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Let's begin with the wide-band arrays. <b>Fig. 7</b> shows the frequency sweep of gain across the 2-meter band for each array in the left column of <b>Table 3</b>. For wide-band operation, the peak gain occurs below the lower limit of the operating passband. Hence, gain decreases across the band. However, the decrease is significantly lessened as we increase the element diameter, with the 0.5" element model showing just over a 0.05 dB change. When maximum operating bandwidth is the primary consideration, increasing the element diameter draws the point of maximum gain closer to being within the operating passband so that the gain curve is at its shallowest.</p>
+  <center>
+    <img src="2mq-7.gif" width="647" height="522" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 180-degree front-to-back curve in <b>Fig. 8</b> reveals that the operative design technique--as used with the 2-element quad--was to place maximum front-to-back at or very near to the design frequency. However, the addition of the 3rd element limits the maximum value of front-to-back ratio as well as the bandwidth over which the value exceeds 20 dB. Although any of the curves might well be usable for many purposes, in terms of the design standards of this exercise, only the 0.5" element version of the antenna achieves 20 dB across the entire band.</p>
+  <center>
+    <img src="2mq-8.gif" width="647" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As with the 2-element quads, the SWR bandwidth of the arrays is considerably wider than the front-to-back bandwidth, as shown in <b>Fig. 9</b>. The more rapid rise in SWR below the design frequency is evident for all versions of the array. However, all of the curves would be acceptable. In fact, referring to <b>Table 3</b>, any of these antennas would be matchable directly to a 75-Ohm main feedline.</p>
+  <center>
+    <img src="2mq-9.gif" width="648" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> provides--among the models given in <b>Table 3</b>--a worst-case look at the patterns of the 0.0625" element diameter model for the entire 2-meter band. In practical terms, the gain would be accounted as reasonably stable, even if not as good as that of the 0.5" model. As well, the rear quadrants--although not up to the 20 dB standard at the band edges--remain quite well controlled and predictable. The nearly 9 dBi free-space gain is rarely achieved in common short-boom 4-element Yagis.</p>
+  <center>
+    <img src="2mq-10.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we turn to the high-gain versions of the antenna, we should expect more gain and a narrower operating bandwidth. In fact, the design of these arrays turned out to be something of a surprise for the designer. As shown in <b>Fig. 11</b>, the peak gain appears within the operating passband, although it gradually shifts toward the high end of the band with the fattest- element version of the array. For the 0.5" diameter model, the gain is about a half dB higher than for the wide-band version, with excellent gain stability across the band.</p>
+  <center>
+    <img src="2mq-11.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In terms of front-to-back ratio, graphed in <b>Fig. 12</b>, the peak front-to-back ratio approaches that of the wide-band array and almost achieves the 20-dB standard with 0.5" diameter elements. Since peak gain was the primary criterion, the exact placement of the front-to-back peak was left a bit more variable, but it occurs in all cases between 145.5 and 146.0 MHz.</p>
+  <center>
+    <img src="2mq-12.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The limiting factor in the high-gain arrays is the SWR curve. shown in <b>Fig. 13</b>. The second surprise of the design exercise was that fact that these arrays all yielded impedance values close to 50 Ohms. The 0.0625" element model fails to achieve a 2:1 50-Ohm SWR curve for the entire 2-meter band. However, the larger-diameter models fit safely within the limits, although with higher band-edge SWR values than for the wide-band models.</p>
+  <center>
+    <img src="2mq-13.gif" width="646" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 14</b> provides a set of free-space azimuth patterns across the band for the 0.0625" model--allowing a comparison with the wide-band version of the array shown in <b>Fig. 10</b>. Whether these patterns are suitable for particular applications is a user judgment.</p>
+  <center>
+    <img src="2mq-14.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The maximum design-frequency gain of the high-gain models is about 9.6 dBi (free-space), which approaches the gain of a standard 5-element Yagi (about 10 dBi). The wide-band version achieves about 9.1 dBi for the same 0.5" element diameter, with a proportionally wider operating bandwidth. The most interesting aspect of this seemingly small set of differentials is that they require very different dimensional profiles to maximize each set of design goals. <b>Fig. 15</b> shows the side profiles of the two arrays, while <b>Table 3</b> shows in detail the differences in actual dimensions.</p>
+  <center>
+    <img src="2mq-15.gif" width="365" height="520" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Nonetheless, each type of array follows a natural progression similar to that of the 2-element arrays. It is possible to optimize a series of each type of array using wire sizes ranging from 3.16E-5 through 1E-2 wavelengths and then to subject the results to regression analysis. The regression equations can than be programmed into any setting for calculations of array dimensions and properties that hold good for 3 to 300 MHz. The same limitations regarding skin effect and array gain that applied to 2-element quads also apply to these arrays. <b>Appendix 2</b> provides a GW Basic listing for the wide-band array design, while <b>Appendix 3</b> supplies a similar listing for the high-gain version. Note that GW Basic recognizes only natural logs so that a multiplier must be added to convert the value to a common log--which is used by the regression analysis. If the program is translated to a spreadsheet that already knows the difference between common and natural logs, the multiplier can be omitted.</p>
+  <p>As with the 2-element arrays, the designs are resonated within +/-1 Ohm reactance at the design frequency. However, the driven element can be adjusted to place resonance within a MHz of the design frequency with minimal effect on the other antenna properties. Alterations to the director and reflector loop sizes have greater consequences for performance. Thus, to move the center point for the peak front-to-back ratio or SWR curve lower in the band, it is recommended that one choose a slightly lower design frequency.</p>
+  <h3>Very-High-Gain 3-Element Quad Beams</h3>I must confess at this point to having arrived at the limit of completely systematic work on 3-element quad designs. The remainder of these notes will address more suggestive conclusions that are insufficiently confirmed to be completely reliable. Nonetheless, they will indicate some directions of development for further design work. In many ways, this is the most interesting arena of quad design, since once quad dimensions are reduced to a set of usable equations for automated design, they become rather dull.
+  <center>
+    <img src="2mq-16.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first interesting anomaly we might address is the possibility of a 3-element quad having even more gain than the standardized model--and on a short boom. The design is based on a high-gain Yagi which has a design frequency free-space gain of about 8.1 dBi, with about 24 dB front-to-back ratio and a resonant feedpoint impedance of about 25 Ohms. By optimizing the loop sizes of the comparable quad, I was able to achieve with 3/16" diameter elements and a 27" boom length nearly 9.9 dBi gain with over 32 dB of 180-degree front-to-back ratio. <b>Fig. 16</b> shows the free-space azimuth patterns for the array over the 2-meter band. With a worst-case front-to-back value of better than 15 dB, this array looks promising.</p>
+  <center>
+    <img src="2mq-17.gif" width="644" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 17</b> shows the gain curve and front-to-back curve across the 2- meter band for this array. The front-to-back rate of change is not unusual, but the rate of gain change across the band is very steep, ranging from 9.57 dBi at 144 MHz to 9.94 dBi at 147 MHz. However, for most of the band, the forward gain exceeds the best gain of the 0.5" high-gain model in the series just examined.</p>
+  <center>
+    <img src="2mq-18.gif" width="648" height="501" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The limiting factor of this design appears in the SWR curve, shown in <b>Fig. 18</b>. The 2:1 SWR curve is under 2 MHz wide, less than half the band. Moreover, the resonant impedance is about 22.7 Ohms. Interestingly, the resistive component of the impedance changes by less than 0.5 Ohms across 2 meters. However, the reactance varies by nearly 67 Ohms from one end of the band to the other. The array is thus most useful for narrow band applications, since achieving a match over such a wide range of reactance would present a very significant challenge. <b>Table 4</b> lists the properties of the array that we have been discussing.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        Table 4:  Design Data for a High-Gain Short 3-Element Quad
+
+Element Diameter:             0.1875"
+Reflector Circumference:      86.688"
+Driver Circumference:         86.064"
+Director Circumference:       81.888"
+Refl-Driver Spacing:          12.388"
+Driver-Dir Spacing:           14.275"
+Total Boom Length:            26.663"
+Feedpoint Impedance:          22.7 Ohms
+Free-Space Gain:              9.89 dBi
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>One reason for working with this array--besides its narrow-band potentials for some applications--was to test the possibility of applying to quads certain Yagi techniques to broaden the operating bandwidth and to control the feedpoint impedance. Called "Optimized Wide-Band Antennas" (OWA) by their developer, Jim Breakall, WA3FET (with preceding work by Tom Schiller, N6BT, and even further back, incipient OWA properties in DL6WU long Yagis), the techniques have proven highly effective with Yagis of almost any size over 2 elements. The key is the addition of a new first director that, in conjunction with reflector spacing, sets the feedpoint impedance stably over a wide operating passband, while the remaining elements set the pattern characteristics of the array. I have designed a number of such arrays ranging from 4 to 7 elements, each of which has a flat 50-Ohm feedpoint impedance that is under 1.3:1 SWR across the wider ham bands in both HF and VHF versions. For each array, the essential operating characteristics of 3-6 element Yagis of the same boom length have been replicated, but with the desired feedpoint characteristics.</p>
+  <p>The question thus arose as to whether these techniques might be applied to quad designs using parameters initially derived from Yagis. The answer is a highly qualified affirmative, but with a very strong reservation--at least so far. <b>Table 5</b> lists the 4-element OWA quad trial design dimensions and properties.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+             Table 5:  Design Data for an "OWA" 4-Element Quad
+
+Element Diameter:                  0.25"
+Reflector Circumference:           87.952"
+Driver Circumference:              84.136"
+Director 1 Circumference:          76.960"
+Director 2 Circumference:          76.640"
+Refl-Driver Spacing:               11.965"
+Driver-Dir 1 Spacing:              12.287"
+Dir 1-Dir 2 Spacing:                8.085"
+Total Boom Length:                 32.337"
+Feedpoint Impedance:               42.7 Ohms
+Free-Space Gain:                   9.60 dBi
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="2mq-19.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 19</b> shows the set of free-space azimuth patterns for the array across 2 meters. As is evident, the rear quadrants are well controlled, although the forward gain has not yet been restored to the peak value attained from the model before "OWA" treatment. <b>Fig. 20</b> affirms this failure to achieve peak gain as well as showing that the rate of gain change across the band is consistent with the untreated model. The front- to-back curve is similar to the original.</p>
+  <center>
+    <img src="2mq-20.gif" width="645" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain in performance appears in the SWR curve of <b>Fig. 21</b>, which shows the 50-Ohm SWR performance of the array. However, both the gain and the SWR curves are similar to those of 0.25" diameter 3-element high-gain model shown earlier--with the earlier model having a more stable gain across the band.</p>
+  <center>
+    <img src="2mq-21.gif" width="648" height="507" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If the present attempt at applying OWA techniques to a 3-element Yagi-Spaced quad is indicative (and perhaps design evidence is not yet sufficient to assert this with confidence), attempting to apply OWA techniques runs into a conflict that is endemic to quads. The optimal coupling between quad elements requires greater spacing than for Yagis. Hence, the spacing of the new "OWA" element is forced a greater distance from the driver to obtain impedance control. In the end, the resultant spacing yields a quad that would obtain similar results in terms of both gain and feedpoint impedance without the OWA element. In essence, the director of the high-gain 3-element quad performs both pattern control and impedance control duties--as well as it can. Although too soon to be said with authority, it is likely the case that obtaining further wide-band performance from a quad simply requires the addition of properly spaced directors.</p>
+  <h3>4-Element Quad Array Design</h3>The foray into 4-element quad array design is fraught with further complications. The additional director multiplies the number of variables. However, we may be able to indicate some useful directions for design effort--and possibly some limitations that may be inherent in long quads.
+  <p>A useful place to begin would be with a sample or two of existing design. I have selected two widely disseminated design, although they appear in disguise. Models of each of them required that I frequency scale the design in order to produce any usable results. Hence, one is redesigned 1.5 MHz below its original design frequency, while the other is 2 MHz below its original design frequency. <b>Table 6</b> summarizes the design and performance data for the two designs.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Table 6:  Design Data for Two 4-Element Quad Arrays
+
+                              Version A:          Version B:
+Element Diameter:             #14 AWG             #18 AWG
+Reflector Circumference:      87.696"             85.264"
+Driver Circumference:         83.448"             83.136"
+Director 1 Circumference:     80.960"             80.712"
+Director 2 Circumference:     78.554"             78.272"
+Refl-Driver Spacing:          15.152"             16.320"
+Driver-Dir 1 Spacing:         12.460"             13.187"
+Dir 1-Dir 2 Spacing:          12.452"             11.192"
+Total Boom Length:            40.064"             40.699"
+Feedpoint Impedance:          42.4 Ohms           42.4 Ohms
+Free-Space Gain:              10.18 dBi           10.05 dBi
+
+                      Performance Data:  144-148 MHz
+
+Version A:
+Frequency Free-Space     Front-to-      Feed Impedance 50-Ohm SWR
+  MHz     Gain dBi       Ratio dB       R +/- jX Ohms
+ 144       9.68           7.99          31.6 - j 32.9       2.50
+ 145       9.99          10.25          34.9 - j 12.8       1.60
+ 146      10.18          12.81          39.0 + j  6.4       1.33
+ 147      10.27          15.61          43.5 + j 24.3       1.71
+ 148      10.30          18.43          47.7 + j 40.4       2.24
+
+Version B:
+Frequency Free-Space     Front-to-      Feed Impedance 50-Ohm SWR
+  MHz     Gain dBi       Ratio dB       R +/- jX Ohms
+ 144       9.55           7.89          35.6 - j 39.0       2.50
+ 145       9.86          10.04          38.6 - j 17.3       1.60
+ 146      10.05          12.42          42.4 + j  3.7       1.20
+ 147      10.14          14.85          46.7 + j 23.7       1.63
+ 148      10.17          16.86          50.8 + j 42.4       2.27
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The similarity of the final designs is a function of their design premises: to use thin wire and a short boom. There should be little wonder that the performance is similar for each array, since there is so little difference in the design, despite their independent sources.</p>
+  <p>The two designs have boom lengths about 6" longer than the average 3-element quad, and their design frequency gain level is only about 0.4 dB higher than the best of the high-gain series of 3-element quads. The point of maximum front-to-back ratio is well above the passband of the array (that is, above 148 MHz). Finally, the neither antenna manages to provide less than 2:1 SWR across 2-meters.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+           Table 7:  Design Data for a Wide-Band 4-Element Quad
+
+Unless otherwise specified, all antennas are designed for a center
+frequency of 146 MHz.  Also, all models use aluminum wire and hence will
+show slightly less gain than predicted by the GW BAsic program, which is
+calibrated for perfect (lossless) wire.  Models are calibrated for
+resonance in NEC-2.  NEC-4 will show a very slight (operationally
+insignificant) frequency shift for resonance.
+
+1.                                 2.
+Wire Diameter:           0.0625"        Wire Diameter:           0.125"
+Reflector Circumference: 86.658"        Reflector Circumference: 87.360"
+Driver Circumference:    82.448"        Driver Circumference:    82.728"
+Refl-Driver Spacing:     13.218"        Refl-Driver Spacing:     13.218"
+Dir 1 Circumference:     78.024"        Dir 1 Circumference:     77.952"
+Refl-Dir 1 Spacing:      38.885"        Refl-Dir 1 Spacing:      38.885"
+Dir 2 Circumference:     75.264"        Dir 2 Circumference:     75.192"
+Refl-Dir-2 Spacing:      68.338"        Refl-Dir-2 Spacing:      67.947"
+Feedpoint Impedance:     60.6 Ohms         Feedpoint Impedance:     58.5 Ohms
+Free-Space Gain:         10.23 dBi      Free-Space Gain:         10.40 dBi
+&lt; 2:1 swr bandwidth:     4.11 mhz       &lt; 2:1 swr bandwidth:     4.50 mhz
+&gt;20 dB F-B Bandwidth:    2.53 MHz       &gt;20 dB F-B Bandwidth:    2.90 MHz
+
+3.                                 4.
+Wire Diameter:           0.25"          Wire Diameter:           0.5"
+Reflector Circumference: 88.448"        Reflector Circumference: 89.976"
+Driver Circumference:    83.072"        Driver Circumference:    83.424"
+Refl-Driver Spacing:     13.218"        Refl-Driver Spacing:     13.218"
+Dir 1 Circumference:     77.782"        Dir 1 Circumference:     77.760"
+Refl-Dir 1 Spacing:      38.885"        Refl-Dir 1 Spacing:      38.885"
+Dir 2 Circumference:     74.992"        Dir 2 Circumference:     74.352"
+Refl-Dir-2 Spacing:      67.446"        Refl-Dir-2 Spacing:      66.953"
+Feedpoint Impedance:     57.3 Ohms         Feedpoint Impedance:     55.0 Ohms
+Free-Space Gain:         10.52 dBi      Free-Space Gain:         10.61 dBi
+&lt; 2:1 swr bandwidth:     5.06 mhz       &lt; 2:1 swr bandwidth:     5.59 mhz
+&gt;20 dB F-B Bandwidth:    3.39 MHz       &gt;20 dB F-B Bandwidth:    4.01 MHz
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="2mq-22.gif" width="646" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, it is possible to design 4-element quads with better than 10 dB free-space gain across the entirety of 2-meters. <b>Table 7</b> provides the specifications for 4 such quads with our standard range of element diameters. As shown in <b>Fig. 22</b>, even the thinnest element provides good gain across the band, although the 0.5" diameter version supplies an additional 0.4 or more dB gain.</p>
+  <center>
+    <img src="2mq-23.gif" width="647" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>These wide-band 4-element quads are only relatively wide--that is, for the class of 4-element quads. In <b>Fig. 23</b>, we can see that only the 0.5" version of this design provides better than 20 dB 180-degree front-to-back ratio for the entirety of 2 meters, although the thinnest element version provides better than 15 dB front-to-back ratio across the band. The SWR curves in <b>Fig. 24</b> reveal that 3 of the 4 arrays meet the 2:1 SWR standard. Since (as shown in <b>Table 7</b>) the resonant impedances are all close to 50 Ohms, these curves will reflect performance with a standard 50-Ohm cable as well.</p>
+  <center>
+    <img src="2mq-24.gif" width="646" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Very often gain and 180-degree front-to-back ratios come at the expense of general pattern shape. However, the designs we are presently discussing have well controlled patterns. The free-space azimuth patterns for the 0.5" diameter element version of the array appear in <b>Fig. 25</b> to verify this claim. The forward lobe is especially consistent from one end of the band to the other, while the rear lobes remain quite well controlled.</p>
+  <center>
+    <img src="2mq-25.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The arrays that we have sampled emerged from a small GW Basic program, which is listed in <b>Appendix 4</b>. The optimized samples that provided the basis for the regression analysis are extensions of the 2- and 3-element wide-band quads that we earlier discussed.</p>
+  <center>
+    <img src="2mq-26.gif" width="646" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The collection of quad designs with which we have been working reveals some interesting trends. <b>Fig. 26</b> graphs the design-frequency gains of all four programmed quad designs for each of the sample 2-meter element diameters. Although the relative gain figures for 2-, 3-, and 4-element quads are interesting, the relative slope of the curves is the key attention-getter. Note that the more elements we add to the quad design, the more dependent the quad becomes on the element diameter. Making multi- element quads of thin wire at VHF and up is one way to lose a significant part of any design's potential.</p>
+  <center>
+    <img src="2mq-27.gif" width="646" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 27</b> reveals another fact of life about quads: the greater the number of elements, the narrower the SWR bandwidth of the array. Above a certain number of elements (I do not yet know the exact number), the only way to achieve a wide SWR bandwidth may be to stagger parasitic elements. However, in every case of stagger-tuned elements, the gain falls below maximum. Hence, the multi-element quad may be self-limiting relative to competeing designs wherever operating bandwidth is a significant consideration.</p>
+  <p>If we permit a narrower operating bandwidth, then we can derive considerably more gain from a 4-element quad. For significantly higher gain from a 4-element quad, we must turn to a design with fat elements and wide spacing. <b>Table 8</b> lists the structural parameters of one such design.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+           Table 8:  Design Data for a High-Gain 4-Element Quad
+
+Element Diameter:             0.5"
+Reflector Circumference:      89.120"
+Driver Circumference:         83.760"
+Director 1 Circumference:     77.760"
+Director 2 Circumference:     74.080"
+Refl-Driver Spacing:          13.200"
+Driver-Dir 1 Spacing:         25.937"
+Dir 1-Dir 2 Spacing:          30.715"
+Total Boom Length:            69.840"
+Feedpoint Impedance:          43.1 Ohms
+Free-Space Gain:              10.98 dBi
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Three items should be immediately apparent from <b>Table 8</b>. First, the design uses large-diameter elements: 1/2" in this case. Second, the boom is quite long--about 2" shy of 6'. Third, the design frequency gain is nearly a full dB higher than for the short-boom models with which we began our foray into 4-element quads. The question remaining is whether we have made sufficient improvements to justify the added mechanical requirements of a quad over a Yagi.</p>
+  <p>To partially answer this question, I shall present the design data for 3 OWA Yagis for 2 meters: a 6-element design using 3/16" elements, a 7-element design using 0.1" elements, and another 7-element design using 1/4" elements. Comparative physical and performance data may prove instructive--at least provisionally.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                   Table 9:  Design Data for 3 OWA Yagis
+
+Antenna                  6 0.1875" El        7 0.1" El      7 0.25" El
+Reflector Length              40.520"        41.180"        41.200"
+Driver Length                 39.962"        39.634"        39.400"
+Director 1 Length             37.376"        37.338"        36.800"
+Director 2 Length             36.310"        36.660"        36.100"
+Director 3 Length             36.310"        36.730"        36.100"
+Director 4 Length             34.960"        36.542"        35.900"
+Director 5 Length              ----          34.856"        34.200"
+Refl-Driver Spacing:          10.130"         8.570"         8.942"
+Driver-Dir 1 Spacing:          4.192"         4.923"         4.658"
+Dir 1-Dir 2 Spacing:          10.974"        12.016"        12.030"
+Dir 2-Dir 3 Spacing:          11.356"        15.484"        15.253"
+Dir 3-Dir 4 Spacing:          16.936"        20.848"        20.538"
+Dir 4-Dir 5 Spacing:           ----          22.488"        22.079"
+Total Boom Length:            54.218"        84.329"        83.500"
+Feedpoint Impedance:          50.0 Ohms      45.7 Ohms      44.3 Ohms
+Free-Space Gain:              10.23 dBi      11.47 dBi      11.55 dBi
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>As shown in <b>Table 9</b>, the boom lengths of the Yagis bracket our improved 4-element quad array. The 70" quad boom lies roughly evenly between the 54" 6-element Yagi boom and the 84" 7-element Yagi booms. As well, the 4-element quad gain also lies between the Yagi numbers. However, before we make judgments using date from just the design frequency, let's survey the entirety of the 2-meter band for all 4 antenna designs.
+  <center>
+    <img src="2mq-28.gif" width="647" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 28</b> shows the free-space gain figures for the 4 antennas--3 Yagis and a quad. Apparent is the greater stability of the Yagi gain, as the quad changes gain by over 0.4 dB across the band. By way of contrast, the Yagis show a maximum gain change of about 0.2 dB. How significant this factor is will be a user judgment.</p>
+  <center>
+    <img src="2mq-29.gif" width="645" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 180-degree front-to-back figures appear in <b>Fig. 29</b>. Although the 6-element OWA Yagi shows the highest peak front-to-back ratio, the band-edge values for all three Yagis are very similar and are above 20 dB. In contrast, the 4-element quad achieves a 20 dB front-to-back ratio for only about 3/4 of the passband. Once more, the relatively narrow-band operating characteristic of the quad emerges.</p>
+  <center>
+    <img src="2mq-30.gif" width="648" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>All of the antennas achieve 50-Ohm SWR values of under 2:1 across 2 meters, as shown in <b>Fig. 30</b>. All three OWAs have values of under 1.25:1 across the band, with the 7-element 0.25" element version achieving under 1.2:1 across 2 meters. All three Yagis can be tweaked for this performance. The quad comes nowhere near this performance, although it does stay within the &lt;2:1 standard. Whether the OWA curves are significantly preferable to the quad curve may rest on a user judgment of the significance of line losses within the total antenna-feedline system.</p>
+  <center>
+    <img src="2mq-31.gif" width="470" height="390" border="2" vspace="5" hspace="9">
+  </center>
+  <p>It is interesting also to investigate pattern shape for various antennas that one might consider using. <b>Fig. 31</b> compares the free-space azimuth patterns for the quad with those for the 0.25" element 7-element OWA Yagi. The Yagi displays better control of rear quadrant radiation across the band. However, the long Yagi also shows some "neck bulges," that is, emergent secondary lobes. Similar lobes are just appearing within the quad pattern, but are far less prominent. To an antenna designer who is not under the press of commercial deadlines, the existence of all such pattern bulges is a sign that further development work is in order. Such emergent lobes are not always eliminable, but the purist tries anyway. This last note is a way of saying that the work is still in progress and far from complete.</p>
+  <h3>Some Very Tentative Conclusions</h3>The conclusions to be drawn from this investigation may be obvious, but are perhaps worth noting anyway.
+  <p>1. For quad design at VHF, using large-diameter elements can be beneficial in achieving close to the full theoretical gain of a quad over a Yagi with a similar number of elements. Thin-wire elements narrow the operating bandwidth and reduce gain by significant amounts.</p>
+  <p>2. Traditional short-boom monoband quad designs fail to realize full quad gain and bandwidth by overlooking the naturally higher mutual coupling of quad elements--a factor that dictates longer boom lengths for optimal performance (relative to arrays with linear elements).</p>
+  <p>3. Quads up through 3 elements are certainly capable of performance that is superior to that of Yagis with the same number of elements and relevantly similar boom lengths. However, above 3 elements, the need for added boom length to achieve optimum inter-element coupling may set a limit on the utility of quads wherever operating bandwidth is an equal concern with gain.</p>
+  <p>4. Quads--even short-boom quads--may still excel for narrow-band applications. However, achieving full performance from a narrow-band quad requires the use of sizable element diameters. Otherwise, the simplicity of VHF Yagi construction may prevail, especially with the availability and simplicity of OWA designs.</p>
+  <p>5. When it comes down to simple and cheap utility antennas with some gain and directivity, the Yagi-quad decision becomes more a matter of what materials are available and less upon the purist considerations that have gone into these notes. Coat hangers, scrap wire, wood, and PVC have yielded generations of utility antennas of either the Yagi or the quad type.</p>
+  <p>6. The work is far from done.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                Appendix 1:
+    A GW Basic Program to Calculate Dimensions of a 2-Element Quad Beam
+
+10 CLS:PRINT "Program to calculate the dimensions of a resonant square 2-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 L=.4342945*LOG(D*10^5):LL=L^2:LM=LL*.0128:LN=LM+1.0413:D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 then 160 else 170
+160 print "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 if d1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=.00336#:BD=.04966518519#:CD=.2731955556#:DD=.6716364021#:ED=1.644147937#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED
+210 AR=.003173333333#:BR=.0508237037#:CR=.3081977778#:DR=.8663851852#:ER=2.040064444#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER
+230 AS=-.003#:BS=-.03551851852#:CS=-.1553055556#:DS=-.2902116402#:ES=-.02540079365#
+240 SP=(AS*(D1^4))+(BS*(D1^3))+(CS*(D1^2))+(DS*D1)+ES
+250 AZ=1.976333333#:BZ=30.84751852#:CZ=172.4909722#:DZ=419.5162831#:EZ=519.8747579#
+260 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+270 AG=-.06333333333#:BG=-.7203703704#:CG=-3.010277778#:DG=-5.381375661#:EG=3.738769841#
+280 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+290 AW=1.688666667#:BW=23.76837037#:CW=124.9339444#:DW=295.8872328#:EW=281.2755159#
+300 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+310 AF=-.00266666667#:BF=.388#:CF=4.790666667#:DF=19.55485714#:EF=28.76628571#
+320 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+330 AN=-.08333333333#:BN=-.9462962963#:CN=-3.943055556#:DN=-7.582671958#:EN=-5.23234127#
+340 DG=(AN*(D1^4))+(BN*(D1^3))+(CN*(D1^2))+(DN*D1)+EN
+350 WL=299.7925/F:PRINT "Wavelength in Meters =";WL
+360 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+370 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+380 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+390 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+400 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+410 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+420 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+430 PRINT "Approximate Resonant Feedpoint Impedance =";ZR;"Ohms"
+440 PRINT "Approximate Free-Space Gain =";GN;"dBi"
+450 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+460 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+470 PRINT "Approximate Rate of Gain Change =";DG;"dB per 1% of Design Frequency"
+480 INPUT "Another Value = 1, Stop = 2: ";P
+490 IF P=1 THEN 10 ELSE 500
+500 END
+
+Note:  "LOG" in GW Basic always mean the natural logarithm.  Hence, a conversion factor is necessary
+to convert the natural log to the common log required by the program.  If the medium to which this
+program may be transferred already knows the difference between "LOG" and "LN," the conversion factor
+can be dropped.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                Appendix 2:
+A GW Basic Program to Calculate Dimensions of a Wide-Band 3-Element Quad Beam
+
+10 CLS:PRINT "Program to calculate the dimensions of a resonant square 3-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 L=.4342945*LOG(D*10^5):LL=L^2:LM=LL*.0128:LN=LM+1.0413:D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 then 160 else 170
+160 print "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 if d1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=.00064:BD=.01044148148#:CD=.06484444444#:DD=.1886626455#:ED=1.232080635#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED
+210 AR=.0009333333333#:BR=.01915555556#:CR=.13983333333#:DR=.4587492063#:ER=1.64042381#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER
+230 AI=-.0012#:BI=-.0209037037#:CI=-.13021111111#:DI=-.3498137566#:EI=.5941126984#
+240 IR=(AI*(D1^4))+(BI*(D1^3))+(CI*(D1^2))+(DI*D1)+EI
+250 AS=-.0033#:BS=-.03927777778#:CS=-.1724583333#:DS=-.3239603175#:ES=-.04951547619#
+260 SP=(AS*(D1^4))+(BS*(D1^3))+(CS*(D1^2))+(DS*D1)+ES
+270 AP=-.004866666667#:BP=-.06262962963#:CP=-.29347222222#:DP=-.6174457672#:EP=-.2289269841#
+280 IP=(AP*(D1^4))+(BP*(D1^3))+(CP*(D1^2))+(DP*D1)+EP
+290 AZ=-2.227066667#:BZ=-26.75247407#:CZ=-115.9142556#:DZ=-217.8183323#:EZ=-79.59203175#
+300 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+310 AG=-.07#:BG=-.7877777778#:CG=-3.350833333#:DG=-6.143888889#:EG=5.104166667#
+320 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+330 AW=-.05847333333#:BW=-.5028392593#:CW=-.4586494444#:DW=6.080227037#:EW=17.61091389#
+340 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+350 AF=.11695666667#:BF=1.717985556#:CF=9.6510925#:DF=25.23848992#:EF=27.78167988#
+360 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+370 AN=-.04666666667#:BN=-.5414814815#:CN=-2.302777778#:DN=-4.364074074#:EN=-3.092777778#
+380 DG=(AN*(D1^4))+(BN*(D1^3))+(CN*(D1^2))+(DN*D1)+EN
+390 WL=299.7925/F:PRINT "Wavelength in Meters =";WL;"    ";
+400 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+410 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+420 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+430 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+440 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+450 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+460 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+470 PRINT "Director Side =";(IR/4);" WL or";(IR/4)*WF;"Feet or";(IR/4)*WL;"Meters"
+480 PRINT "Director Circumference =";IR;" WL or";IR*WF;"Feet or";IR*WL;"Meters"
+490 PRINT "Director-Driver Space =";IP;" WL or";IP*WF;"Feet or";IP*WL;"Meters"
+500 PRINT "Approx. Feedpoint Impedance =";ZR;"Ohms   ";
+510 PRINT "Free-Space Gain =";GN;"dBi"
+520 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+530 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+540 PRINT "Approximate Rate of Gain Change =";DG;"dB per 1% of Design Frequency"
+550 INPUT "Another Value = 1, Stop = 2: ";P
+560 IF P=1 THEN 10 ELSE 570
+570 END
+
+Note:  "LOG" in GW Basic always mean the natural logarithm.  Hence, a conversion factor is necessary
+to convert the natural log to the common log required by the program.  If the medium to which this
+program may be transferred already knows the difference between "LOG" and "LN," the conversion factor
+can be dropped.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                Appendix 3:
+A GW Basic Program to Calculate Dimensions of a High-Gain 3-Element Quad Beam
+
+10 CLS:PRINT "Program to calculate the dimensions of a resonant square 3-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "Alternate Design",,,"L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 L=.4342945*LOG(D*10^5):LL=L^2:LM=LL*.0128:LN=LM+1.0413:D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 then 160 else 170
+160 print "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 if d1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=.000266666667#:BD=.00506666667#:CD=.03633333333#:DD=.1221904762#:ED=1.183285714#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED
+210 AR=.0037333333333#:BR=.05362962963#:CR=.29275555556#:DR=.7424529101#:ER=1.814412698#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER
+230 AI=-.00266666667#:BI=-.033244444444#:CI=-.1550666667#:DI=-.3222793651#:EI=.7283809524#
+240 IR=(AI*(D1^4))+(BI*(D1^3))+(CI*(D1^2))+(DI*D1)+EI
+250 AS=.00033333333#:BS=.004837037037#:CS=.02552777778#:DS=.05643756614#:ES=.2191230159#
+260 SP=(AS*(D1^4))+(BS*(D1^3))+(CS*(D1^2))+(DS*D1)+ES
+270 AP=-.002333333333#:BP=-.03128148148#:CP=-.15586111111#:DP=-.3417669312#:EP=-.05499206349#
+280 IP=(AP*(D1^4))+(BP*(D1^3))+(CP*(D1^2))+(DP*D1)+EP
+290 AZ=4.4029#:BZ=53.43954444#:CZ=239.2408583#:DZ=462.3614437#:EZ=373.3035655#
+300 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+310 AG=-.15#:BG=-1.768518519#:CG=-7.763055556#:DG=-14.78592593#:EG=-.609722222#
+320 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+330 AW=.16666666667#:BW=2.265925926#:CW=11.706111111#:DW=27.93058201#:EW=28.88753968#
+340 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+350 AF=.11933333333#:BF=1.671777778#:CF=8.9885#:DF=22.45931746#:EF=23.68797619#
+360 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+370 WL=299.7925/F:PRINT "Wavelength in Meters =";WL;"    ";
+380 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+390 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+400 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+410 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+420 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+430 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+440 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+450 PRINT "Director Side =";(IR/4);" WL or";(IR/4)*WF;"Feet or";(IR/4)*WL;"Meters"
+460 PRINT "Director Circumference =";IR;" WL or";IR*WF;"Feet or";IR*WL;"Meters"
+470 PRINT "Director-Driver Space =";IP;" WL or";IP*WF;"Feet or";IP*WL;"Meters"
+480 PRINT "Approx. Feedpoint Impedance =";ZR;"Ohms   ";
+490 PRINT "Free-Space Gain =";GN;"dBi"
+500 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+510 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+520 INPUT "Another Value = 1, Stop = 2: ";P
+530 IF P=1 THEN 10 ELSE 540
+540 END
+
+Note:  "LOG" in GW Basic always mean the natural logarithm.  Hence, a conversion factor is necessary
+to convert the natural log to the common log required by the program.  If the medium to which this
+program may be transferred already knows the difference between "LOG" and "LN," the conversion factor
+can be dropped.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                Appendix 4:
+A GW Basic Program to Calculate Dimensions of a Wide-Band 4-Element Quad Beam
+
+10 CLS:PRINT "Program to calculate the dimensions of a resonant square 4-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 L=.4342945*LOG(D*10^5):LL=L^2:LM=LL*.0128:LN=LM+1.0413:D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 then 160 else 170
+160 print "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 if d1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=-.00018:BD=-.002359259259#:CD=-.01090277778#:DD=-.01971296296#:ED=.1174938889#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED:DE=DE*8
+210 AR=.0002666666667#:BR=.004237037037#:CR=.02554444444#:DR=.07158756614#:ER=.2119230159#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER:RE=RE*8
+230 AI=-.0002#:BI=-.002525925926#:CI=-.01182777778#:DI=-.02473915344#:EI=.1008246032#
+240 IR=(AI*(D1^4))+(BI*(D1^3))+(CI*(D1^2))+(DI*D1)+EI:IR=IR*8
+250 AT=-.0006#:BT=-.009059259259#:CT=-.04912777778#:DT=-.1152343915#:ET=.01678174603#
+260 TT=(AT*(D1^4))+(BT*(D1^3))+(CT*(D1^2))+(DT*D1)+ET:TT=TT*8
+270 SP=.1635:IP=.481
+280 ATT=.0026666666667#:BTT=.036888888889#:CTT=.177#:DTT=.3386587302#:ETT=1.046738095#
+290 TTP=(ATT*(D1^4))+(BTT*(D1^3))+(CTT*(D1^2))+(DTT*D1)+ETT
+300 AZ=1.2#:BZ=13.92592593#:CZ=60.777777778#:DZ=113.9177249#:EZ=132.618254#
+310 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+320 AG=-.1#:BG=-1.184444444#:CG=-5.228333333#:DG=-9.831507937#:EG=4.045238095#
+330 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+340 AW=-.06663333333:BW=-.6539148148:CW=-1.677836111:DW=1.361137831:EW=9.502790079
+350 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+360 AF=-.03#:BF=-.27666667#:CF=-.4475#:DF=2.348809524#:EF=7.853214286#
+370 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+380 WL=299.7925/F:PRINT "Wavelength in Meters =";WL;"    ";
+390 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+400 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+410 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+420 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+430 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+440 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+450 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+460 PRINT "Director 1 Side =";(IR/4);" WL or";(IR/4)*WF;"Feet or";(IR/4)*WL;"Meters"
+470 PRINT "Director 1 Circumference =";IR;" WL or";IR*WF;"Feet or";IR*WL;"Meters"
+480 PRINT "Director 1-Reflector Space =";IP;" WL or";IP*WF;"Feet or";IP*WL;"Meters"
+490 PRINT "Director 2 Side =";(TT/4);" WL or";(TT/4)*WF;"Feet or";(TT/4)*WL;"Meters"
+500 PRINT "Director 2 Circumference =";TT;" WL or";TT*WF;"Feet or";TT*WL;"Meters"
+510 PRINT "Director 2-Reflector Space =";TTP;" WL or";TTP*WF;"Feet or";TTP*WL;"Meters"
+520 PRINT "Approx. Feedpoint Impedance =";ZR;"Ohms   ";
+530 PRINT "Free-Space Gain =";GN;"dBi"
+540 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+550 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+560 INPUT "Another Value = 1, Stop = 2: ";P
+570 IF P=1 THEN 10 ELSE 580
+580 END
+
+Note:  "LOG" in GW Basic always mean the natural logarithm.  Hence, a conversion factor is necessary
+to convert the natural log to the common log required by the program.  If the medium to which this
+program may be transferred already knows the difference between "LOG" and "LN," the conversion factor
+can be dropped.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 04-21-2001. &COPY; L. B. Cebik, W4RNL. This article first appeared in</i> Proceedings of the 2001 Southeastern VHF Society Conference <i>(ARRL, 2001), pp. 116-156. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="quadlist.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40">Go to Quad List</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

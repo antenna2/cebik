@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Some Further Applications of the NT Command</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>96. Some Further Applications of the NT Command</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the last episode, we examined the basics of the NT or network command, along with some specialized uses. The command itself is straightforward in its structure.</p>
+  <pre>
+CMD     I1      I2      I3      I4      F1      F2      F3      F4      F5      F6
+        TAG1    SEG1    TAG2    SEG2    Y11R    Y11I    Y12R    Y12I    Y22R    Y22I
+NT      2       1       1       6       5.8e-5  -7.3e-3 -5.8e-5 1.7e-2  5.8e-5  -4.8e-3
+</pre>
+  <p>The integer entries identify the terminal tags and segments for the network, while the 6 floating point positions take the admittance values for the 2-port network. In this episode, we shall probe a bit further into the use of the NT command to simulate complex real networks of components. Note that we shall have to be careful when we use the term "network." With respect to the NT command's contents. The term refers to a 2-port admittance parameter network. At the same time, these handy networks serve to capture the key ingredients of all manner of passive arrays of components that we more traditionally call networks. In theory, the 2-port network can stand in for any component network, no matter how complex.</p>
+  <center>
+    <img src="amod96-1.gif" width="414" height="256" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The terms of a 2-port network, shown in <b>Fig. 1</b>, have names with meanings:</p>
+  <ul>
+    <li>Y11: short circuit input admittance</li>
+    <li>Y22: short circuit output admittance</li>
+    <li>Y12: short circuit reverse transfer admittance</li>
+    <li>Y21: short circuit forward transfer admittance</li>
+  </ul>
+  <center>
+    <img src="amod96-2.gif" width="601" height="287" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Consider a real component network, such as the central part of <b>Fig. 2</b>. One form of analysis that we can perform (A) is to short-circuit the output and apply a voltage to the input. Then we can reverse the procedure (B), applying a voltage to the output side with the input side short circuited. Under these conditions, the following relationships will hold.</p>
+  <center>
+    <img src="amod96e1.gif" width="270" height="27">
+  </center>
+  <p>With the output shorted, we can calculate the values of Y11 and Y21:</p>
+  <center>
+    <img src="amod96e2.gif" width="229" height="50">
+  </center>
+  <p>With the input shorted, we can likewise calculate the values of Y22 and Y12:</p>
+  <center>
+    <img src="amod96e3.gif" width="227" height="49">
+  </center>
+  <p>Since we have restricted ourselves to passive networks, we need not calculate both Y12 and Y21, because</p>
+  <center>
+    <img src="amod96e4.gif" width="68" height="26">
+  </center>
+  <p>Perhaps the only special thing we must do is get used to the fact that NEC nomenclature puts the admittance terms in capital letters, while textbooks shown them in the lower case. Those same textbooks have also replaced--in most cases--the traditional E with a V for voltage, as in the above equations. As well, we shall also have to remember that admittance parameter networks involve calculations based on shunt or parallel admittance, not on series admittance.</p>
+  <p><b>Impedance Matching a Folded Dipole to a 50-Ohm Source</b></p>
+  <p>In order to see some practical cases using the NT command, let's set up a folded dipole at 28.5 MHz, as in the following model.</p>
+  <pre>
+CM Folded Dipole
+CM Pre-match version
+CE
+GW 1 99 -2.4892 0. 0. 2.4892 0. 0. .0005119
+GW 2 1 2.4892 0. 0. 2.4892 0. .0762 .0005119
+GW 3 99 2.4892 0. .0762 -2.4892 0. .0762 .0005119
+GW 4 1 -2.4892 0. .0762 -2.4892 0. 0. .0005119
+GE 0
+FR 0 1 0 0 28.5 1
+GN -1
+EX 0 1 50 00 1 0
+XQ
+EN
+</pre>
+  <p>The key parameter for our work will be the source impedance: 286.705 + j0.651 Ohms. That is why the model uses the XQ command rather than an RP command. In episode 73, we reviewed a technique for adding a component network to the model in order to match the folded dipole to a 50-Ohm source. See <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod96-3.gif" width="480" height="313" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To create this antenna plus matching network (an L circuit), we ended up with a model like the following one.</p>
+  <pre>
+CM Folded Dipole
+CM TL + LD matching network to 50 Ohms
+CE
+GW 1 99 -2.4892 0. 0. 2.4892 0. 0. .0005119
+GW 2 1 2.4892 0. 0. 2.4892 0. .0762 .0005119
+GW 3 99 2.4892 0. .0762 -2.4892 0. .0762 .0005119
+GW 4 1 -2.4892 0. .0762 -2.4892 0. 0. .0005119
+GW 5 1 0. -.0254 1 0. .0254 1 .0005119
+GW 6 1 0. .0254 1 .0254 .0254 1 .0005119
+GW 7 1 .0254 -.0254 1 0. -.0254 1 .0005119
+GW 8 1 .0254 -.0254 1 .0254 .0254 1 .0005119
+GW 9 1 .0508 -.0254 1 .0254 -.0254 1 .0005119
+GW 10 1 .0254 .0254 1 .0508 .0254 1 .0005119
+GW 11 1 .0508 -.0254 1 .0508 .0254 1 .0005119
+GE 0
+TL 1 50 5 1 290 .001
+LD 0 9 1 1 0. 2.6E-07 0.
+LD 0 10 1 1 0. 2.6E-07 0.
+LD 0 8 1 1 0. 0. 4.19E-11
+FR 0 1 0 0 28.5 1
+GN -1
+EX 0 11 1 00 1 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The added lines or GW entries provide a wire framework to hold the components, indicated by the LD0 entries. A very short transmission line (TL) makes a virtual direct connection to the normal folded dipole feedpoint while the actual wire grid structure is at a considerable distance from the main antenna structure to prevent unwanted interactions among the two groups of wires. The model returns a matched source impedance of 50.231 + j1.412 Ohms.</p>
+  <p>The wire-grid system holds both advantages and disadvantages. On the plus side, it is accurate within general limits and is amenable to frequency sweeps. On the minus side, the extra wires do have an affect on the network and require great care to achieve reasonable results.</p>
+  <p>In contrast, if we replace the wire grid with the NT command, we vastly simplify the model. At the same time we can achieve considerable accuracy, since the NT network is a non-radiating structure that does not interfere with the structure geometry of the model. However, an NT replacement for the component network has 2 drawbacks: it is frequency specific (like an LD4 load that specifies resistance and reactance), and it requires some external work to arrive at the values for the 6 floating decimal positions in the command.</p>
+  <p>Those who have little or no experience using 2-port networks usually have two stages of learning curve to endure. The first involves getting used to converting component values into shunt admittance values rather than using the more familiar impedance terms. In isolation, of course, conductance (G) is the inverse of resistance (R), and susceptance (B) is the inverse of reactance (X). Originally, to signify the inverse relationship, the unit of conductance, susceptance, and admittance was the mho, more recently changed to the Siemen (S). G and B occur together, just as do R and X. As well, we tend to think of R and X in series form: R +/- jX Ohms. However, admittance normally appears in shunt or parallel form: G +/-jB S. To convert a series-form impedance to a shunt-form admittance requires that we combine the inversion with a series-to-parallel operation, so that the actual conversions look like the following:</p>
+  <center>
+    <img src="amod96e5.gif" width="260" height="47">
+  </center>
+  <p>Note the reversal of sign on the susceptance equation, due to the change of phase angle when changing from a series to a parallel form.</p>
+  <p>The second stage of the learning curve involves deriving the correct values for Y11, Y12, and Y22 when converting a component network into a 2-port network. Depending on the complexity of the component network, along with our adeptness at working with nodal equations, etc., the work can become tedious. However, for many tasks, there is no way around the work.</p>
+  <p>For our illustrations, we can simplify the entire operation by setting up a few restrictions. First, capacitors will have an indefinitely high Q, and so we may safely ignore their conductance. This holds true only of good quality capacitors used in the HF region, and so we shall continue to work below 30 MHz. Second, if an inductor has a sufficiently high Q (perhaps 200 or so and up), then under conversion, the low series resistance will not alter the susceptance value of the resulting admittance. We may then directly calculate capacitor and inductor shunt admittance values from the following equations:</p>
+  <center>
+    <img src="amod96e6.gif" width="312" height="42">
+  </center>
+  <p>We should recognized the first 2 simplified forms as the negative inverse of forms that we would use to calculate reactance values. The third form is a handy way to arrive at the conductance of the inductor: by dividing its absolute value of susceptance by the coil Q. For uniformity in this exercise, all component network inductors will have a Q of 300.</p>
+  <p>Under the simplifying assumptions, we may then calculate the real and imaginary components of the 2-port network for L and PI networks using the following simple equations:</p>
+  <pre>
+Parameter          Real              Imaginary
+Y11                Gp1 + Gs           Bp1 + Bs
+Y12                -Gs                -Bs
+Y22                Gp2 + Gs           Bp2 + Bs
+</pre>
+  <p>The p1 and p2 subscripts refer to the shunt or parallel components in a real network, while s refers to the series component. Let's apply these procedures to a few matching networks that we might calculate (usually from a utility program) to match our original folded dipole to a 50-Ohm source. We may always compare our results to the source impedance obtained from our wire grid model.</p>
+  <p><b>Three Networks</b></p>
+  <p>Let's begin with an up-converting L circuit using a series inductor and a shunt capacitor on the load side of the L circuit. The arrangement would appear like the left-hand side of <b>Fig. 4</b>. The component values come from one of my utility programs.</p>
+  <center>
+    <img src="amod96-4.gif" width="600" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>This may be as good a time as any to note some differences among network-calculating utilities. Some programs offer you the choice of both coil and network Q (called "delta" in Terman's classical work). Other programs calculate the components for the lowest possible value of delta or working Q, which achieves the highest network efficiency. The latter types of programs are best, since you may not know what the lowest feasible value of working Q may be. Hence, you may select a Q that is too high in the sense of resulting in a less efficient network. In any event, always use the highest component (coil) Q and the lowest network Q that you can, while having manageable components. You may wish to calculate the network Q or delta from the following conventional equations for calculating L circuits (about 2.17).</p>
+  <center>
+    <img src="amod96e7.gif" width="323" height="63">
+  </center>
+  <p>The calculated components are a 0.608 uH series coil and a 42.4 pF shunt capacitor. We need to convert these values first into shunt admittance values and then into parameter entries. We shall use basic units throughout.</p>
+  <pre>
+Component          Value          G (Conductance)          B (Susceptance)
+P1                 None           0                        0
+S                  0.608E-6       3.0616E-5                -9.1848E-3
+P2                 42.4E-12       0                        7.5926E-3
+
+Parameter                   Real                                 Imaginary
+Y11                Gp1 + Gs      3.0616E-5              Bp1 + Bs      -9.1848E-3
+Y12                -Gs           -3.0616E-5             -Bs           9.1848E-3
+Y22                Gp2 + Gs      3.0616E-5              Bp2 + Bs      -1.5922E-3
+</pre>
+  <p>You can recognize the calculated values of Y11-Y22 in <b>Fig. 4</b> within the NT assistance screen from NEC-Win Pro. The total model has the following appearance.</p>
+  <pre>
+CM Folded Dipole
+CM Ls-Cp L-network version: NT
+CM Ls = 0.608 uH, Q = 300; Cp = 42.4 pF
+CE
+GW 1 99 -2.4892 0. 0. 2.4892 0. 0. .0005119
+GW 2 1 2.4892 0. 0. 2.4892 0. .0762 .0005119
+GW 3 99 2.4892 0. .0762 -2.4892 0. .0762 .0005119
+GW 4 1 -2.4892 0. .0762 -2.4892 0. 0. .0005119
+GW 5 1 -.001 0 1000 .001 0 1000 .00005
+GE 0
+FR 0 1 0 0 28.5 1
+GN -1
+EX 0 5 1 00 1 0
+NT 5 1 1 50 3.0616e-5 -9.1848e-3 -3.0616e-5 9.1848e-3 3.0616e-5 -1.5922e-3
+XQ
+EN
+</pre>
+  <p>The model requires only 1 wire in addition to the folded-dipole wires. It serves to provide a new source segment for the input end of the 2-port network. The NT entries follow the order shown in the conversion table. Be certain to orient the terminating wires so that the network operates in the correct direction.</p>
+  <p>If we run the model, it returns a source impedance of 50.410 + j0.042 Ohms. Since the network includes a conductance value, the network does show losses. The folded dipole itself uses perfect wire, so that the GW parts of the model have no loss. Hence, the reported efficiency of 99.28% gives us a sense of the relative losses incurred by adding an actual L matching circuit to the antenna.</p>
+  <p>Why did the circuit not show a perfect 50-Ohm resistive impedance? There are 2 factors which are not clearly separable within the model. First, the external L circuit calculator rounds value to a maximum of 3 significant digits. Second, we used a considerable number of simplifying assumptions. Finally, the fact that we carried out the impedance calculation to 3 decimal places is a function of our desire to compare calculations, not to arrive at a practical matching solution. Rounded to "whole" Ohms, the result is practically perfect.</p>
+  <p>We may equally use the same L-circuit with the reactances (or susceptances) reversed, as in the left side of <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod96-5.gif" width="600" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As we work our way through the calculations, the susceptance values will be close to those of the first example. However, their signs will be reversed. Numerical differences result from the reported component values having only 3 significant digits. As well, because we have swapped places for the capacitor (indefinitely high Q) and the coil (Q = 300), the shunt conductance values in the component network (and the resulting 2-port network) will also differ from the first example. The initial calculations call for a 51.3-pF series capacitor and a 0.737 uH shunt inductor.</p>
+  <pre>
+Component          Value          G (Conductance)          B (Susceptance)
+P1                 None           0                        0
+S                  51.3E-12       0                        9.1863E-3
+P2                 0.737E-6       2.5257E-5                -7.5772E-3
+
+Parameter                   Real                                 Imaginary
+Y11                Gp1 + Gs      1E-10                  Bp1 + Bs      9.1863E-3
+Y12                -Gs           1E-10                  -Bs           -9.1863E-3
+Y22                Gp2 + Gs      2.5257E-5              Bp2 + Bs      1.6091E-3
+</pre>
+  <p>When working with NEC, unless specifically instructed otherwise, entering zero is not usually wise. Hence, the real components of Y11 and Y12 become exceedingly low numbers (1E-10) that still have calculational value. At this value level, the sign become meaningless. The entries appear in the assistance screen on the right side of <b>Fig. 5</b> and are evident in the NT entry in the model itself.</p>
+  <pre>
+CM Folded Dipole
+CM Cs-Lp L-network version: NT
+CM Cs = 51.3 pF; Lp = 0.737 uH, Q = 300
+CE
+GW 1 99 -2.4892 0. 0. 2.4892 0. 0. .0005119
+GW 2 1 2.4892 0. 0. 2.4892 0. .0762 .0005119
+GW 3 99 2.4892 0. .0762 -2.4892 0. .0762 .0005119
+GW 4 1 -2.4892 0. .0762 -2.4892 0. 0. .0005119
+GW 5 1 -.001 0 1000 .001 0 1000 .00005
+GE 0
+FR 0 1 0 0 28.5 1
+GN -1
+EX 0 5 1 00 1 0
+NT 5 1 1 50 1e-10 9.1863e-3 1e-10 -9.1848e-3 2.5257e-5 1.6091e-3
+XQ
+EN
+</pre>
+  <p>Note that, except for the NT entry, the model is identical to the one used in the first example. One advantage of using NT networks is that, if you can calculate the Y11 - Y22 entries, you may try many networks with minimal model revision. Running the model yields a source impedance of 50.293 - j0.317 Ohms, well within the limits set by our rounded component values and our initial assumptions. The efficiency remains 99.28%, since the delta of our L circuit did not change with the alteration of the components.</p>
+  <p>There is no reason why we cannot calculate a true 3-legged PI network to serve as our matching circuit. <b>Fig. 6</b> shows on the left the resulting components that we shall need.</p>
+  <center>
+    <img src="amod96-6.gif" width="600" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our calculation scratch pad will have the following appearance.</p>
+  <pre>
+Component          Value          G (Conductance)          B (Susceptance)
+P1                 41.87E-12      0                        7.4977E-3
+S                  0.668E-6       2.7866E-5                -8.3599E-3
+P2                 45.89E-12      0                        8.2176E-3
+
+Parameter                   Real                                 Imaginary
+Y11                Gp1 + Gs      2.7866E-5              Bp1 + Bs      -8.622E-4
+Y12                -Gs           -2.7866E-5             -Bs           8.3599E-3
+Y22                Gp2 + Gs      2.7866E-5              Bp2 + Bs      -1.423E-4
+</pre>
+  <p>The assistance screen shows the values, as does the following model for this situation.</p>
+  <pre>
+CM Folded Dipole
+CM C-L-C PI-network version: NT
+CM Cp1 = 41.87 pF; Ls = 0.668 uH, Q = 300; Cp2 = 45.89 pF
+CE
+GW 1 99 -2.4892 0. 0. 2.4892 0. 0. .0005119
+GW 2 1 2.4892 0. 0. 2.4892 0. .0762 .0005119
+GW 3 99 2.4892 0. .0762 -2.4892 0. .0762 .0005119
+GW 4 1 -2.4892 0. .0762 -2.4892 0. 0. .0005119
+GW 5 1 -.001 0 1000 .001 0 1000 .00005
+GE 0
+FR 0 1 0 0 28.5 1
+GN -1
+EX 0 5 1 00 1 0
+NT 5 1 1 50 2.7866e-5 -8.622e-4 -2.7866e-5 8.3599e-3 2.7866e-5 -1.423e-4
+XQ
+EN
+</pre>
+  <p>The 2-port NT version of our matched folded dipole shows a source impedance of 50.340 - j0.301 Ohms. The efficiency is down to 99.10%, indicating the inherently higher losses for a 3-component network than for a 2-component network that performs the same impedance transformation.</p>
+  <p>In general, then, for the class of network applications with which we have been dealing, the simplifying assumptions have created no noticeable problems for the use of the NT command to simulate 2- and 3-component matching networks in the HF region.</p>
+  <p><b>A Harder Case: The T</b></p>
+  <p>So far, we have worked with the PI network and incomplete forms of it in converting component networks into shunt admittance values and then into Y11 - Y22 entry values for the 2-port network of the NT command. We have not attempted an analysis of another popular matching network, the T. In its most common form, the C-L-C T is a high-pass network as well as an impedance transformer. We can easily calculate values for a fixed-component version to serve our folded dipole, as shown on the left in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod96-7.gif" width="600" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The figure shows the component values, which result in the following initial shunt admittances.</p>
+  <pre>
+Component          Value          G (Conductance)          B (Susceptance)
+Cs1   (Y1)         51.3E-12       0                        9.1863E-3
+Lp    (Y3)         0.706E-6       2.6366E-5                -7.9099E-3
+Cs2   (Y2)         200.0E-12      0                        3.5814E-2
+</pre>
+  <p>We may develop a new set of conversion formulas, or we may convert the admittance-based T network into an equivalent PI network, using standard conversion equations. The crossover labels for the components have conventional designations, as shown in <b>Fig. 8</b>.</p>
+  <center>
+    <img src="amod96-8.gif" width="529" height="193" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The conversions equations are very straightforward.</p>
+  <pre>
+Conversion Formula       Label         Values Based on the Example
+Yt = Y1 + Y2 + Y3                      3.7090E-2
+Yc = Y1 Y2 / Yt          Ls            8.8702E-3
+Ya = Y1 Y3 / Yt          Cp1           -1.9591E-3
+Yb = Y2 Y3 / Yt          Cp2           -7.6377E-3
+</pre>
+  <p>Not included in the conversion is the conductance. For a Q of 300, the original inductor conductance is 2.6366E-5. If we divide the conductance into the series component susceptance, we obtain a virtual Q of 336.5. We may use this value with each of the imaginary values in the following table to arrive at an approximation of the appropriate real entry. In general, the 2-port paths all involve the T inductor, but the virtual Q for each of the shunt legs of our conversion PI will likely be higher than the Y12 value. Nevertheless, the error will create little or no harm. With this in mind, we can create the final table of entries for the NT command.</p>
+  <pre>
+Parameter                   Real                                 Imaginary
+Y11                Gp1 + Gs      2.0539E-5              Bp1 + Bs      6.9111E-3
+Y12                -Gs           2.6366E-5              -Bs           -8.8702E-3
+Y22                Gp2 + Gs      3.6628E-6              Bp2 + Bs      1.2325E-3
+</pre>
+  <p>The assistance screen reproduced in <b>Fig. 7</b> shows these entries, as does the model itself.</p>
+  <pre>
+CM Folded Dipole
+CM C-L-C T-network version: NT
+CM Cs1 = 51.3 pF; Lp = 0.706 uH, Q = 300; Cs2 = 200.0 pF
+CE
+GW 1 99 -2.4892 0. 0. 2.4892 0. 0. .0005119
+GW 2 1 2.4892 0. 0. 2.4892 0. .0762 .0005119
+GW 3 99 2.4892 0. .0762 -2.4892 0. .0762 .0005119
+GW 4 1 -2.4892 0. .0762 -2.4892 0. 0. .0005119
+GW 5 1 -.001 0 1000 .001 0 1000 .00005
+GE 0
+FR 0 1 0 0 28.5 1
+GN -1
+EX 0 5 1 00 1 0
+NT 5 1 1 50 2.0539e-5 6.9111e-3 2.6366e-5 -8.8702e-3 3.6628e-6 1.2325e-3
+XQ
+EN
+</pre>
+  <p>If we run the listed model, we obtain a source impedance of 49.681 + j0.016 Ohms, a value that is as close to perfect as any other the other results in this exercise. As well, the efficiency value is comparable to those for the other NT examples in this set.</p>
+  <p>These samples provide you with a starting point in expanding your use of the NT command beyond the kinds of special cases that we reviewed on the previous episode of this series. However, beware of extending the simplified calculations beyond the type of non-critical HF situation that we presumed at the start. Full exploration of NT potentials requires some exercises in mastering the techniques of converting all manner of component networks into terms sutable for use with the 2-port admittance parameter network of the NT command.</p>
+  <p>At the other extreme, for those who do not wish to make any calculations externally to the modeling program, one implementation of NEC-2 may be useful. NEC2GO contains a special matching network module. It begins with the source impedance of an unmatched antenna. Then it gives you the choice of available networks to match the antenna's impedance to a source impedance of your choice. As well, you may choose both the coil and the network Q. Your network choices include applicable L, PI, and T circuits. The program then creates a new source wire and the NT command to implement the network selected. The only caution you need to exercise is to select a working Q that will yield the best combination of efficiency and manageable component values.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

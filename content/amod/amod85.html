@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Electrical Fields at a Power Level and Distance</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>85. Electrical Fields at a Power Level and Distance</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>There are occasions on which the modeler needs to know the strength of a radiated electrical field using a specific power level and a specific distance from the antenna. If the antenna structure is centered at the coordinate system origin, that is, where X, Y, and Z equal zero, we can develop this information within NEC in a straightforward manner. However, the task requires more than one step.</p>
+  <p>The following exercises will develop those steps in two ways, paying special attention to the RP (pattern request) and the EX (excitation) commands.</p>
+  <p>Consider the following simplified model of a 1/4 wavelength monopole with 4 buried short radials.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 1/4-wl gp 4r
+CE
+GW 1,30,0.,0.,10.135,0.,0.,0.,.0254
+GW 2,1,0.,0.,0.,0.,0.,-.1524,.0254
+GW 3,10,0.,0.,-.1524,3.292,0.,-.1524,.003175
+GW 4,10,0.,0.,-.1524,0.,3.292,-.1524,.003175
+GW 5,10,0.,0.,-.1524,-3.292,0.,-.1524,.003175
+GW 6,10,0.,0.,-.1524,0.,-3.292,-.1524,.003175
+GE -1
+FR 0,1,0,0,7.05
+GN 2,0,0,0,13.,.005
+EX 0,1,30,0,1.414214,0.
+RP 0,181,1,1000,90.,0.,-1.,0.,0.
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The dimensions are in meters, with a 2" diameter main element and 0.25" diameter radials. <b>Fig. 1</b> shows the outline of the antenna from two perspectives.</p>
+  <center>
+    <img src="amod85-1.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we run this model over average ground, the gain is -2.29 dBi at a TO angle of 27 degrees elevation (63 degrees theta). The feedpoint impedance is about 59.4 + j0.4 Ohms. This is the typical data collection that many modelers are satisfied to collect, and <b>Fig. 2</b> shows the theta (elevation) pattern that accompanies this omni-directional antenna.</p>
+  <center>
+    <img src="amod85-2.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, many modelers are interested in the electrical fields from a given antenna. We may examine a portion of the data for the present model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+**** Electric Field: Theta Pattern ****
+Phi=0, Freq=7.05, File=vr4-ff.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+ Theta     Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+  90.00   7.1434E-008   -107.82   2.6078E-024    -93.92
+  89.00   9.5624E-002   -106.35   3.6393E-018    -94.28
+  88.00   1.7909E-001   -105.08   7.1385E-018    -95.44
+  87.00   2.5231E-001   -103.95   1.0497E-017    -95.92
+  86.00   3.1683E-001   -102.95   1.4097E-017    -95.36
+  85.00   3.7390E-001   -102.06   1.7780E-017    -94.98
+  84.00   4.2453E-001   -101.26   2.1636E-017    -95.05
+  83.00   4.6955E-001   -100.54   2.4428E-017    -96.02
+  82.00   5.0965E-001    -99.88   2.8494E-017    -94.71
+  81.00   5.4540E-001    -99.29   3.1561E-017    -95.20
+  80.00   5.7729E-001    -98.74   3.5149E-017    -95.08
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The 90-degree theta angle (0-degree elevation), of course, is not usable for anything, since results at the horizon are not usable. However, the other angles illustrate the sort of values that one will encounter in a typical scan of the e-fields when calling a standard far-field pattern.</p>
+  <p>In most instances, the values are useful only for comparative purposes. They do not provide any useful information directly about the e-field values at a given distance and a given theta (elevation) angle or height above ground.</p>
+  <p>One way to overcome this problem is to make an RP 1 ground-wave request. In this type of request, one sets a distance from the coordinate system origin using the (F5) position. Instead of specifying an initial theta angle in (F1), the user specifies a height above ground (Z) in meters. One may select for (F3) an increment for multiple readings. The number of theta values in (I2) will now become the number of heights for observation of the e-field, beginning at the value in (F1) at intervals determined by (F3). However, all values will lie along a cylinder extending from the surface upward at the distance set into (F5).</p>
+  <p>The following lines show a typical simple model using RP 1 at a distance of 1000 meters and a single height of 2 meters.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 1/4-wl gp 4r
+CE
+GW 1,30,0.,0.,10.135,0.,0.,0.,.0254
+GW 2,1,0.,0.,0.,0.,0.,-.1524,.0254
+GW 3,10,0.,0.,-.1524,3.292,0.,-.1524,.003175
+GW 4,10,0.,0.,-.1524,0.,3.292,-.1524,.003175
+GW 5,10,0.,0.,-.1524,-3.292,0.,-.1524,.003175
+GW 6,10,0.,0.,-.1524,0.,-3.292,-.1524,.003175
+GE -1
+FR 0,1,0,0,7.05
+GN 2,0,0,0,13.,.005
+EX 0,1,30,0,1.414214,0.
+RP 1 1 361 1000 2 0 1.00000 1.00000 1000
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Note that only the RP line has changed relative to the initial model that made a far field request. However, we obtain what is essentially a limited data phi (azimuth) pattern output for the specified distance and height.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+**** Electric Field: Phi Pattern ****
+Z=2, Freq=7.05, File=vr4-rp1.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+  Phi      Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+   0.00   1.9180E-004    -19.95   1.6350E-022    119.22
+   1.00   1.9180E-004    -19.95   5.1436E-012    134.30
+   2.00   1.9180E-004    -19.95   1.0262E-011    134.30
+   3.00   1.9180E-004    -19.95   1.5331E-011    134.30
+   4.00   1.9180E-004    -19.95   2.0325E-011    134.30
+   5.00   1.9180E-004    -19.95   2.5219E-011    134.30
+   6.00   1.9180E-004    -19.95   2.9991E-011    134.30
+   7.00   1.9180E-004    -19.95   3.4617E-011    134.30
+   8.00   1.9180E-004    -19.95   3.9074E-011    134.30
+   9.00   1.9180E-004    -19.95   4.3341E-011    134.30
+  10.00   1.9180E-004    -19.95   4.7397E-011    134.30
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The data must appear promising, but before we do anything with it, let's examine the EX line of the model. We specified a value of 1.414214 as the voltage magnitude (the peak value corresponding to 1 volt RMS). If we are interested in the power level that yields these values, we must also examine the power budget.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ - - - POWER BUDGET - - -
+
+ INPUT POWER   = 1.6842E-02 WATTS
+ RADIATED POWER= 1.6842E-02 WATTS
+ WIRE LOSS     = 0.0000E+00 WATTS
+ EFFICIENCY    = 100.00 PERCENT
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The antenna input power is 0.016842 watts. This is not likely to be a power level that is useful for taking e-field readings. As well, the input power with a standard EX 0 voltage source will vary from model to model according to the source impedance, since P = (E^2/R), where E is an RMS value.</p>
+  <p>Suppose that we are interested in the e-field values at 1,000 meters using an antenna input power of 1 kw. To arrive at these values, we must adjust the source voltage to a value that will yield them. The required voltage multiplier will be the SQRT (desired power/modeled power), or in this case, SQRT (1000/0.016842). The multiplier is 243.6706, for a new voltage entry on the EX 0 line of 344.6024. If we revise the model, we arrive at the following power budget and sample e-field lines.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ - - - POWER BUDGET - - -
+
+ INPUT POWER   = 9.9999E+02 WATTS
+ RADIATED POWER= 9.9999E+02 WATTS
+ WIRE LOSS     = 0.0000E+00 WATTS
+ EFFICIENCY    = 100.00 PERCENT
+
+**** Electric Field: Phi Pattern ****
+Z=2, Freq=7.05, File=vr4-rp1k.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+  Phi      Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+   0.00   4.6736E-002    -19.95   8.3783E-020    -55.87
+   1.00   4.6736E-002    -19.95   1.2533E-009    134.30
+   2.00   4.6736E-002    -19.95   2.5006E-009    134.30
+   3.00   4.6736E-002    -19.95   3.7356E-009    134.30
+   4.00   4.6736E-002    -19.95   4.9525E-009    134.30
+   5.00   4.6736E-002    -19.95   6.1452E-009    134.30
+   6.00   4.6736E-002    -19.95   7.3080E-009    134.30
+   7.00   4.6736E-002    -19.95   8.4352E-009    134.30
+   8.00   4.6736E-002    -19.95   9.5213E-009    134.30
+   9.00   4.6736E-002    -19.95   1.0561E-008    134.30
+  10.00   4.6736E-002    -19.95   1.1549E-008    134.30
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power budget confirms that the input power is now 1,000 watts. The e-field values now reflect the increased power, as well as the established distance of 1,000 meters at a height of 2 meters above ground. <b>Fig. 3</b> provides rectangular plots of the magnitude and phase of the vertical components of the fields.</p>
+  <center>
+    <img src="amod85-3.gif" width="592" height="620" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The limitation of the RP 1 request is that it requires increments of height in meters. Hence, it does not give a ready angular read out of the e-fields at a distance. There is also a way to overcome that limitation using the far-field request (RP 0). We simply insert a distance from the coordinate system origin into the (F5) position. Let's continue using the 1,000-meter distance we specified in the RP 1 request. However, we shall preserve the theta pattern request that we made in the initial model in order to obtain values at 1-degree intervals from the ground upward. The model will have the following appearance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 1/4-wl gp 4r
+CE
+GW 1,30,0.,0.,10.135,0.,0.,0.,.0254
+GW 2,1,0.,0.,0.,0.,0.,-.1524,.0254
+GW 3,10,0.,0.,-.1524,3.292,0.,-.1524,.003175
+GW 4,10,0.,0.,-.1524,0.,3.292,-.1524,.003175
+GW 5,10,0.,0.,-.1524,-3.292,0.,-.1524,.003175
+GW 6,10,0.,0.,-.1524,0.,-3.292,-.1524,.003175
+GE -1
+FR 0,1,0,0,7.05
+GN 2,0,0,0,13.,.005
+EX 0,1,30,0,1.414214,0.
+RP 0 181 1 1000 -90 0. 1.00000 1.00000 1000
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The only difference between this model and the one with which we started is that the RP 0 line has an extra number, the 1000-meter distance specification. This distance does not change the power gain pattern or value set, as evidenced by <b>Fig. 4</b>, a rectangular version of the pattern shown in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod85-4.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The relevant data that we obtain from the tabular files has this appearance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ - - - POWER BUDGET - - -
+
+ INPUT POWER   = 1.6842E-02 WATTS
+ RADIATED POWER= 1.6842E-02 WATTS
+ WIRE LOSS     = 0.0000E+00 WATTS
+ EFFICIENCY    = 100.00 PERCENT
+
+**** Electric Field: Theta Pattern ****
+Phi=0, Freq=7.05, File=vr4-rfld.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+ Theta     Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+ -90.00   7.1434E-011    246.54   2.6078E-027     80.44
+ -89.00   9.5624E-005    248.00   3.6393E-021     80.08
+ -88.00   1.7909E-004    249.28   7.1385E-021     78.92
+ -87.00   2.5231E-004    250.41   1.0497E-020     78.44
+ -86.00   3.1683E-004    251.40   1.4097E-020     78.99
+ -85.00   3.7390E-004    252.30   1.7780E-020     79.38
+ -84.00   4.2453E-004    253.10   2.1636E-020     79.31
+ -83.00   4.6955E-004    253.82   2.4428E-020     78.34
+ -82.00   5.0965E-004    254.47   2.8494E-020     79.65
+ -81.00   5.4540E-004    255.07   3.1561E-020     79.16
+ -80.00   5.7729E-004    255.61   3.5149E-020     79.28
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Once more, the data appears ok, but before we adopt it, let's re-examine the model on which we based it. Note that the model uses the same initial voltage source magnitude: 1.414214. Since the power input has not changed from the initial model (0.016842 w), we may use the same voltage adjustment ratio and replace the original source voltage with 344.6024.</p>
+  <p>If we make the change, we obtain a somewhat different tabular set of values.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ - - - POWER BUDGET - - -
+
+ INPUT POWER   = 9.9999E+02 WATTS
+ RADIATED POWER= 9.9999E+02 WATTS
+ WIRE LOSS     = 0.0000E+00 WATTS
+ EFFICIENCY    = 100.00 PERCENT
+
+**** Electric Field: Theta Pattern ****
+Phi=0, Freq=7.05, File=vr4-rfld1k.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+ Theta     Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+ -90.00   1.7406E-008    246.54   3.5717E-025    335.99
+ -89.00   2.3301E-002    248.00   4.9539E-019    337.96
+ -88.00   4.3638E-002    249.28   9.9617E-019    336.98
+ -87.00   6.1479E-002    250.41   1.4985E-018    336.03
+ -86.00   7.7202E-002    251.40   2.0201E-018    334.85
+ -85.00   9.1108E-002    252.30   2.5282E-018    336.04
+ -84.00   1.0345E-001    253.10   2.8632E-018    337.87
+ -83.00   1.1442E-001    253.82   3.4424E-018    335.74
+ -82.00   1.2419E-001    254.47   3.7840E-018    338.19
+ -81.00   1.3290E-001    255.07   4.2623E-018    336.94
+ -80.00   1.4067E-001    255.61   4.8567E-018    335.49
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power budget confirms that we have an input power of 1,000 w. The following table then provides the key values of the electrical field at a distance of 1,000 meters for each increase in elevation of 1 degree. Given that we have a vertical monopole, the e-theta values are the most significant ones. The lowest usable value--89 degrees or 1 degree above the horizon--is lower than the 2-meter height value given by the RP 1 request, even though the actual height at 1,000 m is close to 17.5 meters. However, the far-field output does not include the surface wave component. Notice that in the RP 1 data, the e-phi values are several orders of magnitude higher than those in the RP 0 data, even though both levels are operationally insignificant.</p>
+  <p>Remember that the reported values for the e-field are in peak volts. Multiply by 0.707 to obtain RMS values. (EZNEC provides all current and voltage output values in RMS. Version 2 of the NEC-Win software packages will provide a switch so that the user will have the option on inputting and outputting either peak or RMS values.)</p>
+  <p>The distance of 1,000 m or 1 km is one of the standards used in common engineering exercises involving antennas. An alternative to the km is the mile. However, the RP 0 and RP 1 lines require inputs as meters, so 1 mile = 1609.344 m. (Again, EZNEC provides flexibility of input and output units for the RP 1 request. It does not allow access to the RP 0 request to set a distance. However, it will provide tabular outputs in terms of 1 kw / km and 1 kw / mile.)</p>
+  <p>Although the 1-mile and 1-km distances are most commonly used, advanced modelers may have occasion to select other distances. As well, it may on some occasions be useful to compare the e-fields using different power levels. Consider the following model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 1/4-wl gp 4r
+CE
+GW 1,30,0.,0.,10.135,0.,0.,0.,.0254
+GW 2,1,0.,0.,0.,0.,0.,-.1524,.0254
+GW 3,10,0.,0.,-.1524,3.292,0.,-.1524,.003175
+GW 4,10,0.,0.,-.1524,0.,3.292,-.1524,.003175
+GW 5,10,0.,0.,-.1524,-3.292,0.,-.1524,.003175
+GW 6,10,0.,0.,-.1524,0.,-3.292,-.1524,.003175
+GE -1
+FR 0,1,0,0,7.05
+GN 2,0,0,0,13.,.005
+EX 0 1 30 0 24.36700  0.00000
+RP 0 181 1 1000 -90 0. 1.00000 1.00000 1000
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>If we compare this model to the one using 1000 w, we can see that the only difference is in the EX 0 line. The voltage magnitude is now 24.367 v (pk). To arrive at this value, I used the same calculation scheme, but set the desired power at 5 w instead of 1000 w. The adjustment factor was 17.2301. At 5 w, we obtain the following output data.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  - - - POWER BUDGET - - -
+
+ INPUT POWER   = 4.9999E+00 WATTS
+ RADIATED POWER= 4.9999E+00 WATTS
+ WIRE LOSS     = 0.0000E+00 WATTS
+ EFFICIENCY    = 100.00 PERCENT
+
+**** Electric Field: Theta Pattern ****
+Phi=0, Freq=7.05, File=vr4-rfld5w.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+ Theta     Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+ -90.00   1.2308E-009    246.54   9.7188E-026    325.03
+ -89.00   1.6476E-003    248.00   1.3963E-019    324.60
+ -88.00   3.0856E-003    249.28   2.7620E-019    324.84
+ -87.00   4.3472E-003    250.41   4.1454E-019    324.53
+ -86.00   5.4590E-003    251.40   5.5021E-019    324.48
+ -85.00   6.4423E-003    252.30   6.7638E-019    325.11
+ -84.00   7.3146E-003    253.10   8.0686E-019    325.08
+ -83.00   8.0903E-003    253.82   9.3937E-019    324.72
+ -82.00   8.7813E-003    254.47   1.0841E-018    323.95
+ -81.00   9.3973E-003    255.07   1.1981E-018    324.34
+ -80.00   9.9467E-003    255.61   1.3289E-018    324.25
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power budget confirms the 5-w input power level. The sample theta pattern lines provide a direct comparison of those for the 1-kw power level. With this simple exercise, one can compare the e-fields at selected distance between what amateur radio operators refer to as QRP and QRO. The 200-times power differential boils down to a 14.14-times difference in e-field strength over the specified distance. (Since P = (E^2/R) and R has not changed, we would expect the square of the e-field difference to equal 200--and it does.) Such exercises are interesting ways to expand our understanding of the consequences of selecting different power levels relative to the strength of field at a receiving site. However, all such calculations done within modeling software omit the effects of propagation phenomena.</p>
+  <p>Too few modelers make use of the F5 entry position in the RP 0 pattern request line. By a simple double run, one may derive far-field e-field reports for any distance (even non-sensible ones) using any desired power level. Sometimes, that is very useful information indeed.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

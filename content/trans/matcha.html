@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Matching, Quad, Yagi">
+  <title>A Little Matching</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/feedbut.gif" align="middle" width="145" height="75" border="2" vspace="5" hspace="9">Who's Afraid of a Little Matching?<img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  Several times in the last few months I have seen articles and notes on Yagis and quads with a similar theme: I'd prefer to take a little less gain to have a direct 50-ohm feed point impedance and avoid those lossy matching systems. I began wondering: how much gain is an acceptable reduction to equal the loss removed by omitting a matching system?
+  <p>This is not a simple question. First, we need to set some frequency limits to the considerations. Upper HF (10 meters) appears to be a good stopping point for a first cut at the question. Above 10 meters in the ham bands, coaxial cable losses begin to become quite significant, even when perfectly matched. Additionally, capacitors begin to show losses that are negligible at HF. These and other factors strongly suggest that a separate set of design thoughts might be apt for VHF. So I shall confine my thinking to HF for the moment.</p>
+  <p>Second, the original question appears to pertain to gain antennas of parasitical design, such as Yagis and quad beams. These are the main types of antennas that are commonly used and which tend to have feedpoint impedances other than 50 Ohms. Hence, these are the types of antennas for which a designer might genuinely have a choice between a 50-Ohm lower gain design and a non-50-Ohm higher gain design.</p>
+  <p>Third, the antenna mechanicals are not in question here. Yagis and quads are assumed to be well designed mechanically so that their initial properties endure. If this is the case, then we shall in all fairness make the same assumption about the construction design of any matching system: it is mechanically designed to have and hold the properties its initial electrical design gives it. Bad practices are not what the question is about. If the question were about bad construction practices, then the answer is simple: construct better antennas and networks or find a better constructor. But the question seems instead to be about a principle, namely, the losses inherent in matching system designs, losses that cannot be designed out of the matching system.</p>
+  <p>Fourth, we are talking of contemporary, late 1990s, antenna designs. At one time, it was common to find Yagis with feedpoint impedances in the teens. The best optimized commercial and personal designs now typically run above 20 to 25 Ohm feedpoint impedances. Therefore, basic antenna efficiency is not significantly lowered by the materials resistance. However, I think it may be wise to hold this consideration in abeyance until the remainder of the thinking is done.</p>
+  <p>If we use models of parasitical beam designs and specify the material (normally copper or aluminum), we may by-pass the question of antenna efficiency. NEC-based modeling systems take materials losses into account in the calculation of antenna gain. for a given design, the materials losses are given in the difference between the antenna gain using lossless wire and the antenna gain using a specified wire material. Moreover, the question of network losses presumes that the antennas compared are made of comparable materials.</p>
+  <p>There are many matching schemes used with Yagis and quads. Many of them are not subject to easy calculation of losses. However, three typical schemes are easily calculated. Since all are widely (but not universally) used, they will make interesting test cases. I shall assume that if anyone has evidence that some fourth or fifth scheme is even more efficient than any of the ones discussed, he or she will certainly use the new system in place of the three I shall examine.</p>
+  <p>One common system is the Tee-match, which consists of a bar in parallel with the driven element. We feed the center point of the bar and attach its ends outward along the driven element so that we obtain a desired feedpoint impedance.</p>
+  <p>Another is the common beta match, also called the hairpin match, which is nothing but an L-circuit network where the series reactive component is constituted by a series reactance at the antenna feedpoint.</p>
+  <p>The final system for which we can easily calculate losses is a quarter- wavelength and related lengths of coax that may be used to transform impedances.</p>
+  <p>As an aid to gauging the significance of losses, the following graph compares power losses expressed as percentages of the original power and as dB.</p>
+  <center>
+    <img src="match0.gif" width="646" height="492" border="2" vspace="5" hspace="9">
+  </center>
+  <h3>The Tee-Match:</h3>The basic structural elements of the Tee-match are shown in Figure 1.
+  <center>
+    <img src="match1a.gif" width="400" height="168" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can investigate losses when using the Tee match, because the structure can be effectively modeled in MININEC. In fact, just such a preliminary study was conducted and posted in this collection <a href="../model/teea.html">(The Tee-Match)</a>. When modeled directly, the losses of the Tee-match are included in the antenna gain and front-to-back figures. Therefore, significant losses will show up as decreases in antenna forward gain, whether in free space or over ground.</p>
+  <p>The conclusions of that study are revealing. Assume a 5-element Yagi with 1" diameter aluminum elements in free space. Then develop Tee-matches to raise the impedance from the antenna reference source impedance (with no matching element wires) to the vicinity of 200 Ohms. The purpose of the high impedance at the source is to enable the use of a 4:1 toroidal balun of Sevick design for a resultant match with 50-Ohm coax. In the following table, the "Reference" line refers to the antenna without a matching section. The remaining lines refer to Tee-match bars of the indicated diameter in inches.</p>
+  <pre>Model                Gain in dBi                 F-B in dB            Source Z (R +/- jX)
+Reference            9.827                       22.15                 25.5 - 0.96
+T: 0.50"             9.855                       21.71                209.7 + j0.85
+T: 0.75"             9.789                       21.81                210.7 + j1.36
+T: 1.00"             9.817                       21.86                209.7 + j2.49
+T: 1.25"             9.832                       21.86                198.6 - j1.27
+T: 1.50"             9.853                       21.92                205.2 + j1.41</pre>
+  <p>The maximum variation in gain is 0.066 dB, and the maximum variation in front-to-back ratio is 0.44 dB. Given the wandering nature of the figures from one model to the next, there is no compelling reason to believe that the differences are anything more than artifacts of the modeling process, since for each Tee match used, a slightly different Tee bar length and main driven element length were required.</p>
+  <p>In addition, Sevick reports that when properly constructed with due attention to the impedance of the winding, the transmission-line transformers he has designed are better than 99% efficient. At 99% efficiency, the loss would be about 0.04 dB.</p>
+  <p>4:1 coax baluns of the 1/2 wavelength design may run slightly higher losses, depending upon the type of coax used. Low loss coax in the 1/2 wavelength fold-back portion of the balun may have a loss of about 0.08 dB (under 2% of power).</p>
+  <p>Therefore, the use of a well designed and constructed Tee-match incurs only a very minor loss. If we assume that the network consists of both the Tee- system and the transmission line transformer, then losses resulting from the electronic aspects of the composite network amount to about 1-2% of power or about 0.04-0.08 dB.</p>
+  <h3>The Beta Match:</h3>The beta match is outlined in Figure 2.
+  <center>
+    <img src="match2a.gif" width="419" height="342" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The Beta match has been extensively described and explained. The current basic reference is The ARRL Antenna Book, pp. 26-9 to 26-11. Also insightful is "The Hairpin Match: A Review," by Thomas Cefalo, Jr., WA1SPI, Communications Quarterly, Summer, 1994, pp. 49-54, to which I wrote a follow-up (Communications Quarterly, Winter, 1995, pp. 51-54). Despite these efforts, a reputation for lossiness persists with the beta match.</p>
+  <p>Part of the problem lies in the fact that is the parallel or shunt inductor is a coil, the operating bandwidth of the match is wider than with the use of a hairpin or shorted transmission line. since a wider operating bandwidth indicates greater resistive losses, many folks have assumed without calculation that the requirement for an inductance of any sort makes the beta match inherently lossy. Actually, no assumptions are needed, since all the critical aspects of the beta match can be fully calculated.</p>
+  <p>Let's look at a few antennas and determine the losses incurred by this matching system.</p>
+  <h4>a. A Two-Element Yagi</h4>Actually, the number of elements and basic gain of an antenna are largely Irrelevant--except as base-line numbers--to the question of losses from a beta match. What is of critical importance is the feedpoint impedance. For the beta match, using 28.5 MHz as the design center frequency, I have chosen upper and lower frequency limits of 1.25% away from center. This figure fully covers all the HF ham bands except 80/75 and 10 meters. The resulting upper and lower frequencies for our explorations will be 28.144 and 28.856 MHz.
+  <p>The following table summarizes the calculations performed for a beta match, where the driven element was first sized to provide close the an ideal series capacitive reactance for the system. Then, the required shunt coil was created and becomes a constant for all frequencies within the limits. The reactance at each limit was converted into an equivalent capacitance and, with the beta inductor, used to calculate the resulting SWR relative to 50-Ohms. Also given for each frequency is "delta," the loss or working Q figure for the frequency and impedance transformation desired.</p>
+  <p>Network delta is predicated on losses associated with the inductive reactance, based on the premise that, for HF at least, capacitors have comparatively negligible losses. The capacitive reactance of the antenna is not directly comparable to a lumped-constant capacitor. However, losses associated with the capacitive reactance at the antenna feedpoint are already accounted in the antenna materials losses and the final gain figure for the antenna.</p>
+  <p>All figures are derived from a combination of NEC-2 for the antenna performance figures and ZL1LE's ladder (L-network) module of his ATU network program suite included in <a href="../radio.html#HAMCALC">HAMCALC</a>, supplemented and cross checked with a hand calculator.</p>
+  <pre>Frequency (MHz)                           28.144               28.500               28.856
+Gain (Free Space, dBi)                    6.66                 6.38                 6.13
+F-B (dB)                                  10.10                11.06                11.14
+Feed Z (R Ohms)                           27.56                33.14                38.57
+Antenna reactance CX (Ohms)               -36.77               -24.31               -12.72
+Equivalent capacitor Ca (pF)              153.8                229.7                433.6
+Inductor used La (micro-H)                0.391                0.391                0.391
+SWR relative to 50 Ohms                   1.57                 1.02                 1.40
+Delta                                     0.90                 0.71                 0.54</pre>
+  <p>Remember that the driven element was set to a length at 28.5 MHz to provide the reactance just about on the nose for a beta match and a coil calculated from the required inductive reactance in shunt to provide a close match to 50-Ohm coax. The SWR of 1.02 shows a close match. The inductor becomes a constant across the band, with the series capacitive reactance changing with frequency. At the edges of our limits, the resistive component also changes, calling for a different component set to effect a 1:1 match. However, the available components are the coil just put in place and the series reactance of the antenna at the new frequency. Since these values are not ideal, the beta match presents the coax feedline with an impedance resulting in the SWR figures shown. For this particular antenna design, the beta match provides a very decent SWR operating band width.</p>
+  <p>Now let us look at losses. We need go no further than the worst case losses, which result when the delta is highest--in this case 0.90. Actual power losses are a function of the ratio of delta to Q, the figure of merit of the inductor. Loss as a percentage of power is 100 x (delta/Q).</p>
+  <p>The question then is one of the Q of the inductive reactance. Coils with a minimum Q of 100 are easily hand-wound, and Qs exceeding 200 are certainly possible. Hairpins--shorted transmission lines--have far lower losses, although not zero losses. Let us arbitrarily take a Q of 500 as representing the worst hairpin we might construct; carefully crafted hairpins may have Qs exceeding 800. With these numbers, we can perform a few simple calculations.</p>
+  <pre>Delta         Inductance Q         Loss (% power)       Loss in dB
+0.90          100                  0.90                 0.039
+0.90          200                  0.45                 0.020
+0.90          500                  0.18                 0.0078</pre>
+  <p>Clearly the (worst-case) hairpin has far lower losses than any inductor. However, the inductor-based beta match cannot be classified as extremely lossy.</p>
+  <p>Let us look at two more examples with lower impedances to be matched, and therefore higher values of delta.</p>
+  <h4>b. A Three-Element Yagi</h4>
+  <pre>Frequency (MHz)                           28.144               28.500               28.856
+Gain (Free Space, dBi)                    7.15                 7.21                 7.38
+F-B (dB)                                  22.12                35.45                23.54
+Feed Z (R Ohms)                           29.43                27.95                23.80
+Antenna reactance CX (Ohms)               -32.63               -24.85               -15.05
+Equivalent capacitor Ca (pF)              173.1                224.7                366.5
+Inductor used La (micro-H)                0.314                0.314                0.314
+SWR relative to 50 Ohms                   1.32                 1.00                 1.51
+Delta                                     0.84                 0.89                 1.05</pre>
+  <p>Worst-Case losses:</p>
+  <pre>Delta         Inductance Q         Loss (% power)       Loss in dB
+1.05          100                  1.05                 0.046
+1.05          200                  0.53                 0.023
+1.05          500                  0.21                 0.0091</pre>
+  <h4>c. A Five-Element Yagi</h4>
+  <pre>Frequency (MHz)                           28.144               28.500               28.856
+Gain (Free Space, dBi)                    9.11                 9.26                 9.40
+F-B (dB)                                  21.67                26.67                28.54
+Feed Z (R Ohms)                           19.71                17.54                13.58
+Antenna reactance CX (Ohms)               -35.55               -25.89               -13.32
+Equivalent capacitor Ca (pF)              159.1                215.7                414.1
+Inductor used La (micro-H)                0.205                0.205                0.205
+SWR relative to 50 Ohms                   1.90                 1.12                 2.05
+Delta                                     1.24                 1.36                 1.64</pre>
+  <p>Worst-Case losses:</p>
+  <pre>Delta         Inductance Q         Loss (% power)       Loss in dB
+1.64          100                  1.64                 0.072
+1.64          200                  0.82                 0.036
+1.64          500                  0.33                 0.014</pre>
+  <p>The highest loss encountered in this sequence of Yagis is 0.072 dB as a result of the electronic aspects of the beta matching system, and this only occurs when the antenna has a very low impedance and the beta inductor is in the low-Q region of 100. Higher-Q coils and hairpins reduce these losses considerably.</p>
+  <h3>The Quarter-Wavelength Matching Section:</h3>The quarter wavelength matching section is illustrated in Figure 3.
+  <center>
+    <img src="match3a.gif" width="573" height="420" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For antennas with a feedpoint impedance of about 100 Ohms resistive or of about 25 Ohms resistive--and close to resonance, the quarter wavelength matching section can be an effective matching system. For higher impedances, 70-Ohm and 75-Ohm cables are commonly used for matching sections. For impedances close to 25 Ohms, 35-Ohm line can be used. RG83A/U is available, but at $3.00 a foot, it is not as commonly used as it might well be in this application. Fortunately, its 0.66 velocity factor cuts necessary costs somewhat.</p>
+  <p>Consider the following 3-element Yagi with the driven element close to resonance, with a 1/4 wavelength section of 35-Ohm line used for a match and cut for 28.5 MHz. The actual section used was cut to 93 electrical degrees length to ensure an SWR under 2:1 at the upper end of the test frequency spread. Losses in the matching section were calculated with N6BV's TLA; they include only the additional losses arising from the use of the line as an impedance transformer, since the line itself constitutes part of the overall length of feedline from the transmitter to the antenna.</p>
+  <pre>Frequency (MHz)                           28.144               28.500               28.856
+Gain (Free Space, dBi)                    7.93                 8.10                 8.34
+F-B (dB)                                  20.76                25.74                17.56
+Feed R (Ohms)                             27.09                25.74                22.89
+Feed X (Ohms)                             -13.3                - 0.85               +13.24
+Matching Z (R +/- jX Ohms)                37.67 + j18.04       47.65 - j0.03        36.43 - j22.62
+SWR relative to 50 Ohms                   1.65                 1.05                 1.84
+Loss (dB)                                 0.030                0.004                0.037 </pre>
+  <p>Losses, of course, increase as the frequency moves away from the the design center for which the matching line is cut. Nonetheless, losses for this particular application do not exceed 1% of power or 0.04 dB.</p>
+  <h3>SWR Bandwidth:</h3>In selecting a matching scheme, losses in the network are not the only consideration. The SWR operating bandwidth that results from the matching section is also of some electrical importance. Those matching schemes that show higher SWR at the edges of the frequency spread of interest may in some cases be worse choices than other systems with higher initial losses but a lower average SWR relative to the main coax feedline. Losses in the main line increase with SWR. The precise losses will vary with frequency, line type, and line length. Hence, no generalizations are possible. However, in performing calculations of the order just presented, one should also account for main line losses as well before selecting a matching system.
+  <h3>Conclusions:</h3>There is little to choose among the matching schemes explored here, which only sample a few of the schemes--the ones most easily calculated for electrical design losses. The maximum loss encountered was about 0.08 dB, or about 2% of the total radiated power. (Lesser materials or poor physical design, of course, might result in greater losses.) We may therefore use the 0.08 dB figure as the amount of reduction that one might be willing to accept in an antenna design to achieve a 50-Ohm direct match.
+  <p>Unfortunately, I know of no antenna designs with a 50-Ohm direct feed system that are only 0.08 dB less than their higher-gain counterparts. Normally, the gain differential tends to approach 1.0 dB. There are no electrical reasons for suffering such a loss, if the sole aim is to avoid network losses associated with matching networks.</p>
+  <p>There remain, however, some good reasons for settling on a lower gain design in the interests of a direct 50-Ohm feed:</p>
+  <p><b>1. Operating bandwidth:</b> Some designs--such as the 6-meter design in another note in this collection--show a very wide 2:1 SWR operating bandwidth. For some operating needs, operating bandwidth is much more important than gain, and these designs may certainly become the design of choice.</p>
+  <p><b>2. A ham's first home-brew Yagi:</b> For the beginning constructor, a design that represents a sure thing is often important. A 50-Ohm design without the mechanical and electrical details of a matching network can approach the ideal of a "sure thing."</p>
+  <p>For the experienced antenna builder without need for more than a moderate operating bandwidth, however, there should be no need to shy away from matching networks. They cannot be classified as electrically lossy, if one designs them properly--and many good design aids are available. If good design is accompanied by good construction practice (at least as good as that put into the antenna proper), then the matching network should approach in operation its electrical potential for efficiency.</p>
+  <p>The first step in this process is to set aside any reputations matching networks may have and actually to perform the calculations that provide an accurate picture of losses and of efficiency. Matching networks at the antenna terminals have gotten a poor reputation that has largely emerged from bad physical design, bad construction, and bad maintenance, all of which are highly curable antenna diseases. Electrically, the matching systems explored here have so little inherent electrical design loss that it may safely be ignored--with one exception. Do not take my word for any of this, but perform the calculations yourself. You may be amazed at how many interesting and useful things we can learn from such exercises.</p>
+  <p>For further comparisons among matching systems, see <a href="matchb.html">"The Matching Question Redux"</a>.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><i>Updated 04-04-1998. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#matching'>Matching</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

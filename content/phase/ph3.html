@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Phased Array, HB9CV / ZL Special, HF Upper">
+  <title>Two-Element Horizontal Phased Arrays Part 3</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10"> <img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"> Some Notes on Two-Element Horizontal Phased Arrays<br>
+    Part 3: The Limits of a Single Phase Line: The ZL-Special</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>When George Pritchard (ZL3MH, later ZL2OQ) introduced the amateur community to the 2-element phased array, it seemed to offer magic in the form of performance up to 7 dBd (9+ dBi free-space equivalent) and up to 40 dB front-to-back ratio. Unfortunately, the comparators of the day were relatively primitive 2- and 3-element Yagis that rarely performed up to their theoretical possibility. Nonetheless, the antenna type acquired the name "ZL-Special" and has been the subject of performance debate ever since. For a reasonably complete bibliography of ZL-Special articles in English, see my "Modeling and Understanding Small Beams: <a href="../mu/mu5a.html">Part 5: The ZL Special</a>," <i>Communications Quarterly</i>, (Winter, 1997), 72-90.</p>
+  <center>
+    <img src="ph3-1.gif" width="430" height="417" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-1. Outline sketches of several classic ZL-Special designs.
+  </center>
+  <p><b>Fig. 1</b> shows several of the variations on the ZL-Special theme. Some of them work; others do not--or at least not very well. Virtually all early work on horizontal phased arrays presumed that we needed only attend to the impedance transformation along a transmission line. Hence, with 1/8 WL spacing and a similar transmission line, a half twist would yield a 135&deg; phase shift with the accompanying high gain forward lobe and a deep rear null. <b>Fig. 1</b> shows both linear and folded elements, along with the most popular phase line characteristic impedances. The trombone attempted to overcome the velocity factor of the common TV twinlead line (about 0.8) by making wide-spaced folded elements that were physically 1/8 WL at their outer edges but electrically 1/8 WL apart relative to the phase line. Although the trombone works quite well, the structure is completely unnecessary: simple folded dipoles would work as well.</p>
+  <p>Not until Roy Lewallen, W7EL, pointed out the fundamental error in amateur conceptions of the ZL-Special did we begin to re-analyze the 2-element horizontal phased array with some precision. (See Lewallen, "<a href="https://www.eznec.com/Amateur/Articles/Field_Day_Special.pdf" target="_blank">Try the 'FD Special' Antenna</a>," <i>QST</i> (June, 1984), 21-24.) What controls the performance of the ZL-Special phase line is not so much the impedance transformation, but the current transformation (in terms of both current magnitude and phase angle). The current and the impedance do not change at the same rate except when the line is exactly matched to the element that forms its load. Hence, we had to take a wholly new approach to the single-line phased array. In these notes, we shall follow this lead.</p>
+  <center>
+    <h3>ZL-Special Basics</h3>
+  </center><b>Fig. 2</b> shows the deceptively simple elements of a ZL-Special. The two elements bear "forward" and "rear" element labels, where the forward element indicates two things. First, the main forward lobe is in the direction of the forward lobe. Second, the standard ZL-Special feedpoint is at the junction of the phase line and the forward element.
+  <center>
+    <img src="ph3-2.gif" width="300" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-2. The basic elements of a ZL-Special 2-element horizontal phased array.
+  </center>
+  <p>Most radio amateurs do not fully appreciate how many variables are at work in this seemingly simple arrangement. First, the individual elements exhibit center-point impedances that are functions of the mutual coupling between them. The mutual coupling depends upon the element diameters, lengths, and spacing between them. Second, the feedline meets a parallel current division at the forward junction, which requires that all other variables result in the same voltage at the junction. The requisite voltage is a function of the source impedance of the forward element and the "share" of current received by that element.</p>
+  <p>Third, the rear element impedance at its center sets both a current magnitude and phase angle and a voltage magnitude and phase angle, both of which undergo transformation down the selected length of phase line. From Terman, <i>Radio Engineers' Handbook</i> (McGraw-Hill: 1943), p. 185, we have equations for the current and the voltage at any point down a transmission line from a load or antenna element. The following equations are for lossless lines, which is satisfactory for the short phasing lines used in 2-element horizontal phased arrays and which also coincides with the calculations within the TL facility of NEC-2 and NEC-4:</p>
+  <center>
+    <img src="ph3e1.gif" width="609" height="64">
+  </center>
+  <center>
+    <img src="ph3e2.gif" width="595" height="64">
+  </center>
+  <p>The meaning of the terms is as follows:</p>
+  <ul>
+    <li>Er is the voltage at the load or antenna end of the line,</li>
+    <li>Es is the voltage at the source end of the line,</li>
+    <li>Ir is the current at the load or antenna end of the line,</li>
+    <li>Is is the current at the source end of the line,</li>
+    <li>Zo is the characteristic impedance of the line, and</li>
+    <li>(2PI (l/WL)) is an expression for the electrical length of the line of the line in degrees for the frequency of interest.</li>
+  </ul>
+  <p>Because both the voltage and the current have an associated phase angle and resolve into real and imaginary components, the use of these equations in calculations is more complex that the initial appearance of them. Some of the math involved appears in the earlier note <i>Communications Quarterly</i> article. However, such calculations are available within NEC in the TL facility and are also available in the <a href="../radio.html#HAMCALC">HAMCALC</a> suite of GW Basic utility programs from VE3ERP.</p>
+  <p>Critical to our understanding of is the fact that the resultant values of voltage and current (magnitude and phase) at the forward end of the phase line are interactive, as the basic equations make evident. Achieving a current level that balances with the portion of source current used by the forward element at a common voltage such that the rear element then has a current magnitude and phase angle to yield a desirable pattern requires juggling all of the variables into a usable collection.</p>
+  <p>Even if we arrive at a usable collection of values, we have several other variables to consider. First, the calculated characteristic impedance of the phase line must be one that we can acquire or build. Second, the requisite physical length of the phase line (accounting for the line's velocity factor) for the current transformation must be at least the space between the elements. As well, it should not be too much longer than that spacing in light of practical considerations for supporting the line. Since the line will be open--whether we use coax or parallel line for the task--we must isolate it from disturbances that a metallic boom might create. Designing a ZL-Special, then, requires either careful analysis or some very lucky guesses.</p>
+  <center>
+    <h3>A Design Example</h3>
+  </center>Let's analyze a single design for 28.5 MHz to see if we can make the picture clearer. We shall begin with 2 elements. Both will be our standard 0.5" (0.001207 WL) aluminum elements. The forward element will be 0.465 WL long, while the rear element is 0.506 WL long. The spacing will be 0.125 WL. However, from Part 1 of this series, we should now understand that the selected spacing is somewhat arbitrary, since for any element spacing, we may find element lengths that result in a desired phased array pattern.
+  <center>
+    <img src="ph3-3.gif" width="334" height="432" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-3. Design steps for a ZL-Special used for array analysis.
+  </center>
+  <p><b>Fig. 3</b> shows the 4 steps in our analysis, and the results appear in <b>Table 1</b>. If we arrange the elements individually in a NEC model and feed them independently with current sources, then the feed values in the table's step 1 under the relative current columns will result in the relative voltage and the individual element impedances. The models follow the system used in Part 1 of reversing the direction of the rear element relative to the forward element so that any phase line that we add can be in normal orientation. Notable is the similarity of the element impedances, a useful condition (but not the only such condition) for successful ZL- Special design. The tables in Part 1 show in a general way what conditions must exist for us to achieve such similar impedances: the relative longer length of the rear element when both elements are longer than a self-resonant dipole at the frequency of interest is a promising combination at the 1/8-WL spacing. As <b>Fig. 4</b> shows, we have not striven for the highest gain or front-to-back value, but simply for highly usable values.</p>
+  <center>
+    <img src="ph3-4.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-4. Free-space azimuth pattern of the sample ZL-Special at 28.5 MHz.
+  </center>
+  <p>The second step in our analysis creates a model with a transmission line attached to the rear element, but with its forward end brought to a source wire independent of the forward element. The selected line--from calculations, is RG-83, 35-Ohms coax with a velocity factor of 0.66. The required length is 0.13 WL physically or 0.197 WL electrically. This length of the chosen line yields the correct relative rear element current magnitude and phase angle. At the same time, it yields the required forward-end voltage magnitude and phase angle to match the value for the forward element. Note that the required forward line end current is 0.664 (relative to a forward element value of 1.0) with a phase angle of 44.25&deg;.</p>
+  <p>Step 3 in the analysis requires that we connect the forward end of the phase line and the forward element center to create a single feedpoint for the array. Under these conditions, supplying the feedpoint with a current of 1.0 at 0.0&deg; phase angle, we obtain the relative element current levels and phase angles shown. The forward element phase angle is a function of the reactance at its center. However, the net phase angle difference between elements is still - 44.18&deg;. At this stage, we have a complete array that we can frequency sweep from 28.0 to 29.0 MHz. <b>Fig. 5</b> shows the results. The gain shows a nearly linear curve upward, with a total change of about 0.9 dB. The front-to-back ratio remains above 20 dB from the lower band edge to above 28.8 MHz and is at all points superior to the front-to-back ratio of a common reflector- driver Yagi by 5 dB minimum. However, as Table 1 shows, the source impedance is just above 20 Ohms.</p>
+  <center>
+    <img src="ph3-5.gif" width="722" height="544" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig.3-5. Gain and 180&deg; front-to-back ratio of the sample ZL-Special from 28.0 to 29.0 MHz.
+  </center>
+  <p>The final step in our design is to add a matching system to raise the impedance to something compatible with common 50-Ohms coaxial cable. The low source impedance reactance suggest a matching section. A 0.13-WL section of the same 35-Ohms cable (RG-83) used for the phase line functions as a near-1/4-WL section to achieve the goal. With this section in place, we achieve the 50-Ohms SWR curve shown in <b>Fig. 6</b>. One might select other lengths for the matching line to better center the SWR curve, but the values shown would be in most cases quite satisfactory. For reference, <b>Fig. 7</b> shows the array patterns at 28.1 and 28.9 MHz to confirm that the patterns are usable and to show the evolution of the rear lobes as we increase frequency.</p>
+  <center>
+    <img src="ph3-6.gif" width="724" height="544" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-6. 50-Ohm SWR curve of the sample ZL-Special from 28.0 to 29.0 MHz.
+  </center>
+  <center>
+    <img src="ph3-7.gif" width="376" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-7. Free-space azimuth patterns of the sample ZL-Special at 28.1 and 28.9 MHz.
+  </center>
+  <p>The design explored here has attempted to show the required alignment of the many variables involved in ZL-Special design. It is not the only design that will work, but it shares many characteristic with successful ZL-Specials. Most significant is the required low characteristic impedance of the phase line, calling for a coaxial cable. Such lines are vulnerable to external disruption from near-metallic contact, so a non-conductive boom is desirable without resorting to complex phase line support construction.</p>
+  <pre>                               Sample ZL-Special Analysis Data
+
+The following data come from NEC-2/NEC-4 models of a 2-element horizontal phased array for
+28.5 MHz using 0.5" aluminum elements.  The rear element is 0.506 WL long, while the forward
+element is 0.465 WL long.  The modeling environment is free space.  In all cases, the free-space
+gain is 6.34 dBi, and the 180&deg; front-to-back ratio is 30.15 dB.
+
+Step 1.  Independent elements, independent sources:
+Element       Rel. I        Rel. I         Rel. V        Rel. V        Impedance
+              magnitude     phase angle    magnitude     phase angle   R +/- J X Ohms
+Rear          0.8935        -44.18&deg;        26.24         -23.58&deg;       27.49 + j 10.34
+Forward       1.0             0.0&deg;         33.53          31.94&deg;       28.46 + j 17.76
+
+Step 2.  Independent elements, independent sources, phase line installed:
+Element       Rel. I        Rel. I         Rel. V        Rel. V        Impedance
+              Magnitude     phase angle    Magnitude     phase angle   R +/- J X Ohms
+Rear          0.8935        -44.15&deg;        ---           ---           27.49 + j 10.34
+Phaseline     0.664          44.25         33.56         32.02&deg;        49.74 - j  8.98
+Forward       1.0             0.0&deg;         33.51         31.96&deg;        28.43 + j 17.73
+
+Step 3.  Phase line connected to forward element, single source
+Element       Rel. I        Rel. I         Rel. V        Rel. V        Impedance
+              Magnitude     phase angle    Magnitude     phase angle   R +/- J X Ohms
+Rear          0.5734        -60.80&deg;        ---           ---
+Forward       0.6418        -16.62&deg;        ---           ---
+Feedpoint     1.0             0.0&deg;         21.53          15.34&deg;       20.76 + j  5.70
+
+Step 4.  Matching section added:
+Element       Rel. I        Rel. I         Rel. V        Rel. V        Impedance
+              Magnitude     phase angle    Magnitude     phase angle   R +/- J X Ohms
+Rear          0.9774        -133.7&deg;        ---           ---
+Forward       1.0939        -89.48&deg;        ---           ---
+Feedpoint     1.0             0.0&deg;         60.67           6.14&deg;       60.32 + j  6.49
+
+
+Table 1.  Sample ZL-Special analysis data from NEC models in the 4 steps of antenna analysis
+demonstrated in the text.</pre>
+  <center>
+    <h3>Folded-Dipole ZL-Specials</h3>
+  </center>The use of folded dipoles as ZL-Special elements arose to overcome to problems: cost and the need for low-impedance phasing lines. Early versions of such designs taped the elements to bamboo horizontal supports. In general, most of these designs simply set two TV- twinlead elements 1/8 WL apart with a section of TV twinlead as the phasing line. Element lengths were a matter of trial and error experimentation.
+  <center>
+    <img src="ph3-8.gif" width="409" height="284" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-8. Basic outline of a W7EL Field-Day Special for 28.5 MHz.
+  </center>
+  <p>W7EL's "Field-Day Special" rests on a different approach--an attempt to calculate the mutual impedance consequences of the elements, with the selection of element length, spacing, and line length designed to achieve the required current magnitude and phase angle transformation. <b>Fig. 8</b> shows the outline of a 10-meter version of the antenna that I have built. The line lengths indicated are for modeled versions using #18 wire at a 1" spacing (about 450 Ohms impedance as a transmission line and for #20 wire spaced 0.375" (about 300 Ohms as a transmission line. The longer length for the thinner wire, when taken individually and as a spaced 2-wire pair) is natural. The following notes are based on the 1"-spaced model. In both cases, using vinyl-covered wire shortens the physical element by 1-2% to account for the velocity factor of the insulation in antenna use.</p>
+  <center>
+    <img src="ph3-9.gif" width="376" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    3-9. Free-space azimuth patterns of the Field-Day Special at 28.1, 28.5, and 28.9 MHz.
+  </center>
+  <p>Although the element spacing is 4.27' (0.1237 WL), the phase line is 4.9' (0.1420 WL) long, despite the 0.8 velocity factor of high-quality twinlead. Indeed, calculations suggest that a higher front-to-back ratio results from the use of 340-Ohms line. However, as <b>Fig. 9</b> shows in the free-space azimuth patterns across the first MHz of 10 meters, performance with a 300- Ohms line achieves similar levels to the first design that we explored. As well, with a 300-Ohms line, slightly better performance is possible by lengthening the forward element slightly, although the difference is unlikely to be noted in practical operation.</p>
+  <center>
+    <img src="ph3-10.gif" width="722" height="543" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-10. Gain and 180&deg; front-to-back ratio of the Field-Day Special from 28.0 to 29.0 MHz.
+  </center>
+  <p><b>Fig. 10</b> shows the gain and 180&deg; front-to-back curves for the model across the 28.0 to 29.0 MHz span. Typical of ZL-Special designs of any sort, the gain rises almost linearly, while the front-to-back ratio shows a broad peak centered a bit below the center of the design passband. <b>Fig. 11</b> provides figures on the resistance and reactance within the design passband. The resistance range is only about 7.5 Ohms. The reactance changes by a total of 56 Ohms. As Fig. 8 indicated, a pair of series capacitors, each with a reactance of -110 Ohms (about 50 pf at 28.5 MHz) would provide a very reasonable SWR curve across the passband.</p>
+  <center>
+    <img src="ph3-11.gif" width="724" height="544" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-11. Source resistance and reactance of the Field-Day Special from 28.0 to 29.0 MHz.
+  </center>
+  <p>The need for a compact portable antenna inspired the original design of the Field-Day Special. However, for our purposes, it serves additional functions. One is to illustrate that equal- length elements (each about 0.468 WL long) result in wide-band performance that is not significantly different from the use of unequal length elements in the first example. A second function is to show that folded dipole elements have no advantage or disadvantage relative to single elements in performance--although there may be differences in the physical convenience of one or another element type. Third, the elements have widely divergent impedances: forward Z 124 + j 84 Ohms; rear 80 - j 256 Ohms. Nevertheless, the right length of the right impedance phase line effects the correct current division at the feedpoint junction so that we arrive ar the correct current magnitude and phase angle on the rear element to achieve proper or acceptable phased performance.</p>
+  <center>
+    <h3>A Dual-Line ZL-Special</h3>
+  </center>Before we leave the ZL-Special, let's examine a further variation on the general theme of phasing with a single transmission line section between the element. There is no rule that says that one must feed the system precisely at the junction with the forward element, even if tradition has imbedded this view in our minds. <b>Fig. 12</b> shows the general outline of a variant of our first ZL-Special study model.
+  <center>
+    <img src="ph3-12.gif" width="209" height="372" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-12. Basic outline of the dual-line ZL-Special for 28.5 MHz.
+  </center>
+  <p>The design uses the same element lengths as our initial model. The forward element is 0.465 WL long and the rear element is 0.506 WL long. Both are 0.5" (0.001207 WL) diameter aluminum. The original design used a single phase line length of 0.13 WL of 35-Ohms 0.66 velocity factor line. Suppose that one cannot obtain the required RG-83, but has some RG-8X with a 50-Ohms impedance and a velocity factor of 0.78. The higher-impedance line at any length will not achieve in a single line the desired phasing for reasonable ZL-Special performance.</p>
+  <p>However, we may effect transformations of current magnitude and phase angle on both the forward and the rear elements by bringing lengths of transmission line from each element to a middle point. The length of line from the rear element is 0.13 WL. Although this length is physically similar to our original design, electrically, it is only 0.167 WL electrically, since the velocity factor of our new line is higher. A 0.015-WL line from the forward element is 0.192 WL electrically or about 0.52'. At the junction, given a source current of 1.0 at 0.0&deg;, we arrive at a relative current split of this dimensions: forward 0.950 at 4.35&deg; and rearward 0.458 at -2.1&deg;. The resulting current ratio of rear to forward elements is 0.811 at -44.8&deg;, close to the values for the original design.</p>
+  <center>
+    <img src="ph3-13.gif" width="376" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-13. Free-space azimuth pattern of the dual-line ZL-Special at 28.1, 28.5, and 28.9 MHz.
+  </center>
+  <p><b>Fig. 13</b> shows the azimuth patterns across the 28-29 MHz span of the design passband. Only the front-to-back ratio suffers a bit relative to the more ideally phased original example, as shown in the gain and front-to-back curves in <b>Fig. 14</b>. A bit of element length adjustment might well have improved the numbers a bit, but would have altered the demonstration.</p>
+  <center>
+    <img src="ph3-14.gif" width="723" height="543" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-14. Gain and 180&deg; front-to-back ratio of the dual-line ZL-Special from 28.0 to 29.0 MHz.
+  </center>
+  <p>The natural impedance at 28.5 MHz for the new phase line arrangement is about 23.5 + j 13.1 Ohms. The low reactance suggests that a modified 1/4-WL line section might effect a match. 0.167 WL (electrical) of 35 to 37 Ohms line provides the broad 50-Ohms SWR curve shown in <b>Fig. 15</b>. The line might consist of either RG-83, or in the absence of such line, a parallel section of RG-59. In each case, the line velocity factor will determine the physical length.</p>
+  <center>
+    <img src="ph3-15.gif" width="723" height="544" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3-15. 50-Ohm SWR curve of the dual-line ZL-Special from 28.0 to 29.0 MHz.
+  </center>
+  <p>The design shown here is similar in principle to the one used to improve front-to-back performance of a 10-meter hilltopper 2-element Yagi. (See "Two Hilltoppers for 10 Meters," <i>The ARRL Antenna Compendium</i>, Vol. 6, pp. 1-9.) Like the single-line ZL-Special, the antenna requires a non-conductive boom to ensure that the phase-line remains clear of unwanted interactions.</p>
+  <center>
+    <h3>Tentative Conclusions</h3>
+  </center>We have examined the numerous variables that go into the design of a ZL-Special. The somewhat simplistic view of 2-element horizontal phased array design taken in the early years of ZL-Special building has given way to a more complete appreciation of the number of interactive variables involved, including the antenna dimensions and consequential mutual coupling. As well, the phasing work became more complex in terms of the current magnitude and phase angle transitions down a length of line having a given characteristic impedance so as simultaneously to provide each element with the correct relative current magnitude and phase angle and to effect a current division as the line junction or feedpoint that would result in those values.
+  <p>Many possible ZL-Special designs prove to be unfeasible. The requisite characteristic impedance of the phasing line may not exist and cannot be constructed. The required line length may be shorter than the distance between the elements, or it may be excessively long.</p>
+  <p>The key to successful ZL-Special design is to find a set of element lengths and a spacing that meets two conditions. First, the relative current magnitude and phase angle on the individual elements must provide a satisfactory pattern in terms of gain and front-to-back ratio. Second, the impedances of the elements under the first condition must permit the design of a phasing line (or pair of lines) that employs an available or achievable characteristic impedance and that allows the requisite current division and transformation. As we saw in Part 1, there is in principle not restriction upon element spacing within the range of 0.05 to 0.2 WL, although element spacing in the 0.1 to 0.13 WL range tends to yield the most easily achieved gain and operating bandwidth levels.</p>
+  <p>There is, in principle, no restriction upon the element lengths relative to the length of a resonant dipole at the design frequency. As well, there is no restriction upon the relative lengths of the elements: the forward element may be in principle shorter than, equal to, or longer than the rear element. Some combinations may be more favorable than others, although to date, there is no complete survey of all combinations.</p>
+  <p>Perhaps the major disadvantage of the ZL-Special phasing system lies in the need to use folded dipole elements with high-impedance phase lines or to use with single tubular elements a low-impedance line. Many, if not most, builders wish to use a metallic boom and hence to have a phase line that is not susceptible to unwanted interactions. The quest for a stable phasing system has led to some interesting variants of phasing schemes for the 2-element horizontal array. The early HB9CV system--still in use today--and the recent N7CL system are two approaches to the same end. If the elements and the desired phase line do not match, let's add matching networks. As we shall see in the next episode, a slight increase in electrical complexity can lead to significant simplifications in the physical design of 2-element horizontal phased arrays.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-14-2002. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> The National Contest Journal <i>(Mar/Apr, 2002). Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="ph4.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 4</a></p>
+  <p><a href="ph.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Series Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hb9cv-zl-special'>HB9CV / ZL Special</a>, <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#phased-array'>Phased Array</a></p><br>
+</body>
+</html>

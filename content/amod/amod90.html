@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Orientation to Near Fields</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>90. An Orientation to NEC Near Fields<br>
+    Part 1. NEC-2 Input Basics and Simple Outputs</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Beginning modelers tend to focus on the far-field properties of antennas and to overlook near-field data. There are both good and bad reasons for this situation. First, not every entry-level program makes the near-field data available. Second, reading and using the inherent NEC-2 data output can be daunting in the absence of an adequate orientation to that data. Third, compromises in some programs relative to the Cartesian coordinate system and the inherent NEC output angle system can generate some confusions. Fourth, little effort has gone into making the near-field interface more user friendly. Fifth, outside of one piece of data, not inherent to the NEC-2 core, the remainder of the near field data is relatively foreign and therefore useless to the beginning modeler. These are not the only reasons we might give for the disuse into which near field data falls among relatively new modelers, but the list is long enough for an introduction to a partial corrective for the situation.</p>
+  <p>Most practical applications of antennas tend to follow compass headings and elevation angles. We record heading in a clockwise fashion around a compass rose to derive azimuth bearings. Similarly, we count degrees upward from the horizon to arrive at elevation angles. However, NEC employs a true Cartesian system of coordinates that defines points by reference to X, Y, and Z axes. When we translate the coordinates to headings and angles, we count in a counterclockwise direction in which 0 degrees lies along the X-axis of the coordinate graph. Hence, +Y is at 90 degrees, -X at 180 degrees, and -Y at 270 degrees. NEC does not inherently use an elevation system that counts from the ground up, but instead uses theta angles measured from the zenith downward. <b>Fig. 1</b> shows the correct system. Note that since a standard theta angle would run from the zenith downward, it would be correct to count both horizon points as 90 degrees. The continuous count for a 360-degree theta circle is only one of several schemes used.</p>
+  <center>
+    <img src="amod90-1.gif" width="633" height="433" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> uses two separate circles to sort out the elements of the coordinate and angle systems. It is difficult to adequately present the 3-dimensional system on a flat or 2-dimension surface. However, <b>Fig. 2</b> provides an often-used 3-diminsional conventionalization.</p>
+  <center>
+    <img src="amod90-2.gif" width="420" height="396" border="2" vspace="5" hspace="9">
+  </center>
+  <p>My reason for not using the type of sketch shown in <b>Fig. 2</b> is that it takes an expert graphic artist to select just the correct angles for the three axes in order to portray the observation point at a position that is intuitively correct to the reader. Lacking the services of such a skilled artisan, I shall rely on the simpler 2-circle sketch to portray positions.</p>
+  <p>One of the reasons that NEC users sometimes never get clear on how to manipulate the inputs for near fields is that entry-level programs try as best they can to accommodate the user's likely orientation toward azimuth (compass rose) headings and elevation angles. The conversion to elevation angles is simple enough, since the elevation angle = 90 (degrees) - theta (or theta = 90 - elevation). Azimuth is another matter. Some entry level programs simply switch the outer ring number without altering the phi pattern and call the result an azimuth pattern. Other programs use a phi pattern, but label it as an azimuth pattern. Still other programs simply use and label the patterns as phi patterns as they emerge from the NEC output file. Given the morass of potentially confusing orientations, and the fact that near-field entries require a single clear and unambiguous orientation, let's take a problem and work through it.</p>
+  <p><b>Entry Using Cartesian or Rectangular Coordinates</b></p>
+  <center>
+    <img src="amod90-3.gif" width="633" height="433" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows one of the two ways of locating an observation position for a near-field request. Following Cartesian convention, the observation location is located by values for X, Y, and Z. Now let's translate that into an actual model using these conventions.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 0 1 1 1 5 10 5 1.0 1.0 1.0
+NH 0 1 1 1 5 10 5 1.0 1.0 1.0
+EN
+</pre>
+  <p>The NE and NH lines provide the near-field entry requests for electrical and magnetic field strengths. The preceding lines define a simple 2-mm-diameter vertical dipole that is 0.5 wavelength long, with its base 0.25 wavelength above average ground, as specified by the GN entry. The frequency is 299.7925 MHz. Since we are requesting only a pair of single-frequency near-field reports, they will self-execute.</p>
+  <p>Notice that the near field requests separate the electrical and magnetic field solution requests. Otherwise, they are identical in form. Let's expand the form so that we can separate the NEC-2 entries in this model. Since the NE and NH commands occur after the closure of the geometry section of the model, the dimensions must be in meters, regardless of the units used and scaled within the geometry section of the model.</p>
+  <pre>
+Cmd  Cart/  No. of Points    Coordinate        Step Size
+     Spher  X     Y     Z    X     Y     Z     X     Y     Z
+NE   0      1     1     1    5     10    5     1.0   1.0   1.0
+NH   0      1     1     1    5     10    5     1.0   1.0   1.0
+</pre>
+  <p>With respect to the entry of Cartesian or rectangular coordinates to specify the NE and NH requests, NEC-2 and NEC-4 use identical command entries.</p>
+  <center>
+    <img src="amod90-4.gif" width="597" height="272" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows a help screen used by NEC-Win Pro to form one of the near-field command entries. The use of "1" for the number of points in each of the three coordinate directions does not yield 3 observation points, but only a single point defined by the three coordinates. (We shall briefly examine multiple points before we quit.) One of the uses made of single-point near-field requests is to satisfy certain government regulations regarding the magnitudes of electrical and/or magnetic fields in the vicinity of antennas used by various services, including the amateur service. The output report--if within limits set by regulations--will satisfy the requirements of those regulations for a large variety of well designed antenna models. We can glean the requisite data from the output table for the near-field request, as sampled below for the model just displayed.</p>
+  <pre>
+**** NEAR ELECTRIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\amod90-6.nec
+
+            -  LOCATION  -                     -  EX  -               -  EY  -               -  EZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES     VOLTS/M
+     5.000000  10.000000   5.000000     6.6689E-03    25.21    1.3338E-02    25.21    3.8323E-02  -149.78    4.1105E-02
+
+**** NEAR MAGNETIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\amod90-6.nec
+
+            -  LOCATION  -                     -  HX  -               -  HY  -               -  HZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS         AMPS/M   DEGREES       AMPS/M   DEGREES       AMPS/M   DEGREES      AMPS/M
+     5.000000  10.000000   5.000000     9.7519E-05  -150.52    4.8760E-05    29.48    5.0538E-11    18.32    1.0903E-04
+</pre>
+  <p>For the simple purpose of the presumed near-field requests, we are interested in 2 parts of the output report. First, the observation location coordinates appear in the report and serve as a check on the accuracy of our input. In more extensive reports, the coordinate locations would define separate observation points within the range of our request.</p>
+  <p>Second, the last entry in each line lists the peak field magnitude in volts/meter for the electric field and in amperes/meter for the magnetic field. Since this report emerges directly from the NEC output file, the values are in peak volts/meter. Compare those lines with the following ones from an identical EZNEC model.</p>
+  <pre>
+         --------------- NEAR-FIELD PATTERN DATA ---------------
+
+Frequency = 299.793 MHz
+Power = 0.0046119 watts
+Max field = 0.0290653 V/m RMS
+ at X,Y,Z = 5, 10, 5 m
+
+Electric (E) Field (V/m RMS)
+
+X (m)      Y (m)      Z (m)       Ex Mag     Ey Mag     Ez Mag     Etot
+5          10         5          .00471558  .00943117  0.0270987  0.0290653
+
+
+Frequency = 299.793 MHz
+Power = 0.0046119 watts
+Max field = 7.84369E-05 A/m RMS
+ at X,Y,Z = 5, 10, 5 m
+
+Magnetic (H) Field (A/m RMS)
+
+X (m)      Y (m)      Z (m)       Hx Mag     Hy Mag     Hz Mag     Htot
+5          10         5          7.0156E-5  3.5078E-5  0          7.8437E-5
+</pre>
+  <p>The "Etot" and "Htot" columns correspond to the "Peak Field" columns in the first report, but the values under those columns differ radically. Actually, they differ not at all once we realize that the peak voltage/meter (and current/meter) of the NEC output report have been converted into RMS values in the EZNEC report. The SQRT(2) or 1.4142 times the RMS values will yield values very close to those of the NEC-Win Pro output, allowing for the slight differences in actual numbers that results from using different FORTRAN compilers.</p>
+  <p>We shall note in passing that the original NEC-2 core did not yield a total or peak magnitude column. However, many implementations of NEC-2 have added that calculation because it is fundamentally useful to even casual modelers.</p>
+  <p>Although these calculations yield values called near-field reports, they differ from those shown in most basic texts under near-field calculations. In most texts, near-field equations extract from the total field equations those terms most relevant to strict near-field phenomenon calculation. The result is a simpler set of equations to manipulate. Since NEC must ultimately deal with the total field, including all components, the near-field reports are for the total solution, including surface-wave components.</p>
+  <p><b>Entry Using Spherical Coordinates</b></p>
+  <p>Let's now enter the same problem using the spherical coordinate entry option. The rudiments of this option appear in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod90-5.gif" width="633" height="433" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The key ingredients of the alternative entry system are the radius-line from the coordinate center to the observation location, the phi angle pf the observation point, and the theta angle of that point. If we wish to use the same observation position, we shall have to do some calculating. I shall show all results to the display limits of my hand calculator, since I wish the output report to coincide as precisely as possible with the first model. You may round numbers as your task dictates or permits.</p>
+  <p>1. Beginning with the original X, Y, and Z coordinates, we can calculate the radius in standard vector form, Hence, the radius r = SQRT(X^2 + Y^2 + Z^2). For X=5, Y=10, and Z=5, r=12.247449.</p>
+  <p>2. The phi angle is a function of the X and Y coordinate, such that Y/X = tan(phi). Hence, phi = arctan(Y/X) or 63.434949 degrees--and NEC wants the angle in degrees.</p>
+  <p>3. The theta angle is a function of the radius R and the Z coordinate. It tends to be easier to start with an elevation angle, such that el=arcsin(Z/r) degrees, and theta=90-el degrees, that is 65.905157 degrees.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 1 1 1 1 12.247449 63.434949 65.905157 1.0 1.0 1.0
+NH 1 1 1 1 12.247449 63.434949 65.905157 1.0 1.0 1.0
+EN
+</pre>
+  <p>The sample model uses the same antenna and varies only the NE and NH requests to coincide with the coordinate system for entry. The following lines expand the entries with notations for the meaning of each entry in each line.</p>
+  <pre>
+Cmd  Cart/  No. of Points      Coordinate                         Step Size
+     Spher  r     phi   theta  r (radius) phi angle  theta angle  r     phi   theta
+NE   1      1     1     1      12.247449  63.434949  65.905157    1.0   1.0   1.0
+NH   1      1     1     1      12.247449  63.434949  65.905157    1.0   1.0   1.0
+</pre>
+  <p>Note that for each sequence of r, phi, and theta, phi precedes theta in the entry. This order applies to NEC-2. However, NEC-4 reverses the phi and theta positions so that the order is r, theta, phi. For now, we shall restrict ourselves to NEC-2.</p>
+  <center>
+    <img src="amod90-6.gif" width="597" height="272" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> presents the entry set-up screen for the present model to correspond with the earlier model using Cartesian coordinates. Both screens request data inputs that track exactly what will appear in the entry line. However, there is an alternative way to request the input data that some users find more convenient if their request involves more than one point along an axis or other line. Instead of requesting the starting values, the increment, and the number of points, the system requests the start values, the stop values, and the number of points. EZNEC uses such as system, as shown in <b>Fig. 7</b>, and then internally converts the request to the form required by the core.</p>
+  <center>
+    <img src="amod90-7.gif" width="423" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To see if we have done our set-up calculations correctly, lets examine the output report for this new model in NEC-Win Pro format.</p>
+  <pre>
+**** NEAR ELECTRIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\amod90-6.nec
+
+            -  LOCATION  -                     -  EX  -               -  EY  -               -  EZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES     VOLTS/M
+     5.000000  10.000000   5.000000     6.6689E-03    25.21    1.3338E-02    25.21    3.8323E-02  -149.78    4.1105E-02
+
+**** NEAR MAGNETIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\amod90-6.nec
+
+            -  LOCATION  -                     -  HX  -               -  HY  -               -  HZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS         AMPS/M   DEGREES       AMPS/M   DEGREES       AMPS/M   DEGREES      AMPS/M
+     5.000000  10.000000   5.000000     9.7519E-05  -150.52    4.8760E-05    29.48    5.0538E-11    18.32    1.0903E-04
+</pre>
+  <p>The first thing to notice is that the "Peak Field" magnitude reports are identical to those produced using the Cartesian coordinate system for entry. The result is expected the moment that we also examine the observation location data at the left end of each line. The values for X, Y, and Z are identical to those in the Cartesian output report. That is the second notable feature of near-field reports: regardless of which input system we use, the output report is always in terms of Cartesian coordinates for the distinct observation points.</p>
+  <p>For single-point reports, it makes no difference which input system we use, and so the best advice is to choose the simplest based on the data available. Suppose that we are calculating the field intensity of an antenna at a certain height above ground with an observer some specified distance away in a clear field. In such a case, we can often simplify the problem by placing the line from the antenna support along a model geometry axis for either an X or a Y entry on the Cartesian system. The height of the antenna above ground becomes a simplified Z-axis entry. We do not have to pre-calculate the angular distance from the antenna down to the observer. Hence, for many simple cases, the Cartesian entry system is the easier to use.</p>
+  <p>However, let's attend to the limitations of the model. It presumes that the antenna is oriented correctly relative to the observation point. For a vertical dipole in a clear field, the presumption may hold. However, if the antenna is directional in any way, the presumption may not hold unless the orientation is modeled into the geometry. Note also that the hypothetical case presumes a clear field with no absorbing, refracting, or reflecting objects within a relevant distance from either the antenna or the observation point. In the situations of real antennas, we rarely encounter this ideal condition. A fully adequate model would require us to model reasonable approximations of all such objects along with the antenna itself.</p>
+  <p><b>Which Input System?</b></p>
+  <p>It would be easy to summarize the cases for the use of each input system in a couple of lines.</p>
+  <p>Use the Cartesian coordinate input system wherever you require a field of observation points spaced apart by equal or otherwise specified increments of distance.</p>
+  <p>Use the spherical coordinate input system whenever you need a field of observation point separated by equal angular increments or when you need a set of observation points along equal increments in the direction of the radius line.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 0 3 3 3 5 10 5 1.0 1.0 1.0
+EN
+</pre>The initial test model uses Cartesian coordinates for the electric field only to illustrate the "box" effect produced by their use in multiple steps. <b>Fig. 8</b> shows to entry formation screen to clarify what the model requests.
+  <center>
+    <img src="amod90-8.gif" width="597" height="272" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For each axis, the NE requests wants 3 steps at the indicated increment of 1.0-meter each. Hence, the output report will yield 27 lines. For some purposes, this type of report, as illustrated by the following lines, may be just what a task dictates. However, we may need only a few of the values produced out of the entire set of lines.</p>
+  <pre>
+**** NEAR ELECTRIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\amod90-4-3.nec
+
+            -  LOCATION  -                     -  EX  -               -  EY  -               -  EZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES     VOLTS/M
+     5.000000  10.000000   5.000000     6.6689E-03    25.21    1.3338E-02    25.21    3.8323E-02  -149.78    4.1105E-02
+     6.000000  10.000000   5.000000     7.4387E-03  -136.47    1.2398E-02  -136.47    3.8370E-02    48.47    4.0987E-02
+     7.000000  10.000000   5.000000     7.9924E-03    40.01    1.1418E-02    40.01    3.8327E-02  -135.21    4.0767E-02
+     5.000000  11.000000   5.000000     5.8165E-03    81.69    1.2796E-02    81.69    3.8346E-02   -93.49    4.0826E-02
+     6.000000  11.000000   5.000000     6.5235E-03   -69.28    1.1960E-02   -69.28    3.8250E-02   115.36    4.0590E-02
+     7.000000  11.000000   5.000000     7.0459E-03   118.42    1.1072E-02   118.42    3.8054E-02   -57.17    4.0243E-02
+     5.000000  12.000000   5.000000     5.0622E-03   131.45    1.2149E-02   131.45    3.8072E-02   -44.11    4.0272E-02
+     6.000000  12.000000   5.000000     5.7020E-03   -10.04    1.1404E-02   -10.04    3.7853E-02   174.19    3.9932E-02
+     7.000000  12.000000   5.000000     6.1871E-03  -172.23    1.0607E-02  -172.23    3.7536E-02    11.75    3.9485E-02
+     5.000000  10.000000   6.000000     6.4090E-03  -114.92    1.2818E-02  -114.92    3.1057E-02    68.49    3.4195E-02
+     6.000000  10.000000   6.000000     7.1580E-03    86.85    1.1930E-02    86.85    3.1200E-02   -89.38    3.4151E-02
+     7.000000  10.000000   6.000000     7.7435E-03   -92.96    1.1062E-02   -92.96    3.1394E-02    91.08    3.4164E-02
+     5.000000  11.000000   6.000000     5.6244E-03   -52.12    1.2374E-02   -52.12    3.1349E-02   131.88    3.4158E-02
+     6.000000  11.000000   6.000000     6.3577E-03   159.88    1.1656E-02   159.88    3.1508E-02   -15.99    3.4180E-02
+     7.000000  11.000000   6.000000     6.9433E-03    -9.14    1.0911E-02    -9.14    3.1666E-02   175.05    3.4194E-02
+     5.000000  12.000000   6.000000     4.9841E-03     3.65    1.1962E-02     3.65    3.1656E-02  -172.16    3.4194E-02
+     6.000000  12.000000   6.000000     5.6705E-03  -135.22    1.1341E-02  -135.22    3.1757E-02    48.97    3.4184E-02
+     7.000000  12.000000   6.000000     6.2275E-03    65.52    1.0676E-02    65.52    3.1831E-02  -110.35    3.4136E-02
+     5.000000  10.000000   7.000000     6.4443E-03    85.40    1.2889E-02    85.40    2.6446E-02   -93.43    3.0116E-02
+     6.000000  10.000000   7.000000     7.0583E-03   -68.31    1.1764E-02   -68.31    2.6269E-02   113.41    2.9633E-02
+     7.000000  10.000000   7.000000     7.5220E-03   116.39    1.0746E-02   116.39    2.6219E-02   -61.32    2.9313E-02
+     5.000000  11.000000   7.000000     5.4786E-03   156.26    1.2053E-02   156.26    2.6218E-02   -21.57    2.9368E-02
+     6.000000  11.000000   7.000000     6.1422E-03    11.69    1.1261E-02    11.69    2.6247E-02  -165.72    2.9209E-02
+     7.000000  11.000000   7.000000     6.6806E-03  -153.71    1.0498E-02  -153.71    2.6351E-02    29.27    2.9135E-02
+     5.000000  12.000000   7.000000     4.7962E-03  -141.18    1.1511E-02  -141.18    2.6341E-02    41.76    2.9138E-02
+     6.000000  12.000000   7.000000     5.4556E-03    82.77    1.0911E-02    82.77    2.6459E-02   -94.04    2.9129E-02
+     7.000000  12.000000   7.000000     6.0079E-03   -73.40    1.0299E-02   -73.40    2.6614E-02   109.99    2.9156E-02
+</pre>
+  <p>Note that NEC uses an order of precedence in the rate of change of each coordinate, with the X-coordinate changing value most rapidly, followed by the Y- and finally the Z-coordinate.</p>
+  <p>Suppose that we wish only a line of reading along the axis of the radius line. For this type of task, the spherical coordinate system is usually the most apt, as illustrated by the following revision to our basic spherical-coordinate model.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 1 4 1 1 12.247449 63.434949 65.905157 1.0 1.0 1.0
+EN
+</pre>
+  <p>Once more, I have restricted the model to only an NE entry for simplicity. <b>Fig. 9</b> shows the NE entry screen to clarify the maneuver of requesting 4 points along the radius line.</p>
+  <center>
+    <img src="amod90-9.gif" width="597" height="272" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The model requests 4 observation point spaced 1 meter apart along the radius line. The core returns the following report.</p>
+  <pre>
+**** NEAR ELECTRIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\amod90-6-3.nec
+
+            -  LOCATION  -                     -  EX  -               -  EY  -               -  EZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES     VOLTS/M
+     5.000000  10.000000   5.000000     6.6689E-03    25.21    1.3338E-02    25.21    3.8323E-02  -149.78    4.1105E-02
+     5.408248  10.816497   5.408249     6.2225E-03    25.84    1.2445E-02    25.84    3.5339E-02  -149.52    3.7965E-02
+     5.816497  11.632993   5.816497     5.8311E-03    26.38    1.1662E-02    26.38    3.2787E-02  -149.30    3.5273E-02
+     6.224745  12.449490   6.224745     5.4853E-03    26.85    1.0971E-02    26.85    3.0581E-02  -149.11    3.2939E-02
+</pre>
+  <p>For our limited purposes, the most notable part of the output report is the set of coordinates. If we take a vector sum of the coordinates for each observation point, we shall find that each differs by exactly 1.0 meter from the preceding or following point.</p>
+  <p><b>The End of the Beginning. . .</b></p>
+  <p>The exercises in this episode have tried to develop a bit of comfort with the alternative near-field input systems available in NEC-2. We looked mostly at single observation point situations to make the input systems clear, and we essentially examined only one part of the output data.</p>
+  <p>I have not tried to replicate the mathematical background of near fields as calculated NEC, since the theory portions of the manuals do a far better job than I can in these columns. Instead, my task has been to orient the modeler toward using the NE and NH inputs to obtain the information needed for observation points of choice. Nevertheless, we have left some questions open. How does the data within each report line integrate? How does the NEC-4 input system differ from the NEC-2 system? Finally, how does the new request command, called LE and LH, differ from the present set of request commands that we have so far surveyed? Those are enough questions to occupy another entire episode.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modeling Ground Planes</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>9. Modeling Ground Planes and Other Radial Systems</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  Vertical monopoles require a ground plane for the completion of the antenna, whether at ground level or elevated. Other types of antennas also call for ground radial systems. Modeling radial systems presents a numbers of challenges, especially if we are creating one for the first time. So let's see what is involved.
+  <p>Of course, modeling a vertical monopole over perfect ground requires no ground plane, because the program (NEC or MININEC) creates the requisite image antenna necessary for completion of the overall structure. Hence, our focus will be upon modeling vertical monopoles over real ground.</p>
+  <h3>The Radial System</h3>
+  <center>
+    <img src="amod9-1.gif" width="399" height="362" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The standard ground plane system consists of a set of wires arranged radially about a single point. In real systems, the number general ranges from 4 to 120. If the number is only 4, as in <b>Figure 1</b>, the system is simple. Let L be the length of the radial. Then take 4 wires, all with one end at a certain point, usually at the coordinate 0, 0, Z, where Z may be some number greater than zero. For each of the 4, keep the same value of Z. Then alternatively assign the length to positive and then negative values of alternating X and Y. Then our wire chart looks like this.</p>
+  <pre>Wire #    End 1     X    Y    Z         End 2     X    Y    Z
+ 1                  0    0    Z                   L    0    Z
+ 2                  0    0    Z                   0    L    Z
+ 3                  0    0    Z                   -L   0    Z
+ 4                  0    0    Z                   0    -L   Z</pre>
+  <p>Beyond 4 radials, the required values for X and Y become a little more complex. Perhaps the greatest temptation in modeling vertical monopoles is always to use perfect ground in order to avoid having to create large models involving many radials. However, modeling a radial system is a straightforward task with simple rules which are amenable to symbolic model entry or to advanced calculation to determine the radial end-points. <b>Figure 2</b> shows a typical radial system with 8 radials surrounding a center antenna that passes through the page. To construct or symbolize a set of radials, you may use any system similar to the following:</p>
+  <center>
+    <img src="amod9-2.gif" width="491" height="474" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Set the X-axis as the reference line. Let L be the length of each radial (so that a sample radial might have the values at end 1 of X=0 and Y=0 and at end 2 of X=L and Y=0). If 8 is the number of radials, then the angle (A) between each radial is A=360/8. The radials will then have end-2 coordinates as follows:</p>
+  <pre>Radial Number            End-2 X                  End-2 Y
+     1              X1 = L                   Y1 = 0
+     2              X2 = cos A * L           Y2 = sin A * L
+     3              X3 = cos (2 * A) * L     Y2 = sin (2 * A) * L
+
+     8              X2 = cos (7 * A) * L     Y2 = sin (7 * A) * L</pre>
+  <p>In this example, radial 1 is the one which will extend from the center point to the values X=L and Y=0. You may set this table into a modeling program offering symbolic dimensional notation, or you may prepare the table and its results as a preliminary exercise on a prepared form to keep your work systematic and traceable. Symbolic entry does allow revision of the length of the entire radial system with a single change for the value of L. You must, however, have an entry for each radial in the system. Hence, changing the number of radials in a system requires the introduction of the correct number of wires to complete the array.</p>
+  <p>Once you have modeled radial systems with various numbers of wires, you should save your collection under some system of filenames. You may pull them from the files, scale them to the frequency of a present project as well as to the desired wire size and type, adjust X, Y, and Z values to position them for the new project, and then construct the new radiating wires atop them.</p>
+  <h3>What Some Programs Offer</h3>Various versions of NEC and MININEC offer us different ways of setting up the wires for a radial system. Here are a few examples.
+  <p>AO offers symbolic wire data entry. Hence, you may simply plug in the equations for each radial coordinate and present the value of A and L. If you have these preset into a number of files for each desired radial set size, you can join the relevant file to your proposed antenna file externally to AO and give the new file an .ANT extension. Then you can complete the radial system by adding 1. an antenna element wire (or more than one, if needed), 2. a value for L, which itself may be symbolic and determined by some other factor, such as frequency.</p>
+  <p>EZNEC offers an automated radial maker. From the wire description page, you enter the first wire of the radial set, ordinarily specifying the length along either the X or the Y axis. Then the program will ask which wire forms the basic radial (and it always uses end 1 as the pivot point). Finally, it will ask how many radials. The result that appears will be a set of radials with the correct angular spacing and the correct end coordinates. Because the operation is so fast, it does not usually pay to save radial files as separate entities in EZNEC.</p>
+  <p>NECWin will offer its "Plus" version around the beginning of 1999. It will contain an interesting spread sheet that permits flipping from a symbolic data page to an actual value page, so that you can see a radial set both ways. In this program, it will definitely pay to save sample radial set models as separate files for later reuse.</p>
+  <center>
+    <img src="amod9-3.gif" width="483" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If you have a sloping ground plane system, as illustrated in <b>Figure 3</b>, you can back up the calculations in symbolic entry on step and add a rotational component to take the final length at its level coordinates and rotate them downward by the appropriate number of degrees. Within EZNEC, you may group rotate the wires in the radial set downward in one command set. The following table, drawn from a 40-meter model, illustrates the wires of a sloping radial system with the radial length set at 9.8 meters, but sloping downward ar a 45-degree angle. (You can verify this length by taking any one of the X or Y values (6.93) and adding its square to the square of the difference between the End 1 and End 2 Z values (6.93). The square root of the sum is the leg length (9.8), via our old friend, the Pythagorean theorem.)</p>
+  <pre>Wire  End 1    X       Y       Z    End 2    X       Y       Z
+ #    Conx                          Conx
+1            0.000,  0.000, 50.135  W2E1   0.000,  0.000, 40.000
+2     W1E2   0.000,  0.000, 40.000         6.930,  0.000, 33.070
+3     W1E2   0.000,  0.000, 40.000         0.000,  6.930, 33.070
+4     W1E2   0.000,  0.000, 40.000        -6.930,  0.000, 33.070
+5     W1E2   0.000,  0.000, 40.000         0.000, -6.930, 33.070</pre>
+  <p>A wise exercise is to familiarize yourself with the coordinate values you might expect using a free-space model centered in the "0, 0, 0" coordinates. Create on paper or as models some flat radials systems using 4, 8, and 16 radials, as well a some 4-radial sloping systems at 30, 45, and 60 degrees. Set the radial length at some round number, such as 10 (any units will do). Make a chart of the coordinate values you obtain for each system. Then, when you construct actual radial systems, you can compare the results to the chart to see if all the values appear to be reasonable. Making a further cross check with the antenna structure viewing system of your software will likely ensure a correct model--or at least one that is set up as you intend it to be.</p>
+  <p>As a sample, my 16-wire reference table, with an arbitrary radial length of 10, looks like this:</p>
+  <pre>Radial               End 1                         End 2
+Wire No.       X       Y       Z             X       Y       Z
+1            0.000,  0.000,  0.000        10.000,  0.000,  0.000
+2            0.000,  0.000,  0.000         9.239,  3.827,  0.000
+3            0.000,  0.000,  0.000         7.071,  7.071,  0.000
+4            0.000,  0.000,  0.000         3.827,  9.239,  0.000
+5            0.000,  0.000,  0.000         0.000, 10.000,  0.000
+6            0.000,  0.000,  0.000        -3.827,  9.239,  0.000
+7            0.000,  0.000,  0.000        -7.071,  7.071,  0.000
+8            0.000,  0.000,  0.000        -9.239,  3.827,  0.000
+9            0.000,  0.000,  0.000       -10.000,  0.000,  0.000
+10           0.000,  0.000,  0.000        -9.239, -3.827,  0.000
+11           0.000,  0.000,  0.000        -7.071, -7.071,  0.000
+12           0.000,  0.000,  0.000        -3.827, -9.239,  0.000
+13           0.000,  0.000,  0.000         0.000,-10.000,  0.000
+14           0.000,  0.000,  0.000         3.827, -9.239,  0.000
+15           0.000,  0.000,  0.000         7.071, -7.071,  0.000
+16           0.000,  0.000,  0.000         9.239, -3.827,  0.000</pre>
+  <h3>Core Limitations</h3>Because ground plane wires, even sloping ones, have a horizontal component, MININEC ground planes should not be lower than 0.2 wl, the same accuracy restriction imposed on all horizontal wires. Similarly, the quick ground system attached to NEC-2 is limited in accuracy below about the same minimum height. DOS MININEC is further limited by the low number of total segments that a model may include. Using the provisions of symmetry in AO can increase the effective number of segments. However, only the Windows implementations of MININEC have broken this barrier within the calculating core.
+  <p>The Sommerfeld-Norton ground system in NEC-2 permits the modeler to place radials very close to the surface, so long as the radials are at least 0.001 wl above the ground and the height is equal to or greater than the diameter of the radial wire. Although most recommendations suggest that no special treatment is needed for the radial wires at this level, some difference in results appear between identical radials with equal segmentation and with tapered length segmentation. (Tapered length segmentation involves using very short segment lengths closest to the junction, with increasing segment length outward until some preset segment length is reached or the radial ends.) If the modeler attempts to place thin radials lower than 0.001 wl, but never lower than 0.0001 wl, then length tapering techniques must be used.</p>
+  <center>
+    <img src="amod9-4.gif" width="447" height="418" border="2" vspace="5" hspace="9">
+  </center>
+  <p>NEC-2 recommends a maximum of 30 wires to a junction. Although this limitation can be judiciously violated to a small degree, larger radials systems require special techniques. <b>Figure 4</b> suggests a route to overcoming the limit. Some radials join together at a wire junction shy of the main junction, so that the hub sees no more than the recommended maximum number of wires.</p>
+  <p>Since radials usually form symmetrical patterns, structuring them with tapered diameter materials requires no corrective replacements (such as those we might need with linear Yagi elements). Like a capacity hat at the top of an element, the fields cancel due to the symmetrical arrangement of radials, resulting in the introduction of no errors.</p>
+  <h3>An Example of a "Near-Ground" Radial System Model</h3>Let's examine a typical model of a near-ground radial system. The frequency is 7.05 MHz or a wavelength of 42.55 meters. 0.001 wl is about 0.043 meters. Let's round this to 0.05 meters for the example. We can make the ground plane from 6.34 mm diameter (about 0.1") wire. We shall also place the ground plane beneath a 50 mm (nearly 2") diameter 1/4 wl monopole and above average Sommerfeld-Norton ground conditions (conductivity = 0.005 s/m; dielectric constant = 13). If we restrict ourselves to a 4-radial model initially, we have room to print the standard NEC file for such a model. It includes 6061-T6 material conductivity constant in the type 5 load (LD) entries. The final entry (RP) is a pattern request for an elevation plot. The file looks like this:
+  <pre>CM 1/4 wl vert: 7.05 MHz
+CM 4 radials, 0.05 m
+CE
+GW 1 10 0 0 10.1846 0 0 .05 .025
+GW 2 10 0 0 .05 11.796 0 .05 .00317
+GW 3 10 0 0 .05 0 11.796 .05 .00317
+GW 4 10 0 0 .05 -11.796 0 .05 .00317
+GW 5 10 0 0 .05 0 -11.796 .05 .00317
+GS 0 0 1
+GE 1
+GN 2 0 0 0 13 .005 0 0 0 0
+EX 0 1 10 0 1 0
+LD 5 1 1 10 2.4938E7
+LD 5 2 1 10 2.4938E7
+LD 5 3 1 10 2.4938E7
+LD 5 4 1 10 2.4938E7
+LD 5 5 1 10 2.4938E7
+FR 0 1 0 0 7.05 0
+RP 0 181 1 1000 -90 0 1 1
+EN</pre>
+  <p>A 32-radial version of the same antenna would simply be much longer, with 33 wires total (and 33 corresponding LD entries). Interestingly, the gain of the 4-radial antenna is -1.57 dBi with a take-off angle of 64 degrees (zenith, or 26 degrees elevation), and the source impedance is 49 + j 52 Ohms. In contrast the 32-radial antennas shows a gain of 0.12 dBi at the same take-off angle, with a source impedance of 33 - j 0 Ohms. As we raise the ground plane to twice the height, both antennas show a rise in gain and a very slight lowering of the take-off angle, although the 32-radial version change is very small indeed. The 4-radial antenna reports a significant drop in both the feedpoint resistance and reactance, while the change in the 32-radial impedance values is about 1 Ohm in each category.</p>
+  <p>What are we to make of these reports? First, the larger ground plane exhibits much more stable characteristics by nearly a 10:1 factor. Second the reported feedpoint impedance of the larger array is much closer to free space values expected from the antenna than is the report from the 4-radial model. On the other hand, the values continue to change with small adjustments in the height of the ground plane, even for the larger model. We would be hard pressed to know precisely which values at which height to use for more than general guidance.</p>
+  <h3>Is the Model Accurate?</h3>Assessment of a model of a surface or buried radial system using radials that are in close proximity to ground is a complex question. In general, comparative values between different versions of the antenna and its ground radials will be correct. However, absolute values of far field gain and of source impedance are subject to several limitations of the NEC modeling system in addition to slight variability we encountered with the larger ground plane.
+  <p>First, the ground type (in terms of conductivity and of dielectric constant or permittivity) specified for the model presume a uniform or homogenous soil. Since the soil at levels most influential on antenna performance may be stratified, the model may not accurately reflect reality. The potential inaccuracy may be especially acute at lower frequencies, where the field may penetrate the soil to a considerable depth, for example, several feet in the lower HF range.</p>
+  <p>Second, ground conductivity may vary with frequency. Data on local soil susceptibility to this factor is often difficult to obtain. Even when the soil value is known for one frequency, sweeping the frequency over a large range may introduce errors relative to real conditions.</p>
+  <p>Note that these limitations are functions of the NEC-2 core and the Sommerfeld-Norton ground calculation system. They are not limitations of any particular implementation of NEC and should not be held against a vendor's product.</p>
+  <h3>So Where Does All of This Leave Us?</h3>For modeling radial systems at least 0.2 wl above the ground, both MININEC and NEC-2 will do a very satisfactory job on small ground plane systems. The limitation of segments in MININEC restricts such radial systems to a quite small size, but highly elevated systems usually are small--3 to 4 radials at most. NEC-2 can safely model systems of up to 30 radials or so without the use of special techniques.
+  <p>Modeling ground plane verticals close to the ground--as a stand-in for modeling radials systems either on or under ground--is a less certain enterprise. Because we lack assured data for such systems against which to compare the models, our efforts can provide only general guidance and comparative measures. (Even NEC-4 suffers from this same absence of data.) The complexities of the ground on and in which we place radials preclude the level of confidence we give modeling numbers for well-elevated horizontal arrays.</p>
+  <p>Nevertheless, do not discount altogether near-ground modeling of vertical monopoles with ground planes. Comparative data and trends provide valuable information that can be used to improve many antenna systems. Meanwhile, a new generation of work is underway to tighten the correlation of modeling and experimental results.</p>
+  <h3>Other Applications for Radials</h3>Radials have, of course, their second most common use at the far end of shortened linear elements in structures traditionally called "capacity hats." These symmetrical, field-canceling structures, shown by example in <b>Figure 5</b>, simply supply the linear element with the missing length to achieve resonance or some other specified condition. Although shown applied to the top of a vertical monopole in the sketch, they work in the very same manner at the ends of a shortened dipole element.
+  <center>
+    <img src="amod9-5.gif" width="499" height="441" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The principles of modeling hats are identical to those of modeling radials. Because the fields of a hat cancel, we introduce no significant errors into the model by using wire diameters different from that of the main element. The only construction difference in the model will be that for dipoles, the axes on which we place the radials will not always be X and Y, but will involve Z plus either X or Y.</p>
+  <p>Perimeter wires are often part of the hat structure. In working with the model to determine the best radial length, we should take one extra step of care to ensure that the perimeter wire remains attached to the spoke ends. If we enter the radial dimensions in symbolic form, as we would with AO or NECWin Plus, the attachment is easy: simply specify the terminating points of each perimeter wire in the same coordinate notation as the appropriate radial ends.</p>
+  <p>In a program such as EZNEC, where all wires are entered numerically, the task is no harder. When modifying the radial length of an existing hat model that has a perimeter wire, first activate the "preserve connection" feature. Then modify the outer radial end coordinates as a group function, using the "l" or length specification option. The entire hat system of radials and perimeter wires will grow or shrink according to the selected length value. For model development, it is useful to list all of the radial wires in one batch (which would occur naturally, if you used the automated radial maker) and then add the perimeter wires as a second batch.</p>
+  <p>Although we have been most concerned with the construction of radial systems for use in ground plane modeling, the same modeling techniques apply wherever we need a radial structure.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

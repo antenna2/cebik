@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logic of Question Resolution</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>117. Modeling and the Logic of Question Resolution</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Many beginning modelers quickly grow adept at arranging wires into the antenna geometry needed to create successful models. However, unless they are used to multi-step problem solving, these same modelers fail to realize that NEC and MININEC are useful for more than just stringing together wires into antenna forms and then requesting the usual output data. Modeling software is capable of resolving questions, although sometimes, the questions require multiple stages of modeling on the road to relatively final answers. Therefore, it might be useful to look at the logic of problem resolution as it applies to antenna modeling.</p>
+  <p>Because this episode is for the newer modeler, let's look at a fairly straightforward question as a vehicle to demonstrate multi-step modeling. During the past two decades, some antenna builders have proposed an alternative structure for the common folded dipole antenna, especially when we construct the antenna from common forms of insulated transmission lines. <b>Fig. 1</b> shows both the standard construction method and the "pinned" alternative.</p>
+  <center>
+    <img src="amod117-1.gif" width="450" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The pre-modeling-era reasoning behind the pinned version of the antenna runs something like the following: the insulated (vinyl-covered) transmission line has a velocity factor. For highest efficiency or radiation effectiveness, the transmission line portion of the folded dipole requires a termination at the length determined by multiplying the line's velocity factor as a transmission line times 1/2 wavelength. Those favoring shorting the line or placing pins through the line from one conductor to the other claimed noticeable performance improvements, while other folded dipole builders found no detectable difference. Although the issue has largely disappeared from sight in recent years, perhaps it may serve as an example of how we may use a few antenna models to resolve it. Modeling is, after all, less strenuous than erecting folded dipoles and working out all that would go into range measurements sensitive enough to detect any differences in performance--or to record reliably an absence of difference.</p>
+  <p><i>Step 1: Setting Up the Test Situation</i></p>
+  <p>The first step is to set up a workable modeling experimental situation. For this step, we shall want to model a bare-wire folded dipole to ensure that the most basic parts of the work are usable throughout the exercise. We shall also need to have this bare-wire folded-dipole model on hand for comparisons with the versions yet to emerge.</p>
+  <p>a. We need to set up the basic modeling environment to yield fair comparisons among our models. For the present question, free-space is quite adequate. Any ground influences would apply equally to all versions of the folded dipole. Hence, we might as well eliminate ground effects entirely.</p>
+  <p>b. We need to choose a reasonable wire size. AWG #18 copper wire is a fair choice in this case because parallel transmission lines often use the 0.0404"-diameter material beneath the vinyl. As well, the wire will ensure a high segment-length-to-wire-diameter ratio once we establish the remainder of the basic antenna specifications.</p>
+  <p>c. We need to set a test frequency. I have selected 28.5 MHz. (Outside the realm of typical amateur radio installations, one might as easily have rounded this number to 30 MHz.) A folded dipole for this frequency will be about 200" long. However, since we eventually will be using a simulation of insulated transmission line, the wire separation will have to be fairly small. I selected 1" to ensure that the thin wires are not too close together for high accuracy. This decision sets the length of the segments on the end wires. Ideally, the segments in any model should all have the same length. For the anticipated antenna length, we would require close to 200 segments along each long wire in the folded dipole. At a total of about 400 segments, the model is large enough to be reliable but small enough for rapid runs on the current generation of computers. <b>Fig. 2</b> shows the dimensions of the final model.</p>
+  <center>
+    <img src="amod117-2.gif" width="480" height="170" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Within the specified limits, the folded dipole produced the following free-space results:</p>
+  <pre>
+Length: 198"     Gain: 2.10 dBi     Beamwidth: 78.2 deg.     Impedance: 289.1 + j2.8 Ohms
+</pre>
+  <p>The model for this antenna used EZNEC software in this case, although any version of NEC or MININEC would do equally well. The model wires appear in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod117-3.gif" width="690" height="221" border="2" vspace="5" hspace="9">
+  </center>
+  <p>This initial step is not an end in itself. Moreover, we should not merely accept and record the data. Instead we should spend a moment understanding it. A single-wire dipole when resonant will have a feedpoint impedance in free space that is between 70 and 72 Ohms. The folded dipole uses equal-diameter wires throughout, giving it a step-up ratio of 4:1 relative to the single-wire dipole impedance. If we subtract a tiny bit of the impedance as due to the losses in having twice the length of copper wire, then the reported impedance easily falls wholly within the standard range. If we doubt this fact, we can easily back up one step and model a resonant dipole made from AWG #18 copper wire.</p>
+  <p>We might also expect a single wire resonant dipole made from AWG #18 wire to have a gain between 2.12 and 2.14 dBi. The folded dipole shows a tiny reduction--obviously too small to be operationally significant. The reduction is a natural consequence of the fact that a resonant folded dipole will be slightly shorter than a resonant single-wire dipole. As we shorten an antenna element, regardless of the feedpoint impedance, the gain will slowly decrease--again, insignificantly so, but noticeably from a numerical perspective.</p>
+  <p>Now that we have a bare-wire folded dipole, we can begin the process of modeling a folded dipole from insulated parallel transmission line in which the wires are also 1" apart.</p>
+  <p><i>Step 2: Simulating Insulated Transmission Line</i></p>
+  <p>The bare-wire transmission line that forms the equally bare-wire folded dipole has the same form, that is, a 1" separation between two AWG #18 copper wires. Using common equations or a utility program, we discover that the line has an impedance of about 468 Ohms. However, this fact is only loosely applicable to our project.</p>
+  <p>More significantly, we shall set up a half wavelength section of this line, modeling in the form of <b>Fig. 4</b>. A true half wavelength at 28.5 MHz is about 207.1". However, the copper losses shorten the line to 206.2" to obtain a test source impedance with virtually no reactance.</p>
+  <center>
+    <img src="amod117-4.gif" width="510" height="171" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that we have used a load impedance of 1000 Ohms resistive. The aim is to adjust the line length until we obtain a resistive impedance at the source end of the line. The length that we used yielded 992.1 + j0.7 Ohms. The difference in the resistive component goes to wire losses.</p>
+  <p>The importance of the initial transmission-line test is to develop an insulated transmission line with a velocity factor (VF) that is more distant from 1.0. We may be arbitrary here, but still within the realm of possibility. Let's select a VF of 0.80. Now the task is to create insulated wires that will yield a nearly resonant source impedance with a line length that is 0.8 times the original length. 165" will be close enough for the shortened line length. Within EZNEC, we would select a permittivity of 2.505, with an insulation thickness of 0.185". We may leave the loss tangent at zero, since for all practical purposes--as shown in the preceding episode of this series--the resulting wire conductivity will not play a significant role in the results.</p>
+  <center>
+    <img src="amod117-5.gif" width="867" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> compares the wire tables for the two transmission lines. (We might have left the end wires bare, but the results would not significantly change.) With the specified insulation and the given line length, the source impedance is 989.8 + j0.1 Ohms. One reason for the slight difference between the bare-wire and the insulated-wire impedances is the fact that insulation between the wires does have a small but definite affect on the characteristic impedance of the line.</p>
+  <p>The EZNEC method of implementing wire insulation is a substitute for the NEC-4 IS command. Numerous other NEC packages have implemented wire insulation in a variety of ways. Essentially, we need to know only a few pieces on information, as indicated in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod117-6.gif" width="400" height="200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>EZNEC requests the thickness of the insulation. The thickness creates a radius for the outer surface once we adjust that value for the radius (or diameter) of the copper wire at the center. The IS command itself requires the entry of the insulated sheath outer radius, which cannot be smaller than the radius of the center wire. Both raw NEC-4 and EZNEC require a value for the relative permittivity (dielectric constant) of the insulating material. The IS command also requires a value of conductivity for the insulating material. An entry of 1e-10 will do for most excellent insulators. However, if we were using a specific insulating material, we likely would not find a conductivity value in reference books. Instead, we would find a value for the loss tangent, which--as shown last time--translates into a conductivity value. The following lines show just the wires and the IS commands of the EZNEC model saved in NEC format.</p>
+  <pre>
+CM transmission line: covered
+
+GW 1,199,0.,0.,0.,0.,4.191,0.,5.119E-4
+GW 2,1,0.,4.191,0.,0.,4.191,.0254,5.119E-4
+GW 3,199,0.,4.191,.0254,0.,0.,.0254,5.119E-4
+GW 4,1,0.,0.,0.,0.,0.,.0254,5.119E-4
+
+GE 0
+IS 0, 1 ,0,0,2.505,0.,5.2109E-3
+IS 0, 2 ,0,0,2.505,0.,5.2109E-3
+IS 0, 3 ,0,0,2.505,0.,5.2109E-3
+IS 0, 4 ,0,0,2.505,0.,5.2109E-3
+
+EN
+</pre>
+  <p>The IS lines specify the wire to which we apply the insulation. The following two zeroes indicate that we apply it to the entire wire, even though we might have selected only some of the segments. The next value is the relative permittivity, followed by the conductivity (which is zero, due to our selection of the zero loss tangent in the EZNEC model). The final value is the outer radius of the insulation in meters. In this translation from the EZNEC file, the wire radii also appear in meters. We might have used some other unit of measure for the wires in the geometry section and converted them to meters with the GS card. However, all ensuing control commands that involve a physical dimension, including the IS command, must use meters as the unit of physical measure.</p>
+  <p>This entire exercise has aimed at producing an insulated transmission line with a velocity factor of 0.80. The shape of the insulation does not resemble the "dumb-bell" shape typically shown by cross sections of vinyl-coated lines. For this project, that difference is not a matter of concern. We only need and have achieved a transmission line with the required velocity factor. Since the two parallel wires are the same diameter, the step-up ratio will still be 4.</p>
+  <p><i>Step 3: An Unpinned Insulated Folded Dipole</i></p>
+  <p>The next step is to create a model of a folded dipole that uses the insulated transmission-line wire that we just produced. We may begin with the bare wire and use the insulation values that went into the transmission line. However, we shall not change the length of the folded dipole initially. With the insulation in place, we obtain the following free-space performance values.</p>
+  <pre>
+Length: 198"     Gain: 2.10 dBi     Beamwidth: 78.2 deg.     Impedance: 419.8 + j271.5 Ohms
+</pre>
+  <p>The folded dipole is too long. Therefore, we may gradually reduce its length until we obtain a resonant feedpoint. When we stop, the free-space performance and length are as follows:</p>
+  <pre>
+Length: 185.5"   Gain: 2.06 dBi     Beamwidth: 79.4 deg.     Impedance: 262.5 + j0.3 Ohms
+</pre>
+  <p>The very slight gain reduction is solely a function of having shortened the antenna. The shorter antenna also yields a slightly lower feedpoint impedance at resonance, relative to the bare-wire version. Here we may repeat the bare-wire folded-dipole data as a reference for the very small changes.</p>
+  <pre>
+Length: 198"     Gain: 2.10 dBi     Beamwidth: 78.2 deg.     Impedance: 289.1 + j2.8 Ohms
+</pre>
+  <p>The insulated but unpinned folded dipole is shorter than the bare-wire version, but not by 20%. Rather, that ratio of the bare-to-insulated wire lengths is 0.937, which gives us the velocity factor of the insulated wire in antenna service (in contrast to its value in transmission-line service). We have long known that wire insulation has a velocity factor in antenna service, even for single-wire elements. The value depends on the insulation thickness and the relative permittivity of the insulation. Insulated antenna-wire velocity factors tend to range from about 0.92 to 0.98. When we apply insulation to a folded dipole we obtain the same result.</p>
+  <p><i>Step 4: A Pinned Insulated Folded Dipole</i></p>
+  <p>The final step in our exploration of the idea of pinning a folded dipole at the length indicated by the transmission-line velocity factor is to create the pinned version of the antenna model. We have already learned that 80% of a half wavelength at 28.5 MHz is just about 165". Therefore, we shall create two interior cross wires that are 82.5" from the antenna center. To implement these cross wires, we shall have to add 6 new wires to the overall model. <b>Fig. 7</b> compares the two insulated folded dipole models.</p>
+  <center>
+    <img src="amod117-7.gif" width="867" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Whereas the unpinned folded dipole required a length of 185.5" for resonance, the pinned version is slightly shorter: 184.8". With this length adjustment, the pinned insulated folded dipole provides the following free-space performance numbers.</p>
+  <pre>
+Length: 184.8"   Gain: 2.05 dBi     Beamwidth: 79.6 deg.     Impedance: 258.0 + j2.8 Ohms
+</pre>
+  <p>The initial model for the pinned folded dipole used the unpinned length but showed a j17.4-Ohm reactance at the feedpoint. We obtained the resonant length by shortening the outer ends in small increments until satisfied with the result. Had we moved the pins (interior cross wires), we might have made very large changes in position without significantly changing the feedpoint impedance by any significant amount. Feedpoint resonance is largely a function of the longest dimension of the folded dipole, not the pin position.</p>
+  <p>The further shortening of the antenna reduces the gain by a tiny amount and equally reduces the resistive component of the feedpoint impedance. The bare-wire folded dipole showed 289 Ohms, while the unpinned insulated version showed 262.5 Ohms. The pinned folded dipole is down to 258 Ohms. All three values are equally usable, but the trend is worth noting.</p>
+  <p>In operation, we would find not detectable difference among the 3 folded dipoles. <b>Fig. 8</b> shows the patterns, which display no visible differences in pattern shape or half-power beamwidth values.</p>
+  <center>
+    <img src="amod117-8.gif" width="600" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p><i>Conclusion of the Problem</i></p>
+  <p>We began with an open question: when using insulated transmission line to create a folded dipole, does pinning or shorting the antenna at the places indicated by the transmission-line's velocity factor change the folded dipole's performance? While the use of insulated transmission line for the antenna does exhibit an antenna velocity factor, pinning in accord with the transmission-line velocity factor does not change the antenna performance in any detectable way (other than the very tiny numerical differences shown by the models).</p>
+  <p>It is likely that the idea of pinning a folded dipole arose when some radio amateurs realized that a folded dipole exhibited both transmission-line and radiation currents along its overall length. However, the existence of transmission line currents does not mean that the antenna requires transmission line treatment. If we were to separate the currents, following Kuecken's method developed for analysis of folded monopoles, we would discover that the transmission-line current remains constant along the wire and is 90 degrees out of phase with the radiation current. See "<a href="../wire/fdpl.html">Unfolding the Story of the Folded Dipole</a>" for further information on this aspect of folded dipoles. See Kuecken's <i>Antennas and Transmission lines</i>, page 225, for his analysis of the current along a folded monopole or dipole. (To perform the analysis, we would have to revise the order and direction of some wires in the model, but not change the overall geometry. The required addition and subtraction of values on each wire require that we account for the phase angle as well as the magnitude of the current.)</p>
+  <p>In the end, the idea of pinning a folded dipole according to the transmission-line velocity factor rests on a misunderstanding of what occurs along the wires of the antenna. If we pin the folded dipole, we shorten the folded portion of the antenna. However, the wires extending outward form an extension that lengthens the antenna. The extensions are roughly equivalent to a single fat wire created by two thinner wires in parallel, with a common termination. There are numerous applications for using short folded dipoles or monopoles with short or long extensions. The gamma and T matches are cases in point, but well outside the scope of these notes.</p>
+  <p><i>Conclusion to the Episode</i></p>
+  <p>The exercise in analyzing the pinned insulated folded dipole was, of course, a pretext and a sample in this episode. Our efforts were designed to show the newer modeler that antenna modeling software has more applications than just the adjustment of wire geometries to analyze or perfect an antenna design. Sometimes, we can use the software to resolve sundry claims made about various types of antennas.</p>
+  <p>However, the resolution of open questions (which unfortunately turn into exercises in disputation all too often) may not be a one-step process. There are some questions that we can answer just by modifying antenna geometry. For example, we can find the patterns of maximum gain and resonant feedpoint impedance for simple dipoles (and for other types of antennas) simply by adjusting the height of the antenna above ground and then readjusting the length until the antenna is resonant. The present case does not fall into this simple category.</p>
+  <p>Our problem required us to pass through several steps in order to reach a resolution. The steps involved two different kinds of models, even though they were related to each other. More complex questions may involve more complex collections of models. The key is to develop an orderly process of steps required to set up as many bases as are necessary to combine into the final resolution. The logic of problem solution is a pre-requisite to advanced modeling exercises--even with entry-level modeling software.</p>
+  <p>Some problems do not allow us to set up separate bases that we then combine in essentially a parallel combination. Occasionally, we may have to invoke long series of reiterations as we change the values of multiple variables. However, that kind of process is for some future episode in this series.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

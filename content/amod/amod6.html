@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modeling Loads: What Kind, How Much, and Where?</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>6. Modeling Loads: What Kind, How Much, and Where?</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  Both NEC and MININEC permit you to add "loads" to the antenna at virtually any point along the wires composing the model. Loads are simply reactances (and associated loss resistances) inserted into the antenna to change its characteristics.
+  <p>Let's look at loading in several steps, beginning with real-life loads, moving to model loads, and finally applying what we discussed last time (with respect to sources) to place the loads properly in our models.</p>
+  <h3>Loads and Their Applications</h3>Figure 1 suggests several applications for loads. What they have in common is that capacitively reactive loads make an antenna element electrically shorter than it is without the load and inductively reactive loads make the antenna element electrically longer than it is without the load.
+  <center>
+    <img src="amod6-1.gif" width="624" height="373" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We often find inductive loads used to shorten linear antenna elements. We place coils along a dipole anywhere from the center outward. Once we pass about the 50-60% point outward along the element, the coils of wire act more like lengths of wire than as inductors with reactance. Hence, we cannot model element end-loading with reactive loads, but must find a way to model those antenna extensions with wires.</p>
+  <p>An alternative to the use of coiled or solenoid inductors is the use of parallel transmission line as the inductive loading element. A shorted transmission line less than 1/4 wavelength long will have an inductive reactance that is a function of the length of line and its characteristic impedance. Its characteristic impedance is a function of the wire diameter and spacing. Standard antenna references have the right equations (as does the <a href="../radio.html#HAMCALC">HAMCALC</a> collection by VE3ERP).</p>
+  <p>Every inductive load has a Q, a ratio of reactance to resistance (in the wire). Standard coils used in antennas have Qs that run from about 100 to 300 (with some specially made coils running higher), while parallel transmission line loads (also called linear loading) general have a Q of over 1000. These numbers will have high interest for us in modeling.</p>
+  <p>Capacitive loading is less used, since there are fewer cases in which we want to make an antenna physically long and then shorten it. One application is fine tuning the reflector of a quad beam. Capacitive loading is often easier to adjust than the inductive loads on short reflector loops. The Q of capacitors at HF is usually high enough that modelers ignore the resistive losses.</p>
+  <p>Coil losses are predominantly series resistance losses, so we can think of the coil as a resistor and an inductor (or inductive reactance in series). Capacitor losses tend to be in the form of parallel resistance across the capacitance (or capacitive reactance). Figure 2 shows the basic schematic forms that we need to keep in mind as we model loads.</p>
+  <center>
+    <img src="amod6-2.gif" width="413" height="451" border="2" vspace="5" hspace="9">
+  </center>
+  <h3>Modeling Loads</h3>In an antenna model, loads are not physical structures. They are mathematical elements factored into the calculations. If an inductor used as a load in a real antenna has a diameter many times that of the element it is loading, we do not try to model the physical structure. Modeling programs view reactive loads as non-radiating elements. For all practical purposes this is true, although there is always some radiation from the physical structure of a coil, capacitor, or linear loading line.
+  <p>Modeling offers three basic ways to model a loading device: as a series circuit composed of a resistance and a reactance (+ for inductive, - for capacitive), as a series circuit composed of a resistor, an inductor and a capacitor (with units in Ohms, Henrys, and Farads), and as a parallel circuit composed of a resistor, an inductor and a capacitor (with units in Ohms, Henrys, and Farads). If you use either of the latter entry modes, and your circuit lacks one of the elements, put a zero in its place. The zero is not a short circuit: instead, the program knows to treat the zero as a missing element. See Figure 3.</p>
+  <center>
+    <img src="amod6-3.gif" width="534" height="414" border="2" vspace="5" hspace="9">
+  </center>
+  <p>1. <b>Resistance-Reactance Loads</b>: It is tempting to use the series resistance-reactance mode of loading for single loading elements such as coils and capacitors. In many programs, we have direct access to inserting a series resistance and reactance, but inserting values for inductance and capacitance may be more complex. In many cases, the source impedance gives us clues to the reactance values needed. For example, in a shortened dipole, the reactance at the source point gives us the reactance value for a center-loading coil and approximately the value of each of two coils placed near mid-element.</p>
+  <p>If we know the required reactance for a loading coil, we can derive the series resistance from a measurement or a decent estimate of the coil Q. Never omit the coil resistance. If we need 200 Ohms of inductive reactance and estimate the Q at 200, then the series resistance is 1 Ohm. (As small as it seems, that 1 Ohm does affect antenna performance and needs to be included in the model.) At HF, you may ignore resistance with respect to capacitive reactances.</p>
+  <p>However, the series resistance-reactance load has a limitation. If we check the performance of an antenna across an amateur band, that is, away from the central design frequency, the load resistance and reactance in the model stay the same. Real coils do not act this way. They change their reactance as we change frequency. Therefore, the series resistance- reactance model may give an unrealistic picture of antenna performance.</p>
+  <p>For example, here is a 40-meter dipole with mid-element loads modeled with R-X loads and with R-L-C loads when viewed across the 40-meter band. The load design is a coil of about 12.93 uH, which has a reactance of 581 Ohms at the design frequency of 7.15 MHz. The coil Q is about 166, for a series resistance of 3.5 Ohms.</p>
+  <pre>Frequency      R + X Load                    R-L-C Load
+ MHz      Source Z       50-Ohm SWR     Source Z       50-Ohm SWR
+ 7.00     45.4-j33.5      2.003         44.3-j50.2      2.791
+ 7.05     46.5-j20.6      1.536         45.7-j32.1      1.945
+ 7.10     47.5-j 7.5      1.177         47.1-j13.6      1.330
+ 7.15     48.5+j 5.6      1.123         48.6+j 5.4      1.119
+ 7.20     49.7+j18.8      1.455         50.2+j24.8      1.634
+ 7.25     50.8+j32.1      1.873         51.8+j44.8      2.352
+ 7.30     52.0+j45.6      2.383         53.6+j65.4      3.299
+</pre>
+  <p>Notice the overly optimistic report of the 2:1 VSWR operating bandwidth that the frozen R + X load gives to the antenna. The actual 2:1 VSWR operating bandwidth is not over 250 kHz, but a little over 150 kHz, as reported by using the R-L-C load.</p>
+  <p>2. <b>Series Resistance-Inductance-Capacitance Loads</b>: Simple loads using a single inductor or capacitor can also be modeled in terms of their inductance or capacitance (along with the resistance, as applicable). This is shown in the right-hand columns of our sample table, which used loads inserted in this way. By using values for inductance and capacitance, the program automatically calculates the reactance for each frequency checked, and a more realistic picture of antenna performance emerges.</p>
+  <p>The conversion equations for moving from reactance to inductance/capacitance and back to reactance are well known, but they are so important to modeling loads, that I shall repeat them here for reference. L = inductance in Henrys, XL = inductive reactance in Ohms, C = capacitance in Farads, XC = capacitive reactance in Ohms, R = resistance in Ohms, F = frequency in Hertz, and 6.28 is the value of 2 times PI.</p>
+  <ul>
+    <li>XL = 6.28 F L----from inductance to inductive reactance</li>
+    <li>L = XL / (6.28 F)----from inductive reactance to inductance</li>
+    <li>XC = 1 / (6.28 F C)----from capacitance to capacitive reactance</li>
+    <li>C = 1 / (6.28 F XC)----from capacitive reactance to capacitance</li>
+  </ul>
+  <p>You will be working in basic units, even though the most common units required by antenna circuits for HF are in terms of microHenrys and picoFarads. Since most modeling programs use engineering notation, get used to expressing 65 picoFarads as 65E-12 and 5.5 microHenrys as 5.5E-6.</p>
+  <p>Suppose you use mid-element loads for a shortened rotatable 40-meter dipole, coming up with a reactance of 510 Ohms for each coil at the mid- band design frequency of 7.15 MHz. The coils have an estimated Q of 200, so we know the series resistance must be 2.55 Ohms. The required value of inductance is 11.4E-6 Henrys. We would enter the series resistance- inductance-capacitance values as 2.55,11.46E-6,0 (with the zero meaning no capacitor). These are entered as a string in some programs or plugged into spaces in a dialog box in other programs.</p>
+  <p>3. <b>Parallel Resistance-Inductance-Capacitance Loads</b>: For most amateur applications, parallel R-L-C loads have one primary use: for antenna traps. A trap is a parallel tuned circuit used to terminate a portion of an antenna element at a particular frequency by placing a high impedance reactance circuit at a particular place along the element, with the circuit acting like an inductive reactance at lower frequencies, where the outer portion of the element comes into play again. Traps are normally tuned to a frequency just below the lower edge of the band for which they function as traps. A 15 meter trap, for example, is normally tuned to about 20.5 to 20.7 MHz or thereabouts.</p>
+  <p>How to calculate the operative values of resistance and reactance of traps for all frequencies of interest in an antenna will be the subject of a future column. For now, let's focus on getting the trap into the antenna as a load on the band for which it is a trap.</p>
+  <center>
+    <img src="amod6-4.gif" width="446" height="444" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Figure 4 shows our problem. The trap consists of a coil and a capacitor in parallel, but the coil is actually an inductor and a resistor (for its losses) in series. Let's set the coil Q at 200 and tune the trap to 28.0 MHz. The coil is 1.1 uH and the capacitor is 29.4 pF. By the conversion equations above, we get a reactance of 193.5 Ohms, and using the value of Q, we find the series resistance of the coil to be 0.9675 Ohms. We cannot directly enter these values into a model parallel circuit load because not all of the values are in parallel.</p>
+  <p>Hence, we must convert the series values for the coil reactance and resistance into parallel form. Let RP = equivalent parallel resistance, XP = equivalent parallel reactance, RS = original series resistance, and XS = original series reactance. ^2 means a number is squared.</p>
+  <ul>
+    <li>RP = (RS^2 + XS^2) / RS</li>
+    <li>XP = (RS^2 + XS^2) / XS</li>
+  </ul>
+  <p>For our example, summing the squares of RS (.9675) and XS (193.5) gives 37442. Dividing this number by the series resistance gives 39938 as the parallel resistance. Dividing 37442 by the series reactance gives 193.5 as the parallel reactance. Converting 193.5 into an inductance at 28.0 MHz returns a value of 1.1 uH. (The resistance was so small that it nudged the inductive reactance and inductance figures by too small an amount to show--less than 1/2 of 1%. However, the series and parallel equivalents for resistance are very different.)</p>
+  <p>Now we can enter our parallel values for R and L, along with the original value for C, for a parallel R-L-C load as 39938,1.1E-6,29.4E-12.</p>
+  <p>We may use these values at 28 MHz and throughout the 10 meter band. However, if the antenna has an extension for use at 15 or 20 meters, perhaps, the trap will have to be calculated for each of those bands. Although the values for L and C will stand, the fact that the reactance changes for the lower bands means that the equivalent parallel resistance will also change, and that requires a separate set of calculations.</p>
+  <p>Since our aim here is to create loads we can insert into antenna structures, this example will do until we can spend more time on the subject of traps.</p>
+  <h3>Placing Loads</h3>There is a fundamental difference in the placement of loads in MININEC and in NEC. If you are only a casual modeler and only want a trap approximately correct in its placement, then you may look at the placement question as being the same for both programs. Create a wire and place the load on the nearest pulse or segment, depending on whether you are using MININEC or NEC. Some programs give you an option of placing the load at a certain percentage along a wire, and this is handy. The exact placement will be on the pulse or segment nearest the one specified.
+  <p>However, changing the length of the wire, for example, to bring it to resonance, will change the length of the segments. The load will be moved--slightly or significantly, depending upon the number of segments and hence on the length of each one. Figure 5 shows the problem.</p>
+  <center>
+    <img src="amod6-5.gif" width="671" height="255" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For more precise modeling, lets return to separate discussions of MININEC and NEC and see what we can do to set loads more exactly where we want them.</p>
+  <p>1. <b>MININEC</b>: Loads in MININEC go onto pulses, which occur at the junction of segments. This fact tells us more than one thing about loads.</p>
+  <center>
+    <img src="amod6-6.gif" width="530" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <p>First, to place a load precisely, we can create two wires which meet at the load position, as in Figure 6. This maneuver permits us to independently change the length of the wires. For simple loads, such as loading coils, we can vary the length of the outer wire (or outer wires, in the case of a dipole) without moving the load as we fine tune the antenna model for resonance or some other characteristic.</p>
+  <p>If the load is a trap, we can separately change the lengths of the inner wire for 10-meters and the out wire for 15 or 20 meters. Only changes in the length of the inner wire will affect the trap position, which is exactly what we want to do. Changes in the outer wire leave the trap position unaffected.</p>
+  <p>The only caution in the procedure is to makes the segment lengths on each of the wires approximately equal. This is not too critical with MININEC, but it is good practice in all modeling. The procedure we are describing here coincides with the procedures for precisely setting non-centered sources in MININEC.</p>
+  <p>Second, since MININEC loads occur at points along the modeled wire, they have no dimension. Trying to model a bulge in the antenna to account for the load's physical diameter is a largely superfluous effort, given the normal margins of error within modeling. However, if you wish to try it, you will need to create 2 more wires. End the inner wire by 1/2 the length of the load. Create a new wire of this length and the load's diameter. Set the load at the end of this wire. Create a second wire of the same diameter and length, with one end joined to the first new wire. To the second end of this wire connect the old outer end, which has been shortened by 1/2 the length of the load. Be sure that the inner and outer wires are segmented so that all of the segments are now about 1/2 the length of the load, that is, approximately equal in length all along the wires composing the element.</p>
+  <p>In MININEC, there are techniques length-tapering to reduce the total number of segments required, and these are features of ELNEC, AO, and NEC4WIN. Moreover, NEC4WIN can handle the increased segmentation directly. However, in most cases, the exercise will yield no significant improvement in either the analysis of the antenna or in guidance for building a modeled antenna design. Real-world adjustment of the final product will still be required.</p>
+  <p>2. <b>NEC</b>: NEC places a load on a particular segment, and you may view the load as distributed along the segment, even though some modeling program graphics may show the load as a dot in the middle of the segment. In placing the load and structuring our model element, let's be guided by Figure 7.</p>
+  <center>
+    <img src="amod6-7.gif" width="565" height="404" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As with our initial attempt to place a load in MININEC, we may use a simple estimate in NEC along a single wire element. Then we simply place the load on the nearest segment to the exact position we may desire. Just as before, if we vary the length of the wire to achieve some antenna characteristics, such as resonance, we inadvertently change the load position slightly with each adjustment. For casual modeling, this procedure may suffice, but it may equally fall far short of the precision we might sometimes require.</p>
+  <p>An alternative is the use of the two-wire system used with MININEC. There is a difference, however. Placing the load on the last segment of the inner wire does not position it at the junction of the wires. Instead, the load will be on the last inner wire segment itself.</p>
+  <p>In most instances, end-of-inner-wire placement will be a correct placement, especially for traps. Traps are a part of the inner wire which they terminate when operated in the trap frequency band. Whether using a simple load or a trap, the placement on the inner wire will lock the load in place. Adjustments on the outer wire will leave the load placement unaffected.</p>
+  <p>As with the MININEC version of the two-wire system, good practice dictates that the segment lengths on the inner wire and the outer wire be approximately equal.</p>
+  <p>You may also use a 3-wire system, placing the load on a separate wire of 1-segment length. Here the segment may simulate the length of the load or trap (with due caution for the segment lengths in adjoining wires). As with the two-wire system, the load is locked in position. The natural tendency will be to use this system in order to set the diameter of the 1-segment loaded wire equal to the diameter of the load. This procedure is not disallowed, but must be used with extreme care. If the element diameter tapering correction does not function when the element has loads or when the diameters do not follow some regular progression, then NEC-2 will give erroneous results. In NEC-4, which does not require the correction system for tapered diameter elements, too large a shift in diameter will require either that a very large number of segments be used to achieve convergence as a test of the reliability of the results--or that convergence may not be achieved. In either case, trying to model the load diameter usually proves to hold more problems than it solves.</p>
+  <h3>In the End. . .</h3>For both MININEC and NEC, the 2-wire system of load placement is adequate for almost every modeling situation that may occur with amateur radio antennas. With this settled, the modeler can focus on other important questions surrounding loads. Learn to create series and parallel R-L-C loads in order to go beyond the more restrictive R-X loads--and to use each in its proper place in the development of antenna designs and analyses. Load creation and placement together form a single enterprise that can enrich your modeling work.<br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

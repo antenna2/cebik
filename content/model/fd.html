@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>Two Limitations of NEC-4</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <img src="../images/antbott.gif" align="left" width="150" height="77"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">
+  <center>
+    <h1>Notes on Two Limitations of NEC-4</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  NEC-4 is an advance on NEC-2. Among its advantages is the ability to handle linear elements of stepped diameter directly with accurate results. NEC-4 has not proven wholly unlimited in this regard, since segmentation must be very extensive in proportion to the largest step-size within an element.
+  <center>
+    <h4>Closely Spaced Parallel Wires of Different Diameters</h4>
+  </center>NEC-4 has also proven to be limited in its ability to handle closely spaced wires of different diameters. Although it produces more reasonable results than NEC-2, it remains significantly off the mark. The following notes are a demonstration of that limitation.
+  <h5>Dipoles</h5>The baseline for the demonstration is the dipole. Since dipoles of 0.5" and 0.0808" (#12) wire at 28.5 MHz are used in further steps, here is the data for MININEC (public domain version), NEC-2, and NEC-4 (as modeled in free space on ELNEC 3 and EZNEC Pro 2). Gain is in dBi and Feed Z is the feedpoint impedance recorded as R +/- jX in ohms. Segmentation is drawn from MININEC; add 1 segment for NEC.
+  <pre>Antenna        Output    MININEC        NEC-2          NEC-4
+0.5" dipole    Gain      2.13           2.13           2.13
+16.52'; 66 seg Feed Z    72.08 + j0.29  72.88 + j3.69  72.90 + j3.75
+0.0808" dipole Gain      2.11           2.11           2.11
+16.72'; 66 seg Feed Z    72.64 + j0.21  73.06 + j3.09  73.06 + j3.13
+</pre>
+  <p>The antenna models were initially resonated within MININEC, where resonance was considered to be a feedpoint impedance with under 1-ohm reactance. Both NEC-2 and NEC-4 show a slight difference from MININEC. The difference is of no practical importance, but is only of numerical significance for exercises like the present one. For open-ended elements, such as those of a dipole, NEC-4 (single precision mode) shows a regular numerically more positive reactance than NEC-2.</p>
+  <h5>Equal Diameter Folded Dipoles</h5>The actual test consists of modeling a folded dipole. A folded dipole, where the long parallel wires have the same diameter, effects an impedance transformation of 4:1 for any spacing within reason. Thus, the anticipated feedpoint impedance should be in the region of 288 ohms (72 x 4). Since folded dipoles also act like fat wires and are thus shorter at resonance than single wire dipoles, the anticipated modeled feedpoint impedance was slightly lower than the theoretical calculation. The modeled folded dipoles used 0.5" diameter elements spaced 0.25' (3").
+  <p>MININEC tends to chop corners and give erroneous results unless one of two procedures is followed. A. One may use as many segments as the program allows to minimize the size of the corner chopped. B. One may taper the segment lengths approaching the corner so that corner segments are small while the overall segment count is held to a practical minimum.</p>
+  <p>The basic MININEC folded dipole used 66 segments longitudinally and 2 segments at the ends. NEC models added one segment to each longitudinal wire to maintain parallel segmentation. Tapered MININEC models used the internal segmentation values of the ELNEC program. Since these produced 8- segment mid-length wires, the NEC models added one segment to this section to satisfy the need for an off number of segments for center feeding. Finally, a more highly segmented model, using 120 segments per longitudinal wire was created to equalize the segment lengths with those of the 2- segment end wires. This last model was not adjusted for resonance.</p>
+  <pre>Antenna        Output    MININEC        NEC-2          NEC-4
+FD: equal seg  Gain      2.22           2.22           2.22
+16.1'; 66/2 x2 Feed Z    285.7 + j0.90  285.9 + j4.10  285.8 + j3.99
+FD: tapered    Gain      2.21           2.21           2.21
+16.06'         Feed Z    281.0 - j0.68  284.2 + j9.87  284.0 + j8.66
+FD: equal seg  Gain      2.22           2.22           2.22
+16.1'; 120/2x2 Feed Z    285.8 - j1.80  286.0 + j2.27  285.8 + j0.51
+</pre>
+  <p>In practical terms, all programs do a satisfactory job of modeling a simple folded dipole when both wires have the same diameter. When sufficient segments are used in MININEC, tapering proves less accurate, assuming that the balance of results represents a consensus close to reality.</p>
+  <p>Systematically, NEC-4 shows a slightly lower feedpoint impedance for these closed models than NEC-2. Nonetheless, when all wires have the same diameter and other modeling geometry guidelines are met, all modeling programs give equally usable results.</p>
+  <h5>Unequal Diameter Folded Dipoles</h5>When the wires of a folded dipole differ in diameter, they effect (relative to a single-wire dipole) a different feedpoint impedance transformation ratio than do folded dipoles with equal diameter wires. The theoretical impedance transformation ratio is given by
+  <center>
+    <img src="fd1.gif" width="207" height="153" border="2" vspace="5" hspace="9">
+  </center>where R is the impedance transformation ratio, s is the wire spacing, center-to-center, d1 is the diameter of the fed wire, and d2 is the diameter of the second wire, and where s, d1, and d2 are given in the same units.
+  <p>If we use a wire 0.0808" in diameter (#12 AWG) for the fed wire and a wire 0.5" in diameter for the second wire, maintaining the 3" spacing, then the impedance transformation ratio will be approximately 7.47. A folded dipole of this construction would have a calculated feedpoint impedance of about 533 ohms. In practice, due to "fat wire" effect, we might expect a feedpoint impedance slightly lower than this.</p>
+  <p>It should be noted that the impedance transformation equation does not account for the end wires. In this test, the end wires were also 0.0808" in diameter.</p>
+  <p>If either version of NEC can handle parallel wires of differential diameters, then the results should coincide reasonably with those of MININEC, which takes such cases in stride. The test used models of similar construction to those used with equal diameter folded dipoles. A basic model used 66 segments per longitudinal wire and 2 segments per end wire; and a tapered-segment version of the antenna was created using internal tapering values. Here are the results:</p>
+  <pre>Antenna        Output    MININEC        NEC-2          NEC-4
+FD: equal seg  Gain      2.21           0.69           1.59
+16.2'; 66/2 x2 Feed Z    530.5 + j1.47  375.2 + j25.8  462.6 + j17.4
+FD: tapered    Gain      2.21           0.37           1.22
+16.2'          Feed Z    526.5 + j10.8  347.2 + j38.5  423.4 + j37.5
+FD: equal seg  Gain      2.21           0.56           1.53
+16.2'; 122/2x2 Feed Z    527.6 - j2.99  364.1 + j25.1  456.0 + j15.43
+</pre>
+  <p>The MININEC models clearly come very close to expectations. Since the tapered model was not re-resonated, its values are lower, but the large equal-segmented model is likely the more accurate.</p>
+  <p>NEC-2 models of parallel wires of different diameters, as has been well- established, produce highly erroneous values. Tapering throws the values even farther off the mark. Although somewhat better, NEC-4 values are also highly unreliable. Moreover, reducing segmentation of the NEC-4 models produced nothing reliable. An auto-segmented model at conservative minimums of 11 segments for the longitudinal wires and 1 segment each for the ends yielded a gain of 1.82 dBi and a feedpoint impedance of 443.8 + j39.6 ohms. Further reducing segmentation to the absolute minimums of 5 segments per long wire and 1 segment per short calculated a gain of 2.64 dBi and a feedpoint impedance of 371.3 + j26.07 ohms.</p>
+  <h5>Conclusions and Implications</h5>Because the behavior of a folded dipole is well-established and easily predicted, the antenna forms a very good test of the present modeling question: the adequacy of the program to deal with parallel wires of unequal diameters. The conclusion is that NEC-4 remains deficient in this regard, and antenna modelers are duly cautioned.
+  <p>The inadequacy of NEC-4 to model this situation adequately casts doubts on a number of possible modeling challenges. For example, modeling gamma and Tee matching sections as physical elements contributing to the radiation pattern as well as to effecting an impedance transformation is now dubious. Other cases are too numerous to mention. For situations calling for parallel wires of unequal diameter, MININEC remains the modeling program of choice, despite its other limitations.</p>
+  <center>
+    <h4>Wires of Different Diameters Joined at Sharp Angles</h4>
+  </center>A second problem in the NEC-2 calculation engine is the unreliability of results when wires of unequal diameter join at right or acute angles. Although NEC-4 improves upon this situation, its results are not wholly reliable.
+  <h5>Single Quad Loops of a Single Wire Diameter</h5>The foundation for testing the reliability of NEC-4 outputs when wires of different diameter join at right angles is the single quad loop. The test employed loop materials of 0.5" and 0.0808" diameters. When only a single diameter wire is used, all programs perform credibly, so long as models adhere to the antenna geometry criteria of the specific program. All loops were again modeled at 28.5 MHz, with copper wire in free space. All loops are square. Dimensions and segmentation are given for one side of the loop. The tapered-segment MININEC model employs the internal values of the ELNEC program.
+  <pre>Antenna             Output    MININEC        NEC-2          NEC-4
+0.0808" wire        Gain                     3.26           3.26
+9.146'; 31 segs     Feed Z                   126.9 + j 0.02 126.9 - j 0.13
+0.0808" wire        Gain      3.25           3.26           3.26
+9.146'; 61 segs     Feed Z    126.3 - j 7.93 127.0 - j 0.27 127.0 - j 0.69
+0.0808" wire        Gain      3.26
+9.146'; tapered     Feed Z    126.0 - j 3.38
+
+0.5" wire           Gain                     3.37           3.37
+9.364'; 31 segs     Feed Z                   129.7 + j 0.21 129.7 - j 0.10
+0.5" wire           Gain      3.36           3.36           3.26
+9.364'; 61 segs     Feed Z    129.5 - j 4.07 130.0 + j 0.49 129.8 - j 0.41
+0.5" wire           Gain      3.36
+9.364'; tapered     Feed Z    129.1 - j 0.42
+</pre>
+  <p>The initial models were created in NEC-4 and tested on NEC-2 and MININEC. A tapered-segment length model was created in MININEC for comparison with the equal-segment models. Convergence of the two MININEC models is good for practical purposes, although a slight numerical difference shows.</p>
+  <p>For the NEC models, there is no significant numerical, let alone practical difference between NEC-2 and NEC-4 models. Moreover, and especially significant for this test, there is no significant difference between the values achieved at 31 segments per side and 61 segments per side. Practical convergence of results is achieved at much lower levels of segmentation.</p>
+  <h5>Single Quad Loops of a Different Wire Diameters</h5>To test the ability of the programs to handle wires of different diameter joining at right angles, I modeled a single square quad loop. The top and bottom wires were 0.5" diameter, while the vertical wires were 0.0808" diameter. This might be a model of a portable quad loop using tubing for the horizontal members and wire for the vertical pieces, thus allowing the assembly to be collapsed for transportation.
+  <p>The initial model was constructed in MININEC and then re-tested in NEC-2 and NEC-4, using 61 segments per side. The MININEC model required 10.15' side lengths to approach modeled resonance.</p>
+  <pre>Antenna             Output    MININEC        NEC-2          NEC-4
+10.15' sides        Gain      3.61           3.57           3.60
+61 segs/side        Feed Z    137.2 - j 5.71 175.4 + j 140  150.3 +j 44.3
+10.15' sides        Gain      3.61
+tapered segs        Feed Z    136.7 - j 2.30
+</pre>
+  <p>The MININEC model converges well with its tapered alternative model. However, the NEC models diverge in values. Although the gain values are plausible, the feedpoint impedance values indicated a condition far from resonance. The divergence from MININEC is worse for NEC-2 than for NEC-4, suggesting that the NEC-2 figures are least reliable. Since there is no simple theoretical calculation with which to compare the overall results, one cannot claim that the MININEC qualifies as a standard against which to measure the other programs. However, given MININEC's abilities to handle wires of different diameters in other contexts and the general trend of NEC-4 results with such conditions to be closer than NEC-2 results to the MININEC figures, it seems likely that MININEC may yield outputs that are closest among the three to reality.</p>
+  <p>The NEC-4 model with 61 segments per side can be brought closer to resonance by shortening each side to 9.94' in length. This figure might seem equally reliable with the MININEC lengths of 10.15' per side, except for one significant factor: the MININEC figures achieve convergence, while the NEC figures do not, especially with respect to feedpoint impedance. I ran the revised NEC-4 model through various segmentations ranging from 21 to 121 segments per side. In the following table, "delta R" and "delta X" indicate changes in the feedpoint impedance values from the preceding level of segmentation.</p>
+  <pre>Segments/Side  Gain      Feedpoint Impedance      Delta R   Delta X
+      21       3.54      133.4 - j 13.280
+      31       3.54      134.5 - j  9.375         1.1       3.905
+      41       3.53      135.5 _ j  5.589         1.0       3.786
+      51       3.53      136.4 - j  1.943         0.9       3.646
+      61       3.53      137.3 + j  1.616         0.9       3.559
+      71       3.53      138.3 + j  5.119         1.0       3.503
+      81       3.53      139.2 + j  8.663         0.9       3.544
+      91       3.53      140.0 + j 11.880         0.8       3.217
+     101       3.52      140.9 + j 15.36          0.9       3.48
+     111       3.52      141.7 + j 18.57          0.8       3.21
+     121       3.52      142.4 + j 21.60          0.7       3.03
+</pre>
+  <p>The values for gain are well converged. However, those for feedpoint impedance are not. Compare, for example, the differences among figures for 31 and 61 segments per side for the equal-diameter wire loops, using either the 0.0808" or 0.5" models. NEC-4 varies by only 0.1 ohm resistance and under 0.5 ohm reactance across that spread. With the present multi-wire diameter loop, the same difference in segmentation yields a difference of 2.8 ohms resistance and 10.991 ohms reactance, a 200+% difference for each output figure.</p>
+  <p>Moreover, the progression of values shows no signs of closure within the limits of practical modeling. Although there is a trend downward in the delta numbers, where it will occur remains unclear. Without convergence, the figures cannot be regarded as reliable.</p>
+  <h5>Conclusions and Implications</h5>Because there is no independent standard at hand against which to measure the modeled results, the MININEC figures for the single quad loop cannot be certified as in fact closer to reality than those yielded by NEC-4 for antennas constructed of different-diameter wires joining at right angles. However, MININEC's achievement of reasonable convergence of results and NEC-4's inability to achieve converged results suggests that the NEC-4 results are less trustworthy than those of MININEC. NEC-2 figures are most divergent and least reliable of the three modeling calculation engines.
+  <p>It is clear that, for a loop of a given size, NEC-4 will yield lower gain numbers and higher feedpoint values than MININEC. Otherwise expressed, NEC-4 will call for a loop of smaller dimensions to approach resonance.</p>
+  <p>These trends also apply to other antennas using wires of different diameters joining at right and sharper angles. Models of folded X-beams show lesser gain and higher feedpoint values on NEC-4 than on MININEC.</p>
+  <p>Given the limitation of NEC-4 with respect to parallel wires of different diameters, it is probable that the present limitation of NEC-4 is an extension of the same root mechanism. Therefore, it is likely that MININEC remains the modeling engine of choice for antennas employing angular junctions of different-diameter wires.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 4-10-97. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

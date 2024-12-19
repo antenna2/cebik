@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>4-8-16-Infinite Sided Loops</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>69. 4-8-16-Infinite Sided Loops</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Suppose that we have a conventional quad loop, that is a square (in either the flat or diamond configuration) loop of approximately 1 wavelength circumference at resonance. In fact, such a square will be considerably larger than 1 wavelength, although the exact resonant circumference will depend upon the wire size as measured in fractions of a wavelength.</p>
+  <p>A question posed every now and again is what circumference is required if we use a circular form. Since most loops have taken a square form, the question is usually asked in terms of the adjustment needed, if any, to transform the loop into a circle and still be resonant.</p>
+  <p>Actually, the question is often set out in the context of a multi-element parasitic beam. However, the number of variables involved in an answer to a beam question is initially too great to deal with. We need a simpler starting point, and a single loop is the reasonable initial focus of inquiry. Here, we can eventually use near-resonance (plus or minus a very few Ohms of reactance) to determine that a given circle is the counterpart of a square or vice versa. Since we tend to measure loops by their circumference, we have a means of direct comparison and the possibility of coming up with an "adjustment factor."</p>
+  <p>Once we establish that two loops are counterparts, we can also determine the gain of each shape for a direct comparison. Theoretically, a circular loop form has a higher gain than a symmetrical square--indeed, a higher gain than any regular polygon. However, we rarely hear how much gain. Hence, it is difficult to know whether it is worth the effort of fabricating a circular loop in preference to the fairly easy construction associated with the square.</p>
+  <p>Antenna modeling software provides us with a means of exploring the questions that we have listed. However, NEC and MININEC cannot take us all the way to a circle. Every curved geometric shape must consist of straight wires. So that best that we can do is approximate a circle with a suitable complex polygon. Some say that a hexagon is good enough; others prefer an octagon. Still others think that a hexadecagon or 16-sided polygon is required. Therefore, let us begin with a little geometry and trigonometry.</p>
+  <p><b>Geometry and Trigonometry</b></p>
+  <p>Finding counterpart polygons and circles with equal circumferences is mostly a matter of finding appropriate counterpart dimensions. Circumference will be one of those dimensions. We need another, and we shall call it a focal line. A focal line is a line drawn from the center of a figure to its outermost point. In the case of a polygon, that point will be a corner. For a circle, the line is a radius.</p>
+  <center>
+    <img src="amod69-1.gif" width="483" height="373" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig.1</b> shows a circle, a square, an octagon, and a 16-sided polygon. These will be the members of our progression of polygons that ever more closely approximate a circle, in 2:1 steps in terms of the number of sides. The 16-side limit is appropriate, since it limits the complexity of the models we use and it fairly closely approaches a circle as determined by the ratio of the circumference to the length of the focal line.</p>
+  <p>The figure shows the relationship of C to fn (where n may be an s for a square, an o for an octagon, and 16 for the 16-sided figure) for each of our polygons. The ratio of C to Fs is only 0.9003 of the ratio of C to fc (or r for radius). However, the ratio of C to f16 is 0.9936 of the ratio for the circle. Hence, although we cannot attain a true circle, we can approach it well within 1 percent geometrically with the most complex of our polygons.</p>
+  <p>We can calculate the ratios between C and fn simply by knowing the angle between 2 adjacent focal lines. Obviously, the square has 90-degree angles. The octagon has 45-degree angles, and the 16-sided polygon has 22.5-degree angles: simple arithmetic that is a function of the 2:1 ratio of sides in our set of polygons.</p>
+  <center>
+    <img src="amod69-2.gif" width="347" height="302" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> helps us calculate the ratio of circumference to focal line length for any of our polygons. If we set one side of the polygon vertical, as in the figure, then a line bisecting the angle between adjacent focal lines will create a right triangle. The angle of concern is now 1/2 the total angle, and the sine of that angle times the length of the focal line will give us 1/2 the length of the side. Twice that length times the number of sides gives us the circumference or sum of the lengths of all sides. The inverse of that number gives us the length of the focal line as a function of the circumference.</p>
+  <p>Hence, we may use circumference as an initial measure that two figures are counterparts, that is, they have the same circumference. From the circumference comes the length of the relevant focal line, and combining that value with the sine and cosine of the half-angle between focal lines, we can derive all of the necessary coordinates to create a model of our polygon. (The 16-sided polygon will need the sine and cosine of either one or two intermediate angles, but that is a small matter.)</p>
+  <p><b>Modeling the Loops</b></p>
+  <p>Our interest in the basic questions and the project that they inspire lies in the modeling issues associated with trying to derive an answer using NEC or MININEC. We shall restrict ourselves to entry-level software, where only the GW input line is accessible for creating our polygons. In advanced software that makes available all of the NEC input possibilities, we might set up a single wire and then complete the circle using the GM input to replicate and move new wires. We might also use the GA (arc) input line. However, anything that we can do with those inputs, we can also do with GW lines--and a little more manual labor in the set-up. Indeed, going through the exercise of using an input line per wire may be useful in giving modelers with programs like NEC-Win Pro or GNEC some ideas for simplifying the process--or at least the appearance of the input file. (Unless we invoke symmetry--the GX input--NEC will treat each internally generated wire resulting from the GM or GA lines as a segmented wire, and the total run time will not materially change. So it will be largely a matter of showing a given amount of set-up work within the model or hiding that same amount of work, used in the pre-modeling stage, behind a shorter input file. One might well debate, as we shall not do here, which is better: an elegantly short input file that is far from self-explanatory or a full input file that one might read at a glance.)</p>
+  <p>We shall begin with the square loop as the most conventional shape. Indeed, our selection of starting points has a second rationale. We have a perfectly good calculating program that will determine the dimensions of a single loop to near resonance solely by entering the design frequency and the wire diameter in the units of measure used in the model. <b>Fig. 3</b> shows the equations and wire set-up screen for this model. This model is available from the <a href="https://web.archive.org/web/20120722052143/http://www.nittany-scientific.com/" target="_blank">Nittany Scientific</a> (web.archive.org) web site and is a NEC-Win Plus model. Alternative calculation programs are available for the same results, although they would require manual entry to create a model.</p>
+  <center>
+    <img src="amod69-3.gif" width="640" height="555" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since the question of square vs. circular loops arises almost exclusively in VHF antenna design, we shall use 146 MHz as our standard frequency. To limit the number of models that we need to examine, we shall use the following wire diameters in inches: 0.0625, 0.125, and 0.25. 0.0625" is close to the diameter of AWG #14 wire, while 0.25" is a useful diameter for soft copper tubing that we might press into quad-loop use. 0.125" is close to the diameter of AWG #10 wire. As with the sequence of polygons, the wire sizes step in 2:1 ratios.</p>
+  <p>The square quad loop model automates the generation of dimensions for the first step in our trials. However, we need models for the other polygons. If we externally calculate the length of the focal line for each of them, using the circumference of the square version as a starting value, then we can construct a simplified equation-based model for the more complex polygons (again, using NEC-Win Plus as our platform).</p>
+  <center>
+    <img src="amod69-4.gif" width="640" height="604" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the variables and wire set-up needed for the octagon. By making the starting side parallel the Z-axis, we can use the sine and cosine of 22.5 degrees to determine the coordinates of the corners, adding plus and minus signs as necessary for the quadrant within which the coordinates lie. With allowances for those signs, the set-up work is simply repetitious.</p>
+  <center>
+    <img src="amod69-5.gif" width="640" height="754" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 5</b>, we find the comparable information for the 16-sided figure. To minimize the number of trig functions, this model places a focal line along the X-axis. Hence, we may reuse the sine and cosine of 22.5 degrees and only need to add the sine/cosine of 45 degrees to complete the variable set for the model. The wire set-up reflects the change of orientation.</p>
+  <p>The square quad loop uses 11 segments per wire for a total of 44. The octagon uses 5 segments per wire for a total of 40. The 16-sided figure uses 3 per wire, for a total of 48. NEC, of course, requires an odd number of segments per wire if we wish to center the source on a given wire. Once we settle on the segmentation of the source wire, it is a good habit to make all of the segments in the model as close to the same length as possible. In the case of regular polygons, achieving that goal is simple. As well, when comparing models of different shapes but very comparable sizes, it is normally useful to have similar segment lengths in all of the compared models. However, these rules of thumb are no substitute for performing convergence and average gain tests on each model of a sequence.</p>
+  <center>
+    <img src="amod69-6.gif" width="640" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows the numerical values for the coordinates of the 16-sided figure using the alternative set-up. You may locate the value of f16 by looking at the very first end-1 X coordinate. In some cases, having the points arranged so that they parallel the coordinate system axes may be inconvenient. In that event, you may set up the figure in the same manner that we used for the octagon. You will need the sines and cosines of 11.25, 33.75, 56.25, and 78.75 degrees. However, in terms of varables, we may reduce the set to a pair of angles, because 11.25 and 78.75 degrees form one pair whose sines and cosines reverse, while 33.75 and 56.25 degrees form the second pair with the same property.</p>
+  <center>
+    <img src="amod69-7.gif" width="640" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p>An alternative procedure is to accept the model as is initially and then to rotate it by 11.25 degrees. <b>Fig. 7</b> shows the results of global rotation around the Y-axis. The rotation gives us the same result as setting up the polygon with sides parallel to the X- and Z-axes. <b>Fig. 8</b> shows the difference.</p>
+  <center>
+    <img src="amod69-8.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Why select one orientation over the other? The procedure that results in <b>Fig. 7</b> is a bit quicker to develop. However, in some cases, one may wish to have a source that is centered within a wire and also on a wire parallel to the ground--if one were to further develop the models to place them over a ground surface.</p>
+  <p>For any model, we can check the circumference. In the case of the square and the octagon, the absolute value of the second end-1 X coordinate is also the length of a half-side. Hence, the circumference of the square is 8 times that values and the circumference of the octagon is 16 times its half-side value. The initial 16-sided polygon uses the full length of the focal line as an X coordinate, so its circumference is 6.2428903 times that value (to be spuriously precise). The alternate or rotated 16-sided figure uses the same calculation as the square and the octagon.</p>
+  <p>Almost all of the set-up steps may also be accomplished with Multi-NEC, AC6LA's NEC adjunct program. As well, Antenna Model--among well-corrected MININEC implementations--would allow much the same set up, but with an even number of segments per source wire.</p>
+  <p><b>Some Sample Results</b></p>
+  <p>The initial values for the 8- and 16-sided figures do not yield resonance. Indeed, the more sides that we add, the lower the self-resonant frequency. However, once we obtain the self-resonant frequency, we may re-scale the loop to 146 MHz. We must take care to return the scaled wire size to its original value and recheck the impedance at 146 MHz to assure ourselves that it is within reasonable limits, since we wish to know by how much a resonant near circle circumference differs from the circumference of a resonant square.</p>
+  <p>In fact, the ratio of loop circumferences is also the ratio of the initial resonant frequency to 146 MHz, the design frequency.</p>
+  <p>In all cases, I performed an average gain test (AGT) on each test model to assure myself that the result would be comparable. The AGT values ranges from 0.998 to 1.005, for a range of gain errors totaling 0.03 dB. The worst case AGT value was 1.005, which is equivalent to a gain error of 0.02 dB. The resistive component of the feedpoint impedance would be off in this case by 1/2 of 1%. Since most builders work with perhaps 1% tolerances, the AGT margins are well within limits. All models used perfect or lossless wire, but the differences in outcome for copper or aluminum would be insignificant. The following table summarizes the results of the test models, with all values for 146 MHz and all dimensions in inches. Gain values are free space. The tests and re-scaling were performed using NEC-4 (in this instance, EZNEC Pro/4).</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+            Model Test Results for 4-, 8-, and 16-Sided Loops
+
+0.0625" Diameter Wire (0.00077 wavelength)
+# Sides          Gain       Feed Z          Circumference   Ratio/Square
+                 dBi        R+/-jX Ohms     Inches
+ 4               3.35       128.0 + j 0.3   87.040          ----
+ 8               3.59       137.2 + j 0.2   85.579          0.9832
+16               3.63       139.4 - j 0.2   85.043          0.9771
+Gain increase:   0.28
+
+0.125" Diameter Wire (0.00155 wavelength)
+# Sides          Gain       Feed Z          Circumference   Ratio/Square
+                 dBi        R+/-jX Ohms     Inches
+ 4               3.39       130.2 + j 2.5   88.143          ----
+ 8               3.62       139.1 + j 1.9   86.453          0.9808
+16               3.66       141.2 + j 1.5   85.849          0.9740
+Gain increase:   0.27
+
+0.25" Diameter Wire (0.00309 wavelength)
+# Sides          Gain       Feed Z          Circumference   Ratio/Square
+                 dBi        R+/-jX Ohms     Inches
+ 4               3.45       133.3 + j 4.2   89.664          ----
+ 8               3.67       141.9 + j 3.3   87.699          0.9781
+16               3.71       143.9 + j 2.9   87.023          0.9705
+Gain increase:   0.26
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>There are several characteristics of the progressions worth noting:</p>
+  <p>1. As we approach a true circle, the gain increases over that of a square quad loop. However, the increase is less than 0.3 dB, which is operationally unnoticeable. In a multi-element array, this gain will not accrue to each added element, but instead will represent the total gain increase for the entire array. Hence, if moving from a square to a circular element quad invokes considerable construction complexities, it may not be worth the effort.</p>
+  <p>2. As we approach a true circle from the square starting point, the near-resonant feedpoint impedance increases. The increase is between 7% and 8%. Although not a truly serious increase, it is sufficient to bring a note of caution relative to SWR curves based on calculations for a square loop starting point. The change may also require some re-optimizing of multi-element quads that move from square to circular elements.</p>
+  <p>3. As is well known among quad builders, the larger the element diameter, the larger the required loop circumference for resonance. This fact does not change as we move from square elements to circular ones.</p>
+  <p>4. The fatter the wire diameter, the greater the adjustment required in the loops. Using the 16-sided polygon as a reasonable approximation of a circle, it requires a circumference nearly 98% of the size of a square loop with 0.0625" diameter wire but only about 97% of the square's circumference when the wire is 0.25" in diameter.</p>
+  <p><b>A Caution</b></p>
+  <p>The adjustment factors developed based on models up through 16 sides apply only to independent loop elements. For this situation, simple re-scaling is a sufficient technique for returning the loop to resonance as we increasingly round it.</p>
+  <p>However, multi-element parasitic beams have other considerations that make the situation far more complex. Establishing resonance through loop adjustment may not suffice to ensure that the performance of the array replicates a square-quad original. Element spacing may require changes. As well, one must consider not only centering the impedance or SWR curve at the design frequency, but as well the curves for the forward gain and the front-to-back ratio.</p>
+  <p>A 16-sided polygon is within 1% of being a good approximation of a circle, considering the ratio of the circumference to the length of a focal line. Hence, for individual quad loops, the adjustment factors developed by the models should be quite reliable. As the figures derived from octagons show, the 8-sided figure may not be as reliable as a guide to circularizing elements. As well, in the adjustment of loops from a square original to a circular final product, the change in resonant impedance may be as important as the loop circumference. On the other hand, it is unlikely that the gain differential will ever be noticed.</p>
+  <p>In terms of modeling approximations of circles, the polygon that we select for the approximation depends upon the degree of precision that we require. For tracking some general trends or where we know in advance that there are features of the physical antenna that we cannot model, even a hexagon may serve as an approximation (where the circumference C equals 6 times fh, the hexagon focal line length). Increasing requirements for precision, however, makes the 16-sided figure a very adequate choice in most cases. Even if we cannot model a true circle in NEC or MININEC, we may still come very close. The answer to whether "very close" is "satisfactorily close" is always a task-driven judgment.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

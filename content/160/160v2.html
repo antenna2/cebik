@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="MF, Vertical">
+  <title>Modeling 160-Meter Vertical Arrays Part 2: Appreciating Conductivity and Permittivity</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/hat.gif" align="left" width="72" height="84" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Modeling 160-Meter Vertical Arrays<br>
+    Part 2: Appreciating Conductivity and Permittivity</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>In the first installment of this series, we established a data baseline relative to 160-meter 1/4 wavelength vertical antennas, exploring the types of modeled radial systems and the number of radials used in each system. We concluded that, as a model of the typical buried radial system, only a model of a buried system appears to be sufficiently sensitive to changes occasioned by differences in soil quality. Other alternatives have, at best, only limited correlations to the physically buried system.</p>
+  <p>Our exploration was limited by the use of four "standard" soil types, and we raised the question of whether these standards represented a fair sampling of conditions underlying a vertical antenna. This question is part of a larger one: how do the combined effects of soil conductivity and permittivity (relative dielectric constant) influence the performance of vertical antennas within the context of NEC modeling systems?</p>
+  <p>We might take a strictly mathematical approach to this question, since the ground effects are calculated (in the Sommerfeld-Norton ground system that is part of NEC) by standard engineering formulations. However, for many modelers, this approach fails to generate a set of reasonable expectations of antenna performance. Therefore, a second approach may be preferable: to take a standard antenna and ground radial system of varying numbers of radials and to model it using a wide span of combinations of conductivity and permittivity. We shall use this second approach in this episode, with the hope of eliciting some useful patterns of thought about ground effects on a vertical antenna system. Once more, the data tables will outweigh the text by a considerable margin.</p>
+  <h3>Conductivity and Permittivity</h3>Soil conductivity is measurable in units of Siemens (or "mhos") per meter (S/m), the inverse of resistivity in Ohms per meter. Of the two relevant ground quality properties, it is the more intuitive. Measurements are relatively frequency specific so that a general DC or low frequency RF measurement may not be exact for a proposed antenna system in the MF or lower HF region. The calculation systems in which conductivity plays a roles normally do not account for variations in the value by virtue of soil stratification, but instead presume an average value that characterizes a homogenous soil beneath the antenna.
+  <p>Permittivity or the relative dielectric constant is less well understood by many amateurs. The main use of the dielectric constant with which most of us are familiar pertains to capacitors: a capacitor can become more compact by using a dielectric with a high value. Soils exhibit the same property. Some values of the relative dielectric constant for materials relevant to antennas installation appear in <b>Table 1</b>, which is derives from John D. Kraus, <i>Antennas</i>, 2nd Ed. (1988), pp. 665 and 851.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 1.  Some permittivity (relative dielectric constant) values (from Kraus, Antennas, 2nd
+Ed.).
+
+Material                      Dielectric Constant
+Vacuum                        1.0
+Dry air                       1.0006
+Fresh snow                    1.5
+Clay Soil                     14
+Sandy Soil                    10
+Slate stone                   7
+Urban ground                  4
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Soil qualities are categorized by combinations of values for both conductivity and permittivity. In <b>Table 2</b> is a listing of the soil types found in the table of found in <i>The ARRL Antenna Book</i> (p. 3-6), with the type descriptions truncated. The ARRL table is taken from Terman's <i>Radio Engineer's Handbook</i> (p. 709), which derives from "Standards of Good Engineering Practice Concerning Standard Broadcast Stations," <i>Federal Register</i> (July 8, 1939), p. 2862. Immediately apparent in the <b>Table 2</b> listing is the fact that there are many more soil quality types than the standard four that we used in Part 1.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 2.  Some soil types (from ARRL Antenna Book).
+
+Type                   Conductivity          Permittivity          Category
+Pastoral 1             0.0303                20                    Very Good
+Pastoral 2             0.01                  14
+Flat marshy            0.0075                12
+Pastoral 3             0.006                 13
+Pastoral 4             0.005                 13                    Average (Good)
+Rocky                  0.002                 12-14                 Poor
+Sandy                  0.002                 10
+City                   0.001                  5                    Very Poor
+Heavy Industrial       0.001                  3                    Extremely Poor
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>However, there is a pattern of mutual increases in both conductivity and permittivity, and the range of each is finite. (I have omitted both fresh and salt water as too special to warrant inclusion here.) Conductivity ranges from 0.001 S/m to a bit over 0.03 S/m, with a greater degree of differentiation among lower values. Permittivity values tend to be more linearly arranged, with a maximum value of 20. The minimum "vacuum" or free space value would be 1. With these patterns in mind, we stand a chance of acquiring an appreciation for the relative effects of each of the two variables on vertical antenna performance over the full span of possibilities within a finite project.</p>
+  <p>The span of conductivity values lends itself to a Fibonacci sequence: 1, 2, 3, 5, 8, 13, 21, and 34 mS/m. A linear progression of dielectric constants (1, 5, 9, 13, 17, 21) covers this range well. Within the matrix of these values are combinations either exactly or very close to values in the standard soil quality chart. However, if we look at all of the values in the matrix, we might acquire a perspective on the relative effects of each component. Finding where the standard values fit within the overall matrix of possible values is the goal of our exercise.</p>
+  <center>
+    <img src="1602-1.gif" width="703" height="421" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    1. Basic techniques to construct the buried radial system vertical monopole used in developing the data in <b>Tables 3-1</b> through <b>3-8</b>.
+  </center>
+  <p>All we need now is an antenna model to which we can apply these values. Let's use the 1/4- wavelength 40-m tall vertical, 25 mm in diameter, that we employed in Part 1. We shall use a radial system buried 0.001 wavelength deep in the various soils. The model dictates the use of NEC-4, and the details of the fine structure of the tapered-length elements appear in <b>Fig. 1</b>. The radials are 2 mm in diameter, and everything is copper.</p>
+  <h3>The Results</h3>The detailed results of the exercise in systematic modeling appear in <b>Tables 3-1</b> through <b>3-8</b>. Each table represents a different level of conductivity, with sub-tables for each level of dielectric constant in the progression. Each combination of conductivity and permittivity is carried through systems of 4, 8, 16, 32, and 64 radials to check the modeled effects of the radials system size. In the Gain and Source Resistance columns, I have identified the maximum and minimum values. The Source Reactance column identifies the minimum values of reactances for each radial system size as a measure of the nearest approach to resonance.
+  <p>Before walking through the tables themselves to observe some interesting detailed phenomena, we might well show some summary results. For every combination of conductivity and permittivity value, there is a range of gain values and a range of source resistance values as we increase the number of radials from 4 to 64. These figures are indicative of certain important trends in the tables.</p>
+  <center>
+    <img src="1602-2.gif" width="649" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    2. Maximum and average gain differentials for 4 to 64 radial systems and dielectric constant between 1 and 21 plotted against conductivities of 0.001 to 0.34 S/m.
+  </center>
+  <p><b>Fig. 2</b> is a graph of the maximum and the average differential of gain values for changes in the radials system for all values of permittivity for each of the conductivity levels. The importance of showing both sets of numbers together is this: the higher the difference between maximum and average gain values, the greater difference that the value of dielectric constant makes to antenna performance. In contrast, the lower the differential between maximum and average values, the less the importance of the dielectric constant to antenna performance.</p>
+  <p>Two aspects of the graph are of special note. First, as the conductivity value rises above about 0.005 S/m, the difference between the maximum and the average values becomes insignificant. For soils with a conductivity of about 0.008 S/m, the value of permittivity makes no significant difference to antenna performance. Below a conductivity value of about 0.005 S/m, permittivity can make a considerable difference in performance. Second, at the highest values of conductivity explored, the overall change in gain between 4 and 64 radials falls well under 1 dB, regardless of the permittivity value.</p>
+  <center>
+    <img src="1602-3.gif" width="709" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    3. Maximum and average gain differentials for 4 to 64 radial systems and conductivities of 0.001 to 0.34 S/m plotted against dielectric constants between 1 and 21.
+  </center>
+  <p><b>Fig. 3</b> illustrates the same point from the opposing perspective of permittivity. The graph plots gain differentials for the span of 4 to 64 radials for each level of conductivity against dielectric constant. This graph replicates the conclusion that wide changes in the dielectric constant make little difference to soils with conductivities above the 0.005 S/m level. However, the chart adds another conclusion to our list. Changes in the dielectric constant value in the region from 1 to 9 makes a far greater difference in performance than values above that level.</p>
+  <center>
+    <img src="1602-4.gif" width="649" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    4. Maximum and average source resistance differentials for 4 to 64 radial systems and dielectric constants between 1 and 21 plotted against conductivities of 0.001 to 0.34 S/m.
+  </center>
+  <p>Similar conclusions derive from examining the source resistance data in the same manner. <b>Fig. 4</b> plots of maximum and average differentials of source resistance, with the lines beginning to merge at the 0.005 S/m level. Above that level of conductivity, differences in permittivity have little effect on the source resistance. To take the obverse perspective, <b>Fig. 5</b> plots the source resistance as a function of the relative dielectric constant for each sampled level of conductivity. Except to repeat the initial conclusion, one might well ignore the lines for conductivity values above 0.005 S/m. The curves for lower values of conductivity show an interesting pattern of effects from changing values of permittivity. Differentials do not peak at the lowest combination of conductivity and permittivity. Instead, peaks occur at different levels of permittivity for each of the lower values of conductivity.</p>
+  <center>
+    <img src="1602-5.gif" width="705" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    5. Maximum and average source resistance differentials for 4 to 64 radial systems and conductivities of 0.001 to 0.34 S/m plotted against dielectric constants between 1 and 21.
+  </center>
+  <p>The upshot is that higher levels of conductivity show great regularity in gain and source resistance values as they vary while we increase the number of radials in the system. However, at lower levels of conductivity, permittivity plays a more variable role in setting maximum and minimum values of gain and gain differential, as well as source resistance and resistance differentials. To explore this a bit further, let's take a short walk through some of the tables.</p>
+  <h3>A Short Look at the Tables</h3>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-1 through 3-8.  160-meter vertical monopole: 40 m tall, 25 mm diameter; 40.96-m
+(0.25 wavelength) radials, 2 mm diameter, tapered segmentation: 0.001 to 0.04 wavelength
+per wire; radials 0.001 wavelength below ground; NEC-4.  "TO Angle" = elevation angle of
+maximum radiation.  For each sub-table, a trailing "+" means the highest value in that
+category and a trailing "-" means the lowest value in that category, where category is the
+column parameter except for the values of source reactance, in which case the minimum
+values are shown for each level of radials.
+
+Table 3-1.  Conductivity = 0.001
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                     -4.76-        28                     86.13                 34.14
+ 8                     -3.62         28                     65.93                 21.77
+16                     -2.84         27                     53.89                 13.57
+32                     -2.37         28                     46.89                  7.88
+64                     -2.13         28                     42.93                  4.28
+Dielectric constant = 5
+ 4                     -4.37         27                     87.04+                25.31
+ 8                     -3.11         28                     65.90                 18.09
+16                     -2.18         28                     52.71                 12.43
+32                     -1.61         27                     44.89                  7.54-
+64                     -1.32         27                     40.68                  4.11-
+Dielectric constant = 9
+ 4                     -3.80         27                     83.72                 17.87
+ 8                     -3.56         27                     64.66                 14.62
+16                     -1.56         27                     51.87                 11.75
+32                     -0.88         27                     43.49                  8.12
+64                     -0.54         27                     38.93                  4.91
+Dielectric constant = 13
+ 4                     -3.28         27                     79.27                 14.23
+ 8                     -2.11         26                     62.60                 12.19
+16                     -1.13         26                     51.36                 10.94
+32                     -0.39         26                     43.13                  8.66
+64                      0.01         26                     38.30                  5.87
+Dielectric constant = 17
+ 4                     -2.91         25                     76.43                 12.50
+ 8                     -1.74         26                     60.59                 10.98
+16                     -0.79         26                     50.59                 10.24
+32                     -0.03         26                     42.92                  8.94
+64                      0.41         26                     38.00                  6.63
+Dielectric constant = 21
+ 4                     -2.59         25                     74.33                 10.32-
+ 8                     -1.45         26                     59.13                 10.24-
+16                     -0.52         25                     49.82                  9.83-
+32                      0.24         25                     42.80                  9.10
+64                      0.70+        25                     37.93-                 7.21
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-2.  Conductivity = 0.002
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                     -2.80-        25                     72.68                 29.22
+ 8                     -1.90         26                     59.18                 20.31
+16                     -1.26         25                     50.59                 14.44
+32                     -0.83         25                     44.92                 10.17
+64                     -0.58         26                     41.35                  7.11
+Dielectric constant = 5
+ 4                     -2.79         26                     73.51+                25.71
+ 8                     -1.85         25                     59.44                 18.46
+16                     -1.14         25                     50.44                 13.57
+32                     -0.65         26                     44.43                  9.77
+64                     -0.38         25                     40.68                  6.89
+Dielectric constant = 9
+ 4                     -2.68         25                     73.39                 22.33
+ 8                     -1.70         25                     59.27                 16.69
+16                     -0.95         25                     50.16                 12.80
+32                     -0.42         25                     43.95                  9.58
+64                     -0.11         25                     40.04                  6.88-
+Dielectric constant = 13
+ 4                     -2.49         25                     72.45                 19.47
+ 8                     -1.51         25                     58.63                 15.18
+16                     -0.74         25                     49.71                 12.18
+32                     -0.16         25                     43.44                  9.55
+64                      0.17         25                     39.43                  7.08
+Dielectric constant = 17
+ 4                     -2.29         25                     71.39                 17.11
+ 8                     -1.31         25                     58.05                 13.93
+16                     -0.54         25                     49.43                 11.63
+32                      0.06         25                     43.25                  9.50-
+64                      0.42         25                     39.15                  7.28
+Dielectric constant = 21
+ 4                     -2.06         25                     70.02                 15.30-
+ 8                     -1.11         25                     57.27                 12.98-
+16                     -0.34         25                     49.03                 11.21-
+32                      0.27         25                     43.03                  9.52
+64                      0.65+        25                     38.91-                 7.55
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-3.  Conductivity = 0.003
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                     -1.77         24                     66.44                 26.48
+ 8                     -1.01         23                     55.74                 19.15
+16                     -0.44         24                     48.79                 14.29
+32                     -0.04         24                     43.94                 10.72
+64                      0.19         23                     40.72                  8.04
+Dielectric constant = 5
+ 4                     -1.82-        24                     67.10                 24.55
+ 8                     -1.02         24                     56.00                 18.07
+16                     -0.42         24                     48.79                 13.73
+32                      0.01         24                     44.76                 10.46
+64                      0.27         24                     40.42                  7.91
+Dielectric constant = 9
+ 4                     -1.81         24                     67.37+                22.58
+ 8                     -0.98         24                     56.07                 16.98
+16                     -0.36         24                     48.73                 13.18
+32                      0.10         24                     43.56                 10.24
+64                      0.38         24                     40.11                  7.83-
+Dielectric constant = 13
+ 4                     -1.75         24                     67.30                 20.73
+ 8                     -0.91         24                     55.96                 15.98
+16                     -0.27         24                     48.59                 12.70
+32                      0.22         24                     43.36                 10.09
+64                      0.52         24                     39.82                  7.83-
+Dielectric constant = 17
+ 4                     -1.66         24                     66.96                 19.05
+ 8                     -0.82         24                     55.72                 15.07
+16                     -0.16         24                     48.41                 12.27
+32                      0.34         24                     43.17                  9.98
+64                      0.66         24                     39.57                  7.89
+Dielectric constant = 21
+ 4                     -1.55         23                     66.43                 17.58-
+ 8                     -0.71         24                     55.39                 14.28-
+16                     -0.05         24                     48.20                 11.90-
+32                      0.47         24                     43.00                  9.90
+64                      0.80+        23                     39.37-                 7.97
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-4.  Conductivity = 0.005
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                     -0.64         22                     60.19                 23.25
+ 8                     -0.01         22                     52.16                 17.60
+16                      0.45         22                     46.82                 13.77
+32                      0.80         22                     42.93                 10.93
+64                      1.03         23                     40.17                  8.73
+Dielectric constant = 5
+ 4                     -0.68         23                     60.59                 22.36
+ 8                     -0.04         22                     52.34                 17.09
+16                      0.44         22                     46.88                 13.49
+32                      0.80         22                     42.89                 10.80
+64                      1.04         22                     40.06                  8.67
+Dielectric constant = 9
+ 4                     -0.71-        22                     60.88                 21.43
+ 8                     -0.05         23                     52.47                 16.55
+16                      0.44         22                     46.90                 13.20
+32                      0.82         22                     42.84                 10.66
+64                      1.07         22                     39.94                  8.62
+Dielectric constant = 13
+ 4                     -0.71-        23                     60.96                 20.42
+ 8                     -0.04         23                     52.43                 15.94
+16                      0.47         23                     46.79                 12.83
+32                      0.86         22                     42.67                 10.46
+64                      1.12         22                     39.73                  8.50-
+Dielectric constant = 17
+ 4                     -0.71-        23                     61.15+                19.58
+ 8                     -0.04         22                     52.55                 15.50
+16                      0.48         22                     46.87                 12.64
+32                      0.89         23                     42.71                 10.42
+64                      1.16         22                     39.72                  8.56
+Dielectric constant = 21
+ 4                     -0.69         22                     61.14                 18.70-
+ 8                     -0.01         22                     52.52                 15.01-
+16                      0.52         23                     46.83                 12.38-
+32                      0.93         22                     42.65                 10.33-
+64                      1.22+        23                     39.62-                 8.56
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-5.  Conductivity = 0.008
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                      0.26         21                     55.68                 20.58
+ 8                      0.77         21                     49.51                 16.19
+16                      1.15         20                     45.32                 13.14
+32                      1.45         21                     42.17                 10.84
+64                      1.66         21                     39.81                  9.01
+Dielectric constant = 5
+ 4                      0.22         21                     55.92                 20.14
+ 8                      0.74         20                     49.63                 15.93
+16                      1.14         21                     45.36                 12.99
+32                      1.44         20                     42.17                 10.76
+64                      1.66         21                     39.77                  8.98
+Dielectric constant = 9
+ 4                      0.19         20                     56.12                 19.67
+ 8                      0.73         21                     49.73                 15.65
+16                      1.13         21                     45.40                 12.83
+32                      1.44         21                     42.16                 10.68
+64                      1.66         20                     39.73                  8.95
+Dielectric constant = 13
+ 4                      0.17         21                     56.42                 19.20
+ 8                      0.71         21                     49.81                 15.37
+16                      1.12         21                     45.43                 12.67
+32                      1.44         21                     42.15                 10.60
+64                      1.67         21                     39.68                  8.92
+Dielectric constant = 17
+ 4                      0.16         21                     56.42                 18.73
+ 8                      0.70         20                     49.87                 15.10
+16                      1.12         21                     45.45                 12.52
+32                      1.45         21                     42.13                 10.53
+64                      1.68         20                     39.64                  8.90
+Dielectric constant = 21
+ 4                      0.15-        21                     56.52+                18.26-
+ 8                      0.70         21                     49.92                 14.82-
+16                      1.12         21                     45.46                 12.36-
+32                      1.46         21                     42.12                 10.45-
+64                      1.70+        21                     39.60-                 8.88-
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-6.  Conductivity = 0.013
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                      1.04         19                     51.99                 18.19
+ 8                      1.45         19                     47.28                 14.85
+16                      1.77         20                     44.02                 12.47
+32                      2.01         19                     41.51                 10.63
+64                      2.20+        19                     39.54                  9.15
+Dielectric constant = 5
+ 4                      1.02         19                     52.12                 17.96
+ 8                      1.44         19                     47.35                 14.71
+16                      1.75         19                     44.05                 12.38
+32                      2.01         19                     41.51                 10.58
+64                      2.20+        19                     39.52                  9.12
+Dielectric constant = 9
+ 4                      1.00         19                     52.24                 17.74
+ 8                      1.42         19                     47.42                 14.57
+16                      1.74         19                     44.08                 12.30
+32                      2.00         19                     41.52                 10.53
+64                      2.20+        20                     39.51                  9.11
+Dielectric constant = 13
+ 4                      0.98         19                     52.34                 17.51
+ 8                      1.41         19                     47.48                 14.43
+16                      1.73         19                     44.10                 12.21
+32                      2.00         20                     41.52                 10.49
+64                      2.19         19                     39.50                  9.08
+Dielectric constant = 17
+ 4                      0.97         20                     52.44                 17.27
+ 8                      1.40         19                     47.53                 14.29
+16                      1.73         20                     44.13                 12.13
+32                      1.99         19                     41.52                 10.44
+64                      2.19         19                     39.48                  9.06
+Dielectric constant = 21
+ 4                      0.95-        19                     52.53+                17.03-
+ 8                      1.39         19                     47.57                 14.14-
+16                      1.72         19                     44.15                 12.04-
+32                      1.99         19                     42.52                 10.39-
+64                      2.20+        20                     39.37-                 9.05-
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-7.  Conductivity = 0.021
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                      1.70         18                     49.04                 16.17
+ 8                      2.03         18                     45.45                 13.65
+16                      2.28         17                     42.91                 11.81
+32                      2.49         18                     40.90                 10.36
+64                      2.65+        17                     39.28                  9.16
+Dielectric constant = 5
+ 4                      1.69         18                     49.11                 16.05
+ 8                      2.02         18                     45.49                 13.58
+16                      2.28         18                     42.93                 11.76
+32                      2.48         17                     40.91                 10.33
+64                      2.65+        18                     39.27                  9.15
+Dielectric constant = 9
+ 4                      1.67         17                     49.18                 15.94
+ 8                      2.01         18                     45.53                 13.50
+16                      2.27         18                     42.95                 11.71
+32                      2.48         18                     40.92                 10.30
+64                      2.65+        18                     39.27                  9.13
+Dielectric constant = 13
+ 4                      1.66         18                     49.24                 15.82
+ 8                      2.00         18                     45.57                 13.42
+16                      2.26         18                     42.97                 11.67
+32                      2.47         18                     40.92                 10.27
+64                      2.64         18                     39.27                  9.12
+Dielectric constant = 17
+ 4                      1.65         18                     49.30                 15.71
+ 8                      1.99         18                     45.60                 13.36
+16                      2.25         18                     42.98                 11.63
+32                      2.47         18                     40.93                 10.25
+64                      2.64         18                     39.26-                 9.11
+Dielectric constant = 21
+ 4                      1.64-        18                     49.35+                15.60-
+ 8                      1.99         18                     45.63                 13.28-
+16                      2.25         18                     43.00                 11.58-
+32                      2.46         18                     40.93                 10.22-
+64                      2.64         18                     39.26-                 9.10-
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3-8.  Conductivity = 0.034
+
+No. of                 Gain          TO Angle               Source R              Source jX
+Radials                dBi           degrees                Ohms                  Ohms
+Dielectric constant = 1
+ 4                      2.26         16                     46.62                 14.44
+ 8                      2.53         16                     43.87                 12.56
+16                      2.73         16                     41.91                 11.15
+32                      2.90         17                     40.32                 10.01
+64                      3.04+        17                     39.00                  9.07
+Dielectric constant = 5
+ 4                      2.26         17                     46.66                 14.39
+ 8                      2.52         16                     43.90                 12.52
+16                      2.73         17                     41.92                 11.13
+32                      2.89         16                     40.33                 10.00
+64                      3.04+        17                     39.00                  9.06
+Dielectric constant = 9
+ 4                      2.25         16                     46.69                 14.34
+ 8                      2.52         17                     43.92                 12.49
+16                      2.72         16                     41.93                 11.11
+32                      2.89         16                     40.33                  9.99
+64                      3.03         16                     39.00                  9.06
+Dielectric constant = 13
+ 4                      2.24         16                     46.72                 14.28
+ 8                      2.51         16                     43.94                 12.45
+16                      2.72         17                     41.94                 11.08
+32                      2.89         17                     40.34                  9.97
+64                      3.03         16                     39.00                  9.04
+Dielectric constant = 17
+ 4                      2.24         17                     46.76                 14.23
+ 8                      2.51         17                     43.96                 12.41
+16                      2.71         16                     41.95                 11.06
+32                      2.88         16                     40.34                  9.96
+64                      3.03         17                     39.00                  9.04
+Dielectric constant = 21
+ 4                      2.23-        17                     46.79+                14.16-
+ 8                      2.50         16                     43.98                 12.37-
+16                      2.71         17                     41.97                 11.03-
+32                      2.88         17                     40.35                  9.94-
+64                      3.02         16                     39.00-                 9.03-
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In <b>Table 3-1</b>, we have the lowest value of conductivity examined: 0.001 S/m. Lower values of conductivity have been measured for some antenna sites. However, this table includes the lowest value on the ARRL chart. In fact, the value 0.001 S/m with a dielectric constant of 5 is the Very Poor category. Interestingly, this combination yields the highest source resistance, even though the lowest gain occurs with a 0.001 S/m--1 combination. Although soils with very low conductivity and very high dielectric constant are improbable, the lowest values of reactance occur with the highest values of permittivity for radial systems between 4 and 16 radials. However, for larger radial systems, the lowest reactance values occur with a dielectric constant of 5. (Contrast this variability with <b>Tables 3-5</b> through <b>3-8</b>, where the lowest reactance values for all sizes of radial systems occurs with the highest values of permittivity.)</p>
+  <p>A change in conductivity from 0.001 S/m to 0.002 S/m makes a large difference on the modeled gain performance of the test antenna at lower levels of permittivity, as shown in <b>Table 3-2</b>. However, when we reach a permittivity of 9 (close to the standard of Poor soil), the differences from a conductivity of 0.001 S/m have shrunk considerably. Nevertheless, at this dielectric constant level, differentials between 4 and 64 radial systems level off in the 2.6 dB region--which is still sufficient reason to increase a radial system to the maximum feasible size.</p>
+  <p>In both <b>Tables 3-2</b> and <b>3-3</b> (for conductivities of 0.002 and 0.003 S/m, respectively), we continue to find that the minimum gain values and that maximum source resistance values do not occur at the extremes of the chart. Indeed, minimum gain shows a progression toward a higher values of dielectric constant with increases in conductivity. Maximum source resistance shows the same trend, but does not wind up in the same dielectric constant box as minimum gain.</p>
+  <p><b>Table 3-4</b>, for a conductivity of 0.005 S/m represents a broad middle set of grounds with charted dielectric constants in the 12-14 range. In the table, minimum gain covers a broad range of permittivity--9 to 17, with the peak source resistance appearing at a permittivity of 17. However, for any size radial system, the curves are beginning to broaden. With 64 radials, the modeled gain varies only by 0.19 dB over the entire range of dielectric constants. Nonetheless, considerable variation remains in both the gain and source resistance columns for small to large radial systems.</p>
+  <p>With <b>Table 3-5</b>, we enter the region of greatest regularity in phenomena, indicating the reduced influence of dielectric constant--or, what amounts to the same thing, the domination of conductivity as the major ground factor affecting antenna performance. Both gain and source resistance maximums and minimums occur with a dielectric constant of 21. <b>Tables 3- 6</b> through <b>3-8</b> reflect similar trends. With Very Good soil, or its nearest tabular counterpart (0.034 S/m and 21), the difference between 4 and 64 radials models out at under a 0.8 dB difference in gain--at least for the particular model of a monopole and radial system used in this exercise.</p>
+  <p>Our quick stroll through the tables should be somewhat of a revelation, especially when set against the standard soil quality values displayed in <b>Table 2</b>. In most instances, for a given value of conductivity, the associated value of dielectric constant in the standard listing reflects one of the minimums or maximums, as relevant from the broader modeled <b>Tables 3-1</b> through <b>3-8</b>. At the lower values of conductivity, the dielectric constant not only plays a larger role in determining modeled antenna performance, but as well, that influence varies from one value to the next of conductivity. The standard listing in <b>Table 2</b> tends to capture the maximum combined influence of both factors.</p>
+  <p>As a consequence, the use of the "short" list of four values (Very Poor, Poor, Good, and Very Good) tends to be a fair sampling of the soil quality properties as they influence modeled vertical antenna performance. The large stretch between the values associated with Good soil (0.005 S/m and 13) and those associated with Very Good soil (0.0303 S/m and 20) becomes quite reasonable in view of two factors. First, as conductivity increases greatly, the amount of change in antenna performance for any given size radial system between conductivity steps decreases significantly. Second, variations in the dielectric constant become relatively insignificant. Hence, the seemingly odd values associated with Very Good soil become as good as any other figures for conductivities above 0.02 S/m.</p>
+  <p>There are, of course, very good mathematical reasons for the patterns that we have observed. However, by presenting the calculations in combination with a standardized vertical antenna model, the consequences of those calculation become perhaps a bit more vivid--and perhaps even a bit more useful in establishing patterns of reasonable expectation for antenna models. Of course, the results given here apply to 160 meters and to a 1/4 wavelength monopole with a buried radial system. Rather than extrapolate the results too far from the situation modeled, one should develop a comparable systematic modeling study for such other antenna system structures and frequencies as may be of greatest interest.</p>
+  <p>We have so far limited ourselves to single radial systems and single element vertical arrays. In the next episode, we shall look at ways to develop models of more complex situations, along with some limitations of using the MININEC ground as a substitute for actually modeling radials.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-10-01. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> The National Contest Journal <i>(Mar./Apr., 2001), pp. 4-9. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="160v3.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 3</a></p>
+  <p><a href="160v.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Series Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

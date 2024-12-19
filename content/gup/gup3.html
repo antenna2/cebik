@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>Azimuth, Elevation, and Antenna Modeling</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10">ANTENNAS FROM THE GROUND UP<img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>3. Playing the Angles<br>
+    or Azimuth, Elevation, and Antenna Modeling</h3>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  One of the goals of this series is to help you answer your own antenna questions. There are many tools available to help you do this. For new antennas you construct, there are antenna analyzers, SWR meters, and the like. For theory and construction ideas, there are books galore (not to mention articles like these). Finally, but very importantly, there is antenna modeling software.
+  <p>First, you have to like your computer. Second, although there are some basic modeling cores for MAC, modeling is a PC business, especially if you want to use one of the commercial versions. Third, you have to learn how to ask the modeling program good questions and read its answer intelligently. Although I cannot make you like your computer, I can tell you where to find software and how to get started in using it wisely.</p>
+  <p>Even if you do not intend to buy or download a modeling program, you should continue reading. When you are done, you will at least have a better grasp of what all those antenna plots and graphs in the magazine articles are trying to tell you.</p>
+  <h4>What's Available and Where</h4>There are many types of antenna modeling programs. Modeling an antenna is simply calculating some of the antenna properties. There are BASIC programs in <a href="../radio.html#HAMCALC">HAMCALC</a> for designing a number of different antennas. (Some are more accurate than others.) There are special purpose programs, like YAGIMAX, that can help you optimize certain kinds of antennas.
+  <p>However, when most folks speak of antenna modeling these days, they are referring to the Numerical Electromagnetics Code, either in its FORTRAN version (NEC) or its offshoot BASIC version (MININEC). These programs are very powerful "method of moments" calculation machines that, within limits, can produce a lot of accurate information about antennas.</p>
+  <p>Both NEC-2 and MININEC are public domain programs, so you can download them for free. However, you have to design your own user interface to get information about your antenna in and get calculation results out. Like this:</p>
+  <center>
+    <img src="gup3-1.gif" width="578" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Figure 1: An SWR curve of a model.
+  </center>
+  <p>Figure 1 told me that I cut the 40-meter dipole model too long, so I pruned a number rather than a piece of wire.</p>
+  <p>Both NEC and MININEC have limitations. NEC-2 cannot handle wires of dissimilar diameters well, but it can deal with antennas close to ground. MININEC is limited to antennas above 0.2 wavelengths above ground and requires special techniques to handle wires that meet at angles. Both have their place, but for wire antennas in the 160-30 meter region, I recommend NEC.</p>
+  <p>There are three commercial versions of NEC-2 available to hams for under $90. These are</p>
+  <p>EZNEC, by Roy Lewallen, W7EL, P.O. Box 6658, Beaverton, OR 97007. This DOS program ($89) has a "friendly" user interface by most reports and a 500-segment limit for antenna size.</p>
+  <p>NEC/Wires by Brian Beezley, K6STI, 3532 Kinda Vista, San Marcos, CA 92069. This DOS program ($70) uses a different input interface that allows formulas; also with a similar segment limit.</p>
+  <p>NEC-Win Basic by Paragon Technologies, 3006 Research Drive, State College, PA 16803. This is the only Windows version of NEC ($75) and uses a spreadsheet style input system.</p>
+  <p>Both EZNEC and NEC-Win have "big brothers" for virtually unlimited antenna sizes, and NEC-Win Pro has added graphics capabilities. However, prices are considerably higher.</p>
+  <p>All three programs have been designed or tested by hams. I use versions of all three from time to time, along with the MININEC versions of each (ELNEC from W7EL and AO from K6STI, along with NEC4WIN from Orion in Canada and MININEC for Windows from MININEC creators Rockway and Logan).</p>
+  <h4>What Can I Learn From Models?</h4>Lots! Many purchasers simply try to model the antenna(s) they have and then never use them again. Bad approach. Making good models takes a good bit of experience in playing with the program, and the programs can teach you a lot about different types of antennas in different circumstances.
+  <p>First, you create a physical model of the antenna of interest, laying out wires on an X, Y, Z coordinate system, and specifying wire size and material, ground conditions, and other information needed for the analysis. Then the program provides you with (as a start) complete far field information (available graphically or in tables), feedpoint impedance and related data, antenna current levels, and more.</p>
+  <p>The numerical data, such as feedpoint impedance and SWR relative to 50 ohms, is easy to interpret. Antenna patterns require a little more effort.</p>
+  <p>Let's start in free space, that spherical volume in &thorn;outer space&thorn; free of all conductive obstructions. Let's place a dipole there and look at its 3-D pattern. It looks like Figure 2, where the wire-line is a highly magnified orienting guide to the antenna position. Since this is a "far-field" pattern, the actual antenna would be too minuscule to see.</p>
+  <center>
+    <img src="gup3-2.gif" width="549" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 2.
+  </center>
+  <p>An azimuth pattern is one tracing a horizontal circle around the antenna pattern. We take azimuth patterns at some specified elevation angle. For free space, the angle is typically (but not absolutely always) 0&deg; elevation. Mentally cutting Figure 2 on the flat, which is almost from the bottom left corner to the top right corner, we get the following azimuth pattern:</p>
+  <center>
+    <img src="gup3-3.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3. Free space azimuth pattern of a dipole.
+  </center>
+  <p>You will recognize the side nulls as corresponding to the side-pucker of the 3-D view. In free space, for a dipole, every slice through the donut would present the same view of the antenna pattern.</p>
+  <p>The elevation view of the pattern is a slice vertically through the 3-D pattern. It can be at any specified azimuth angle, but typically we choose the azimuth angle of strongest radiation. Here the angle is either 90&deg; or 270&deg;.</p>
+  <p>What determines the 90-270&deg; orientation in part results from how the model was constructed. For a horizontal dipole, you can put the length of the antenna in the X dimension--which gives the pattern in Figure 3--or in the Y dimension--which would change the antenna orientation by 90 degrees. A Y-dimensioned dipole would show maximum radiation in azimuth directions 0&deg; and 180&deg;. (My preference for speed of making alterations is to put the longest or most changeable length in the X dimension. Hence, all broadside patterns will be oriented as in Figure 3.)</p>
+  <p>The vertical slice through the donut, of course, would yield a simple circle indicating equal power at all elevation angles. All NEC models presume the principle of reciprocity; that is, the pattern of power radiation equals the pattern of receiving sensitivity.</p>
+  <p>Antennas mounted over the ground are more complex, because the portion of the free space pattern representing downward radiation is reflected by the ground back upward in accord with basic optical principles, adjusted by the program for ground losses. The actual amount of ground loss for horizontal antennas does not differ greatly from great soil to very poor soil, so for most purposes, models are taken over average ground. The values of conductivity and the dielectric constant are usual built into the program as defaults.</p>
+  <p>Let's put a 40-meter dipole up 70' and look at its 3-D pattern:</p>
+  <center>
+    <img src="gup3-4.gif" width="387" height="316" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 4.
+  </center>
+  <p>The exaggerated line represents the antenna wire. Here it passes at the base of the pattern through the bottom-most side puckers. Maximum radiation is broadside to the wire, but at upward angles.</p>
+  <p>The next step is to take an elevation pattern, a vertical slice through the direction of maximum radiation (from lower left to upper right). For this antenna, the angle will again be either 90&deg; or 270&deg; on the azimuth circle.</p>
+  <center>
+    <img src="gup3-5.gif" width="639" height="282" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig.5. Elevation pattern of a 40-meter dipole at 70' height along the azimuth of maximum radiation.
+  </center>
+  <p>You can likely recognize the center "hump" from the 3-D plot and the upturned ends. Note that there is no radiation at 0&deg; elevation angle because far-field plots are assumed to be so far distant that point-to- point and ground wave radiation are no longer factors that determine the pattern.</p>
+  <p>Creating an azimuth pattern involves choosing an elevation angle above 0&deg;. We may use any number of bases for our selection, but two are most common. One is the angle of maximum radiation to see just what the maximum gain of the antenna may be and how the pattern at that angle looks. The model told me that the angle of maximum radiation (also called the "take-off" angle) is 27&deg;.</p>
+  <p>Figure 6 displays the azimuth pattern of the dipole at its take-off angle. Remember that the pattern is actually a sort of cone, with the center of the pattern circle at the antenna height. The cone slopes upward all around the circle at an angle of 27&deg; above the horizon. You can also see from Figure 6 that the maximum gain is 7.6 dBi.</p>
+  <center>
+    <img src="gup3-6.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 6. Azimuth pattern of a 40-meter dipole at 70' height at an elevation angle of 27&deg;, the angle of maximum radiation.
+  </center>
+  <p>A second route to creating an azimuth pattern is to begin with an independent interest in some skip path angle. Suppose, for instance, that you have good reason to believe that the best path to Europe requires a skip angle of 17&deg;. What would the antenna&thorn;s pattern look like at that angle?</p>
+  <center>
+    <img src="gup3-7.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 7. Azimuth pattern of a 40-meter dipole at 70' height at an elevation angle of 17&deg;, the angle of special interest.
+  </center>
+  <p>From Figure 7, it is clear that the shape of the pattern has not significantly changed relative to the pattern shape at the 27&deg; elevation angle. However, the gain is down considerably. Looking at the 3-D pattern and the elevation pattern, we can see that this new cone slice is taken at an angle of lesser radiation.</p>
+  <p>The lobes and nulls of an antenna over real ground are functions of the phases of the direct or incident waves and the reflected waves as they occur at the same angles away from the antenna. Sometimes they are in phase and add, resulting in gain numbers far higher than the free space gain. We call this a lobe. In other parts of the overall pattern, they are out of phase with each other, partially or wholly canceling the radiation. We call this a pattern null.</p>
+  <h4>Is That All There Is?</h4>Individual patterns are very instructive, but they only provide spot data. There are numerous ways to increase the amount of information from models of antennas.
+  <p>One way to increase the amount of information in a pattern is to combine several elevation or several azimuth patterns into one graph. For example, if we had combined Figures 6 and 7, the lesser strength of the radiation at the lower angle would have been evident.</p>
+  <p>We can also combine elevation patterns. For example, place a dipole, a 2- element Yagi, and a 3-element Yagi at the same height and combine their elevation patterns in the azimuth of greatest radiation. You will see the evolution of the bidirectional dipole into a pattern with high forward gain and a high front-to-back ratio.</p>
+  <center>
+    <img src="gup3-8.gif" width="631" height="285" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig.8. 10-meter dipole, 2-element Yagi, and 3-element Yagi elevation patterns
+  </center>
+  <p>A second way to derive more antenna information from a modeling program is to frequency-sweep an antenna. Specify upper and lower frequency limits and the increments for spot checks between these limits. You can produce data on pattern changes, such as where the gain reaches maximum and where the front-to-back ratio (if relevant) reaches maximum. You can also watch the feedpoint impedance, both resistance and reactance, change across the sweep range. Some antenna designs are quite narrow, and one or more of their properties may change drastically even within a ham band. Others are broad and do not radically change any characteristics over wide frequency ranges.</p>
+  <p>Another instructive exercise is to watch the properties of an antenna change with height as you step the model height at regular intervals. Although most programs have frequency sweep capabilities, you will have to increase the model height manually. However, you may discover interesting changes of patterns or the feedpoint impedance along the way.</p>
+  <p>There are innumerable systematic questions you can pose to a modeling program, and the answers you glean can teach you much about antennas. Unfortunately, most antenna modeling program users make a few spot checks of their own antennas and then never open the program again. These folks lose fully 90% of the benefits of the program.</p>
+  <p>I have dwelled on the basics of antenna modeling because much in this series will be derived from them or illustrated by them. In fact, you can make a whole handbook of expectations from them.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 4-29-97. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="groundup.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to series index page</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AM BC Modeling with NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>AM BC Modeling with NEC<br>
+    4. Square, Sloping, and Tapered</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>All of the samples that we have explored in our journey through modeling AM BC towers over perfect ground have used triangular towers with a uniform face-width along the total length. These towers have served well in examining the correlations among the chief types of models: the NEC-recommended substitute single-wire version, the alternative of using 3 independent legs, and the full-structure models.
+  <p>Although the triangular tower with a uniform face-width may be the most common sort of structure used, there are a number of other structures that we occasionally find. The notes in this episode work with a few of the non-standard tower shapes.</p>
+  <p><b>The Square Tower</b></p>
+  <p>The most notable alternative to a triangular tower is a square tower. We shall initially work with squares having a uniform face-width in order to correlate the results with past triangular towers that we have examined. Therefore, we shall use a face width of 18" (1.5') and a height of 234' at 1 MHz. As always we shall use lossless conductors and a perfect ground. As well, each model will use a current source, with its associated modeling requirement of an extra distant thin and short wire along with a network (NT) entry.</p>
+  <p>The simplest model consists of a single vertical wire with a single source. The NAB-recommend value for the wire radius is 0.56 times the face-width. For the 18" face of a square towers, the substitute wire requires a radius of 0.84' (10.08"). Except for the change of the radius, the single-wire 234' model, with 41 segments for the modeled wire, looks very much like the corresponding single-wire substitute model for a triangular tower.</p>
+  <pre>
+CM near-resonant monopole, perfect ground, square (0.56)
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 234 0.84
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 7.4329
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>For the moment, we shall by-pass the data that we may collect from this model of a square tower to move directly to the second way to handle the model. We may also model the tower as 4 independent legs, each 234' tall with 41 segments. As in past models, we shall use 2"-diameter legs (radius = 0.085'). In this tower arrangement, the legs form a square around the center of the coordinate system. Therefore, each leg has X- and Y-coordinates of 0.75', with numerical signs indicating the quadrant of each leg. Relative to triangular towers, we require one more source (with its added wire and network) and the divisor for the net source impedance will be 4 instead of 3. If we wish to employ a common source, then we simply add a 4th transmission line to the collection that we used for triangular towers. However, we may continue to use the separate source model and perform the simple external calculation. Although the model appears to be more complex than its triangular counterpart, it actually has only 4 more lines, each of which is a near copy of its neighbor.</p>
+  <pre>
+CM near-resonant monopole, perfect ground, square, straight
+CM 4 sources, independent legs
+CE
+GW 1 41 .75 .75 0 .75 .75 234 0.085
+GW 2 41 -.75 .75 0 -.75 .75 234 0.085
+GW 3 41 -.75 -.75 0 -.75 -.75 234 0.085
+GW 4 41 .75 -.75 0 .75 -.75 234 0.085
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GW 30904 1 9904.0000 9904.0000 9904.0000 9904.0001 9904.0001 9904.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.8643
+EX 0 30902 1 0 0.0 1.8643
+EX 0 30903 1 0 0.0 1.8643
+EX 0 30904 1 0 0.0 1.8643
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+NT 30904 1 4 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Once more we shall by-pass the data and move directly to the third type of model, one using a simulated full structure. Because we may divide 234' by 3' to obtain in integer for the total number of required sections (78), we can use 3' section for the model. The lowest section will use only a horizontal member at its upper limit, omitting the sloping sections. As we discovered with triangular towers, the use of sloping members in the lowest section results in a current division at the ground-contact end of the source segment, seriously distorting the model results. We introduce sloping model wires in the second section, as shown in <b>Fig. 1</b>. The view shows only the lowest two sections to reveal the segmentation scheme, which is the same as used for the full-structure triangular tower model in the preceding episode.</p>
+  <center>
+    <img src="amod134-1.gif" border="2" height="340" hspace="9" vspace="5" width="300">
+  </center>
+  <p>To complete the tower, we need only one further geometry command. The GM entry replicates the second section 76 more times to arrive at the total height required. The final model is a bit larger than its triangular counterpart, with 708 wires and 2488 segments. Lest the model size seem forbidding, the model required a 62-second total run time on a moderately old 1.8 GHz machine.</p>
+  <pre>CM near-resonant monopole, perfect ground, square, straight
+CM 4 sources, full structure
+CE
+GW 1 3 .75 .75 0 .75 .75 3 0.085
+GW 2 3 -.75 .75 0 -.75 .75 3 0.085
+GW 3 3 -.75 -.75 0 -.75 -.75 3 0.085
+GW 4 3 .75 -.75 0 .75 -.75 3 0.085
+GW 5 2 .75 .75 3 -.75 .75 3 .085
+GW 6 2 -.75 .75 3 -.75 -.75 3 .085
+GW 7 2 -.75 -.75 3 .75 -.75 3 .085
+GW 8 2 .75 -.75 3 .75 .75 3 .085
+GW 9 3 .75 .75 3 .75 .75 6 0.085
+GW 10 3 -.75 .75 3 -.75 .75 6 0.085
+GW 11 3 -.75 -.75 3 -.75 -.75 6 0.085
+GW 12 3 .75 -.75 3 .75 -.75 6 0.085
+GW 13 2 .75 .75 6 -.75 .75 6 .085
+GW 14 2 -.75 .75 6 -.75 -.75 6 .085
+GW 15 2 -.75 -.75 6 .75 -.75 6 .085
+GW 16 2 .75 -.75 6 .75 .75 6 .085
+GW 17 3 .75 .75 3 -.75 .75 6 .085
+GW 18 3 -.75 .75 3 -.75 -.75 6 .085
+GW 19 3 -.75 -.75 3 .75 -.75 6 .085
+GW 20 3 .75 -.75 3 .75 .75 6 .085
+GM 9 76 0 0 0 0 0 3 9 1 20 3
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GW 30904 1 9904.0000 9904.0000 9904.0000 9904.0001 9904.0001 9904.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.8623
+EX 0 30902 1 0 0.0 1.8623
+EX 0 30903 1 0 0.0 1.8623
+EX 0 30904 1 0 0.0 1.8623
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+NT 30904 1 4 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>I have reserved the data collections to present them together, not only with each other, but with the data for the three models of 234' 18" face-width triangular towers from the preceding episode. The total data collection for the near-resonant tower models will prove instructive.</p>
+  <pre>
+Near Resonant (234') 18" Face Monopole Models: Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+
+Triangular
+Single-Wire Model
+35.65 - j 1.29    7.4897          5.14         1.999   0.00     275.1 mV/m @ -45.6 deg
+3-Leg Model
+35.57 - j 1.61    2.4993/leg      5.14         1.999   0.00     275.1 mV/m @ -45.6 deg
+Full-Structure Model
+35.47 + j 2.74    2.5029/leg      5.24         2.043   0.09     278.2 mV/m @ -46.2 deg
+
+Square
+Single-Wire Model
+36.20 + j 1.01    7.4329          5.15         1.999   0.00     275.2 mV/m @ -46.0 deg
+4-Leg Model
+35.97 + j 0.08    1.8643/leg      5.15         1.999   0.00     275.2 mV/m @ -45.9 deg
+Full-Structure Model
+36.04 + j 3.85    1.8623/leg      5.22         2.034   0.07     277.6 mV/m @ -46.6 deg
+</pre>
+  <p>Within the data for square towers, we find a very small variation in the resistive component of the three models, about 0.25 Ohm. The reactance varies more widely among models, but less than 3 Ohms overall. Among the triangular models, we found slightly less variation in the resistive component and slightly more variation in the reactance. However, with both types of models, the full-structured version showed a less-then-ideal AGT value that required correction of the gain report and the field-strength report. If we correct the square-model field strength raw data by dividing the report by the square root of half the basic AGT score, we obtain a reading of 275.3 mV(pk)/m, which brings into accord with the raw reports of the simpler models. Applying the AGT-dB value to correct the raw gain reports also brings it into line with the other gain values.</p>
+  <p>Between the triangular and the square models, we find very little difference in the values. The seemingly fatter square tower shows a source impedance that is about 0.5-Ohm higher resistively and about 1-Ohm more inductive with respect to reactance. For many applications, the difference would not make a difference. Effectively, for the same face width, the square tower is 1.5 times fatter than the triangular model, but a 50% change in diameter does not change modeling results by a great amount.</p>
+  <p><b>A Sloping Square</b></p>
+  <p>One very common form for a square tower is a sloping structure that is broader at the base than at the top. To sample this configuration from a modeling perspective, we might consider a 234' tower consisting of 4 legs. The face width at the base might be 48" (4') and at the top 24" (2'). <b>Fig. 2</b> illustrates one face of such a sloping structure, but not to scale. The rate of change of face width is only 0.05"/foot of height. However, that small rate will be sufficient to show us what to expect from such structures.</p>
+  <center>
+    <img src="amod134-2.gif" border="2" height="400" hspace="9" vspace="5" width="280">
+  </center>
+  <p>If we accept the correlation among the three model versions that we have so far examined, then we may develop a relatively simple model for the sloping tower. Perhaps the easiest model consists of 4 independent legs, using our standard 2" diameter (0.085' radius). Each leg slopes inward by the requisite amount to arrive at the desired top face width. Except for the X- and Y-coordinates, the model closely resembles the 4-leg version of the square tower with a uniform face width.</p>
+  <pre>
+CM near-resonant monopole, perfect ground, square, sloping legs
+CM 4 sources
+CE
+GW 1 41 2 2 0 1 1 234 0.085
+GW 2 41 -2 2 0 -1 1 234 0.085
+GW 3 41 -2 -2 0 -1 -1 234 0.085
+GW 4 41 2 -2 0 1 -1 234 0.085
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GW 30904 1 9904.0000 9904.0000 9904.0000 9904.0001 9904.0001 9904.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.9062
+EX 0 30902 1 0 0.0 1.9062
+EX 0 30903 1 0 0.0 1.9062
+EX 0 30904 1 0 0.0 1.9062
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+NT 30904 1 4 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Because the tower is so much fatter than its uniform-face-width counterpart, we might expect the data to show some inductive reactance at a height of 234', which was very close to resonant with the 18" uniform face width. The data collection tells a somewhat different story.</p>
+  <pre>
+234' 4-Leg Sloping Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+34.41 - j 8.81    1.9062/leg      5.14         1.999   0.00     275.0 mV/m @ -46.5 deg
+</pre>
+  <p>In fact, the tower "plays short." That is to say, due to the tapering of the effective diameter of the tower along its length from the source outward to ward the element end, the tower requires a larger value for its height to achieve resonance than a comparable uniform-diameter (or uniform-face-width) tower. The tower simply reflects one of the fundamental properties of elements that taper downward in diameter moving away from the feedpoint. (If it were practical to invert the tower so that it exhibited an increase in effective diameter as we moved away from the source at perfect ground level, it would show the properties of one-half of a biconical element and "play long." Of course, what we cannot do in reality, we often can do as a modeling exercise and thereby naturalize our expectations of element behavior.) For our very gently sloping tower to achieve resonance within j+/-1 Ohm of remnant reactance, we need to increase the height by about 5' or about 2%.</p>
+  <p>More radically sloped square towers, which might be more typical in actual installations, would show somewhat different results. The typical base face width will in practical installations generally increase faster than the rate of slope. These two tendencies tend to counteract each other, with the wider footprint shrinking the required height for resonance and the rate of slope increasing the required height. For anyone anticipating modeling a real physical square sloping tower, running a series of models for familiarization may be a useful exercise. The nearly ideal AGT score gives the 4-sloping-leg model as much validity as its uniform-face-width counterpart.</p>
+  <p><b>Tapered or Stepped-Diameter Triangular Towers</b></p>
+  <p>Although uncommon in the AM BC industry, we do find many triangular towers that employ the rough equivalent of the square tower's sloping legs. Technically, we should refer to such models as stepped-diameter structures, although it is common practice also to refer to them as tapered-diameter elements. (That is why I specifically referred to the square tower as having a sloping face width, since the width decreased continuously rather than in steps.) <b>Fig. 3</b> shows a simplified but representative situation.</p>
+  <center>
+    <img src="amod134-3.gif" border="2" height="370" hspace="9" vspace="5" width="325">
+  </center>
+  <p>We may use the not-to-scale sketch to create some interesting models. However, trying to set up a full-structure model will usually end up in frustration. The steps between sections are normally sudden and very short, resulting in a need for wire segments that fall below the recommended NEC minimum length of 0.001 wavelength (or 11.803" at 1 MHz). If we find the NAB-recommended single-wire equivalent of tower faces acceptable, we can create a simplified model.</p>
+  <p>Let's begin with our 234' total height and break it into 4 equal 58.5' sections, each with its own face width. The base will be 24" wide and the top 12" wide, with equal face width steps between. Hence, we might end up with the following chart.</p>
+  <pre>
+Stepped-Diameter Triangular Tower Section Face Widths and Equivalent Diameters
+
+Section     Face-Width     Equiv. Diameter     Radius in Feet
+Base        24"            17.76"              0.74'
+2           20             14.80               0.6167
+3           16             11.84               0.4934
+Top         12              8.88               0.37
+</pre>
+  <p>We can easily create a single-wire tower using 4 modeling wires having the desired properties.</p>
+  <pre>
+CM near-resonant monopole, perfect ground, stepped triangle
+CM NAB substitute single-wire monopole
+CE
+GW 1 10 0 0 0 0 0 58.5 .74
+GW 2 10 0 0 58.5 0 0 117 .6167
+GW 3 10 0 0 117 0 0 175.5 .4934
+GW 4 10 0 0 175.5 0 0 234 .37
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 7.7772
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Next, let's run the model, first using NEC-2 and then using NEC-4. We obtain the following data collection.</p>
+  <pre>
+234' Stepped-Diameter Triangular Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+NEC-2
+33.52 - j 7.85    7.7245          5.26         2.058   0.12     279.0 mV/m @ -45.6 deg
+NEC-4
+33.07 - j15.21    7.7777          5.18         2.020   0.04     276.2 mV/m @ -45.6 deg
+</pre>
+  <p>With the number and size of the diameter steps, neither core yields a very precise results. As we would expect, the NEC-2 results shows a much poorer AGT score than the NEC-4 run, but both are off the mark where we wish to have relatively high precision.</p>
+  <p>The most common way to achieve precision in cases like this one is to use substitute elements with a uniform diameter. The most precise method available to calculate the length of these elements derives from the work of David Leeson (see chapter 8 of his <i>Physical Design of Yagi Antennas</i>). Leeson adapts the work of Schelkunoff to the calculation of the length and diameter of a uniform-diameter element equivalent to a stepped-diameter element. The equivalence equation is useful for unloaded elements within about 15% of resonance. If we do not wish to perform the calculations manually, we can turn to programs such as NEC-Win Plus or EZNEC that contain the facility within their input interface programming. Note that the substitute element will have a different length as well as diameter relative to the original. For the present sample, the required radius is 0.5593', while the element length is 226.292'. However, the resulting model is very simple.</p>
+  <pre>
+CM near-resonant monopole, perfect ground, leeson
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 226.292 .5593
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 7.4329
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>The substitute element provides us with the following data collection.</p>
+  <pre>
+Substitute Stepped-Diameter Triangular Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+32.15 - j17.47    7.8876          5.12         1.999   0.00     274.3 mV/m @ -45.3 deg
+</pre>
+  <p>As we might expect from the tower height using the substitute element, the stepped-diameter tower is short of resonance. The NEC-2 data might have given the impression that its values were closer to the anticipated resonant impedance. However, it turns out that the NEC-2 run produced values further from accurate data, and both uncorrected models tended to produce reactance values that were too inductive. (A MININEC (Antenna Model) model using the dimensions for the original versions with a changing diameter yielded a gain of 5.13 dBi with a source impedance of 32.63 - j18.85 Ohms.)</p>
+  <p><b>Conclusion</b></p>
+  <p>In this episode, we examined some of the variations that we might well encountered in modeling monopole towers over perfect ground for various AM BC enterprises. As always, the samples were hypothetical, but illustrative of the principles involved in modeling tower structures. We saw that uniform-face-width square towers have simplified forms that are as reliable as the simplified forms used for triangular towers. As well, the full-structure versions of those models, even when adhering as strictly as possible to all NEC guidelines, still resulted in a slight deviation from an ideal AGT score--just enough to show report values that required correction.</p>
+  <p>The sloping-leg and stepped-face-width models, although uncommon in most practice, gave us an opportunity to select the best modeling technique for a given task. In the case of square towers with sloping legs, using independent tower legs for the model proved not merely to simplify the model, but also to avoid the modeling flaws that would easily result from trying to construct a full-structure model. The stepped-face-width triangular model using the NEC-recommended single-wire model allowed us to calculate a uniform-diameter substitute element for which NEC produces more reliable data.</p>
+  <p>We have traveled a considerable distance from our first procedural steps in using NEC to model AM BC towers under standard conditions. However, we still have steps to take.</p>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" height="40" width="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

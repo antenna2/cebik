@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, HF Upper">
+  <title>Notes on LPDA Stubs</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Some Notes on LPDA Stubs</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Log Periodic Dipole Arrays (LPDAs) very often employ shorted transmission line stubs connected across the phase line at the rear-most element terminals. The function and operation of these stubs is not as well understood as one might hope. Therefore, I am offering the following notes to clarify the situation somewhat.</p>
+  <p>From the earliest accounts of LPDAs, the use of a terminating stub has been recommended. <i>The ARRL Antenna Book</i> design procedure for stubs recommended until recently that the designer short out the longest elements on an HF array with a 6" jumper, but that VHF arrays should use a 1/8 wavelength stub as calculated from the longest wavelength used. There is a (lost) reason for this odd recommendation. At HF, where early amateur experience focused its attention, experimenters discovered that LPDAs seemed somewhat insensitive to the stub length. However, the initial recommendation remained in effect for VHF arrays.</p>
+  <p>For an LPDA with a 2:1 frequency range, a 1/8 wavelength stub at the lowest operating frequency represents a 1/4 wavelength stub at the arithmetic mean frequency. For a 14-30 MHz LPDA, the mean is about 22 MHz. We shall see the significance of this value as we move a little further into our exploration.</p>
+  <p><b>Some LPDA Phase-Line Basics</b></p>
+  <p>Ideally, every LPDA design carries with it a recommended value for the characteristic impedance of the phase line interconnecting the elements. (For the most fundamental aspects of LPDA design, see <i>LPDA Notes</i>, Vol. 1 and 2 on the <a href="../bookant.html">Books Page</a>). For the range of Tau and Sigma values most often used by the relatively short and sparsely populated arrays in amateur service, the most commonly calculated value is about 200 Ohms. However, this general value sits upon a fence between better gain (and front-to-back ratio, since these two values tend to follow each other in LPDAs) on one side and performance stability on the other.</p>
+  <p>The higher the phase-line characteristic impedance, the more stable the operation of the LPDA. We can define stable operation as the absence at any operating frequency of anomalous behavior. <b>Fig. 1</b> shows the undesired anomalous behavior.</p>
+  <center>
+    <img src="lst-1.gif" width="614" height="456" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Ordinarily, for any given frequency of operation within the passband of an LPDA, there will be a most active element, as indicated by the current magnitude at its center. All elements forward of the most active element will also be active to varying degrees. To the rear of the most active element, 1 element (and normally not more than 2 elements) will be significantly active. The current levels on the remaining rearward elements will be relatively insignificant.</p>
+  <p>At one or more frequencies in the operating spectrum of an LPDA, the rearward elements relative to the most active element may show high current levels, with each element operating in a harmonic mode. For a 2:1 frequency range, an LPDA will usually show no more than one anomalous frequency. Wider frequency specifications may result in multiple anomalous frequencies. The anomalous operation results in strong rearward radiation, effectively destroying the well-behaved LPDA pattern.</p>
+  <p>If we select a phase-line impedance well above the recommended value, such anomalies do not appear. However, the cost of increasing the phase-line characteristic impedance is a reduction in gain across the operating spectrum relative to the full potential of a given set of elements. (If the relative smoothness of the array gain across the operating passband is a design concern, then we may also have to redesign some elements when changing the phase-line characteristic impedance to restore that smoothness. The initial properties of an array are relative to using the phase-line value that emerges from calculations.)</p>
+  <p>For a variety of reasons, we may wish to use a phase-line characteristic impedance that is lower than the calculated value. For the range of Tau and Sigma values used in amateur arrays, a phase-line impedance of about 100 Ohms often permits a direct match to a 50-Ohm coaxial feed cable using only a simple 1:1 balun. As well, lowering the phase-line impedance also tends to yield higher gain (and better front-to-back ratios). However, accompanying these practical improvements is a tendency for the array to reveal an anomaly.</p>
+  <p>Whether or not the decrease in phase-line characteristic impedance reveals an anomaly depends on a number of design values. The higher the values of both Tau and Sigma, the lower the tendency of an array to show an anomaly. In the 14-30 MHz operating range, LPDAs with Taus above 0.95 and Sigmas above 0.055 may show no anomaly with a 100-Ohm phase line. Such a design has appeared in <i>antenneX</i>. Unfortunately for the average builder, the array is well over 50' long. At the opposite end of the scale, when we drop the value of Tau below 0.90 and the value of Sigma below 0.050, we may find anomalies even with a 250-Ohm phase line. For stability, very small arrays should likely use relatively high impedance phase-line values, perhaps 400 Ohms or more, even if the already small performance is further reduced slightly.</p>
+  <p>Let's look at the operating characteristics of a representative LPDA design using a Tau near 0.91 and a Sigma of about 0.055. We shall equip the design with a 100-Ohm phase line. Arbitrarily, we shall add a 25" shorted stub, using the same 100-Ohm phase line.</p>
+  <center>
+    <img src="lst-2.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the free-space forward gain, the 180-degree front-to-back ratio, and the worst-case front-to-back ratio, as plotted on EZPLOT. The legend designation "front/sidelobe" represents the worst case front-to-back ratio, since there are no secondary forward lobes to corrupt this value. In a broadband array, where the rear lobes may change their shapes periodically, the worst-case front-to-back ratio is often a better predictor of overall array performance to the rear. In a well designed LPDA, the graphed line is relatively smooth, in contrast to the many peaks in the 180-degree front-to-back line. The graph employs 0.25 MHz intervals.</p>
+  <p>In the region of 25.5 to 25.75 MHz, we note a sudden decrease in gain and an equally sudden decrease in front-to-back ratio. Note that the frequencies are not identical for gain and front-to-back ratio. The actual worst-case gain and front-to-back ratio will coincide at the precise anomalous frequency, but the curves approaching that frequency tend to differ for gain and front-to-back ratio.</p>
+  <center>
+    <img src="lst-3.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 3</b>, we can track the effects of anomalous operation on the feedpoint values: resistance, reactance, and SWR (here referenced to 50 Ohms). In this particular instance, not only does the SWR climb to a very high value (and much higher, since the precise anomalous frequency is slightly higher than 25.25 MHz), but as well, the resistance climbs to a high value and the reactance becomes very inductive. In other instances of anomalies, the feedpoint resistance might become very low instead.</p>
+  <p><b>The Role of A Shorted or Terminating Stub</b></p>
+  <p>There are two general practices in placing shorted stubs across the terminals of the longest element. One practice is to use the same characteristic impedance as the phase line itself. In the graphed sample, the line was 100 Ohms and 25" long. The alternative practice is to use a higher value of characteristic impedance. For short stubs, the result is a shorter stub than when using a lower characteristic impedance.</p>
+  <p>We may track the effect of using different stub impedances and lengths. The only preparation that we need is a simple warning. For the present design, we cannot eliminate the anomaly. We may only push its frequency up and down the LPDA's passband.</p>
+  <center>
+    <img src="lst-4.gif" width="647" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> tracks the anomalous frequency of the sample LPDA using 100-Ohm and 600 Ohm stubs at lengths ranging from virtually nothing to 450". The actual length of the so-called zero-length line was 0.1" in order to make the TL facility in NEC functional. 450" is slightly over 1/2 wavelength at the lowest operating frequency (14 MHz: 1 wavelength = 843").</p>
+  <p>The 100-Ohm stub curve is interesting for its nearly linear shape. Slight irregularities in the curve result from sampling at 0.25 MHz intervals. The 600-Ohm curve changes the anomalous frequency very rapidly initially, but the curve flattens considerably at middle lengths, and resumes a more rapid decrease rate in the anomalous frequency at long stub lengths.</p>
+  <p>Of first note is the fact that we may actually push the anomalous frequency below the lower end of the operating passband. However, as the final entry shows, we do not rid ourselves of the anomaly in this way. Instead, the anomaly reappears at the upper end of the passband as the stub approaches and passes a length of 1/2 wavelength at the lowest operating frequency. At best, we may select a stub length that places the anomaly in an unused portion of the operating spectrum.</p>
+  <p>Of second note is the line length at which the two curves cross: about 137" or so. Close to this length, both stubs are 1/4 wavelength near the crossing frequency, 22 MHz. This fact represents the significance of the original specification for this line at 1/8 wavelength relative to the lowest frequency used. The simple calculation works reasonably for LPDAs having a 2:1 frequency range. The difficulty is that the line length has no magic. It does not eliminate anomalies and it does not necessarily move the anomalous frequency to a desirable frequency. The length does have one further significance. The frequency of the anomaly does replicate the frequency at which an anomaly occurs if we use no stub at all.</p>
+  <p>Lest we think that anomalies are simply regions of reduced performance, let's take a closer look at a different sample. In this case--which uses the same array with a longer stub line--I expanded the coverage by using 0.1 MHz intervals. <b>Fig. 5</b> is the result.</p>
+  <center>
+    <img src="lst-5.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The circled point on the graph is an artifact. The gain value shown is actually the gain of the array in the opposite direction, a result of the very high currents on the rear elements, as displayed in <b>Fig. 1</b>. The very worst effects occur just above 20.9 MHz. From the perspective of the expanded sweep, we can see that the gain and front-to-back ratio tend to drop precipitously, only to rise at a slower rate than they fell--if we use rising frequency as our reference. The SWR tends to rise more slowly and then suddenly drop back into the normal range. Hence, the SWR curve alone is not a sufficient guide to setting the anomaly's frequency through adjustments to the stub length.</p>
+  <center>
+    <img src="lst-6.gif" width="376" height="425" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> contrasts two patterns from the same array at 19.5 MHz and 20.9 MHz. The well-behaved upper pattern turns into a reverse-direction lower pattern of very low gain, given its dipole-like shape. I have used this sample to show also that incorrect selection of the stub length can move an anomaly too close to a desired operating range, in this case, the 21 MHz amateur band.</p>
+  <p>It is unwise to use <b>Fig. 4</b> as a general guide to stub lengths and anomaly frequencies. It is design specific. Those who design LPDAs via modeling techniques can estimate the required stub length for any value of characteristic impedance in order to place an anomaly where it will do the least harm. The lines in the samples shown use a velocity factor of 1.0, and so any actual line will have to use a shorter length in accord with the velocity factor of the line used.</p>
+  <p>Besides moving an anomaly from one frequency to another, stubs also function to place both sides of each element at the same static charge potential. There appears to be no good reason why the center point of the shorting bar across the stub may not be grounded to the mast. However, the use of a balun at the feedpoint may make this move unnecessary, since one line of the balun on the unbalanced side may already be at boom potential. Unless one is using a normal transformer instead of a transmission-line transformer in the balun device, static charge continuity should be present.</p>
+  <p><b>Borderline Phase-Line Impedances</b></p>
+  <p>Although phase-line impedances values above 200 Ohms should result in stable operation, we cannot simply assume that no anomalies will appear. Most contemporary LPDA designs use a series of modifications to calculated values in order to enhance performance. Practical construction considerations do not permit the use of a single--let alone ideal--element length-to-diameter ratio. The longest and shortest elements may be varied to improve passband-edge performance. As well, one may add a parasitic director to an array to improve high-end performance in lieu of adding a series of LPDA elements. The result of these and other design modifications is to alter the anticipated smooth curves of a stable LPDA. The examples that we used above all employed a parasitic director and some circularization of Tau.</p>
+  <p>Let's simply change the phase-line impedance of our initial model, this time using 250 Ohms. We shall retain the 25" stub, but let it also have a 250-Ohm impedance. The stub in this instance functions to slightly alter the characteristics at the lowest operating frequency in order to obtain the best combination of gain, front-to-back ratio, and 100-Ohm SWR.</p>
+  <center>
+    <img src="lst-7.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As the circled element in <b>Fig. 7</b> shows, we have an apparent warning signal of a possible anomaly at 27.5 MHz. The free-space forward gain suddenly drops by nearly 0.15 dB to 7.07 dBi. Interestingly, the 2 front-to-back curves show no symptoms of an anomaly.</p>
+  <center>
+    <img src="lst-8.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows that there are no sudden changes in any of the feedpoint values, thus confirming that fact that we may have a false alarm. (The SWR values would be lower overall had we used a reference standard of 120 Ohms, but this value is generally inconvenient for transformation to 50 Ohms by most standard methods.) In fact, detailed frequency sweeps of the frequencies around 27.5 MHz reveal no anomaly, but only the sudden drop in gain. The drop is not serious in terms of the overall gain curve of the array (which requires further optimization to smooth the upper half of the passband). Indeed, we may wish to correlate the two figures and note that the gain drop occurs in the region where the SWR curve changes from its regular undulations into a slowly dropping value. Undoubtedly, the two performance factors are under the influence of the parasitic director.</p>
+  <center>
+    <img src="lst-9.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Just as we may move the frequency of an anomaly downward by lengthening a shorted stub, so too can we move the frequency of false alarm. <b>Fig. 9</b> shows the curve for the same array, but with a 225" stub. The upper portion of the curve--above 27 MHz--now has the smoothness that we expected to see. However, we find sudden value changes around 23.5 MHz: sudden shifts upward in both gain and the 180-degree front-to-back ratio. Once more, neither the feedpoint value curves nor a detailed frequency sweep uncover a true anomaly.</p>
+  <p>Let's push the phase-line impedance borderline somewhat closer to the limit: from 250 Ohms down to 200 Ohms. The advantage of the move is that the 100-Ohm SWR curve improves considerably, while the gain increases by a small but numerically noticeable amount.</p>
+  <center>
+    <img src="lst-10.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we model an array similar to the one we have been using as a sample, but omit the stub altogether, we obtain a peak in gain and a slight null in front-to-back ratio at about 22.5 MHz, as shown in the expanded graph in <b>Fig. 10</b>. The 0.25 dB rise in gain over a small frequency spread is a function of the parasitic director in concert with the other LPDA elements for this particular design. At most, it is an oddity, unless we are striving for the smoothest possible gain curve across the entire passband.</p>
+  <p>Now let's add an arbitrary 25" 200-Ohm shorted stub across the rear element. This action tends to coincide with the older advice simply to use a short stub of some arbitrary length--and the 25" stub at 200 Ohms has about the same effect as a 6" 600-Ohm stub.</p>
+  <center>
+    <img src="lst-11.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> shows that the short stub will increase the frequency of an oddity (even if not an anomaly) relative to using no stub at all. However, our former gain peak has turned into a 0.8 dB drop in gain and a drop in front-to-back ratio of about 10 dB. Although these values--confirmed as the lowest in the curves by an even more detailed frequency sweep--are not technically anomalous, they do represent a serious--and unnecessary--decrease in performance.</p>
+  <center>
+    <img src="lst-12.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 12</b> provides one solution. By using a longer stub--125" in this case--we return the curves to very nearly their former positions.</p>
+  <p>The upshot of the exercise is that a short stub is not necessarily the answer to every ill or near-ill that may befall an LPDA design. In cases where the phase-line impedance is lowered to marginal stability, a simple shorted stub may cause more harm than good. In such cases, if we need a stub at all, then we must experiment with lengths until we have satisfied all the design goals of a particular LPDA. As noted earlier, the more modifications that we make upon a given calculated design in order to improve performance, the more likely it will be that finding a satisfactory stub length will be a matter of trial and error.</p>
+  <p><b>Summary</b></p>
+  <p>The reasons for using a shorted stub in an LPDA include the following items.</p>
+  <p>1. A stub provides DC continuity between the halves of each element in an LPDA. The result may be a reduced noise level and a degree of safety if there is a path to ground for any static charge.</p>
+  <p>2. A stub permits us to slightly tailor the performance characteristics of an LPDA at the lowest operating frequencies, as we aim for the best combination of gain, front-to-back ratio, and feedpoint impedance.</p>
+  <p>3. A stub permits us to move anomalous and other "odd-performance" frequencies to the most desirable frequency--often an unused portion of the operating spectrum.</p>
+  <p>However, a stub does not permit us to remove an anomaly that results from using a very low phase-line impedance. Indeed, in cases of phase-line impedances that provide only marginal stability, selecting the wrong stub length relative to its characteristic impedance can create more problems than it solves. Most cases in which we have reports that a stub eliminates an anomaly are actually cases of changing a poor line length into a better line length.</p>
+  <p>The longer the stub, the lower the frequency of an anomaly until a stub approaches 1/2 wavelength, at which point, anomalous behavior repeats itself. A stub that is about 1/8 wavelength long at the lowest operating frequency yields performance very close to the performance of an array with no stub at all--assuming an LPDA frequency range of about 2:1.</p>
+  <p>In wider-range LPDAs, we may encounter multiple anomalous frequencies. A single stub usually is insufficient to move all of them to desirable frequencies.</p>
+  <p>A stub may be unnecessary if the performance of an array meets design specifications without a stub and if alternative means are used to obtain DC continuity between array element halves.</p>
+  <p>The sample cases used in this exercise are subject to almost an indefinitely large number of variations, given the large number of variables involved both basic LPDA calculations and in subsequent modifications to improve performance. Hence, the only way to determine the correct length for a stub remains trial and error. NEC models of arrays and their stubs can shorten the design work, but all such models are subject to stub-length modification on the physical antennas that they represent.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 08-01-2003. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for July, 2003. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#lpda'>LPDA</a></p><br>
+</body>
+</html>

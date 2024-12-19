@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>When MININEC is Superior to NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>56. When MININEC is Superior to NEC</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Although NEC (-2 or -4) has become the <i>de facto</i> stand for modeling LF through VHF wire antennas, we should be aware that there are cases in which public domain MININEC, especially in its corrected and improved versions, may yield superior results. In an earlier column, I compared some results using NEC-4 and various implementations of public domain MININEC. However, in that column, I used NEC-4 as a standard against which to compare the various versions of MININEC. The models used were selected on the basis of the known accuracy of NEC-4 relative to the model geometries involved.</p>
+  <p><b>NEC-2/-4 Weaknesses</b></p>
+  <p>There are, however, a number of model geometries which neither NEC-2 nor NEC-4 handle very well. NEC-2 has its well-documented weakness with any stepping of element diameter. When elements are linear, the Leeson corrections provide accurate results. However, the Leeson corrections actually provide the user with a substitute constant-diameter element having the same electrical properties as the original stepped diameter element. Moreover, the use of a Leeson-substitute is applicable only when the element is a. linear, b. within about 15% of half wavelength resonance (1/4 wavelength resonance for vertical monopoles), and c. not loaded except at the element center (if horizontal) or at the element base (if a 1/4 wavelength monopole). Although exceptionally useful for monoband Yagi, the Leeson corrections have limitations when we try to model arrays with loaded elements or arrays that intermix elements for many frequencies.</p>
+  <p>NEC-4 has to a major extent overcome the NEC-2 weakness with stepped- diameter elements. However, the results grow more inaccurate as the diameter step grows larger. In most cases, the potential for error shows up on the average gain test as a value that departs considerably from the ideal 1.00 (for horizontal elements--2.00 for monopoles touching the ground). Therefore, when using even NEC-4, running the average gain test after removing all resistive loading from the antenna and placing it in free space (or over perfect ground for monopoles touching the ground) is a crucial step in assessing the appropriate confidence level in a model.</p>
+  <p>Both NEC-2 and NEC-4 retain weaknesses in related model geometries where no easy correctives current exist. One such area is an angular junction of wires that have dissimilar diameters. This form of construction is common in LF through VHF antenna construction. At lower frequencies, wire extensions may emanate from a tower. At higher frequencies, antenna elements may begin as aluminum tubing and end as copper wire.</p>
+  <p>The errors that accrue to angular junctions of dissimilar diameter wires tend to disappear with at least one type of structure. Consider an element with a symmetrical hat structure (or a ground-plane radial structure). If the structure of wires is truly symmetrical, then the net radiation from the structure is (nearly) zero. With these types of structures, the angular junction errors tend to disappear.</p>
+  <p>A second type of error that appears in both NEC-2 and NEC-4 models appears when we closely space elements of different diameters. The common folded dipole may use length-wise wires of differing diameters to control the impedance step-up over a standard dipole. The ratio is 4:1 only if both wires are the same diameter--and NEC handles this case very well if the segment junctions are well aligned for the two wires. However, if the unfed wire is significantly thicker or thinner than the fed wire, then NEC yields results that are prone to error.</p>
+  <p>The wires need not be connected at the ends for the errors to appear. In open-sleeve coupling situations, the fed element and the slaved element may be a. in very close proximity and b. of different lengths and diameters. Depending upon the lengths, the diameters, and the spacing, considerable error may creep into the NEC output. The closer the spacing, the higher the error.</p>
+  <p>For a more complete review of these weakness, see "NEC-4.1: Limitations of Importance to Hams," <i>QEX</i> (May/June, 1998), pp. 3-16.</p>
+  <p><b>MININEC 3.13 Strengths and Weaknesses</b></p>
+  <p>MININEC 3.13 is the public domain version of the program. As such, it has been subject to numerous modifications by those implementing the core within more user-friendly interfaces. In its initial form, MININEC has a series of known weaknesses.</p>
+  <ul>
+    <li>1. MININEC requires an excessively high level of segmentation to overcome errors at angular junctions of wires.</li>
+    <li>2. There is a known limit to the smallest angle that MININEC may handle with a wire junction at any level of segmentation.</li>
+    <li>3. As one increases frequency, MININEC shows a frequency offset of increasing proportions.</li>
+    <li>4. As one decreases the spacing between wires, inaccuracies increase.</li>
+  </ul>
+  <p>Each of these inadequacies has been addresses by at least one implementation of MININEC. However, the latest incarnation of public domain MININEC--Antenna Model--has addressed all of them and returns results that are very consistent with NEC-4 models through the lower UHF region (the limits of my testing so far).</p>
+  <p>Thus far, no one has managed to weld the highly accurate Sommerfeld ground calculation system to MININEC. Hence, the simple reflection coefficient system remains in all current implementations of the program. Any wire with a horizontal component (meaning both horizontal and tilted wires) will show increasing inaccuracy of results when the wire is less than about 0.2 wavelength high at its lowest point. MININEC thus shows its greatest strengths when the model is in free space or at a relatively high position relative to the ground.</p>
+  <p>(We shall by-pass in this column the use of a MININEC ground as a substitute for ground-plane radials for monopoles touching the ground. I did a series of articles "Some Facts of Life About Modeling 160-Meter Vertical Arrays" for <i>The National Contest Journal</i> in 200-2001 the explore this territory in considerable detail.)</p>
+  <p>MININEC 3.13 tends to show its strength in just the areas where NEC displays its weaknesses. Linear elements with a stepped diameter produce accurate results without need for any correctives. Indeed, the original Leeson correctives were calibrated to MININEC results using the same elements. (See Chapter 8 of <i>Physical Design of Yagi Antennas</i> by David B. Leeson, especially section 8.5.) Moreover, angular junctions of dissimilar-diameter wires can be routinely handled once correctives are introduced for the basic angular junction difficulty in MININEC. Finally, MININEC shows an ability to yield accurate results with closely spaced wires of differing diameters once the basic close-spaced wire inadequacy has been corrected.</p>
+  <p>Note that many of the MININEC strengths--excepting the ability to handle directly stepped-diameter wires--depend upon the introduction of correctives to initial MININEC weaknesses. Hence, the reliability of MININEC 3.13 depends to a great degree upon the adequacy and number of correctives introduced into the calculating core. AO has a good frequency corrective and ELNEC has a good close-wire corrective. As noted, however, Antenna Model has introduced the most thorough-going collection of corrections and will be used as the MININEC program in a couple of sample exercises.</p>
+  <p><b>A VHF Rectangle as a Sample Comparison between MININEC and NEC</b></p>
+  <center>
+    <img src="amod56-1.gif" width="530" height="412" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As an exercise for which I have actually built a physical antenna to check models against reality, let's consider a 2-meter rectangle designed for 146.0 MHz. <b>Fig. 1</b> shows the model, its segmentation, and feedpoint. The model shape was dictated by the task specification of arriving at an antenna having a feedpoint impedance that yield a low SWR with 50-Ohm coaxial cable feedline. The model uses (in the MININEC version) 16 segments in the horizontal legs and 34 segments in the vertical legs.</p>
+  <center>
+    <img src="amod56-2.gif" width="296" height="448" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The physical construction of the antenna appears in outline form in <b>Fig. 2</b>. The horizontal legs consist of 0.75" diameter aluminum tubing 16.0" long. The lower horizontal leg is split for direct connection of a female UHF connector. The vertical legs each use 33.75" of AWG #14 wires (0.0641" diameter). The wires are bare copper. The test antenna itself used a simple PVC vertical center support and small blocks of wood to support the horizontal legs. The vertical PVC support used two different nesting sizes of PVC to allow for adjustment of the vertical height during tests.</p>
+  <center>
+    <img src="amod56-3.gif" width="589" height="416" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The free-space pattern for the antenna appears in 3-dimensional form in <b>Fig. 3</b>. For those more used to seeing 2-dimensional patterns for the antenna, <b>Fig. 4</b> provides the azimuth or E-plane pattern for the antenna. Note that the nulls at 90 degrees to broadside to the antenna are not as deep as those on a dipole placed in free space. There is significant radiation from the vertical legs of any quad loop, square or rectangular--at least enough to diminish the nulls off the edge of the array.</p>
+  <center>
+    <img src="amod56-4.gif" width="640" height="625" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I ran this antenna at 146.0 MHz using Antenna Model's corrected MININEC and on various implementations of NEC-2 and NEC-4. The following table summarizes the results. There was no difference between single and double precision NEC-4 values.</p>
+  <pre>Core             Impedance             Free-Space      AGT
+                 R+/-jZ Ohms           Gain dBi        Gain/dB
+
+MININEC (AM)     53.1 + j 0.7          5.04            0.9871/-0.06
+NEC-4            65.2 + j68.6          5.01            0.9780/-0.10
+NEC-2            83.8 + j152           4.82            0.9470/-0.24</pre>
+  <p>There are several facets to explore in this table. Although one might view some aspects as unnecessarily subtle, the results form an interesting composite.</p>
+  <p>First, the average gain test (AGT) values emerge from both EZNEC and NEC- Win Plus for the NEC-2 test--and are consistent in both. EZNEC shares in common with Antenna Model the ability to arrive at an AGT value even if the elements have material loading (LD5 in NEC). These values are of little or no use, since they do not differentiate between material losses and a failure to achieve an ideal 1.0 AGT value due to the antenna geometry in relationship to core calculations. Therefore, one must use care to use perfect or lossless wire for the test. NEC-Win Plus does this automatically in its implementation of the test.</p>
+  <p>The AGT value can be translated into a gain deficit (as in the example) or a gain surplus by multiplying the common log of the AGT value by 10. In all three cases, the corrected gain value (the reported value minus the AGT in dB) becomes something very close to 5.1 dBi.</p>
+  <p>The AGT value itself may be used to correct source impedances having negligible reactance. Multiply the source resistance by the AGT. The MININEC report becomes about 52.4 Ohms, a difference too small for my instruments to measure. However, the high reactance associated with the NEC source impedance reports voids the use of the AGT to correct the source resistance values.</p>
+  <p>In fact, adjusting the vertical legs of the NEC models to yield a source impedance close to resonant provided me with a simple test of which program provided the most accurate results. NEC-4 required vertical legs of 32" to yield a source impedance of about 57 Ohms, while NEC-2 needed vertical legs 29.6" long to report a resonant source impedance of about 65 Ohms. The significant difference between the length of the vertical legs with no change of the horizontal legs allowed a simple test to determine the most accurate modeling result.</p>
+  <p>The physical antenna was within about 0.2" of the MININEC results and showed a source impedance very close to 50 Ohms--allowing for instrument error. It is interesting to note that ELNEC, which does not use a frequency corrective for its MININEC core, reported a gain of 5.1 dBi and a source impedance of 50.8 - j 4.0 Ohms, indicating that the frequency drift of raw MININEC has not surpassed usability at the 146-MHz range.</p>
+  <p><b>A Step-Up Folded Dipole as a Sample Comparison between NEC and MININEC</b></p>
+  <p>A folded dipole that is resonant on any given frequency will exhibit the familiar 4:1 impedance set-up relative to a single wire resonant dipole only if the long wires are of equal diameter. If the fed wire is larger in diameter than the unfed wire, then the impedance will increase by less than 4:1, but in no case will it be less than 1:1. If the unfed wire is larger in diameter than the fed wire, then the impedance ratio relative to a single-wire resonant dipole will be greater than 4:1.</p>
+  <p>The theoretical impedance transformation is given by the following equation:</p>
+  <center>
+    <img src="amod56e1.gif" width="260" height="154">
+  </center>
+  <p>where R is the impedance transformation ratio, s is the wire spacing, center-to-center, d1 is the diameter of the fed wire, and d2 is the diameter of the second wire, and where s, d1, and d2 are given in the same units.</p>
+  <p>Suppose that we create a folded dipole using AWG #12 wire (0.0808" dia.) for the fed wire and 0.5" diameter for the unfed wire. Let's also space the wires 3" (0.25') center-to-center. The impedance transformation predicted by the equation is 7.47. If a single wire dipole has an impedance of abut 71 Ohms, then the anticipated folded dipole impedance would be about 530 Ohms. The equation does not take into account the connecting end wires, so we may expect some variance from the value, but not by more than a few percent. As well, the impedance of a dipole will vary slightly depending upon the diameter and type of material, so we should expect perhaps a range of +/-5 Ohms for the set-up folded dipole relative to calculations.</p>
+  <center>
+    <img src="amod56-5.gif" width="575" height="211" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now let's make a model of the step-up folded dipole. If we choose 28.5 MHz as the test frequency, we can segment a folded dipole as shown in <b>Fig. 5</b>. The long wires have 68 segments in MININEC and 67 segments in NEC--to ensure proper centering of the feedpoint. The AWG #12 end wires use 2 segments per wire.</p>
+  <center>
+    <img src="amod56-6.gif" width="490" height="171" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows the general physical outlines of the antenna. For the test frequency, the long wires are 16.2' long. For this test, the end wires extend along the Z-axis. If we lay the folded dipole along the X-Y axes, there will be a slight gain difference in the resulting two azimuth lobes amounting to about 0.1 dB. Using the Z-axis for the two long wire displacement equalizes the gain in the lobes.</p>
+  <center>
+    <img src="amod56-7.gif" width="575" height="610" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the 3-dimensional free-space pattern of the antenna and the familiar donut shape applicable to dipoles, whether folded or unfolded. Those who prefer 2-dimensional patterns may look at <b>Fig. 8</b>, which records the E-plane pattern of the antenna in free space. Incidentally, all patterns and segmentation graphics in this column come from Antenna Model. Hence, the recorded gain is that of the MININEC model.</p>
+  <center>
+    <img src="amod56-8.gif" width="643" height="625" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The crux of our investigation hinges upon how well MININEC fares over and against NEC-2 and NEC-4 models of the same antenna. The only difference between models will be in the segmentation of the long wires: 68 vs. 67.</p>
+  <pre>Core             Impedance             Free-Space      AGT
+                 R+/-jZ Ohms           Gain dBi        Gain/dB
+
+MININEC (AM)     530.5 + j 2.0         2.13            0.9988/-0.01
+NEC-4            463.0 + j17.5         1.50            0.8660/-0.62
+NEC-2            375.2 + j25.8         0.60            0.7030/-1.53</pre>
+  <p>The MININEC model produces highly credible numbers for both the source impedance and the gain. As well, it yields a very good AGT value. In contrast, the NEC-4 and NEC-2 numbers fall well outside the range of credibility. (As with the first test, there is no significant difference between NEC-4 single and double precision values.) Although NEC-4 comes closer to believable numbers, as witnessed by the higher AGT value, the model still falls into the range of the unusable. However, if we adjust the gain values by the AGT deficit in dB, we come close to the value reported directly by the MININEC model.</p>
+  <p>Both NEC-2 and NEC-4 provide excellent results when the two long wires of the folded dipole have the same diameter. The limitation faced by NEC lies in its calculations when the wires have different diameters. Indeed, making the end wires equal in diameter to the unfed wire does not change the results. MININEC is the preferred core for antenna design and analysis when antennas have geometries resembling the one in the step-up folded dipole.</p>
+  <p><b>Conclusion</b></p>
+  <p>There are, then, antenna wire geometries for which MININEC is the preferred modeling core, especially if that core has been adjusted to overcome past known weaknesses. This is the case with Antenna Model, although if VHF and upward frequencies are not used, ELNEC will handle close-spaced wires quite well and if no close-spaced geometries are involved, AO will handle VHF and UHF frequencies well. See column #50 for further specific comparisons among MININEC cores.</p>
+  <p>These notes are not intended in any way as a criticism or indictment of NEC-2 or NEC-4. Quite the opposite. We obtain the best results in our modeling tasks when we apply the right tool to the right job. For many tasks, NEC-2 and NEC-4 are the right tools. However, corrected MININEC is also available for certain special jobs that NEC-2 and NEC-4 do not do well. And, for a large class of modeling tasks, both NEC and MININEC are equally apt as modeling cores.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

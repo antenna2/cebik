@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Scales of Equivalence</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>26. The Scales of Equivalence</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>Frequency scaling antennas consists of adjusting the dimensions of an antenna with a frequency F1 to some other frequency F2. The process is very straightforward in some kinds of cases, and somewhat circuitous in others. Let's examine a case of each type so that we can become aware of when simple scaling may fail us and the sorts of maneuvers we can perform to get the job done anyway.</p>
+  <p><b>Simple Scaling</b></p>
+  <p>The basic parameters of frequency scaling in its simplest for appear in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod26-1.gif" width="523" height="245" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Scaling involves not only element length adjustments, but also element diameter adjustments of the same magnitude. The adjustments we must make are simply the inverse of the ratio of the two frequencies. If the initial frequency is 28.35 MHz and the target frequency is 14.175 MHz, then the ratio is 0.5. All element lengths, spacings, and diameters must therefore be multiplied by the inverse of the ratio--in this case by 2--to arrive at the final antenna dimensions.</p>
+  <p>Let's examine the wire chart for a simple 2-element Yagi cut for 28.35 MHz.</p>
+  <pre>2-el Al Yagi:  28.35 MHz                Frequency = 28.35  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -95.250, 52.000,  0.000        95.250, 52.000,  0.000 1.00E+00  21
+2        -105.75,  0.000,  0.000       105.750,  0.000,  0.000 1.00E+00  21</pre>
+  <p>The element end coordinates are specified in the "X" columns; the element spacing is in the "Y" column; and the diameter is to the right.</p>
+  <p>The modeled performance of this antenna is as follows.</p>
+  <pre>Freq.          Free-Space          Front-to Back        Feedpoint Z
+ MHz            Gain dBi             Ratio dB          R +/- jX Ohms
+28.0             6.29                11.32             31.18 - j 12.12
+28.35            6.03                11.00             36.46 - j  0.13
+28.7             5.80                10.35             41.55 + j 11.29</pre>
+  <p>If we frequency scale this antenna to 14.175 MHz, all of the dimensions are multiplied by 2 to arrive at the following wire table.</p>
+  <pre>2-el Al Yagi: 14.175 MHz                   Frequency = 14.175  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -190.50,104.000,  0.000       190.500,104.000,  0.000 2.00E+00  21
+2        -211.50,  0.000,  0.000       211.500,  0.000,  0.000 2.00E+00  21</pre>
+  <p>Because every dimension is exactly scaled, we expect the resultant antenna to perform along its new frequency range exactly as the initial model performed within its own range. We shall not be disappointed by the modeled antenna performance figures.</p>
+  <pre>Freq.          Free-Space          Front-to Back        Feedpoint Z
+ MHz            Gain dBi             Ratio dB          R +/- jX Ohms
+14.0             6.29                11.32             31.15 - j 12.12
+14.175           6.03                11.00             36.44 - j  0.14
+14.35            5.81                10.37             41.52 + j 11.29</pre>
+  <p>I have reported values to more decimal places than would be operationally significant in order to show the degree to which scaling can be precise. Unfortunately, not every case of scaling lends itself to such easy arithmetical treatment.</p>
+  <p><b>A More Difficult Scaling Task</b></p>
+  <p>Let's next tackle a slightly more interesting scaling task. Our task will be to scale a 20-meter Yagi with complex stepped diameter elements into a 10-meter Yagi with a simpler element scheme, as in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod26-2.gif" width="509" height="196" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The frequency ratio will be 2:1. As we shall discover, that fact does not come close to resolving the scaling challenge.</p>
+  <p>Suppose we begin with a 4-element 20-meter Yagi having the following wire structure.</p>
+  <pre>4-element 20M Yagi                         Frequency = 14.175  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -217.50,  0.000,  0.000  W2E1 -154.00,  0.000,  0.000 5.00E-01   7
+2   W1E2 -154.00,  0.000,  0.000  W3E1 -134.00,  0.000,  0.000 6.25E-01   2
+3   W2E2 -134.00,  0.000,  0.000  W4E1 -92.000,  0.000,  0.000 7.50E-01   4
+4   W3E2 -92.000,  0.000,  0.000  W5E1 -72.000,  0.000,  0.000 8.75E-01   2
+5   W4E2 -72.000,  0.000,  0.000  W6E1 -48.000,  0.000,  0.000 1.00E+00   2
+6   W5E2 -48.000,  0.000,  0.000  W7E1  48.000,  0.000,  0.000 1.25E+00   9
+7   W6E2  48.000,  0.000,  0.000  W8E1  72.000,  0.000,  0.000 1.00E+00   2
+8   W7E2  72.000,  0.000,  0.000  W9E1  92.000,  0.000,  0.000 8.75E-01   2
+9   W8E2  92.000,  0.000,  0.000 W10E1 134.000,  0.000,  0.000 7.50E-01   4
+10  W9E2 134.000,  0.000,  0.000 W11E1 154.000,  0.000,  0.000 6.25E-01   2
+11 W10E2 154.000,  0.000,  0.000       217.500,  0.000,  0.000 5.00E-01   7
+12       -211.00, 72.000,  0.000 W13E1 -154.00, 72.000,  0.000 5.00E-01   5
+. . .
+22 W21E2 154.000, 72.000,  0.000       211.000, 72.000,  0.000 5.00E-01   5
+23       -203.55,141.000,  0.000 W24E1 -154.00,141.000,  0.000 5.00E-01   5
+. . .
+33 W32E2 154.000,141.000,  0.000       203.550,141.000,  0.000 5.00E-01   5
+34       -190.56,306.000,  0.000 W35E1 -154.00,306.000,  0.000 5.00E-01   4
+. . .
+44 W43E2 154.000,306.000,  0.000       190.560,306.000,  0.000 5.00E-01   4</pre>
+  <p>For elements 2, 3, and 4, I have omitted the interior wires of the model, since they are identical to those in the first element. The design is adapted from a version created by N6BV. I have adjusted the dimensions so that the antenna properties are spread out across the 20-meter amateur band rather than being focused in the lower 200 kHz. Hence, the design-center frequency is 14.175 MHz for this model. As well, I have adjusted the driver length for resonance and adjusted the spacing so that the resonance impedance is close to 25 Ohms so that the design can be fed with a 1/4 wl section of 35-Ohm cable from the main 50-Ohm feedline. All in all, this is a nice little design that would fit a 26' boom.</p>
+  <p>Tabularly, the performance of this example follows this pattern.</p>
+  <pre>Freq.          Free-Space          Front-to Back        Feedpoint Z
+ MHz            Gain dBi             Ratio dB          R +/- jX Ohms
+14.0             8.42                21.28             23.54 - j  6.99
+14.175           8.53                22.80             26.26 - j  0.73
+14.35            8.62                20.31             21.26 + j  4.89</pre>
+  <p>More graphically, the overlaid free-space azimuth patterns for this antenna appear in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod26-3.gif" width="640" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now let's scale the antenna directly, replacing every wire length, spacing, and diameter in the model with its half-size replacement for a design frequency of 28.35 MHz. The performance table is as follows.</p>
+  <pre>Freq.          Free-Space          Front-to Back        Feedpoint Z
+ MHz            Gain dBi             Ratio dB          R +/- jX Ohms
+28.0             8.40                21.28             23.57 - j  6.97
+28.35            8.51                22.76             26.27 - j  0.71
+28.7             8.61                20.28             21.26 + j  4.95</pre>
+  <p>The tabulated values tell us that <b>Fig. 3</b> makes as good a representation of the azimuth patterns for the scaled antenna as for the original. Hence, we can go directly to the wire table for the directly scaled 10-meter antenna.</p>
+  <pre>4-element 10M Yagi-scaled                  Frequency = 28.35  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -108.75,  0.000,  0.000  W2E1 -77.000,  0.000,  0.000 2.50E-01   7
+2   W1E2 -77.000,  0.000,  0.000  W3E1 -67.000,  0.000,  0.000 3.13E-01   2
+3   W2E2 -67.000,  0.000,  0.000  W4E1 -46.000,  0.000,  0.000 3.75E-01   4
+4   W3E2 -46.000,  0.000,  0.000  W5E1 -36.000,  0.000,  0.000 4.38E-01   2
+5   W4E2 -36.000,  0.000,  0.000  W6E1 -24.000,  0.000,  0.000 5.00E-01   2
+6   W5E2 -24.000,  0.000,  0.000  W7E1  24.000,  0.000,  0.000 6.25E-01   9
+7   W6E2  24.000,  0.000,  0.000  W8E1  36.000,  0.000,  0.000 5.00E-01   2
+8   W7E2  36.000,  0.000,  0.000  W9E1  46.000,  0.000,  0.000 4.38E-01   2
+9   W8E2  46.000,  0.000,  0.000 W10E1  67.000,  0.000,  0.000 3.75E-01   4
+10  W9E2  67.000,  0.000,  0.000 W11E1  77.000,  0.000,  0.000 3.13E-01   2
+11 W10E2  77.000,  0.000,  0.000       108.750,  0.000,  0.000 2.50E-01   7
+12       -105.50, 36.000,  0.000 W13E1 -77.000, 36.000,  0.000 2.50E-01   5
+. . .
+22 W21E2  77.000, 36.000,  0.000       105.500, 36.000,  0.000 2.50E-01   5
+23       -101.77, 70.500,  0.000 W24E1 -77.000, 70.500,  0.000 2.50E-01   5
+. . .
+33 W32E2  77.000, 70.500,  0.000       101.775, 70.500,  0.000 2.50E-01   5
+34       -95.280,153.000,  0.000 W35E1 -77.000,153.000,  0.000 2.50E-01   4
+. . .
+44 W43E2  77.000,153.000,  0.000        95.280,153.000,  0.000 2.50E-01   4</pre>
+  <p>Once more I have omitted the interior structure of elements except for the reflector, since all 4 elements are the same in this respect. The problem posed by the scaled antenna is self-revealing from the truncated data: the stepped-diameter tubing schedule would require the use of thin-wall tubing of sizes that are not available. In short, we are unlikely to want to build the directly scaled model.</p>
+  <p>Suppose that we wish simply to use for each element an interior length of 0.5" diameter tubing and an outer tip of 0.375" diameter tubing. The temptation would be to use our scaled outer dimensions for each element and simply change the remainder of the wire schedule. The final result might look like this.</p>
+  <pre>4-element 10M Yagi                        Frequency = 28.35  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -108.75,  0.000,  0.000  W2E1 -48.000,  0.000,  0.000 3.75E-01   6
+2   W1E2 -48.000,  0.000,  0.000  W3E1  48.000,  0.000,  0.000 5.00E-01   9
+3   W2E2  48.000,  0.000,  0.000       108.750,  0.000,  0.000 3.75E-01   6
+4        -105.50, 36.000,  0.000  W5E1 -48.000, 36.000,  0.000 3.75E-01   6
+5   W4E2 -48.000, 36.000,  0.000  W6E1  48.000, 36.000,  0.000 5.00E-01   9
+6   W5E2  48.000, 36.000,  0.000       105.500, 36.000,  0.000 3.75E-01   6
+7        -101.77, 70.500,  0.000  W8E1 -48.000, 70.500,  0.000 3.75E-01   5
+8   W7E2 -48.000, 70.500,  0.000  W9E1  48.000, 70.500,  0.000 5.00E-01   9
+9   W8E2  48.000, 70.500,  0.000       101.775, 70.500,  0.000 3.75E-01   5
+10       -95.280,153.000,  0.000 W11E1 -48.000,153.000,  0.000 3.75E-01   5
+11 W10E2 -48.000,153.000,  0.000 W12E1  48.000,153.000,  0.000 5.00E-01   9
+12 W11E2  48.000,153.000,  0.000        95.280,153.000,  0.000 3.75E-01   5</pre>
+  <p>If we check this model, we would obtain a performance table similar to the following one.</p>
+  <pre>Freq.          Free-Space          Front-to Back        Feedpoint Z
+ MHz            Gain dBi             Ratio dB          R +/- jX Ohms
+28.0             8.54                19.90             20.24 + j  6.85
+28.35            8.45                18.23             10.00 + j 20.49
+28.7             6.91                 8.32              3.56 + j 41.45</pre>
+  <p>Graphically, the azimuth patterns would be those in <b>Fig. 4</b>.</p>
+  <center>
+    <img src="amod26-4.gif" width="640" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Something has gone wrong with our scaling efforts. The elements are all too long. Unfortunately, many a home constructor of beams has been caught in this trap. Scaling an antenna's dimensions and then changing the stepped-diameter element schedule is a sure way to offset the performance curve of an antenna.</p>
+  <p><b>The Correction</b></p>
+  <p>The accuracy of NEC-2 (and to a lesser degree, NEC-4) depends upon the introduction of correction factors that substitute for stepped-diameter elements a uniform diameter element of the same impedance. Most NEC-2 software equipped with such correction factors use either the Leeson equations (EZNEC and NEC-Win Plus) or the Beezley equations (NEC-Wires). Let's compare the substitute uniform-element lengths and diameters of the elements for a. the impractical but exactly scaled 10-meter Yagi and b. the simplified but errant Yagi.</p>
+  <pre>Element             Directly Scaled               Simplified
+               Length         Diameter       Length         Diameter
+Reflector      104.094"       0.396"         106.985"       0.434"
+Driver         100.990"       0.403"         103.765"       0.437"
+Dir. 1          97.448"       0.410"         100.078"       0.440"
+Dir. 2          91.317"       0.424"          93.663"       0.446"</pre>
+  <p>The excess length of the Yagi with a simplified element structure is clearly apparent. However, there is no simple and sure means of shortening the uniform element lengths to the lengths used in the directly scaled version--at least not in extant implementations of NEC-2. However, there is a sure procedure to bring us very close indeed to the desired goal.</p>
+  <p>Every element in a Yagi has a self-resonant frequency. Using the directly scaled 10-meter beam as our guide (since we know its performance potential), let's find the self-resonant frequency for each element, using a reactance of under 1 Ohm to define resonance. Then, we shall adjust the length of the corresponding element in the simplified version of the antenna so that its self-resonant frequency is the same as in the directly scaled version. As a check on our work, we shall record the resultant substitute uniform-diameter element. The final result looks like this.</p>
+  <pre>Element        Freq.     New Length          Subs. Length   Subs. Diameter
+Reflector      27.12     105.8"              104.062"       0.436"
+Driver         27.96     102.6"              100.894"       0.439"
+Dir. 1         28.94      99.1"               97.434"       0.442"
+Dir. 2         30.86      92.9"               91.317"       0.449"</pre>
+  <p>If we compare the substitute uniform-diameter elements in our revised model, we shall see how close they are to the substitute uniform-diameter elements for the directly scaled model in both length and diameter. Given that similarity, we shall not require any spacing adjustments in our newly revised model with its simplified element structure. The final wire table looks like this.</p>
+  <pre>4-element 10M Yagi-scale adj.              Frequency = 28.35  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -105.80,  0.000,  0.000  W2E1 -48.000,  0.000,  0.000 3.75E-01   6
+2   W1E2 -48.000,  0.000,  0.000  W3E1  48.000,  0.000,  0.000 5.00E-01   9
+3   W2E2  48.000,  0.000,  0.000       105.800,  0.000,  0.000 3.75E-01   6
+4        -102.60, 36.000,  0.000  W5E1 -48.000, 36.000,  0.000 3.75E-01   6
+5   W4E2 -48.000, 36.000,  0.000  W6E1  48.000, 36.000,  0.000 5.00E-01   9
+6   W5E2  48.000, 36.000,  0.000       102.600, 36.000,  0.000 3.75E-01   6
+7        -99.100, 70.500,  0.000  W8E1 -48.000, 70.500,  0.000 3.75E-01   5
+8   W7E2 -48.000, 70.500,  0.000  W9E1  48.000, 70.500,  0.000 5.00E-01   9
+9   W8E2  48.000, 70.500,  0.000        99.100, 70.500,  0.000 3.75E-01   5
+10       -92.900,153.000,  0.000 W11E1 -48.000,153.000,  0.000 3.75E-01   5
+11 W10E2 -48.000,153.000,  0.000 W12E1  48.000,153.000,  0.000 5.00E-01   9
+12 W11E2  48.000,153.000,  0.000        92.900,153.000,  0.000 3.75E-01   5</pre>
+  <p>The proof of the method lies in performance, which NEC-2 reports in the following table.</p>
+  <pre>Freq.          Free-Space          Front-to Back        Feedpoint Z
+ MHz            Gain dBi             Ratio dB          R +/- jX Ohms
+28.0             8.41                21.84             23.20 - j  7.59
+28.35            8.52                22.83             26.04 - j  1.37
+28.7             8.61                20.39             20.39 + j  3.99</pre>
+  <p>In terms of azimuth patterns, <b>Fig. 5</b> provides the same data more dramatically.</p>
+  <center>
+    <img src="amod26-5.gif" width="640" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Conclusion</b></p>
+  <p>Frequency scaling begins as a simple process. However, the more complex the antenna structure, the more complex the process can become. I have used the example of changing the stepped-diameter structure of the elements for several reasons. First, in many instances, practical antenna construction demands element structures that differ from those of a directly scaled model. Second, many antenna constructors fall into the snare of simply changing element structure without first analyzing the potential consequences.</p>
+  <p>Third, the techniques required for restoring the poorly-scaled antenna model to a much more usable state are typical of techniques that may be required in many other situations. For the general process of modeling, it is this last reason which is the most important. The exercise is not a cure-all for all difficulties in the process of scaling antennas. However, it should alert you to what may make a scaling task go astray and what sorts of techniques may bring the model back into the fold.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

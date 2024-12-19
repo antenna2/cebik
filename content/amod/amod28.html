@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modeling By Equation</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>28. Modeling By Equation<br>
+    B. Bigger and Better Things</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>In the last episode, we took a look at modeling antennas through the use of variables and equations. Our antenna was a simple square quad loop. The technique we chose, from the many possible ones, was to define variables for element length and wire diameter in terms of fractions of a wavelength. For initial simplicity, we kept everything in free space.</p>
+  <p>In this installment, we shall move on to a moderately complex antenna--a 3-element quad. After we model it in free space, we shall move it over ground to see what that move might require by way of revisions to our variables and equations. Before we embark on this journey, let me throw in a few reminders about the importance of adopting conventions in your modeling.</p>
+  <p><b>The Many Faces of Conventions</b></p>
+  <p>Effective and efficient antenna modeling requires more than a random approach. The more systematic we become, the fewer things we have to decide in each modeling task. Not only do we save time, but as well, we are less likely to commit errors in the construction of our models.</p>
+  <p>The rules of the modeling programs set some boundary limits to the ways in which we can proceed. Within those limits, we have a good bit of flexibility. Sometimes, we need to make use of that flexibility and model some special structure in an unusual but correct way. Most of the time, however, we are more likely to speed success in our modeling efforts if we develop some good procedures and stick with them until the special case comes along. I tend to call these procedures conventions. There are several types.</p>
+  <p><b>1. Structural procedures</b>: Creating a model, wire by wire, is best done by developing certain habits. For example, with linear elements, we can model from left to right or from right to left for each element. Either way permits us to track the currents along the element and easily read other portions of the NEC data output in ways that modeling from the center outward only confuses. However, our linear progressions should always move in the same direction from model to model.</p>
+  <center>
+    <img src="amod28-1.gif" width="355" height="337" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Loop elements, such as the one shown in <b>Fig. 1</b>, offer us additional opportunities to create conventions in our modeling. Since a loop is a continuous element composed of at least 4 wires, we shall normally encounter fewer confusions and errors if we model the circumference in a regular progression. The sketch shows a counterclockwise progression. Clockwise progressions are also good, but we should adopt one or the other for all of our loops.</p>
+  <p><b>Fig. 1</b> also shows the loop symmetrically placed around a center point. For initial free-space modeling, one should let the center point be 0,0, so that each dimension of the antenna involves A or -A for each coordinate point. The advantage of this procedure becomes evident as soon as we wish to place a second loop behind or ahead of the first, but to use a different set of dimensions at the same time. The 0,0 center point ensures that each loop is aligned with the next one.</p>
+  <p>A third facet of structural conventions involves the choice of coordinate axes for various antenna dimensions. The Z-axis handles vertical dimensions automatically. Some early programs for slower computers used the X axis as the axis of symmetry, forcing the modeler to set elements as +Y and -Y dimensions. Those rules are largely defunct, and the modeler can place side-to-side dimensions across either the X or the Y axis. The unused X- or Y-axis normally becomes the front-to-back axis, if the antenna has more than one element.</p>
+  <p>The example in <b>Fig. 1</b> uses the X-axis as the crossing point for the side-to-side dimensions of the loop. Hence, the wires that cross this axis will have +X and -X values. If we add further loops to form a beam, they will be spread along the Y axis. My preference for this arrangement is personal: it places the most changed dimension--element length--in the left column of most wire geometry sheets for easy visual identification. However, using the Y-axis for side-to-side dimensions and the X axis for front-to-back dimensions is equally apt, and tends to align the forward lobe of most azimuth patterns with the zero-degree mark on plots. The goal is to pick one system (according to your modeling goals overall) and to stick with it so long as it serves well.</p>
+  <center>
+    <img src="amod28-2.gif" width="315" height="269" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows a representative set of front-to-back conventions. In this sketch, all elements count their dimensions from the rear of the multi-element array, in this case, the reflector. It is set to zero. Each element will have a distance value that is positive, represented by the variables D and E in the sketch. The advantage of this scheme is that the total front-to-back dimension is always readily available to the modeler. The disadvantage is that distances from the second to the third element must be calculated.</p>
+  <p>An alternative procedure is to set the driver at 0 along the selected front-to-back axis. Then, the reflector will have a negative value and the director (or directors) will have a positive value. A third scheme occasionally used is to set the array in equal distances forward and behind the zero point. However, this system can only be put in place after the final front-to-back dimension is known.</p>
+  <p>For our work in this episode, we shall use the conventions shown in the sketches. I note this fact so that you can read the antenna structures directly from the screen captured graphics. If you model the subject antenna, give some thought to translating the model into the structural conventions you typically use. If you return to the model at a later date, you will be more likely to read the model correctly.</p>
+  <p><b>2. Equation conventions</b>: When constructing values for the variables out of which you will build the antenna model, give some preliminary thought to the ways in which you will develop the variables. Of course, the simplest system is to simply assign variables a numerical value. This system permits multiple dimensional changes with the change of a single value on the equations page. However, it is limited insofar as it does not permit full scaling of the antenna structure.</p>
+  <p>Let's look at a different sort of example.</p>
+  <center>
+    <img src="amod28-3.gif" width="636" height="455" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the equation set for a 3-element quad beam consisting of a reflector, driver, and director. The page actually reveals a great deal of information about how the modeling is being conducted.</p>
+  <p>The equations all relate the antenna dimensions to a wavelength. One might choose to relate them to frequency. Although this latter scheme allows frequency scaling, it does not provide automatic numerical value changes with changes of units. Relating the numeric values to a wavelength provides both facilities.</p>
+  <p>The equations also arrive at the final values by dividing the length of a wave by a certain number. Alternatively, one might have multiplied a wavelength by the reciprocal of the divisor, if that scheme is more efficient for a given modeler.</p>
+  <p>There are also some conventions at work that logically group the values in the total set. A, B, and C are the variables controlling the reflector, driver, and director wire lengths, respectively. Note that each element has an independent equation related back to W, a wavelength. It is also possible to develop one variable, for instance, the driver, and then to key the reflector and director dimensions as functions of the driver.</p>
+  <p>Since the reflector will be set to zero along the Y axis, D controls the reflector to driver spacing and E controls the reflector to director spacing. Even within the scheme used to assign values, one might have reorganized these variables. However, consistency from one model to the next reduces confusion and errors.</p>
+  <p>The wire diameter is assigned to H, with G reserved. Since the initial model will be in free space, no height equation is necessary. However, to keep the dimensional variables well grouped ahead of the wire diameter, G is reserved for later use, while the wire diameter moves to H. Later, when we move the model over ground, G will have a value. More importantly, you will be able more easily to correlate the components of the free-space model to those of the model over ground.</p>
+  <p>The end result is the use of A, B., and C for dimensions to be placed in the X column, D and E for dimensions to be placed in the Y column, and G for dimensions that go in the Z column. (Since the quad had a vertical dimension to begin with, using A in the Z column is, of course, inevitable.) Wire diameter comes last.</p>
+  <p>No magic attaches to this particular system. It serves to illustrate one of many possible orderly schemes that permit easy reading by both the modeler and others. Nonetheless, in the process of suggesting that each modeler develop conventions that best facilitate modeling, I have also managed to explain the ones used in this exercise.</p>
+  <p><b>Onward to the 3-Element Quad</b></p>
+  <p><b>Fig. 1</b> and <b>Fig. 2</b> together show the outline of a typical 3-element parasitic quad beam consisting of reflector, driver, and director elements. <b>Fig. 3</b> listed the design equations for the antenna. How these dimensions translate into values appears in <b>Fig. 4</b>, the equations page set to show numerical values. As we did with the simple quad loop, we have used 300 MHz and free space as the background for the antenna. You may recognize the wire diameter as equivalent to #20 AWG. Also notable is the fact that adding to the number of elements in an array tends to multiply the number of variables required to fully describe the antenna.</p>
+  <center>
+    <img src="amod28-4.gif" width="636" height="459" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Two items are notable about the page shown in <b>Fig. 4</b>. First, the variable G has been left blank, with the wire diameter registered as variable H. As we noted, G will be used later to set a height value for checking the model over ground. Second, the variable E shows the total length of the antenna array from back-to-front. There would be no harm in defining further variables to provide instant calculation of the spacing from the driver to the director. By defining I (for example) as E - D, we would obtain that value, even though we do not plan to use the variable I in the set-up of the antenna geometry. In addition, should we desire the information, we might set other variables as ratios of the reflector to the driver length or the director to the driver length. Not every equation we define has to be used in the antenna geometry itself.</p>
+  <center>
+    <img src="amod28-5.gif" width="636" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the actual geometry of the 3-element quad, described in terms of the variables we have just defined. The Y columns have been assigned the back-to-front dimension. Recording the variables for these distances has the additional benefit of allowing us easily to identify which element is which.</p>
+  <p>The X and Z columns record the variables associated with each of the elements in terms of the half-lengths of each side of the quad. Note that each element follows identically the same pattern of development around the perimeter of the loop. Consistency of geometric layout is an aid to error detection as well as to later interpreting NEC output data.</p>
+  <center>
+    <img src="amod28-6.gif" width="637" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The final step in preparing to run our model consists of looking at the actual dimensions on the wires page (<b>Fig. 6</b>). In that process, we also note that the antenna is of copper wire and that the source segment is placed on the lower horizontal wire of the second (driver) element. Although this exercise has by-passed the placement of the source, that process is, of course, crucial to developing a successful model. It now time to run the model.</p>
+  <center>
+    <img src="amod28-7.gif" width="433" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The data we gather from the NEC core output is gathered together in <b>Fig. 7</b>. The free-space gain of this quad is about 9.5 dBi, a very respectable value for a monoband 3-element quad design. The gain is about 1.4 dB better than a 3-element Yagi having the same boom length and configured for a similar front-to-back value in excess of 20 dB. Given the smaller diameter of the wires in the quad relative to what would be typical for a Yagi at the same frequency, the modeled quad achieves as much as possible of the theoretical gain of quads over Yagis.</p>
+  <p>The front-to-back figure should be referenced to the azimuth pattern. Although the pattern does not show trace lines that would identify the bearing for the front-to-back ratio, the value shown is clearly related to the strongest rearward lobes. In fact, the program used (NECWin Plus) routinely provides the worst-case front-to-back ratio. The more common 180-degree front-to-back ratio can be extrapolated from the pattern itself and approaches 25 dB. More exacting figures can be derived by comparing the forward gain (heading 270 in the example) with the rearward gain (heading 90 in the example).</p>
+  <p><b>Above Ground</b></p>
+  <p>To place the antenna above a desired ground requires two steps. The first is to define a ground. <b>Fig. 8</b> shows the selection of the Sommerfeld-Norton ground, using the values for average ground (conductivity = 0.005 S/m; dielectric constant or relative permittivity = 13.0). Since the antenna is configured for horizontal polarization, the actual ground values chosen will not have a very significant effect upon antenna performance at heights greater than 1 wl above ground.</p>
+  <center>
+    <img src="amod28-8.gif" width="636" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> also shows how we plan to establish the antenna at a certain height above the ground we have just defined. The variable we earlier reserved is now assigned the value of 2*W, indicating a height of 2 wl. However, this entry does not say how we shall implement the height. Let us assume that the 2 wl height represents the height of the center of the quad structure. This is a common practice--and a good reason for centering each of the elements of the quad array on the same axis line.</p>
+  <p>On the equations page, we could have used variable G to define several further variables. We might let I = G-A to cover the lower reflector element and J = G+A to handle the upper reflector element. We would need 4 more variables to cover all of the quad elements. However, there is a simpler method, shown in <b>Fig. 9</b>, the wires page using the variable entries version.</p>
+  <center>
+    <img src="amod28-9.gif" width="637" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When entering the antenna geometry as a set of variables, we are not limited to single letter assignments. We can enter more complex equations involving those variables. The equations can involve complex functions, but in the present case, we only need simple addition and subtraction involving the variable for the antenna height and the loop dimension variable. Lower wires will be below the value of G and upper wires will be above the value of G. Note that values in the X and Y columns are unaffected: everything we need to modify in order to place the antenna above ground occurs in the Z axis column.</p>
+  <center>
+    <img src="amod28-10.gif" width="638" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> shows the results of our new variable and our revised symbolic structure in the dimensions version of the wires page. The center of the antenna is about 6.5' above ground, with the upper and lower horizontal wires less than 6" distant from the center position. Of course, at this point (or any other point in the model development process), we could have selected other dimensional units. Many readers outside the U.S. will prefer millimeters for the dimensional unit for an antenna at 300 MHz.</p>
+  <p>The final element to note before running the antenna model is the revision made to the azimuth pattern request. Only free-space NEC models should request an elevation angle of zero degrees. In this case, the elevation angle will be 7 degrees, the angle of maximum radiation or take-off angle.</p>
+  <p><b>Fig. 7</b> captures the shape of the azimuth pattern of the antenna placed 2 wl above average ground. Only the detailed information requires revision. The array shows a gain of 15.1 dBi, with a worst-case front-to-back ratio of 20.7 dB. The feedpoint impedance is 29 - j0.0 Ohms.</p>
+  <p>Since the model uses #20 wire at 300 MHz, it can be reasonably scaled to other VHF and UHF frequencies commonly used in amateur radio. Scaling to 2 meters will permit the use of #14 wire. However, scaling down to 6 meters will require something close to #4 wire to preserve the exact balance of factors in the design. Changing to a more common wire size--#12 or #14 AWG--will require adjustment of at least the variable for the driver wire length. You may also wish to experiment with the values for the reflector and director to see if changes in their dimensions result in better or worse overall antenna performance. From that point, you may wish to do some further scaling and adjusting to optimize the array for HF performance (on any band from 20 through 10 meters). In the process, you will certainly note the greater ease that variables and equations lend to the process of manually optimizing an antenna relative to having to change each dimension entry individually. If you like the results of your scaling and adjusting work, be sure to save the results under different file names for each version you wish to preserve.</p>
+  <p><b>Same Song, Different Key</b></p>
+  <p>Rather than detail the potential for scaling the quad (which is only an example in this context, but a pretty good example), let's take the same antenna and look at it in another way. <b>Fig. 11</b> provides the first step.</p>
+  <center>
+    <img src="amod28-11.gif" width="311" height="257" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In this view of the antenna, we shall treat the driver as the central element and place it at the zero point on the Y axis. The reflector will use a negative value to record its position behind the driver, while the director will be placed ahead of the driver with a positive value.</p>
+  <p>At the same time, we shall let the driver be the central element in another sense. We shall define the length dimensions for the reflector and the director in terms of the driver length. To keep our focus upon these elements of designing by variables and equations, let's place the antenna back into free space.</p>
+  <center>
+    <img src="amod28-12.gif" width="638" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 12</b> shows the results of our work, at least with respect to defining the basic variables we shall use. Note that the values for A and C are defined in terms of B. The order of definition does not make a difference: the spreadsheet form will find B and use it to determine the numerical value of A (as well as C). In this exercise, I have also changed from the use of denominators to the use of multipliers to set the values.</p>
+  <p>In addition, the spacing is now defined in the terms set forth in <b>Fig. 11</b>. If we wish to know the total array length, we can always define an extra variable as the sum of D and E.</p>
+  <center>
+    <img src="amod28-13.gif" width="636" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The changes we have made to the equations page will require some revisions to the variable entries version of the wires page. See <b>Fig. 13</b>. Actually, only the variables assigned to the Y columns require change from the earlier example. The reflector is at -D, while the director is at +E. Using negative values for variables on this page allows us to simplify the equations page by letting most, if not all, of our basic equations be expressed in positive values.</p>
+  <center>
+    <img src="amod28-14.gif" width="636" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Flipping to the dimension entry version of the wires page shows that the resulting antenna is virtually identical to the earlier version. Compare <b>Fig. 14</b> to <b>Fig. 6</b>. The numerical values for the two models are the same through 3 decimal places--which is at least one more than any practical application would call for when the dimensions are in inches. Consequently, we can expect the performance reports from the NEC core to be virtually identical for the two models.</p>
+  <p>We have not explored all of the permutations and combinations of ways in which we can construct models using variables and equations. The procedure with which you become most comfortable may not coincide with either of the variants we have explored. However, developing a consistent procedure--except where a specific task may dictate otherwise--will go a long way toward naturalizing the process of modeling in this way. The larger the model, the more crucial it is to adhere to conventions that yield the quickest error detection, the clearest readout of your work, and the greatest ease in modifying the model en route to the perfect antenna.</p>
+  <p>Once you have developed a sense of the conventions of modeling that work best for you, the door is open to the use of more complex equations. The ones we have explored have been of the simplest kind. Let's take one more look at the process of modeling with variables and equations next time--with an eye toward what we can do with slightly more complex equations.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AM BC Modeling with NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>AM BC Modeling with NEC<br>
+    3. The Long and the Short of It</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>Our examination of the use of NEC in modeling towers intended for AM BC service rests on the foundation that the desired ground for such structures is a perfectly reflecting surface. All field-strength measurements are predicated on this ground, used for various theoretical reasons of considerable historical interest. So far, we have examined the steps required to obtain from the NEC modeling core the same results obtained from selected MININEC programs. In addition, we have looked for differences that may exist between models that use the NEC-recommended single-wire substitute towers and those using to one or another degree relatively completely detailed tower structures.
+  <p>For a certain class of towers, the substitutes and the more detailed geometries showed either a remarkably good correlation or deviations that we could not ascribe to a single cause due to slight deviations from the ideal Average Gain Test (AGT) score. The class of towers included only resonant or near resonant towers, considering the 1-MHz design frequency and the use of lossless conductors. Whether the close correlations hold for other tower lengths remains indeterminate, at least within this sequence of notes.</p>
+  <p>In this portion of our trek through the maze of towers, we shall explore the consequences of modeling towers having considerable, but not radical amounts of, reactance. We shall begin by going long, using a standard FCC length of 273' for a so-called 90-degree tower. Then we shall try a short tower, only 201' high. Both towers show source reactance values well above 50 Ohms, but much less than 100 Ohms. The heights are arbitrary with respect to the degree to which each departs from resonance. However, both heights are divisible by 3, setting the length of the sections into which we shall subdivide them for one type of model.</p>
+  <center>
+    <img src="amod133-1.gif" border="2" height="420" hspace="9" vspace="5" width="463">
+  </center>
+  <p>In each case, we shall look at three model types, as shown in <b>Fig. 1</b>. One will use the single-wire substitute model using NAB recommended diameter adjustment factors. In fact, all of the towers in this episode will presume a face width of 18" or 1.5'. The required radius is 0.37 times the face width or 0.555'. The second type of tower will use three legs only, with separate sources for each leg to simplify both the model and its viewing within software facilities (in this case, GNEC). As in past episodes, the leg diameter will be 2", that is, a radius of 0.085'. The third type of tower will show both horizontal and sloping members, except for the lowest section, which will include only horizontal members at the top of the section. Like the legs, the horizontal and sloping members will use 2"-diameter wires. Each vertical tower section will be 3' high, and we may use the GM command to replicate the necessary upper sections beyond the second one, which is the first to use a complete structure.</p>
+  <p>The three tower types will provide a sufficient basis for comparing the results with those we obtained in the preceding notes for similar tower structures.</p>
+  <p><b>A 273' 18"-Face Tower</b></p>
+  <p>At 1 MHz, a 90-degree tower is 273' high. This tower is nearly 40' taller than the resonant 24"-face tower that we used as our sample earlier. We expect to derive at least two easily predictable results. First, the source impedance will be inductively reactive. Second, the tower gain and field-strength values will be a bit higher than the 5.15-dBi and 275 mV/m values that we obtained at a nearly resonant length.</p>
+  <p>The single-wire model requires no change in segmentation, since the length increase does not significantly increase the length of each of the 41 segments. With a current source, the following lines show the model file.</p>
+  <pre>
+CM 90-degree monopole, perfect ground
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 273 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 5.761
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>The excitation line indirectly shows the current level necessary to provide a 1-kW power level at the new tower height and source impedance. A simple table shows the critical values, at least relative to these simplified exercises.</p>
+  <pre>
+273' Single-Wire Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+60.27 + j84.91    5.761           5.30         1.999   0.00     280.0 mV/m @ -47.7 deg
+</pre>
+  <p>The impedance magnitude is double the value of the resonant tower, resulting in a significantly lower current (7.45 A for the resonant tower). The gain is up about 0.15 dB, while the field-strength is about 5 mV/m higher. As a reminder, the model requests the ground wave, including both surface and sky wave components at ground (Z=0) level. <b>Fig. 2</b> outlines the pattern and the relevant vector. The distance is 1 mile. In practice, of course, the modeler can select any height and distance (in meters) as the observation point.</p>
+  <center>
+    <img src="amod133-2.gif" border="2" height="270" hspace="9" vspace="5" width="426">
+  </center>
+  <p>One alternative to using the substitute single-wire tower is to model 3 independent legs, each with its own source. The method of combining sources by using a distant short, thin wire and 3 transmission-lines of near-zero length is always available for this and the next model. However, we shall use the separate-source method, since it allows us to view tower model details more easily in the software (GNEC) facilities. In fact, <b>Fig. 3</b> shows the lower part of the alternative model, with one tower leg hidden.</p>
+  <center>
+    <img src="amod133-3.gif" border="2" height="340" hspace="9" vspace="5" width="200">
+  </center>
+  <p>Except for tripling the number of wires, sources, and networks, the model is not much more complex than the single-wire model. Since the face dimension of the triangular tower is smaller than for the models in the preceding episode, the X and Y coordinates have changed to place the coordinate center at the mid-tower position.</p>
+  <pre>
+CM 90-deg 3-leg monopole, perfect ground
+CM 3 sources
+CE
+GW 1 41 0.866 0 0 0.866 0 273 0.085
+GW 2 41 -0.433 .75 0 -0.433 .75 273 0.085
+GW 3 41 -0.433 -.75 0 -0.433 -.75 273 0.085
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.9217
+EX 0 30902 1 0 0.0 1.9217
+EX 0 30903 1 0 0.0 1.9217
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>In the earlier models, 3 independent legs yielded data values that closely correlated to the single-wire values. As the data table shows, the situation does not change much when we lengthen the tower to 273'.</p>
+  <pre>
+273' 3-Leg Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+60.17 + j83.97    1.9217/leg      5.30         1.999   0.00     280.0 mV/m @ -47.8 deg
+</pre>
+  <p>The resistive component of the impedance is within 0.1-Ohm of the single-wire model, while the reactance report differs by just under 1 Ohm. Multiplying the current-per-leg by 3 gives us 5.765 Apk at 1 kW, an increase of 4 mA. In short, the data for the two models does not diverge significantly.</p>
+  <p>The full-structure simulation in the preceding episode used 2' vertical tower sections. For the present models, 3' sections are arithmetically more convenient. Each vertical and sloping member uses 3 segments, while the horizontal cross members use 2 segments. This procedure equalizes segments length to the degree possible within the model without unnecessarily multiplying the segment count. <b>Fig. 4</b> shows the basic structure, using only the lower section and the second section of the much taller tower.</p>
+  <center>
+    <img src="amod133-4.gif" border="2" height="340" hspace="9" vspace="5" width="400">
+  </center>
+  <p>The leg and other element diameters and X-Y coordinates are the same as in the model with 3 independent legs. To complete the full 273' of the tower, we must use the GM command to replicate the second section 89 more times. Including the remote source wires, the model contains 819 wires and 2178 segments.</p>
+  <pre>
+CM 90-deg 3-leg monopole  perfect ground
+CM 3 sources
+CM 117 sections with cross braces
+CE
+GW 1 3 0.866 0 0 0.866 0 3 0.085
+GW 2 3 -0.433 .75 0 -0.433 .75 3 0.085
+GW 3 3 -0.433 -.75 0 -0.433 -.75 3 0.085
+GW 4 2 0.866 0 3 -0.433 .75 3 0.085
+GW 5 2 -0.433 .75 3 -0.433 -.75 3 0.085
+GW 6 2 -0.433 -.75 3 0.866 0 3 0.085
+GW 7 3 0.866 0 3 0.866 0 6 0.085
+GW 8 3 -0.433 .75 3 -0.433 .75 6 0.085
+GW 9 3 -0.433 -.75 3 -0.433 -.75 6 0.085
+GW 10 2 0.866 0 6 -0.433 .75 6 0.085
+GW 11 2 -0.433 .75 6 -0.433 -.75 6 0.085
+GW 12 2 -0.433 -.75 6 0.866 0 6 0.085
+GW 13 3 0.866 0 3 -0.433 .75 6 0.085
+GW 14 3 -0.433 .75 3 -0.433 -.75 6 0.085
+GW 15 3 -0.433 -.75 3 0.866 0 6 0.085
+GM 9 89 0 0 0 0 0 3 7 1 15 3
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.8857
+EX 0 30902 1 0 0.0 1.8857
+EX 0 30903 1 0 0.0 1.8857
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Like the resonant tower in the earlier exercises, the data for the full-structure model at 273' shows numerically noticeable differences relative to the simpler models.</p>
+  <pre>
+273' Full-Structure Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+62.49 + j86.20    1.8857/leg      5.40         2.043   0.09     283.2 mV/m @ -48.8 deg
+</pre>
+  <p>The reported gain is about 0.1-dB high relative to the models with nearly ideal AGT scores. The field-strength report is also high. The AGT-dB value provides a means to correcting the gain report. It answers to a simple conversion equation: AGT-dB = 10 log(10)(AGT/2). (Note: when using the AGT test in free space, do not use the /2 portion of the equation.) A positive AGT-dB value shows by how much the gain report in dBi is high. The more nearly correct gain is simple the reported gain minus the AGT-dB value. To arrive at a more nearly correct field-strength value divide the reported value by SQRT (AGT/2) (again, omitting the /2 portion for AGT values taken in free space). The calculated correct value for the peak field-strength is 280.2 mV/m. This value is within 0.2 mV/m of the values shown for the simpler models.</p>
+  <p>The impedance components of the full-structure model are within about 2 Ohms of the values shown in the simpler models. For reference, a MININEC model of the substitute single-wire model showed a gain of 5.29 dBi, with a source impedance of 62.29 + 85.96 Ohms. All of the values within this collection of models are tightly grouped. Whether the differences reach the level of being significant is driven by the specifications brought to the modeling enterprise.</p>
+  <p><b>A 201' 18"-Face Tower</b></p>
+  <p>In most respects, modeling the tower that is shorter than resonant will be identical in procedure to modeling either a resonant or a long tower. For visual details, refer to the figures already shown in the first part of this exercise and in preceding exercises. Our interest will lie almost wholly with the models themselves and with the data that they report.</p>
+  <p>A 201' tower with an 18" triangular face width requires only one change when using the single-wire substitute with the NAB recommended radius (0.555'). Only the Z-coordinate for the upper end changes. The use of 41 segments in no way presses any NEC limits or recommendation. Therefore, we obtain a model like the following one.</p>
+  <pre>
+CM 201' monopole, perfect ground
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 201 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 9.3772
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>For this model using perfect wire and perfect ground, we obtain the following data as a starting point in our comparisons.</p>
+  <pre>
+201' Single-Wire Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+22.75 - j70.37    9.3722          5.04         1.999   0.00     271.8 mV/m @ -44.4 deg
+</pre>
+  <p>Although the precise numbers might not be predictable, their general range certainly meets expectations. The resistive component of the impedance is only about 2/3 of the resonant value and about 1/3 of the value for the long tower. The reactive component is capacitive and significant. The lower impedance requires a higher current (given in peak Amps) at the source for a constant power level of 1 kW. The AGT score is close enough to ideal that it does not require any correction of the gain value, which is lower than the value for a resonant tower due to the lesser height of our present tower. Since the gain is lower, the field-strength reading (given in peak mV/m) is also lower than for either resonant or the long tower. (Multiply the field strength by 0.7071 to obtain the RMS value.)</p>
+  <p>The single-wire model corresponds to the left hand sketch in <b>Fig. 1</b>. Our interest from a modeling perspective is the correlation of the data collection with alternative models, such as the center sketch of a 3-leg tower, where each leg is independent and we use 3 sources to feed the assembly. As we have done in previous switches from the single-wire to 3-leg towers, we shall use 2"-diameter legs (0.085' radius) and retain the 41 segments for each leg. The triangle for the tower is 18" (1.5') on a side, and the model will position the legs so that the coordinate center falls at the midpoint of the triangle of legs.</p>
+  <pre>
+CM 201' 3-leg monopole, perfect ground
+CM 3 sources
+CE
+GW 1 41 0.866 0 0 0.866 0 201 0.085
+GW 2 41 -0.433 .75 0 -0.433 .75 201 0.085
+GW 3 41 -0.433 -.75 0 -0.433 -.75 201 0.085
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 3.1298
+EX 0 30902 1 0 0.0 3.1298
+EX 0 30903 1 0 0.0 3.1298
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Once we are satisfied with the model structure, we may turn to the data.</p>
+  <pre>
+201' 3-Leg Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+22.69 - j70.20    3.1298/leg      5.04         1.999   0.00     271.8 mV/m @ -44.4 deg
+</pre>
+  <p>The gain, field-strength, and AGT data are all identical to the values derived from the single-wire model. The total current is the sum for 3 legs or 9.389 Apk. The impedance reports for the two models are well within a quarter-Ohm of each other. Obviously, the single-wire and the 3-leg model (using independent legs) correlate extremely well no matter what standard we apply to them.</p>
+  <p>The most complex full-structure model uses the same basic sections as we used for the long tower: 3' sections using 3 segments for each vertical and sloping member and 2 segments for the horizontal members. All wires use a 2" diameter. The lowest section omits the sloping members to avoid unwanted current divisions at the point where the source segments meet the ground. We replicate the full 9-wire second section (as viewed in <b>Fig. 4</b>) the number of times necessary to reach the final tower height. 201' as a sample tower height is convenient, since it divides nicely into 3' sections. Beyond the second section, we require 65 replications at 3' intervals using the GM command on just the wires of the second section.</p>
+  <pre>
+CM 201' 3-leg monopole  perfect ground
+CM 3 sources
+CM 67 sections with cross braces
+CE
+GW 1 3 0.866 0 0 0.866 0 3 0.085
+GW 2 3 -0.433 .75 0 -0.433 .75 3 0.085
+GW 3 3 -0.433 -.75 0 -0.433 -.75 3 0.085
+GW 4 2 0.866 0 3 -0.433 .75 3 0.085
+GW 5 2 -0.433 .75 3 -0.433 -.75 3 0.085
+GW 6 2 -0.433 -.75 3 0.866 0 3 0.085
+GW 7 3 0.866 0 3 0.866 0 6 0.085
+GW 8 3 -0.433 .75 3 -0.433 .75 6 0.085
+GW 9 3 -0.433 -.75 3 -0.433 -.75 6 0.085
+GW 10 2 0.866 0 6 -0.433 .75 6 0.085
+GW 11 2 -0.433 .75 6 -0.433 -.75 6 0.085
+GW 12 2 -0.433 -.75 6 0.866 0 6 0.085
+GW 13 3 0.866 0 3 -0.433 .75 6 0.085
+GW 14 3 -0.433 .75 3 -0.433 -.75 6 0.085
+GW 15 3 -0.433 -.75 3 0.866 0 6 0.085
+GM 9 65 0 0 0 0 0 3 7 1 15 3
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 3.1729
+EX 0 30902 1 0 0.0 3.1729
+EX 0 30903 1 0 0.0 3.1729
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>From this model, we obtain an interesting data collection.</p>
+  <pre>
+201' Full-Structure Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+22.07 - j62.14    3.1729/leg      5.14         2.043   0.09     274.8 mV/m @ -44.7 deg
+</pre>
+  <p>The AGT score--in both forms--for this model is the same as for the full-structure version of the long tower. Hence, we find a gain figure that is too great compared to the other models. If we subtract the AGT-dB value from the reported gain, the value falls into line with the other model reports. The field-strength is also too large. However, if we divide it by the square root of half the basic AGT value, we obtain 271.9 mV/m (pk), a value that again is in line with the reports from models with more nearly ideal AGT values.</p>
+  <p>The source impedance report is perhaps the most interesting item in the collection. The resistive component is within about a half-Ohm of the other reports. However, the reactive component is about 8 Ohms lower. The amount of variance from the other models is not correctable by usual techniques--at least not to a degree that brings the value into alignment with the values derived from the other two short-tower models. Whether the source impedance variations represent anything significant remains a judgment that requires reference to the overall task within which we do modeling of this order. If the variation is significant, the models do not tell us clearly which values to use, since the model with the deviant figures also has a slightly non-ideal AGT value. If the difference is not significant, then we need not--except perhaps for curiosity--use a full structure model with its increased wire (603) and segment (1602) counts.</p>
+  <p><b>Conclusion</b></p>
+  <p>Our collection of models does show some interesting trends. Using the AGT and AGT-dB values, we may correct the gain and field-strength reports of the full-structure models to coincide very tightly with the reports from the simpler models. Only the trends in the source impedance variations remain for exploration. To explore these trends, I revised the models in the last episode to reflect the structure used in the present models. The key difference is the use of an 18" triangle face width, down from the 24" value used earlier. As well, the full-structure model uses 3' sections, as described earlier in these notes. The 234' near-resonant height also divides nicely by 3. However, the thinner tower structure--at least in the simpler models, is about 0.5' shy of being a resonant length. We need not show the models involved, since we have already described the types of change required to move from one model to another of a different height. However, the data tables may prove instructive.</p>
+  <pre>
+Near Resonant (234') 18" Face Monopole Models: Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+Single-Wire Model
+35.65 - j 1.29    7.4897          5.14         1.999   0.00     275.1 mV/m @ -45.6 deg
+3-Leg Model
+35.57 - j 1.61    2.4993/leg      5.14         1.999   0.00     275.1 mV/m @ -45.6 deg
+Full-Structure Model
+35.47 + j 2.74    2.5029/leg      5.24         2.043   0.09     278.2 mV/m @ -46.2 deg
+</pre>
+  <p>Within the range for the short through the long tower (201' to 273' at 1 MHz), the full-structure models show a rising deviation in the resistive impedance component from the simpler model values as we increase the tower height. The short full-structure tower is about 0.5-Ohm low. At resonance, the full-structure value is very close to equal, and at the greatest height in the collection, the resistive component is about 2 Ohms high. Three data points do not make a curve, but they may indicate a trend.</p>
+  <p>The reactive component of the source impedance of the full-structure models shows a seemingly more random set of fluctuations. The value for the tallest tower is only about 1 Ohm more inductive than the value reported by the simpler models. At a resonant height, the value is about 4 Ohms inductive compared to the counterpart models, while the shortest tower reports a reactance that is about 8 Ohms more capacitive than the other models.</p>
+  <p>As we have noted, it is not clear from the models themselves whether the trends and fluctuations are functions of the AGT deviation from the ideal or from the full structure itself. At each section start, we have a division of the current between the sloping and the vertical members of the section, although the vertical leg shows anywhere from 2 to nearly 4 times the current magnitude that we find on the corresponding sloping member.</p>
+  <p>For some applications, the variations may be meaningful. In such cases, and within the limits of NEC recommendations for proper structuring of the model geometry, one may wish to employ models that come closer to the actual physical structure of a tower under study. The key geometry factors include the minimum segment length relative to the design frequency, the segment-length-to-radius ratio, and the angle of intersection between joining members of the structure. In all such cases, the modeler must carefully check the AGT score to ensure that the model remains within whatever limits one sets for maximum departure from an ideal score. Although software makers provide some general guidance, the standards of acceptable deviation remain in the end a modeler responsibility based on the required degree of precision brought to the task. In all cases, where the AGT score indicates less than ideal values, the modeler should adjust the gain and the field-strength values accordingly.</p>
+  <p>In other applications, the variations among models may not be significant. In such cases, one may productively use the simpler models and bypass the tedious work of trying to capture every detail of structure that holds the tower legs together.</p>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" height="40" width="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, Vertical, HF Lower">
+  <title>An 80-Meter LPMA Part 1. Designing the LPMA With a MININEC Ground</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>An 80-Meter LPMA: A Design Idea and a Modeling Dilemma<br>
+    Part 1. Designing the LPMA With a MININEC Ground</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Although many amateurs are familiar with the log periodic dipole array (LPDA), fewer are familiar with the log periodic monopole array (LPMA). The LPMA has been around almost as long as its bigger brother, but not many amateur applications have emerged from the basic design. These notes will focus on a 3.5-4.0 MHz limited passband LPMA in a design exercise that will highlight some of the main electrical and physical characteristics of the antenna type. As well, we shall look at some of the stumbling blocks to the design of an LPMA that might actually be implemented with confidence.</p>
+  <p>In principle, the LPMA is a series of ground-mounted monopoles (although other arrangements have been used) with a phasing line running from the base feedpoint of one monopole to the next--complete with the line reversal as it connects to each succeeding vertical element. The elements can be designed using standard LPDA design equations and then using only one side of the dipole. As well, the LPMA is amenable to the same kinds of performance-enhancing modifications as the LPDA.</p>
+  <p>These are the design principles of the LPMA. Most LPMAs are designed by equation and then checked on software something like MININEC. Such software might be MININEC itself or a version of NEC with access to a MININEC ground. The elements are set with their bases touching ground, without the use of an actual ground plane. For many purposes, a MININEC ground is an adequate substitute--at least in preliminary design work--for a NEC-4 buried radial field of considerable size--more than 32 or so radials. However, as I have shown in the series I did on 160-meter vertical arrays, MININEC has some limitations that make its ground system inadequate for accurately modeling the performance of some antenna types. In the end, the question that will face us is whether the MININEC ground is adequate for the modeling of an LPMA, and if so, under what conditions.</p>
+  <p><b>A Single LPMA</b></p>
+  <p>The basic design used in this exercise is the 8-element version of the horizontal LPDA for 3.5 to 4.0 MHz described near the end of "80-Meter Wire LPDAs" in last month's issue of <i>AntenneX</i>. Since the elements are wholly vertical and a large ground radial field is assumed, the initial design effort can use a MININEC ground for efficiency. It is well to note that the array gain will vary with the ground quality in the Fresnel zone of the antenna well beyond the radial system. Therefore, the cited gain figures should be compared to a reference. A 1/4 wavelength resonant monopole over good ground using a MININEC ground system with NEC-4 registers a gain between 0.4 and 0.5 dBi. Although the LPMA gain will vary with the quality of the radial system and the surrounding ground quality, its advantage over a monopole with a similar radial system and surrounding ground quality will be close to the difference between the gain figures to be cited and the reference monopole.</p>
+  <p>The initial modeling of the 8-element array--86' long overall--yielded the following performance figures across 80/75 meters:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . .
+                           8-Element LPMA Performance Potential
+Freq.       Gain        TO Angle    F-B Ratio   Beamwidth   Feedoint Z        50-Ohm
+ MHz        dBi         degrees      dB         degrees     R +/- jX          VSWR
+3.5         4.36        22          18.34       133         50.8 - j 3.0      1.06
+3.75        4.04        22          14.94       137         54.2 + j 4.6      1.13
+4.0         4.32        22          19.53       129         45.1 - j 7.0      1.20
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. .</pre>
+  <p>The test model specified #12 AWG copper wire, and for this reason, the model has a defect. It has no support. Therefore, except as a reference point, it is not a feasible antenna, although one might build the end elements from tower sections. However, even though the elements have been Tau-tapered to increase performance, the catenary arc of the non-conductive support cable would not likely be above all of the element tips.</p>
+  <center>
+    <img src="80v-1.gif" width="418" height="282" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As a consequence of these considerations, the LPMA was further modified by the addition of two parasitic elements, each composed of tower sections. A 79' tower reflector was added to the rear of the 8 phased elements, and a 50' tower director was added ahead of the same element set. <b>Fig. 1</b> shows the general layout of the LPMA. The overall length was increased to 123' to accommodate these support towers. The following model description shows the dimensions of the design, along with the specified 100-Ohm phase line.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . .
+80-m t=.92 s=.05 3.3-4.5                    Frequency = 3.75  MHz.
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+1            0.000,  0.000, 79.000     G   0.000,  0.000,  0.000 6.00E+00  29
+2           18.000,  0.000, 75.500     G  18.000,  0.000,  0.000    # 12   27
+3           33.494,  0.000, 69.500     G  33.494,  0.000,  0.000    # 12   25
+4           47.771,  0.000, 64.563     G  47.771,  0.000,  0.000    # 12   23
+5           60.928,  0.000, 60.000     G  60.928,  0.000,  0.000    # 12   21
+6           73.050,  0.000, 55.500     G  73.050,  0.000,  0.000    # 12   19
+7           84.221,  0.000, 51.500     G  84.221,  0.000,  0.000    # 12   17
+8           94.515,  0.000, 48.000     G  94.515,  0.000,  0.000    # 12   17
+9          104.000,  0.000, 44.500     G 104.000,  0.000,  0.000    # 12   15
+10         123.000,  0.000, 50.000     G 123.000,  0.000,  0.000 6.00E+00  17
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1          15     9 / 96.67   (  9 /100.00)      0.707       0.000       V
+                -------- TRANSMISSION LINES ---------
+Line  Wire #/% From End 1   Wire #/% From End 1    Length       Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)                Ohms Fact Norm
+1      2/98.1  (  2/100.)    3/98.0  (  3/100.)  Actual dist  100.0  1.00  R
+2      3/98.0  (  3/100.)    4/97.8  (  4/100.)  Actual dist  100.0  1.00  R
+3      4/97.8  (  4/100.)    5/97.6  (  5/100.)  Actual dist  100.0  1.00  R
+4      5/97.6  (  5/100.)    6/97.4  (  6/100.)  Actual dist  100.0  1.00  R
+5      6/97.4  (  6/100.)    7/97.1  (  7/100.)  Actual dist  100.0  1.00  R
+6      7/97.1  (  7/100.)    8/97.1  (  8/100.)  Actual dist  100.0  1.00  R
+7      8/97.1  (  8/100.)    9/96.7  (  9/100.)  Actual dist  100.0  1.00  R
+Ground type is Real, MININEC-type analysis
+Conductivity = .005 S/m    Diel. Const. = 13
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. .</pre>
+  <p>The double-duty towers not only are capable of supporting the non-conductive cable to hold the elements in place, but as well add considerably to the performance of the LPMA. The following table can be legitimately compared to the preceding one, since the 8 phased elements were not altered.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . .
+               8-Element LPMA Plus Parasitic Elements Performance Potential
+Freq.       Gain        TO Angle    F-B Ratio   Beamwidth   Feedoint Z        50-Ohm
+ MHz        dBi         degrees      dB         degrees     R +/- jX          VSWR
+3.5         5.04        22          20.35       115         48.8 + j 5.5      1.12
+3.75        4.99        22          18.46       113         42.4 + j 4.7      1.21
+4.0         5.28        22          20.33       106         38.4 - j21.9      1.75
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. .</pre>
+  <p>The addition of the parasitic elements added about 0.85 dB to the average array gain across the band. However, higher gain brings with it a somewhat narrower beamwidth. The performance is very stable, as demonstrated by the 50-Ohm SWR graph in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="80v-2.gif" width="640" height="210" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> overlays azimuth patterns for the 3 80-meter checkpoints to demonstrate that the array holds a fairly consistent pattern throughout the operating passband, with under 0.3 dB variation across the band.</p>
+  <center>
+    <img src="80v-3.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The array design and its performance potential as compared to a simple monopole over the same ground system is somewhat self-explanatory. Therefore, let's focus on a limitation of the array as presented. It is anchored to the ground at every element and hence is fixed. If we wish to cover more than the stated -3 dB beamwidth, we must add more such arrays.</p>
+  <p><b>A Bi-LPMA</b></p>
+  <p>The parasitic reflector has a third function besides being an anchor tower and a reflector: it also serves to isolate arrays placed in opposing directions. When one array is active, the other shows no negative effects on its operation. <b>Fig. 4</b> shows the outline of the bi-LPMA with a common parasitic reflector.</p>
+  <center>
+    <img src="80v-4.gif" width="496" height="256" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Each array is identical to its mate, and both are designed to be mechanically anchored at the high end by the central tower-reflector. In the model description, simply create a directional mirror image of the single array shown. The following table shows the reported performance potential for each of the two arrays.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . .
+              8-Element Bi-LPMA Plus Parasitic Elements Performance Potential
+Freq.       Gain        TO Angle    F-B Ratio   Beamwidth   Feedoint Z        50-Ohm
+ MHz        dBi         degrees      dB         degrees     R +/- jX          VSWR
+3.5         5.28        22          19.61       110         48.8 + j 6.2      1.14
+3.75        5.15        22          21.93       113         42.4 + j 5.1      1.22
+4.0         5.31        22          25.43       108         38.4 - j21.7      1.74
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. .</pre>
+  <p>The operational predictions have scarcely changed any numbers, and the reported feedpoint impedance values are a measure of the degree to which the two LPMAs are isolated. The only change worthy of notice is the slight increase in average gain for the array. It has climbed another 0.15 dB and is now a full dB higher than the 8-element model without parasitic elements.</p>
+  <center>
+    <img src="80v-5.gif" width="640" height="210" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The SWR curve in <b>Fig. 5</b> shows its close kinship to the one for the single array. There are slight changes in the pattern shapes, especially to the rear, as demonstrated by the overlaid patterns in <b>Fig. 6</b>. For most situations, the differences from the single LPMA would be considered operationally insignificant.</p>
+  <center>
+    <img src="80v-6.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>More significant for anyone contemplating the implementation of a dual LPMA is the coverage provided. <b>Fig. 7</b> overlays sample patterns to show both the covered area and the gaps in coverage at right angles to the dual LPMA.</p>
+  <center>
+    <img src="80v-7.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although the double array might be suitable for a station on a great arc between Europe and Australia, the gaps remain troublesome for anyone wishing full horizon coverage.</p>
+  <p><b>A Tri-LPMA</b></p>
+  <p>It is possible to redesign the dual array into a triple array by placing LPMAs at 120-degree angles around the central reflector tower. Since the bandwidth of the array is somewhat less than 120 degrees, it is possible that the central reflector would provide sufficient isolation to permit the individual arrays to operate without pattern distortion from elements of the inactive arrays.</p>
+  <center>
+    <img src="80v-8.gif" width="415" height="403" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the general outline of the tri-LPMA system. Each array is operated independently of the other two, with only the reflector serving as a common element. The degree of isolation maintained by the system is demonstrated in the potential performance table that follows.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . .
+             8-Element Tri-LPMA Plus Parasitic Elements Performance Potential
+Freq.       Gain        TO Angle    F-B Ratio   Beamwidth   Feedoint Z        50-Ohm
+ MHz        dBi         degrees      dB         degrees     R +/- jX          VSWR
+3.5         5.38        21          14.24       102         48.0 + j 7.7      1.18
+3.75        5.52        21          19.02       101         41.6 + j 5.7      1.25
+4.0         5.67        21          23.94        97         37.9 - j21.7      1.76
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. .</pre>
+  <p>The triple array is perfectly usable, with another 0.3 dB increase in average gain. The increase suggests that the 3 arrays are not completely independent, and the reduction in 3.5-MHz front-to-back ratio confirms the suggestion. As well, the slight reduction in array independence and the small increase in gain also appear as a further reduction on -3 dB beamwidth.</p>
+  <center>
+    <img src="80v-9.gif" width="640" height="210" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As <b>Fig. 9</b> shows, however, the changes in the feedpoint impedance across the band are relatively insignificant. The 50-Ohm SWR curve is not materially different from the two we have already seen.</p>
+  <center>
+    <img src="80v-10.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The degree to which the rearward arrays effect changes in the azimuth patterns of the active LPMA becomes apparent in <b>Fig. 10</b>, where checkpoint patterns are overlaid once more. More crucial to the desire for full horizon coverage from the triple array is <b>Fig. 11</b>, which set forth the worst case coverage on 4.0 MHz, where the beamwidth is narrowest. Whether the coverage is adequate is, of course, a potential user judgment.</p>
+  <center>
+    <img src="80v-11.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The desire for relatively equal signal strength across the entire horizon raises the possibility of making an array of 4 LPMAs at 90-degree angles to each other. The outline of such an array appears in <b>Fig. 12</b>.</p>
+  <center>
+    <img src="80v-12.gif" width="441" height="382" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although such an array is tempting, especially within the paper-design phase, it will turn out to be impractical. The interaction among arrays that began to appear at 3.5 MHz in the triple array will become major interaction across the band. The modeled performance report for a square of LPMAs appears in the following table.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . .
+            8-Element Square-LPMA Plus Parasitic Elements Performance Potential
+Freq.       Gain        TO Angle    F-B Ratio   Beamwidth   Feedoint Z        50-Ohm
+ MHz        dBi         degrees      dB         degrees     R +/- jX          VSWR
+3.5         3.59        21           7.52       171         44.4 + j11.1      1.30
+3.75        5.46        21          16.59        96         40.1 + j 6.7      1.31
+4.0         5.98        21          25.61        86         37.2 - j21.9      1.78
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. .</pre>
+  <p>Although the SWR curve has remained relatively stable, other operating categories shows major fluctuations relative to the previously examined versions of the LPMA.</p>
+  <center>
+    <img src="80v-13.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 13</b> overlays 3.5 and 4.0 MHz patterns for a quadruple LPMA. Not only has the gain and front-to-back ratio diminished at 3.5 MHz, the beamwidth at that frequency has widened extremely. At the other end of the band, we see some pattern distortion that contributes to a narrowing of the beamwidth to 86 degrees. In fact, the narrowest beamwidths occur in the region from 3.55 to 3.65 MHz, with the beamwidth shrinking to about 78 degrees.</p>
+  <p>The highly variable set of patterns in the 4-square LPMA arrangement result from the natural operation of an LPDA or and LPMA. As we change frequencies, different elements become highly active, that is, carry higher levels of current. This phenomenon applies not only to the active array, but as well to the inactive arrays to which the near field of the active array may be coupled. At the lowest frequencies, the elements closest to the reflector will be active. The effect of parasitic inactive long elements on the pattern will be quite different than the effect at higher frequencies of shorter elements spaced further from the reflector. As well, the degree of coupling will also be variable as we change frequency and involve different elements, thus changing the current magnitude and phase on the inactive parasitic side elements. On this narrow-band LPMA, the range of effects is small, although two distinct types of pattern distortion emerge. On a wider-range LPMA, the range of potential pattern distortion is considerably greater.</p>
+  <p>The square LPMA composed of 4 arrays places the side arrays well within the stronger portions of the active LPMA. Consequently the interactions are high--high enough to dis-recommend this arrangement. By way of contrast, the tri-LPMA places the two inactive arrays well to the rear and generally in the weakest portions of the active array's pattern. Consequently, a much higher degree of isolation exists. The isolation is not perfect, as shown by the rise in gain and by the reduction in the 3.5 MHz front-to-back ratio. However, the tri-LPMA remains perfectly serviceable for full horizon coverage with a gain variation of just about 4-5 dB.</p>
+  <p><b>The Adequacy of the Design and the Design Technique</b></p>
+  <p>When I began this design exercise, I had confidence in the use of a MININEC ground system for the initial work. In general, where a MININEC ground goes astray is when one or more of the elements in a vertical array at or close to ground level is not perfectly vertical. A horizontal component to any element--driven or parasitic--in a MININEC model invokes to one degree or another the errors inherent in the system with horizontal wires below about 0.2 wavelength. Since the elements of an LPMA are vertical throughout, the MININEC ground should be reliable as a guide to design.</p>
+  <p>However, in attempting to translate the final designs into NEC-4 models employing buried radials, a number of difficulties were encountered, especially in attempts to develop either simplified or composite buried radial systems. Eventually, I discovered that the most successful route to a buried radial model was also the most straightforward, if not the easiest from a modeling perspective. The result is the conclusion that the LPMA design explored here is usable as a physical antenna, but only if certain conditions are met. Since these conditions are not quite simple or easy to implement--and since the temptations to alternative ground treatment systems are many--perhaps we should devote some time to the subject in Part 2.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 05-01-2002. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for April, 2002. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="80v2.html"><img src="../images/fwdyl.gif" align="bottom" width="36" height="33"> Go to Part 2</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#lpda'>LPDA</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

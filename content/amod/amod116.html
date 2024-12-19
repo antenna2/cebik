@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insulation Revisited</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>116. Insulation Revisited</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episode 50, we examined some of the basic factors in using the NEC-4 IS or Insulated Sheath command. 33 episodes later (in 83), we looked at a very partial workaround for implementing insulated sheaths in NEC-2 without rewriting the program to import the IS command. Another 33 episodes have gone by, and so we may revisit the IS command.</p>
+  <p>In our initial look at the command, we made an assumption, namely, that for virtually all cases of insulated antenna wires, the conductivity of the insulation would be less than 1E5 S/m. The assumption rested on general expectations of common modern wire insulation materials, but had no solid foundation in calculations. Indeed, unless one has a considerable reference library, finding the conductivity of wire insulation turns out to be much more difficult than finding its relative permittivity. In the original episode, the graphs and charts used a constant conductivity of 1E-10 S/m to simplify charting the properties of insulation and arriving at reasonable graphs of insulated-wire antennas, including their velocity factor relative to a bare wire antenna.</p>
+  <p>We should re-visit insulated wires to see if the assumptions in our original episode stand the test of calculation. In fact, differences between the way various programs implement the potential for insulating wires forces the issue upon us.</p>
+  <p><b>Some Basics of Insulated Sheaths</b></p>
+  <p>NEC-4's IS command assumes that the insulation extends from the surface of the wire to a user-designated outer limit, with no space between the wire and the insulation. Hence, the command is limited to common wire fabrication and does not extend to uses where we might suspend a bare wire within a tubular shell. The command itself is almost deceptively simple.</p>
+  <pre>
+IS     I1     ITAG     ITAGF     ITAGT     EPSR     SIG       RADI     Mnemonics
+       I1     I2       I3        I4        F1       F2        F3       Entry Labels
+IS     0      1        0         0         3.       2.50E-4   .002     Sample Entry
+</pre>
+  <p>As with all NEC entries, we have a series of integer (I1-I4) and a series of floating decimal (F1-F3) entries. I1 merely signals that new data will appear. (A -1 would cancel previous IS data.) I2 specifies the affected tag. I3 and I4 specify the first and last segments to which the data will apply. A pair of zeroes indicates that the data applies to all segments. We have only 3 floating decimal entries. The first is the relative permittivity of the insulation. The second specifies the conductivity of the insulation. The last entry provides the radius of the outer limit of the insulation, where the inner limit is automatically the radius of the wire beneath the insulation. F3 must use a number higher than the radius specified in the GW line referenced by the Tag number in entry I2. In the sample command, the data applies to all segments of Tag 1. The relative permittivity is 3.0, with a conductivity of 2.5E-4 S/m. The sheath radius is 2 mm, which is valid for the wire of Tag 1, which has a 1-mm radius. In more common terms, the wire diameter is 2 mm, the sheath thickness is 1 mm, and the total insulated wire diameter is 4 mm. Essentially, the IS command sets up a second medium for a limited space around the wire, and the conductivity and relative permittivity values that we insert employ the same parameters we apply to ground media.</p>
+  <p>Some implementations of NEC use the IS command exclusively, while others--such as EZNEC--employ an entry system that differs in detail but not in calculation from the IS command. The differences involve shifting from one way of thinking about insulation to another, so let's compare the two entry systems. GNEC, as one example of an implementation using the IS command, provides a help screen that reflects the structure of the command. In contrast, EZNEC attaches insulation to the wire-entry screen. <b>Fig. 1</b> shows the two entry screens along with some sketchy guidance to the dimensional differences between the two. Both help screens show the same parameters and values.</p>
+  <center>
+    <img src="amod116-1.gif" width="745" height="325" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The relative permittivity entries for the two insulations are the same, and the pencil-and-paper transformation of thickness to sheath radius is trivial (for this example, where the wire radius is 1 mm). The key is in the entries that are not the same in the two systems. The IS command requires a value of conductivity, and hitherto, we have simply assumed a very low value. The EZNEC entry requires a value called the "loss tangent," and only some modelers know where to find that. Probably, only a few know how to go from one to the other and back again. Let's see how to perform the required calculation.</p>
+  <p>Relative permittivity (epsilon<sub>r</sub>) is, of course a form of short hand for the value of permittivity (epsilon).</p>
+  <center>
+    <img src="amod116e1.gif" width="51" height="19">
+  </center>
+  <p>Epsilon<sub>0</sub>is the value of permittivity in a vacuum, namely 8.854E-12 F/m. Since the value is a constant, many computerized calculation system omit this term from user view, and NEC is one of those systems. So the relative permittivity of any material of concern is simply the comparative permittivity relative to a vacuum. Hence, we need only tabulate fairly simple numbers, ranging from 1 upward. We can often find lists of relative permittivity values in handbooks.</p>
+  <p>A few handbooks, such as <i>Reference Data for Engineers</i>, Table 9, pp. 4-20 to 4-23, will also list another value, the dissipation factor. The following entries sample the list, which covers 4 pages of materials and values.</p>
+  <pre>
+Sample "Characteristics of Insulating Materials"
+
+Material          Relative Permittivity               Dissipation Factor
+                  10E3 Hz     10E6 Hz     10E8 Hz     10E3 Hz     10E6 Hz     10E8 Hz
+Polycarbonate     3.02        2.96        -----       0.0021      0.010       ------
+Polyethylene      2.26        2.26        2.26       &lt;0.0002     &lt;0.0002      0.0002
+Teflon (PTFE)     2.1         2.1         2.1        &lt;0.0005     &lt;0.0003     &lt;0.0002
+PVC (100%)        3.10        2.88        2.85        0.0185      0.0160      0.0081
+</pre>
+  <p>The values may vary somewhat over the range of frequencies, but normally quite slowly. For 30 MHz, taking the mean values between 10E6 Hz and 10E8 Hz (1 and 100 MHz) will normally be as close to correct in the HF range as the data itself will allow.</p>
+  <p>The dissipation factor of an insulating material is the ratio of energy dissipated to energy stored in a dielectric. The value derived is the tangent of the loss angle (a function of the two factors having a 90-degree phase difference). In alternative terms and thanks to Roy Lewallen for the way of expressing it, the loss tangent is the ratio of the imaginary to real parts of the complex permittivity, which in turn is a function of the real permittivity (dielectric constant), frequency, and conductivity. Immediately, we should see that the conductivity will vary with both the relative permittivity and the frequency for any loss tangent value. In fact, we may convert a listed loss tangent value to a value of conductivity in a straightforward equation:</p>
+  <center>
+    <img src="amod116e2.gif" width="93" height="23">
+  </center>
+  <p>C is the conductivity in S/m, epsilon<sub>0</sub> is the permittivity of a vacuum, epsilon<sub>r</sub> is the relative permittivity of the insulating material at hand, F is the frequency in Hz, and lt is the listed loss tangent or dissipation factor. You may sometimes find a listing for a power factor: for values less than 0.1, you may treat the power factor, the dissipation factor, and the loss tangent as the same. In fact, all reasonable loss tangent values will by considerably less than 0.1.</p>
+  <p>The conversion equation includes several constants: 2, PI, and epsilon<sub>0</sub>. If you wish to create a small spreadsheet to calculate back and forth between conductivity and loss tangent, you may combine the constants:</p>
+  <center>
+    <img src="amod116e3.gif" width="122" height="22">
+  </center>
+  <p>This simplification reduces the conversion process to a shorter equation:</p>
+  <center>
+    <img src="amod116e4.gif" width="134" height="25">
+  </center>
+  <p>Let's create a 30-MHz dipole using the values shown in <b>Fig. 1</b> for the relative permittivity and for the EZNEC loss tangent. The result of conversion yields the conductivity value shown in the GNEC IS screen. This value of conductivity is very much less than the value assumed in episode 50 (1E-10 S/m). So our next concern is whether there are any practical consequences of the higher conductivity values calculated by converting from the loss tangent to conductivity at the frequency of operation. My scan of the plastic material in my reference shows very low values of loss tangent (0.0002 is perhaps the most common value). Nonetheless, we should see what emerges from a systematic scan of values.</p>
+  <p><b>The Results from Using a Constant Conductivity and a Loss Tangent</b></p>
+  <p>In episode 50, we ran through some exercises exploring various insulation thicknesses (0.5 mm, 1.0 mm, and 2.0 mm) around a 2-mm diameter bare copper wire dipole resonated at 30 MHz. In all cases, we used a constant value for conductivity. The constant rested on an initial exercise using some thick insulation with a constant value of relative permittivity and a variable conductivity. The initial results showed the changes in the antenna's feedpoint resistance and reactance without changing its length. The length originated from resonating the wire when bare. <b>Fig. 2</b> shows the results of that initial exercise, using free-space models.</p>
+  <center>
+    <img src="amod116-2.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The assigned relative permittivity is fairly high for plastics (although PVC may be as high as 3.5), and the insulation thickness is as great as the wire diameter. Even under these conditions, the feedpoint resistance remains stable until the conductivity increases above 1E-4 S/m. The reactance remains stable until we pass 1E-3 S/m. The calculated conductivity value in the sample in <b>Fig. 1</b> appears to be on the resistance borderline but below the threshold for reactance variation. Hence, a preliminary estimate would suggest that we might find a few Ohms of feedpoint resistance variation, but the resonant length of the insulated dipole should not differ significantly from the modeled length using the very low conductance value of episode 50.</p>
+  <p><b>Table 1</b> provides the values derived under the conditions of episode 50. They provide us with a touchstone for some further work and with a reference for some original results.</p>
+  <center>
+    <img src="amod116-t1.gif" width="661" height="321" border="2" vspace="5" hspace="9">
+  </center>
+  <p>This table (and others to come) require some background. In all cases, I varied the relative permittivity in increments of 0.25 between values of 1.0 and 3.0. The Res FQ entry shows the resonant frequency of the antenna at its original length under varying insulation conditions. The bare wire length was 4.832 m. However, for convenience, the following line marked DP Length uses the half-length of the dipole (based on modeling from -Y to +Y through the coordinate system origin). The DP length entry is for 30 MHz and produces resonance (within less than +/-j0.5 Ohms reactance). By comparison with the bare-wire length, we can arrive at a Wire VF or velocity factor for the specific insulation condition. The bottom line in each series lists the 30-MHz resonant feedpoint resistance (Zres) of the shortened antenna.</p>
+  <center>
+    <img src="amod116-3.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the change of resonant feedpoint resistance under the insulation conditions listed in <b>Table 1</b>. <b>Fig. 4</b> shows the velocity factor of the insulated and resonated dipoles relative to a bare-wire dipole using the same basic starting wire diameter. Note that the curves are congruent between the two graphs, indicaing the orderliness of the progressions. See episode 50 for other graphed results from the exercise.</p>
+  <center>
+    <img src="amod116-4.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Remember that the initial exercise used a constant conductivity (1E-10 S/m). Let's return to that exercise, but this time allow the conductivity to be variable, based on a selected loss tangent value. I have chosen a value of 0.0005, since this value is close to but somewhat higher than the most common value listed for plastic insulating materials. <b>Table 2</b> records the results of going through the same set of exercises, but this time calculating the value of conductivity for each case. As the table shows, conductivity rises with each increase in relative permittivity.</p>
+  <center>
+    <img src="amod116-t2.gif" width="661" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although the values of conductivity change relative to the single value used for <b>Table 1</b>, none of the other values change. (There is a very slight change in the Zres or resonant impedance line that we shall address in more detail shortly.) The values are virtually identical between tables. In the period between generating these table (several years), versions of the software have changed, as have the computers and CPUs. As well, the basic compilers for the Fortran code have also changed. Each of these changes can result in a change in the final decimal digit for any entry. Hence, between the two tables, we may for all practical modeling purposes say that no change occurs, despite the differences in the values of conductivity.</p>
+  <p>This result is consistent with the exercise shown in <b>Fig. 2</b>, even though the figure uses a thick insulation with a relative permittivity that is high for the range of plastics commonly used for wire insulation. The impedance values recorded in that table remain almost constant until the conductivity is significantly higher than the values that appear in <b>Table 2</b>. If the loss tangent is among the common values, then at 30 MHz, the presumption of a very low conductivity value does not harm the accuracy of the resulting models. In addition, the velocity factor graph (<b>Fig. 4</b>) remains usable as a general guide to dipole length shortening as a function of wire insulation of common sorts.</p>
+  <p>Even though a loss tangent of 0.0005 may be common, there are instances in which the value may be higher. In fact, EZNEC provides a loss-tangent value of 0.05 for PVC. This value is 2 orders of magnitude higher than the value used for <b>Table 2</b>. Therefore, we likely should perform at least one more exercise. Let's retain our 2-mm diameter copper wire dipole at 30 MHz. As well, let's select the middle case from <b>Table 2</b>, the situation in which we use 1-mm thick insulation. However, let's change the basis of comparison. Let's explore loss-tangent values of 0.0005, 0.005, and 0.05 in order to see what changes may occur in the data that we accumulate in these free-space models. For each model at each level of relative permittivity, we arrive at a new value of conductivity, as shown in <b>Table 3</b>.</p>
+  <center>
+    <img src="amod116-t3.gif" width="661" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Perhaps the first noticeable trait of the tabulated values is that a 10-fold increase in the loss tangent produces an exactly equivalent increase in the value of conductivity. Hence, the highest value of conductivity is about 2.5E-4 S/m. Nevertheless, almost nothing else changes. The self-resonant frequencies for the 4.832-m wire when insulated are the same, regardless of the conductivity. These frequencies would be determined largely by the feedpoint reactance, which does not change significantly until the conductivity reaches about 1E-3 S/m. Likewise, the required half-element length for resonance at 30 MHz does not change over the range of loss-tangent values scanned in the table. As a consequence, the insulated-wire velocity-factor graph (<b>Fig. 4</b>) remains usable for the entire set of loss-tangent values covered by the exercise.</p>
+  <p>One factor does change: the feedpoint resistance at the 30-MHz resonant wire length. In fact, it shows a systematic rise as we increase the value of loss tangent, as shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod116-5.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The amount of change is systematic but still quite small between loss-tangent values of 0.0005 and 0.005. This value range corresponds at 30 MHz to a range center of 1.6E-6 S/m and 1.6E-5 S/m. Both of these midpoint conductivity values fall well below the expected resistance upward swing vs. conductivity. The loss-tangent value of 0.05 produces a more noticeable change that averages about 1.5 Ohms relative to the 2 lower curves. The associated mid-point conductivity is about 1.6E-4 S/m. Reference to <b>Fig. 2</b> shows that the resistance curve has entered its area of noticeable climb in this region.</p>
+  <p>The higher feedpoint resistance value is largely a function of the decreasing resistivity of the insulation under the specified conditions. Indeed, the mid-point value of resistivity is close to 6000 Ohms/m, a value that gives the insulation semi-conductor status. Small amounts of current may flow and equally may be dissipated as heat. With lower values of conductivity, the insulation is largely RF transparent. Dissipation appears to reach a peak at a conductivity of about 1E-2 S/m (100 Ohms/m). Once the insulation is more conductive, it becomes a part of the radiating wire itself, and the overall feedpoint resistance begins to decline.</p>
+  <p><b>Conclusion</b></p>
+  <p>I have conducted these exercises at 30 MHz, the upper limit of the HF range. We find most uses of insulated antenna elements at HF. Since the value of conductivity will rise and fall with the frequency, the 30-MHz case represents a worst-case analysis. However, it is wise to remember that insulation of the proportions used in these exercises will increase the insulation conductivity by a factor of 10 if we increase the frequency to 300 MHz.</p>
+  <p>I sometimes receive questions about the effects of enamel (or its current replacement coating) on wire. In general, the enamel coating is too thin for its effect to appear when comparing it to bare wire of the same diameter. I have also received questions about anodized aluminum elements, and the same general answer applies. Forcing the emergence of aluminum oxide for a few molecules of depth into the aluminum has little effect on the element's performance compared to a bare element that has received a fresh polishing. However, both situations require special care with respect to ensuring good electrical contact at junctions.</p>
+  <p>Most plastic coating used to insulate wires have a relative permittivity between 2 and 3, with loss tangents in the HF region of less than 0.001. The exercises have shown that in this range, nothing critical changes with respect to the value of loss tangent or a calculated conductivity value. Hence, one might safely use a generalized loss tangent of about 0.0005 or some very low value of conductivity (depending upon the software) and still wind up with a model that is accurate enough to serve as a basis for antenna building. In the HF region, construction and environmental variables will generally override any slight differences one might see in modeling tables.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

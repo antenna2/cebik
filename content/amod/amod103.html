@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>True Azimuth Models</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>103. True Azimuth Models<br>
+    EZNEC Software</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the first of our 2 episodes on creating true azimuth patterns, we explored NSI software to see how to develop both true azimuth patterns and the models that yield those patterns. Because the NEC-Win polar plot places zero degrees at the top of the plot, the apparent difference between a phi plot (the inherent NEC plot from the radiation pattern tables) and an azimuth or compass plot is simple. The phi plot counts degrees in a counterclockwise direct, while a compass plot counts degrees in a clockwise direction.</p>
+  <p>The creation of true azimuth models, however, requires something more from us as modelers. North equates with the +X-axis in the Cartesian coordinate system. Hence, East or 90 degrees azimuth corresponds to the -Y axis. For irregular sets of positions in the X-Y plane, we need to do some careful planning to obtain a model whose geometry produces a correct azimuth plot. Each step in the process is simple enough, even when we receive initial data in the form of distances and bearings. However, we can easily develop a model of moderate complexity and lose track of what comes next. Hence, I recommend a detailed pencil-and-paper procedure for setting up such models.</p>
+  <p>Nevertheless, in NSI software, we can in a straightforward way create true azimuth or compass-oriented models that are useful for VOACAP, BC, and large antenna field analyses. In fact, we may do the same using EZNEC software. However, the procedures will not be identical, simply because the polar plot display conventions in EZNEC differ from those used by NSI software. Once we master the conventions applicable to EZNEC, we shall discover that every step possible in one software package is available in the other. They will simply differ in accord with convention differences. One result is that a true azimuth model created for one software set will not be readable as a true azimuth pattern by the other without significant revision of the model geometry.</p>
+  <p><b>Simple Rotational Models in EZNEC</b></p>
+  <p>EZNEC (Version 4) comes in 3 sizes: standard, plus, and pro. The last version is available with either the NEC-2 or NEC-4 core. However, all required functions to create true azimuth models are available on even the most basic version of the program.</p>
+  <p>The process of creating true azimuth models begins with an understanding of the EZNEC azimuth plot. In its raw form, without the supplemental data shown, the plot is somewhat opaque, as suggested by <b>Fig. 1</b>. The plot shows the pattern of the same 3-element Yagi used to start the NSI notes, with the boom aligned along the X-axis. Thus, we discover the first difference between NSI software and corresponding EZNEC software. EZNEC places the standard plot zero-degree position on the far right. This procedure allows a pattern that coincides roughly with the normal way of presenting the Cartesian X and Y axes on a flat surface: The X-axis receives a horizontal line and the Y-axis receives a vertical line. In the plot shown, +Y corresponds to the top position of the plot circle.</p>
+  <center>
+    <img src="amod103-1.gif" width="445" height="333" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Because the plot does not show the degrees on the outer ring of the plot circle, the nature of the plot may not be immediately apparent. There is a data set attached to each plot to record various headings of interest in plot analsis. However, in this plot transfer, the only way to obtain degree markings is to add them with a paint program. Although EZNEC refers to the plot as an azimuth plot, it is actually a phi plot and counts degrees counterclockwise. (The EZNEC elevation plots do count degrees from the horizon upward.) For a myriad of antennas with symmetrical patterns on each side of the virtual boom line, the difference does not make a difference relative to understanding the antenna's operation.</p>
+  <p>Among its options, EZNEC does offer a "Compass" plot. The compass plot counts degrees clockwise, with zero degrees positioned at the top of the plot circle. Note that there is a 90-degree difference between the zero-points of the standard plot and the compass plot. If we wish to create a model of an antenna pointed North, we must adopt a new set of convention. <b>Fig. 2</b> shows the relationship of the plot conventions to the Cartesian geometry conventions.</p>
+  <center>
+    <img src="amod103-2.gif" width="548" height="290" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since North corresponds to the Cartesian Y-axis, to point an antenna North requires that we form the model with the boom pointed toward +Y. The revised model will then have its elements extended (for a symmetrical model with linear elements) along the -Y to +Y axis, with East corresponding to the +X direction. If we revise our 3-element Yagi model accordingly, we can obtain both a standard and a compass pattern, as shown in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod103-3.gif" width="750" height="333" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that there is no difference between the graphical portions of each plot. The differences appear in the data beneath the plot. The standard plot shows the cursor and the maximum gain heading to be 90 degrees, which we would expect of the phi pattern for a plot oriented 90 degrees counterclockwise to the plot in <b>Fig. 1</b>. In contrast, the compass plot shows the cursor and maximum gain at zero degrees, corresponding to the model's boom pointing North along the +Y axis.</p>
+  <p><b>Fig. 4</b> provides us with the wire table for the model. If you compare it with the wire table from NEC-Win Plus in the preceding episode, you will find that all X-column Values are now in the Y column and vice versa.</p>
+  <center>
+    <img src="amod103-4.gif" width="688" height="487" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's rotate the antenna 45 degrees toward the Northeast (compass bearing 045 degrees) to parallel the same operation in the last episode. To set up the antenna for rotation, we should first move the wires by 93" so that the rotation point (coordinates 0,0) is at the center of the boom. EZNEC has move and rotate functions comparable to those in NSI software. They appear as options within the wire table array of possible modifications. Just like using the GM command, we must move the wires first and then rotate them. <b>Fig. 5</b> shows the relevant maneuvers in terms of the assistance screens that appear. To center the antenna along its boom for a compass pattern, we move the wires -93" along the Y-axis or boom line. Then we rotate the antenna 45 degrees clockwise around the Z-axis to move the boom direction from North to Northeast.</p>
+  <center>
+    <img src="amod103-5.gif" width="411" height="502" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For reference, <b>Fig. 6</b> shows a composite wire table after each maneuver. The table shows only the end-1 values, with the post-move set on the left and the post-rotation set on the right. If we had wished to place the antenna after rotation at some other position within a field of antennas, we would next perform another move operation, setting the distance along each axis into the appropriate X and Y boxes of the move screen. In EZNEC, it is possible to rotate a wire set around the center of a wire, but this operation would not preserve the centering of the antenna on its overall boomlength from reflector to director. In most cases, making adjustments to a model's position yields an accurate result if taken step-by-step in accord with a plan first noted on paper.</p>
+  <center>
+    <img src="amod103-6.gif" width="688" height="487" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Having set up the Yagi in true azimuth fashion, we obtain a compass plot that is accurate as a true azimuth plot. <b>Fig. 7</b> shows the plot, its data, and the outline view of the antenna as its is aligned in the X-Y plane. The plot has its maximum gain at a 045-degree azimuth bearing, although to be certain, we must consult the data below the actual plot. The antenna outline confirms that the plot accurately portrays the antenna performance, given its alignment. It also confirms that we have moved and rotated the antenna correctly in accord with the compass-plot conventions that apply to EZNEC. The view also let's us know that the virtual boom center is offset by a small amount from the center or driver element. The feedpoint circle and the axis center circle do not coincide.</p>
+  <center>
+    <img src="amod103-7.gif" width="650" height="333" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since we have turned the antenna after moving it, let's create a stack of 2 Yagis. We shall want the 2 antennas in the stack to point in different directions, perhaps one headed Northeast and the other North. EZNEC provides a variety of ways to create the stack. One way to proceed is to copy the existing wires to create a new set. The next step is to use either the height function or the move function to create a spacing between the 2 sets of wires. For this small exercise, I have selected 800" as the arbitrary separation. We may then rotate the new wires 45 degrees counterclockwise to point them North along the boom. If we wish to test other angles of separation between the antennas in the stack or other separation distances, we can use the move and rotate functions appropriately.</p>
+  <p>Since we already have a beam pointing North, we can also import the file description from that model. For identical antennas in a stack, this procedure might be more cumbersome, since we would need to separate the antennas and ensure that each rotated on its boom center. However, there are many exercises in which we may have different antennas in the modeled stack. In that case, importing the added antenna model may prove to be the most practical maneuver.</p>
+  <p>The operations to create stacks are available also in NSI software. The spreadsheet main face of NEC-Win Plus allows block copying of the first Yagi into a second version. The translation (move) function then allows us to set the separation. To create a stack of different antennas, we may block copy a set of wires and appended sources and loads from one model file to another. In advanced software that makes the full NEC command set available, we can accomplish the copy and move functions with the GM command.</p>
+  <p>The results of our EZNEC stacking operations appear in <b>Fig. 8</b>. Although the wire table is too long to reproduce, the plot, the data, and the antenna model outline should suffice to establish that we have a successful true azimuth model and plot of the stack. I set the radiation pattern increment to 0.5 degrees so that the heading for maximum gain would read correctly (rather than showing the nearest integer value). Since the model is in free space, the maximum gain occurs rather exactly between the headings of the identical beams. Placing the stack over ground might amend the heading of maximum gain due to slightly different ground effects on the two antennas in the stack.</p>
+  <center>
+    <img src="amod103-8.gif" width="700" height="333" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The are many good reasons for studying the patterns of a stack with the individual beams pointing in different directions--assuming that this condition is among the planned modes of operation. Forward gain of the composite pattern is only 1 of several interesting facets of the stack. You may also wish to compare the beamwidth for a single antenna (66 degrees) with the beamwidth for the stack (77 degrees). Note also the change in the rearward lobes. Then mentally overlay two sets of individual-antenna rear lobes at 45 degrees to each other. Although the two antennas have some interaction with each other, the overlay process goes a long way toward showing the revised shape of the rearward radiation pattern in the stack.</p>
+  <p><b>True Azimuth Models in EZNEC</b></p>
+  <p>To complete our tour of setting up true azimuth models in EZNEC software, we must also tackle the types of situations that we examined for NSI software. There are many modeling problems in which we begin the process with one or another form of azimuth data describing the geometry of the antennas. We shall explore a couple of simpler cases in order to maintain clarity on the principles involved. Suppose that we had a set of 3 monopoles that are 1/4 wavelength at 1 MHz. Since a wavelength at 1 MHz is 300 m, the monopoles are each 75-m long. Although a real-world exercise might include a buried radial system for each monopole, we shall use a perfect ground for our exercise. As well, the individual antennas have an arbitrary diameter of 0.1 m (100 mm) and use a relatively low conductivity. Also for simplicity, we shall feed the individual antennas in phase.</p>
+  <p>As we did with the NSI exercises, we may begin with data provides in the form of bearings and distances, perhaps against a map or site plat.</p>
+  <pre>
+Tower         Distance      Azimuth Bearing
+Number        Meters        Degrees
+
+  1           ---           ---
+  2           150           060
+  3           300           060
+</pre>
+  <p>The system once more consists of the monopole in a line, with 1/2 wavelength spacing between the individual antennas. For the exercise, we shall feed each monopole at its base in phase with the other two monopoles. Because the heading is 060 degrees, the line extends from Southwest to Northeast. If we let the first monopole be the key and place it at coordinates 0,0, then the remaining monopoles will fall somewhere between North and East. Once more, we can make use of the sine and cosine functions of 60 degrees to form multipliers for the distances and derive the proper coordinates. Because the second and third monopoles fall in the first quadrant, both X and Y will be positive.</p>
+  <p>Since the Y-axis is North or zero degrees and the X-axis is 90 degrees, the X coordinate will be the sine of the angle times the distance or 0.866 * 150 = 129.9 m. The Y coordinate will be the sine of the angle times the distance or 0.5 * 150 = 75 m. The monopoles form a single line, so the second coordinate set can simply use the cumulative distance for X = 259.8 m and Y = 150 m. The completed table is below.</p>
+  <pre>
+Tower         Distance      Azimuth Bearing    X coordinate     Y coordinate
+Number        Meters        Degrees
+
+  1           ---           ---                0                0
+  2           150           060                129.9            75
+  3           300           060                259.8            150
+</pre>
+  <p><b>Fig. 9</b> provides a visual presentation of the monopole layout against the Y and X axes that form the South-to-North lines and the West-to-East line. The annotated antenna view has been turned so that the axes assume their proper positions relative to an azimuth map. The compass plot confirms that the main lobes of the radiation pattern are broadside to the line of monopoles, with maximum gain at 135 and 315 degrees azimuth.</p>
+  <center>
+    <img src="amod103-9.gif" width="750" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> shows the wire table for the model to confirm the use of the cordinates in the tables. As noted in the preceding episode, there are many applications in which precision azimuth pattern are required. Hence, the small bit of pre-modeling calculation that it takes to set up the true azimuth model is minuscule compared to having a pattern rejected by a licensing agency.</p>
+  <center>
+    <img src="amod103-10.gif" width="688" height="200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The second exercise involves 3 towers that do not form a single line. Instead, the third tower moves off from the second at a different angle. We shall retain the in-phase feeding system over perfect ground to preserve the model's simplicity, since our goal is to get a handle on how to organize the coordinates within EZNEC to obtain a true azimuth model.</p>
+  <pre>
+Tower         Reference         Distance      Azimuth Bearing
+Number        Tower             Meters        Degrees
+
+  1           ---               ---           ---
+  2           1                 150           060
+  3           2                 150           030
+</pre>
+  <p>We may easily calculate the coordinates for the second monopole using the techniques employed for the first monopole system. Next, we can assume that the second monopole is at the coordinate center and calculate its coordinates. To the values for X and Y, we simple add the values for each coordinate derived for the position of monopole 2. The result of the small trig exercise appears in the following completed table.</p>
+  <pre>
+Tower         Reference         Distance      Azimuth Bearing    X coordinate     Y coordinate
+Number        Tower             Meters        Degrees
+
+  1           ---               ---           ---                0                0
+  2           1                 150           060                129.9            75
+  3           2                 150           030                204.9            204.9
+</pre>
+  <p>The results appear more graphically in <b>Fig. 11</b>, where the annotated antenna outline shows the final positions along with the original data and the calculated coordinates. The compass plot is identical to the one produced using NEC-Win Plus and the pattern is broadside to the virtual line from the first to the last of the monopoles. The lack of perfect symmetry on each side of that lines reveals the effects of the irregular line formed by the 3 antennas.</p>
+  <center>
+    <img src="amod103-11.gif" width="750" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As a confirmation of the model's use of the calculated coordinates, <b>Fig. 12</b> shows the model's wire table.</p>
+  <center>
+    <img src="amod103-12.gif" width="688" height="200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Producing true azimuth patterns in EZNEC turns out to be as straightforward as it did using NSI software. Once we located North (the +Y axis) and East (the +X axis), the remain steps became a matter of calculating coordinates from any data that might be supplied in terms of distance and azimuth bearing. Of course, we can always begin with coordinate data, so long as we remember to place the antenna or its parts against a paper version of the X-Y system with North set along the correct axis line. Figuring the antenna coordinates then becomes a matter of arranging the coordinates. If an antenna has an area as defined in the X-Y plane, then it may be easiest to arrange the antenna along one or another azis and then to move and/or rotate the antenna to the desired orientation.</p>
+  <p>EZNEC and NEC-Win Plus both use proprietary file formats, neither of which is the standard ASCII NEC-input file format. However, NEC-Win Plus will save files in the standard format, and EZNEC Pro will do so as well. Hence, my own work often involves moving from one piece of software to the other by way of an intervening NEC model file. There is a relationship between the systems needed to produce true azimuth models in each type of software. When moving from NEC-Win Plus to EZNEC, rotate the antenna or antenna field 90 degrees counterclockwise in EZNEC. When moving from EZNEC to NEC-Win Plus (or other NSI software), rotate the antenna or antenna field 90 degrees clockwise in the NSI program. The results will yield true a azimuth model if the initial model was truly an azimuth model within its software.</p>
+  <p>Producing true azimuth models is certainly not necessary for a large part of the modeling enterprise. However, for applications demanding true azimuth models and patterns, the two bodies of software that we have sampled provide guides to almost any other software implementing NEC. The software must have an azimuth pattern that counts degrees clockwise. With that available, the rest of the task has only 2 steps. The first is to determine how the azimuth pattern relates to the software's standard phi pattern. The second is to calculate the necessary coordinates for the antenna to produce a true azimuth model and a true azimuth pattern.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

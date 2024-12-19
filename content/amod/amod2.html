@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Under the Limits: MININEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>2. Under the Limits: MININEC</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p>All antenna modeling software works within a set of limits. Exceeding the limits may yield a model, but one that is usually unreliable in terms of translating it into reality. Hence, we need to be thoroughly familiar with the limits of the software we use.</p>
+  <p>Since most of us use a commercial implementation of one of the basic public domain calculation cores (MININEC or NEC-2), we must divide our attention between core considerations and program considerations. There are limitations of the MININEC calculation core itself which are initially common to all program implementations. However, some programs use proprietary correctives to overcome some limitations, and these will vary from one program to another. Hence, we shall have to make reference to differences among programs, but without necessarily recommending or dis-recommending any particular program.</p>
+  <p>The three main commercial implementations of public domain MININEC (3.13) software in Windows format are the following:</p>
+  <ul>
+    <li>1. Antenna Model -- http://www.antennamodel.com/</li>
+    <li>2. NEC4WIN -- http://www.orionmicro.com</li>
+    <li>3. MMANA -- http://www.qsl.net/mmhamsoft/</li>
+  </ul>
+  <p>(This list does not include the DOS programs AO/MN and ELNEC.)</p>
+  <h4>MININEC Limitations: Segmentation</h4>Like NEC, MININEC analyzes an antenna by first analyzing the interaction among the individual straight segments that make up the elements. Segments are subdivisions of straight wires that compose the antenna structure, as shown in Figure 1. A dipole may have a single wire subdivided into many segments. A 2-element quad may be composed of many wires, only some of which may have more than one segment.
+  <center>
+    <img src="amod2-1.gif" width="459" height="446" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The recommended minimum number of segments per half wavelength is 10, although fewer can occasionally be used. The fewer the number of segments per half wavelength, the less reliable the results. Even 10 segments per wavelength may be too few to pass convergence tests described in the last episode. The shortest segment length recommended is 0.0001 wavelength.</p>
+  <p>Although you can make a wire about as thin as you can imagine, your wires should not exceed a diameter of 0.02 wavelengths.</p>
+  <p>The following chart provides some guidance into the long and short of segment length, as well as into maximum wire diameter.</p>
+  <pre>Frequency      Segment Length in "      Shortest Segment    Largest Wire
+               for 10 seg/0.5 wl        Length in "         Diameter in "
+1.8                 327.9                    0.6657              133.1
+3.5                 168.6                    0.3372               67.4
+7.0                  84.3                    0.1686               33.7
+10.1                 58.4                    0.1169               23.4
+14.0                 42.2                    0.0843               16.9
+18.068               32.7                    0.0653               13.1
+21.0                 28.1                    0.0562               11.2
+24.89                23.7                    0.0474                9.5
+28.0                 21.1                    0.0422                8.4
+50.0                 11.8                    0.0236                4.7
+144.0                 4.1                    0.0082                1.6</pre>
+  <p>The length limitations do not operate in isolation. First, the length should never be less than about 1.25 the wire diameter, and a greater ratio of length to diameter is preferable. Second, the ratio of lengths of adjoining segments should be less than 2:1.</p>
+  <p>The preceding recommendations represent program limitations. In practice, these limits should be avoided by the greatest possible distance. We can accomplish this by adhering to some positive rules of thumb. First, insofar as feasible with linear elements, make the segment lengths equal, even where the element may be composed of wires of different diameter. Second, use at least twice the minimum recommended segmentation for any antenna more complex than a simple half wavelength dipole. (We shall soon discover an important situation in which to depart from these rules.) Figure 2 illustrates these rules of thumb in action for a two-element Yagi.</p>
+  <center>
+    <img src="amod2-2.gif" width="444" height="297" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Adherence to these rules of thumb has proven less critical in MININEC than in NEC and less critical where wires are widely spaced than when closely spaced. Nonetheless, they are reasonably good habits to get into, except where specifically counter-indicated, as in the case of segment length tapering, to be discussed in a moment. In all cases, increase segmentation as indicated by appropriate convergence testing.</p>
+  <p>MININEC calculations are based upon placing a current pulse at the intersection of two segments (with wire end pulses added to non-continuous elements). The placement of the pulse (which differs from the manner in which NEC performs its calculations) also dictates the placement of antenna sources: they must be at pulses. Hence, a center-fed linear element should have an even number of segments so that there is a pulse segment junction) at the element center on which to place the source. Similar rules apply to the placement of loads: even if off center, they can only be placed at junctions of wire segments. Exact placement of sources and loads which are not at wire centers or ends requires that there be enough segments to position them very close to their physical counterparts. Figure 3 illustrates the situation.</p>
+  <center>
+    <img src="amod2-3.gif" width="398" height="409" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As Figure 3 shows, when source or load position is critical, you can always subdivide an element into wires of different length and place the source or load at the junction of the wires. Some programs limit the position of the source (and loads) to wire ends or centers; hence, the use of separate wires within a single antenna element may be necessary in order to place a source (or load) exactly where the antenna dimensions require it. This technique is especially applicable to antennas such as the off-center fed half wavelength wire, sometimes called the Windom.</p>
+  <p>The MININEC system of pulse placement puts limitations on the construction of models involving angular geometries, such as the quad loop. The ends of pulses are roughly at the middle of segments. The effect resembles shortening the antenna by ignoring some of the wire at the corner. Hence, as suggested by Figure 4, with only close to the minimum recommended segmentation per half wavelength, a MININEC model quad loop will have to be made larger than in reality to achieve resonance at a desired frequency.</p>
+  <center>
+    <img src="amod2-4.gif" width="541" height="445" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There are two ways to overcome this limitation. One is to increase the number of segments, making each one very short. This technique results in a minimal shortening effect and can yield accurate quad models. A second technique is called segment length tapering. AO provides an automatic tapering option, while ELNEC provides an option for constructing an alternative model with either preset or user-controlled maximum and minimum segment lengths. In both cases, segments approaching critical angles become very short and gradually increase in length. The technique yields maximum accuracy with a minimum number of segments per wire.</p>
+  <p>MININEC was created for the PC when the maximum memory available was 640 KB. Memory is the key limitation in the maximum number of segments available for a model. At one time, a maximum of about 128 pulses was standard. However, existing programs have increased this limit by various means. ELNEC uses a special program adjunct to increase the limit to about 256 pulses. AO has altered the code with machine-level routines so that the number of pulses is limited only by memory. NEC4WIN uses coding within the Windows 95 protocols to remove the limit from the number of available pulses.</p>
+  <p>Despite these advances, when compared to NEC-2 programs, MININEC models have size restrictions that limit some types of modeling. Very large and complex geometries may call for considerable ingenuity. Even then, their accuracy may be suspect in some cases.</p>
+  <p>Nevertheless, we shall see, when we discuss some of the limitations of NEC- 2, that MININEC does model some situations with a good deal more reliability than its FORTRAN counterpart.</p>
+  <h4>Grounds</h4>Another general area in which MININEC shows significant limitations is in its options for grounding and the accuracy of models near ground. MININEC has, in addition to a free space option, a ground system that permits the definition of two ground condition sets. These ground condition specifications affect only the far field pattern of the antenna model. Source impedance and current data is developed as if the antenna were positioned over perfect ground. For many types of antennas, the differences between source impedance figures taken over perfect ground and those taken over less than perfect ground will not be operationally significant. The following table shows figures for a dipole modeled at 3.5 MHz 1 wavelength high in MININEC and also in NEC-2 with high accuracy Sommerfeld-Norton grounds ranging from perfect to very poor. The antenna was first resonated within +/- 1 ohm reactance over perfect ground and held at that length for the development of the other figures. MININEC dipoles have 20 segments; NEC dipoles have 21 segments.
+  <pre>                         MININEC                  NEC-2 (N-S Ground)
+Antenna   Cond. (S/m)    138.0' #12 copper        137.6' #12 copper
+Ground    & Die. Con.    Gain      Source Z       Gain      Source Z
+                         dBi       R +/- jX       dBi       R +/- jX
+Perfect                  8.12      73.1 + j0.38   8.12      73.2 - j0.42
+Very Good 0.0303/20      7.99      73.1 + j0.38   8.05      72.5 + j0.77
+Good      0.005/13       7.80      73.1 + j0.38   7.87      72.2 + j2.42
+Poor      0.002/13       7.64      73.1 + j0.38   7.69      72.6 + j3.30
+Very Poor 0.001/5        7.42      73.1 + j0.38   7.49      72.3 + j4.75</pre>
+  <p>This high dipole shows no major operational problem in using the MININEC figures in lieu of the NEC-2 figures. However, the NEC source figures do show a small but possibly significant reactance. To main resonance, the antenna calls for a change in length amounting to about 0.1' per ohm reactance. In other types of antennas at other heights, the difference might be greater and of higher significance.</p>
+  <p>MININEC has a second inherent limitation respecting ground. Wires placed roughly parallel to the ground will yield both inaccurate current (and therefore gain) data and also source data when they are below about 0.2 wavelengths. (More accurate data close to the ground would have required a larger code at a time when PCs had severe memory limitations.) The following table compares MININEC and NEC-2 data for a 3.5 MHz dipole (resonated in free space) at heights from 0.05 to 0.30 wavelengths above medium or "average" earth (conductivity = 0.005 Siemens/meter; dielectric constant = 13).</p>
+  <pre>                         MININEC                  NEC-2 (S-N Ground)
+Antenna                  137.2' #12 copper        136.9' #12 copper
+Height                   Gain      Source Z       Gain      Source Z
+ W/L      Feet           dBi       R +/- jX       dBi       R +/- jX
+0.05      14.05          9.4        7.4 - j 4.9   1.2       48.9 + j15.4
+0.10      28.10          8.4       23.3 + j20.5   5.1       49.8 + j21.1
+0.15      42.15          7.7       45.9 + j35.1   6.4       62.5 + j26.9
+0.20      56.20          7.0       62.3 + j37.0   6.5       77.0 + j25.3
+0.25      70.26          6.2       87.7 + j28.3   6.2       87.8 + j17.3
+0.30      84.31          5.9       97.4 + j13.5   6.1       92.3 + j 6.1</pre>
+  <p>The low altitude gains calculated by MININEC are, of course, unrealistically high, whereas the ones calculated by NEC-2 are more reliable, in light of ground losses. Figures do not begin to coincide between the two programs until the dipole reaches about 0.25 wavelengths in height. Notice that figures for the dipole are not wholly reliable in MININEC at heights of 50 feet, a common amateur backyard dipole height for 80 meters. Similarly positioned 80-meter wire arrays of greater complexity will show equal or greater errors. The upshot is this: if models of antennas around or below the MININEC height limit are needed, then MININEC is not the program of choice for such models.</p>
+  <p>The limitation just described also makes MININEC unreliable in the evaluation of ground planes for many lower HF verticals, since the ground plane normally consists of wires under, at, or just above the surface of ground and parallel to it. NEC-2 is more accurate using the Sommerfeld- Norton ground and placing wires at their height above the surface. Underground radials can be modeled at very small heights above the surface for reasonably accurate results. (NEC-4 has the ability to model wires underground.)</p>
+  <h4>Miscellaneous Limitations</h4>There are a number of other less problematical limitations within MININEC. Some commercial implementations of MININEC have added corrective measures; others have not, most likely in the belief that the amount of error introduced is within the boundaries of normal antenna building practice.
+  <p><b>Frequency</b>: As the frequency at which models are set increases, MININEC shows a gradual offset in the direction of showing an antenna to be shorter than its real-world counterpart would be. AO introduces a corrective for this offset to bring the results in line with NEC-2. To illustrate the phenomenon, the following results were obtained for a 3-element Yagi of uniform 0.5" aluminum elements at 28.5 MHz in free space:</p>
+  <pre>Program        Gain      Front-to-Back       Source Impedance
+               dBi            dB               R+/- jX Ohms
+NEC-4          8.11         27.15               25.7 - j0.8
+NEC-2          8.11         27.13               25.7 - j0.8
+AO (MIN)       8.09         26.89               25.7 - j0.3
+ELNEC (MIN)    8.04         27.21               26.5 - j6.0
+ELNEC at 28.65 MHz                              25.7 - j0.6</pre>
+  <p>The uncorrected MININEC model is resonant at a frequency about 150 kHz above the resonance shown by the other models or about 0.5% higher in frequency at 10 meters. Similar results are shown by AO when the frequency corrective is switched off. The actual amount of error is a function of both antenna element diameter and frequency and thus may become more significant in the upper HF and VHF region of the spectrum.</p>
+  <p><b>Parallel Wires</b>: Closely space wires, such as in a folded dipole can give erroneous outputs in MININEC unless carefully segment-length tapered toward the junctions with the short end-connecting wires. ELNEC has introduced a parallel wire correction feature that permits the use of low numbers of segments per half wavelength without length tapering with quite reasonable output results. The following table illustrates a simple folded dipole (partially shown in Figure 5) of #18 copper wire with 1" wire spacing and 16.6' total length at 28.5 MHz in free space.</p>
+  <center>
+    <img src="amod2-5.gif" width="397" height="311" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>          Without correction            With correction
+No. seg./      Gain      Source Z       Gain      Source Z
+0.5 wl         dBi       R +/- jX       dBi       R +/- jX
+ 22            1.60      11.6 - j106    2.09      287 + j 8.5
+ 32            1.46      11.4 - j 85    2.10      288 + j 2.0
+ 42            1.21      11.0 - j 84    2.10      288 + j 3.1
+Full taper                              2.09      285 + j31.9</pre>
+  <p>AO results for tapered and uncorrected untapered folded dipoles are similar. The closely spaced parallel wire correction where wires join can be overcome either by a corrective or by segment length tapering. However, where the wires do not join, the modeler must use care in validating the modeled results in the absence of a parallel wire corrective.</p>
+  <h4>On the Positive Side</h4>There are some aspects of modeling where MININEC shows significantly greater accuracy than NEC-2. We shall explore the NEC-2 limitations more extensively next time, but here we can simply list a few MININEC superiorities.
+  <p><b>Folded dipoles of dissimilar diameter wires</b>: NEC in all its forms produces rather unreliable models of folded dipoles with dissimilar wires. The 4:1 source impedance ratio for a folded dipole occurs only when both wires are the same size. When the wires differ in diameter, the source impedance is a complex function of the wires diameter ratios and their spacing. Details of the calculation appear in <i>The ARRL Antenna Book</i>. Detailed models in MININEC show very reasonable approximations of the calculated results.</p>
+  <p><b>Elements with tapered wire diameters</b>: Yagi elements may start at the center with 1" or larger diameter tubing and decrease the diameter as you work your way out toward the end. MININEC handles these transitions in stride. In contrast, NEC-2 requires a special type of corrective, usually based on the Leeson correctives, which substitutes an equivalent single diameter element for the one you actually place in the model.</p>
+  <p><b>Closely spaced wires</b>: When wires are very closely spaced--say less than 10" or so at 20 meters (with frequency, wire diameter, and other variables thrown in), NEC results become unreliable, generally showing higher than realistic gain, but no change in the antenna pattern shape. In contrast, MININEC produces realistic results down to very close wire spacings. (However, never let two antenna wire surfaces overlap.)</p>
+  <p><b>Changing diameters at angular corners</b>: Again, NEC does not handle this situation well, producing unreliable models. Extensive modeling of the folded X-Beam, which normally uses tubular angled arms and wire tails, suggests that MININEC--when using segment length tapering at the angular corners--produces more reliable models. Likewise, tests with quad loops with tubular horizontal sections and wire vertical sections also suggests that MININEC models are more accurate than NEC models.</p>
+  <p>This sampling of areas where MININEC produces more reliable models than NEC-2 suggests that for the foreseeable future, MININEC will maintain a significant place in antenna modeling. Indeed, over a broad middle ground that does not approach the limitations of either program, both will produce quite reliable models--sufficiently reliable to be guides of antenna construction. Our discussion of MININEC limitations is not aimed at lessening confidence in the program or its commercial implementations. Rather, it is designed to help us ensure model reliability by keeping our models away from the limits and well within arena where MININEC best does its work.</p>
+  <p>For further information on MININEC limitations, the classic reference is Roy Lewallen, W7EL, "MININEC: The Other Side of the Sword," <i>QST</i> (February, 1991), 18-22.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

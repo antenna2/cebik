@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wire Grids 2: Angular and Awkward</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>68. Wire Grids 2: Angular and Awkward</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the last episode, we looked at some simple rectangular wire-grid structures in order to set forth some of the rules of thumb that guide wire-grid construction. We saw that there are guides, but no completely firm rules for the process, although we always have the AGT and convergence tests that we may apply to the entire model in order to assess its adequacy.</p>
+  <p>In this episode, I want to look at more advanced wire-grid construction. We shall examine both very specific structures and more generic structures, and when each may be applicable to a modeling task. However, we shall have to speak in far more general germs than those used in the previous discussion. The more detailed and complex the wire-grid structure, the less absolute are the rules of construction.</p>
+  <center>
+    <img src="amod68-1.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> illustrates with clip-art a number of the types of structures that engineers have had to wire-grid. Some structures, like buildings, only need their skeletons modeled, since the remainder may be largely non-conductive. By far, the largest wire-gridding enterprise encompasses the many types of transportation devices to which we attach antennas or which may play a role in RF compatibility studies. If the Navy (or merchant marine) has a new vessel on the drawing boards, then antenna placement--including interactions among antennas--is a prime concern. It is no less a concern for the Saturday sailor who may directly or indirectly use part of his rigging for his antennas. Aircraft--both winged and helicopters--present new challenges to antenna placement as a function of both the use of new materials and the development of new RF-based services. Land motor vehicles ranging from compact cars to personal SUVs to medium and large carrier trucks remain a prime target for wire-grid construction. Some investigators are even wire-gridding the human body--with special attention to the head--in their studies of the effects of new communications technologies on human health.</p>
+  <p>The elements of <b>Fig. 1</b> would be more vivid had I been able to present samples of wire-grid structures capturing at least a sample of each type of subject. However, most of the very specific wire-grid models belong to the companies within which they have been created. Hence, unlike models of Yagis, quads, and other common antenna types, there are few available and meaningful samples of the wire-gridder's art.</p>
+  <p><b>Specific Wire-Grid Models</b></p>
+  <p>The development of an adequate wire-grid model of any structure requires a number of skills and knowledge bases. First, one must have an intimate knowledge of the structure itself. The size and composition of the elements of the structure determine to a very large degree the parameters of the wire-grid model. One must also understand how RF energy interacts with the structure in order to place grid elements correctly, especially in areas likely to have high or changing currents. Indeed, the construction of a wire-grid model of a complex structure, like a war ship, may require more than one iteration before the model is fully adequate to its use in reliable analyses.</p>
+  <p>Some argue persuasively that wire-gridding is an art, since it resembles in many ways the production of a realistic sculpture of a given subject. The modeler must decide what is significant and how to go about ensuring that what is significant is prominent in the model. To illustrate the point crudely, let's examine a few steps in the process, using 2-D graphics to illustrate (inadequately) what essentially is a 3-D task.</p>
+  <center>
+    <img src="amod68-2.gif" width="285" height="315" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> gives us one type of starting point. We see a planar shape of modest complexity composed of curves and lines, where the lines are not parallel. A wire-grid model of the shape must use straight lines, for example, those connecting the dots in the lower part of the sketch. These points will not necessarily have the same distance from adjacent points throughout the model. Hence, the wire-gridder is faced from the outset with decisions concerning segment length inequalities and their consequences upon the adequacy of the final model.</p>
+  <center>
+    <img src="amod68-3.gif" width="285" height="315" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Even with a 2-D shape, we must fill in the model with wires and their junctions to simulate (in this example) a solid surface. <b>Fig. 3</b> shows a few of the questions we must answer. The density of segmentation will determine to a large degree the final model size. A very complex structure may occupy 10s of thousands of segments. The higher the frequency of the RF, the shorter that we must necessarily make the segments, at least in areas that we might classify as sensitive.</p>
+  <p>How we fill in the structure is as important as specific segment lengths, since the angles of the wires may play a role in how well the model serves as a tool for the specific analyses tasks at hand. In some cases, like a wire-gridding El Greco, the modeler may have to distort the model relative to the real structure in order for it to perform its function. Each case of wire-gridding a specific structure presents its unique challenges.</p>
+  <p>We have not addressed issues such as wire diameter and conductivity (and permeability). A building skeleton may consist of many different sizes of conductive frame members. Yet, NEC works best when adjacent wire segments have the same diameter. The requirement is relatively critical to NEC-2, although even NEC-4 requires close scrutiny when wire diameters of adjacent segments change too abruptly. As well, each wire in the assembly requires in many cases of very specific modeling its own conductivity (and permeability) value. Although steel vehicles and aluminum aircraft still abound, modern materials scattered in the latest designs have complicated both the real and modeled structures. (Note that we are not speaking here of minor conductivity differentials among materials, such as those among steel, aluminum, and copper. Instead, composites can be engineered for virtually any level of conductivity, and that value may differ as we change positions along a structure.)</p>
+  <p>Except for relatively straight forward cases of creating wire-grid structures, the modeler requires fully-featured software for developing the final model. The core segmentation limit must be adequate to the model (rather than letting the segment limit drive the model size). If the conductivity issue is complex, then the software must allow for individual assignment of those values to each wire or group of wires.</p>
+  <p>Those who are heavily engaged in wire-grid work use a variety of adjunct software. Perhaps the most common type is some form of CAD software so that one can construct the model as a drawing--in 3 dimensions, of course. The output of the CAD file--perhaps in .DXF or a proprietary format--can then be transferred to a NEC input system and result in the requisite set of GW entries to form the model. Unless the adjunct software is very much customized, the modeler will still need to assign conductivity values (LD5 inputs) within the framework of NEC. As well, one must also introduce the frequency parameters, one or more sources, any R-X or R-L-C loads, and appropriate output requests in order to complete the model. As well, one may need to add further wires to the model to count as antennas placed upon the structure.</p>
+  <p>Finally (at least for this brief description), the modeler must place the structure within its operating environment. Sea-going vessels, of course, are among the simplest to place, as are buildings--IF they are composed of solid conductive exterior surfaces. However, even these examples may present occasional problems. A building frame with many sub-basements--sometimes filled with parked cars, sometimes not--may not show a working ground level that corresponds to the land surface within which the building stands. If the building frame has an earth ground, it may consist of the lowest level of construction, while an antenna on the roof may show its far field performance relative to the surface ground. Whether these features make a difference is usually not completely assured in advance of actually modeling and running the entire model.</p>
+  <p>The wire-grid model is therefore not complete just by developing a set of wires to create a structural framework in NEC-model form. Diagnostic analyses of the model, using whatever data may be available from real tests, is as much a part of the process as any other step.</p>
+  <p>We have described in outline form some of the parameter's of the wire-grid art and science when applied to critical analyses of very specific structures. The challenges are sufficient that there should be little wonder that advanced wire-gridders hold their techniques close to the vest. As well, the subjects of these models may include proprietary designs, such as future automobiles, or security-sensitive designs, such as new weapons platforms or vehicles. Hence, the general modeler should not expect to see many of these advanced wire-grid structures being shared among modelers.</p>
+  <p><b>More Generic Wire-Grid Models</b></p>
+  <p>Many tasks that require wire-grid structures need not have all of the detail demanded by the most highly refined models that we have been discussing. A generic model of a vehicle, building, or other shape may suffice to yield adequate data for a given design of analysis project. To that end, modelers can benefit from adjunct software already available. For example, a South African firm produced Wiregrid, which they characterize as "a graphical interface for NEC." More recently, Nittany-Scientific released its NEC-Win Synth software for graphically creating wire-grid structures, either free-hand or using a number of pre-set general shapes. Whether such packages are suitable to a particular modeling project is always a user-decision based in part upon the task specifications. However, for a large number of investigations, such software aids can be very useful. Let's focus on one such package--NEC-Win Synth--in order to see what may be involved in creating wire-grid structures using such aids. We shall be as interested in the limitations as in the opportunities afforded by the software.</p>
+  <p>NEC-Win Synth produces only a set of wires, that is, ultimately a set of GW input lines to a NEC file. The output is directly accessible in the proprietary .NWP format used in NEC-Win Plus, but may also be saved in .NEC format for use with other software packages. As well, the user may also create a wire table that can be imported by the EZNEC wire table facility. However, in all of these cases, one must keep track of the total wire and segment count to ensure that the package used to run the final NEC model will handle the wire-grid structure and its supplements.</p>
+  <center>
+    <img src="amod68-4.gif" width="626" height="548" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the main screen that is available for the user if he wishes to create his own wire grid be specifying the wires involved. The graphic display area is available for checking the model at every step, which consists of adding wires, one at a time. Note that the user specifies not only the wire end coordinates, but the number of segments and wire diameter as well. For the model as a whole, the users sets a design frequency and the unit of measure.</p>
+  <p>Although this screen is available, its largest use is perhaps to construct adjunct structures to one or more of the pre-set shapes available within the program. How one handles a pre-set shape is quite different from building a wire-grid one wire at a time.</p>
+  <center>
+    <img src="amod68-5.gif" width="409" height="332" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> displays one of the full pre-set screens available, in this case, an SUV. Like modeling from scratch, the user establishes a design frequency, along with the number of segments per wavelength and the wire diameter for the wire grid. However, the program itself determines how many wires and where they are placed. The user inputs critical dimensions--in the selected units of measure--from a chart to the right. If one is perhaps trying to decide where to place antennas on a new SUV, then he needs only a tape measure to obtain the relevant dimensions. As with all construction projects, measure twice and enter once.</p>
+  <p>The NEC-Win Synth system of wire-grid creation uses segment junctions wherever relevant for wire intersections. The system reduces the ultimate file size and run time relative to wire grids that use a separate wire between each junction. However, the user will almost always need to go back to the Synth software to create a new model from scratch if he desires to revise features of the initial wire-grid structure. Not to take this step can all too easily result in a collection on unjoined or illicitly joined wires.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CE Generated by NEC-Win Synth 1.0
+CE
+GW  1 6 0.0000000000 0.0000000000 0.0000000000 0.0000000000 1.0000000000 0.0000000000 0.0050000000
+GW  2 6 0.0000000000 0.0000000000 0.1750000000 0.0000000000 1.0000000000 0.1750000000 0.0050000000
+GW  3 6 0.0000000000 0.0000000000 0.3500000000 0.0000000000 1.0000000000 0.3500000000 0.0050000000
+GW  4 6 0.0000000000 0.0000000000 0.5250000000 0.0000000000 1.0000000000 0.5250000000 0.0050000000
+GW  5 6 0.0000000000 0.0000000000 0.7000000000 0.0000000000 1.0000000000 0.7000000000 0.0050000000
+GW  6 4 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.0000000000 0.7000000000 0.0050000000
+GW  7 4 0.0000000000 0.1666666667 0.0000000000 0.0000000000 0.1666666667 0.7000000000 0.0050000000
+GW  8 4 0.0000000000 0.3333333333 0.0000000000 0.0000000000 0.3333333333 0.7000000000 0.0050000000
+GW  9 4 0.0000000000 0.5000000000 0.0000000000 0.0000000000 0.5000000000 0.7000000000 0.0050000000
+GW 10 4 0.0000000000 0.6666666667 0.0000000000 0.0000000000 0.6666666667 0.7000000000 0.0050000000
+GW 11 4 0.0000000000 0.8333333333 0.0000000000 0.0000000000 0.8333333333 0.7000000000 0.0050000000
+GW 12 4 0.0000000000 1.0000000000 0.0000000000 0.0000000000 1.0000000000 0.7000000000 0.0050000000
+GW 13 6 1.8000000000 0.0000000000 0.0000000000 1.8000000000 1.0000000000 0.0000000000 0.0050000000
+GW 14 6 1.8000000000 0.0000000000 0.1750000000 1.8000000000 1.0000000000 0.1750000000 0.0050000000
+GW 15 6 1.8000000000 0.0000000000 0.3500000000 1.8000000000 1.0000000000 0.3500000000 0.0050000000
+GW 16 6 1.8000000000 0.0000000000 0.5250000000 1.8000000000 1.0000000000 0.5250000000 0.0050000000
+GW 17 6 1.8000000000 0.0000000000 0.7000000000 1.8000000000 1.0000000000 0.7000000000 0.0050000000
+GW 18 4 1.8000000000 0.0000000000 0.0000000000 1.8000000000 0.0000000000 0.7000000000 0.0050000000
+GW 19 4 1.8000000000 0.1666666667 0.0000000000 1.8000000000 0.1666666667 0.7000000000 0.0050000000
+GW 20 4 1.8000000000 0.3333333333 0.0000000000 1.8000000000 0.3333333333 0.7000000000 0.0050000000
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>I have presented the resultant wire table only through wire #20, since the entire model of the SUV has 253 wires. The segment count is in the 1500 range at 5 segments per wavelength, with no antennas yet added. A higher segment density will increase the model size exponentially.</p>
+  <p>The user will have to add applicable antennas, wire conductivities, model frequency scanning limits, and output requests before running it through the NEC core. Some of the operations can be handled as block operations in some programs, so the finishing time is not excessive by any means. As well, compared to modeling an SUV from scratch, wire by wire, or even by combining semi-automated wire-grid planes, the model construction time is very small.</p>
+  <p>Nevertheless, the model does have limitations. The vehicle has a shape the reflects the general shape of an SUV having the same dimensions. However, it does not have all of the bumps and indents that are typical of specific SUV models. For most general modeling, these differences between reality and model will make little or no difference. However, they might make a difference in some particular investigation. Hence, the modeler should never assume without evaluation whether or not the synthesized model is adequate to any particular modeling task.</p>
+  <p>A modeler need not employ a pre-set shape for a particular object when creating a wire grid. The program contains an number of interesting geometric shapes, as illustrated in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod68-6.gif" width="510" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The illustration exhibits only 3 shapes. The conic section and the circular section, of course, can be combined in a single file to create a radiating ice cream cone--or anything else having that shape. Since the circular cap can be oriented as the user desires, he can cap either end of the cone.</p>
+  <p>The closed cylinder has been used in a number of cases to simulate each half of a very fat dipole. Another form develops an open-ended cylinder, allowing the modeler to cap the ends with circular sections. The caution each modeler must observe in combining shapes is to be certain that overlapping shape-edge wires are reduced to a single wire in each case.</p>
+  <center>
+    <img src="amod68-7.gif" width="520" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> illustrates some shapes that are useful for UHF and microwave antenna work. The corner reflectors used as illustrations in the preceding episode can now be fabricated--in model form--more simply, with the apex already set as a single wire. The horn and parabola are of obvious use. Indeed, if one pre-calculates the parabola's geometry to yield a set of dimensions, forming one is simple. However, the wire spreadsheet accompanying the graphical user interface also has provision for modeling by equation, so that a modeler can set up the parabola with variables and revise its shape from within the synthesizing program. Which generation scheme works best depends upon the user's needs.</p>
+  <center>
+    <img src="amod68-8.gif" width="285" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our final illustration, <b>Fig. 8</b>, shows the currently available vehicle shapes in terms of the necessary dimensional inputs necessary to fabricate a desired wire-grid model.</p>
+  <p>Note that the collection does not include generic tanks, planes, ships, or helicopters. What the future may hold for additional pre-set models I cannot say at this time. However, the modeler is not left solely to wire-by-wire modeling of such structures in wire-grid form. Rather, one can combine preset wire-grid shapes--especially the geometric shapes--and develop specialized constructs in less time than a wire-by-wire technique would yield. However, the process is likely slower than other techniques to which I referred earlier, such as the use of CAD drawings exported as NEC wires lists.</p>
+  <p><b>Conclusion</b></p>
+  <p>In many ways, this episode has been cursory and vague, providing only a general idea of what advanced wire-gridding requires. At the same time, I see no way around this situation, since wire-gridding requirements cover such a wide span of purposes and needs. Whether one views wire-grid construction as an inviting challenge or a daunting necessary evil depends as much upon individual temperament as upon the nature of the specific task at hand. There are aids to wire-gridding, such as the program that we sampled, and these can assist one to get started into complex shapes, even if only at the generic level. However, the inveterate wire-gridder combines a wide variety of skills in developing the most refined structures that yield the most accurate analyses. Developing those skills takes time and energy and more than a little talent.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

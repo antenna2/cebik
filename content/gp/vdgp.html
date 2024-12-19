@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Vertical, HF Lower">
+  <title>Vertical Dipoles and Ground Planes What Antenna Modeling Reports</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/hat.gif" align="left" width="72" height="84" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Vertical Dipoles and Ground Planes<br>
+    What Antenna Modeling Reports</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  A number of positions have been expressed from different perspectives relative to the need for a ground plane beneath a self-contained vertical antenna, that is, an antenna that does not require the ground plane to serve as the other half of a dipole. A typical self-contained vertical antenna is the vertical dipole.
+  <p>This note is not intended to resolve the question. Its only function is to report the results of some systematic modeling to see what modeling programs such as NEC-2 and NEC-4 have to say on the question. Whether the modeling program outputs reflect reality is a question that requires additional work to determine.</p>
+  <p>The situation cannot be effectively modeled in MININEC, since that core will not handle wires close to the ground, and a ground plane must be very close to the ground. I also decided against using buried wires, since the work could not be then replicated by users of NEC-2. However, Jack Belrose has established that a ground plane set as low as 0.001 wl above ground will replicate the typical on-the-ground and shallow-buried ground plane very well.</p>
+  <center>
+    <img src="vdgp-1.gif" width="386" height="450" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Therefore, I created a model of a 2" diameter aluminum vertical dipole for 7.05 MHz, which is resonant within +/- j1 Ohm. The required vertical dipole length was 66.6 feet. For half the runs, I added a radial system consisting of 32 0.25" wires, the center of which was directly below the vertical dipole, as shown in <b>Figure 1</b>.</p>
+  <p>To set the length of the radials, I began with a 1/4 wl monopole over perfect ground, setting its length to achieve resonance. I then moved the 1/4 wl monopole to free space and created a 32-radial ground plane that would restore resonance in that medium. The required radials length was 42.2 feet.</p>
+  <p>Since the system of radials is independent of the antenna, there is no precise reference length or test to use to set the length of the radials. Moreover, typical amateur installations rarely use precision measures for radials. Indeed, they even more rarely use 32 radials, so the radial system implies a degree of perfection greater than would typically be used. This fact should be kept in mind when evaluating the results of the modeling runs.</p>
+  <p>Past modeling over various types of soil has suggested that modeling solely over average soil, even in the high accuracy Sommerfeld-Norton system, can give misleading results. Therefore, runs were made over 4 soil types:</p>
+  <pre> Type               Conductivity        Dielectric Constant
+"Very Good"          0.0303 s/m               20
+"Average"            0.005                    13
+"Poor"               0.002                    13
+"Very Poor"          0.001                     5
+</pre>
+  <p>The array of soil types should give a better picture of performance.</p>
+  <p>I modeled the antenna itself at center feedpoint heights of 2 wl (280'), 1 wl (140'), 1/2 wl (70') and 1/4 wl (35'). This last height placed the antenna 1.7' above ground and less than 1.6' above the ground plane. The ground plane, for runs using it, was placed at a constant height of 0.164' (about 2" or 0.05 m) above the ground, which is very slightly higher than 0.001 wl.</p>
+  <p>Here in tabular form are the results, giving the gain (dBi), take-off angle (degrees), and source impedance (R +/- jX Ohms) for each run with and without a ground plane beneath the antenna.</p>
+  <pre>Height                             Soil Type
+               Very Good      Average        Poor           Very Poor
+2 wl/280'
+No GP          5.18 / 13      4.44 /  7      4.78 /  6      5.70 /  7
+               71.7 + j0.1    71.8 + j0.1    71.8 + j0.1    71.8 + j0.1
+With GP        5.18 / 13      4.44 /  7      4.78 /  6      5.70 /  7
+               71.7 + j0.1    71.8 + j0.1    71.8 + j0.1    71.8 + j0.1
+1 wl/140'
+No GP          5.21 / 27      3.52 / 27      2.92 / 28      3.77 / 12
+               71.1 + j0.3    71.3 + j0.3    71.3 + j0.2    71.5 + j0.3
+With GP        5.21 / 27      3.53 / 27      2.93 / 28      3.76 / 12
+               71.1 + j0.3    71.3 + j0.3    71.4 + j0.3    71.5 + j0.3
+1/2 wl/70'
+No GP          1.26 / 10      0.20 / 13      1.12 / 14      1.37 / 17
+               68.1 + j0.5    69.0 + j0.7    69.2 + j0.6    70.0 + j0.8
+With GP        1.27 / 10      0.28 / 13      1.19 / 14      1.44 / 16
+               68.2 + j0.7    69.4 + j0.9    69.7 + j0.7    70.7 + j0.8
+1/4 wl/35'
+No GP          1.96 / 15      -.09 / 18      0.22 / 19      -.74 / 21
+               101.7+ j7.4    97.7 + j4.2    95.8 + j4.0    91.4 + j0.8
+With GP        1.99 / 15      0.32 / 18      0.71 / 19      0.04 / 21
+               97.0 + j7.2    90.3 + j11     90.0 + j13     85.6 + j15
+Delta Gain      0.03 dB        0.40 dB        0.49 dB        0.78 dB</pre>
+  <p>With the end of the antenna at least 1/4 wl above the ground plane, the maximum gain improvement os 0.08 dB, as reported by NEC-4. with the end of the antenna in close proximity to the ground plane, the improvement in gain is directly related to the quality of the soil beneath the antenna. For soil ranging from poor to average, the additional gain provided by the 32- radial ground plane is less than half a dB. For very poor soil, the improvement is about 3/4 dB.</p>
+  <center>
+    <img src="vdgp-2.gif" width="637" height="268" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Of immediate notice to those who have not modeled verticals extensively is the fact that the worst performance, as calculated by the modeling program, occurs over average soil. Poor relative performance shows up as both lesser gain and a higher angle of maximum radiation. <b>Figure 2</b> shows why. The development of elevation lobes can be a squared-edge field, the result of two lobes mixed. The lower or the higher may dominate, and this may be by a small amount or a large amount. Therefore, in evaluating the potential performance of a vertical antenna, one should always investigate not just the angle of maximum radiation, but as well all of the elevation lobe structure.</p>
+  <p>Whether the added gain for any situation justifies the creation of a significant ground plane is a user decision. Whether the model reflects reality accurately is a question requiring independent investigation. However, it seemed useful as the beginning of a running investigation to present some NEC-4 modeling results in this regard. NEC-2 results are perfectly consistent, so one may replicate the exercise with ease. A copy of the EZNEC description of the test antenna for one test is attached as a reference. The EZNEC "radial-maker" is an easy way to create the required radial system.</p>
+  <p>Three directions of further analysis are indicated. First, the ground plane is fairly extensive. Would a few radials--4, for instance--achieve the same gain improvements? Second, is the gain increase relatively linear as the antenna center moves from 1/2 wl up down to 1/4 wl up? Third, would longer or shorter radials materially affect the improvement in gain? These are questions I hope to get to--at least so far as modeling is concerned-- as time permits.<br></p>
+  
+  <br>
+  <pre>                      EZNEC/4  ver. 2.5
+vert dipole w/gp: 7.05 MHz                   09-18-1998     08:09:22
+Frequency = 7.05  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn.--- End 1 (x,y,z : ft)  Conn.--- End 2 (x,y,z : ft)  Dia(in) Segs
+
+1          0.000,  0.000,313.300         0.000,  0.000,246.700 2.00E+00  21
+2   W3E1   0.000,  0.000,  0.164        42.200,  0.000,  0.164 2.50E-01  10
+3   W4E1   0.000,  0.000,  0.164        41.389,  8.233,  0.164 2.50E-01  10
+4   W5E1   0.000,  0.000,  0.164        38.988, 16.149,  0.164 2.50E-01  10
+5   W6E1   0.000,  0.000,  0.164        35.088, 23.445,  0.164 2.50E-01  10
+6   W7E1   0.000,  0.000,  0.164        29.840, 29.840,  0.164 2.50E-01  10
+7   W8E1   0.000,  0.000,  0.164        23.445, 35.088,  0.164 2.50E-01  10
+8   W9E1   0.000,  0.000,  0.164        16.149, 38.988,  0.164 2.50E-01  10
+9  W10E1   0.000,  0.000,  0.164         8.233, 41.389,  0.164 2.50E-01  10
+10 W11E1   0.000,  0.000,  0.164         0.000, 42.200,  0.164 2.50E-01  10
+11 W12E1   0.000,  0.000,  0.164        -8.233, 41.389,  0.164 2.50E-01  10
+12 W13E1   0.000,  0.000,  0.164       -16.149, 38.988,  0.164 2.50E-01  10
+13 W14E1   0.000,  0.000,  0.164       -23.445, 35.088,  0.164 2.50E-01  10
+14 W15E1   0.000,  0.000,  0.164       -29.840, 29.840,  0.164 2.50E-01  10
+15 W16E1   0.000,  0.000,  0.164       -35.088, 23.445,  0.164 2.50E-01  10
+16 W17E1   0.000,  0.000,  0.164       -38.988, 16.149,  0.164 2.50E-01  10
+17 W18E1   0.000,  0.000,  0.164       -41.389,  8.233,  0.164 2.50E-01  10
+18 W19E1   0.000,  0.000,  0.164       -42.200,  0.000,  0.164 2.50E-01  10
+19 W20E1   0.000,  0.000,  0.164       -41.389, -8.233,  0.164 2.50E-01  10
+20 W21E1   0.000,  0.000,  0.164       -38.988,-16.149,  0.164 2.50E-01  10
+21 W22E1   0.000,  0.000,  0.164       -35.088,-23.445,  0.164 2.50E-01  10
+22 W23E1   0.000,  0.000,  0.164       -29.840,-29.840,  0.164 2.50E-01  10
+23 W24E1   0.000,  0.000,  0.164       -23.445,-35.088,  0.164 2.50E-01  10
+24 W25E1   0.000,  0.000,  0.164       -16.149,-38.988,  0.164 2.50E-01  10
+25 W26E1   0.000,  0.000,  0.164        -8.233,-41.389,  0.164 2.50E-01  10
+26 W27E1   0.000,  0.000,  0.164         0.000,-42.200,  0.164 2.50E-01  10
+27 W28E1   0.000,  0.000,  0.164         8.233,-41.389,  0.164 2.50E-01  10
+28 W29E1   0.000,  0.000,  0.164        16.149,-38.988,  0.164 2.50E-01  10
+29 W30E1   0.000,  0.000,  0.164        23.445,-35.088,  0.164 2.50E-01  10
+30 W31E1   0.000,  0.000,  0.164        29.840,-29.840,  0.164 2.50E-01  10
+31 W32E1   0.000,  0.000,  0.164        35.088,-23.445,  0.164 2.50E-01  10
+32 W33E1   0.000,  0.000,  0.164        38.988,-16.149,  0.164 2.50E-01  10
+33  W2E1   0.000,  0.000,  0.164        41.389, -8.233,  0.164 2.50E-01  10
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1          11     1 / 50.00   (  1 / 50.00)      1.000       0.000       V
+No loads specified
+No transmission lines specified
+Ground type is Real, high-accuracy analysis
+Conductivity = .005 S/m    Diel. Const. = 13
+              --------------- MEDIA ---------------
+Medium        Conductivity(S/m)   Dielectric Const.    Ht(ft)   R Coord(ft)
+
+1                 5.000E-03            13.00           0 (def)     0 (def)
+</pre><br>
+  
+  <br>
+  <h4>Phase 2: From 1/2 WL down to 1/4 WL</h4>The range of heights from 1/2 wl (70' source point) down to 1/4 wl (35' source point) is quite interesting. Although one can see for each type of soil a general progression, the curves are not at all so smooth as we might expect.
+  <p>Here in tabular form is the result of modeling the vertical dipole both without and with a ground plane at 0.164' for each 5' increment.</p>
+  <pre>Height                             Soil Type
+(top/ctr/bot)   Very Good       Average         Poor            Very Poor
+103.3/70/36.7
+No GP           1.26 / 10       0.20 / 13       1.12 / 14       1.37 / 17
+With GP         1.27 / 10       0.28 / 13       1.19 / 14       1.44 / 16
+Improvement     0.01            0.08            0.07            0.07
+98.3/65/31.7
+No GP           1.57 / 10       0.26 / 13       1.11 / 14       1.19 / 17
+With GP         1.58 / 10       0.35 / 13       1.19 / 14 +     1.29 / 17
+Improvement     0.01            0.09            0.08            0.10
+93.3/60/26.7
+No GP           1.83 / 11       0.31 / 14       1.08 / 15       0.98 / 17
+With GP         1.84 / 11       0.42 / 14       1.18 / 15       1.12 / 17
+Improvement     0.01            0.11            0.10            0.14
+88.3/55/21.7
+No GP           2.02 / 11       0.34 / 14 +     1.02 / 15       0.75 / 18
+With GP         2.02 / 11       0.46 / 15       1.15 / 15       0.94 / 18
+Improvement     0.00            0.12            0.13            0.19
+83.3/50/16.7
+No GP           2.13 / 12       0.33 / 15       0.92 / 16       0.48 / 18
+With GP         2.13 / 12       0.47 / 15 +     1.08 / 16       0.74 / 19
+Improvement     0.00            0.12            0.16            0.26
+78.3/45/11.7
+No GP           2.15 / 13 +     0.26 / 16       0.76 / 17       0.16 / 19
+With GP         2.15 / 13 +     0.45 / 16       0.98 / 17       0.52 / 20
+Improvement     0.00            0.19            0.22            0.36
+73.3/40/6.7
+No GP           2.10 / 14       0.13 / 17       0.54 / 18       -.23 / 20
+With GP         2.09 / 14       0.39 / 17       0.85 / 18       0.28 / 20
+Improvement     -.01            0.26            0.31            0.51
+68.3/35/1.7
+No GP           1.96 / 15       -.09 / 18       0.22 / 19       -.74 / 21
+With GP         1.99 / 15       0.32 / 18       0.71 / 19       0.04 / 21
+Improvement     0.03            0.41            0.49            0.78</pre>
+  <p>Quite clearly, the poorer the soil, the greater overall improvement is effected by a ground plane beneath the vertical dipole. However, that improvement does not become something worth the investment in a uniform manner. With very good soil, it is unlikely that a ground plane effects an improvement worth the effort. If we arbitrarily set 0.2 dB gain as the minimum improvement, then over no soil does the ground plane effect significant improvement until the antenna center is below 3/8 wl.</p>
+  <p>Moreover, the gain curves are neither smooth nor the same shape for each soil type. Over very poor soil, the gain shows a relatively smooth decrease with each decrease in antenna height whether or not there is a ground plane. Over better soils, the gain shows a peak value at center height between 1/2 and 1/4 wl (indicated by a + in the table). The better the soil, the lower the height of the gain peak. Over very good soil, the gain peaks at the same height, with or without a ground plane. Over average or poor soil, the peaks with and without a ground plane occur at different heights.</p>
+  <p>Once more, these are modeling results only--and only for a comparison between the absences of a ground plane and the use of a 32-radial ground plane of the size specified earlier. One cannot extrapolate to reality. Moreover, until the other questions posed earlier are tested, one cannot even extrapolate to other ground plane sizes, whether the variance is in number of radials or in radial length.<br></p>
+  
+  <br>
+  <h4>Phase 3: The Effect of the Number of Radials</h4>Even though the improvements that modeling reports are marginal and significant only at the lowest heights over the worst soils, the 32-radial standard lies beyond the system size of most amateur installations. Most amateur installations are likely to have only 4 radials.
+  <p>The 4-radial system was developed in the same manner as the 32-radial system. A 1/4 wl monopole was resonated over perfect ground. When placed in free space, a 4-radial ground plane system was developed to re-resonate the antenna. The elements of this system were 37.7' long (shorter than the radials in the 32- radial system by about 0.5'). This system was placed 0.001 wl above ground (about 2" or 0.05 m).</p>
+  <p>We may look at the potential for small radial systems--at least as modeling would show them, by inserting the 4-radial data into the previous table of values for the height range of 1/2 wl to 1/4 wl relative to the center of the vertical dipole above ground.</p>
+  <pre>Height                             Soil Type
+(top/ctr/bot)    Very Good        Average          Poor             Very Poor
+103.3/70/36.7
+No GP            1.26 / 10        0.20 / 13        1.12 / 14        1.37 / 17
+4 radials        1.26 / 10        0.21 / 13        1.13 / 14        1.38 / 16
+32 radials       1.27 / 10        0.28 / 13        1.19 / 14        1.44 / 16
+
+98.3/65/31.7
+No GP            1.57 / 10        0.26 / 13        1.11 / 14        1.19 / 17
+4 radials        1.57 / 10        0.27 / 13        1.12 / 14        1.21 / 17
+32 radials       1.58 / 10        0.35 / 13        1.19 / 14        1.29 / 17
+
+93.3/60/26.7
+No GP            1.83 / 11        0.31 / 14        1.08 / 15        0.98 / 17
+4 radials        1.83 / 11        0.33 / 14        1.10 / 15        0.79 /17
+32 radials       1.84 / 11        0.42 / 14        1.18 / 15        1.12 / 17
+
+88.3/55/21.7
+No GP            2.02 / 11        0.34 / 14        1.02 / 15        0.75 / 18
+4 radials        2.02 / 11        0.35 / 14        1.04 / 15        0.79 / 18
+32 radials       2.02 / 11        0.46 / 15        1.15 / 15        0.94 / 18
+
+83.3/50/16.7
+No GP            2.13 / 12        0.33 / 15        0.92 / 16        0.48 / 18
+4 radials        2.13 / 12        0.34 / 15        0.94 / 16        0.53 / 19
+32 radials       2.13 / 12        0.47 / 15        1.08 / 16        0.74 / 19
+
+78.3/45/11.7
+No GP            2.15 / 13        0.26 / 16        0.76 / 17        0.16 / 19
+4 radials        2.15 / 13        0.28 / 16        0.79 / 17        0.22 / 19
+32 radials       2.15 / 13        0.45 / 16        0.98 / 17        0.52 / 20
+
+73.3/40/6.7
+No GP            2.10 / 14        0.13 / 17        0.54 / 18        -.23 / 20
+4 radials        2.09 / 14        0.16 / 17        0.58 / 18        -.13 / 20
+32 radials       2.09 / 14        0.39 / 17        0.85 / 18        0.28 / 20
+
+68.3/35/1.7
+No GP            1.96 / 15        -.09 / 18        0.22 / 19        -.74 / 21
+4 radials        1.95 / 15        -.04 / 18        0.30 / 18        -.56 / 21
+32 radials       1.99 / 15        0.32 / 18        0.71 / 19        0.04 / 21</pre>
+  <p>The improvement that a 4-radial ground plane system is likely to produce is for the most part insignificant. The increase in gain according to the modeling software, is greater than 0.1 dB only for the worst soil and at the lowest antenna height. Nevertheless, there is a certain proportionality to the slight improvements, insofar as they tend to reveal the beginnings of a steady curve of increased performance up through the 32-radial level. It is likely that this trend reflects reality, even if the actual numbers may vary (or not) between real antenna systems and models.<br></p>
+  
+  <br>
+  <h4>Phase 4: The Effect of the Length of Radials</h4>To test the effects of the lengths of radials, I selected the antenna and ground plane configuration where the 32-radial ground plane had the greatest impact on antenna gain--that is with the antenna centered at 1/4 wl above ground. I then changed the length of the ground plane radials in 1/16 wl (0.0625 wl) increments from 3/16 to 8/16 wl.
+  <p>The results of the modeling runs are given in the following table.</p>
+  <pre>Radial Length                       Performance
+L in feet   L in WL     Gain dBI    T-O angle         Source Z
+0 (no GP: ref.)         -.74        21           91.4 + j 0.1
+26.25       .1875       -.53        21           88.5 + j 5.0
+35.00       .2500       -.28        21           86.2 + j 9.1
+43.75       .3125       0.12        22           85.9 + j16.5
+52.50       .3750       0.54        22           91.3 + j24.7
+61.25       .4375       0.83        23          102.7 + j28.9
+70.00       .5000       0.95        24          117.0 + j23.9</pre>
+  <p>It is clear that under the modeled circumstances, increasing the length of the radials detunes the antenna relative to its resonant length with no ground plane. In terms of resonance alone, the peak detuning or maximum reactance occurs in the vicinity of a radial length of 7/16 wl. The resistive component of the source impedance continues to climb throughout the tested range of radial lengths.</p>
+  <center>
+    <img src="vdgp-3.gif" width="586" height="459" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Gain and take-off angle are most clearly shown when graphed. <b>Figure 3</b> shows the two parameters as they vary with the length of radials. Gain rises almost linearly if we exclude the two limiting values of radial length in the test. Above 7/16 wl (0.4375 wl), gain increases at a much slower rate.</p>
+  <p>It is also clear that the ground plane itself plays a second role in determining the elevation pattern of the vertical dipole. As the length of the radials increases, the take-off angle also increases. The stepped nature of curve is an artifact of taking angular reading a 1-degree increments. The curve can be read in both a positive and a negative manner: the ground plane length offers some control over the take-off angle, but on the other hand, for applications requiring the lowest achievable take-off angle, long radials become a deficit.<br></p>
+  
+  <br>
+  <h4>Conclusion</h4>This completes the introductory survey of the effects of a ground plane beneath a self-complete antenna such as a vertical dipole. The modeling has shown some of the tendencies in the calculated outputs for such antenna systems in terms of antenna height, low height variations, number of radials, and radial length. The study is by no means complete, since one may fill in some of the gaps, extend the progressions, and replicate the work for other frequencies and antenna types.
+  <p>As repeated throughout, this rudimentary study does not speak directly to real antenna systems, but only shows what modeling calculations within NEC-2 and NEC-4 try to say about vertical dipoles over ground planes. Except for vertical dipoles in very close proximity to very poor soils, the addition of a ground plane has minimal benefit to offer vertical dipoles--and by extension other vertically polarized antennas that are not dependent upon the ground plane to complete the antenna itself.</p>
+  <p>Because the ground plane in this study was constructed above the ground itself, the work can be replicated and extended using any version of NEC available (excluding MININEC). Those with NEC-4 capabilities may wish to compare the results shown here with a carefully constructed ground plane system below the surface of the ground at various depths. Although vertical antennas are extensively used at 7 MHz, the frequency is at the high end of the range of frequencies for which the questions posed are relevant. Hence, replication of the study at lower frequencies is advisable before extrapolating to many conclusions from this effort, even within the context of modeling.</p>
+  <p>In short, this study has more "phases" than I am ever likely to have time for in the near future.</p>
+  <p>For additional information on work done in this area on 20 meters, you may download a paper from the <a href="http://www.n6rk.com/" target="_blank">Rick Karquist, N6RK</a>, site. The paper is in .pdf format and thus requires Adobe Acrobat to read or print.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 9-22-98. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

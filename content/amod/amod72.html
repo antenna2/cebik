@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The GX or Symmetry Geometry Input</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>72. The GX or Symmetry Geometry Input</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>NEC-2 and NEC-4 have a useful geometry input card labeled GX . Often called the Symmetry Card, its actual title is "Reflection in Coordinate Planes." A typical input line suggests extreme simplicity:</p>
+  <pre>GX    5     110
+      I1    I2</pre>
+  <p>Note that there are no floating decimal positions for this input. The I1 entry indicates by how much to increment the tag numbers for each new construct created by the card. This maneuver helps prevent overlapping tag numbers for the wires of the model. The next entry is actually three binary entries, one each for the X, Y, and Z axes around which a reflection would occur: a "1" means "yes, reflect in this plane (across this axis)," and a "0" means "do not reflect."</p>
+  <p>A reflection is a symmetrical replication of the existing structure created by GW and other entries preceding the GX card. Since the sample line has reflections in two planes, we shall end up with 3 new constructs for a total of 4 constructs and 4 times the total number of wires and segments as are in the geometry preceding the GX line. The 3 planes in the I2 entry indicate the X, Y, and Z axes. However, replication or reflection occurs in reverse order. In this case, we have no Z-axis replication. The Y-axis "1" creates a replica on the "other" side of the Y-axis. Then, the X-axis "1" creates a reflection of the two structures on the other side of the X-axis. Obviously, to use this card effectively requires careful planning to avoid ending up with a tangled jungle of illicitly overlapping and intersecting wires.</p>
+  <p>The user's question is obvious: what do we get for all of our careful planning? The answer is a reduction of the core run-time. The NEC manuals provide a chart of the relative run-times for the matrix storage, fill-time, and factor-time elements of the core run, but the bottom line is that a single reflection can reduce a run-time to about half of the same model created by other means. Two reflections cuts the time to about a fourth, and 3 reflections to about an eighth. The values show up most graphically on very large models (several thousands of segments), where the overhead for pre- and post-matrix work is a very small part of the total run-time. Hence, most advanced modelers save the GX card for very large models.</p>
+  <p><b>A Working Example: 3 Ways to Analyze a Square of 4 Yagis</b></p>
+  <p>Any account of the GX card faces a problem. Either the illustrations will be too large to show and the run-time improvements will be easy to see, or the models will be small, but the run-time differences will be hardly significant. Since these notes aim to orient the newer modeler to the use of the GX card, we shall use the small-model avenue and look at run-times in more detail later on.</p>
+  <center>
+    <img src="amod72-1.gif" width="723" height="383" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's begin with a simple 6-element Yagi designed for 146 MHz, where a wavelength is about 80.84" or 2.0533 meters. The total model, with all dimensions in meters, appears in <b>Fig. 1</b>. We shall stay in free space for this exercise, since eventually we shall want to create a GX version with symmetry relative to to the X and the Z axes. For simplicity throughout this exercise, we have modified the LD5 (material load) line so that it always encompasses all segments, no matter how many wires segments we add to the model by any of the means that we shall explore. The vital NEC output report data for this little antenna appears in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                           Single 6-Element 146-MHz Yagi
+
+     Gain       Front-to Back         Feedpoint Impedance        Run-Time
+     dBi        Ratio dB              R +/- j X Ohms             Sec
+     10.23      35.39                 49.97 + j 9.53             1.20
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The only unusual bit of data in the listing is the core run-time taken from the NEC output report. It includes all core operations, which include the modification of values for the conductivity of aluminum and the E-plane or azimuth/phi pattern request as well as the matrix work.</p>
+  <p>This is our base-line data against which we shall make comparisons as we modify the model to create a square array of 4 such beams with their booms separated by 1 wavelength in each direction. (We do not here have to concern ourselves as to whether the spacing is optimal, so the convenient measures will work well for us.)</p>
+  <p>There are at least 3 ways to create our square of 3 models. The method that is available on entry-level programs is simply to replicate the first Yagi 3 more times and to space each one at the required distances apart to make the square. Using copy and move functions for blocks of GW or wire entries simplifies the process somewhat, but the final model is somewhat large visually and not too easy to scan rapidly. <b>Fig. 2</b> verifies this fact.</p>
+  <center>
+    <img src="amod72-2.gif" width="739" height="741" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note the we need not add any new LD5 inputs, since the I1 and I2 entries cover all segments in the total model. Otherwise expressed, everything is aluminum. However, we did add new EX lines so that each beam has a source. <b>Fig. 3</b> shows the NEC-Vu graphic of the square.</p>
+  <center>
+    <img src="amod72-3.gif" width="589" height="602" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The output data appears in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                Square of 4 6-Element 146-MHz Yagis:  GW Construct
+
+     Gain       Front-to Back         Feedpoint Impedance        Run-Time
+     dBi        Ratio dB              R +/- j X Ohms             Sec
+     16.25      26.23                 50.96 + j 7.29 (x4)        9.50
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The performance is interesting, but the run-time is the more crucial figure to examine. The run-time is 7.9 times longer than for the single Yagi.</p>
+  <p>A second formation technique is available to the user of more advanced programs, such a NEC-Win Pro (NEC-2) or GNEC (NEC-4). Instead of replicating with modifications all of the GW lines, we may employ the GM or Coordinate Transformation card instead. So let's reuse our 6 GW lines for a single Yagi and then make the moves indicated by the GM lines that follow in <b>Fig. 4</b>.</p>
+  <center>
+    <img src="amod72-4.gif" width="739" height="496" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first GM line moves the existing Yagi into the -X and -Z region. The amount of each move is 1/2 wavelength, as indicated by the 1.026668 (meter) values. This move will simplify the required moves for both this and the third alternative square.</p>
+  <p>The second GM line creates a second Yagi 1 wavelength above the first one and assigns it tag numbers 7-12.</p>
+  <p>The third GM line creates a new pair of Yagis 1 wavelength in the +X direction and assigns them the tag numbers 13-24.</p>
+  <p>We end up with the same square of Yagis that we viewed in <b>Fig. 3</b>. The output report appears in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                Square of 4 6-Element 146-MHz Yagis:  GM Construct
+
+     Gain       Front-to Back         Feedpoint Impedance        Run-Time
+     dBi        Ratio dB              R +/- j X Ohms             Sec
+     16.25      26.23                 50.96 + j 7.29 (x4)        9.45
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The only difference in the reported data is the run-time. In this instance, it is 0.05 seconds shorter than the run-time for the GW construct. However, such times will show natural variations for the individual models that are larger than the difference in the two recorded values, depending upon the myriad of variables within the computer.</p>
+  <p>If we know how to read the GM cards, the GM model is simpler to scan. Although the model uses NEC-4, it will also run in NEC-2, at least using the version of NEC-2 employed by NEC-Win Pro. The Imov entries may be missing if we are moving or replicating the entirety of the structure that so far exists. However, because there are so many cores of various ages and variation, if you are using something like Multi-NEC with a public domain core, be certain that you adhere to that core's requirements for setting up the GM lines.</p>
+  <center>
+    <img src="amod72-5.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> records the E-plane (phi) pattern for the free-space square of 4 Yagis. Since the output reports for the two different models are identical, the pattern applies equally to both.</p>
+  <p>Now let's create the same models with mirrors but no smoke, that is, with the GX reflection input. We shall add a GM card to move the initial Yagi into the same -X, -Z position that we used with the GM construct. However, this time, we shall create the other 3 Yagis with a single GX line, as shown in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod72-6.gif" width="739" height="477" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that by incrementing the tag numbers by 6, we shall create a total of 24 tags. The GX line indicates replication across the Z-axis and then total replication across the X-axis. The NEC-Vu result is identical to the square of Yagis shown in <b>Fig. 3</b>. We also have added the EX lines to make sure that we have a source for each reflection. So why does the resulting pattern emerge as shown in <b>Fig. 7</b>?</p>
+  <center>
+    <img src="amod72-7.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The answer lies in how NEC creates reflections in coordinate planes. The new structures are indeed mirror images. The following abbreviated table compares the first and last segments of each of the 4 reflector wires from the GM construct (which is identical to the GW construct) and from the GX construct, as recorded in the Segmentation Data in the NEC output file.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                Partial Segmentation Tables From NEC-4 Output Files
+
+2m6-GM4a:  GM Construct
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1  -1.51677   0.00000  -1.02667   0.04901    0.00000   0.00000   0.00238     0    1    2      1
+    21  -0.53657   0.00000  -1.02667   0.04901    0.00000   0.00000   0.00238    20   21    0      1
+
+   127  -1.51677   0.00000   1.02667   0.04901    0.00000   0.00000   0.00238     0  127  128      7
+   147  -0.53657   0.00000   1.02667   0.04901    0.00000   0.00000   0.00238   146  147    0      7
+
+*  253   0.53657   0.00000  -1.02667   0.04901    0.00000   0.00000   0.00238     0  253  254     13
+*  273   1.51677   0.00000  -1.02667   0.04901    0.00000   0.00000   0.00238   272  273    0     13
+
+*  379   0.53657   0.00000   1.02667   0.04901    0.00000   0.00000   0.00238     0  379  380     19
+*  399   1.51677   0.00000   1.02667   0.04901    0.00000   0.00000   0.00238   398  399    0     19
+
+====================================================================================================
+
+2m6-GX4:  GX construct
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1  -1.51677   0.00000  -1.02667   0.04901    0.00000   0.00000   0.00238     0    1    2      1
+    21  -0.53657   0.00000  -1.02667   0.04901    0.00000   0.00000   0.00238    20   21    0      1
+
+   127  -1.51677   0.00000   1.02667   0.04901    0.00000   0.00000   0.00238     0  127  128      7
+   147  -0.53657   0.00000   1.02667   0.04901    0.00000   0.00000   0.00238   146  147    0      7
+
+*  253   1.51677   0.00000  -1.02667   0.04901    0.00000 180.00000   0.00238     0  253  254     13
+*  273   0.53657   0.00000  -1.02667   0.04901    0.00000 180.00000   0.00238   272  273    0     13
+
+*  379   1.51677   0.00000   1.02667   0.04901    0.00000 180.00000   0.00238     0  379  380     19
+*  399   0.53657   0.00000   1.02667   0.04901    0.00000 180.00000   0.00238   398  399    0     19
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>If we compare the entries for the 3rd and 4th reflectors, which emerge from translations or from reflections across the X-axis, we can see that the order from first to last segment is reversed in the GX construct. As well, the beta orientation angle is not 0, but 180 degrees. However, if we return to <b>Fig. 6</b>, the model description, and examine the EX lines, we set up all four sources with the same phase angles: 1.414 real and 0 volts imaginary. The result is a square of four Yagis with the left pair fed out of phase with the right pair.</p>
+  <p>To restore the in-phase feed for the two pair of Yagis, we need to reverse the phase of the right-most beam sources or EX entries (or, alternatively, of the left-most pair). We achieve this simply by adding a minus sign to the real component of the voltage at the source, as shown in <b>Fig. 8</b>.</p>
+  <center>
+    <img src="amod72-8.gif" width="739" height="477" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When we make the change, the following data emerge from the model after running the core.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                Square of 4 6-Element 146-MHz Yagis:  GX Construct
+
+     Gain       Front-to Back         Feedpoint Impedance        Run-Time
+     dBi        Ratio dB              R +/- j X Ohms             Sec
+     16.25      26.23                 50.96 + j 7.29 (x4)        4.40
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Obviously, almost nothing changes relative to the GW and GM constructions, except for the run-time. In this trivial-sized model, the run-time is about half that of the other two models, and most of that time is taken up in pre- and post- matrix calculations and file generation. A truly large model would show a far greater reduction in core run-time.</p>
+  <p><b>A Different Type of Reflection Model</b></p>
+  <p>A second type of example may better illustrate the run-time savings that symmetry yields. We shall develop a simple doublet at 15 MHz, where a wavelength is close to 20 meters. We shall use segments close to 1-meter long so that there are about 20 segments per wavelength. The first model uses 2001 segments in a 2000-meter length. The second uses 4001 segments and twice the length of the first model. The third model uses 2001 segments with the same lengths as the first model. However, we set the 2001 segments from a position of Y=-2000 to Y=0. Then we set the GX input as follows.</p>
+  <pre>GX  1  010</pre>
+  <p>This entry creates a reflection across the Y-axis. The reflection runs from Y=+2000 to Y=0. The result is a single continuous wire-pair running 2000 meters each side of Y=0. To center the source, we create two EX lines, each in the segment closest to Y=0. The sum of the two source impedance reports should equal the impedance we would achieve in the 4001-segment model at the same overall length (4000 meters). The values will not be precisely the same, because the sources are located in a low current, high voltage region of the antenna, where the impedance changes rapidly in a very small distance. However, we are here less interested in the output reports for the models--except to ensure that each model is accurately constructed--and more interested in the run times. <b>Fig. 9</b> shows the two large models. The half-size initial doublet is simply the left half of the lower sketch without a GX card and with only one source centered (segment 1001).</p>
+  <center>
+    <img src="amod72-9.gif" width="530" height="219" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> is a composite of all three models. (If you test them, use only one at a time.)</p>
+  <center>
+    <img src="amod72-10.gif" width="723" height="731" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following table summarizes the run times with double-precision NEC-4 on a 1.8-GHz machine running under XP. The parameters were set so that the entire operation in each case required no file-swapping to the hard drive.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                              Larger Model Run Times
+
+           Model                                 Run-Time
+           D2001 (2001 segments)                  27.73 seconds
+           D4001 (4001 segments)                 179.01 seconds
+           D4002GX (2001 segments + GX)           55.43 seconds
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The models are perhaps medium-size and simple enough not to require excessive run-times regardless of the method of construction. However, they are large enough that the overhead becomes insignificant compared to the matrix time. Hence, their relative times are useful in developing an expectation of run times on models of this size and larger. A single reflection requires about twice the run-time of virtually the same model without the reflection. However, the GW version of the same model requires over 3.2 times the run-time of the GX version of the same wire antenna. The run-times shown are averages of runs of the same models after various periods of computer operation. However, in this case, the times varied by less than 0.1 seconds per model.</p>
+  <p>The doubling of the number of segments in the two GW-only models results in a 6.45 increase in run-time. Reducing that time to merely double the smaller-model run-time represents a considerable savings, especially when extrapolated (roughly) to even larger models. Since I did not exclude to the degree possible all overhead time, these numbers will be imprecise relative to all of the possible variations in model construction. But they do provide an indication of the orders of savings possible whenever a GX input is relevant to a large model.</p>
+  <p>Run-times are not the only notable feature of the model. The ability to bring a wire to a zero value, that is, to a position on an axis, can be multiplied indefinitely within the limits of array dimensions allowed by the core and the operating system. Hence, one might build 1/2 of a wire-grid ship, plane, or ground vehicle and create the other half via the GX entry. Similarly, a free- space sphere may begin with 1/8th of the structure and reach completion via the GX entry specifying reflection in all three planes. An oval may require only 1/4 of the structure for completion in two reflections.</p>
+  <p><b>Some GX Cautions</b></p>
+  <p>Here are some cautions in using the GX card.</p>
+  <p>1. Do not locate segments in the plane (axis-value=0) or crossing the plane around which the reflection occurs. The result will be intersecting or overlapping wire segments, an illicit NEC condition.</p>
+  <p>2. Do not add a wire or patch after the GX card; that is, do not add on a GW, GH, CW, or SP entry. Such additions will destroy at least one plane of symmetry, and the program will reset to whatever symmetries may exist prior to the ruined one (or more).</p>
+  <p>3. Do not use a GM card with a number of new structures greater than zero, or symmetry will be destroyed. As well, a GM card acting on only part of a structure will also destroy symmetry.</p>
+  <p>4. Avoid second GX entries, since they will negate the symmetry established by the prior GX entry. A following GR (Generate Cylindrical Structure) card will also negate the symmetry of a prior GX card.</p>
+  <p>5. If the GE card indicates a ground plane by setting I1 to 1 or to -1, then symmetry across the Z-axis (otherwise expressed, symmetry parallel to the X-Y plane) will be destroyed, although any other specified symmetry will be used. As a practical example, if one wishes to use symmetry for the square of 4 Yagis, but above a real ground, then the most direct way to accomplish this goal is to set a vertical pair of Yagis either as a pair of GW constructs or a GW + GM construct, and then to use the GX card to create the second pair across (in our examples) the X-axis. A following GM card may be used to rotate a structure about the Z- axis, so long as it includes the entire structure and does not create new structures.</p>
+  <p>Most of the listed cautions or limitations on the GX entry reset the core to either non-symmetry or to the highest level of symmetry allowable in light of the fault. There are other conditions, such as placing non-symmetrical lumped loads (LD1 through LD4) on the structure, that simply destroy symmetry without any resetting of the core. However, non-radiating networks (NT or TL entries) will not adversely affect a symmetry specification.</p>
+  <p>For the novice to the use of the GX card, making it the last entry prior to the geometry end (GE) card is perhaps the wisest route. Like sources (EX), one must also specify lumped loads in separate lines in the model. During the learning curve, it may prove useful to develop an over-simplified model having the same essential features as the eventual complex or very large model to ensure that you have introduced no symmetry-destroying features. Further information on the GX entry appears in the user-sections of the NEC-2 and NEC-4 manuals.</p>
+  <p>Our foray into the GX card has been to introduce both its features and its restrictions. In general, for small to medium size models, it is likely best to avoid using the card, since the time saved on the current crop of 1- to 2-GHz machines is small. However, for exceedingly complex and large models, symmetry may be the only course to take to achieve acceptable run-times.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

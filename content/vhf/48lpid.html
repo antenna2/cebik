@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, LPDA, Broadcast">
+  <title>LPDAs for the 400-800-MHz Television Range Part 1: An Ideal But Impractical Antenna</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>LPDAs for the 400-800-MHz Television Range<br>
+    Part 1: An Ideal But Impractical Antenna</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The advent of High-Definition television has brought about some anticipation of the need for wide-band high-gain UHF antennas for areas of the country where the population density--and the station density--is high. Each television channel will in fact occupy two channels to carry all of the necessary data to make current and projected systems work well. With a two-channel signal, reception will require an antenna of considerably higher reliability (gain) than we presently use. The search for both ideal and practical antennas is underway.</p>
+  <p>In this first part of the 2-part series, we shall examine the properties of the log periodic dipole array (LPDA) to serve the need. Next time, we shall examine a much more practical antenna that meets existing requirements with room to spare while leaving a good bit of physical room to spare as well.</p>
+  <p><b>An "Ideal" LPDA for 400-800 MHz</b></p>
+  <p>The 400-800-MHz range has a 2:1 frequency ratio. An LPDA is fully capable of superior performance in this range. However, the LPDA often receives poor marks for performance owing to deficient design. The chief problems in most extant designs are the following:</p>
+  <p>1. The urge to use as few elements as possible from the beginning of design. This urge results in the selection of a low value of Tau--often in the 0.80-0.89--range, with a correspondingly low Sigma value (less than 0.05) to keep the boom as short as possible.</p>
+  <p>2. The tendency to design an LPDA by the traditional book, using only a 2% margin below the lowest operating frequency and a 30% margin above the highest operating frequency.</p>
+  <p>Both of these design trends result in low-gain LPDAs with highly uneven performance across the intended operating passband. Gain fall-off at the lower and upper ends of the operating spectrum results from uncritical adherence to standard design criteria. In addition, low values of Tau and Sigma result in wide variations in gain across the operating passband, as well as wide excursions in the feedpoint impedance. A highly variable gain defeats the goal of dual channel reliability in having gain to spare at both frequency channels to ensure adequate reception of all required data.</p>
+  <p>In the present design exercise, let's reverse the usual procedure. Instead of beginning with the smallest possible LPDA and then wrestling with the design to make it work, let's begin with an ideal design that will easily do the job. Later, we can think about the practical limits of size reduction to make a more practical antenna.</p>
+  <p>For the "ideal" design, I used the following criteria:</p>
+  <p>1. I selected values for Tau and Sigma that are nearly the maximum permitted by design equations. Tau was set at 0.97. For this value of Tau, the ideal value of Sigma is near 0.18, so I also used this value.</p>
+  <p>2. The higher the value of Tau, the less need there is to set a lower limit to the design that is several percent below the actual lowest operating frequency. Therefore, the lowest design frequency was set at 400 MHz, using the standard 2% allowance that determines the length of the longest element.</p>
+  <p>3. Because of high-frequency truncation, setting the design limit for the array at 1.3 times the top operating frequency is usually inadequate. Since all elements forward of the one nearest resonance are active, as we change operating frequency upward, fewer elements are active. At the top of the operating range, as few as 2-3 elements will be active if we use the standard design specifications. The result is a decrease in gain of severe proportions in many LPDA designs. A more adequate figure for a pure LPDA is 1.6 times the upper operating frequency. If one uses standard design software for initial calculations, the 1.3 factor may be built into the system. Using an upper design frequency of 1.25 times the upper operating frequency usually results in a shortest element cut for 1.6 times the upper operating frequency. Therefore, the upper design frequency was set for 1000 MHz.</p>
+  <p>4. Although practical LPDAs might used several element diameter steps, the basic design work used a 0.125" element throughout for simplicity.</p>
+  <p>The resulting design uses 40 elements on a boom that is about 10.6' long. Since we are not here interested in commercial practicality in this initial effort, we can work with a design proportioned like the outline in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="48lpid-1.gif" width="606" height="175" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Physically, the antenna can be described using the EZNEC antenna model descriptions, if we remember that element length values in the Y-columns are for element half lengths:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+400-800 MHz T=.97 S=.18 40 el      Frequency = 400  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+1            0.000, -7.528,  0.000         0.000,  7.528,  0.000 1.25E-01  29
+2            5.420, -7.302,  0.000         5.420,  7.302,  0.000 1.25E-01  29
+3           10.677, -7.083,  0.000        10.677,  7.083,  0.000 1.25E-01  27
+4           15.777, -6.870,  0.000        15.777,  6.870,  0.000 1.25E-01  27
+5           20.723, -6.664,  0.000        20.723,  6.664,  0.000 1.25E-01  27
+6           25.521, -6.464,  0.000        25.521,  6.464,  0.000 1.25E-01  25
+7           30.176, -6.270,  0.000        30.176,  6.270,  0.000 1.25E-01  25
+8           34.690, -6.082,  0.000        34.690,  6.082,  0.000 1.25E-01  23
+9           39.069, -5.900,  0.000        39.069,  5.900,  0.000 1.25E-01  23
+10          43.317, -5.723,  0.000        43.317,  5.723,  0.000 1.25E-01  23
+11          47.438, -5.551,  0.000        47.438,  5.551,  0.000 1.25E-01  21
+12          51.434, -5.385,  0.000        51.434,  5.385,  0.000 1.25E-01  21
+13          55.311, -5.223,  0.000        55.311,  5.223,  0.000 1.25E-01  21
+14          59.072, -5.066,  0.000        59.072,  5.066,  0.000 1.25E-01  19
+15          62.719, -4.914,  0.000        62.719,  4.914,  0.000 1.25E-01  19
+16          66.258, -4.767,  0.000        66.258,  4.767,  0.000 1.25E-01  19
+17          69.690, -4.624,  0.000        69.690,  4.624,  0.000 1.25E-01  19
+18          73.019, -4.485,  0.000        73.019,  4.485,  0.000 1.25E-01  17
+19          76.248, -4.351,  0.000        76.248,  4.351,  0.000 1.25E-01  17
+20          79.381, -4.220,  0.000        79.381,  4.220,  0.000 1.25E-01  17
+21          82.419, -4.093,  0.000        82.419,  4.093,  0.000 1.25E-01  17
+22          85.367, -3.971,  0.000        85.367,  3.971,  0.000 1.25E-01  15
+23          88.225, -3.852,  0.000        88.225,  3.852,  0.000 1.25E-01  15
+24          90.999, -3.736,  0.000        90.999,  3.736,  0.000 1.25E-01  15
+25          93.688, -3.624,  0.000        93.688,  3.624,  0.000 1.25E-01  15
+26          96.298, -3.515,  0.000        96.298,  3.515,  0.000 1.25E-01  13
+27          98.829, -3.410,  0.000        98.829,  3.410,  0.000 1.25E-01  13
+28         101.284, -3.307,  0.000       101.284,  3.307,  0.000 1.25E-01  13
+29         103.665, -3.208,  0.000       103.665,  3.208,  0.000 1.25E-01  13
+30         105.975, -3.112,  0.000       105.975,  3.112,  0.000 1.25E-01  13
+31         108.216, -3.019,  0.000       108.216,  3.019,  0.000 1.25E-01  11
+32         110.389, -2.928,  0.000       110.389,  2.928,  0.000 1.25E-01  11
+33         112.497, -2.840,  0.000       112.497,  2.840,  0.000 1.25E-01  11
+34         114.542, -2.755,  0.000       114.542,  2.755,  0.000 1.25E-01  11
+35         116.526, -2.672,  0.000       116.526,  2.672,  0.000 1.25E-01  11
+36         118.450, -2.592,  0.000       118.450,  2.592,  0.000 1.25E-01  11
+37         120.316, -2.514,  0.000       120.316,  2.514,  0.000 1.25E-01   9
+38         122.127, -2.439,  0.000       122.127,  2.439,  0.000 1.25E-01   9
+39         123.883, -2.366,  0.000       123.883,  2.366,  0.000 1.25E-01   9
+40         125.586, -2.295,  0.000       125.586,  2.295,  0.000 1.25E-01   9
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Wire Conn. --- End 1 (x,y,z : mm)  Conn. --- End 2 (x,y,z : mm)   Dia(mm) Segs
+1            0.000,-191.20,  0.000         0.000,191.201,  0.000 3.18E+00  29
+2          137.665,-185.47,  0.000       137.665,185.465,  0.000 3.18E+00  29
+3          271.200,-179.90,  0.000       271.200,179.901,  0.000 3.18E+00  27
+4          400.728,-174.50,  0.000       400.728,174.504,  0.000 3.18E+00  27
+5          526.371,-169.27,  0.000       526.371,169.269,  0.000 3.18E+00  27
+6          648.245,-164.19,  0.000       648.245,164.191,  0.000 3.18E+00  25
+7          766.462,-159.27,  0.000       766.462,159.265,  0.000 3.18E+00  25
+8          881.133,-154.49,  0.000       881.133,154.487,  0.000 3.18E+00  23
+9          992.364,-149.85,  0.000       992.364,149.853,  0.000 3.18E+00  23
+10         1100.26,-145.36,  0.000       1100.26,145.357,  0.000 3.18E+00  23
+11         1204.92,-141.00,  0.000       1204.92,140.996,  0.000 3.18E+00  21
+12         1306.43,-136.77,  0.000       1306.43,136.766,  0.000 3.18E+00  21
+13         1404.90,-132.66,  0.000       1404.90,132.663,  0.000 3.18E+00  21
+14         1500.42,-128.68,  0.000       1500.42,128.684,  0.000 3.18E+00  19
+15         1593.07,-124.82,  0.000       1593.07,124.823,  0.000 3.18E+00  19
+16         1682.95,-121.08,  0.000       1682.95,121.078,  0.000 3.18E+00  19
+17         1770.12,-117.45,  0.000       1770.12,117.446,  0.000 3.18E+00  19
+18         1854.68,-113.92,  0.000       1854.68,113.923,  0.000 3.18E+00  17
+19         1936.71,-110.50,  0.000       1936.71,110.505,  0.000 3.18E+00  17
+20         2016.27,-107.19,  0.000       2016.27,107.190,  0.000 3.18E+00  17
+21         2093.45,-103.97,  0.000       2093.45,103.974,  0.000 3.18E+00  17
+22         2168.31,-100.85,  0.000       2168.31,100.855,  0.000 3.18E+00  15
+23         2240.93,-97.829,  0.000       2240.93, 97.829,  0.000 3.18E+00  15
+24         2311.36,-94.894,  0.000       2311.36, 94.894,  0.000 3.18E+00  15
+25         2379.69,-92.048,  0.000       2379.69, 92.048,  0.000 3.18E+00  15
+26         2445.96,-89.286,  0.000       2445.96, 89.286,  0.000 3.18E+00  13
+27         2510.25,-86.608,  0.000       2510.25, 86.608,  0.000 3.18E+00  13
+28         2572.60,-84.009,  0.000       2572.60, 84.009,  0.000 3.18E+00  13
+29         2633.09,-81.489,  0.000       2633.09, 81.489,  0.000 3.18E+00  13
+30         2691.76,-79.044,  0.000       2691.76, 79.044,  0.000 3.18E+00  13
+31         2748.68,-76.673,  0.000       2748.68, 76.673,  0.000 3.18E+00  11
+32         2803.88,-74.373,  0.000       2803.88, 74.373,  0.000 3.18E+00  11
+33         2857.43,-72.142,  0.000       2857.43, 72.142,  0.000 3.18E+00  11
+34         2909.37,-69.977,  0.000       2909.37, 69.977,  0.000 3.18E+00  11
+35         2959.75,-67.878,  0.000       2959.75, 67.878,  0.000 3.18E+00  11
+36         3008.63,-65.842,  0.000       3008.63, 65.842,  0.000 3.18E+00  11
+37         3056.03,-63.867,  0.000       3056.03, 63.867,  0.000 3.18E+00   9
+38         3102.02,-61.951,  0.000       3102.02, 61.951,  0.000 3.18E+00   9
+39         3146.62,-60.092,  0.000       3146.62, 60.092,  0.000 3.18E+00   9
+40         3189.89,-58.289,  0.000       3189.89, 58.289,  0.000 3.18E+00   9
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           5    40 / 50.00   ( 40 / 50.00)      0.707       0.000       V
+
+                -------- TRANSMISSION LINES ---------
+
+Line  Wire #/% From End 1   Wire #/% From End 1    Length       Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)                Ohms Fact Norm
+1      1/50.0  (  1/50.0)    2/50.0  (  2/50.0)  Actual dist  100.0  1.00  R
+2      2/50.0  (  2/50.0)    3/50.0  (  3/50.0)  Actual dist  100.0  1.00  R
+3      3/50.0  (  3/50.0)    4/50.0  (  4/50.0)  Actual dist  100.0  1.00  R
+4      4/50.0  (  4/50.0)    5/50.0  (  5/50.0)  Actual dist  100.0  1.00  R
+5      5/50.0  (  5/50.0)    6/50.0  (  6/50.0)  Actual dist  100.0  1.00  R
+6      6/50.0  (  6/50.0)    7/50.0  (  7/50.0)  Actual dist  100.0  1.00  R
+7      7/50.0  (  7/50.0)    8/50.0  (  8/50.0)  Actual dist  100.0  1.00  R
+8      8/50.0  (  8/50.0)    9/50.0  (  9/50.0)  Actual dist  100.0  1.00  R
+9      9/50.0  (  9/50.0)   10/50.0  ( 10/50.0)  Actual dist  100.0  1.00  R
+10    10/50.0  ( 10/50.0)   11/50.0  ( 11/50.0)  Actual dist  100.0  1.00  R
+11    11/50.0  ( 11/50.0)   12/50.0  ( 12/50.0)  Actual dist  100.0  1.00  R
+12    12/50.0  ( 12/50.0)   13/50.0  ( 13/50.0)  Actual dist  100.0  1.00  R
+13    13/50.0  ( 13/50.0)   14/50.0  ( 14/50.0)  Actual dist  100.0  1.00  R
+14    14/50.0  ( 14/50.0)   15/50.0  ( 15/50.0)  Actual dist  100.0  1.00  R
+15    15/50.0  ( 15/50.0)   16/50.0  ( 16/50.0)  Actual dist  100.0  1.00  R
+16    16/50.0  ( 16/50.0)   17/50.0  ( 17/50.0)  Actual dist  100.0  1.00  R
+17    17/50.0  ( 17/50.0)   18/50.0  ( 18/50.0)  Actual dist  100.0  1.00  R
+18    18/50.0  ( 18/50.0)   19/50.0  ( 19/50.0)  Actual dist  100.0  1.00  R
+19    19/50.0  ( 19/50.0)   20/50.0  ( 20/50.0)  Actual dist  100.0  1.00  R
+20    20/50.0  ( 20/50.0)   21/50.0  ( 21/50.0)  Actual dist  100.0  1.00  R
+21    21/50.0  ( 21/50.0)   22/50.0  ( 22/50.0)  Actual dist  100.0  1.00  R
+22    22/50.0  ( 22/50.0)   23/50.0  ( 23/50.0)  Actual dist  100.0  1.00  R
+23    23/50.0  ( 23/50.0)   24/50.0  ( 24/50.0)  Actual dist  100.0  1.00  R
+24    24/50.0  ( 24/50.0)   25/50.0  ( 25/50.0)  Actual dist  100.0  1.00  R
+25    25/50.0  ( 25/50.0)   26/50.0  ( 26/50.0)  Actual dist  100.0  1.00  R
+26    26/50.0  ( 26/50.0)   27/50.0  ( 27/50.0)  Actual dist  100.0  1.00  R
+27    27/50.0  ( 27/50.0)   28/50.0  ( 28/50.0)  Actual dist  100.0  1.00  R
+28    28/50.0  ( 28/50.0)   29/50.0  ( 29/50.0)  Actual dist  100.0  1.00  R
+29    29/50.0  ( 29/50.0)   30/50.0  ( 30/50.0)  Actual dist  100.0  1.00  R
+30    30/50.0  ( 30/50.0)   31/50.0  ( 31/50.0)  Actual dist  100.0  1.00  R
+31    31/50.0  ( 31/50.0)   32/50.0  ( 32/50.0)  Actual dist  100.0  1.00  R
+32    32/50.0  ( 32/50.0)   33/50.0  ( 33/50.0)  Actual dist  100.0  1.00  R
+33    33/50.0  ( 33/50.0)   34/50.0  ( 34/50.0)  Actual dist  100.0  1.00  R
+34    34/50.0  ( 34/50.0)   35/50.0  ( 35/50.0)  Actual dist  100.0  1.00  R
+35    35/50.0  ( 35/50.0)   36/50.0  ( 36/50.0)  Actual dist  100.0  1.00  R
+36    36/50.0  ( 36/50.0)   37/50.0  ( 37/50.0)  Actual dist  100.0  1.00  R
+37    37/50.0  ( 37/50.0)   38/50.0  ( 38/50.0)  Actual dist  100.0  1.00  R
+38    38/50.0  ( 38/50.0)   39/50.0  ( 39/50.0)  Actual dist  100.0  1.00  R
+39    39/50.0  ( 39/50.0)   40/50.0  ( 40/50.0)  Actual dist  100.0  1.00  R
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The wire table appears in both English (inches) and metric (millimeters) forms for ease of translation. The phase line is 100-Ohms throughout, since a low-impedance line yields a completely stable LPDA, given the high values of both Tau and Sigma.</p>
+  <p>We shall examine the operating characteristics of the 40-element LPDA more closely as we proceed. However, at this stage, let's quickly examine the free-space azimuth patterns in <b>Fig. 2</b>, since they give us a fair sampling of the antenna's performance.</p>
+  <center>
+    <img src="48lpid-2.gif" width="650" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The total gain variation across the passband of use is under 1 dB. As well, the front-to-back ratio is 30 dB or better. The -3 dB beamwidth is relatively even, running between 42 and 44 degrees through the operating range. Needless to say, these are all positive attributes of the antenna design. However, no LPDA should be accepted on too scanty a set of performance samplings. Therefore, let's look more closely at how the antenna sweeps the entire operating range.</p>
+  <p><b>Fig. 3</b> presents data for the design with several goals. First, with a 50 MHz interval between sweep steps, the graphs will show with fair--but not final--reasonableness the antennas capabilities. Should anyone have a more serious intent for the design, then samplings at much smaller intervals are necessary.</p>
+  <p>Second, the graphs sweep beyond the edges of the operating passband to show the trends in performance at the extremes. Normally, LPDAs show a rapid decline in performance below the lower edge of the design frequency (with very low-Tau, high-Sigma design being somewhat of an exception). Beyond the upper operating frequency, the performance decline is slower, although impedance excursions may be greater proportionally than gain and front-to-back excursions.</p>
+  <center>
+    <img src="48lpid-3.gif" width="646" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> gives us the gain and front-to-back values across the swept frequencies. Within the 400-800-MHz range of operation, the gain is remarkably stable, with a gradual decrease immediately outside the operating passband. However, above 900 MHz, the gain decreases very rapidly. Had we not specified a very high upper design frequency, the radical slope of the gain decrease would have occurred within the operating passband.</p>
+  <p>Below the operating passband, the front-to-back ratio dwindles quickly, with a slower decrease above the upper end of the operating range. The peaks (450 and 700 MHz) of front-to-back ratio within the operating range are natural to virtually all LPDA designs.</p>
+  <center>
+    <img src="48lpid-4.gif" width="646" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Typical of LPDA performance--unless masked by matching devices such as baluns and the like--the resistance and reactance of the array show increasingly large excursions as we approach and pass the upper design frequency. The general trend in these parameters is opposite below and above the design range. Below 400 MHz, both resistance and inductive reactance increase. Above the design range, resistance decreases and capacitive reactance increases.</p>
+  <p>Within the design range--when the upper limit is extended to overcome truncation effects--changes in the source resistance are modest. Reactance remains predominantly capacitive, although quite low. The graph does not show this completely due to the wide intervals between readings. However, if we sweep more tightly, the inductive reactance reports will be fewer in number than the capacitive reactance reports. As well, if we had tapered the element diameters to smaller values with shorter elements, the overall capacitive reactance dominance would also have shown itself.</p>
+  <center>
+    <img src="48lpid-5.gif" width="649" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The overall consequences of the resistance reactance excursions appear more dramatically in the 50-Ohm and 75-Ohm curves of <b>Fig. 5</b>. Within the operating range of the antenna, we may operate with cables of either characteristic impedance. However, the median feedpoint impedance of the array is closer to 75 Ohms than to 50. In fact, the higher that we set the combined values of Tau and Sigma, the closer the feedpoint impedance will approach the characteristic impedance of the phasing line (100 Ohms in this design example).</p>
+  <p>In passing, we may note that the antenna will show a reasonable line match down to 350 MHz and up to 900 MHz. However, the degradation of the other performance figures suggest that this SWR margin will net little by way of good antenna operation.</p>
+  <p><b>The "Ideal" LPDA in Operation</b></p>
+  <p>Since the antenna--should someone ever build one of them--will operate many wavelengths above ground, the resistance, reactance, and SWR figures will remain applicable in virtually can circumstance. However, there are limitations to the gain and front-to-back reports. The use of free-space is quite useful for establishing performance characteristics. However, all of the work was done in the antenna E-plane, which corresponds to a horizontal orientation above a real ground. Perhaps it may be useful to briefly examine the antenna design above real ground in both horizontal and vertical orientations.</p>
+  <p>Initially, the LPDA model was set horizontally above real ground at a height of 20' (240" or 6.1 m). I chose the height as representing an installation above a 1-story average American home.</p>
+  <center>
+    <img src="48lpid-6.gif" width="650" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> present representative azimuth patterns for the array at 400, 600, and 800 MHz. These far field patterns are representative of point-to-point communications, with the lowest lobe angle descending with rising frequency from 1.8 degrees to 0.9 degrees.</p>
+  <p>The patterns themselves closely approximate the free-space patterns, with the added gain of ground reflections. since a desired minimal level of gain for the requirements of urban and suburban television is about 7-8 dB, these antennas have excess gain--a result that we expected. The beamwidth requires careful aiming of these antennas for maximum response. However, the narrow beamwidth has the bonus of reducing ghosting that results from signals reflected from or refracted by buildings and other objects.</p>
+  <p>If we flip the array 90 degrees into a vertical orientation while leaving the boom at the 20' mark, we obtain the patterns shown in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="48lpid-7.gif" width="650" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first thing to note about the patterns in <b>Fig. 7</b>, relative to those in <b>Fig. 6</b>, is that they have lower gain and wider beamwidths. The gain deficit is half to 3/4 of a dB, while the average increase in -3 dB beamwidth is 3-4 degrees.</p>
+  <p>Although the 180-degree front-to-back ratio remains the same for both orientations, the rear lobe structure changes considerable as we change orientations. Rejection at 90 degrees to the main forward lobe decreases although it remains well above 25 dB. In addition, as the 600-MHz pattern shows, when vertically oriented, LPDAs may show a tendency to display very minor secondary forward lobes at some frequencies.</p>
+  <p><b>Conclusions</b></p>
+  <p>Our small design exercise into a nearly ideal LPDA for the 400-800 MHz range suggests that the LPDA principle is entirely serviceable for the express needs of high-definition television. The design has only 2 drawbacks. First, it is 10.6' long, much longer than anyone wishes to use in a residential situation. (The length may not be detrimental to many research situations.) As well, the 40-element design does not lend itself to economical construction.</p>
+  <p>One might well use a pair of U-channels as combination booms and phase lines for the array, following a common practice in LPDA design. However, with 80 half elements to install--mostly likely by pressure fitting--assuring long-term reliability commensurate with the initial cost of such an antenna would be difficult. Mounting the array would present similar challenges, since rear-end mounting is likely unfeasible and the close spacing of the elements would call for a complex mid-boom mounting scheme.</p>
+  <p>Such problems--at first sight daunting--are surmountable by careful engineering. However, except for specialized uses, such an antenna would lie beyond commercial feasibility for the general television consumer market. (However, if we were to gold-anodize the structure and claim special properties for the array equal to those claimed for the battery cables with gold contacts used by some audiophiles for speakers, we might capture a fetish market among the growing numbers of aficionados of "home theaters" and designated "media rooms." I shall leave such speculations to those who develop midnight-to-dawn infomercials.)</p>
+  <p>What we need at the practical level is an antenna no more than about 2' square--or, more accurately for LPDAs, 2' on a side of a triangle. We should also reduce the number of elements. Still, we need to have something of a margin relative to the gain needs of high-definition television.</p>
+  <p>In short, we need Part 2, "A Practical Antenna."</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-01-03. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>(Feb., 2003). Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="48lppr.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 2</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#broadcast'>Broadcast</a>, <a href='../topics.html#lpda'>LPDA</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

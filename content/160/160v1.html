@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="MF, Vertical">
+  <title>Modeling 160-Meter Vertical Arrays Part 1: Some Baseline Data</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/hat.gif" align="left" width="72" height="84" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Modeling 160-Meter Vertical Arrays<br>
+    Part 1: Some Baseline Data</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>For rather obvious reasons, 160 meters shows a higher percentage of vertical antennas and arrays relative to the total number of antennas in use than any other band. With the advent of NEC and MININEC, the tools that we use for designing and analyzing antennas for 160 have shifted from hand calculations to computer-aided design programs. However, the more I read, the less content I am that we have a full appreciation for what those modeling programs tell us. No where is the absence of understanding more evident than in the treatment of radial systems, whether they are attached to the antenna as part of its structure or simply lie beneath an independent antenna element.</p>
+  <p>There are two major ways that we might proceed in at least partially correcting this relative vacuum. One is mathematical and has recently been started by Rudy Severns, N6LF, in "Verticals, Ground Systems, and Some History, " QST (July, 2000), 38-44. An alternative route is to do some systematic modeling related to 160-meter vertical antennas and arrays. By capturing in a reasonably comprehensive way the span of results that antenna modeling systems present to us, we can gain some perspective and reasonable expectations of well-wrought antenna models.</p>
+  <p>This series will take the latter approach. In this first part, we shall examine some baseline data on 1/4 wavelength verticals using various types of modeled ground systems available to us within versions of NEC. In the second part, we shall seek a more comprehensive view and appreciation of the relative effects of soil conductivity and permittivity (relative dielectric constant) on the performance of our baseline antenna model. Since the project will simultaneously involve some problems associated with using the MININEC (no-radial) ground system and with the construction of models of radial systems, we shall tackle both problems in Part 3. The 4th episode will be devoted to a potpourri of models of some common vertically polarized antennas we typically use on 160 meters, as we seek some guidelines for the most adequate modeling possible. In the final installment, we shall look at the suggested use of inner and outer ground qualities to simulate a radial system.</p>
+  <p>There is some disputation afoot regarding the adequacy of models of just the sort that we shall examine relative to the performance of the physical antennas modeled. This series will not address that cluster of questions, since that larger topic necessarily involves the use of adequate testing methodology upon actual antennas as one side of the coin. Here, we shall be looking at what sorts of things different kinds of models tell us, and the number of variations on radial system modeling alone will more than fill our plate. However, a thorough understanding of what such models tell us is the other side of the coin under discussion, so I shall not be wholly blind to implications of the work done here.</p>
+  <p>Throughout these episodes, I shall be using both NEC-2 and NEC-4 in commercial implementations--EZNEC, GNEC, and NEC-Win Plus. These programs have input and output facilities that greatly ease the construction and interpretation of models, such as radial-makers, and the like. I shall indicate which level of NEC is used for every model explored. As well, the major output of this study is an array of data presented in tables and graphs. I shall limit text to an amount necessary to take a guided walk through the data, but it would require a book to extract every nuance from the information gathered. You may wish to study the data at length and draw further inferences from them.</p>
+  <h3>The 1/4-Wavelength Vertical Monopole and Its Radial System</h3>
+  <center>
+    <img src="1601-1.gif" width="561" height="465" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    1. The basic 1/4 wavelength monopole and variations among models used in this study.
+  </center>
+  <p>Any model of a 1/4 wavelength vertical monopole must necessarily include several elements, shown in <b>Fig. 1</b>. Of course, there is the vertical element itself. In all cases, I shall use a 40-m tall element that is 25 mm in diameter. (Because metrics are so common in 160-meter antenna work, all dimensions will be in metric form. 25 mm is just under 1" in diameter.) Wherever a radial system is used, it will consist of 2 mm diameter wire (about 0.0787" or between AWG #14 and AWG #12). Everything will be copper for simplicity and because changes of material in these models yield changes in results that have no affect on the trends in which we shall be most interested. The test frequency will be 1.83 MHz, and therefore 1/4 wavelength radials will be 40.96 m long.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 1.  Soil types used in the study.
+
+Soil Type         Conductivity            Permittivity
+                  Siemans/meter           dielectric constant
+Very Poor         0.001                    5
+Poor              0.002                   13
+Good (Average)    0.005                   13
+Very Good         0.0303                  20
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Beneath the antenna will be the ground, as defined by a combination of conductivity and dielectric constant (permittivity). <b>Table 1</b> lists the de facto standard range of values typically used as a fair sampling of the effects of soil quality on antenna performance. In the next part of our exploration, we shall look at the question of whether this short table represents a fair sampling or not. For the moment, we may content ourselves with these categories. Their origin lies in the table of found in <i>The ARRL Antenna Book</i> (p. 3-6), which is itself an adaptation of the table presented by Terman in <i>Radio Engineer's Handbook</i> (p. 709), taken from "Standards of Good Engineering Practice Concerning Standard Broadcast Stations," <i>Federal Register</i> (July 8, 1939), p. 2862.</p>
+  <p>The four levels of soil quality--Very Poor, Poor, Good, and Very Good--have been a standard set of ground quality models since they were placed into early versions of ELNEC by Roy Lewallen, W7EL. Unfortunately, the "Good" category has obtained the alternate label "Average," which may be dubious, even if it is the general default used in most commercial implementations of NEC. Hence, we see more antennas modeled over "Average" ground than any other sort. The practice presents no hindrance to the understanding of models of horizontally polarized antennas, but it may create some limitations in our thinking about verticals for the MF and lower HF region.</p>
+  <p>We shall bypass some inherent limitations of all NEC models at MF and lower HF. NEC presumes a flat uncluttered terrain and a uniform soil constitution beneath the antenna. Neither condition may obtain in any given situation. Although we can model important ground clutter with wire grid assemblies, we cannot capture in a NEC model the stratified soil that may underlie a given antenna site. Since our work will be limited to comparisons among models, these limitations will not affect the results.</p>
+  <p>Now to the crux of the problem with modeling vertical arrays on 160 meters: we can use a considerable number of modeling techniques related to the radial system to make comparisons among antennas. Here is the short list of common radial system modeling techniques:</p>
+  <ul>
+    <li>1. Buried radials: available only in versions of NEC above 2, which in practical terms of commercial implementations, requires NEC-4. Exigencies of modeling wires near the surface usually result in the use of length-tapered elements to yield finite model sizes.</li>
+    <li>2. Elevated radials, within 0.001 wavelengths of ground to simulate buried radials. This is the standard NEC-2 method of handling of radial systems, although there are two major versions:</li>
+    <li>2a. Uniform segmentation of all wires, which results in very large models for adequately segmented antennas with 30 or more radials.</li>
+    <li>2b. Length-tapered elements, which yield smaller models, often able to be run on segment- limited implementations of NEC.</li>
+    <li>3. Use of the MININEC ground (available with the NEC core in versions of EZNEC) without modeling the radial system itself.</li>
+  </ul>
+  <p>To look at the ways in which these modeling systems converge and diverge, we can take a simple 1/4 wavelength monopole for 1.83 MHz and model it in each system using (where relevant) from 4 to 128 1/4 wavelength radials over each type of soil quality shown in Table 1. The number of radials will double in each step. This will give us a baseline of data for making some comparisons among the systems. Throughout, I shall list results in more numeric detail than might be significant for practical operation. Since we are interested in the numerical trends internal to modeling, the added precision of recorded results is wholly appropriate.</p>
+  <h3>Elevated and Buried Radial System Results</h3>
+  <p>The notion of elevated and buried radial systems, as used here, are limited to radial systems near the soil surface. (Placing a radial system on or under the soil is not possible in NEC-2 and placing the radial system at Z=0 in NEC-4 yields unusable results. Hence, our choices are limited.) For NEC-2 or NEC-4, we may follow a standard practice of placing the radial system at the minimum recommended height above ground. For the frequency in use, the 0.001 wavelength recommendation translates into a height of 0.164 m or about 6.5". By simple raising the entire system by this height from its initially modeled ground level, we may use standard uniform segmentation of the elements. However, because a radial system is a complex structure, use of the minimum segmentation levels (about 10 per half wavelength) will often not yield convergence of the model. The models used here employed 20 segments per quarter wavelength. Remember that this type of model is said to simulate buried radials.</p>
+  <center>
+    <img src="1601-2.gif" width="646" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    2. Gain reports of the 1/4 wavelength monopole over various soil qualities for 4 to 128 radials for an above-ground uniformly segmented model.
+  </center>
+  <p>Although NEC-2 recommends a limit of about 30 wires to a single junction, the limitation does not apply to NEC-4. Therefore, the uniform segmentation models over the various soil types proceeded to 128 radials. Whether NEC-4 can handle this number of wires at a junction for the models involved is indicated by the results. (Even in NEC-2, all of the models easily pass the average gain test, with the highest deviation from a perfect 1.000 appearing with only 4 radials: 1.0397. The 128-radial model produce an average gain test result of 1.0096. However, the average gain test is a necessary but not sufficient test of model adequacy and does not reveal every possible flaw in models.) Table 2 and Fig. 2 provide the data in different forms. For uniform segmentation, the smooth curves in Fig. 2 indicate that nothing erratic happens at the uppermost numbers of radials.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 2.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, uniform segmentation: 20 segments per wire; radials 0.001 wavelength above ground;
+NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  5 wires; 100 segments
+Very Poor         -2.15       27                44.51 + j 22.49
+Poor              -0.51       25                42.07 + j 27.30
+Good               0.51       22                42.84 + j 29.04
+Very Good          2.30       17                43.82 + j 25.37
+
+8-radials:  9 wires; 180 segments
+Very Poor         -1.61       27                38.90 + j  6.11
+Poor              -0.05       24                37.59 + j  9.71
+Good               0.96       22                38.52 + j 11.79
+Very Good          2.74       17                39.64 + j 12.17
+
+16-radials:  17 wires; 340 segments
+Very Poor         -1.42       27                36.80 + j  0.02
+Poor               0.08       25                36.29 + j  2.88
+Good               1.09       22                37.27 + j  4.45
+Very Good          2.90       16                38.14 + j  5.74
+
+32-radials:  33 wires; 660 segments
+Very Poor         -1.38       27                35.93 - j  2.20
+Poor               0.07       24                35.92 + j  0.55
+Good               1.09       22                36.96 + j  1.89
+Very Good          2.93       17                37.87 + j  3.15
+
+64-radials:  65 wires; 1300 segments
+Very Poor         -1.31       27                35.19 - j  2.92
+Poor               0.05       25                35.81 - j  0.21
+Good               1.02       22                37.09 + j  1.22
+Very Good          2.91       16                38.02 + j  2.57
+
+128-radials:  129 wires; 2580 segments
+Very Poor         -1.18       27                34.43 - j  2.57
+Poor               0.11       25                35.43 - j  0.26
+Good               0.98       22                37.07 + j  0.99
+Very Good          2.86       17                38.25 + j  2.52
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>However, the data reported by NEC-4 are interesting in their own right. The region of 16 to 32 radials is where the curves level off and modeling additional radials produces no further significant increases in the modeled far field gain, with the possible exception of the worst soil qualities. Moreover, the curves are nearly congruent, indicating that for each soil type, increasing the number of radials has a similar effect on gain. The impedance data in <b>Table 2</b> indicates a similar set of trends for the source resistance. Indeed, from 32 radials upward, the source impedance changes virtually negligibly.</p>
+  <p>The model sizes listed in <b>Table 2</b> provide ample incentive to use length tapering on the elements to reduce model size. 32 radials of uniform segmentation at the specified density of 20 per 1/4 wavelength overrun the 500-segment limitation of some programs. However, by using length tapering of each wire toward the junction, a 32-radial model requires only 397 segment. The standards of length tapering used in the model are based on two factors. First, the buried radial model will require wires as short as 0.001 wavelength (0.164 m). Hence, this figure became the lower length limit for tapering, with 0.04 wavelength selected as the upper limit. Standard length- segmenting features on programs like EZNEC begin with a wire of the shortest specified length and add wires of progressively doubled lengths until the maximum segment length is reached. The remaining element length is then segmented at a segment length that does not exceed the limit. Second, as shown in a detail of <b>Fig. 1</b>, the segments on either side of the source segment should be the same length as the source segment. For the above-ground radial system, this stricture required a separate source wire from 0.164 m to 0.328 m above ground, with the tapering of the element beginning above that point.</p>
+  <center>
+    <img src="1601-3.gif" width="647" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    3. Gain reports of the 1/4 wavelength monopole over various soil qualities for 4 to 128 radials for an above-ground tapered-length element model.
+  </center>
+  <p>The results from this set of models appear in <b>Table 3</b> and <b>Fig. 3</b>. Impedance values in the table are slightly lower than for the uniformly segmented model simply because the source (which may be pictured as centered in its segment) is located closer to the radial junction. However, the range of values is quite similar, as we would expect from comparable models. The gain curves in <b>Fig. 3</b> are almost clones of those in <b>Fig. 2</b>. Once more the region between 16 and 32 radials marks a practical peak beyond which values do not change significantly by any standard.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001 wavelength
+above ground; NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  31 wires; 61 segments
+Very Poor         -1.90       27                41.91 + j 18.38
+Poor              -0.33       25                40.27 + j 22.38
+Good               0.66       22                41.28 + j 23.89
+Very Good          2.45       17                42.26 + j 21.04
+
+8-radials:  55 wires; 109 segments
+Very Poor         -1.47       27                37.49 + j  3.69
+Poor               0.03       25                36.84 + j  6.82
+Good               1.01       22                37.99 + j  8.78
+Very Good          2.81       17                38.89 + j  9.56
+
+16-radials:  103 wires; 205 segments
+Very Poor         -1.34       27                35.91 - j  1.80
+Poor               0.09       25                36.08 + j  0.89
+Good               1.06       22                37.37 + j  2.61
+Very Good          2.92       16                37.91 + j  4.36
+
+32-radials:  199 wires; 397 segments
+Very Poor         -1.29       27                35.09 - j  3.55
+Poor               0.09       25                35.69 - j  1.05
+Good               1.04       22                37.24 + j  0.48
+Very Good          2.92       16                37.83 + j  2.46
+
+64-radials:  391 wires; 781 segments
+Very Poor         -1.23       27                34.36 - j  3.63
+Poor               0.10       25                35.24 - j  1.36
+Good               1.02       22                36.97 - j  0.10
+Very Good          2.91       16                37.91 + j  1.99
+
+128-radials:  775 wires; 1549 segments
+Very Poor         -1.12       27                33.81 - j  3.04
+Poor               0.17       25                34.80 - j  0.95
+Good               1.03       22                36.51 + j  0.04
+Very Good          2.87       16                37.97 + j  1.89
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>When we bury radials in a NEC-4 model, we should adhere to a number of required and advisable modeling practices. The radial junction is 0.164 m below ground. There must be a segment junction at the Z=0 point. As well the source should be above ground, and its adjacent segment lengths should be equal. These needs dictate that we once more use 0.001 wavelength as the shortest wire length in the tapered length elements, as shown in another detail of <b>Fig. 1</b>. We can place a wire of this length from the radial junction to the ground level and one more above it as the source junction. The length-tapering process then ensures that all of these conditions are met. The choice of the 25 mm diameter main element in all of these models easily meets recommended length-to-diameter ratio recommendations in all versions of NEC. The choice of burying the radials 0.001 wavelength deep was occasioned by the desire to make the models in this episode as structurally comparable as possible. In a future episode, we shall examine techniques for burying radial closer to the ground surface.</p>
+  <center>
+    <img src="1601-4.gif" width="648" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    4. Gain reports of the 1/4 wavelength monopole over various soil qualities for 4 to 128 radials for an below-ground tapered-length element model.
+  </center>
+  <center>
+    <img src="1601-5.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    5. Source resistance reports from two models over Very Poor and Very Good soil: above-ground and below-ground radial systems.
+  </center>
+  <p>The results of this model appear in <b>Table 4</b> and <b>Fig. 4</b>. Immediately apparent from the table is the much higher range and higher initial values of source impedance. Only over Very Good soil does the impedance of the 4-radial model approach that shown for the comparable above-ground radial system models. For lesser quality soils, impedances remain higher until we reach the 32- radial models. <b>Fig. 5</b> compares tapered-length above- and below-ground radials systems in terms of the source resistance--limited to Very Poor and Very Good soils to avoid a graphic grid lock of lines. Although the Very Good soil below- and above-ground curves parallel each other, the Very Poor soil resistance lines dramatically show much wider differences. If we use the premise that the below-ground radial system better reflects the situation of most real installations, then the notion that the above-ground system is adequate for modeling radial systems is thrown into jeopardy.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 4.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001 wavelength
+below ground; NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  32 wires; 62 segments
+Very Poor         -4.37       27                87.04 + j 25.31
+Poor              -2.49       25                72.45 + j 19.47
+Good              -0.71       23                60.96 + j 20.42
+Very Good          2.10       17                47.34 + j 14.52
+
+8-radials:  56 wires; 110 segments
+Very Poor         -3.11       28                65.90 + j 18.09
+Poor              -1.51       25                58.63 + j 15.18
+Good              -0.04       23                52.43 + j 15.94
+Very Good          2.60       17                44.34 + j 12.60
+
+16-radials:  104 wires; 206 segments
+Very Poor         -1.61       28                52.71 + j 12.43
+Poor              -0.16       25                49.71 + j 12.18
+Good               0.86       23                46.79 + j 12.83
+Very Good          2.79       16                42.20 + j 11.18
+
+32-radials:  200 wires; 398 segments
+Very Poor         -1.32       27                44.89 + j  7.54
+Poor               0.17       25                43.44 + j  9.55
+Good               1.12       22                42.67 + j 10.46
+Very Good          2.94       17                40.48 + j 10.03
+
+64-radials:  392 wires; 782 segments
+Very Poor         -1.19       27                40.68 + j  4.11
+Poor               0.32       25                39.43 + j  7.08
+Good               1.26       22                39.73 + j  8.50
+Very Good          3.05       17                39.06 + j  9.07
+
+128-radials:  776 wires; 1550 segments
+Very Poor         -1.12       28                38.60 + j  2.18
+Poor               0.17       25                37.32 + j  5.29
+Good               1.03       23                37.91 + j  6.99
+Very Good          2.87       17                37.94 + j  8.27
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The gain curves, read either from the table or the graph, also show a much wider span of values as we add radials. In general, not unexpectedly, the worse the soil quality, the greater the influence of adding more radials to the radial system. Indeed, the span of gain values and their progression, especially in the Very Poor soil category, tends to reflect better some operational reports than do the above-ground radial system models.</p>
+  <h3>Some Miscellaneous Modeling Issues</h3>In setting up the models for developing some baseline data, I restricted the main element diameter to 25 mm in order to easily meet the length-to-diameter requirements within the tapered length models. <b>Table 5</b> tends to show why this move is needed and may serve as a caution about hasty modeling. The first portion of the table shows the results (from 4 to 32 radials) of increasing the element diameter to 0.164 m (a reasonable but approximate substitute for a standard Rohn tower section). With a length-to-diameter ratio of 1:1, the values--although usable for some purposes--show considerable wandering relative to the progressions in <b>Fig. 3</b>, the above-ground tapered length system with a 25 mm element.
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 5.  Increasing the diameter of the vertical monopole to 0.164 m and to 0.25 m.
+
+A. 40-m vertical monopole, 164 mm (0.001 wavelength) diameter; 40.96-m (0.25 wavelength)
+radials, 2 mm diameter; tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001
+wavelength below ground; NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  32 wires; 62 segments
+Very Poor         -1.65       27                40.65 + j 17.92
+Poor              -0.14       25                39.82 + j 21.57
+Good               0.83       22                41.16 + j 23.06
+Very Good          2.64       17                42.11 + j 21.49
+
+8-radials:  56 wires; 110 segments
+Very Poor         -1.65       27                40.11 + j  7.46
+Poor              -0.18       24                39.81 + j 10.76
+Good               0.80       22                41.25 + j 12.80
+Very Good          2.62       17                42.24 + j 14.04
+
+16-radials:  104 wires; 206 segments
+Very Poor         -1.51       27                38.41 + j  2.69
+Poor              -0.10       24                38.77 + j  5.54
+Good               0.88       22                40.30 + j  7.32
+Very Good          2.74       17                41.00 + j  9.36
+
+32-radials:  200 wires; 398 segments
+Very Poor         -1.56       27                38.33 + j  1.12
+Poor              -0.18       25                39.15 + j  3.76
+Good               0.77       22                40.95 + j  5.31
+Very Good          2.66       17                41.76 + j  7.61
+
+B. 40-m vertical monopole, 250 mm (0.001 wavelength) diameter; 40.96-m (0.25 wavelength)
+radials, 2 mm diameter; tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001
+wavelength below ground; NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  32 wires; 62 segments
+Very Poor         -1.19       27                36.97 + j 17.53
+Poor               0.32       25                36.26 + j 20.92
+Good               1.29       23                37.53 + j 22.29
+Very Good          3.10       17                38.47 + j 20.82
+
+8-radials:  56 wires; 110 segments
+Very Poor         -1.26       28                37.07 + j  8.09
+Poor               0.21       24                36.84 + j 11.19
+Good               1.19       22                38.22 + j 13.05
+Very Good          3.01       17                39.21 + j 14.20
+
+16-radials:  104 wires; 206 segments
+Very Poor         -1.42       27                37.94 + j  3.78
+Poor               0.00       25                38.36 + j  6.58
+Good               0.98       22                39.91 + j  8.29
+Very Good          2.84       17                40.67 + j 10.35
+
+32-radials:  200 wires; 398 segments
+Very Poor         -1.52       27                38.33 + j  2.31
+Poor              -0.14       25                39.21 + j  4.93
+Good               0.82       22                41.05 + j  6.46
+Very Good          2.70       16                41.94 + j  8.77
+
+C.  40-m vertical monopole, 250 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, uniform segmentation: 20 segments per wire; radials 0.001 wavelength above ground;
+NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  5 wires; 100 segments
+Very Poor         -1.97       27                44.41 + j 24.37
+Poor              -0.39       24                42.67 + j 28.77
+Good               0.62       22                43.72 + j 30.49
+Very Good          2.43       17                44.73 + j 28.03
+
+8-radials:  9 wires; 180 segments
+Very Poor         -1.57       27                40.01 + j 10.70
+Poor              -0.04       25                39.17 + j 14.23
+Good               0.96       22                40.34 + j 16.30
+Very Good          2.76       16                41.41 + j 17.24
+
+16-radials:  17 wires; 340 segments
+Very Poor         -1.42       27                38.24 + j  5.37
+Poor               0.04       25                38.18 + j  8.34
+Good               1.04       22                39.46 + j 10.06
+Very Good          2.89       17                40.27 + j 11.87
+
+32-radials:  33 wires; 660 segments
+Very Poor         -1.36       27                37.20 + j  3.45
+Poor               0.04       24                37.72 + j  6.23
+Good               1.03       22                39.23 + j  7.75
+Very Good          2.90       17                40.09 + j  9.72
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Increasing the diameter further to .25 m (a bit less than 10") yields values that continuously decrease as we add radials, suggesting their unreliability. However, for above-ground radial system models, returning to the standard or uniform segmentation corrects the difficulty, since at 20 segments per 1/4 wavelength, the length-to-diameter relationships are well within limits.</p>
+  <p>The upshot of this exercise is that it may be very difficult to adequately model some monopole and radial systems where the monopole is very fat and the radials are buried very close to the ground surface. However, in Part 3, we shall show at least one way around this problem.</p>
+  <center>
+    <img src="1601-6.gif" width="648" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    6. NEC-2 and NEC-4 gain reports over Very Good soil for uniformly segmented and tapered- length element models.
+  </center>
+  <center>
+    <img src="1601-7.gif" width="648" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    7. NEC-2 and NEC-4 source resistance reports over Very Good soil for uniformly segmented and tapered-length element models.
+  </center>
+  <p>For those restricted to modeling in NEC-2, the natural question to ask is how well NEC-2 values correspond to those we have so far viewed from NEC-4. Only the figures from <b>Tables 2</b> and <b>3</b> are relevant, since NEC-2 does not permit buried radials. <b>Table 6</b> shows the results of running the <b>Table 2</b> and <b>Table 3</b> models in NEC-2, up to 32 radials to remain within the recommended junction limitations. The figures are well within usable agreement, although the NEC-2 gain numbers tend to run a bit higher and the resistance figures a bit lower than those yielded by NEC-4. <b>Fig. 6</b> compares NEC-2 and NEC-4 standard and tapered-length values for gain, while <b>Fig. 7</b> does the same for the source resistance--both over Very Good Soil. The high degree of parallelism among the curves suggests that NEC-2 is as usable as NEC-4 with respect to these types of modeled radial systems.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 6.  NEC-2 Values for Table 2 and Table 3 models (to 32 radials only).
+
+A.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm diameter,
+uniform segmentation: 20 segments per wire; radials 0.001 wavelength above ground; NEC-2.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  5 wires; 100 segments
+Very Poor         -2.09       27                43.91 + j 20.92
+Poor              -0.50       25                42.00 + j 25.72
+Good               0.53       23                42.60 + j 27.69
+Very Good          2.50       17                41.87 + j 26.15
+
+8-radials:  9 wires; 180 segments
+Very Poor         -1.56       27                38.48 + j  4.94
+Poor              -0.06       25                37.74 + j  8.53
+Good               0.95       23                38.58 + j 10.80
+Very Good          2.86       17                38.53 + j 12.81
+
+16-radials:  17 wires; 340 segments
+Very Poor         -1.37       27                36.36 - j  1.40
+Poor               0.05       25                36.56 + j  1.78
+Good               1.05       23                37.59 + j  3.69
+Very Good          2.98       17                37.49 + j  6.51
+
+32-radials:  33 wires; 660 segments
+Very Poor         -1.29       27                35.19 - j  3.20
+Poor               0.06       25                36.04 - j  0.51
+Good               1.04       23                37.38 + j  1.24
+Very Good          2.99       17                37.39 + j  4.25
+
+B.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm diameter,
+tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001 wavelength above
+ground; NEC-2.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  31 wires; 61 segments
+Very Poor         -1.74       27                40.38 + j 16.41
+Poor              -0.22       25                39.26 + j 20.34
+Good               0.79       23                40.12 + j 22.01
+Very Good          2.73       17                39.71 + j 21.23
+
+8-radials:  55 wires; 109 segments
+Very Poor         -1.36       27                36.57 + j  3.14
+Poor               0.09       25                36.31 + j  6.29
+Good               1.08       23                37.34 + j  8.39
+Very Good          2.99       17                37.39 + j 10.58
+
+16-radials:  103 wires; 205 segments
+Very Poor         -1.23       27                35.06 - j  2.01
+Poor               0.15       25                35.56 + j  0.73
+Good               1.14       23                36.75 + j  2.60
+Very Good          3.07       17                36.69 + j  5.49
+
+32-radials:  199 wires; 397 segments
+Very Poor         -1.18       27                34.17 - j  3.63
+Poor               0.15       25                35.15 - j  1.13
+Good               1.12       23                36.57 + j  0.55
+Very Good          3.07       17                36.64 + j  3.52
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We have not so far looked at the use of the MININEC ground as a means of simplifying models of vertical antennas. In this system, we simply connect the base of the vertical to ground and omit the ground radials. <b>Table 7</b> corrects this absence in quick order. Note that the source impedance of a model using the MININEC ground calculation system is invariant for the 25-mm and the 250-mm diameter models, since it is calculated by reference to perfect ground and not to the particular soil type specified for the other output figures.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 7.  MININEC Values:  40-m vertical monopole, direct connection to ground (no radials),
+fed at the lowest segment; NEC-4.
+
+A.  25 mm diameter
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+Perfect                                         37.08 + j  6.12
+Very Poor         -1.00       27
+Poor               0.31       25
+Good               1.41       23
+Very Good          3.16       17
+
+A.  250 mm diameter
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+Perfect                                         39.01 + j 12.67
+Very Poor         -0.99       27
+Poor               0.32       25
+Good               1.42       23
+Very Good          3.17       17
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>How we should characterize the gain reports of the MININEC ground simplification might be initially puzzling. However, there is one condition under which the three NEC-based ground systems converge--at 32 radials. For the examples used in this baseline exploration, the gain values for each soil types are very close indeed for the two above-ground systems and the buried system. Fig. 8 shows the convergence, with the MININEC no-radial values shown in the separate higher line. In general, MININEC ground system gain values tend to be overly optimistic relative to those yielded by ground systems using radials.</p>
+  <center>
+    <img src="1601-8.gif" width="650" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    8. 32-radial system gain reports over various soil types for all models, with MININEC-ground (no-radials) added.
+  </center>
+  <p>Although the MININEC no-radial modeling system might be a usable substitute for the above- ground radial systems, it is certainly no substitute for the NEC-4 buried radial system. Simplified MININEC-ground models are wholly insensitive to the variations in source resistance exhibited by the buried-radial system. Moreover, the buried-radial system itself varies from other NEC radial systems by showing performance increases beyond the 32-radial level. As we shall see in Part 3, there are some possible illicit uses of the MININEC no-radial system that can result in significant antenna analysis errors.</p>
+  <p>In general, then, the most sensitive method of modeling 1/4 wavelength monopoles is to use a buried radial system (assuming the actual or proposed antenna will place the radials either on or below ground). However, this technique is available only in NEC-4 among currently available commercial implementations of NEC. Second choice among those restricted to NEC-2 is to use 32-radial models, and to use length-tapering if there is a 500-segment limitation in the program. However, above-ground radial system models will not approach the sensitivity of more adequate methods, especially over Poor to Very Poor soils, if these models are substitutes for a buried radial system.</p>
+  <p>There are contexts in which one should not replace the most sensitive modeling methods with substitutes that are not fully consistent in output with the best techniques. Casual modeling for personal satisfaction is one matter, but serious work is quite another. For modeling which others might treat as authoritative for antenna design, analysis, or selection, only the most sensitive techniques will do, even if reaching this level involves upgrading software or being patient while very large (2500-segment) models run.</p>
+  <p>Although we have established a kind of baseline for 160-meter vertical antenna systems, we have only spot-checked the possible values of conductivity and permittivity that characterize the soils over which we model antennas. To appreciate the ways in which these two parameters affect the outcome of modeling efforts, we shall do a more thorough survey next time.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-10-01. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> The National Contest Journal <i>(Nov./Dec., 2000), pp. 19-25. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="160v2.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 2</a></p>
+  <p><a href="160v.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Series Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

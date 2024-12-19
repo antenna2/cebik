@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Models, Symmetry, and Loads</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>105. Models, Symmetry, and Loads: A Couple of Reminders</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>While diagnosing an ailing model, I encountered a couple of areas in which a bit of clarification might be useful to other modelers. Since the points that we shall cover may be second nature to some modelers and temptations to error for others, let's just call these notes reminders.</p>
+  <p><b>The Destruction of Symmetry</b></p>
+  <p>The NEC manuals provide a list of conditions that "automatically reset the symmetry condition." The first item on the list--which is all that we need for this exercise--reads this way: "Addition of a wire or patch (GW, GH, CW, SP, etc.) will destroy all symmetry." The conditions apply equally to the GX and the GR symmetry commands.</p>
+  <p>The most common interpretation that newer modelers seem to apply to the statement is that the core will fail to produce the symmetric structure specified in either the GX or GR command. This interpretation is incorrect. Rather, the core produces the desired structure, but does not use the shorter form of calculation to arrive at the matrix values. Instead, the model is reset for the entire structure to a non-symmetry mode of calculation.</p>
+  <p>Consider the following models, all of which have the properties shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod105-1.gif" width="623" height="306" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The most direct form for this model would create all 5 wires in separate GW commands, using the following lines.</p>
+  <pre>
+CM Test model: 4 vertical dipoles, inner 2 fed
+CM 5th passive vertical dipole at a distance
+CM Full version
+CE
+GW 1 11 0 -.75 -.245 0 -.75 .245 .001
+GW 2 11 0 -.25 -.245 0 -.25 .245 .001
+GW 3 11 0 .25 -.245 0 .25 .245 .001
+GW 4 11 0 .75 -.245 0 .75 .245 .001
+GW 5 11 .5 0 -.245 .5 0 .245 .001
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+EX 0 2 6 0 1 0
+EX 0 3 6 0 1 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The relevant performance data for the model is a maximum gain of 6.04 dBi, with a 36-degree beamwidth in the main or maximum-gain lobe. The reported source impedance is 49.383 -j21.986 Ohms. Both of the variations on this model will yield the same results to the last decimal place. The free-space azimuth pattern has the shape shown in <b>Fig. 2</b>. Note that the main lobe (by a tiny fraction of a dB) is away from the 5th vertical dipole.</p>
+  <center>
+    <img src="amod105-2.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>An alternative to listing GW 3 and GW 4 is to use the GX commands to replicate the first 2 wires symmetrically across the Y-axis. This alternate form would take this appearance.</p>
+  <pre>
+CM Test model: 4 vertical dipoles, inner 2 fed
+CM 5th passive vertical dipole at a distance
+CM GX, symmetry defeated
+CE
+GW 1 11 0 -.75 -.245 0 -.75 .245 .001
+GW 2 11 0 -.25 -.245 0 -.25 .245 .001
+GX 1 010
+GW 5 11 .5 0 -.245 .5 0 .245 .001
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+EX 0 2 6 0 1 0
+EX 0 3 6 0 1 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>Since a GW entry (GW 5) follows the GX command, the common misconception is that wires 3 and 4 will not appear. Instead, the correct interpretation is that the GX command produces the required 2 wires, but does not invoke symmetry in its calculations. The following extract from the NEC output report gives us the telltale line.</p>
+  <pre>
+ TOTAL SEGMENTS USED=   55     NO. SEG. IN A SYMMETRIC CELL=   55     SYMMETRY FLAG=  0
+</pre>
+  <p>If symmetry had been invoked, the number of segments in the symmetric cell would have been 22, the number of segments in the first 2 wire entries. As well, the symmetry flag would equal 1 rather than zero. The total number of segments in the model is 55, indicating that the core has created the requisite new wires or tags. The performance reports and the segment and current tables also show the existence of the created wires, but without the symmetry calculation shortcuts. In fact, the run times for this test model and for the first one were identical.</p>
+  <p>On some occasions, it may be necessary to successfully invoke symmetry due to model size or other factors. That route is irrelevant to the present array, but the model may be useful in its simplicity for illustrating one way to go about the process. The technique involves the use of a Numerical Green's File (NGF). We have examined NGFs in past episodes, but always in the context of saving the file for use with multiple new models that call up the results. We need not use separate NGF formation and use files. Instead, we can create and use the NGF results within the same model or .NEC file. We only need to use the NX or next structure command between the saving of the NGF and the call-up of its contents. Note that NEC-2 requires that the first command following NX must be a comment (CM or CE). However, NEC-4 permits a geometry command to directly follow the NX command. We may use the following model as a guide.</p>
+  <pre>
+CM Test model: 4 vertical dipoles, inner 2 fed
+CM 5th passive vertical dipole at a distance
+CM GX, symmetry via NGF
+CE
+GW 1 11 0 -.75 -.245 0 -.75 .245 .001
+GW 2 11 0 -.25 -.245 0 -.25 .245 .001
+GX 1 010
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+WG test3.ngf
+NX
+CE
+GF test3.ngf
+GW 5 11 .5 0 -.245 .5 0 .245 .001
+GE 0 -1 0
+EX 0 2 6 0 1 0
+EX 0 3 6 0 1 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The first half of the model, prior to the NX command, creates the first 2 vertical dipoles and requests their replication via symmetry across the Y-axis. As in all NGF operations, we include ground, loading, and frequency information for the affected wires within this file. The WG command saves the results. The program used for these exercises allows the user to specify any file name and extension for the data storage. However, raw NEC-2 has limitations of the NGF filename, and different implementations of NEC-2 may use different specifications for this entry. Finally, note that we do not use the EN command before the NX command, because EN would terminate calculations.</p>
+  <p>Following the NX command, I have inserted a CE line so that the model will run on NEC-2 or NEC-4. The GW entry established the 5th dipole, while the EX lines provides the two sources. The results of this model are identical to those of the preceding tests, although we want to examine one special line-set of the NEC output report.</p>
+  <pre>
+   TOTAL SEGMENTS USED=   44     NO. SEG. IN A SYMMETRIC CELL=   22     SYMMETRY FLAG=  1
+ STRUCTURE HAS 1 PLANES OF SYMMETRY
+</pre>
+  <p>In the first set of core calculations, the GX command creates 22 new segments, for a total of 44. The symmetry cell has the initial 22 segments and the flag is set to 1, indicating that symmetry is invoked for 1 plane. Because the model is so small and contains both parts of the process, the run time is no different than for the first 2 tests. However, for this demonstration, run time was not in question. For very large models, it may well become a key reason for using this technique. Our goal was to show how we can invoke symmetry and complete our modeling all within the same .NEC file.</p>
+  <p>If we wish to consider matters of file size and run times, we can turn to a different sort of model and simultaneously illustrate the same points for the GR or rotational symmetry command.</p>
+  <center>
+    <img src="amod105-3.gif" width="500" height="275" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the general properties of the models that we shall construct for this exercise. At the usual test frequency (299.2975 MHz, where 1 wavelength = 1 meter), we shall place 64 1/4 wavelength radials 0.05 m below ground. At the center, we shall construct a single monopole wire that meets the radials below ground and extends 0.25 wavelength above ground. By assigning 11 segments to the monopole wire, the junction of the second and third segments will intersect Z = 0, the ground level. The following model illustrates the simple set-up, using the GM command to replicate the radials 63 times beyond the original GW 1 specifications.</p>
+  <pre>
+CM 64 buried radials with monopole
+CM GM
+CE
+GW 1 11 0 0 -.05 .25 0 -.05 .001
+GM 1 63 0 0 5.625 0 0 0
+GW 65 11 0 0 -.05 0 0 .25 .001
+GE -1 -1 0
+FR 0 1 0 0 299.7925 1
+EX 0 65 3 0 1 0
+GN 2 0 0 0 5 .001
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>The model yields a maximum gain of -0.42 dBi at a TO angle of 59 degrees (theta). <b>Fig. 4</b> shows the elevation/theta pattern for the model. The model made no attempt to achieve resonance, but used instead easily remembered dimension values. Hence, the reported source impedance is 46.125 - j730.025 Ohms. All versions of the model report identical results.</p>
+  <center>
+    <img src="amod105-4.gif" width="425" height="255" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To shorten run times and further simply model formation, many modelers replace the GM command with a GR command. The GR command allows rotational symmetry and calculates the angle between each radials, so the modeler does not have to remember that a 64-radial system has a 5.625-degree angular separation between radial wires. The replacement model appears in the following lines.</p>
+  <pre>
+CM 64 buried radials with monopole
+CM GR
+CE
+GW 1 11 0 0 -.05 .25 0 -.05 .001
+GR 1 64
+GW 65 11 0 0 -.05 0 0 .25 .001
+GE -1 -1 0
+FR 0 1 0 0 299.7925 1
+EX 0 65 3 0 1 0
+GN 2 0 0 0 5 .001
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>Note that the GR entry is followed by the monopole GW entry. We could not place the monopole ahead of the GR command. That move would have resulted in the creation of 64 monopoles in the same position. By placing the monopole wire after the GR command, we obtain only one monopole, we create only a single monopole, but we defeat the invocation of symmetry. However, we do not defeat the creation of the radials themselves. The critical line from the NEC output report for the model confirms these notes.</p>
+  <pre>
+   TOTAL SEGMENTS USED=  715     NO. SEG. IN A SYMMETRIC CELL=  715     SYMMETRY FLAG=  0
+</pre>
+  <p>The entire model--all 715 segments--form one symmetric cell, and the symmetry flag = 0; hence, the radials exist in the model, but it does not use symmetry in the calculations. The run time for this version of the model is identical to the run time required by the version using the GM command.</p>
+  <p>To invoke symmetry, we may employ the model style used for the final version of the vertical dipole array. We may create and run the radials alone and save the results in an NGF file. Within the same model, we may use the NX command to begin a second run that calls up the stored results and applies them to the enlarged model that now contains the monopole. The final model in this series appears in the following lines.</p>
+  <pre>
+CM 64 buried radials with monopole
+CM GR + NGF
+CE
+GW 1 11 0 0 -.05 .25 0 -.05 .001
+GR 1 64
+GE -1 -1 0
+FR 0 1 0 0 299.7925 1
+GN 2 0 0 0 5 .001
+WG radials.ngf
+NX
+GF radials.ngf
+GW 65 11 0 0 -.05 0 0 .25 .001
+GE -1 -1 0
+EX 0 65 3 0 1 0
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>If you run this model on NEC-2, insert at least a CE command prior to the GF entry that follows NX. The key NEC output report lines tell us that the first portion of the multi-run model has invoked symmetry.</p>
+  <pre>
+   TOTAL SEGMENTS USED=  704     NO. SEG. IN A SYMMETRIC CELL=   11     SYMMETRY FLAG= -1
+ STRUCTURE HAS  64 FOLD ROTATIONAL SYMMETRY
+</pre>
+  <p>To create the NGF data, the first run uses only the total number of segments in the radials. The remaining 11 segments in the monopole do not appear until the second run. The symmetric cell shows only the number of segment in the initial radial, and the symmetry flag = -1, indicating rotational symmetry.</p>
+  <p>The total file begins to show the run-time advantage of using the GR command. The total run time for this latest version of the model is about 1/3 the time for the other two versions. Neither time is truly long for the current generation of PCs. However, the savings are indicative of what may accrue for larger models.</p>
+  <p>To illustrate that point, I enlarged the radial system to 120 1/4 wavelength radials. To replicate a common BC industry practice, I also inserted a set of 120 shorter radials between the longer radials. The total system-- or at least a portion of it--appears in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod105-5.gif" width="800" height="411" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Only the short radials appear fully, with all segments shown to give an idea of the model construction. However, the model-file appearance does not change much compared to the 64-radial models that we just viewed. Indeed, the only difference is a second GW line (which uses the same tag number as the first wire).</p>
+  <pre>
+CM 240 buried radials with monopole
+CM GR + NGF
+CE
+GW 1 11 0 0 -.05 .25 0 -.05 .0001
+GW 1 2 0 0 -.05 .04546 .0012 -.05 .0001
+GR 1 120
+GE -1 -1 0
+FR 0 1 0 0 299.7925 1
+GN 2 0 0 0 5 .001
+WG radials.ngf
+NX
+GF radials.ngf
+GW 65 11 0 0 -.05 0 0 .25 .0001
+GE -1 -1 0
+EX 0 65 3 0 1 0
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>The symmetry-cell size and the flag setting both tell us that the model invoked symmetry. Even so, the increased model size required about 21 times longer to run than the 64-radial model using the same technique. As we increase the number of segments, run times increase exponentially. Without symmetry, we would need to add a further multiplier to the run time.</p>
+  <pre>
+   TOTAL SEGMENTS USED= 1560     NO. SEG. IN A SYMMETRIC CELL=   13     SYMMETRY FLAG= -1
+ STRUCTURE HAS 120 FOLD ROTATIONAL SYMMETRY
+</pre>
+  <p>The model style shown has one drawback. We are likely to forget that the file called radials.ngf remains in the directory (or folder) where we store models. Using symmetry, the file is not very large, only 314 KB. But it does take up space. Directory cleaning is an important adjunct function for almost all modeling. (Some implementations of NEC do not save any files except the model file unless the modeler makes a specific request to save something else.) Indeed, if we had created the radial system using the GM command and stored the results for possible future use, the .NGF file might have reached 10 MB of storage space, depending upon the number of segments in each radial. So the GR function has a second benefit besides run time: it produces smaller NGF files.</p>
+  <p><b>A Loaded Reminder</b></p>
+  <p>In the NEC manual, there is a chart of control commands that collects them into 3 groups. The following list is from the NEC-4 manual</p>
+  <blockquote>
+    <p>Group I: FR, GN, IS, JN, LD, UM, VC</p>
+    <p>Group II: EX, NT, TL</p>
+    <p>Group III: CP, EN, GD, LE, LH, NE, NH, NX, PL, PQ, PS, PT, RP, WG, XQ</p>
+  </blockquote>
+  <p>The 3 groups correspond roughly to the 3 steps of solution generation. First comes the interaction matrix: calculation and factoring in preparation for solving for currents. The next step is to solve for currents with a given excitation. Finally comes the calculation of near and/or far fields. The first step depends only upon geometry commands and control commands in Group I. The current solutions depend upon commands in both Group I and II. Following a Group II entry by a Group I entry may result in a repetition of the current solution, since the Group I entry would result in a change of the conditions necessary for that solution. The re-calculation would depend upon the placement in the control command sequence of commands that execute, such as XQ and RP.</p>
+  <p>In the course of examining our first 3 test cases, involving the collection of vertical dipoles, the importance became apparent of arranging to the extent possible all control commands in the sequence of the groups. <b>Fig. 6</b> shows the set up for this modified version of the dipole array in free space. The loads will all by LD4 types with zero reactance and resistance values as shown in the diagram (in Ohms).</p>
+  <center>
+    <img src="amod105-6.gif" width="375" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first of the models uses a straightforward separate specification for each vertical dipole. It follows the simple geometry entries with the Group I entries of FR and LD, with all 3 LDs placed sequentially. Next come the 2 Group II EX commands. A pattern request completes the model.</p>
+  <pre>
+CM Test model: 4 vertical dipoles, inner 2 fed
+CM 5th passive vertical dipole at a distance
+CM Full version-LD4s all before EX
+CE
+GW 1 11 0 -.75 -.245 0 -.75 .245 .001
+GW 2 11 0 -.25 -.245 0 -.25 .245 .001
+GW 3 11 0 .25 -.245 0 .25 .245 .001
+GW 4 11 0 .75 -.245 0 .75 .245 .001
+GW 5 11 .5 0 -.245 .5 0 .245 .001
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+LD 4 1 6 6 1e6 0
+LD 4 4 6 6 1e6 0
+LD 4 5 6 6 100 0
+EX 0 2 6 0 1 0
+EX 0 3 6 0 1 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The model reports a maximum gain of 4.73 dBi with a 54-degree beamwidth. The reported source impedance is 61.157 - j12.362 Ohms. <b>Fig. 7</b> shows the phi/azimuth pattern for the model.</p>
+  <center>
+    <img src="amod105-7.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now let's revise the model to reflect a tendency among some modelers. Suppose that we had only specified the 1-MOhm loads for GW 1 and GW4, followed by the 2 EX commands. Then we went back to add a load of 100 Ohms resistance to the 5th dipole. We might inattentively insert the new LD4 command just before the request for pattern (RP) command. The following lines show the basic model file.</p>
+  <pre>
+CM Test model: 4 vertical dipoles, inner 2 fed
+CM 5th inert vertical dipole at a distance
+CM Full version-LD4 on GW5 separated from other LD4s by EX
+CE
+GW 1 11 0 -.75 -.245 0 -.75 .245 .001
+GW 2 11 0 -.25 -.245 0 -.25 .245 .001
+GW 3 11 0 .25 -.245 0 .25 .245 .001
+GW 4 11 0 .75 -.245 0 .75 .245 .001
+GW 5 11 .5 0 -.245 .5 0 .245 .001
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+LD 4 1 6 6 1e6 0
+LD 4 4 6 6 1e6 0
+EX 0 2 6 0 1 0
+EX 0 3 6 0 1 0
+LD 4 5 6 6 100 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>Interestingly, the model shows a maximum gain of 6.74 dBi with a beamwidth of 36 degrees. <b>Fig. 8</b> shows the phi/azimuth pattern. The model reports a source impedance of 58.156 - j14.714 Ohms.</p>
+  <center>
+    <img src="amod105-8.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The revised pattern alone is enough to show that something has gone astray in at least one of the 2 models. Just what went amiss becomes clear from the following revised model. It simply removes the high-resistance loads on GW1 and GW4 from the model.</p>
+  <pre>
+CM Test model: 4 vertical dipoles, inner 2 fed
+CM 5th inert vertical dipole at a distance
+CM Full version-LD4 on GW5 only
+CE
+GW 1 11 0 -.75 -.245 0 -.75 .245 .001
+GW 2 11 0 -.25 -.245 0 -.25 .245 .001
+GW 3 11 0 .25 -.245 0 .25 .245 .001
+GW 4 11 0 .75 -.245 0 .75 .245 .001
+GW 5 11 .5 0 -.245 .5 0 .245 .001
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+EX 0 2 6 0 1 0
+EX 0 3 6 0 1 0
+LD 4 5 6 6 100 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The new model with no loads on the outer passive vertical dipoles returns the identical results that we obtained from the version with the load on the 5th dipole following the EX commands and separated from the other LD4 loads. <b>Fig. 8</b> is the correct phi/azimuth pattern for this model. In the earlier model, separating the load entries by the EX commands resulted in a re-calculation that in effect omitted the earlier loads. If we want to include the loads on the outer dipoles in the model results, we have to use a modeling format similar to the first model in the final sequence of tests.</p>
+  <p>The lesson of these models is that it pays to group commands first by group level and second by type. The payback involves more important factors than mere run time. It also pays in terms of the accuracy of the output data.</p>
+  <p><b>Conclusion</b></p>
+  <p>Occasionally, we encounter interesting models that require diagnosis, and in the process, we either learn something new about the operation of NEC or we are reminded of some fine points about model construction that we might have let slip over months and years of modeling. This month's reminders are examples of that process. In fact, I might not have thought to mention either of the main ideas without the presence of a set of models to diagnose. While not every modeler might need these reminders, I thought I would pass them along while a. they were on my mind and b. I had a reasonable set of simple models by which to illustrate them.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

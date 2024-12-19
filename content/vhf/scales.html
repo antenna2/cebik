@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Yagi">
+  <title>Scaling and Adjusting VHF/UHF Yagis</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Scaling and Adjusting VHF/UHF Yagis</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>A recurring question that I receive on an average of once per week involves one or more aspects of adjusting Yagi designs for the prospective builder's building and operating situation. Therefore, it seems useful to review the entire spectrum of what is involved in adapting a given Yagi design for one's own purposes.</p>
+  <p>There are three fundamental aspects to the adjustment process:</p>
+  <ul>
+    <li>1. Design frequency scaling</li>
+    <li>2. Adjustments for changes in element diameter</li>
+    <li>3. Adjustments for the method of element mounting</li>
+  </ul>
+  <p>Failure to attend to any one or more of these aspects of personalizing a Yagi design can lead to arrays that simply fail to perform to expectations.</p>
+  <p><b>Frequency Scaling</b></p>
+  <p>The first aspect of re-design is frequency scaling. The scaling may be from one band to another or within a given band of operation. Let's begin with a 10-element Yagi designed initially for 222 MHz. <b>Fig. 1</b> shows the general outline of the array.</p>
+  <center>
+    <img src="scales-1.gif" width="523" height="183" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wide-band design would have a model description close to the following one.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      EZNEC/4 ver. 3.0
+
+10-el OWA Yagi 222 MHz                       6/20/02     6:38:09 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 222 MHz
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                -13.449,      0,      0            13.4491,      0,      0     0.125   21
+2                -12.989,5.78212,      0            12.9887,5.78212,      0     0.125   21
+3                -12.167,8.85899,      0             12.167,8.85899,      0     0.125   21
+4                -11.946,16.6905,      0            11.9457,16.6905,      0     0.125   21
+5                -11.969,26.7813,      0            11.9686,26.7813,      0     0.125   21
+6                -11.907,40.3681,      0            11.9075,40.3681,      0     0.125   21
+7                -11.575,56.8802,      0            11.5748,56.8802,      0     0.125   21
+8                -11.279,76.2883,      0            11.2788,76.2883,      0     0.125   21
+9                -11.049,96.4126,      0            11.0486,96.4126,      0     0.125   21
+10               -10.128,114.432,      0            10.1279,114.432,      0     0.125   21
+
+Total Segments: 210
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       2        50.00      50.00    11       1           0         V
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We can illustrate the performance of the Yagi by a pair of graphs. <b>Fig. 2</b> shows the gain and front-to-back performance. The 180-degree front-back performance is labeled front-to-back ratio, while the worst-case front-to-back performance is labeled front-to-sidelobe ratio. Since there are no forward sidelobes, the front-to-sidelobe ratio effectively represents the worst-case front-to-back ratio. Had there been forward sidelobes, this curve would not have been reliable. To hide matters a bit more, the shape of the rear lobes of the array is such that the 180-degree and the worst-case ratios are the same, and the two curves coincide.</p>
+  <center>
+    <img src="scales-2.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the feedpoint performance of the array, with values for resistance, reactance, and 50-Ohm SWR. Note that both the resistance and reactance values are very constant, showing only a slight decrease at the upper end of the passband. These two decreases coincide to the rapid rise of the SWR value to nearly 1.15:1.</p>
+  <center>
+    <img src="scales-3.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The importance of these performance graphs is that they will serve as a base-line with which to compare our adjustments as we move the design to a new frequency. Since the OWA design has such a wide-band set of characteristics, we should not consider altering the design for a new frequency in the current band. Instead, let's move it to 2 meters. The wide-band characteristics suggest that we might easily select 146 MHz as the new design frequency.</p>
+  <p>To scale the array to any new frequency, we can apply a simple equation:</p>
+  <center>
+    <img src="scalese1.gif" width="516" height="115">
+  </center>
+  <p>where F<sub>o</sub> is the old frequency, F<sub>n</sub> is the new one, and the lambda values are those corresponding to the frequencies. The key to using this equation is to apply it to every dimension (Dim): element length, element spacing, and element diameter. Omitting any one of these dimensions of the array will result in a faulty scaling job.</p>
+  <p>The task is not difficult for a pocket calculator. Some modeling software--such as EZNEC--has an automated scaling feature. Other software, such as NEC-Win Plus--can be set up to provide automated scaling--once dimensions are input in terms of fractions of a wavelength. However we execute the equation, the following type of antenna model description should result.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      EZNEC/4 ver. 3.0
+
+10-el OWA Yagi 146 MHz scale 1               6/20/02     6:38:42 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 146 MHz
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                 -20.45,      0,      0              20.45,      0,      0   .190068   21
+2                 -19.75,8.79199,      0              19.75,8.79199,      0   .190068   21
+3                -18.501,13.4705,      0            18.5005,13.4705,      0   .190068   21
+4                -18.164,25.3786,      0            18.1639,25.3786,      0   .190068   21
+5                -18.199,40.7223,      0            18.1988,40.7223,      0   .190068   21
+6                -18.106,61.3816,      0            18.1059,61.3816,      0   .190068   21
+7                  -17.6, 86.489,      0               17.6, 86.489,      0   .190068   21
+8                 -17.15,    116,      0              17.15,    116,      0   .190068   21
+9                  -16.8,  146.6,      0               16.8,  146.6,      0   .190068   21
+10                 -15.4,    174,      0               15.4,    174,      0   .190068   21
+
+Total Segments: 210
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       2        50.00      50.00    11       1           0         V
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>To verify our work, let's briefly scan the graphs that results from a frequency scan of the model across 2 meters.</p>
+  <center>
+    <img src="scales-4.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Because the 4 MHz of 2-meters is somewhat wider than the 5 MHz span we used earlier in the 222-MHz region, the lower band edge gain of the 2-meter version of the Yagi is a bit lower, as shown in <b>Fig. 4</b>. The peak gain is a bit higher, due to less skin-effect loss at the new lower frequency for the aluminum elements. Nevertheless, the forward gain varies by only 0.2 dB across the band, too small an amount to bother with resetting the frequency of peak gain. Likewise, the front-to-back ratio (180-degree and worst-case) both vary by under 1 dB across the band.</p>
+  <center>
+    <img src="scales-5.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As <b>Fig. 5</b> shows, the low-end 50-Ohm SWR approaches 1.18:1. More important, we once more see the level values of resistance and reactance, with slight dips only at the upper end of the band, where the SWR also begins to rise rapidly.</p>
+  <p>The end result of our work is that the newly scaled design will exactly replicate the performance at its original frequency. However, let's note one minor inconvenience: the required new element diameter is 0.19". Unfortunately, this value is not commonly available. (Since we are setting up an example, we shall blithely ignore the fact that 3/16" (0.1875") aluminum rod is obtainable with relative ease from mail-order sources.)</p>
+  <p><b>Adjusting for Changes in Element Diameter</b></p>
+  <p>Let's suppose that we wish to build the antenna from 0.25" diameter stock (tubing or rod). Perhaps the most common question that I receive is whether one can simply use the same dimensions with the new diameter or whether each element should be shaved a bit to account for the fatter element. The amount of increase--0.06"--seems almost harmless.</p>
+  <p>Let's see how harmless the increase is by simply changing the element diameter in the recent model description to the 0.25" figure. Otherwise, everything else in the model remains the same. Here is what we get.</p>
+  <center>
+    <img src="scales-6.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows the gain and front-to-back curves. Note that both curves rapidly fall off at the upper end of the band. The gain variation is now well over 0.5 dB, and the front-to-back variation is about 2.5 dB. These values might satisfy some uses, but they are clearly well off from the original curves.</p>
+  <center>
+    <img src="scales-7.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Likewise in <b>Fig. 7</b>, the feedpoint data also shows greater degradation in the upper part of the band. The reactance and resistance both decrease sufficiently to yield a 50-Ohm SWR greater than 1.7:1 at 148 MHz. Clearly, we need to make some adjustments in the element lengths.</p>
+  <p>The typical casual procedure is to shave the element lengths by roughly equal percentages, and then to further shave the driver to center the SWR curve. However, Chapter 7 of the RSGB volume <i>The VHF/UHF DX Book</i> (edited by Ian White, G3SEK, with the antenna chapter written by Guenter Hoch, DL6WU) presents a more precise way of handling the recalculation of element lengths for the new element diameter.</p>
+  <p>We first calculate the element reactance according to an equation derived from the work of Schelkunoff:</p>
+  <center>
+    <img src="scalese2.gif" width="690" height="121">
+  </center>
+  <p>where X is the element reactance, lambda is the wavelength of the design frequency, D is the original diameter, and L is the original length. We then use this reactance, together with the new element diameter, to arrive at the new element length with this revised ordering of the equation.</p>
+  <center>
+    <img src="scalese3.gif" width="600" height="167">
+  </center>
+  <p>The terms have the same meaning as in equation 2, but they represent the new values. A version of this equation set is part of the most recent <a href="../radio.html#HAMCALC">HAMCALC</a> offering from VE3ERP. Hence, the use of a hand calculator--with all of the opportunities for messing up the result with a single missed keystroke--is no longer necessary.</p>
+  <p>If we convert all of the element lengths using these equations, then we come up with the following model description for our 0.25" element diameter version of the 2-meter scaling of our original 222-MHz Yagi.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      EZNEC/4 ver. 3.0
+
+10-el OWA Yagi 146 MHz .25adj                6/20/02     6:39:53 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 146 MHz
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                -20.464,      0,      0             20.464,      0,      0      0.25   21
+2                -19.723,8.79199,      0            19.7235,8.79199,      0      0.25   21
+3                -18.403,13.4705,      0            18.4025,13.4705,      0      0.25   21
+4                -18.046,25.3786,      0             18.046,25.3786,      0      0.25   21
+5                -18.083,40.7223,      0             18.083,40.7223,      0      0.25   21
+6                -17.985,61.3816,      0             17.985,61.3816,      0      0.25   21
+7                -17.449, 86.489,      0            17.4495, 86.489,      0      0.25   21
+8                -16.974,    116,      0             16.974,    116,      0      0.25   21
+9                -16.604,  146.6,      0            16.6035,  146.6,      0      0.25   21
+10               -15.123,    174,      0             15.123,    174,      0      0.25   21
+
+Total Segments: 210
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       2        50.00      50.00    11       1           0         V
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Note that the elements are not altered by anything like a constant amount or percentage. In fact, the prescribed reflector is actually longer than the original for a 0.19" diameter element. Elements longer than a calculated half wavelength will always come out longer for a fatter diameter, while those less than 1/2 wavelength will come out shorter--by increasing amounts as the calculated capacitive reactance gets larger.</p>
+  <p>We have calculated the new element lengths, but can we trust them? The test lies in generating graphs to cover a frequency sweep from 144-148 MHz.</p>
+  <center>
+    <img src="scales-8.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the restored centering of the gain curve, with only 0.2 dB variation across the band. The front-to-back curves vary by less than 1 dB across the band, although we can faintly see a slight difference between the 180-degree and worst-case curves in the mid-band region. The conclusion is that the equations are highly usable.</p>
+  <center>
+    <img src="scales-9.gif" width="744" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The feedpoint curves in <b>Fig. 9</b> echo the results of the performance curves. The resistance and reactance curves show only gradual downward slopes at the upper band edge so that the SWR curve returns to the shape we saw in the original and initially scaled versions of the antenna. The maximum 50-Ohm SWR is 1.19:1.</p>
+  <p>However, let's enter a limitation of sorts, based upon the faint warning given by elements in the curves. Although perfectly acceptable in terms of operation, the curves show very slight aberrations relative to the 0.19" diameter scaled model. First, the gain peak is not quite up to the original level. Second, the front-to-back curves are not exactly coincident across the entire band. Third, the resistance and reactance drop enough to elevate the upper band-edge SWR very slightly. Operationally, these are insignificant matters, but they are hints of a limitation in the calculation.</p>
+  <p>Let's assume that the array was carefully optimized at its original design frequency. Careful scaling yielded identical proportions at the new frequency, and so performance remained fully optimized. As we change element diameter alone, however, the beam is no longer as fully optimized. A change of diameter alters the mutual coupling between elements and thereby changes the optimal element lengths and spacings for maximum performance.</p>
+  <p>For our small (25%) change of element diameter, the difference is too small to arouse any concern. However, as we change the diameter more significantly--say, by a ratio of 2:1 or of 1:2--departure from optimal performance becomes clearly noticeable. Thinner elements may require closer spacing--and fatter elements require greater spacing. The changes of spacing may require small adjustments in element length. Even our 0.25" diameter version of the Yagi is capable of just a bit more gain across the band with an even smoother SWR curve.</p>
+  <p>However, there is a mis-step that we can make that will foul up the Yagi performance more readily than these small departures from complete optimization.</p>
+  <p><b>Yagi Element Mounting</b></p>
+  <p>Home-made VHF and lower UHF Yagis in amateur service tend to use one of the three mounting systems shown in <b>Fig. 10</b>.</p>
+  <center>
+    <img src="scales-10.gif" width="592" height="252" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although I have omitted details--since they may vary widely--the general principles separating the three mounting systems should be clear. The first version uses a non-conductive plate or other means of insulating and separating the element from the boom. If the separation is sufficient, the boom has virtually no effect upon the element. In such cases, one may use modeled dimensions directly, since the model (whether NEC or MININEC) presumes that the elements are isolated from unmodeled conductors. An alternative to the insulating plate is, of course, to use a non-conductive boom. This technique permits through-boom mounting for the element, but with no change of the effective length of the element.</p>
+  <p>The second mounting system makes a direct metal-to-metal contact between the element and the boom. Although once popular among home-shop antenna makers, this system has fallen into disrepute. The chief reason for the dwindling popularity is that it tends to depend upon unsealed contact between metal objects for electrical continuity. Whatever the fastener, assured long-term solid contact is difficult to maintain, even with the greatest construction care. As a result, weathering tends to introduce unwanted noise products into the antenna, as well as offer the potential for altered characteristics if the contact among the system elements breaks down. Some manufacturers use direct boom mounting by welding elements to the boom, but this technique is usually outside the range of home workshop capabilities.</p>
+  <p>Perhaps the most popular contemporary system for mounting elements to a metal boom is to use insulated shoulder inserts. A tight squeeze is the order of the day for sliding the insert over the element and into the holes in the boom. In some installations, a clamping or compression washer fits over the element and against the insert to hold the element firmly in place.</p>
+  <p>Although less prone to major effects from the boom than metal-to-metal mounts, the through-boom insulated mounting system nevertheless requires element length compensation. As the element passes through the boom, the boom changes the magnetic field near the element center, in effect, acting like a variable diameter expansion of the element. As with all elements whose diameter tapers downward as one moves away from the center, the effective or equivalent uniform diameter decreases, and the element requires lengthening. And like all adjustments solely to the element length, the adjustment will not yield a current distribution precisely identical to that of an isolated linear element. However, remaining errors will be too small to be detected operationally.</p>
+  <p>For a through-boom insulated mounting, the remaining question becomes how much to change the element length to compensate for the boom. A number of reasonable approximations have been used in the past. Only recently has the full complexity of the calculation come to the fore in the work of Lief Asbrink, SM5BSZ, who also works in professional/commercial antenna development. A full account of his investigations appears in a series of technical papers at <a href="https://web.archive.org/web/20030330235241/http://www.antennspecialisten.com/" target="_blank">www.antennspecialisten.com</a> (web.archive.org). (Further information on aspects of VHF/UHF operation, equipment, and antennas appears at his <a href="https://web.archive.org/web/20030207154619/http://ham.te.hik.se/homepage/sm5bsz/" target="_blank">personal home page</a> (web.archive.org).</p>
+  <p>The calculation of the required adjusted element lengths for a given array involves a set of routines that Lief has placed into a stand-alone DOS-based program called BC.EXE. One may download the program from the website containing the technical papers. It includes the code, so that one may investigate the algorithms used in the calculation. The exercise requires the user to set up an input file (to replace the default one with the program), and then the program works out the required element lengths.</p>
+  <p>It may suffice here simply to note the relevant input data list for each element:</p>
+  <ul>
+    <li>1. Boom tube outer diameter. (See below.)</li>
+    <li>2. Boom tube wall thickness.</li>
+    <li>3. Boom hole diameter.</li>
+    <li>4. Element diameter.</li>
+    <li>5. Initial element length.</li>
+    <li>6. Distance to the nearest boom end.</li>
+  </ul>
+  <p>The special note on item 1. of the list refers to the fact that the program accounts for both round and square booms. Hence, if one selects a round boom, one enters the boom diameter. However, if one uses a square boom, then one enters the side dimension.</p>
+  <p>Most estimators of the required element length corrections have hitherto overlooked three factors of significance in Lief's list of input data. First is the thickness of the boom material. Differences in boom wall thickness affect the outcomes of the calculations owing to the magnetic field inside the boom. Second is the gap between the element and the edges of the hole through which it passes. In general, this distance is the thickness of the shoulder insert wall. Third is the distance from the element to the end of the boom. The last factor plays a significant role only if the element is close to the boom end.</p>
+  <p>A reasonable approximation using only the outer diameter of the boom has been developed by joint work between G3SEK and DL6WU. The equation runs</p>
+  <center>
+    <img src="scalese4.gif" width="399" height="65">
+  </center>
+  <p>where C is the correction factor as a fraction of the boom diameter, and B is the boom diameter in wavelengths. For example, at 144 MHz, a boom diameter of 1" (25.40 mm) is 0.0122 wavelength. The correction factor is 0.1366 times the boom diameter, or 0.1366" (3.47 mm). Using this equation would result in a lengthening of elements by a little over 1/8" each. The G3SEK/DL6WU correction factor equation has a good track record at 144 and 432 MHz for boom diameters less than 0.055 wavelength. A copy of a program to perform the requisite corrections is available at Ian White's web site, <a href="http://www.ifwtech.co.uk/g3sek/diy-yagi/ele.exe" target="_blank">www.ifwtech.co.uk/g3sek/diy-yagi/ele.exe</a>. The entire site, titled "VHF/UHF Long Yagi Workshop," is well worth careful reading. You will find there articles on using 50-Ohm drivers that are not folded dipoles (by F/G8MBI), as well as a program for calculating the elements of a DL6WU long-boom wide-band Yagi. The amount of additional practical information is monumental and is Ian White at his long-standing best.</p>
+  <p>You may wish to compare the results of the G3SEK program to the more complete SM5BSZ calculations.</p>
+  <p>It is not possible to provide a graph of performance results from applying a through-boom correction factor. Modeling of the through-boom insulated mounting system is generally not feasible (within the boundaries of a reasonable size model) with NEC-2 or NEC-4.</p>
+  <p>Although the adjustments are small in many cases, they are significant. The accumulation of errors can throw off the performance of an array or the frequency at which that performance occurs. With narrow-band designs especially, a small error can mean the difference between an excellent and a mediocre Yagi.</p>
+  <p>Just how large are the adjustments? We may gain a feel for the amount of difference that the mounting method makes by examining the calculated dimensions of a sample DL6WU Yagi, using the latest version of the DL6WU-2006.EXE program. The program offers adjustment factors, relative to insulated and isolated elements, for through-boom and bonded mounting methods. The calculations require the user to specify the element diameter (with separate entries for the driver and for the parasitic elements) and to enter a boom diameter. The following table lists the calculated element lengths for a 300-MHz 14-element DL6WU design using 0.1875"-diameter elements (3/16") and a 1"-diameter boom. The Element spacing does not change, but the element lengths do change by clearly noticeable amounts.</p>
+  <pre>
+Calculated dimensions of a 14-element DL6WU Yagi for 300 MHz using 0.1875"-diameter elements and a 1" boom.
+All dimensions in inches.  Multiply by 25.4 for dimensions in millimeters.
+
+Cumulative   Element                      Element Length
+Spacing                   Isolated         Through-Boom     Bonded
+ -----       Reflector    19.185           19.431           19.677
+  7.869      Driver       18.906           18.906           18.906
+ 10.819      D1           17.275           17.521           17.767
+ 17.901      D2           17.101           17.347           17.593
+ 26.360      D3           16.907           17.153           17.399
+ 36.196      D4           16.720           16.996           17.212
+ 47.212      D5           16.554           16.800           17.046
+ 59.015      D6           16.410           16.656           16.903
+ 71.408      D7           16.285           16.532           16.778
+ 84.391      D8           16.176           16.442           16.668
+ 97.964      D9           16.079           16.325           16.572
+112.128      D10          15.992           16.239           16.485
+126.881      D11          15.914           16.160           16.406
+142.225      D12          15.842           16.088           16.335
+</pre>
+  <p>The particular numbers representing the element lengths for the last two columns are specific to the selection of both element diameter and boom diameter. Even with the same element diameter, the values will change if we vary the diameter of the boom for either through-boom or bonded construction. Since NEC and MININEC calculate only axial currents (along the element) and not transverse currents (around the element), the modeling programs cannot provide any assistance in confirming the adjusted designs. At a certain point, field testing must supplant computer-assisted design work.</p>
+  <p>At 300 MHz and for the materials selected, the parasitic element lengths change by amounts that are appreciable. In a broadband design, such as the DL6WU, a given operating bandwidth may still fall within the acceptable performance range of the array, even if unadjusted for the style of construction. However, for many narrow-band designs, the length adjustments may be absolutely necessary to achieving the desired performance. Also note that the calcuating program assume that the user will directly feed the 50-Ohm driver and therefore, the element will be insulated and isolated from a conductive boom. As a result, the driver length is the same in all three columns of the table.</p>
+  <p>What applies to through-boom insulated mounting systems and to bonded beam construction also applies at every step of the way in the process of scaling and altering a VHF or lower UHF Yagi design. Adapting an existing design to one's personal situation, materials, and operating needs requires careful calculation and even more careful construction.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 12-01-2002, 07-09-2004, 08-30-2007. &COPY; L. B. Cebik, W4RNL. This item appeared in</i> AntenneX<i>, November, 2002. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#vhf-uhf'>VHF / UHF</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

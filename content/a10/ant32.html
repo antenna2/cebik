@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>What the Heck is a Stub?</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="middle" width="125" height="62" border="2" vspace="5" hspace="10">No. 32: What the Heck is a Stub? <img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>Some of the antennas we have looked at in these columns have used transmission line stubs. I often receive this question: "Just what is a stub and what does it do?" So let's look at stubs. To keep things simple at the beginning, we shall confine ourselves to stubs shorter than a quarter wavelength.</p>
+  <h3>The Basic Principle</h3>
+  <center>
+    <img src="ant32-1.gif" width="553" height="223" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A shown in <b>Figure 1</b>, a stub is a length of transmission line. When the line is shorted at the far end, it acts as an inductive reactance and can actually replace a coil. When the far end is open, the stub acts as a capacitive reactance and can replace a capacitor. Stubs would be too large to use in HF circuits, but they are convenient in antenna applications, where space is usually no problem. They can handle high voltages and currents, often with greater ease and cost-effectiveness than lumped components.</p>
+  <p>The amount of inductive or capacitive reactance is proportional to the length of the stub. However, the relationship is not linear. Let's look at how we calculate the reactance of a shorted stub to see why.</p>
+  <center>
+    <img src="ant32e1.gif" width="234" height="59">
+  </center>
+  <p>where X<sub>L</sub> is the inductive reactance in Ohms, Z<sub>O</sub> is the characteristic impedance of the transmission line used for the stub, and L<sub>d</sub> is the length of the line in electrical degrees. since we are using lines shorter than 1/4 wavelength, L<sub>d</sub> will be between 0 and 90 degrees.</p>
+  <p>For the same value of reactance, the higher the Z<sub>O</sub> of the transmission line, the shorter the line length. Hence, parallel transmission line is often used for inductive stubs to save space. Since the tangent of angles above 45&deg; grows larger very fast, we usually restrict ourselves to modest value of inductive reactance so that we can prune the line length precisely without overshooting the mark.</p>
+  <p>Shorted stubs for inductive reactance are more common than open stubs for capacitive reactance. The reason is easy to see from the formula.</p>
+  <center>
+    <img src="ant32e2.gif" width="186" height="76">
+  </center>
+  <p>where X<sub>C</sub> is the capacitive reactance in Ohms and the other terms have the same meaning as in the earlier equation. Smaller values of capacitive reactance (the most common need) require longer transmission line stubs. While some applications call for open stubs, shorted stubs for inductive reactance are far more common.</p>
+  <h3>Application #1</h3>
+  <center>
+    <img src="ant32-2.gif" width="604" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Figure 2</b> shows one common use of shorted (inductively reactive) stubs: to load an antenna element to make it electrically longer than its physical length. We know that a Yagi reflector is longer than the driven element, but in the figure, they are the same physical length. The load value of X<sub>L</sub> is 85 Ohms to make the reflector work like an element somewhat longer than the physical length would permit. Now we can place a coil in the load position. At 28.5 MHz, a coil of 0.47 microH would do the job, but its resistive losses might be of concern. Short stub losses are nearly negligible, so let's use a stub instead.</p>
+  <p>At the given frequency of 28.5 MHz, a shorted stub might be made from either RG-58 (50 Ohms, 0.66 VF coaxial cable) or parallel transmission line (for example, 450-Ohms, VF 0.95). The first step is to take the ratio of X<sub>L</sub> and Z<sub>O</sub>. For 50-Ohm cable, this is 1.7, and for 450-Ohm line, it is 0.19. The second step is to figure the length in degrees. The "arctan" (backing out the degrees when you know the tangent of an angle) of 1.7 is 59.5&deg;, while the arctan for the 450-Ohm line is 10.7&deg;.</p>
+  <p>Now let's figure the real line lengths needed. First, we know that a wavelength at 28.5 MHz is abut 34.5' long for a full 360&deg;. 59.5&deg; means a 5.71' length. 10.7&deg; is 1.025' long at the same frequency.</p>
+  <p>However, remember that the actual transmission lines had VF (velocity factor) values. The coax value means that its length needs to be 0.66 times the calculated amount, or 3.77' (45.22"). The parallel line had a VF of 0.95 and thus needs to be about 0.97' (11.7") long. Personally, I would use, if possible, the 450-Ohm line, since it is shorter, lighter, and easier to handle. But that is not the right decision for every situation.</p>
+  <h3>Application #2</h3>
+  <center>
+    <img src="ant32-3.gif" width="648" height="335" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Some antennas use a beta match system, which requires an inductive reactance across the antenna terminals so that an antenna with a low impedance can match a 50-Ohm coax system, as sketched in <b>Figure 3</b>. Although coils are quite effective, most commercial beta matches use a "hairpin." The hairpin is nothing more than a U-shaped piece of wire, which is itself nothing more than a shorted parallel transmission line.</p>
+  <p>Using standard equations for L-networks we can calculate the inductive reactance we need to place across the coil. If the antenna has an impedance of 25 Ohms, then the required reactance is 50 Ohms. We can make a hairpin from our 450-Ohm transmission line, using the same procedure. 50/450 = 0.11. The arctan of this number is 6.34&deg;. This number of electrical degrees amounts to 0.61' (7.29") at 28.5 MHz. If the VF is 0.95, then the final length is 0.58' (6.93").</p>
+  <p>For both applications, we would start with lines a little long and prune them to exact length. We can do this by having an adjustable set of contacts at the terminals or we can trim the shorted end and resolder the shorting bar.</p>
+  <p>The math in this exercise is mostly to acquaint you with the general properties of stubs--which call for shorter lengths and which call for longer. Those inclined to do so can calculate a bunch of 10-meter stubs to see what the lengths look like for various values of X<sub>L</sub> and X<sub>C</sub> and different types of transmission line. Then when you encounter stubs in articles, presence and general dimensions will be familiar to you.</p>
+  <p>The antenna array we discussed in the last column used stubs in the reflectors. I'll bet the next column also has a stub.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 07-01-2001. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="anta.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to An-Ten-Ten-nas Page</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+</body>
+</html>

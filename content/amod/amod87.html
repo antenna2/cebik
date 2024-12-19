@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NEC-4 Manual Sample Files</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>87. NEC-4 Manual Sample Files</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Last month, we presented the examples models that occur in the 2-decade-old NEC-2 User's Manual. This month, we shall meet the example models that appear in the 1992 NEC-4 User's Manual (pp. 100-181). A number of the models are identical to those in the earlier manual, while some others vary only to the degree required by revisions in some few of the command line structures. However, the NEC-4 Manual adds two new models covering features unique to NEC-4 (relative to NEC-2).</p>
+  <p>To ease the process of testing the examples from the NEC-4 User's Manual, I have transscribed them into this text. To use a file, simply block copy the model file text and insert it as an ASCII file to the input of your core. If you encounter any stray codes from this HTML version, you may run the models through Notepad, cleanse them, and then save them in .txt format, but with a .NEC extension--or whatever the proper input file extension may be for your program.</p>
+  <p>Alternatively, you may download from my web site a zipped file containing all of the examples, called <a href="../download/nec4-examples.zip">NEC4-EXAMPLES</a>. Unzip the file and store the example models in the directory/folder of your choice.</p>
+  <p>In the NEC User's Manual, Examples 1-4 are combined into one input file, as are Examples 7 and 8. I have separated them here as a convenience. However, by referring to the manual for the NX (Next Structure) command, you may recombine the files into their original format.</p>
+  <p>The introductions to each file come from the NEC-4 User's Manual, pp. 100-181. Quotation marks ("..") indicate material from the Manual. There are occasional references to discussions in other sections of the Manual. I have omitted here the referenced material for brevity.</p>
+  <p><b>Example 1</b></p>
+  <p>"Examples I through 4 are simple cases intended to illustrate the basic formats. In Example 1, a A/2 dipole is excited at its center. The XQ command requests only the calculation of current. After "ANTENNA INPUT PARAMETERS", a table shows the value of current at the center of each segment. Next, the antenna is loaded at its center with a series R-L-C circuit. Since the load coincides with the source segment, the effect on input impedance is simply to add the load impedance in series. If the load had been on another segment, the effect on input impedance would have been more complex."</p>
+  <p>"The PQ command requests a listing of the linear charge density at the center of each segment. In addition, the charge density is printed at the free ends of segments 1 and 7, with "E" following the segment number to indicate a free wire end. The values obtained for charge density at wire ends will be very dependent on the segment lengths. As more segments are added to reduce the segment lengths, the charge densities at the ends will increase, approaching the singular behavior expected at an edge. However, the values printed give some indication of the charge in the vicinity of the end."</p>
+  <p>"The NE commands request computation of near electric fields, first along the wire axis and then along the wire surface. Ideally, the <i>z</i> component of electric field would be zero along the wire axis and on the surface, except over the source region. On the wire axis the field is very small at the centers of segments away from the source, since these values are enforced in the moment-method solution. When the field is evaluated along the wire surface, the <i>z</i> component is small, but considerably larger than on the axis. Evaluating the <i>z</i> component of field on the wire surface is the worst case for the thin-wire approximation in NEC-4. This calculation illustrates a difference between NEC-4 and NEC-3. In NEC-3, the solution was obtained by matching the boundary condition on the wire surface, with the current treated as a filament on the axis. Hence NEC-3 would give very small tangential fields on the surface at the match points. When the near field is requested at a point on the wire axis in NEC-3, it is actually computed on the wire surface. The radial electric field (E<sub>x</sub>) computed on the wire surface can be compared with the charge densities at the segment centers. For charge density rho and wire radius a the field is E<sub>x</sub> = rho/2 PI alpha epsilon<sub>0</sub>."</p>
+  <pre>CE EXAMPLE 1. CENTER FED LINEAR ANTENNA
+GW 0 7 0. 0. -.25 0. 0. .25 .001
+GE
+EX 0 0 4 0 1.
+XQ
+LD 0 0 4 4 10. 3.000E-09 5.300E-11
+PQ
+NE 0 1 1 15 0. 0. 0. 0. 0. .01786
+NE 0 1 1 15 .001 0. 0. 0. 0. .01786
+EN</pre>
+  <p><b>Example 2</b></p>
+  <p>"In Example 2 the wire has an even number of segments, so a bicone voltage source model has been used to excite the wire at its center. The symbol '*' in the table of antenna input parameters is, a reminder that this type of source has been used. The wire radius is very small for this problem, since the bicone source is only accurate for thin wires and small radius to segment-length ratios. A safer way to excite the center of this wire would be to use applied-field voltage sources on segments 4 and 5, each with half of the total voltage."</p>
+  <p>"Three frequencies are run in Example 2, and the option on the EX command is used to collect and normalize the input impedances. At the end of Example 2, the wire is given the conductivity of aluminum. This has a significant effect, since the wire is relatively thin."</p>
+  <pre>CM EXAMPLE 2. CENTER FED LINEAR ANTENNA.
+CM CURRENT SLOPE DISCONTINUITY SOURCE.
+CM 1. THIN PERFECTLY CONDUCTING WIRE
+CE 2. THIN ALUMINUM WIRE
+GW 0 8 0. 0. -.25 0. 0. .25 .00001
+GE
+FR 0 3 0 0 200. 50.
+EX 5 0 5 1 1. 0. 50.
+XQ
+LD 5 0 0 0 3.720E+07
+FR 0 1 0 0 300.
+EX 5 0 5 0 1.
+XQ
+EN</pre>
+  <p><b>Example 3</b></p>
+  <p>"Example 3 is a vertical dipole over ground. The average power gain has been computed using the option on the RP command. For the first result, with perfectly-conducting ground, the average gain is close to the ideal value of 2. For a more complex structure, the average gain can provide a check on the accuracy of the computed input impedance. The value of average gain should be 1.0 for a model in free space and 2.0 over perfectly conducting ground. Acceptable differences from the correct value may range from a few percent for a simple model to ten percent or more for large, complex models."</p>
+  <p>"Example 3 also includes a solution for finitely conducting ground using the reflection coefficient approximation. With a finitely conducting ground the average gain cannot be used as a check on solution accuracy, but shows the radiation efficiency of the antenna, taking into account ground loss. Since the average gain has dropped from 2.0 for perfectly conducting ground to 0.72, the radiation efficiency is 36 percent."</p>
+  <pre>CM EXAMPLE 3. VERTICAL HALF WAVELENGTH ANTENNA OVER GROUND
+CM 1. PERFECT GROUND
+CM 2. IMPERFECT GROUND INCLUDING GROUND WAVE AND RECEIVING CE PATTERN CALCULATIONS
+GW 0 9 0. 0. 2. 0. 0. 7. .3
+GE 1
+FR 0 1 0 0 30.
+EX 0 0 5 0 1.
+GN 1
+RP 0 10 2 1301 0. 0. 10. 90.
+GN 0 0 0 0 6. 1.000E-03
+RP 0 10 2 1301 0. 0. 10. 90.
+RP 1 10 1 0 1. 0. 2. 0. 1.000E+05
+EX 1 10 1 0 0. 0. 0. 10.
+PT 2 0 5 5
+XQ
+EN</pre>
+  <p><b>Example 4</b></p>
+  <p>"Example 4 is a simple model to demonstrate the connection of a wire to a surface patch. Although the structure is over a perfectly conducting ground, a value of 1.8 is obtained for average gain. This result indicates that the input impedance is inaccurate, probably due to the crude patch model used for the box. In a case such as this, the average gain can be used to compute corrected values for the radiated power, input resistance and antenna gain. The total radiated power from integrating the radiated field, 9.623(10<sup>-4</sup>) watts, is printed after the average gain. In earlier versions of NEC, this value must be obtained by multiplying the average gain by the total input power. The radiation resistance can then be computed as</p>
+  <pre>Radiation resistance = 2 (radiated power)/|I source|^2
+                     = 167.8 ohms.</pre>
+  <p>where I<sub>source</sub> is the source current, and the factor of 2 is necessary because values printed by NEC for current, voltage and field are peak rather than rms. Since the value of input power used in computing gains for the radiation pattern table is too large by 0.46 dB (10 log<sub>10</sub>[2/1.8]), the gains can be corrected by adding this amount."</p>
+  <pre>CE EXAMPLE 4. T ANTENNA ON A BOX OVER PERFECT GROUND
+SP 0 0 .1 .05 .05 0. 0. .01
+SP 0 0 .05 .1 .05 0. 90. .01
+GX 0 110
+SP 0 0 0. 0. .1 90. 0. .04
+GW 1 4 0. 0. .1 0. 0. .3 .001
+GW 2 2 0. 0. .3 .15 0. .3 .001
+GW 3 2 0. 0. .3 -.15 0. .3 .001
+GE 1
+GN 1
+EX 0 1 1 0 1.
+RP 0 10 4 1001 0. 0. 10. 30.
+EN </pre>
+  <p><b>Example 5</b></p>
+  <p>"Example 5 is a practical log-periodic antenna with 12 elements. Input data for the transmission line sections is printed in the table "NETWORK DATA." The table "STRUCTURE EXCITATION DATA AT NETWORK CONNECTION POINTS" contains the voltage, current, impedance, admittance and power at each segment to which the transmission lines or networks connect. The currents printed in this table are the currents in the segments at the connection points, and will differ from the current into the connected transmission line if there are other transmission lines, network ports or a voltage source providing alternate current paths. Thus, the current printed for segment 3 differs from that in the table "INPUT PARAMETERS." The latter is the current through the voltage source and includes the current into the segment and into the transmission line. Power listed in the network-connection table is the power being fed into the segment. A negative power indicates that the structure is feeding power into the network or transmission line."</p>
+  <p>"This example was run with the parameter MAXMAT set to 64 to illustrate the output format when file storage must be used for the matrix. The line after the listing of input line 14 shows how the matrix has been divided into blocks for transfer between memory and file storage. The line "CP TIME TAKEN FOR FACTORIZATION" shows the amount of central processor time used to factor the matrix, excluding I/0 time. This will be less than the total factoring time printed below in the output."</p>
+  <pre>CM 12 ELEMENT 10G PERIODIC ANTENNA IN FREE SPACE.
+CM 78 SEGMENTS. SIGMA=D/L RECEIVING AND TRANS. PATTERNS
+CM DIPOLE LENGTH TO DIAMETER RATIO=150.
+CE TAU=0.93, SIGMA=0.70, BOOM IMPEDANCE=50. OHMS.
+GW 1 5 0. -1. 0. 0. 1. 0. .00667
+GW 2 5 -.7527 -1.0753 0. -.7527 1.0753 0. .00717
+GW 3 5 -1.562 -1.1562 0. -1.562 1.1562 0. .00771
+GW 4 5 -2.4323 -1.2432 0. -2.4323 1.2432 0. .00829
+GW 5 5 -3.368 -1.3368 0. -3.368 1.3368 0. .00891
+GW 6 7 -4.3742 -1.4374 0. -4.3742 1.4374 0. .00958
+GW 7 7 -5.4562 -1.5456 0. -5.4562 1.5456 0. .0103
+GW 8 7 -6.6195 -1.6619 0. -6.6195 1.6619 0. .01108
+GW 9 7 -7.8705 -1.787 0. -7.8705 1.787 0. .01191
+GW 10 7 -9.2156 -1.9215 0. -9.2156 1.9215 0. .01281
+GW 11 9 -10.6619 -2.0662 0. -10.6619 2.0662 0. .01377
+GW 12 9 -12.2171 -2.2217 0. -12.2171 2.2217 0. .01481
+GE
+FR 0 0 0 0 46.29
+TL 1 3 2 3 -50.
+TL 2 3 3 3 -50.
+TL 3 3 4 3 -50.
+TL 4 3 5 3 -50.
+TL 5 3 6 4 -50.
+TL 6 4 7 4 -50.
+TL 7 4 8 4 -50.
+TL 8 4 9 4 -50.
+TL 9 4 10 4 -50.
+TL 10 4 11 5 -50.
+TL 11 5 12 5 -50.00 0 0 0 .02 0
+EX 0 1 3 10 1.
+RP 0 37 1 1110 90. 0. -5. 0.
+EN</pre>
+  <p><b>Example 6</b></p>
+  <p>"The structure data for the cylinder with attached wires was discussed in section 3.4 [of the Manual]. In this example, the wire on the end of the cylinder is excited first, and a radiation pattern is computed. The CP command requests the coupling between the base segments of the two wires. The coupling printed is the maximum that would occur when the source and load are simultaneously matched to their antennas. The table includes the matched load impedance for the second segment and the corresponding input impedance at the first segment. The source impedance would be the conjugate of this input impedance for maximum coupling."</p>
+  <pre>CE CYLINDER WITH ATTACHED WIRES.
+SP      0       0       10.     0.      7.3333  0.      0.      38.4
+SP      0       0       10.     0.      0.      0.      0.      38.4
+SP      0       0       10.     0.      -7.3333 0.      0.      38.4
+GM      0       1       0.      0.      30.
+SP      0       0       6.89    0.      11.     90.     0.      44.88
+SP      0       0       6.89    0.      -11.    -90.    0.      44.88
+GR      0       6
+SP      0       0       0.      0.      11.     90.     0.      44.89
+SP      0       0       0.      0.      -11.    -90.    0.      44.89
+GW      1       4       0.      0.      11.     0.      0.      23.     .1
+GW      2       5       10.     0.      0.      27.6    0.      0.      .2
+GS      0       0       .01
+GE
+FR      0       1       0       0       465.84
+CP      1       1       2       1
+EX 0    1       1       0       1.
+RP 0    73      1 1000  0.      0.      5.      0.
+EX 0    2       1       0       1.
+XQ
+EN</pre>
+  <p><b>Example 7</b></p>
+  <p>"Examples 7 and 8 demonstrate the use of NEC for scattering calculations. The normalized cross sections (rho/lambda<sup>2</sup>) for bistatic scattering are printed in the radiation-pattern tables."</p>
+  <pre>CM SAMPLE PROBLEMS FOR NEC - SCATTERING BY A WIRE.
+CM 1. STRAIGHT WIRE - FREE SPACE
+CM 2. STRAIGHT WIRE - PERFECT GROUND
+CM 3. STRAIGHT WIRE - FINITELY CONDUCTING GROUND
+CE (SIG.=1.E-4 MHOS/M., EPS.=6.)
+GW 0 15 -55. 0. 10. 55. 0. 10. .01
+GE 1
+FR 0 1 0 0 3.
+EX 1 2 1 0 0.
+RP 0 2 1 1000 0. 0. 45. 0.
+GN 1
+EX 1 1 1 0 45. 0. 0.
+RP 0 19 1 1000 90. 0. -10. 0.
+GN 0 0 0 0 6. 1.000E-04
+RP 0 19 1 1000 90. 0. -10. 0.
+EN</pre>
+  <p><b>Example 8</b></p>
+  <p>"Example 8 is a stick-model of an aircraft, as shown in figure 21."</p>
+  <center>
+    <img src="amod87-1.gif" width="486" height="418" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>CM SAMPLE PROBLEM FOR NEC
+CE STICK MODEL OF AIRCRAFT - FREE SPACE
+GW 1 1 0. 0. 0. 6. 0. 0. 1.
+GW 2 6 6. 0. 0. 44. 0. 0. 1.
+GW 3 4 44. 0. 0. 68. 0. 0. 1.
+GW 4 6 44. 0. 0. 24. 29.9 0. 1.
+GW 5 6 44. 0. 0. 24. -29.9 0. 1.
+GW 6 2 6. 0. 0. 2. 11.3 0. 1.
+GW 7 2 6. 0. 0. 2. -11.3 0. 1.
+GW 8 2 6. 0. 0. 2. 0. 10. 1.
+GE
+FR 0 1 0 0 3.
+EX 1 1 1 0 0. 0. 0.
+RP 0 1 1 1000 0. 0. 0.
+EX 1 1 1 0 90. 30. -90.
+RP 0 1 1 1000 90. 30.
+EN</pre>
+  <p><b>Example 9</b></p>
+  <p>"Example 9 shows the calculation of scattering by a sphere with ka of 2.9 (ka = 2 PI alpha/lambda = circumference/lambda.) Bistatic scattering patterns are computed in the E and H planes. Then near electric and magnetic fields are computed, starting at the center of the sphere and going out along the z, y and x axes. The fields within the sphere should be the negative of the incident field to produce zero total field. This condition is approximately satisfied in the example."</p>
+  <p>"If the frequency is changed so that the internal cavity of the sphere becomes resonant (ka = 2.744 for the TM<sub>101</sub> mode) large fields will be found inside the sphere. Such internal resonances may occur in any closed structure, and will result in large errors in the computed currents and radiated fields. Since the magnetic-field integral equation used in NEC enforces the boundary condition of zero tangential magnetic field on the inside of the surface, the surface acts as a perfect magnetic conductor on the inside. Hence, the resonant fields that are seen will be the dual of those that would exist in a perfect electric-conducting sphere. Unfortunately, while the correct magnetic currents for the internal fields would not radiate externally, the electric currents in the NEC solution radiate strongly."</p>
+  <p>"A number of ways have been developed for avoiding internal resonances, one being to solve combined electric and magnetic field integral equations. The only solution to the problem in NEC is to place wires inside the sphere to destroy the resonance condition at a given frequency. Three orthogonal dipoles might be placed at the center of a sphere. If the wires are perfectly conducting the resonance would be shifted to a different frequency. However, if lossy wires are used, resonances could be reduced at all frequencies."</p>
+  <pre>CM BISTATIC SCATTERING BY A SPHERE.
+CM PATCH DATA ARE INPUT FOR A SPHERE OF 1. M. RADIUS
+CM THE SPHERE IS THEN SCALED SO THAT KA=FREQUENCY IN MHZ.
+CM THE PATCH MODEL MAY BE USED FOR KA LESS THAN ABOUT 3.
+CE FOR THIS RUN *-* KA=2.9 ***
+SP 0    0 .13795 .13795 .98079  78.75   45.     .11957
+SP 0    0 .51328 .21261 .83147  56.25   22.5    .17025
+SP 0    0 .21261 .51328 .83147  56.25   67.5    .17025
+SP 0    0 .80314 .21520 .55557  33.75   15.     .16987
+SP 0    0 .58794 .58794 .55557  33.75   45.     .16987
+SP 0    0 .21520 .80314 .55557  33.75   75.     .16987
+SP 0    0 .96194 .19134 .19509  11.25   11.25   .15028
+SP 0    0 .81549 .54490 .19509  11.25   33.75   .15028
+SP 0    0 .54490 .81549 .19509  11.25   56.25   .15028
+SP 0    0 .19134 .96194 .19509  11.25   78.75   .15028
+GX 0 111
+GS 0 0 47.71465
+GE
+FR 0    1 0     0       2.9
+EX 1    1 1     0       90.     0.      0.
+RP 0    19      1 1000  90.     0.      -10.    0.
+RP 0    1       19 1000 90.     0.      0.      10.
+NE 0    1       1       11      0.      0.      0.      0.      0.      5.
+NE 0    1       11      1       0.      0.      0.      0.      5.      0.
+NE 0    11      1       1       0.      0.      0.      5.      0.      0.
+NH 0    1       1       11      0.      0.      0.      0.      0.      5.
+NH 0    1       11      1       0.      0.      0.      0.      5.      0.
+NH 0    11      1       1       0.      0.      0.      5.      0.      0.
+EN</pre>
+  <p><b>Example 10</b></p>
+  <p>"In Example 10, a horizontal dipole antenna 16 m long is modeled near the surface of a ground using the Sommerfeld solution. A file of Sommerfeld-integral values was generated by running the SOMNTX program for the ground parameters epsilon<sub>g</sub> = 10, rho = 0.01 S/m and 5 MHz. The file from SOMNTX was given the name SOMEX10.NEC"</p>
+  <p>In the first data set the wire is modeled in free space and then at a height of 0.01 m over the ground. The input impedance is considerably closer to resonance when the wire is over ground, but the average gain of 1.59E-2 shows that only 0.795 percent of the input power is being radiated into the upper half space, with the rest absorbed by the ground."</p>
+  <p>"In the second data set, the dipole is modeled in an infinite medium with the same ground parameters, and then buried 0.01 m below the ground surface. When the wire is in a conducting medium the segment coordinates and segment lengths in the table "CURRENTS AND LOCATION" are normalized by the quantity |lambda<sub>g</sub>| = lambda<sub>0</sub>|epsilon<sub>g</sub> - jrho/omega epsilon<sub>0</sub><sup>1/2</sup> where lambda<sub>0</sub> is the wavelength in free space. The normalized segment lengths should satisfy the criteria for solution accuracy as discussed in section 2.1."</p>
+  <p>"In computing the radiated field in the infinite medium, a factor of e<sup>-jkR</sup>/R is omitted, as is always done when the distance R is not specified on the RP command. Since the actual field has an exponential decay when k is complex, the radiated field, defined as the component of field falling off as 1/R, is zero in a lossy medium. By omitting the exponential, NEC obtains a non-zero value that indicates the relative strength of field in any direction at a finite distance, but it should not be considered radiated field. Likewise, the average gain and radiated power cannot be interpreted in their usual senses. All power is absorbed in the medium and not radiated. While the interpretation of these values is open to question, the computed values seem more useful than printing zero. When the field is computed in a lossy medium with a ground interface, zero will be printed for the radiated field and gain, since then it is not possible to remove the exponential attenuation."</p>
+  <p>"With the dipole buried 0.01 m below the ground surface, the average gain is slightly larger than when the wire was above ground. This difference is probably due to the change in current distribution when the wire is in the ground. The attenuation through 0.01 m of this ground is negligible."</p>
+  <p>"In the final case, two dipoles are modeled, with one above the ground surface by 0.01 m and the other buried by the same distance. Both dipoles are driven by 1 volt sources, but opposing currents are set up in a transmission-line mode. The input resistance of the upper dipole is negative, indicating that it is absorbing power from the buried wire. The average gain and radiated power are smaller than for a single wire above or below ground, probably as a result of the large fields generated in the ground with this two-wire configuration."</p>
+  <pre>CM Horizontal 16 m dipole
+CM 1. Dipole in free space
+CM 2. Dipole above ground - Ground: E = 10., SIG 0.01 S/M,5 MHz
+CE Sommerfeld gound option
+GW 1    11      -8.     0. 0.01 8.      0.      0.01    .001
+GE -1
+FR      0       1       0       0       5.
+EX      0       1       6       0       1.
+RP      0       10      2       1000    0.      0.      10.     90.
+RP      0       10      10      1002    0.      0.      10.     10.
+GN      2       0       0       0       10.     0.01    SOMEX10.NEC
+RP      0       10      2       1000    0.      0.      10.     90.
+RP      0       10      10      1002    0.      0.      10.     10.
+NX
+CM Horizontal 16 m dipole
+CM 1. Dipole in an infinite lossy medium
+CM 2. Dipole below the ground surface
+CE      Sommerfeld gound option - E = 10., SIG = 0.01 S/M, 5 MHz
+GW 1    11      -8.     0. -0.01        8.      0.      -0.01   .001
+GE -1
+FR      0       1       0       0       5.
+EX      0       1       6       0       1.
+UM      0       0       0       0       10.     0.01
+RP      0       10      2       1000    0.      0.      10.     90.
+RP      0       10      10      1002    0.      0.      10.     10.
+CM NOTE: The above calculation of average gain in a lossy medium cannot
+CM      be interpreted in the usual sense. A factor of EXP(-jkR)/R
+CM      has been omitted from the field so that a non-zero value can
+CM      be  obtained for R --&gt; infinity with complex k. However, by the
+CM      usual definition, the far-field gain is zero in a lossy medium.
+CM      Set upper medium to free space, then use Sommerfeld ground.
+GN 2    0       0       0       10. 0.01 SOMEXIO.NEC
+RP 0    10      2       1000    0. 0. 10. 90.
+RP 0    10      10      1002    0. 0. 10. 10.
+NX
+CM TWO HORIZONTAL 16 M DIPOLE ANTENNAS ABOVE AND BELOW GROUND
+CE SOMMERFELD GOUND OPTION - E = 10., SIG = 0.01 S/M, 5 MHz
+GW 1    11      -8.     0. 0.01 8.      0.      0.01    .001
+GW 2    11      -8.     0. -0.01        8.      0.      -0.01   .001
+GE -1
+FR      0       1       0       0       5.
+EX      0       1       6       0       1.
+EX      0       2       6       0       1.
+GN      2       0       0       0       10. 0.01 SOMEXIO.NEC
+RP      0       10      2       1000    0.      0.      10.     90.
+RP      0       10      10      1002    0.      0.      10.     10.
+EN</pre>
+  <p><b>Example 11</b></p>
+  <p>"In example 11, a 15 m monopole is modeled on a ground stake 2 m deep. Separate GW commands are used to define the monopole and ground stake to ensure that the junction will occur exactly at the interface. The average gain computation shows that the radiation efficiency of this antenna over ground is 16 percent. NE and NH commands are used to compute the electric and magnetic fields at a distance of 5000 m with the surface wave included. When the Sommerfeld ground option is in use, the near magnetic field is computed from a finite-difference evaluation of <b>V</b> x <b>E</b>. The increment for evaluating differences is &PlusMinus;10-3 A0. Hence, if the near magnetic field had been evaluated at a height of less than 0.06 ra in this example an incorrect value would have been obtained due to the negative increment in z falling on the wrong side of the interface." [Note: in the lines above, <b>V</b> is a stand-in for an inverted delta, not available for this transcription.]</p>
+  <p>"If the lower medium had a conductivity of zero, the average gain could be computed over both upper and lower half spaces (0&deg; &lt; 0 &lt; 180&deg;) and should have a value of 1.0. This can serve as a necessary, but not sufficient, check on the solution accuracy for a dielectric ground. In integrating the power in a dielectric ground, it may be necessary to use increments in theta of a degree or less to accurately sample the field near the totally reflecting or critical angle in the ground (theta = 180&deg; - sin<sup>-1</sup> epsilon<sup>-1/2</sup> = 162&deg; for epsilon<sub>tau</sub> = 10, rho = 0.) The steepness of this near discontinuity increases with increasing height of the antenna above the ground."</p>
+  <pre>CM 15 m monopole antenna on a ground stake 2 m deep.
+CE Ground: E = 10., SIG = 0.01 S/m, 5 Mz.
+GW 1    8       0.      0.      -2.     0.      0. 0.   0.01
+GW 2    10      0.      0.      0.      0.      0. 15.  0.01
+GE -1
+FR 0    1       0       0       5.
+GN 2    0       0       0       10. 0.01 SOMEX10.NEC
+EX 0    2       1       0       1.
+RP                      0       19      2       1002 0. 0.      5.      90.
+NE 0    1       1       21 5000.        0.      0.1     0.      0.      10.
+NH 0    1       1       21 5000.        0.      0.1     0.      0.      10.
+EN</pre>
+  <p><b>Example 12</b></p>
+  <p>"The monopole antenna from Example 11 is now modeled on a ground screen of six radial wires, with a screen radius of 12 meters. The Numerical Green's Function option was used to take advantage of the rotational symmetry of the ground screen. The monopole is added on the axis of rotation in the second part of the run."</p>
+  <p>"The screen was buried 5 cm below the surface of the ground. Since a segment cannot penetrate the interface, the junction of the monopole and the radial wires was located on the interface at the origin. The inner segment of each radial wire descends at an angle to the 5 cm depth, and the remainder of the radial is horizontal. The inner segment was chosen to have approximately the same length as the horizontal segments. The complete ground screen is generated with a GR command to set the code to use symmetry in the solution."</p>
+  <p>"The monopole is added to the NGF solution in the second part of the run. The summary of segment data includes all segments from the NGF file and those added for the monopole. After the summary of segment data, a line shows the number of new unknowns in the NGF solution. This number includes the new segments plus one new unknown for each segment from the NGF file that connects to a new segment. Segments in the NGF file that connect to new segments contribute new unknowns since they need new basis functions due to the changed junction condition. Since there are 10 segments in the monopole and six radials each connecting to the base of the monopole, the number of new unknowns is 16. The code must also recompute the field from the second ring of segments from the center of the screen, since the basis functions for the first segments extend onto the second segments. This additional integration can significantly reduce the advantage of using the NGF to take advantage of symmetry when many NGF segments connect to new segments."</p>
+  <p>"The computed results include a radiation pattern and average gain. From the average gain, it is seen that the radiation efficiency has increased to 29 percent from the 16 percent obtained with a ground stake. A better ground screen would increase the efficiency still further. The NEC-GS program is much more efficient than NEC-4 [11] for modeling monopoles on large radial-wire ground screens. However, at the present time there is no version of NEC-GS using the NEC-4 solution algorithms."</p>
+  <pre>CM 6-Wire Radial-Wire Ground Screen.
+CE An NGF file is written to take advantage of symnetry of the screen.
+GW 1    14 12.  0. -.05 0.8     0.      -.05    .01
+GW 1    1 0.8   0. -.05 0.      0.      0.      .01
+GR 0    6
+GE
+FR 0    1       0       0       5.
+GN 2    0       0       0       10. .01 SOMEX10.NEC
+WG
+NX
+CE 15 m Monopole added to the ground screen from the NGF file.
+GF
+GW 2    10      0.      0.      0.      0.      0. 15. .01
+GE
+EX 0    2       1       0       1.
+RP 0    19      2       1001    0.      0.      5. 90.
+EN</pre>
+  <p>These model files are provided to encourage newer users of NEC-4 to familiarize themselves with the complete scope of what NEC can do. As well, since many of the example narratives point to limiting factors, the user can familiarize himself or herself with NEC limitations and correctives or work-arounds.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

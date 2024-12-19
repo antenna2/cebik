@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Testing the Fringes of Modeling Programs</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>51. Testing the Fringes of Modeling Programs</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episodes 2 and 3 of this continuing series, I outlined briefly the nature and limitations of program using NEC cores and those using MININEC cores for antenna modeling calculations. Special limitations applicable to NEC-4 that do not appear in the core manual were outlined in "NEC-4.1: Limitations of Importance to Hams," <i>QEX</i> (May/June, 1998), 3-16, and these limitations also apply to NEC-2 as well. The ARRL NEC-2 antenna modeling continuing education course has two lessons specifically devoted to modeling core limitations. Note that I specifically call them core limitations, since a given limitation would apply to every commercial implementation of a given core unless the programmer adds specific correctives. For example, the NEC-2 difficulty--largely corrected in NEC-4--of handling stepped diameter elements is overcome by the introduction of Leeson corrections (calculated substitute elements of uniform diameter) in both EZNEC and NEC-Win Plus. The correctives are programmer additions to the core.</p>
+  <p>Often, it is difficult to appreciate the nature and extent of core limitations without having access to a variety of programs on which to make comparisons. As well, for simple modeling projects in the HF range, almost any one of the program cores will do a good job. If we combine these ideas, then it might be useful to look at a couple of models that press the cores to their limits--and sometimes beyond--in order to see what various programs do with them. The results can be useful in evaluating the suitability of a given program for the particular range of projects that the modeler has in mind.</p>
+  <p>The following notes will include these programs:</p>
+  <ul>
+    <li>EZNEC 3.0 Professional Version: NEC-2, NEC-4, and NEC4-D (double-precision)</li>
+    <li>NEC-Win Plus: NEC-2</li>
+    <li>NEC-Win Pro: NEC-2</li>
+    <li>GNEC: NEC-4</li>
+    <li>ELNEC: MININEC 3.13 (DOS)</li>
+    <li>AO: MININEC 3.13 (DOS)</li>
+    <li>Antenna Model: MININEC 3.13 (Windows)</li>
+    <li>NEC4WIN-VM: MININEC 3.13 (Windows)</li>
+    <li>MMANA: MININEC 3.13 (Windows) (freeware)</li>
+  </ul>
+  <p>Although the NEC-4 and NEC-2 cores may seem to be fixed items, they are not. They continue to evolve as new methods emerge for speeding up routines in the dense matrix calculations in the compiled FORTRAN core. As well, because MININEC 3.13 is a public domain program, it has been translated into compiled BASIC, DOS machine coding, and into C++ for Windows operation. The latter steps have largely removed the older 256-segment limitation of earlier implementations. Hence, we can expect some slight variation in results, since implementing the core code in various ways opens the program to the use of various correctives for its other limitations. Expert MININEC, a proprietary newer version of the code with new algorithms was not accessible for this set of tests.</p>
+  <p><b>A Simple Folded Dipole Test</b></p>
+  <p>Let's begin with a simple antenna that every core can effectively run: a folded dipole that does not press program limitations. <b>Fig. 1</b> shows the outlines of the model.</p>
+  <center>
+    <img src="amod51-1.gif" width="468" height="225" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Each long wires is 197.9" (5.0242 m or 0.4776 wl) long at the test frequency of 28.5 MHz. The end wires are 1" (0.0254 m or 0.002415 wl) long. The end wires have 1 segment each, while the long wires each use 111 segments for NEC models and 110 segments for MININEC models. The heavy segmentation essentially overcomes the MININEC tendency to truncate corner junctions. (NEC4WIN limited the number of segments for the long wires to 50.) The odd-even segmentation difference, of course, relates to source placement. A NEC source appears in the middle of a segment, calling for an odd number of segments for center placement. A MININEC source appears on a pulse or junction of two segments, calling for an even number of segments for center placement on the wire. The source type-- voltage or current--makes no difference to the outcome.</p>
+  <p>The length of the segments is about 0.004 wl on the long wires and about 0.0024 wl on the end wires, for a segment length ratio of 1.78:1. This value falls within the recommended 2:1 ratio of segment lengths for adjacent segments. The wire diameter is 0.0403", corresponding to AWG #18. This diameter is 1.0236 mm or about 9.73E-5 wl, well within recommended limits.</p>
+  <p>The models were set as Y-coordinate values, with the space between the folded dipole wires appearing on the Z-axis. This orientation presents a "broadside" for the azimuth pattern from which I took gain readings. Had I set the wire spacing on the X-axis, the maximum gain readings would have appeared to be about 0.05 dB higher than those in the table, with an approximate 0.1 dB "front-to- back" ratio. This differential occurs because the wires do not have equal current magnitudes and phase angles at corresponding points. The wire conductivity or resistivity value is for copper wire, although NEC4WIN in Version 3.1 of the program does not have user choices for material losses. Hence, its gain values will be for lossless or "perfect" wire.</p>
+  <p>The initial model was pruned to resonant length using NEC-4 as the standard. The defined model was then run in programs using other cores. The following table provides the results. Note that AO and NEC4WIN offer several possible combinations of loop and frequency correctives and will have multiple entries. All gain and impedance values are presented in the degree of precision presented by the individual programs. NEC-4D means the double-precision version of the NEC-4 core.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      Standard Folded Dipole at 28.5 MHz
+
+Program and Core        Free-Space        Source Impedance
+                        Gain dBi                R +/- jX Ohms
+A. NEC Cores
+EZNEC 3.0
+  NEC-4                 2.10                    288.6   - j   0.5613
+  NEC-4D                2.10                    288.5   + j   0.1557
+  NEC-2                 2.10                    288.5   + j   0.1875
+NEC-Win Plus
+  NEC-2                 2.10                    288.488 + j   0.1597
+NEC-Win Pro
+  NEC-2                 2.10                    288.488 + j   0.160
+GNEC
+  NEC-4D                2.10                    288.487 + j   0.153
+
+B. MININEC 3.13 Cores
+ELNEC 3.0               2.098                   288.28  - j   4.5420
+AO 6.5
+  No Corrections        2.09                    288     - j   3
+  Frequency Cor.        2.09                    290     + j   7
+  Bent-Wire Cor.        2.09                    288     - j   4
+  Fr. + B-W Cor.        2.09                    290     + j   6
+Antenna Model           2.10                    288.68  + j   0.6826
+NEC4WIN-VM 3.1
+  No Corrections        2.13                    286.13  - j   2.33
+  NEC Freq. Cor.        2.13                    287.76  + j  10.88
+  Loop-Wire Cor.        2.15                    306.61  + j 104.96
+  Fr. + Loop Cor.       2.15                    308.16  + j 111.01
+MMANA                   2.06                    291.158 - j   4.915
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The coincidence of values for both NEC cores illustrates the degree to which the model is well within core guidelines. The ELNEC MININEC result shows a slight capacitive reactance owing to the fact that this program does not implement a frequency corrective. Uncorrected AO results in a similar figure, although with correctives, the impedance values fluctuate around resonance in ways that would be operationally insignificant. The MMANA result appears to reflect a wire conductivity or resistivity assignment that is slightly high, which reduces gain in the hundredths column and increases the resistive component of the source impedance. Although differentials are not operationally significant, the Antenna Model result most closely coincides with the NEC-4 and NEC-4D reports.</p>
+  <p>The NEC4WIN-VM numbers require further interpretation, since they are for lossless wire. The basic NEC-4 model returns a gain of 2.14 dBi and a source impedance of 286.4 - j 2.47 for this same condition. The uncorrected NEC4WIN numbers correspond well with this value set. The frequency correction offsets the values in a similar way to the frequency correction in AO. (We shall look at frequency issues in a subsequent model.) Clearly, the loop wire correction is not designed for use with closely spaced wires, such as in a folded dipole.</p>
+  <p>Now let us contrast these results with those for a folded dipole that challenges the limits of the cores. <b>Fig. 2</b> shows the outlines of the new folded dipole model. We shall retain the 28.5-MHz test frequency. However, we shall reduce the wire diameter to AWG #22, that is, 0.0253", 0.6426 mm, or 6.11E-5 wl. As well, we shall reduce the spacing between wires to yield end wires that are much shorter: 0.375", 0.009525 m, or 9.06E-4 wl. The basic NEC-4 model became resonant within +/- j 1 Ohm with a length of 199.04", 5.0556 m, or 0.4806 wl.</p>
+  <center>
+    <img src="amod51-2.gif" width="483" height="194" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Retaining the 110/111 segmentation density for the long wires and single segments for the end wires, we wind up with segments lengths of 4.33E-3 wl and 9.06E-4 wl, respectively, for a ratio of 4.78:1. This value exceeds the recommended ratio for adjacent segments in both cores. Further limitations of the cores become apparent when we tabulate the results for all programs.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                       Narrow Folded Dipole at 28.5 MHz
+
+Program and Core        Free-Space        Source Impedance
+                        Gain dBi                R +/- jX Ohms
+A. NEC Cores
+EZNEC 3.0
+  NEC-4                 2.07                    290.0   - j   0.7181
+  NEC-4D                2.08                    289.8   + j   0.2772
+  NEC-2                 2.08                    289.8   + j   0.3964
+NEC-Win Plus
+  NEC-2                 2.08                    289.808 + j   0.2683
+NEC-Win Pro
+  NEC-2                 2.08                    289.808 + j   0.268
+GNEC
+  NEC-4D                2.08                    289.807 + j   0.264
+
+B. MININEC 3.13 Cores
+ELNEC 3.0               2.074                   289.544 - j   6.4580
+AO 6.5
+  No Corrections        -.09                      7.81  - j   61.5
+  Frequency Cor.        -.27                      7.46  - j   59.8
+  Bent-Wire Cor.        -.09                      7.81  - j   61.5
+  Fr. + B-W Cor.        -.27                      7.46  - j   59.8
+Antenna Model           2.08                    289.459 - j   2.04
+NEC4WIN-VM 3.1
+  No Corrections        2.19                      9.60  - j  73.90
+  NEC Freq. Cor.        2.20                      6.74  - j  62.36
+  Loop-Wire Cor.        2.31                      1.74  - j  46.76
+  Fr. + Loop Cor.       2.32                      1.29  - j  40.10
+MMANA                   -.51                     14.626 - j  58.674
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The NEC core values hold up well under the limit pressure applied in this model. Since the wires have a smaller diameter, the gain reduction relative to the model of a standard folded dipole is reasonable. The source impedance for any pair of wires in a folded dipole is approximately 4 times the value of the source impedance for a single wire of the same diameter. Hence, the impedance values are quite sensible as well.</p>
+  <p>For the most part, the implementations of public domain MININEC yield wholly unreliable results, indicating that the model has exceeded core limitations by an excessive amount. The completely unrealistic source impedance values make any inspection of the gain values otiose. However, the fact that the NEC4WIN gain values are out of line with the AO and MMANA values, even for uncorrected MININEC calculations, suggest that in redoing the algorithms for Windows, some alteration has occurred.</p>
+  <p>The ELNEC and Antenna Model value sets, however, are exceptions to the MININEC rule. Both ELNEC and Antenna Model contain close-wire correction factors not used by the other programs. The result are sets of both gain and impedance values that are quite coincident with the values produced by NEC models.</p>
+  <p>Although we have looked at only two models--folded dipoles that are within and outside normal core limitations--the exercise does indicate the value of comparative modeling. There are differences between the limitations of the cores surveyed. As well, there are also limitations and correctives within implementations of those cores, some of which involve core reprogramming and some of which involve supplemental correction factors. Even correctives bearing similar names in different programs may operate differently. Therefore, it pays to explore the programs by using a series of models that press the limitations to discover just where a given program's limits actually lie.</p>
+  <p><b>A UHF Model of a 4-Element Yagi</b></p>
+  <p>We have noted a frequency corrective applied to some implementations of MININEC. As we increase frequency, MININEC 3.13 develops a frequency inaccuracy that AO, Antenna Model, and NEC4WIN attempt to correct. ELNEC and MMANA apparently do not have such correction factors.</p>
+  <p>Interestingly, the AO MININEC correction factors are calibrated to NEC-2. However, NEC-2 also exhibits a frequency-based deviation from the results obtained from NEC-4 models of the same antenna. The deviation become more pronounced in the upper VHF area and above. It is likely that the differences in reports result from changes made for the NEC-4 core in the treatment of the source "gap" and the element end calculations.</p>
+  <center>
+    <img src="amod51-3.gif" width="610" height="426" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's see to what extent the programs display the deviations. <b>Fig. 3</b> shows the outline of a 4-element utility Yagi designed to have a very low (under 1.25:1) 50-Ohm SWR across the 420-450 MHz band. <b>Fig. 4</b> shows the NEC-4 SWR curve for the antenna.</p>
+  <center>
+    <img src="amod51-4.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following listings of EZNEC wire tables provide the dimensions for the antenna in inches, in meters, and in wavelengths.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+W4RNL 432 WB Yagi               Frequency = 432  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+1            0.000, -6.575,  0.000         0.000,  6.575,  0.000 5.00E-01  15
+2            5.807, -6.083,  0.000         5.807,  6.083,  0.000 5.00E-01  15
+3            9.626, -5.453,  0.000         9.626,  5.453,  0.000 5.00E-01  15
+4           15.748, -5.256,  0.000        15.748,  5.256,  0.000 5.00E-01  15
+
+Wire Conn. --- End 1 (x,y,z : m )  Conn. --- End 2 (x,y,z : m )   Dia(mm) Segs
+
+1            0.000, -0.167,  0.000         0.000,  0.167,  0.000 1.27E+01  15
+2            0.147, -0.154,  0.000         0.147,  0.154,  0.000 1.27E+01  15
+3            0.244, -0.139,  0.000         0.244,  0.139,  0.000 1.27E+01  15
+4            0.400, -0.133,  0.000         0.400,  0.133,  0.000 1.27E+01  15
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : wl)  Conn. --- End 2 (x,y,z : wl)   Dia(wl) Segs
+
+1            0.000, -0.241,  0.000         0.000,  0.241,  0.000 1.83E-02  15
+2            0.213, -0.223,  0.000         0.213,  0.223,  0.000 1.83E-02  15
+3            0.352, -0.200,  0.000         0.352,  0.200,  0.000 1.83E-02  15
+4            0.576, -0.192,  0.000         0.576,  0.192,  0.000 1.83E-02  15
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           8     2 / 50.00   (  2 / 50.00)      1.000       0.000       I
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The worst case segment length to wire radius ratio is 2.62:1, reasonably well within most program limitations for linear elements with no odd geometric features. The shortest segment is 0.024 wl long (with the longest 0.03231 wl). MININEC models of the same antenna used 16 segments per element to center the source on wire 2.</p>
+  <p>In tabulating the results for this model using various programs, it is necessary to sample them at 10 MHz intervals across the 420-450 MHz span. Therefore, each entry consists of four entries forming a progression that will be useful in evaluating the results. Because each data entry is larger, values have been truncated wherever they exceed the column allowance.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                   Wide-Band 4-Element Yagi for 420-450 MHz
+
+Program     Freq. Free-Space  Front-Back  Source Impedance        50-Ohm
+ and Core   MHz   Gain dBi    Ratio dB    R +/- jX Ohms           SWR
+
+A. NEC Cores
+EZNEC 3.0
+  NEC-4     420   9.12        11.56       45.81 - j  2.99         1.114
+            430   9.23        12.14       56.30 + j  1.51         1.130
+            440   9.34        12.73       61.22 - j  2.38         1.230
+            450   9.55        14.31       49.46 - j  7.28         1.158
+  NEC-4D    420   9.12        11.56       45.81 - j  2.99         1.114
+            430   9.23        12.14       56.30 + j  1.51         1.130
+            440   9.34        12.73       61.22 - j  2.38         1.230
+            450   9.55        14.31       49.47 - j  7.28         1.158
+  NEC-2     420   9.17        11.69       47.77 - j  1.14         1.053
+            430   9.27        12.20       58.14 + j  1.51         1.166
+            440   9.40        12.92       59.93 - j  4.57         1.221
+            450   9.64        14.99       42.72 - j  6.56         1.236
+
+NEC-Win Plus
+  NEC-2     420   9.17        11.69       47.77 - j  1.14         1.053
+            430   9.27        12.19       58.14 + j  1.50         1.166
+            440   9.40        12.92       59.93 - j  4.57         1.221
+            450   9.64        14.99       42.72 - j  6.56         1.236
+
+NEC-Win Pro
+  NEC-2     420   9.17        11.69       47.77 - j  1.15         1.05
+            430   9.27        12.19       58.14 + j  1.50         1.17
+            440   9.40        12.92       59.93 - j  4.57         1.22
+            450   9.64        14.99       42.73 - j  6.57         1.24
+
+GNEC
+  NEC-4D    420   9.12        11.56       45.81 - j  3.00         1.11
+            430   9.23        12.14       56.30 + j  1.51         1.13
+            440   9.35        12.74       61.22 - j  2.38         1.23
+            450   9.55        14.31       49.47 - j  7.29         1.16
+
+B. MININEC 3.13 Cores
+ELNEC 3.0   420   8.95        10.42       38.11 - j 12.47         1.480
+            430   9.10        11.58       48.22 - j  3.96         1.092
+            440   9.20        12.21       57.67 - j  1.27         1.156
+            450   9.33        13.00       59.82 - j  5.36         1.227
+      (     460   9.58        14.95       46.49 - j  7.08         1.178  )
+
+AO 6.5
+  No Corrections
+            420   8.95        10.74       39.3  - j 11.4          1.44
+            430   9.09        11.81       49.6  - j  3.5          1.07
+            440   9.20        12.39       58.6  - j  1.5          1.18
+            450   9.34        13.24       59.4  - j  5.7          1.22
+  Frequency Cor.
+            420   9.02        11.86       47.7  - j  2.8          1.08
+            430   9.13        12.30       58.4  + j  1.2          1.17
+            440   9.26        12.85       62.6  - j  2.9          1.26
+            450   9.49        14.58       49.3  - j  6.3          1.14
+
+Ant. Model  420   9.00        11.55       44.90 - j  4.87         1.160
+            430   9.12        12.13       55.80 + j  0.92         1.117
+            440   9.24        12.61       62.51 - j  1.39         1.252
+            450   9.44        13.96       53.65 - j  6.89         1.162
+
+NEC4WIN-VM 3.1
+  No Corrections
+            420   8.95        10.43       38.13 - j 12.49         1.48
+            430   9.10        11.58       48.25 - j  3.96         1.09
+            440   9.20        12.21       57.74 - j  1.26         1.16
+            450   9.33        13.00       59.91 - j  5.38         1.23
+  Frequency Cor.
+            420   9.45        10.86       48.22 - j  5.77         1.13
+            430   9.54        11.59       53.32 + j 12.77         1.29
+            440   9.67        12.85       42.13 - j 18.51         1.54
+            450   9.92        15.58       23.44 - j  7.82         2.20
+
+MMANA
+            420   8.94        10.41       38.16 - j 12.53         1.48
+            430   9.09        11.57       48.28 - j  3.99         1.09
+            440   9.19        12.20       57.75 - j  1.28         1.16
+            450   9.32        12.99       59.93 - j  5.35         1.23
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>If we compare MININEC results to the NEC-2/-4 results, we obtain an interesting picture. Uncorrected MININEC gives consistent results in all implementations. However, as the extra line in the ELNEC entry shows, there is nearly a 10 MHz offset in the 420-450 MHz band relative to NEC values. This amounts to an approximate 2 to 2.5 percent difference.</p>
+  <p>The frequency offset correction operations differ between AO 6.5 and Antenna Model on the one hand and NEC4WIN-VM 3.1 on the other. The AO and Antenna Model corrected values tend to track the NEC-2 figures very well, although there is a slight gain deficit in the MININEC values despite calibration to NEC- 2. In contrast, the NEC4WIN corrected values appear to push the NEC-2 values by a frequency offset that is 10% in the other direction than uncorrected MININEC. For example, the source impedance value for 450 MHz (23.44 - j 7.82 Ohms) is not reached by the NEC models until the frequency is near 470 MHz. As well, the NEC4WIN gain values may be as much as two 10 MHz steps off.</p>
+  <p>However, we should not neglect the fact that there is also a difference between the NEC-2 and NEC-4 figures. Since all NEC-2 values coincide and all NEC-4 (including both single and double precision) values also coincide, we can glimpse the differentials from looking at the EZNEC values, which are clustered in the table. There is about a 5 MHz frequency offset between NEC-2 and NEC-4. The NEC-2 values for 420 MHz approach those reached in NEC-4 at about 425 MHz, and the progression continues through the passband of the antenna. The progression applies to all of the figures for gain, front-to-back ratio, and source impedance.</p>
+  <p>The 1+% frequency offset between NEC-2 and NEC-4 at UHF may not seem like much for a wide-band utility Yagi design. However, for a long-boom, narrow-band array that requires precise dimensions for each element, that degree of offset may prove quite significant.</p>
+  <p>The frequency offset is a function of the fact that the element diameter (0.5") is approaching the length of a segment (average 0.8"). Whenever this condition exists, NEC-2 will return offset results unless one invokes the EK command. This command is not presently available on entry-level software, except for NEC2GO and EZNEC, where (after the initial testing that produced the table above) it is invoked automatically. However, the command is available on advanced NEC-2 software, such as NEC-Win Pro. If we add the "fat-wire" command (actually labeled the "extended thin wire kernel"), which uses a more complex algorithm for the core calculations, we obtain the following results for a NEC-2 model.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                   Wide-Band 4-Element Yagi for 420-450 MHz
+
+Program     Freq. Free-Space  Front-Back  Source Impedance        50-Ohm
+ and Core   MHz   Gain dBi    Ratio dB    R +/- jX Ohms           SWR
+
+A. NEC Cores
+
+NEC-Win Pro with EK
+  NEC-2     420   9.12        11.52       45.64 - j  2.99         1.12
+            430   9.23        12.11       56.12 + j  1.64         1.13
+            440   9.35        12.72       61.11 - j  1.23         1.23
+            450   9.55        14.29       49.40 - j  7.23         1.16
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The end product is a table of values very close to the NEC-4 values. The revised algorithms in NEC-4 resulted in dropping the EK command from the list, since it was no longer required. Whenever the wire diameter is less than half the length of the segments in a NEC-2 model, it is usually wise to invoke the EK command if it is available.</p>
+  <p>Returning to the MININEC 3.13 programs, we should note that of all the commercial implementations, only Antenna Model yields results in both the close-spaced wire test and the UHF test that track closely with NEC results. AO has an effective frequency corrective and ELNEC has an effective close-wire corrective: Antenna Model has both, plus reported correctives for both standard (quad-type) corner junctions and very narrow (less than 28 degrees) angular junctions. These latter features would require additional tracking tests, with the caution that for very narrow angular junctions, there may be differences in NEC-2 and NEC-4 results.</p>
+  <p>As with all offsets among programs and program cores, the degree of offset allowable relative to a particular standard depends upon the range of tasks, frequencies, and antenna geometry complexities that define our modeling needs. These notes are designed simply to bring some of the fringe-area phenomena into the open for inspection. The relative importance of each differential is, in the end, a user judgment.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

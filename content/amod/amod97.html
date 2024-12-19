@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Integrating Commands: A Case Study</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>97. Integrating Commands: A Case Study</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In past episodes, we have examined some of the commands available on more advanced implementations of NEC. In each case, we looked at the command in relative isolation, with only enough of a model to illustrate how we enter and basically use the command. Although such guidance is a necessary step on the road to mastery of the command, it does not reveal the full power of the commands. That power only becomes apparent as we gradually learn how to integrate the commands into a model so as to achieve a goal.</p>
+  <p>There is no set of examples that will fully illustrate how we may effectively integrate commands for more effective modeling. The number of structure geometry and control commands is simply too large to sample every potential combination that we might effectively use. At most, we can look at a case study to see the thinking process that goes into setting up a model. Then, the rest is up to your own ingenuity in developing the most effective model for the task specifications that oversee the work.</p>
+  <p>The case study that I shall present involves a relatively recent innovation in AM broadcast antenna design. The antenna is called the Star-H, and has been developed by Kinstar, a joint partnership between the Star-H Corporation and Kintronic Laboratories. For more information, see the July issue of <i>antenneX</i> or the web sites indicated in that article. The article author, Dave Cuthbert, WX7G, adapted the antenna--at least in model form--to 160 meters and introduced a further space-reduction technique.</p>
+  <p>The basic star-H divides the vertical portion of the array into 4 parallel vertical wires, on the premise that each wire will have 4 times the impedance of a single vertical, a desirable situation for easier impedance matching and lower power losses in the resistive connections from part-to-part. A second feature of the antenna is converting each vertical leg into an inverted-L configuration. Since each of the 4 folded sections will form a symmetrical horizontal collection with the same current magnitude and phase angle everywhere along each wire, the horizontal fields will cancel, leaving only the radiation from the base-fed vertical wires. The effect is comparable to a 4-spoke top hat arrangement, except that each leg of the array will have its own higher source impedance. <b>Fig. 1</b> shows the general outline of the array. Since the view is broadside, you will have to visualize the horizontal legs projecting into and out of the page that correspond to the ones going from side to side.</p>
+  <center>
+    <img src="amod97-1.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The object of the design is to reduce the height required by the array to about 1/3 the height of a full size 1/4 wavelength monopole. Each inverted-L section thus requires a very long horizontal section. Since the center 4 wires and the end of each horizontal wire require support--presumed to be a power pole or similar--the antenna needs considerable real estate. In scaling the antenna to the 160-m amateur band, Cuthbert folds each horizontal end toward but not to an adjacent corner. The result is an array that might fit a reasonable plot of ground without either excessive vertical or horizontal demands.</p>
+  <p>The resulting model that I created used AWG #12 wire throughout (without loss, since the model is for illustration of some modeling principles). The vertical sections are 50' high, with the initial parts of the horizontal portions 35' long. Hence, the tip-to-tip distance is a maximum of 70'. The fold-overs are about 45' long and approach the tip of the next corner. <b>Fig. 2</b> shows the Cuthbert design as adapted here.</p>
+  <center>
+    <img src="amod97-2.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The Star-H developers recommend an industry-standard 120-radial system beneath the antenna and the ground. My interest in the design was to find out its potential when used over such a radial system. In outline, the system has the appearance of <b>Fig. 3</b>, if we could view it with X-ray vision from overhead.</p>
+  <center>
+    <img src="amod97-3.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Of course, a buried radial system requires the use of NEC-4 software, so the following modeling exercise uses GNEC. Each radial is 1/4 wavelength long at 1.8 MHz. A wavelength at that frequency is about 166.6-m or 546.6' long, so the radials are each 136' long. Hence, the entire structure of the antenna itself, including the bent inverted-L legs, will fit well within the limits of the field, which is 272' from tip-to-tip.</p>
+  <p>In the process of testing various constructs for the field, I confirmed the fact that a truly symmetrical arrangement of wires in a radial pattern does not need to have the same segmentation density of wires that do not result in mutually canceling fields. Hence, while the other portions of the array use a segment length of about 1', the buried ground plane structure uses only 25 segments per radial. I raised the number of segments per radial from 10 to 25 using a test 1/4-wl monopole, and the impedance change was minuscule: delta R was 0.02 Ohm and delta X was 0.05 Ohm. Further increases in the segments per radial seemed unjustified, although you can add a GC command and taper the segment lengths along the radial.</p>
+  <p>Even with the sparse segment population, a 120-radial field requires 3000 segments to go with 120 wires or GW tag entries. Software having only GW or individual wire entry facilities thus results in very large model files, even before entering the upper portions of the antenna. However, NEC has two commands well worth using on this model:</p>
+  <p>The WG or "write a numerical Green's function file" command allows us to separate the radial system portion of the model from the upper structure. By including the companion GF or "re-call a numerical Green's function file" in a separate model containing the upper portion of the structure, we can run the radial system once for a given frequency and use its output with any number of antenna structures. When the NEC core runs with the second file, it need not perform the entire set of matrix calculations over again, but calls up the results from the Green's file saved with an .NGF extension and combines them with the added structural elements in the new file. The result is a very great savings in run time, although the actual saving depends on the ratio of added segments to those handled by the initial model that created the Green's function file. In the present case, the radial system will use 3000 segments, but the additions will use no more than 530 more.</p>
+  <p>A 3000-segment radial system, if composed solely of GW entries, would require considerable run time before it wrote the .NGF file. However, we can shorten that run time to something insignificant by using another available command. The GR or "rotational symmetry" command requires only the establishment of the first wire. Then, we simply specify that we wish a total of 120 structures at 3-degree intervals to arrive at a fully symmetrical and complete ground radial system. If nothing disturbs the symmetry, then we end up with a rapid-fire run. In fact, it required under 10 seconds on a 1.8 GHz PC.</p>
+  <p>The following lines shows the radial portion of the antenna model at 1.8 MHz.</p>
+  <pre>
+CM 160-m radial system: 1/4 wl long/radial, #12 wire
+CE
+GW 1 25 0 0 -1 0 136 -1 .00673
+GR 1 120
+GS 1 0 0
+GE
+FR 0 1 0 0 1.8 1
+GN 2 0 0 0 13.0000 0.0050
+WG radials.ngf
+EN
+</pre>
+  <p>The geometry section is a paradigm of simplicity, with only the first radial and the rotational symmetry commands. Since the dimensions are in feet, we need to add a scaling factor, which uses the automated feet-to-meters option available in NEC-4. The "plain" GE command and a more complex entry (GE -1 -1 0) yield the same results. The presence of a ground does not disturb rotational symmetry since the model makes no attempt to rotate the symmetrical structure from its initial orientation.</p>
+  <p>The actual ground is the usual entry for average soil conditions, with a conductivity of 0.005 S/m and a dielectric constant or permittivity of 13. If you change either the frequency (set at 1.8 MHz) or wish to use a different set of ground conditions, you will have to make a decision. You may alter the entries in the model that writes the .NGF file and re-run an unchanged model with the added structure. Alternatively, you may save the results of changing the frequency or ground conditions under a different file name with the .NGF extension and make similar changes in the model with the antenna structure. Each .NGF file for the 120 radials uses about 1.7 MB of hard drive storage, which is greater than the sum of all other input, output, and temporary files combined for the model with the antenna structure, but still a very small file of its type.</p>
+  <p>The alternative method of creating the radials would use the GM command.</p>
+  <pre>
+CM 160-m radial system: 1/4 wl long/radial, #12 wire
+CE
+GW 1 25 0 0 -1 0 136 -1 .00673
+GM 1 119 0 0 3 0 0 0
+GS 1 0 0
+GE
+FR 0 1 0 0 1.8 1
+GN 2 0 0 0 13.0000 0.0050
+WG radials.ngf
+EN
+</pre>
+  <p>The GM command creates all of the necessary radials. However, it requires 320 seconds (on the same computer) to run and requires an .NGF file storage space of 141 MB. Those numbers represent 32 times the run time and 82 times the storage space of the GR version of the radial system.</p>
+  <p>The corresponding antenna structure file that recalls the radial system results will have an appearance that depends on the complexity of the superstructure. The following model is for a test monopole that is full length, but still uses AWG #12 wire.</p>
+  <pre>
+CM 160-m monopole over radials
+CM call radials.ngf
+CE
+GF radials.ngf
+GW 201 1 0 0 -1 0 0 0 .00673
+GW 202 1 0 0 0 0 0 1 .00673
+GW 203 131 0 0 1 0 0 132 .00673
+GS 1 0 0
+GE -1 -1 0
+EX 0 202 1 0 1 0
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>The first structure entry is a call for the .NGF file contents. Then we add the monopole structure. GW201 is a 1' wire connecting the hub of the radials to the surface (Z = 0). GW202 is a 1' 1-segment wire from the ground up and serves as the source segment (see the EX0 entry). GW 203 handles the rest of the vertical monopole. In this case, the height worked out to exactly 1' per segment. Since the model that wrote the .NGF file uses 120 tag numbers, the antenna structure begins with a higher number. In this case, the number was chosen for easy tracking of more complex antenna structures above ground. Note the use of the more elaborate GE command to ensure that the model records that a ground plane is present, but that the current expansion should undergo no modification, since there are buried wires within the total structure.</p>
+  <p>The model that calls and uses an .NGF file holds the excitation and radiation pattern requests. However, it contains no ground specification (GN) for frequency setting (FR). Those commands appear in the model that wrote the .NGF file. Since those specifications are necessary to both parts of the model and must be self-consistent, they begin life in the earlier model.</p>
+  <p>Despite the fact that we have 3133 total segments in the monopole and its radial system, the model required under 1 minute to complete the calculations. This speed proved very useful, since a number of experimental heights were required before the antenna achieved near-resonance. The model showed a gain of 1.30 dBi at a take-off angle of 23 degrees elevation (theta = 67 degrees). The reported impedance for lossless wire was 36.028 - j2.021 Ohms. These values become reference marks for models of the Cuthbert version of the Star-H for 160 meters.</p>
+  <p>Above the 1' above ground level, the new array requires 4 identical structures. For each leg of the array, there is a short (2') wire running horizontally away from center. Then there is a vertical section that I set at 50'. Next, there is another horizontal wire at the 50' level running 35' away from the vertical leg. Finally, we have a 45' wire running from the end of the previous wire toward the corner of the next structure.</p>
+  <p>In some implementations of NEC, we would have to repeat the 4-wire set for each leg of the modified Star-H. However, implementations using the full command set allow us to simplify the set-up. The following model--using a single source of excitation--shows how we can minimize the number of GW entries.</p>
+  <pre>
+CM 160-m star-H over radials
+CM call radials.wgf
+CE
+GF radials.ngf
+GW 201 1 0 0 -1 0 0 0 .00673
+GW 202 1 0 0 0 0 0 1 .00673
+GW 203 2 0 0 1 0 2 1 .00673
+GW 204 50 0 2 1 0 2 50 .00673
+GW 205 35 0 2 50 0 35 50 .00673
+GW 206 45 0 35 50 32 3 50 .00673
+GM 10 3 0 0 90 0 0 0 203 1 206 45
+GS 1 0 0
+GE -1 -1 0
+EX 0 202 1 0 1 0
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>It is possible to use the GR command in the antenna model. We would need to move the first two GW entries to follow the GR command, which applies to the structure as it departs the center line (X = Y = 0). GR will create the wires, but not use symmetry in the calculation. The GR version of the model has the following appearance.</p>
+  <pre>
+CM 160-m star-H over radials
+CM call radials.wgf
+CE
+GF radials.ngf
+GW 203 2 0 0 1 0 2 1 .00673
+GW 204 50 0 2 1 0 2 50 .00673
+GW 205 35 0 2 50 0 35 50 .00673
+GW 206 45 0 35 50 32 3 50 .00673
+GR 10 4
+GW 201 1 0 0 -1 0 0 0 .00673
+GW 202 1 0 0 0 0 0 1 .00673
+GS 1 0 0
+GE -1 -1 0
+EX 0 202 1 0 1 0
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>The use of GR in the upper portion of the antenna does not gain anything significant in terms of run time. Both models require just over 124 seconds to run. Because the bulk of the run time involves loading and processing the results of the 3000-segment .NGF file, the remaining 530 segments of new geometry require only a small part of the run time. To effect a significant saving of run time (apt perhaps to larger models than the present example), we would need to design the upper structure so that the GR command had no following GW lines.</p>
+  <p>The single-feed version of the Cuthbert-modified Star-H reports a gain of 1.05 dBi (in both the GM and GR versions of the model) with an TO elevation angle of 25 degrees (65 degrees theta). The source impedance report is 13.183 + 0.548 Ohms. We may also provide the model with 4 separate feedpoint, using the first segment of GW 204 (and its counterparts, GW 214, GW 224, and GW 234). We do not change the model otherwise, since the feedpoints appear in series with the structure. Hence, they need completion to ground and use the same routes through GW201 and GW202 on the way to the radial system below ground.</p>
+  <pre>
+CM 160-m star-H over radials
+CM call radials.wgf
+CE
+GF radials.ngf
+GW 201 1 0 0 -1 0 0 0 .00673
+GW 202 1 0 0 0 0 0 1 .00673
+GW 203 2 0 0 1 0 2 1 .00673
+GW 204 50 0 2 1 0 2 50 .00673
+GW 205 35 0 2 50 0 35 50 .00673
+GW 206 45 0 35 50 32 3 50 .00673
+GM 10 3 0 0 90 0 0 0 203 1 206 45
+GS 1 0 0
+GE -1 -1 0
+EX 0 204 1 0 1 0
+EX 0 214 1 0 1 0
+EX 0 224 1 0 1 0
+EX 0 234 1 0 1 0
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>The 1.80-MHz performance report includes a gain of 1.10 dBi at a TO elevation angle of 25 degrees (65 degrees theta), and individual source impedances of 52.421 + j2.004 Ohms. <b>Fig. 4</b> provides a comparison of the patterns of the two modified Star-H antennas (solid line) and the reference 1/4 wavelength monopole.</p>
+  <center>
+    <img src="amod97-4.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 2-degree difference in the TO angle and the 0.2-dB difference in gain is a function of the full-size monopole's greater length and the resulting current distribution. For high power BC application, the basis for the use of 4 feedlines lies not only in the lower losses associated with the higher impedances. As well, the system distributes the total source current among 4 feedlines, further reducing the stress on each cable due to heating. For local stations using power levels up to a few thousand watts, high power coaxial cables would likely serve well and avoid problems of routing and spacing from other objects that parallel feedlines involve. A carefully tuned 4-source system might easily avoid the use of any matching components at the individual sources, simply by "pruning" the 4 wires to achieve matching conditions.</p>
+  <p>Even in amateur service, a 4-port coaxial system is usable, although amateurs operate across a span of frequencies within each assigned band. One advantage of the 4-source feed system is the simplicity of extending the 2:1 SWR range of the antenna while sustaining the lower losses of the higher impedance. The key is to adjust the height of the array so that the resistive portion of the impedance extends from perhaps 35 Ohms to perhaps 80 Ohms as we move the frequency above 1.8 MHz. The rate of change of the resistive portion of the impedance is about 8 Ohms per 100 kHz in the 50-Ohm region. The second part of the balancing act is to use a horizontal length that is slightly long at the lowest frequency. Then the antenna exhibits inductive reactance everywhere within the band. A series capacitor at each feedpoint can compensate for the reactance, leaving only a resistive impedance for the individual cables. The rate of change of the reactance is nearly 80 Ohms per 100 kHz and shows a nearly linear curve. Selecting a capacitor with a suitably wide range to match the reactance range to be compensated is both possible and feasible. The only update to this very old technique is that the remote capacitors require careful ganging and equally careful weather-proofing.</p>
+  <p>At the equipment end of the 4 lines, you may change the impedance of each line to 200 Ohms using a 1:4 UNUN. The 4 higher impedances then require only parallel connection to match 50-Ohm equipment outputs and inputs. In more critical situations, such as BC service, where the exact pattern shape makes a licensing difference, the system must have means of ensuring that the balance of power is correct at the antenna terminals.</p>
+  <p>These notes on matching systems are secondary to the main focus of this column: the use the NEC resources to produce the most efficient and effective model. By integrating a number of commands into a model, we produced a 120-radial system and an .NGF file that we can apply to an unlimited number of antennas. To modify the model for other frequencies, we need only make two small maneuvers. First, we would reset the frequency in the FR command. Second, we would change the length of the radial to suit the frequency and whatever other design specifications might be relevant to the project. Since the model invokes the rotational symmetry (GR) command, the radial revision effort requires a change to only a single GW entry. We might make the radial system one step more complex by entering a GC command following the single GW entry. In that command, we might length-taper the radial from the center outward so that the innermost segment has a length to match the depth of the field (1'). We may also change the size of the system simply by altering the angle and total number of structures within the GR command. The result is a model that runs extremely rapidly and requires minimal storage space for the resulting .NGF file.</p>
+  <p>The antenna structure file that calls upon the radial system .NGF file is also compact. For symmetrical systems, we may create only one of the upper structures and use either the GM and GR command to replicate the initial structure the require number of times. In the present project, if we wished to alter the balance between the vertical and horizontal portions of the upper structure, we would need to enter only a single set of new coordinates. The GM command would replicate the first as many times as might be necessary to finish the task. In addition, the use of the .NGF file for the radial system shortens the run time between design revisions from somewhere in the 6- to 10-minute range down to 2 minutes on the PC used for this exercise. As a result, the entire design perfection procedure takes a matter of hours rather than days.</p>
+  <p>There are other commands that we might have incorporated into our integrated model. For example, we might design and add a matching network to the single-source version of the model, using NT-command techniques explored in the two most recent columns. We can easily calculate the required components for a down converting L-circuit and from that point find usable entries of Y11, Y21, and Y22 in the 2-port NT command. By estimating the value of the coil Q, we can get a measure of the network losses. Of course, we may add into the final design a material loading value (LD5) for both the radials and the upper antenna structure.</p>
+  <p>Antenna modeling, then, is not just a matter of learning the terms of each command. It is also a matter of learning to see opportunities for integrating the commands into a model (or, in this case, a pair of models) so as to yield the most effective combination that will minimize unnecessary work (as well as work time) and maximize flexibility. Since these tasks tend to be task specific, there is no single general rule that will cover all cases. Rather, there are only case studies--like the present one--that may alert you to the possibilities. At that point, your own ingenuity must take over.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Designing With NEC: A Case Study</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>44. Designing With NEC: A Case Study<br>
+    Part 1: The 4 Ss</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Recently, I had occasion to design a 4+-element, 5-band quad array. The exercise brought to mind a number of questions that have been sent to me over the last few months, many of which involved ideas that came into play during the process of generating the antenna design. Hence, I thought that making a case study of the design effort might be useful to others who wish to use NEC (or MININEC) to design one or more antennas of the garden variety. By garden variety, I mean antennas of conventional HF and VHF design and structure.</p>
+  <p>The effort begins far from the software itself. Before we are done, we shall be thoroughly involved with NEC, but initially, we start with pencil and paper (or word processor and screen). The first step is deciding and defining what you wish to design.</p>
+  <p><b>Specifications</b></p>
+  <p>In any design process, if you do not know what you want to achieve, you will never know when you have achieved it--or why you may be falling short of the goal. Therefore, the first "S" on our list is a set of specification that give a detailed picture of the antenna we wish to design. All such lists involve familiarity with the antenna type so that the specifications are realistic. For the case in hand, the antenna is a 5-band quad on a 26' boom. There will be at least 4 elements per band, arranged in the standard way: a 10' separation of the reflector from the driver, with directors at 8' intervals ahead of the driver.</p>
+  <p><b>Starting Point</b></p>
+  <p>Before we complete the list of specifications, let's introduce another "S." Since we do not need to reinvent the large multi-band quad array, we might as well begin with an existing antenna that comes closest to what we wish to design. In this case, it is the "3.5-element" quad array designed by Danny Mees, ON7NQ, and described in some detail in Quad Notes, Vol. 1. For 20, 17, and 15 meters, the antenna has 3 elements that use the 10'-8' spacing. For 12 and 10 meters, Danny inserted an extra element 5' ahead of the reflector (and hence, 5' behind the lower- band drivers). These elements are the drivers for the higher bands, and the remaining two elements become directors. <b>Fig. 1</b> shows the general outline of the array.</p>
+  <center>
+    <img src="amod44-1.gif" width="447" height="456" border="2" vspace="5" hspace="9">
+  </center>
+  <p>By analyzing the ON7NQ array, we can get a fairly good idea of 3+-element performance potentials and put ourselves in a better position to set specifications for the 4+-element array.</p>
+  <p>The following table lists the dimensions of the elements, band-by-band. For the moment, we may ignore the first two columns and focus solely on the side-length and circumference of each element.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ON7NQ 3.5-element 5-Band Quad Dimensions (Inches)
+
+Modeling   Antenna          1/2 Side        Side            Loop
+Variable   Part             Length          Length          Circumference
+A          20 Refl          108.5           217.0           868.0
+B          20 Dri           106.85          213.7           854.8
+C          20 Dir 1         102.5           205.0           820.0
+D          ---
+E          17 Refl          84.25           168.5           674.0
+(F)        (Reserved for Start Frequency)
+G          17 Dri           83.15           166.3           665.2
+H          17 Dir 1         79.9            159.8           639.2
+I          ---
+J          15 Refl          72.4            144.8           579.2
+K          15 Dri           71              142.0           568.0
+L          15 Dir 1         69              138.0           552.0
+M          ---
+N          12 Refl          61.2            122.4           489.6
+O          12 Dri           59.95           119.9           479.6
+P          12 Dir 1         59.1            118.2           472.8
+Q          12 Dir 2         59.35           118.7           474.8
+R          ---
+S          10 Refl          55.34           110.68          442.7
+T          10 Dri           52.9            105.8           423.2
+U          10 Dir 1         52.3            104.6           418.4
+V          10 Dir 2         51.995          103.99          416.0
+(W)        (Reserved for Start Wavelength)
+X          ---
+
+Note:  To convert to meters, divide inches by 39.37.
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>These elements were converted into numbers for a NEC-4 model, the details of which we shall shortly address. For now, our main interest lies in the band-by-band performance reports.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Modeled Performance:  ON7NQ 3.5-element, 5-Band Quad
+NEC-4; Full Segmentation
+
+Freq.      Gain       Front/Back Impedance        50-Ohm
+MHz        dBi          dB       R +/- jX         SWR
+
+14.0       8.42       11.83      37.6 - j 18.5    1.66
+14.175     8.29       15.06      44.3 + j  4.4    1.17
+14.35      8.06        9.76      34.8 + j 36.5    2.50
+
+18.068     8.47       21.80      42.7 - j  5.1    1.21
+18.118     8.42       25.52      43.5 - j  0.3    1.15
+18.168     8.36       20.90      43.2 + j  4.6    1.19
+
+21.0       8.43       15.28      49.7 - j 20.1    1.49
+21.225     8.52       20.98      46.4 - j  0.0    1.08
+21.45      8.47       10.24      36.2 + j 30.7    2.16
+
+24.89      9.26       22.72      35.1 - j  2.1    1.43
+24.94      9.22       18.92      41.1 + j  2.3    1.27
+24.99      9.18       16.70      47.6 + j  4.8    1.12
+
+28.0       9.01       18.40      43.8 - j 31.6    1.96
+28.2       9.35       25.89      45.3 - j 11.0    1.29
+28.4       9.62       30.72      51.3 + j  6.8    1.15
+28.6       9.85       22.80      58.7 + j  9.6    1.27
+28.8       9.73       12.38      31.1 + j  8.1    1.68
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The array is a quite good performer of its type, although there are a few areas on which we might like to make improvements as we work toward the larger design. The 20- and 15-meter bands are limited to the lower ends. Whole band coverage would be desirable if possible. It is unlikely that a wire quad array of this order can be made to cover the entire first MHz of 10 meters at the level of performance reported.</p>
+  <p>The antenna also makes evident certain other limits of wire quad arrays. Although monoband Yagis can be designed with better than a 20 dB front-to-back ratio across the band of interest, wire quads have much narrower bandwidth limits. Therefore, a 15 dB front-to-back figure is more likely to be achieved. As well, thin-wire quad arrays are subject to rapid changes in performance characteristics with relatively small changes in frequency. Therefore, it pay to scan the edges as well as the middle of even the narrowest amateur bands to assure adequate performance. Notice, for example, the 6 dB drop in the front-to-back ratio on 12 meters from one edge of the band to the other.</p>
+  <p><b>Specifications--Again</b></p>
+  <p>The object of the design process will be an enlarged version of the ON7NQ array, with an extra director 8' in front of the current forward director. The array will retain the extra elements for 12 and 10 meters and place them as in the original. Now we can set some goals derived from the array we have just examined.</p>
+  <ul>
+    <li>Gain: at least 0.7 dB greater than the existing array</li>
+    <li>Front-to-Back Ratio: at least 15 dB across each band--if possible</li>
+    <li>Source Impedance: less than 2:1 50-Ohm SWR for direct feed (individually) on each band with a standard 50-Ohm coaxial cable</li>
+    <li>Coverage: Full band coverage of all bands, with 800 kHz coverage of 10 meters</li>
+  </ul>
+  <p>Let's see how completely we can realize these goals.</p>
+  <p><b>Strategy</b></p>
+  <p>To develop a model with which we can easily work while designing takes some forethought. First, the model will be large--22 elements to be exact, with each element consisting of 4 wires. To meet the general recommendation that segment junctions be aligned as closely as is reasonable possible, the wires for each band will require different levels of segmentation. If 10 meters receives 7 segments per side-wire for each elements, the we should increase the number of segments per side by 2 for each lower band. The 20-meter elements will use 15 segments per side, about twice the number as those in each side of the 10-meter elements. <b>Fig. 2</b> sketches the segmentation of the reflector elements from the array.</p>
+  <center>
+    <img src="amod44-2.gif" width="417" height="440" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The basic model for the array consists of 88 wires and 944 segments. We shall look at the model-size issue momentarily.</p>
+  <p>First, let's examine how design work will proceed. We have the ON7NQ dimensions, but we must allow for the possibility that a larger array will require at least small changes in any of the dimension figures. As well, we must begin with an educated guess at the proper size for the new directors that we shall add. Then, the process will be to optimize the dimensions to achieve the performance specifications.</p>
+  <p>The model will be set in free space so that its dimensions can be set out in terms of both +/-Y and +/-Z. This limits the key dimensional number to one per element. However, manually changing the dimensions of any single element requires up to 16 numerical entries into a wire table, with considerable chance for the usual embarrassing lot of split-key entries and transposed numbers.</p>
+  <p>To simplify the process, I used the model-by-equation facility. The first column of the ON7NQ dimension table lists the variable to which each element dimension is assigned. (Note that the software used, NEC-Win Plus, reserves F for the start frequency and W for the corresponding wavelength.) The variables carry us up through X in the alphabet of available variables. To avoid using up variables on the fixed spacings between elements, these values were entered numerically on the Wires page. <b>Fig. 3</b> shows a partial page of values.</p>
+  <center>
+    <img src="amod44-3.gif" width="640" height="738" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although not clearly evident from the wires-page graphic, I arranged the wires according to the spacing from the reflector, with all 5 reflectors listed first, from the lowest band to the highest. Then come the two high band drivers, followed by the 5 elements spaced 10' from the reflectors. However, on the equations page, each band's elements are grouped together and labeled, since the optimizing process would proceed one band at a time. <b>Fig. 4</b> shows the equations page.</p>
+  <center>
+    <img src="amod44-4.gif" width="640" height="738" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Segmentation</b></p>
+  <p>Hand optimizing a design requires many small changes in one or more dimension, followed by a sweep of the band in question to check performance at the band edges and at mid-band. (Of course, more detailed sweeps are occasionally useful to watch the progression of performance characteristics over smaller frequency spreads.) The time required for a NEC run increases with the square of the increase in the number of segments. Anything that might be done to shorten the waiting time would prove useful so long as it did not introduce unacceptable errors in the results.</p>
+  <p>To reduce the size of the model, I reduced the segmentation for each element wire in the following way. 20-, 17-, and 15-meter elements used 7 segments per side, while 12 and 10 meter elements used 5 segments per side. I reached this decision after checking the performance of the ON7NQ array on each band with full segmentation and with the reduced segmentation scheme. Although the numbers did not exactly coincide, the progression of values for each model was sufficiently close to permit initial modeling via the smaller model. However, these results would be considered provisional, pending a recheck using the full segmentation scheme. In that way, only final tweaking--if any should be needed--would require the larger, slower model.</p>
+  <center>
+    <img src="amod44-5.gif" width="518" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The process of hand-optimizing even a complex model like a multi-element, multi- band quad is not completely random. <b>Fig. 5</b> shows the outline of the new array. The starting point might be anywhere. However, in the development od such arrays, one of the most stable bands turns out to be 15 meters. That is, it tends to be least affected by changes to the other bands. So optimizing 15 meters first is a good way to proceed. Then work outward through 17 meters to 20 meters and inward through 12 meters to 10 meters. As we shall have occasion to note in detail when we evaluate the design, the bands which are not bound by other band elements on both sides tend to be more difficult to set.</p>
+  <p>The development of a design is made easier by attending to details as we proceed. First, although we need to change the source location with every change in band, we can remember where to place the source by annotations on the equations page, as is evident in <b>Fig. 4</b>. Second, we can be alert to patterns that develop on one band and apply them to related bands.</p>
+  <p>A case in point is the fact that for each of the 2 highest bands, the middle director needs to be larger than either the first or the third director. The second director on 20 meters was also larger than the first, although this pattern did not hold for 17 and 15 meters.</p>
+  <p>A second case in point concerns which method to use to arrive at a desired feedpoint impedance. One method involves making changes to the reflector; the other involves work with the directors. In the optimizing process for this array, I quickly learned that enlarging the reflector to increase the feedpoint impedance resulted in more rapid reductions in gain and front-to-back ratio than did the manipulation of the director dimensions.</p>
+  <p>Many of these points are evident in the table of dimensions and variables used for the final version of the design exercise.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+W4RNL 4.5-element 5-Band Quad Dimensions (Inches)
+
+Modeling   Antenna          1/2 Side        Side            Loop
+Variable   Part             Length          Length          Circumference
+A          20 Refl          108.5           217.0           868.0
+B          20 Dri           106.5           213.0           852.0
+C          20 Dir 1          97.5           195.0           780.0
+D          20 Dir 2          98.0           196.0           784.0
+E          17 Refl           84.25          168.5           674.0
+(F)        (Reserved for Start Frequency)
+G          17 Dri            82.8           165.6           662.4
+H          17 Dir 1          79.9           159.8           639.2
+I          17 Dir 2          79.9           159.8           639.2
+J          15 Refl           72.7           145.4           581.6
+K          15 Dri            70.7           141.4           565.6
+L          15 Dir 1          69.75          139.5           558.0
+M          15 Dir 2          69.65          139.3           557.2
+N          12 Refl           61.2           122.4           489.6
+O          12 Dri            60.3           120.6           482.4
+P          12 Dir 1          59.1           118.2           472.8
+Q          12 Dir 2          59.9           119.8           479.2
+R          12 Dir 3          59.3           118.6           474.4
+S          10 Refl           55.0           110.0           440.0
+T          10 Dri            52.9           105.8           423.2
+U          10 Dir 1          52.2           104.4           417.6
+V          10 Dir 2          52.5           105.0           420.0
+(W)        (Reserved for Start Wavelength)
+X          10 Dir 3          52.0           104.0           416.0
+
+Note:  To convert to meters, divide inches by 39.37.
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The performance figures reported by the small model used to manipulate dimensions are as follows.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Modeled Performance:  W4RNL 4.5-element, 5-Band Quad
+NEC-2; Reduced Segmentation
+
+Freq.      Gain       Front/Back Impedance        50-Ohm
+MHz        dBi          dB       R +/- jX         SWR
+
+14.0       8.81       15.13      33.9 - j 20.3    1.86
+14.175     8.57       16.66      52.0 + j 10.3    1.23
+14.35      8.13        9.92      57.7 + j 34.1    1.89
+
+18.068     9.21       21.09      35.6 - j  2.6    1.41
+18.118     9.17       21.91      38.8 + j  5.0    1.32
+18.168     9.09       18.22      41.9 + j 11.9    1.37
+
+21.0       9.41       15.09      41.0 - j 16.6    1.51
+21.225     9.42       17.06      56.3 + j  7.6    1.20
+21.45      9.53       20.97      34.5 + j  8.1    1.52
+
+24.89      10.19      21.88      40.7 + j  4.1    1.25
+24.94      10.21      19.60      42.2 + j  7.3    1.26
+24.99      10.18      16.57      43.5 + j 12.0    1.34
+
+28.0        9.51      12.01      39.7 - j 27.9    1.92
+28.2       10.08      16.81      48.6 - j 12.4    1.29
+28.4       10.54      20.44      47.2 - j  2.8    1.08
+28.6       10.81      19.69      42.2 + j 17.2    1.50
+28.8       10.53      32.57      64.7 + j 15.4    1.45
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Before we comment on the success or failure of the design exercise, let's look at the numbers that emerged from the use of the fully segmented model on NEC-2.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Modeled Performance:  W4RNL 4.5-element, 5-Band Quad
+NEC-2; Full Segmentation
+
+Freq.      Gain       Front/Back Impedance        50-Ohm
+MHz        dBi          dB       R +/- jX         SWR
+
+14.0       8.81       15.02      33.6 - j 20.5    1.88
+14.175     8.58       16.76      51.9 + j 10.0    1.22
+14.35      8.14        9.96      57.8 + j 33.8    1.89
+
+18.068     9.24       22.03      36.0 - j  1.7    1.39
+18.118     9.18       21.26      39.3 + j  5.7    1.31
+18.168     9.10       17.39      42.3 + j 12.5    1.37
+
+21.0       9.49       15.33      41.4 - j 15.6    1.47
+21.225     9.47       17.04      57.0 + j  7.5    1.21
+21.45      9.55       19.16      31.3 + j  9.9    1.70
+
+24.89      10.27      21.77      38.6 + j  5.2    1.33
+24.94      10.29      19.80      40.2 + j  9.1    1.34
+24.99      10.25      16.77      41.9 + j 14.3    1.43
+
+28.0        9.59      12.15      40.7 - j 27.4    1.88
+28.2       10.15      17.00      49.3 - j 12.7    1.29
+28.4       10.60      20.50      47.1 - j  2.8    1.09
+28.6       10.85      19.76      42.6 + j 18.0    1.52
+28.8       10.51      29.74      64.9 + j 12.1    1.40
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The deviations between the two sets of numbers are noticeable, but not large. Perhaps the greatest difference occurs on 12 meters, where the segmentation on the small model shifted to 5 segments per wire from the higher value of 7 used for 20-15 meters. Nonetheless, nothing in the sweeps of the larger model suggested that any modifications to the design were necessary.</p>
+  <p>On occasion, NEC-2 and NEC-4 may differ slightly in values reported for quad arrays. This difference is most noticeable in monoband arrays where an array is set to a precise resonance (less than 1 Ohm reactance) and/or a precise front-to-back peak value at the design frequency. The differences are usually a matter for +/- 10 kHz or so in the frequency of resonance or front-to-back peak. Although the differences are small--perhaps less than operationally significant--a sweep of the design using NEC-4 seemed in order to be certain that some of the more rapidly changing operational characteristics did not yield odd results.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Modeled Performance:  W4RNL 4.5-element, 5-Band Quad
+NEC-4; Full Segmentation
+
+Freq.      Gain       Front/Back Impedance        50-Ohm
+MHz        dBi          dB       R +/- jX         SWR
+
+14.0       8.81       15.02      33.7 - j 20.8    1.88
+14.175     8.58       16.76      51.9 + j 10.0    1.22
+14.35      8.14        9.95      57.8 + j 34.0    1.89
+
+18.068     9.23       22.01      36.1 - j  1.8    1.39
+18.118     9.18       21.24      39.2 + j  5.7    1.32
+18.168     9.10       17.38      42.3 + j 12.5    1.38
+
+21.0       9.49       15.33      41.5 - j 15.6    1.47
+21.225     9.47       17.04      57.0 + j  7.5    1.21
+21.45      9.54       19.13      31.3 + j 10.0    1.70
+
+24.89      10.27      21.79      38.6 + j  5.3    1.33
+24.94      10.28      19.82      40.3 + j  9.1    1.35
+24.99      10.24      16.77      41.9 + j 14.4    1.43
+
+28.0        9.59      12.15      40.8 - j 27.4    1.88
+28.2       10.15      17.00      49.3 - j 12.7    1.29
+28.4       10.60      20.51      47.1 - j  2.8    1.09
+28.6       10.85      19.77      42.6 + j 18.1    1.52
+28.8       10.51      29.75      64.9 + j 12.1    1.40
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Happily, the NEC-2 and NEC-4 results are coincident to the <i>n</i>th degree. I list them here simply to note that, where the software is available, such checks are useful and advisable. The check is especially applicable in this case, where the model-by-equation facility was not available in a NEC-4 version for use from the beginning of the process of design.</p>
+  <p>So now we have a design for a 4.5-element quad on a 26' boom. However, we still have two major question areas left over. First, is the design--as a design--successful relative to the specifications that we set up originally? Second, what relationship does this design--as a model--have to an eventual physical antenna? We shall look at both questions and the collection of data that forms some kind of a set of answers to them next time.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Vertical, Broadcast, MF">
+  <title>1 MHz Ground-Wave Analysis: Comparison Among MININEC and NEC Modeling Implementations</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <img src="../images/hat.gif" align="left" width="72" height="84" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">
+    <h1><br>
+    1 MHz Ground-Wave Analysis<br>
+    <br>
+    A Comparison Among MININEC and NEC Modeling Implementations</h1>
+  </center>
+  <center>
+    L. B. Cebik<br>
+  </center>
+  <p>Ground-wave analysis in the frequency region of 0.5 to 1.5 MHz is crucial within the AM broadcast industry. Recent recommendations to the FCC would permit the use of antenna modeling calculations to replace some (but not all) field measurements. To provide an inter-program basis for comparing ground-wave calculations, a comparative data gathering exercise was undertaken using various implementations of MININEC 3.13, "Expert" MININEC (EM Sci), NEC-2, and NEC-4. This report provides the results of the work.</p>
+  <p><em>1. Ground-wave analysis for vertical antennas and arrays.</em> The basic unit of measure for ground-wave analysis is the Volt/meter (V/m), although many common applications call for figures in milli-Volts/meter (mV/m). The parameter measured is the vertical component of the radiation field (sometimes designated E-theta), using a specified power and distance. The most common power used is 1,000 W (1 kW). The most common distances are 1 mile (1609 m) and 1 km (1,000 m or 0.6214 mi). Often, readings are rechecked at further distances. For this study, distances of 1, 3, and 5 km are used for modeled calculations.</p>
+  <p>To make the comparisons, a single near-resonant 1/4 monopole was modeled. Ground selection was dependent on the program used, since not all cores or all implementations of modeling cores permit access to the same types of ground system calculations. For example, in MININEC and NEC, the monopole was modeled with a direct connection to ground and no buried radials, since such radials are not available in most versions of these programs. However, NEC-4 permits a model using a buried radial system, and one such model was developed for this study.</p>
+  <p>Ground-wave analysis in all forms of MININEC is limited to the use of a perfect ground, since there is no provision for a ground-wave analysis other than the determination of far-field values at 0 elevation angle (90 theta or zenith angle) and a specified distance. NEC-2 and NEC-4 have provisions for a separate ground-wave output via request by the RP1 card. The results may be specified as a radial distance and an observation height. The provision of a ground-wave analysis output permits the specification of soil qualities in terms of conductivity and permittivity for the model, in addition to the use of a perfect ground.</p>
+  <p>One implementation of both NEC-2 and NEC-4 (EZNEC Pro) provides a MININEC ground calculation system for use in conjunction with the specified NEC core. By employing a MININEC ground and specifying soil quality values, the modeler obtains the ability to make ground-wave calculations that cannot be done within MININEC itself. As well, the use of the MININEC ground is said to overcome the inaccuracies inherent in the use of either the reflection-coefficient or Sommerfeld-Norton ground calculations with simple "no-radial" models. Whether this assertion is validated by comparison among models will become part of the data from this study.</p>
+  <p>A third method of ground-wave analysis involves the use of a buried ground radial system, a possibility within NEC-4. The ground-wave output from this modeling structure may use any permissible soil quality values. However, the model may not use a perfect ground, since part of its structure is below the ground surface.</p>
+  <p><em>2. Models used in this study.</em> The basic vertical monopole antenna used in this study consists of a single wire 0.0254 m (1.0") in diameter. The reason for this selection involves the ease of modeling this thin diameter using a buried radial system in NEC-4, to be explained shortly. The resistivity of the wire was 1.72E-08, the approximate value for copper.</p>
+  <p>The length of the monopole for NEC-2, NEC-4, and Expert MININEC is 72.771 m (2865") to yield an antenna that is resonant within +/-j1 reactance over perfect ground. For versions of MININEC 3.13, the requisite length was 72.898 m (2870"). One version of MININEC 3.13 (NEC4WIN95) contains a "NEC-correction" feature, which returned the monopole length to the shorter value for resonance as here defined.</p>
+  <p>Models connected directly to ground and using no radials initially employed 21 segments, a value that places all critical dimensions well within the convergence and other boundaries of modeling. MININEC models place the source at the junction of the ground and the wire segment adjacent to ground. NEC models place the source within the segment adjacent to ground. No deleterious effects were noted from the differential in source placement between the two types of cores.</p>
+  <p>The NEC-4 model calls for special comment, due to the requirements for establishing a buried radial system. Such models must meet two major requirements. First, there must be a wire segment junction at the point where the wire enters ground. This requirement is usually met by specifying a wire end at Z=0. Second, wire segments adjacent to the segment on which the source is placed should be the same length as the source segment for greatest accuracy.</p>
+  <center>
+    <img src="comp1-1.gif" width="603" height="423" border="2" vspace="5" hspace="9">
+  </center>
+  <p><strong>Fig. 1</strong> provides a simplified sketch of the rudiments of the model used in this study. The radial system was placed 0.152 m (6") below ground. Other studies have shown that there is very little difference in the outcome of models with identical radial systems buried from about 3" to about 24" below ground.<sup>1</sup> The radial placement yields a single segment wire between the radial junction and the ground surface. A second single-segment wire of the same length extends above the surface and becomes the source wire. Above the source wire, a series of length-tapered wires extends, the shortest being the same length as the source segment. The height above ground was set at 72.771 m (2865"), the same as the other NEC monopole models that use no radials. All monopole wires have a diameter of 0.0254 m.</p>
+  <p>The radial system consists of 120 2mm (0.0787") diameter, 74.948 m (2950.7") long copper wires, with equal angular spacing between them. Each of these wires is also length tapered, with the shortest wire being equal to the monopole wire forming the junction. No problems of accuracy have been encountered in the use of large radial systems in NEC-4 if all radials are thin and have the same length, despite the angular junction of wires having dissimilar diameters.</p>
+  <p>The model just described meets all requirements, however conservative, for length-to-diameter ratios for even the shortest wires in any element. One reason for the selection of the thin monopole (relative to what is commonly found in AM broadcast antenna installations) is that the modeling is greatly simplified. However, there are usable techniques for modeling thicker monopoles and/or shallower radial fields.<sup>2</sup></p>
+  <p>A significant question is whether the length-tapered monopole is equivalent within relevant limits to the 21-segment monopoles with which it is being compared. That comparison proves to be more than 1-dimensional and is part of the data gathered in the course of the study.</p>
+  <p><em>3. Modeling cores and programs used in this comparison.</em> The cores and programs compared in this study are the following.</p>
+  <ul>
+    <li><em>MININEC 3.13</em> ELNEC (Lewallen)<br>
+    NEC4WIN 95 (Orion)<br>
+    AO 6.5 (Beezley)</li>
+    <li><em>Expert MININEC</em> (EM Sci, Inc.)<br>
+    Expert MININEC Broadcast Professional</li>
+    <li><em>NEC-2</em><br>
+    EZNEC Professional (Lewallen)<br>
+    NEC-Win Pro (Nittany-Scientific)</li>
+    <li><em>NEC-4</em><br>
+    EZNEC Professional (Lewallen)<br>
+    GNEC (Nittany-Scientific)</li>
+  </ul>
+  <p>Except for the unique ability of EZNEC Professional to provide ground-wave analysis over a MININEC ground using either NEC-2 or NEC-4, there was no difference in the values provided using the NEC cores with either Nittany-Scientific or Lewallen implementations.</p>
+  <p><em>4. MININEC 3.13 results.</em> The <strong>Table 1</strong> lists the results of ground-wave analysis obtained--insofar as was possible--from implementations of MININEC 3.13. The models are single-wire monopoles with no modeled radial system. All ground-wave calculations have been expressed in mV/m, even if program outputs registered V/m. The ground-wave calculation, where available, is based on a distance of 1,000 m and a power level of 1,000 W.</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>Program</strong></td>
+        <td><strong>ELNEC</strong></td>
+        <td><strong>AO</strong></td>
+        <td><strong>NEC4WIN unc.</strong></td>
+        <td><strong>NEC4WIN cor.</strong></td>
+      </tr>
+      <tr valign="top">
+        <td>Height (m)</td>
+        <td>72.898</td>
+        <td>72.898</td>
+        <td>72.898</td>
+        <td>72.771</td>
+      </tr>
+      <tr valign="top">
+        <td>Impedance (Ohms)</td>
+        <td>36.15 - j0.17</td>
+        <td>36.0 - 0.4</td>
+        <td>38.08 + j0.18</td>
+        <td>36.17 - j0.83</td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)</td>
+        <td>5.14</td>
+        <td>5.12</td>
+        <td>5.14</td>
+        <td>5.14</td>
+      </tr>
+      <tr valign="top">
+        <td>Field Strength (mV/m)</td>
+        <td>312.85</td>
+        <td>312*</td>
+        <td>not available</td>
+        <td>not available</td>
+      </tr>
+    </table>
+  </center>
+  <center>
+    Table 1. A comparison of MININEC 3.13 results
+  </center>
+  <p>Only values for 1 km are available from EZNEC, while AO allows the specification of a distance. However, AO provides somewhat truncated values, since it rounds extensively. For example, it rounded the conversion of 1,000 m into 0.6 miles. I found no way to extract field strength data from NEC4WIN. These values are in themselves of academic interest, although they may be useful in comparisons with other values enumerated in later tables. Internally, perhaps the most interesting aspect of the numbers is the consistency of calculated source impedance for all uncorrected models.</p>
+  <p><em>5. Expert MININEC Broadcast Professional and NEC-2/-4 results over perfect ground.</em> Expert MININEC provides the user with the ability to specify virtually any power level and any distance when taking field strength readings, within the limitations of using the far field computation at 0 elevation over perfect ground. Therefore, it is possible to arrive at field strength values for 1, 3, and 5 km.</p>
+  <p>In addition, one can obtain comparable results from both NEC-2 and NEC-4 using virtually any implementation of these cores. Therefore, one may combine the results into a single table, since all three employ a 21-segment 72.771 m monopole, and none of the models uses a radial system.</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>Perfect Ground Values</strong></td>
+        <td><strong>Expert MIN.</strong></td>
+        <td><strong>NEC-4</strong></td>
+        <td><strong>NEC-2</strong></td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (R +/- jX Ohms)</td>
+        <td>36.09 - j0.27</td>
+        <td>36.22 + j0.26</td>
+        <td>36.22 + j0.26</td>
+      </tr>
+      <tr valign="top">
+        <td>Ground Wave @ 1 km (mV/m rms)</td>
+        <td>312.78</td>
+        <td>312.75</td>
+        <td>312.74</td>
+      </tr>
+      <tr valign="top">
+        <td>Ground Wave @ 3 km (mV/m rms)</td>
+        <td>104.26</td>
+        <td>104.25</td>
+        <td>104.25</td>
+      </tr>
+      <tr valign="top">
+        <td>Ground Wave @ 5 km (mV/m rms)</td>
+        <td>62.56</td>
+        <td>62.55</td>
+        <td>62.55</td>
+      </tr>
+    </table>
+  </center>
+  <p align="center">Table 2. A comparison of ground-wave field strength values for Expert MININEC Broadcast (EMB), NEC-4, and NEC-2 (Nittany-Scientific or Lewallen).</p>
+  <p>The results shown in <strong>Table 2</strong> are remarkably clear. For the test model, there is no significant difference in calculated performance within any entry on the table. Expert Mininec Broadcast and NEC-2/-4 calibrate coincidentally for the class of cases involved in this study using exactly vertical wires when the calculations are made over perfect ground. As well, comparison with <strong>Table 1</strong> shows that there is no significant difference in the available field strength readings between MININEC 3.13 and the cores recorded in <strong>Table 2</strong>.</p>
+  <p><em>6. NEC-4 results using buried radials over various soils.</em> Evaluating the results of a modeled vertical monopole of the type used in this study must eventually involve a comparison with a version that modeled a buried radial system to complete the monopole antenna. The 120-radial system of 0.025 radials (74.948 m or 2950.7") using 2 mm diameter copper wire was chosen because it replicates common practice in the frequency range (1.0 MHz) and allows relatively accurate modeling results.</p>
+  <p>However, comparing the results of such a model in NEC-4 to other models over perfect ground is not without some issues, since there are limitations to the comparison. The NEC-4 model with buried radials cannot be modeled with a perfect ground, since part of the essential structure is below ground level. The question that will arise is whether one can reasonably extrapolate from the buried-radial model to those over perfect ground with attention to the ground-wave field strength values. The question will require some attention to differences in ground-wave calculations produced by NEC-4 and NEC-4D (single and double precision versions of the core).</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>NEC-4 with 120 Buried Radials</strong></td>
+        <td><strong>NEC-4</strong></td>
+        <td><strong>NEC-4D</strong></td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Poor (0.001 S/m; 5)</strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-0.80 / 25</td>
+        <td>-0.80 / 25</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>41.46 - j 2.92</td>
+        <td>41.46 - j 2.92</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>189.49</td>
+        <td>189.50</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>36.33</td>
+        <td>36.33</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>14.20</td>
+        <td>14.20</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Poor (0.002 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>0.67 / 23</td>
+        <td>0.67 / 23</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>38.75 - j 0.63</td>
+        <td>38.75 - j 0.63</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>229.68</td>
+        <td>229.68</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>54.76</td>
+        <td>54.76</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>25.22</td>
+        <td>25.22</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Good (0.005 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>1.86 / 21</td>
+        <td>1.86 / 21</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>37.87 + j 0.98</td>
+        <td>37.87 + j 1.00</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>276.10</td>
+        <td>276.08</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>79.78</td>
+        <td>79.78</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>42.46</td>
+        <td>42.46</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Good (0.0303 S/m; 20)</strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>3.44 / 15</td>
+        <td>3.44 / 15</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>36.90 + j 1.57</td>
+        <td>36.90 + j 1.58</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>304.79</td>
+        <td>304.80</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>99.01</td>
+        <td>99.00</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>58.18</td>
+        <td>58.18</td>
+      </tr>
+    </table>
+  </center>
+  <center>
+    Table 3. Ground wave and other values deriving from NEC-4 and NEC-4D models.
+  </center>
+  <p>Therefore, <strong>Table 3</strong> provides data for both core outputs, using the same 1, 3, and 5 km standard distances at a power of 1 kW. In addition, the model has been placed over a variety of soils, according to the widely used standard listing in Terman's <em>Radio Engineer's Handbook</em> (p. 709), which derives from "Standards of Good Engineering Practice Concerning Standard Broadcast Stations," <em>Federal Register</em> (July 8, 1939), p. 2862. In other studies, the use of the chosen categories of soil quality constants for Sommerfeld-Norton ground calculations has been found to be a fair, if not perfect, sampling of the range of possible soil conditions.<sup>3</sup> The first listed value in each portion of the table is conductivity in S/m, while the second value is the permittivity or relative dielectric constant.</p>
+  <p>Of first notice in the table is the spread of values of ground-wave field strength for any given distance at the set power as we change the soil quality. Although the ground-wave field strength values over very good soil approach those from models placed without radials over perfect ground, over very poor soil the values are only about 60% of the perfect ground values. In addition, there is a progression of decreasing source impedance as soil quality improves which cannot show up when calculations are made solely over perfect ground.</p>
+  <center>
+    <img src="comp1-2.gif" width="648" height="506" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Of second notice is the tendency to extrapolate from the values for very good soil to the values for perfect ground calculations on the basis of the general tendencies shown in the output results. Although such an extrapolation is probably satisfactory for many applications, a more precise version of the process is beset with problems relating to the complexity of the calculations involved.</p>
+  <p>One problem involves the fact that a 120-radial system may approach the performance of a solid surface, but it does not reach that level. <strong>Fig. 2</strong> shows graphically the increase in ground-wave field strength at 1 km with 1 kW of power over poor soil (0.002 S/m; 13) as we increase the number of radials in a NEC-4 model. As is readily apparent, the curve has not reached a final plateau.</p>
+  <p>A second problems involves the extension of the soil quality into higher values. Perhaps the standard of quality is salt water, with a conductivity of 5 S/m and a dielectric constant of 81. <strong>Table 4</strong> provides values for NEC-4 and NEC-4D models of the system in use over salt water.</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>NEC-4 with 120 Buried Radials</strong></td>
+        <td><strong>NEC-4</strong></td>
+        <td><strong>NEC-4D</strong></td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Salt Water (5.0 S/m; 81)</strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>5.29 / 07</td>
+        <td>5.28 / 06</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>32.72 - j 2.58</td>
+        <td>32.72 - j 2.57</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>400.48</td>
+        <td>328.14</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>135.89</td>
+        <td>109.36</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>123.33</td>
+        <td>65.60</td>
+      </tr>
+    </table>
+  </center>
+  <center>
+    Table 4. Ground wave values deriving from NEC-4 and NEC-4D models over salt water.
+  </center>
+  <p>The NEC-4 values are wholly unreliable and stem from unreliable calculation behavior that actually begins as the soil quality approaches the level listed as very good. At these values of conductivity and permittivity, calculated ground-wave field strength values show variability when listed in 1 increments. Although the differential between maximum and minimum values is small (about 0.02 mV/m rms), it varies from the anticipated uniform value at all compass points. NEC-4D provides uniform values. As conductivity reaches a value of about 0.5 S/m, the maximum-minimum spread in NEC-4 output values grows to over 4 mV/m, and for each doubling of conductivity above that level, the spread nearly triples. Increasing the dielectric constant over this range from 20 to 50 does not change the spread from maximum to minimum very much, but it does change the maximum and minimum values themselves. Therefore, above a conductivity of about 0.1 S/m and a dielectric constant of about 20, NEC-4 values of ground-wave field strength for the type of model used here become quite unreliable.</p>
+  <p>In contrast, the ground-wave field strength values produced by NEC-4D always provide a uniform value at every azimuth bearing for a vertical monopole of the type used in this study. For several echelons of increase beyond the soil quality called very good, the results are generally reliable. However, the reliability is not perfect. The results for the subject model with "salt-water" ground constants exceed the result of every model surveyed, when the monopole is placed over perfect ground without radials. The 1-km ground-wave value is over 4% greater than any of the perfect ground values.</p>
+  <p>Whether or not the differentials have any practical significance, it remains the case that one cannot numerically extrapolate with any degree of precision from the radial model to the perfect ground model or vice versa. Moreover, more deeply burying the radial system will not resolve the issue. In a series of models using 60 radials, it was found that increasing the depth to 12" increased the 1 km field strength by 6 mV/m rms. The values remained constant within 1 mV/m thereafter until at least a depth of 24".</p>
+  <p>The NEC-4 and NEC-4D results for soil qualities that are very good or worse are too close for repetition in further tables in this study. However, whatever the ground type, with or without a radial system, as soil quality approaches very good, the NEC-4D ground-wave field strength readings will begin to decrease relative to those produced by NEC-4.</p>
+  <p><em>7. NEC-2/-4 results over a MININEC ground.</em> One implementation of NEC-2 and NEC-4 (EZNEC Professional from Lewallen) provides the user with the option of employing a MININEC ground calculation while using one or the other of the NEC cores. This option enables the user to employ the RP1 option to develop ground-wave field strength readings. As well, it permits the user to select any set of soil quality constants. The limitation of this option is that the source impedance is calculated as it would be in MININEC 3.13, that is, only over perfect ground. Consequently, although the ground wave values will vary with the soil constants selected, the source impedance will remain the same for all cases.</p>
+  <p>The assumption underlying the use of MININEC ground with NEC calculations on a monopole with no radials is that the MININEC ground calibrates well to a full NEC-4 model with radials. Other studies have shown that this assumption is not adequate for systems with few radials, but for purely vertical antenna structures, it may hold well enough to simplify some orders of modeling.<sup>4</sup> Models that employ any horizontal or sloping elements, whether directly fed or parasitic, may encounter erroneous results if any portion of a sloping or horizontal wire is below about 0.2 above ground.</p>
+  <p><strong>Table 5</strong> provides a listing of results using NEC-2 and NEC-4 with a MININEC ground within EZNEC Pro. The entries parallel those in <strong>Table 3</strong>, which records the outputs for the full 120-buried radial model. In addition, the table provides for each core 2 listings, one of which corresponds to the standard 21-segment models used over perfect ground, and the other of which corresponds to the length-tapered element used in the 120-radial model. The length-tapering for these new models is identical to that portion of the 120-radial model that is above the surface of the ground. For both models, the source is on the wire segment that joins the ground.</p>
+  <p><strong>Table 5</strong>, then, provides the data necessary to perform two tasks: a. to discover if the length-tapered model is a reasonable correlate of the 21-segment standard model monopole, and b. to determine if the use of NEC with a MININEC ground provides, with a simplified model, usable results with respect to treating a 120-radial model as a standard.</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>NEC Core, MIN Gnd, No Radials</strong></td>
+        <td><strong>NEC-4; 21 Segs.</strong></td>
+        <td><strong>NEC-4; L-Tapered</strong></td>
+        <td><strong>NEC-2; 21 Segs.</strong></td>
+        <td><strong>NEC-2; L-Tapered</strong></td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Poor (0.001 S/m; 5)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-0.80 / 26</td>
+        <td>0.00 / 26</td>
+        <td>-0.08 / 26</td>
+        <td>0.00 / 26</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.48 - j 0.24</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.47 - j 0.26</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>206.41</td>
+        <td>208.14</td>
+        <td>206.25</td>
+        <td>208.04</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>39.52</td>
+        <td>39.85</td>
+        <td>39.80</td>
+        <td>40.14</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>15.44</td>
+        <td>15.57</td>
+        <td>15.60</td>
+        <td>15.74</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Poor (0.002 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>1.01 / 23</td>
+        <td>1.09 / 23</td>
+        <td>1.01 / 24</td>
+        <td>1.09 / 24</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.48 - j 0.24</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.47 - j 0.26</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>239.39</td>
+        <td>241.43</td>
+        <td>238.52</td>
+        <td>240.60</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>57.02</td>
+        <td>57.51</td>
+        <td>57.17</td>
+        <td>57.67</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>26.26</td>
+        <td>26.48</td>
+        <td>26.36</td>
+        <td>26.59</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Good (0.005 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>2.11 / 21</td>
+        <td>2.18 / 20</td>
+        <td>2.11 / 21</td>
+        <td>2.18 / 21</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.48 - j 0.24</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.47 - j 0.26</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>284.46</td>
+        <td>286.89</td>
+        <td>282.60</td>
+        <td>285.07</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>82.16</td>
+        <td>82.86</td>
+        <td>81.99</td>
+        <td>82.71</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>43.73</td>
+        <td>44.10</td>
+        <td>43.67</td>
+        <td>44.05</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Good (0.0303 S/m; 20)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>3.53 / 15</td>
+        <td>3.61 / 15</td>
+        <td>3.54 / 16</td>
+        <td>3.61 / 16</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.48 - j 0.24</td>
+        <td>36.22 + j 0.26</td>
+        <td>35.47 - j 0.26</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>308.37</td>
+        <td>310.96</td>
+        <td>306.82</td>
+        <td>309.53</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 3 km</td>
+        <td>100.13</td>
+        <td>101.00</td>
+        <td>99.99</td>
+        <td>100.87</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 5 km</td>
+        <td>58.85</td>
+        <td>59.34</td>
+        <td>58.79</td>
+        <td>59.31</td>
+      </tr>
+    </table>
+  </center>
+  <center>
+    Table 5. NEC-2 and NEC-4 with MININEC ground.
+  </center>
+  <p>Within the table, the maximum variation among ground-wave field strength calculations is about 1.3%. The lower source resistance values for the length-tapered models in both NEC-2 and NEC-4 is partly attributable to the closer proximity of the source to the actual ground. For most purposes, the data from either the standard 21-segment model or the length-tapered model would be interchangeable.</p>
+  <p>Relative to the 120-radial NEC-4 model, these models show higher values for ground-wave field strength calculations, ranging from under 2% for very good ground to nearly 10% for very poor ground. The differentials have sufficient pattern to them to suggest that the variations may be systematic. The range of values in mV/m (rms) runs from a little over 5 for very good ground to well above 18 for very poor ground. Therefore, it is unlikely the setting the buried radial system to a lower level would increase the field strength calculation outputs sufficiently to reach the levels resulting from the use of a MININEC ground.</p>
+  <p>The precise differential that represents a threshold between a usable and an unusable correlation of values between the two ways of modeling monopoles is, in the end, a task driven judgment. The task will contain, implicitly or explicitly, the appropriate criteria for determining the adequacy of a no-radial substitute model for a fully-modeled buried radial system.</p>
+  <p><em>8. NEC-2/-4 results over reflection coefficient and Sommerfeld-Norton grounds with no radials.</em> Every implementation of NEC-2 and NEC-4 cautions against using the output values from a model that places a monopole in direct connection with ground with no radial system when employing either the Sommerfeld-Norton or the reflection coefficient approximation ground calculation methods. However, little exemplary evidence for the dangers of this procedure appear in software or other literature. Within the present context, it might be useful in developing an appreciation of the sound advice to present ground-wave field strength values and related data as they emerge from the standard and the length-tapered models misplaced on the ground with no radials.</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>NEC Core, RCA Gnd, No Radials</strong></td>
+        <td><strong>NEC-4; 21 Segs.</strong></td>
+        <td><strong>NEC-4; L-Tapered</strong></td>
+        <td><strong>NEC-2; 21 Segs.</strong></td>
+        <td><strong>NEC-2; L-Tapered</strong></td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Poor (0.001 S/m; 5)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-11.1 / 26</td>
+        <td>-25.4 / 26</td>
+        <td>0.83 / 26</td>
+        <td>1.53 / 26</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>420.0 - j 673</td>
+        <td>8620 - j 14810</td>
+        <td>29.42 - j 0.49</td>
+        <td>24.96 - j 2.79</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>57.90</td>
+        <td>11.23</td>
+        <td>229.14</td>
+        <td>248.25</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Poor (0.002 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-8.69 / 24</td>
+        <td>-22.5 / 24</td>
+        <td>1.67 / 23</td>
+        <td>2.20 / 23</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>317.2 - j 494</td>
+        <td>6342 - j 10900</td>
+        <td>31.17 - j 0.30</td>
+        <td>27.51 - j 2.27</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>77.97</td>
+        <td>15.84</td>
+        <td>258.15</td>
+        <td>274.38</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Good (0.005 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-6.75 / 21</td>
+        <td>-20.1 / 21</td>
+        <td>2.54 / 21</td>
+        <td>2.90 / 20</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>267.0 - j 312</td>
+        <td>5211 - j 6875</td>
+        <td>32.81 - j 0.54</td>
+        <td>30.07 - j 2.38</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>101.89</td>
+        <td>21.70</td>
+        <td>298.89</td>
+        <td>311.60</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Good (0.0303 S/m; 20)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-2.61 / 16</td>
+        <td>-15.2 / 16</td>
+        <td>3.71 / 15</td>
+        <td>3.90 / 15</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>146.6 - j 124</td>
+        <td>2514 - j 2740</td>
+        <td>34.78 - j 0.23</td>
+        <td>33.19 - j 1.43</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>151.20</td>
+        <td>35.59</td>
+        <td>314.67</td>
+        <td>321.48</td>
+      </tr>
+    </table>
+  </center>
+  <center>
+    Table 6. NEC-2 and NEC-4 with a reflection coefficient approximation ground.
+  </center>
+  <p>In <strong>Table 6</strong> and <strong>Table 7</strong>, field strength values for 3 and 5 km are omitted, since the 1 km figure provides adequate evidence that the values are not usable. In <strong>Table 6</strong>, the NEC-2 figures are obviously far off the mark. However, it is interesting to note that the length-tapered model--which was stable in relationship to the standard model over a MININEC ground--has become highly unstable with results that little resemble those of the standard model.</p>
+  <p>At first sight, the results from NEC-4 appear to be more reasonable. Had one taken only a single model over a single set of soil quality values, one might have been tempted to accept the results. However, both sets of values result in 1 km field strength values that are higher than those from placing the monopole on a perfect ground. In addition, the progression of source impedance values proceeds in the wrong direction, showing the appearance of higher ground losses as the soil quality improves.</p>
+  <center>
+    <table width="100%"></table>
+    <table border="5" cellpadding="5" cellspacing="5">
+      <tr valign="top">
+        <td><strong>NEC Core, S-N Gnd, No Radials</strong></td>
+        <td><strong>NEC-4; 21 Segs.</strong></td>
+        <td><strong>NEC-4; L-Tapered</strong></td>
+        <td><strong>NEC-2; 21 Segs.</strong></td>
+        <td><strong>NEC-2; L-Tapered</strong></td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Poor (0.001 S/m; 5)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-8.52 / 26</td>
+        <td>-21.2 / 26</td>
+        <td>-1.40 / 25</td>
+        <td>-1.28 / 25</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>249.9 - j 63.71</td>
+        <td>4499 - j 1502</td>
+        <td>48.92 + j 4.75</td>
+        <td>47.48 + j 2.59</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>78.03</td>
+        <td>18.13</td>
+        <td>177.37</td>
+        <td>179.77</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Poor (0.002 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-5.02 / 24</td>
+        <td>-16.9 / 24</td>
+        <td>-0.16 / 24</td>
+        <td>-0.06 / 23</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>144.5 - j 32.70</td>
+        <td>2197 - j 838.0</td>
+        <td>47.40 + j 5.65</td>
+        <td>46.23 + j 4.55</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>119.02</td>
+        <td>30.27</td>
+        <td>209.14</td>
+        <td>211.51</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Good (0.005 S/m; 13)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>-1.80 / 21</td>
+        <td>-12.3 / 21</td>
+        <td>1.14 / 20</td>
+        <td>1.22 / 21</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>89.0 - j 1.11</td>
+        <td>1013 - j 146.7</td>
+        <td>45.26 + j 5.76</td>
+        <td>44.37 + j 5.24</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>180.16</td>
+        <td>53.29</td>
+        <td>254.47</td>
+        <td>256.69</td>
+      </tr>
+      <tr valign="top">
+        <td><strong>Very Good (0.0303 S/m; 20)</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>Gain (dBi)/TO Angle (degrees)</td>
+        <td>2.26 / 16</td>
+        <td>-3.98 / 16</td>
+        <td>2.98 / 15</td>
+        <td>3.05 / 15</td>
+      </tr>
+      <tr valign="top">
+        <td>Source Impedance (Ohms)</td>
+        <td>48.7 + j 3.78</td>
+        <td>203.9 - j 2.40</td>
+        <td>41.19 + j 3.69</td>
+        <td>40.40 + j 3.60</td>
+      </tr>
+      <tr valign="top">
+        <td>GW: 1 km</td>
+        <td>264.81</td>
+        <td>129.18</td>
+        <td>298.19</td>
+        <td>291.58</td>
+      </tr>
+    </table>
+  </center>
+  <center>
+    Table 7. NEC-2 and NEC-4 with a Sommerfeld-Norton ground.
+  </center>
+  <p>As <strong>Table 7</strong> shows well, the NEC-2 values are beyond the pale of credibility, and the instability between the standard and length-tapered models shows itself, although perhaps not to the extremes revealed by the use of a reflection coefficient ground. In contrast, the NEC-4 results more closely approach credibility with a reasonably close coincidence between the standard and the length-tapered models. Nevertheless, for most purposes, the values throughout the table are too distant from either the models over perfect ground or the 120-radial model for practical use.</p>
+  <p>The purpose of this last exercise was not to simply state the obvious, namely, that values derived from monopole models connected directly to a reflection coefficient or Sommerfeld-Norton ground are not generally reliable. The tables focus attention on the degree of departure from reliable figures and the ways in which the modeling results go astray under the specified conditions.</p>
+  <p><em>9. Conclusions.</em> The data presented in this study provides an inter-program comparison of the expected results from modeling 0.25 vertical monopoles over a number of ground systems ranging from perfect ground to a full 120-radial buried system. The data are relevant to evaluating various modeling schemes that might be employed in the calculation of ground-wave field strength values applicable to MF (AM broadcast) antennas and arrays.</p>
+  <p>MININEC 3.13, Expert MININEC, and NEC (-2/-4) produce well-correlated output values of ground-wave field strength when the models are simple monopoles connected to a perfect ground.</p>
+  <p>The NEC-4 120-radial buried system model correlates reasonably closely to both MININEC and NEC models that are simple monopole connected directly to perfect ground--so long as the NEC-4 model soil quality is very good or better. Lesser soil quality leads to greater disparity between the model outputs. Wherever soil quality is a significant consideration and the quality may be less than very good, a model over perfect ground may not prove fully adequate.</p>
+  <p>Over the span of soil qualities usually encountered, the use of a MININEC ground with a simple monopole model correlates to a fair degree with the outputs from the NEC-4 120-radial buried system model. However, the two types of models increasingly diverge in output values as soil quality becomes worse.</p>
+  <p>In all cases, the acceptability of a model depends upon the criteria of evaluation employed. since these criteria are determined by the project goals and specifications, no conclusion can be drawn generally about the acceptability of using one model in preference to another. The exceptions to this conclusion are models connecting a monopole directly to a reflection coefficient or Sommerfeld-Norton ground: for most purposes, the outputs of such models are wholly unreliable.</p>
+  <center>
+    <strong>Notes</strong>
+  </center>
+  <p>1 See Part 4 ("A Potpourri of 160-Meter Vertical Antennas and Modeling Issues") of "Some Facts of Life About Modeling 160-Meter Vertical Arrays," forthcoming in <em>The National Contest Journal</em>.</p>
+  <p>2 See Part 3 ("Complex Radial Systems and Limitations of the MININEC (No-Radial) Ground") of "Some Facts of Life About Modeling 160-Meter Vertical Arrays."</p>
+  <p>3 See Part 2 ("Appreciating Conductivity and Permittivity") of "Some Facts of Life About Modeling 160-Meter Vertical Arrays."</p>
+  <p>4 See Part 1 ("Some Baseline Data") of "Some Facts of Life About Modeling 160-Meter Vertical Arrays."</p>
+  <p>This four part series can be found on the <b><a href="../160/160v.html">Some Facts of Life About Modeling 160-Meter Vertical Arrays</a></b> page.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information about modeling software.</p><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 02-23-01. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#broadcast'>Broadcast</a>, <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

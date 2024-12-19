@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Some Rudiments of Receiving Pattern Modeling</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>129. Some Rudiments of Receiving Pattern Modeling</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episode 88 of this series, we examined the use of two commands that are essential to developing antenna receiving data: EX (1 through 3) and PT (1 through 3). Nevertheless, I continue to receive inquiries on the basic methods of developing receiving data from both new modelers and radio amateurs. The requests contain various questions, of which the following three may be a summary.</p>
+  <blockquote>
+    <p>1. How do I obtain receiving data?</p>
+    <p>2. What does the data tell me?</p>
+    <p>3. Of what use is the data?</p>
+  </blockquote>
+  <p>Therefore, we might wish to begin again. We shall re-examine the commands, but reduce the scope of their possibilities to a limited subset. Then we can apply the commands to a few examples that will illustrate the process of developing useful information. The samples will be very rudimentary and hence have little new to show us. However, we are more interested in the basic methods of generating the information. We shall discover that we may often have to resort to supplementary external calculations (easily done with a spreadsheet) to make full and meaningful use of the information that we collect.</p>
+  <p><b>Getting Started: EX 1 and PT 1</b></p>
+  <p>To develop receiving patterns and data, we must have access to some control commands that many entry level implementations of NEC omit. (Even if our package has the commands, the odds are that we have not used them.) Most modelers use only the EX 0 excitation command to set the source voltage (or, indirectly, the current) on a selected segment of a modeled antenna geometry. The left side of <b>Fig. 1</b> shows the situation with which we are most familiar.</p>
+  <center>
+    <img src="amod129-1.gif" width="350" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To obtain receiving data, we must use different options available for the EX command, namely, EX 1, EX 2, or EX 3:</p>
+  <blockquote>
+    <p>EX 1: incident plane wave, linear polarization</p>
+    <p>EX 2: incident plane wave, right hand (thumb along the incident vector) elliptic polarization</p>
+    <p>EX 3: incident plane wave, left hand (thumb along the incident vector) elliptic polarization</p>
+  </blockquote>
+  <p>In these notes, we shall bypass the elliptical polarization options and work solely with linear polarization, EX 1. Regardless of which of these incident plane wave excitation modes that we select, note from the figure that the excitation is external to the antenna geometry. However, the figure has an inevitable flaw. By giving the excitation a position external to the antenna, the sketch invites the temptation to think of the excitation as a point having different angular directions to various parts of the antenna wire. A more accurate picture, but one that I do not know how to draw, is to place the source at an indefinitely large distance from the antenna wire so that the illumination is uniform over the entire antenna geometry.</p>
+  <p>We must set up the EX command to position the source relative to the antenna. The entry-line structure for them has a number of interesting properties that differ from the line structure of a simple voltage source. (Reminder: although you may use both an EX 0 voltage source and a plane wave source in the same model, the last source type will determine the format of the output report and the function of any RP command.)</p>
+  <pre>
+Com  I1   I2     I3     I4   F1        F2        F3         F4    F5   F6    F7
+ID   Type # Thta # Phi  Not  Th angle  Ph angle  Eta        Theta Phi  Axis  El. field
+          angles angles used to vector to vector pol. angle step  step ratio V/m
+EX   1    1      8      0    90        0         90         0     45   0     0
+</pre>
+  <p>The sample entry is for a linear plane wave. Hence, F6 is 0 by non-relevance. F7 also has a 0, but that value indicates a default value of 1 V/m. In some problems designed to ferret out coupling potentials among wires, you may use a specific value that closely approximates the value from the source signal at the structure being examined in model form. NEC-2 lacks the F7 field and hence always uses 1 V/m. As we shall see, this limitation is not a significant problem.</p>
+  <p>Most of the remaining entries define incident plane waves as a calculation loop within NEC (with some properties resembling the loop operation of frequency sweeps using the FR command). In the sample, for the sake of clarity, there is only one theta angle: 90 degrees. This angle is parallel to the plane of antenna elements that extend parallel to the X-Y plane and is equal to an elevation of 0 degrees. The sample specifies 8 phi-angle (azimuth-angle) steps at 45-degree increments, thus providing samples evenly spaced in the element plane.</p>
+  <p>The F3 entry, called Eta, under linear polarization is easy to memorize. With a value of 0, the polarization is in the +/-Z direction--vertically polarized for antennas over ground. If F3 is 90, the polarization is in the X-Y plane--horizontally polarized for antennas over ground. We shall place our antenna in free space with the wire extended in the X-Y plane and then use horizontal polarization for simplicity, but there is no restriction against checking results when cross-polarized or with the polarization set to intermediate angles. When using EX 2 or EX 3, elliptical polarization, the entry changes its meaning and defines the major ellipse axis. (Remember that true circular polarization is simply a special case of elliptical polarization having equal axes.)</p>
+  <p>Having set up the excitation, we must then enter commands that will give us useful data. We might use an RP 0 command to request a pattern, but this information will be of use only to those interested in radar and similar work. The pattern that we obtain will be for scattering data, the reflection of radio wave off of the object. However, we shall set up an antenna and will be more interested in the energy that we receive from the uniform 1 V/m illumination. NEC calculates for each segment in the geometry the peak current. This is highly useful information. To obtain it we must use the PT control command. Like the EX command, it has several options.</p>
+  <blockquote>
+    <p>PT -2: All current printed. This also occurs if PT is omitted altogether.</p>
+    <p>PT -1: Suppress printing of all wire-segment currents.</p>
+    <p>PT 0: Current printed for specified segments only.</p>
+    <p>PT 1: Currents printed in a format designed for a receiving pattern.</p>
+    <p>PT 2: Currents printed in a format designed for a receiving pattern, plus a normalized value for the last segment's current.</p>
+    <p>PT 3: Only the normalized current is printed.</p>
+  </blockquote>
+  <p>The current tables that we obtain when using a modeled antenna with a voltage source result from not entering a PT command at all, which results in the PT -2 option by default. For receiving data, we need to look at the PT options from plus 1 through plus 3. In fact, we shall only use PT 1 in this episode, leaving the other options as (pardon the expression) an exercise for the reader. The PT entry is very simple.</p>
+  <pre>
+Com  I1    I2     I3       I4
+ID   Type  Tag #  1st Seg  Last Seg
+PT   1     1      8        8
+</pre>
+  <p>The command only requires that we specify the tag (wire) number in which we are interested, along with the range of segments on that tag. Although we might in many instances be interested in the current magnitude and phase on many segments in a model, the sample reduces the range to a single segment.</p>
+  <p>Let's combine these lines into a different set of concluding lines for our initial model.</p>
+  <pre>
+PT 1 1 8 8
+EX 1 1 37 0 90 0 90 1 10 0 1
+XQ
+EN
+</pre>
+  <p>The EX 1 command specified 37 different readings separated by 10 degrees each on the phi circle, with all of them having a theta angle of 90 degrees. Eta is also 90 degrees, indication that if the antenna element is parallel to the X-Y plane, the excitation source will be polarized in plane with the element. Note that the PT command is not like RP, that is, it is not self-executing. Therefore, we must add the XQ command in order to force the program to calculate the currents.</p>
+  <p><b>Orientation to a Specific Model</b></p>
+  <p><b>Fig, 1</b> showed a model of a dipole. Let's confine ourselves to this familiar antenna and create a pair of models in a single model file (using the handy NX command) to illustrate the differences between a transmitting and a receiving situation.</p>
+  <pre>
+CM dipole 300 MHz EX0/RP0
+CE
+GW 1 15 0 -.2373 0 0 .2373 0 .001
+GE
+FR 0 1 0 0 299.7925 1
+EX 0 1 8 0 1 0
+RP 0 1 361 1000 90 0 1.00000 1.00000
+NX
+CM dipole 300 MHz EX1/PT1 no load
+CE
+GW 1 15 0 -.2373 0 0 .2373 0 .001
+GE
+FR 0 1 0 0 299.7925 1
+EX 1 1 37 0 90 0 90 1 10 0 1
+PT 1 1 8 8
+XQ
+EN
+</pre>
+  <p>The geometry section of both models are identical, as is the FR command. The upper model uses an EX 0 source command to provide transmitting data that we can obtain from the tabular outputs or from a handy graphical representation of the radiation pattern. As we might expect, NEC calculates free-space gain as 2.13 dBi, with a source impedance of 71.72 - j0.16 Ohms. (The source impedance is often more important for receiving data gathering than the transmitting gain, which equally applies to reception by virtue of reciprocity.)</p>
+  <p>At most, we might find a rectangular graph for the data gathered by the PT 1 command in the lower model. We can recognize that the specified tag and segment for the data is the very same segment that we used in the upper model as the source segment. Let's look at a few lines from the tabular data produced by the lower receiving model.</p>
+  <pre>
+- - - RECEIVING PATTERN PARAMETERS - - -
+      ETA=  90.00 DEGREES
+      TYPE -LINEAR
+      AXIAL RATIO= 0.000
+
+THETA      PHI          -  CURRENT  -         SEG
+(DEG)     (DEG)       MAGNITUDE    PHASE      NO.
+
+90.00      0.00     4.3935E-03     -3.08        8
+90.00     10.00     4.2975E-03     -3.07        8
+90.00     20.00     4.0208E-03     -3.03        8
+90.00     30.00     3.5949E-03     -2.98        8
+90.00     40.00     3.0627E-03     -2.91        8
+90.00     50.00     2.4681E-03     -2.83        8
+90.00     60.00     1.8475E-03     -2.75        8
+90.00     70.00     1.2244E-03     -2.69        8
+90.00     80.00     6.0886E-04     -2.65        8
+</pre>
+  <p>As we move the plane-wave excitation source position, we can see that the current magnitude (in peak Amps) changes, as does the phase angle, on the segment of the antenna that formerly held the EX 0 voltage source. The question that arises next is how this data is meaningful to us. It is meaningful, but perhaps not just yet.</p>
+  <p><b>Loading the Former Source Segment</b></p>
+  <p>The source segment on a transmitting antenna becomes the load segment on the same antenna when receiving. However, if we think of the load as the receiver terminals, we normally are less interested in the current at the terminals than we are in the voltage. As well, a receiver presents the antenna feed segment with a load. We shall ignore for this simple exercise the role of the transmission line in setting the load at the feedpoint segment and assume a direct connection. Hence, to acquire meaning full data in an extended sense from the model, we normally would place a load on the feedpoint segment, as suggested in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod129-2.gif" width="220" height="220" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The question that emerges is what load we should use. Let's explore a bit by placing resistive loads from 10 through 150 Ohms on the feedpoint segment (Tag 1, Segment 8). A simple LD 4 command will do the job. Then we can set up a model to progressively record the current that appears on the segment with each load value.</p>
+  <pre>
+CM dipole 300 MHz EX1/PT1 loads
+CE
+GW 1 15 0 -.2373 0 0 .2373 0 .001
+GE
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 90 1 1 0 1
+PT 1 1 8 8
+XQ
+LD 4 1 8 8 10 0
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 90 1 1 0 1
+PT 1 1 8 8
+XQ
+LD 4 1 8 8 20 0
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 90 1 1 0 1
+PT 1 1 8 8
+XQ
+LD 4 1 8 8 30 0
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 90 1 1 0 1
+PT 1 1 8 8
+XQ
+</pre>
+  <p>The partial model file shows the simple technique used to accumulate data on the performance of the antenna relative to feedpoint current using various resistive loads. (The file contains for reference a model version that uses no loading as a check on the model's formation.) We can place the results into a table on a spreadsheet, which will allow us to perform some supplementary calculations. See <b>Table 1</b>.</p>
+  <center>
+    <img src="amod129-t1.gif" width="641" height="113" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first data line below the resistive load values provides us with the data reported by NEC. Since we normally use RMS values of voltage and current for various purposes, the next line performs the required conversion. The following lines provide the power and the voltage for each load.</p>
+  <p>The importance of placing a load on the feedpoint segment lies in the fact that it allows us to perform the last two calculations. P = I^2R, and E = IR = SQRT(PR). Without the load value, we have no way to determine these values. The pattern of values simply confirms what basic texts teach about energy. As we raise the value of the load resistor, the voltage at the receiver/feedpoint terminals increases. <b>Fig. 3</b> graphs the rise in voltage with the increase in the selected load resistor.</p>
+  <center>
+    <img src="amod129-3.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graph also includes the calculated power at the feedpoint terminals. Note the peak in the power level at approximately 70 Ohms load resistance. We obtain maximum power transfer when the load matches the source impedance. The transmit version of the antenna yielded a source impedance of about 72 Ohms, and the 70-Ohm load resistor comes closest to matching that value. (Numerous modelers arbitrarily place 50-Ohm loads across the antenna terminals without first checking the antenna's source impedance. In some cases, there are good reasons for doing so, although in other cases, the load is a matter of habit. If the impedance of the antenna and the load are distant from each other and a transmission-line intervenes, then the load resistor may not accurately reflect the conditions at the receiver terminals.)</p>
+  <p><b>The Effects of Eta</b></p>
+  <p>So far, we have only sampled the sorts of information that we likely knew about antennas under receiving conditions. Plane-wave excitation also permits us to sample some facets of performance that we have largely taken on faith. For example, we learn that cross polarization of linearly polarized antennas seriously degrades received signal strength. Our rudimentary experiments let us sample the effect in greater detail. The models that we are using are somewhat idealistic, since they use lossless wire in free space. However, as a start, they will give us a baseline against which to compare the results of antennas that we may place over ground.</p>
+  <p>The only variable in this new exercise is the value of Eta as we hold other values constant. <b>Fig. 4</b> shows the general situation. Let's retain the dipole set up parallel to the X-Y plane. Although the sketch shows a bit of displacement so as not to muddy the figure, the plane wave source is at 0 degree phi. If Eta = 90 degrees, it will be in-plane with the dipole. If Eta = 0 degrees, it will be cross polarized relative to the receiving dipole. As indicated by the sketch, we may select any angle in between.</p>
+  <center>
+    <img src="amod129-4.gif" width="450" height="150" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In order the give sense to the data, we must use a single value for the load resistor. For the runs that we shall make, 70 Ohms seems appropriate. We may set up a model following the same procedures used in the initial exercise.</p>
+  <pre>
+CM dipole 300 MHz EX1/PT1 70-Ohm load, variable Eta
+CE
+GW 1 15 0 -.2373 0 0 .2373 0 .001
+GE
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 90 1 1 0 1
+PT 1 1 8 8
+XQ
+LD 4 1 8 8 70 0
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 90 1 1 0 1
+PT 1 1 8 8
+XQ
+LD 4 1 8 8 70 0
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 80 1 1 0 1
+PT 1 1 8 8
+XQ
+LD 4 1 8 8 70 0
+FR 0 1 0 0 299.7925 1
+EX 1 1 1 0 90 0 70 1 1 0 1
+PT 1 1 8 8
+XQ
+</pre>
+  <p>In the new model shown partially above, the LD4 command is the same in each case. However, the F3 position of the EX 1 line changes in 10-degree steps from an in-plane condition toward a cross-polarized condition. Once more, we may tabulate the results and calculate the effects on the receiver terminal voltage, as shown in <b>Table 2</b>.</p>
+  <center>
+    <img src="amod129-t2.gif" width="769" height="129" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gradual decrease in the terminal voltage comes as no surprise in the progression of Eta values. The rate of decrease becomes apparent if we graph the voltage, as shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod129-5.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graphs show the increasing rate of voltage decrease at the receiver terminals as we get farther away from an in-plane condition. In free space, the full cross-polarized condition results in zero volts. Over ground, we would not likely see the absolute zero shown by the free-space model. Ground reflections alone are sufficient to leave a remnant voltage (and segment current), although in models, the level is usually below the level of anything usable. In the real world, with many objects to reflect, refract, and diffract radio waves, we may find usable, if difficult signal levels.</p>
+  <p><b>Varying the Excitation Position</b></p>
+  <p>One of the most useful features of plane-wave excitation is the ease with which we may change the angle of the incident wave. By the proper selection of a range of theta and phi angles, we may not only change the angle of the incident wave, but we may survey a large collection of angles. <b>Fig. 6</b> suggests the scope of the possibilities.</p>
+  <center>
+    <img src="amod129-6.gif" width="420" height="386" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I have drawn the circles as ovals for clarity. We may choose a starting value for theta and then select an increment and the number of theta steps. We may do the same for phi. How large we make the resulting table depends on both good sense and how large a table we are prepared to read. For the dipole, it would make no sense to sample more than a single theta angle, since we would obtain the same free-space results with every sequence of phi angles. Since we only need samples, we may use phi angles in 10-degree increments between 0 and 90 degrees. Beyond that point, we would replicate values. The model that we need--using a 70-Ohm feedpoint segment resistor--is very simple.</p>
+  <pre>
+CM dipole 300 MHz EX1/PT1 70-Ohm load, variable phi
+CE
+GW 1 15 0 -.2373 0 0 .2373 0 .001
+GE
+FR 0 1 0 0 299.7925 1
+EX 1 1 10 0 90 0 90 1 10 0 1
+LD 4 1 8 8 70 0
+PT 1 1 8 8
+XQ
+EN
+</pre>
+  <p>The results are once more amenable to tabulation, as shown in <b>Table 3</b>. The final data entry is technically incorrect. The actual reported value is 8E-15, but it would have shown up as zero if entered in that form.</p>
+  <center>
+    <img src="amod129-t3.gif" width="769" height="129" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We may also graph the calculated voltage values, along the way noticing differences between these voltages and those appearing in the data and graph for the Eta experiment. <b>Fig. 7</b> gives us the visual reference.</p>
+  <center>
+    <img src="amod129-7.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although we shall not work these values in this exercise, you may wish to compare them with other data that you collect from models. For example, compare the voltage values as we move the incident-wave angle and compare the results with the gain values in the original transmitting antenna, especially as the transmitting antenna gain passes the -3-dB marks that define the bandwidth. The transmitting plot reports a beamwidth of 80 degrees or 40 degrees each side of phi = 0. At the 40-degree marks in Table 3, we find that the calculated power is just about half the value shown for 0 degrees phi. Of course, the current and voltage each show values that are about 0.7 of the values for 0 degrees phi.</p>
+  <p><b>Conclusion</b></p>
+  <p>Our goal has not been to uncover anything new about dipoles. Instead, these notes have aimed at familiarizing you with the modeling moves necessary to let receiving data perform useful, even if mundane work. Varying the load resistor, the value of Eta, and the angle of the incident wave relative to the antenna are three variations that we may use individually or in concert to analyze the receiving behavior of simple or complex antenna geometries.</p>
+  <p>Although we have used the NEC-2 given excitation value of 1 V/m, in NEC-4, we may select virtually any field strength value we might need for a given project. However, since we supplemented the reported data with rudimentary calculations of other values that we might need or want, we may as easily add a line adjusting the reported current values for adjusted excitation field strength values. The reported current will be directly proportional to the excitation voltage, from which other values will calculate as easily.</p>
+  <p>Since our goal has been to display the main manipulations that we may require, we have also bypassed results that we might obtain using elliptically polarized plane-waves. For NEC, an axial ratio of 1.0 indicates a circularly polarized wave, while 0.0 yields linear polarization. By a judicious selection of the ratio of minor to major axis ratio and of the value of Eta, we can obtain virtually any desired degree of ellipticalness.</p>
+  <p>Receive data can provide even newer modelers with important data on antenna performance, so long as the implementing software allows access to the EX 1 through EX 3 and the PT 1 through PT 3 commands. Supplementing NEC reports with additional calculations can extend the utility of the information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <center>
+    &nbsp;
+  </center>
+</body>
+</html>

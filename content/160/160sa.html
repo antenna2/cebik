@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="MF, Vertical">
+  <title>Pursuing the (Nearly) Perfect Parasitic Vertical Array for 160 Meters Part 1</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Pursuing the (Nearly) Perfect Parasitic Vertical Array for 160 Meters<br>
+    Part 1: A Review of Design and Modeling Techniques</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Suppose that you had a vertical array for 160 meters that produced a pattern like the azimuth pattern in <b>Fig. 1</b>. Notice that the elevation angle is 15 degrees, and that the peak front-to-back ratio is nearly 40 dB. What might it take to achieve such a pattern? In most instances, folks would speculate on phased monopoles. Now let's add the ability to remotely switch the direction of the array in 60 degree intervals throughout the entire circle. What might that ability require?</p>
+  <center>
+    <img src="160s-1.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Before our speculation carries us too far into BC-band fields of towers, let me give away the secret. The array is a single driven element about 1/2 wl tall with sloping parasitic guys (or pseudo-guys). It will be the subject of this design study (since my yard and budget are too small for implementation). However, even though based on modeling studies in NEC-4, the array avoids almost all of the modeling flaws that have made parasitic vertical arrays so contentious. In fact, as a prelude to looking at the new array, let's look first at some facts about modeling some well established arrays.</p>
+  <p><b>Buried Radial Systems</b></p>
+  <p>In most 160-meter literature, we find 2 sorts of radial system models, neither of which are accurate models of buried radial systems. By a buried radial system, I mean a set of radials anywhere from near the surface down to about 2' into the soil. In general, this covers most of the radial systems in use at 160-meter installations.</p>
+  <p>The two most common systems used in models of buried radials are the near-ground elevated radial system and the no-radial system using a MININEC ground. Of the two, the latter is the most common, since it is the simplest to model. Of the two, the MININEC ground system creates the worse models, but both are completely inadequate as substitutes for modeling a buried radial system.</p>
+  <p>Modeling a buried radial system requires a version of NEC higher than NEC-2. Obtaining NEC-4, for which there are commercial implementations, is an expensive proposition, and most individuals may find the investment beyond their means relative to the benefits. However, the differences in the models and their results yielded by NEC-4, relative to the weak substitutes currently used, dictates that any individual or institution that wishes to claim any degree of good correlation between models and reality for vertical arrays on 160 meters should have this software.</p>
+  <center>
+    <img src="160s-2.gif" width="701" height="413" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I can illustrate the point with a short series of models. First consider simple 1/4 wl monopole over a field of buried radials whose numbers might vary from 4 to 128. We can model this situation fairly easily in NEC-4. Using <b>Fig. 2</b> as a guide, we can see some of the requirements for such models. The vertical wire must have a junction at the surface (Z = 0) level. The source segment should be the same length as the immediately adjacent segments for maximum accuracy. These requirements set the minimum segment length in the model. One consequence of the minimum segment length is a limit on the diameter of the main element if we retain a safe 4-to-1 length-to-diameter ratio for the complex geometry of radial system models. For our example, let's use 0.001 wl or 0.164 m as the minimum length, which corresponds to a radial field buried about 6.5" deep. I shall use a 25-mm diameter main element and 2-mm diameter radials for the examples.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                    Table 1.  Soil types used in the study
+
+      Soil Type               Conductivity            Permittivity
+                              Siemens/meter           dielectric constant
+      Very Poor               0.001                    5
+      Poor                    0.002                   13
+      Good (Average)          0.005                   13
+      Very Good               0.0303                  20
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>I shall note in passing that my modeling studies show only interesting but faint numerical difference as we move the radial field from about 3" deep to about 25" deep--differences that would not add up to a tenth of a dB difference in performance for any given soil quality. As <b>Table 1</b> indicates, we shall use in these notes the standard sample soil qualities of Very Poor through Very Good to check on differentials based on ground differences. That these labels indicate samples that are indeed fair and that the other aspects of these preliminary notes on modeling are accurate has been demonstrated in a series of articles for <i>The National Contest Journal</i> that appeared in 2001.</p>
+  <p>In order to control the size of models, one may use length-tapering of the elements, including both the main and radial wires. <b>Fig. 2</b> shows the technique in sufficient detail for these notes. The main element is a constant 40-m throughout the monopole exercise, while the radial will be an exact 1/4 wl at 1.83 MHz, the test frequency throughout these notes. However, the key question concerns results.</p>
+  <center>
+    <img src="160s-3.gif" width="649" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> provides part of the answer. It summarizes the gain of a 40-m tall monopole over radial fields from 4 to 128 radials over the sample soils. Note that for most of the samples, the far-field gain peaks at about 64 radials. However, for Very Poor Soil, gain continues to rise, even at the 128-radial level, with well over a 3 dB differential when moving from 4 to 128 radials in the system. I should add here that most of standard categories of soil conductivity and permittivity are based on measurements made for AM BC service. Amateurs should not be surprised to find conductivity levels well under 1 mS/m, the lowest value in both the standard charts and the sample types used here. For example, a set of tests on some Maine soil at 7 MHz yielded a conductivity of about 0.2 mS/m, with an indirectly derived permittivity of 7, which happens to be the textbook value for shale. In short, one should not over-estimate the quality of one's soil, even if maps suggest pretty good stuff under foot. The gain line for Very Poor soil comes closest to reflecting experiential reports of signal improvements occasioned by adding radials to one's system.</p>
+  <center>
+    <img src="160s-4.gif" width="654" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain curves are reflected in NEC-4 reports of anticipated feedpoint values for monopoles, as shown in <b>Fig. 4</b>. The curves do not begin to converge until we have at least 32 radials under the monopole. At that point, construction variables would mask any ground-occasioned differences in measured values.</p>
+  <p>One of the reasons that so many modelers use the MININEC ground system in vertical modeling is that the NEC-2 alternative of placing a ground plane at about 0.001 wl above ground shows strong correlations to the results of using the no-radial MININEC ground. Unfortunately, the near-ground radial system has only very limited correlations to the buried-radial system we have glanced at so far. Hence, both systems are faulty as adequate models of a buried-radial system.</p>
+  <center>
+    <img src="160s-5.gif" width="652" height="531" border="2" vspace="5" hspace="9">
+  </center>
+  <p>So that we do not encounter graphic grid lock in a morass of lines, let's simply compare sample buried radial systems results to those that would be yielded for the same antenna connected directly to a MININEC ground. This latter facility is available in EZNEC as an adjunct to the normal NEC-2 array of ground options. <b>Fig. 5</b> shows the MININEC-ground curve in relationship to curves for 8, 32, and 128 buried radials, all in NEC-4, for various soil qualities. Although the MININEC curve traces adequately the curves for larger radial systems, it does not come close to reflecting the situation with a smaller radial field.</p>
+  <center>
+    <img src="160s-6.gif" width="649" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>More telling is <b>Fig. 6</b>, a graph of the modeled source resistance values for the same set of models. A MININEC ground provides a single source impedance figure, taken over none of the same ground types, but over perfect ground. It comes close to tracking only the field of 128 radials, with serious deficiencies for any small radial field.</p>
+  <p><b>MININEC vs. Buried Radials for Parasitic-Guy Arrays</b></p>
+  <p>We might live with the differentials between large buried-radial systems and the MININEC no-radial system of modeling were it not for a weakness in the MININEC ground system that almost all modelers of 160-meter arrays routinely overlook. A guy-wire used as a parasitic element slopes and therefore has a horizontal as well as a vertical component to its far field. Virtually all versions of MININEC warn modelers that placing a horizontal antenna closer than about 0.2 wl to the ground results in increasing inaccuracies to the output reports. In general, the gain reports will be increasingly too high and the source impedance reports too low as we bring the wire closer to the ground. The restriction on the MININEC ground accuracy applies not only to driven elements, but as well to parasitic elements and not only to truly horizontal elements, but as well to sloping elements.</p>
+  <center>
+    <img src="160s-7.gif" width="450" height="359" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's illustrate the problem with a simple classic array, illustrated in <b>Fig. 7</b>. We shall test this array at 1.83 MHz over the MININEC ground and over a buried radial system. Since both elements are grounded, we shall use a set of intersecting radial systems, outlined in simplified form in <b>Fig. 8</b>. However, the actual modeled system uses 32 radials per intersecting system, with junctions where shortened radials meet. (Techniques for constructing buried models of intersecting radial systems are fully described in the <i>NCJ</i> series noted earlier.) Otherwise, the buried radial system is constructed just as for the single monopole.</p>
+  <center>
+    <img src="160s-8.gif" width="605" height="427" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="160s-9.gif" width="648" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we compare MININEC-ground models over various soils to models over buried 32-radial systems (a region where the monopole models converge reasonably well), we find that the MININEC-ground model over-estimates gain by an average of a full dB, as shown in <b>Fig. 9</b>. <b>Fig. 10</b> is even more dramatic, as it reveals the degree of over-estimation of the front-to-back ratio that occurs in the MININEC-ground model compared to the buried-radial model. Given that full-size unloaded horizontally oriented drive-reflector Yagis achieve only about 10 to 12 dB front-to-back ratio maximums, there should be little question as to which model type is the more believable. To see the overall differences between the two types of models, we may compare elevation patterns over good soil of the two models, as shown in <b>Fig. 11</b>.</p>
+  <center>
+    <img src="160s-10.gif" width="645" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="160s-11.gif" width="640" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To confirm that the results of the first example are not a simple aberration, let's try another standard guy-wire array using 3 elements, as shown in <b>Fig. 12</b>. The sloping guys function as a director and an inductively loaded reflector. For the buried-radial version of this model, we shall require a system of three 32-radial fields that intersect along two lines, as sketched in simplified form in <b>Fig. 13</b>.</p>
+  <center>
+    <img src="160s-12.gif" width="555" height="315" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="160s-13.gif" width="624" height="390" border="2" vspace="5" hspace="9">
+  </center>
+  <p>With 2 sloping elements, the differences between the MININEC-ground model and the buried-radial model become further accentuated. <b>Fig. 14</b> compares the gain values over different soil types for the two models. Even over Very Good soil, the MININEC-ground model over-estimates the array gain by a full dB, with that differential growing to nearly 5 dB over Very Poor ground. The front-to-back ratio comparison in <b>Fig. 15</b> is equally impressive, with the MININEC-ground model over-reporting the ratio by an average of 10 dB.</p>
+  <center>
+    <img src="160s-14.gif" width="649" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="160s-15.gif" width="648" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In addition to these differences, the buried-radial ground model requires a different inductive loading value than needed by the MININEC-ground model: 22 vs. 33 Ohms inductive reactance. Interestingly, the use of a near-ground elevated radial system requires a load in the reflector that is quite close to the MININEC value, further illustrating that neither system adequately substitutes for a buried-radial model--if buried radials happen to be what we are modeling. <b>Fig. 16</b> summarizes the differences in comparative elevation plots for the MININEC-ground and buried-radial models over Good soil.</p>
+  <center>
+    <img src="160s-16.gif" width="640" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>It has been necessary to review the inadequacies of the MININEC-ground system of modeling vertical arrays, especially when the array uses sloping elements, for two major reasons. One reason is the prevalence of the use of such models and their general acceptance as substitutes for models of buried radial systems. The second reason, related to the first, is that the MININEC-ground models present an illusion that guyed monopole arrays come sufficiently close to outstanding performance, especially with respect to the front-to-back ratio, that we need not seriously consider further techniques of improvement.</p>
+  <p>Little could be further from the truth for sloping parasitic monopole arrays. In general, buried-radial system models suggest that both the gain and front-to-back ratio performance of most sloping parasitic element arrays leaves a vast region for improvement. The increments of gain and front-to-back ratio offered by such arrays are worthy, compared to a single monopole, and this level of improvement may be satisfactory for a large number of antenna installations. However, when we compare the performance to the azimuth pattern in <b>Fig. 1</b>, we can easily see that further improvement is possible.</p>
+  <p><b>1/2 Wavelength Phased 1-Tower Arrays</b></p>
+  <p>Before we look at a possible improvement upon a parasitic array, let's briefly review some of the potential for phased arrays using 1/2 wl radiators. Among the classics is the K8UR array (first presented in <i>CQ</i> for December, 1989) that consists of a central grounded tower that functions as a passive element in the system. Surrounding the tower are 4 dipoles, the upper halves of which are attached to non-conductive guy wires. Each wire is angled at 30 degrees relative to the vertical tower, conforming to standard guying practice. At the roughly centered feedpoints, the dipoles are folded back toward the tower, forming another 30 degree angle to it. The entire ensemble resembles the outline sketch in <b>Fig. 17</b>.</p>
+  <center>
+    <img src="160s-17.gif" width="417" height="438" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The reason for the double circles in each dipole is the use of a split feed for each element to ensure centering of the feedpoint. Single feeds on each wire in the segment nearest the center result in only about 1-Ohm differences of resistance and reactance, so simpler modeling is possible. However, when scaled for study in the context of 160 meters, the initial models were disappointing using any method of feed.</p>
+  <p>The K8UR system requires a phased feed system that some literature casually specified as -90 degrees on the forward element, +90 degrees on the rear element, and 0 degrees on the side elements, all at the same current amplitude. Unfortunately, models of this system produce mediocre performance, with front-to-back ratios that do not reach 10 dB over any soil quality.</p>
+  <center>
+    <img src="160s-18.gif" width="640" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The problem does not lie with the arrangement of the tower and the wires. In fact, excess concern with the spacing of the wires from the tower and the positioning of the fold-back points to yield a square that is 1/4 wl on a side has produced less than optimal performance from the array. <b>Fig. 18</b> compares the elevation patterns of two models of the array. One uses the recommend fold-back point to form the square that is 1/4 wl per side and spaces the wires a minimum of 2.6 m from the central tower. The other model uses a fold-back point that is exactly halfway along the driven wires, while allowing the wires to be within 0.5 m of the central tower. The improvement in the reduction of very high angle radiation by using the mid-point fold-back is clearly evident in this comparison over good quality soil. It holds for every other soil type, with the mid-point version also showing about a degree lower take-off angle over each soil type.</p>
+  <p>In the mid-point model, a 72-m tower simulated by a 250-mm wire forms the central element. 80-m long 2-mm diameter wires form the phased dipoles. Obtaining at least an excellent front-to-back ratio--whatever the gain turns out to be--is simply a matter (for the modeler) of introducing the correct current magnitude and phase for the 4 fed dipoles. In the case of the K8UR array, as modeled here, the process is simplified because the side wires can be left at a magnitude of 1 and a phase angle of zero.</p>
+  <p>For the arrangement noted, over good soil, the forward wire required a current magnitude of 1.05 at a -130 degree angle, while to rear element required a magnitude of 1.06 at 136 degrees to achieve a balance between maximum gain and maximum front-to-back ratio. For good soil, the optimized version of the mid-point model shows a gain of 6.45 dBi at an elevation angle of 17 degrees with a front-to-back ratio of 45 dB and a horizontal beamwidth of 90 degrees. <b>Table 2</b> provides additional performance potentials over various soils.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     Table 2.  K8UR Array with Mid-Point Dipole Feed
+72-m high 250-mm diameter tower, 80-m long 2-mm diameter center-fed dipoles, no
+radials.
+
+Soil        Gain  TO    Fr-Bk B/W   Feed Current Relative Magnitude and Phase
+Quality     dBi   angle Ratio -3 dB       Dir               Ref         Sides
+Very Poor   3.9   21&deg;   42.6  94&deg;   1.05 @ -130&deg;      1.07 @ 136&deg;       1.0 @ 0&deg;
+Poor        5.4   19&deg;   44.9  92&deg;   1.05 @ -130&deg;      1.06 @ 136&deg;       1.0 @ 0&deg;
+Good        6.5   17&deg;   45.0  90&deg;   1.05 @ -130&deg;      1.06 @ 136&deg;       1.0 @ 0&deg;
+Very Good   8.8   13&deg;   44.0  88&deg;   1.05 @ -130&deg;      1.06 @ 136&deg;       1.0 @ 0&deg;
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The table lists the required relative current magnitudes and phase angles for each active element for each soil type. This information is likely more useful than the resultant feedpoint impedances.</p>
+  <center>
+    <img src="160s-19.gif" width="640" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The K8UR system is capable of truly outstanding performance using a well-designed phasing system--one capable of handling the inevitable variations that occur from one installation to the next. <b>Fig. 19</b> shows the potential performance over various soils in overlaid azimuth patterns, each taken at the TO angle for the soil type. The array is a bit sensitive. Changes in the side wire phase angle as little as 5 degrees reduced the front-to-back ratio to under 20 dB. Its only other limitation is in direction switching. When fully optimized, the -3 dB bandwidth of under 95 degrees leaves a slight weakness (up to -3 dB) along the bearings that mark the dividing points between available headings.</p>
+  <p>The K8UR array is an example of a phased array that avoids the use of separate towers for the individual active elements. For our purposes, the array forms a touchstone for simpler systems that require only a single driven element. We shall look at a couple of possibilities for parasitic arrays in Part 2.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 1-1-2002. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for December, 2001. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="160sb.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 2</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

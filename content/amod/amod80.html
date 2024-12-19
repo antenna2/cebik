@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Developing Antenna Expectations Using Modeling Software</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>80. Developing Antenna Expectations Using Modeling Software<br>
+    2B: Vertical Monopoles (continued)</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the preceding episode, we began our investigation of vertical monopoles by looking at elevated versions of the antenna. However, as our general work outline showed, the elevated vertical monopole is but one of the two ways we use the antenna. At lower frequencies ranging from LF and VLF up through the lower HF region, we often use them with one end at ground level and with a buried system of radials. So we still have half a project to finish.</p>
+  <p>The overall project had this structure:</p>
+  <blockquote>
+    A. Elevated vertical monopole
+    <blockquote>
+      1. Monopole development
+      <p>2. Height above ground</p>
+      <p>3. Ground quality</p>
+    </blockquote>B. Ground-mounted monopole
+    <blockquote>
+      1. Perfect vs. lossy ground
+      <p>2. Radial density</p>
+      <p>3. Buried radials</p>
+      <p>4. Radial length</p>
+      <p>5. Vertical length</p>
+    </blockquote>
+  </blockquote>
+  <p>Even though we could only sample some of the many systematic questions relating to the properties of elevated vertical monopoles, we have to move onward. This series is not designed to answer all questions that contribute to a set of reasonable expectations of antenna types. Instead, it is designed to show some of the principles of systematic study that will let you continue the process of gathering data in ways that make sense of antenna performance patterns. We shall be similarly incomplete this month.</p>
+  <p><b>B. Ground-Mounted Monopole</b></p>
+  <p>The ground-mounted vertical (monopole) was once considered one of the most basic of all antennas. More recently, we have come to see it as an extension or a modification of the dipole, with the radial system substituting for the lower half of the dipole. However, because the ground plays such a significant role in the performance of the antenna, we shall not start in the same place that we began with all of the other antennas that we have so far explored. Instead of beginning in free space, we shall begin with a perfectly reflecting ground.</p>
+  <p><b>1. Perfect vs. Lossy Ground</b></p>
+  <p>In both NEC and MININEC, if we place a vertical element in contact with a perfect ground, the program will calculate the properties of the antenna by creating an image antenna that extends mathematically below the ground surface by an equal length. The left sketch in <b>Fig. 1</b> shows the general situation.</p>
+  <center>
+    <img src="amod80-1.gif" width="431" height="291" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A perfect ground will totally reflect the radiation striking it, thus doubling the power in the radiated field. To see the image antenna effects in action, let's create a 7.05-MHz vertical monopole made from 2" (50.8-mm) aluminum. We shall give it a length of 33.25' (10.135 m). For this exercise, let's use 30 segments. NEC-4 returns a maximum gain of 5.14 dBi with a source impedance of 35.94 - j 0.13 Ohms.</p>
+  <p>As shown in the middle portion of <b>Fig. 1</b>, the 1/4 wavelength vertical element plus its image is equivalent to a 1/2 wavelength vertical dipole in free space--except for the source impedance. If we create such a dipole for 7.05 MHz from the same materials, making it 66.5' (20.27 m) long, we obtain a source impedance of 71.84 - j 0.58 Ohms. The very slight difference between the reported impedance and double the 1/4 wavelength impedance stems from the slight shift we had to make in the position of the source. The monopole source is on the lowest segment of the physical antenna, which places it slightly above ground. We assigned the dipole 61 segments, placing the source at its exact center, which corresponds to the ground level (Z=0) for the monopole.</p>
+  <p>Because the dipole has no reflections to double the radiated power of its far field, we should expect the field strength to be 1/2 the level of the monopole over perfect ground. So, instead of a field strength of 5.14 dBi, the dipole in free space reports 3 dB less, or 2.13 dBi.</p>
+  <p>To simplify models of vertical monopoles, modelers have in the past simply placed the monopoles in contact with the ground using MININEC. (NEC-2 and NEC-4 return completely useless reports under the same conditions.) The practice was so widespread that the EZNEC version of NEC incorporated the MININEC ground as a user-selected option. To understand the operation of the MININEC ground, let's place our monopole from the ground up using the MININEC ground system. As in past episodes, we shall use the following samples of ground quality as trials for our simple monopole model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                           Some Useful Soil Types
+
+              Soil Type                    Conductivity                 Permittivity
+                                           S/m                          (Dielectric Constant)
+              Very Poor                    0.001                         5
+              Poor                         0.002                        13
+              Good                         0.005                        13
+              Very Good                    0.0303                       20
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Running the model through these sample ground qualities, we obtain the following performance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                Changes of Vertical Monopole Performance with Ground Quality:  MININEC Ground
+
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -1.76         29                    35.94 - j 0.13
+              Poor                  -0.28         27                    35.94 - j 0.13
+              Good                  -0.03         26                    35.94 - j 0.13
+              Very Good             1.95          21                    35.94 - j 0.13
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We obtain a plausible-looking chart of gain values and TO angles. However, the source impedance remains the same for every value. The MININEC ground system always uses the source impedance for a perfect ground as one of its simplifying features, remembering that it was developed for early PCs with very limited memory resources. Hence, it cannot tell us whether the source impedance changes with ground quality. We cannot know from the MININEC ground system whether we need to adjust the length of the monopole to bring it to resonance for a given ground quality.</p>
+  <center>
+    <img src="amod80-2.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The MININEC ground system does let us make an important contrast, one that will hold true for every trial in this episode. <b>Fig. 2</b> shows the difference between a pattern taken over perfect ground and one taken over a real (MININEC) ground. The lower part of the figure represents all of the elevation patterns that we shall encounter. The only differences will be in the maximum gain and the TO angle as we move from one trial to another. As long as we stick to our 1/4 wavelength vertical monopole, we shall see the lower elevation pattern.</p>
+  <p><b>2. Radial Density</b></p>
+  <p>The use of a MININEC ground cannot capture the fact that the performance of a vertical monopole will change according to the size of the radial field that we add to the base of the monopole, as shown in the far right portion of <b>Fig. 1</b>. The radials, normally at or below the ground surface of a ground-mounted vertical monopole, are an essential ingredient to the antenna's performance with respect both to its source impedance and its far-field strength. We should now be on the verge of appreciating that the performance of a ground-mounted vertical monopole is a function of a complex interaction among the physical properties of the antenna, the ground quality, and the number and type of radials that we place at its base.</p>
+  <p>NEC-2 does not permit a wire to extend below ground level (Z=0). Therefore, the program cannot directly model a buried radial system. However, to simulate a buried radial system, the standard procedure is to create the radial set with the antenna and its radials raised about 0.001 wavelength above ground. This level is at or close to the absolute proximity permitted under NEC for wires above a Sommerfeld ground calculating system. (Do not use the simpler reflection coefficient system.)</p>
+  <p>For our 7.05-MHz monopole, we shall raise it by only 0.4" (10.16 mm) above ground. To the antenna base, we shall add radial systems using various numbers of radials. To be systematic about the matter, we shall use the progression 4, 8, 16, 32, and 64 radials. Broadcast systems use 120 radials with shorter radials between the longer ones, but a 64-radial system is about as large as amateur systems get. Besides, 64 radials, set up as we shall prescribe, will result in models with more than 1900 segments.</p>
+  <p>We shall not change the length of the monopole, but instead track what happens as we change the number of radials and the soil quality. We need to set a length for the radials. Each one will be--for the sake of our initial trials--0.25 wavelength long, that is, 34.88' or 10.63 m. (We shall look at the question of radial length before we have finished the episode.) For reasons having to do with subsequent trials, we shall assign 30 segments to each radial, as well as to the monopole, so that all segments are about the same length, close to 12" (0.3 m).</p>
+  <p>If we create the models using each of the specified number of radials and run the model over the 4 sample ground qualities, we obtain a table that resembles the following one.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+               Vertical Monopole Performance with Ground Quality and Number of Radials: NEC-2
+
+4 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -2.64         29                    46.57 + j 27.66
+              Poor                  -2.13         27                    59.43 + j 64.93
+              Good                  -3.31         26                    81.51 + j 63.16
+              Very Good             -3.09         21                    114.0 + j 97.64
+
+8 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -1.67         29                    36.19 + j  4.73
+              Poor                  -0.65         27                    40.48 + j 20.35
+              Good                  -1.40         26                    49.86 + j 21.27
+              Very Good             -1.01         21                    69.18 + j 43.57
+
+16 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -1.28         29                    33.44 - j  3.90
+              Poor                  -0.18         27                    35.55 + j  3.53
+              Good                  -0.59         26                    40.06 + j  3.94
+              Very Good              0.20         21                    51.69 + j 14.66
+
+32 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -1.05         29                    30.61 - j  6.90
+              Poor                   0.08         27                    33.16 - j  2.89
+              Good                  -0.15         26                    35.54 - j  3.14
+              Very Good              1.09         21                    41.64 + j  1.37
+
+64 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -0.89         29                    29.66 - j  7.48
+              Poor                   0.24         27                    32.08 - j  4.73
+              Good                   0.06         26                    33.70 - j  4.99
+              Very Good              1.51         21                    47.39 - j  2.82
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The table shows that for any number of radials, the elevation angle of maximum radiation--the TO angle--varies only with the soil quality. As we add radials, the source resistance descends and compresses, so that the wide range we see with few radials becomes a narrow range with many radials. The source reactance, which was always inductive with only 4 radials, is always capacitive with 64 radials. However, we should also note that some of the source impedance values drop below the 35-Ohm level that we encountered with a perfect ground. There is an old rule of thumb that suggests a way to account for losses to ground in a vertical monopole. Any portion of the source resistance that is above 35-36 Ohms is simply a loss function. However, the models suggest to the contrary that the relationship may not be so simple as that, since some source resistance values are below the ideal level. In fact, the source resistance for very poor soil and 64 radials begins to approach the level that we encountered for an elevated monopole with radials.</p>
+  <center>
+    <img src="amod80-3.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Of course, the gain reports will not support a suggestion that very low source resistance values mean high efficiency from our vertical monopole. <b>Fig. 3</b> tracks the gain values from the table for each of the ground qualities as we increase the number of radials. Note that the gain performance of the monopole over poor soil is always slightly better than over good soil. As well, the performance over very good soil shows a much steeper curve so that, with fewer than 16 radials, the gain is lower than with some of the worse soil qualities.</p>
+  <p>If we remember that we created these models as an above-ground simulation of a buried radials system, we can pose a valid question: how reliable is this simulation? This question is not so simple as it seems. The effects of ground on vertical monopoles has been under continuous study since the earliest days of radio. Even the best modeling systems are under scrutiny in the quest for a more perfect understanding of ground effects and the ideal radial system. At best, in our trials, we can only demonstrate a superior model of the monopole and its radials. We cannot reach an absolutely final answer.</p>
+  <p><b>3. Buried Radials</b></p>
+  <p>Unfortunately, the only way to create a superior model of the ground-mounted vertical monopole with a buried radial system is to use NEC-4, which is outside the reach of most casual modelers. However, NEC-4 does permit the use of wires below ground. In conjunction with the Sommerfeld ground calculating system, the model promises to yield more accurate results than a scarcely elevated substitute. However, should the Sommerfeld (S-N) system undergo refinement as a means of calculating ground effects, then even these models will yield better results in future modeling software.</p>
+  <center>
+    <img src="amod80-4.gif" width="445" height="286" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows what is necessary to develop a buried radial system. NEC requires that a wire or segment junction coincide with the ground (Z=0). The wire or segment from ground down to the level of the junction of radials plays a critical role in the model. The segment just above ground is where we place the source, and to obtain reliable results, this segment should be the same length as the segments adjacent to it. If we do not use segment length tapering, the distance from the ground down to the radials thus determines the length of the segments in the vertical monopole. We shall use 66 segments, since we shall place the buried radials 0.5' (0.15 m) below ground. In fact, moving the radial depth tends to change the results by insignificant amounts for a fairly wide range of depths. Hence, the half-foot depth represents a reasonable compromise between reflecting actual practice in setting radials and relatively manageable model sizes. Because the radials are symmetrical, we can use a reduced segmentation density. In fact, we shall retain the 30-segment-per-radial density that we used for the elevated system.</p>
+  <p>If we set up the models according to this scheme and run them through the sample soil qualities, we obtain the following table of results.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+               Vertical Monopole Performance with Ground Quality and Number of Radials: NEC-4
+
+4 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -4.62         30                    97.95 + j 27.77
+              Poor                  -2.85         27                    69.26 + j  6.64
+              Good                  -2.53         26                    67.02 + j 12.35
+              Very Good              0.35         21                    52.55 + j 12.79
+
+8 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -2.49         29                    57.61 + j 22.66
+              Poor                  -1.73         27                    57.59 + j  8.47
+              Good                  -1.49         26                    54.66 + j 11.89
+              Very Good              0.81         21                    47.47 + j 10.82
+
+16 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -1.32         29                    40.34 + j 11.40
+              Poor                  -0.63         27                    46.71 + j 10.16
+              Good                  -0.64         26                    45.81 + j  9.69
+              Very Good              1.19         21                    43.76 + j  9.23
+
+32 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -0.91         29                    34.52 + j  4.58
+              Poor                   0.09         27                    38.55 + j  7.91
+              Good                  -0.07         26                    39.69 + j  7.38
+              Very Good              1.50         21                    40.89 + j  7.99
+
+64 Radials
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -0.78         29                    32.47 + j  1.54
+              Poor                   0.34         27                    35.00 + j  5.20
+              Good                   0.16         26                    36.53 + j  5.12
+              Very Good              1.70         21                    38.76 + j  6.91
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We may first notice that the TO angles have not changed, with the one exception of 4 radials with very poor soil. Our second notice should go to the source impedances. With few radials, the buried-radial model reverses the source impedance situation with respect to values for very good and very poor soil. Internally to the table, the 16-radial level marks a turning point in the source resistance reports. With fewer radials, the source resistance goes up as soil quality goes down. With more than 16 radials, the trend reverses. All reactances are inductive for two reasons. First, the height above ground of the vertical is unchanged, even though we added a small subterranean section to the antenna. Second, the source position is slightly higher up on the total vertical length from the radials to the tip. Nonetheless, as we add more radials, the ground-mounted vertical monopole comes very close to resonance over any soil quality, with under j 7 Ohms reactance as the 64-radial worst case.</p>
+  <center>
+    <img src="amod80-5.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> extracts the gain data for a visual presentation. When we compare it to the data from the above-ground radial models, we see some clear differences. Even though the above-ground version did not record the cross-over in gain advantage between poor and good soils at the 16-radial mark (corresponding to the changeover point for the source resistance values), these two soil levels show the highest correlation between the two graphs. The most significant changes occur with respect to very good and very poor soil. The values for very good soil maintain an advantage over other soil qualities and the curve is much shallower than with the above-ground reports. In contrast, with buried radials and very poor soil, we find a steeper curve and values always at the bottom of the scale.</p>
+  <p>It is likely that the buried-radial models return more reliable results than their NEC-2 above-ground simulation. The gain and source impedance reports tend to be closer to intuitions, although intuition would be a poor guide with respect to the middle of the scale, where poor soil sometimes outperforms good soil by a small margin (that is not operationally significant). We should note once more that the inter-relationship among the physical antenna structure, the soil quality, and the number of radials is further complicated by source resistance values that fall noticeably below the perfect-ground value. Finally, you may wish to compare the results in both sets of tables with the recorded when using a MININEC ground without a radial system.</p>
+  <p><b>4. Radial Length</b></p>
+  <p>Throughout the trials that we have been performing, we used radials that were exactly 1/4 wavelength at 7.05 MHz. One continuing discussion concerning ground-mounted vertical monopoles concerns the ideal length for radials. As we have seen, we cannot obtain absolute answers to such questions, but we can see what models have to report on the subject. Let's take the 16-buried-radial model and test it for radials of varying length, ranging from 0.10 wavelength to 0.40 wavelength. We can, for demonstration purposes only, use only good and very poor soils for our sampling, leaving other options for further exploration as something you can do yourself. We shall retain our 0.25" (6.25-mm) radials and segmentation density, which means that the models will grow larger with every increase in radial length. The results should resemble the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                          Effects of Radial Length on Vertical Monopole Performance
+
+Good Soil
+                     Length         Gain          TO Angle       Source Impedance
+                     WL             dBi           degrees        R +/- j X Ohms)
+                     .10            -1.30         26             47.12 - j  0.85
+                     .15            -0.87         26             43.92 + j  4.80
+                     .20            -0.72         26             44.58 + j  8.29
+                     .25            -0.74         26             45.82 + j  9.69
+                     .30            -0.57         26             46.95 + j 10.17
+                     .35            -0.51         26             47.83 + j 10.07
+                     .40            -0.48         26             48.36 + j  9.63
+
+Very Poor Soil
+                     Length         Gain          TO Angle       Source Impedance
+                     WL             dBi           degrees        R +/- j X Ohms)
+                     .10            -3.10         29             46.94 - j 17.96
+                     .15            -2.40         29             40.94 - j  7.64
+                     .20            -1.76         29             37.77 + j  1.90
+                     .25            -1.32         29             40.33 + j 11.40
+                     .30            -1.18         30             47.76 + j 15.52
+                     .35            -1.13         30             53.84 + j 13.71
+                     .40            -1.06         31             56.34 + j  9.68
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In both trials, we see a regular and smooth improvement in gain performance with longer radials, although the range is less with good soil than with very poor soil. There are in the models no special lengths within the range tested. The TO angle over good soil remains constant, although over very poor soil, the angle begins to increase slowly as we extend the radial length above 0.25 wavelength.</p>
+  <p>Both tables show that with radials about 0.30 wavelength, the inductive reactance reaches a maximum. Source resistance shows minimum values, but at slightly different radial lengths: for good soil, at 0.15 wavelength, for very poor soil, at 0.20 wavelength. These are minor phenomena, more of numerical interest than operational significance. Indeed, IF the models are reasonably accurate predictors of antenna behavior with varying radial lengths, then it is likely that the exact radial length will not affect antenna performance significantly so long as all radials are the same length and as symmetrically laid out as feasible.</p>
+  <p><b>5. Vertical Length</b></p>
+  <p>When we encounter initial textbook discussions of ground-mounted vertical monopoles, the authors treat us to graphical elevations patterns related to the length of the vertical monopole above ground. Inevitably, the patterns show a significant gain advantage to using a monopole that is 0.625 wavelength. Let's replicate those patterns over perfect ground. Then let's go a step farther and perform the same set of trials over good ground with our 16-radial buried system. We shall not change general parameters of the model, using 1/4 wavelength radials. Our goal will be to understand why some broadcast antenna engineers prefer in fact not to use the longer monopole (beyond the fact that such a monopole represents a very tall structure to maintain in the AM broadcast frequency range). The results of our trials at 7.05 MHz will look like those in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                         Effects of Vertical Length on Vertical Monopole Performance
+
+Perfect Ground
+                     Length         Gain          TO Angle       Source Impedance
+                     WL             dBi           degrees        R +/- j X Ohms)
+                     .25             5.14         --             35.94 - j  0.13
+                     .375            5.83         --             269.9 + j 372.4
+                     .50             6.95         --             6762. - j 664.9
+                     .625            8.04         --             64.09 - j 253.9
+                     .75             6.61         46             59.14 + j 26.59
+
+Good Soil
+                     Length         Gain          TO Angle       Source Impedance
+                     WL             dBi           degrees        R +/- j X Ohms)
+                     .25            -0.64         26             45.83 + j  9.71
+                     .375           -0.06         22             308.3 + j 380.0
+                     .50             0.53         18             5859. - j 669.4
+                     .625            0.73         15             64.65 - j 235.5
+                     .75             4.14         45             73.26 + j 34.47
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>With an aluminum vertical, the 5/8 wavelength vertical over perfect ground shows a 2.9-dB advantage over the 1/4 wavelength vertical. However, when we transplant the verticals to merely good soil, the gain advantage of the longer version shrinks to less than 1 dB. We may note the lower TO angle of the longer vertical and still think that we should use it. For that reason, we should also explore the elevation patterns themselves over both perfect and merely good ground.</p>
+  <center>
+    <img src="amod80-6.gif" width="400" height="620" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can trace the pattern development in <b>Fig. 6</b>. From a vertical length of 1/4 wavelength up to 1/2 wavelength, the patterns over good soil track well with the patterns over perfect ground. However, at a length of 5/8 wavelength, the very modest secondary lobes of the pattern over perfect ground take a different turn. They become very large regions of high angle radiation. Much of the energy that--over perfect ground--extended the lower lobe has now moved into the second lobe. Little wonder that engineers who do not wish to cause interfering skip signals at night in the AM BC band opt for a shorter length of vertical monopole. Even for amateur use, the 5/8 wavelength monopole may increase short-range noise and interfering signals without commensurate improvements in long-range performance.</p>
+  <p>The 0.625 wavelength vertical monopole is the analog of the 1.25 wavelength vertical dipole. Two episodes ago, we saw that increasing the dipole length to 1.5 wavelengths virtually eliminated low angle radiation and redirected energy at very high angles. The same effect holds true for ground-mounted vertical monopoles that we extend to 0.75 wavelength. As the bottom patterns in <b>Fig. 6</b> show clearly, even the version over perfect ground shows the angle of the main lobes to be very high. The version over good soil eliminates virtually all low angle radiation.</p>
+  <p><b>Conclusion</b></p>
+  <p>Although we seem to have covered a wide territory in our investigation of ground-mounted verticals, we have omitted many facets of what a truly thorough study might accomplish. We did not look at the effects of using different combinations of vertical element diameters with equally varied radial diameters. We did not investigate the effects of different materials on monopole performance. Even where we sampled different soil qualities, we often left gaps in the coverage.</p>
+  <p>However, we have progressed far enough for you to proceed individually to do a more thorough exploration. Indeed, the principles of systematic exploration of antenna properties via models apply to any number of antenna types, both simple and complex: parasitic arrays, phased arrays, closed geometries (vertical and horizontal loops, etc.), and even systems of multiple antennas. In some cases, such as horizontal arrays that are well elevated above ground, the results will be as authoritative as one might wish. In other cases, such as ground-mounted verticals, they will be useful, suggestive, and helpful, without necessarily being without contest from new developments in the understanding of how complex factors combine to yield antenna performance.</p>
+  <p>In virtually all cases, the exercises will not only contribute to our understanding of the subject antenna types. As well, they will help us overcome numerous misconceptions, presumptions, myths, and assumptions that we carry to our antenna work. These are some of the key roadblocks to developing reasonable expectations of antenna performance, the goal of using modeling as a means to understanding better what antennas can do.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

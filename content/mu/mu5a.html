@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Phased Array, HB9CV / ZL Special, HF Upper, Small Beams">
+  <title>Modeling and Understanding Small Beams Part 5: The ZL Special</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Modeling and Understanding Small Beams</h1>
+    <h3>Part 5: The ZL Special</h3>
+    <p><b>L. B. Cebik, W4RNL</b></p>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br wp="BR1">
+  <br wp="BR2">
+  <p>When George Prichard (ZL3MH, later ZL2OQ and unfortunately recently deceased) introduced the amateur population in 1949 to 2-element horizontal phased arrays, they promised to overcome all the shortcomings of early home brew Yagis.<sup>1</sup> Early experimental results by F. C. Judd, G2BCX, who dubbed the antenna the "ZL Special" in honor of Prichard's work, seemed to indicate gains as high as 7 dBd and front-to-back ratios as high as 40 dB.<sup>2</sup> Moreover, the antenna was relatively simple to construct: 2 half-wave elements separated by about 45 degrees relative to the frequency of choice and connected by a phasing transmission line with a half twist would produce an array phased 135 degrees with maximum gain and a deep null to the rear. <b>Fig. 1</b> shows the general outline of the antenna, which may use either straight dipoles or folded dipoles.</p>
+  <center>
+    <img src="mu5a-1.gif" width="474" height="228" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 1. The basic construction of a ZL Special horizontal 2-element phased array.
+  </center>
+  <p>The variability of success in replicating the claimed results has been exceeded only by the variability of explanations of what happens to make a ZL Special work. Moxon and Lewallen have pointed out that the success of any phased array depends not upon shifting the impedance of an element, but upon establishing correct current magnitude and phase angle relationships between the two elements. Indeed, Moxon found that successful ZL Specials were more likely the result of accident than engineering, although Lewallen succeeded in designing replicable and reliable equal-length element models using "twinlead" for use as "Field Day Specials."<sup>3</sup></p>
+  <p>It would be easy to lose ourselves in the fascinating history of misconceptions of the ZL Special within the amateur community. However, let's look instead at a (not THE) conception of the ZL Special that in fact permits one to design an antenna that will work as predicted. The design technique will combine data supplied by antenna modeling programs, such as NEC and MININEC, with some further algebraic analysis to produce an accurate model of both the geometric and phasing dimensions of the ZL Special problem.</p>
+  <center>
+    <strong>The Background for ZL Special Analysis</strong>
+  </center>
+  <p>We can reduce the ZL Special problem to an orderly series of propositions and explanations. The following notes are an outline of that process.</p>
+  <pre>
+                     Wide-Band 2-Element Yagi Performance
+       
+Antenna                Driven Element   Reflector     Element       Material
+Dimensions                Length         Length       Spacing       Aluminum
+DE + Ref                   16.0'          17.5'         4.3'         1" dia.
+       
+Free Space:
+       
+Frequency (MHz)            28.00         28.25         28.50         28.75         29.00
+Gain (dBi)                 6.7           6.5           6.3           6.1           5.9
+F-B ratio (dB)             10.3          11.0          11.2          11.0          10.6
+Impedance (R&PlusMinus;jX)           24 - 17       28 - 8        32 + 1        36 + 9        40 + 18
+       
+35' over real medium earth:
+       
+Frequency (MHz)            28.00         28.25         28.50         28.75         29.00
+Gain (dBi)                 12.1          11.9          11.7          11.5          11.4
+F-B ratio (dB)             11.7          12.5          12.5          11.9          11.1
+Impedance (R&PlusMinus;jX)           26 - 18       30 - 9        34 + 0        38 + 8        42 + 16
+
+Table 1.      Performance characteristics in free space and at 35' over real medium earth of a
+              wide-band 2-element Yagi using a driven element and a reflector.
+       </pre>
+  <p>1. <strong><em>The significant reason for phasing 2 horizontal half wavelength elements is front-to-back ratio, not gain</em></strong>. Two phased half wavelength horizontal elements will not significantly exceed the gain of a 2-element Yagi. For reference, the performance figures of the modified W6SAI beam, used as our stand throughout this series, appear in <b>Table 1</b>. Although 2-element Yagis with higher gain are possible, they sacrifice even the modest front-to-back ratio of the Orr beam.</p>
+  <p>The rational for designing a phased array is to improve the front-to-back ratio of the antenna for QRM reduction. Phasing promises, in the abstract, to produce a deep rear null, while preserving the gain obtainable with a 2-element Yagi. <b>Fig. 2</b> compares the plots (35' above real ground) of the reference Yagi and a modestly well-designed ZL Special.</p>
+  <center>
+    <img src="mu5a-2.gif" width="410" height="303" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 2. Comparison of azimuth plots for the reference Yagi and a ZL Special at 28.5 MHz, 35' above real medium earth.
+  </center>
+  <p>2. <strong><em>We may think of the ZL Special as a "-45 degree" antenna</em></strong>. Traditionally, we have conceived of the ZL Special as two parallel horizontal elements connected by a short (about 45 degrees) phaseline with a half twist. Thinking in impedance terms, where all values reappear every half wavelength, we subtracted the half-twist line from 180 degrees to obtain 135 degrees phasing. However, we can make two modifications to this traditional view.</p>
+  <p>First, we may think of the antenna in terms of current phase shifts rather than impedance phase shifts. Current magnitude-phase combinations occur only once per wavelength along a transmission line. Although full length 135&deg; lines will achieve the desired phasing for well-designed models, a 45&deg; length of phaseline with a half twist is not the equivalent of a 135&deg; line with respect to current.</p>
+  <p>Second we may for modeling purposes move the half twist of the phase line anywhere along the line, including at the point of junction with the rear element. In modeling terms, this move means twisting the element. In practical terms, if the front element is modeled in increasing length values (for example, from -8' to +8'), then the rear element is modeled in decreasing values (for example, from +8' to -8'). The two elements are 180&deg; out of phase, and connected by an untwisted 45 length of phaseline.</p>
+  <p>With respect to the front element, the rear element is ideally current phased -45&deg; (or 315&deg;). The model will now return correct values for calculating voltage and current along the phaseline, with no change in the impedance transformation. However, as we shall see, impedance transformation is largely incidental to understanding the ZL Special.</p>
+  <p>3. <strong><em>For any two close-spaced near-resonant elements, there is a value of current magnitude and phase for each element that will yield a deep null to the rear</em></strong>. The values of current phase relative to the front element are roughly proportional to the spacing between elements. <b>Fig. 3</b> shows in graphic form the results of modeling half wavelength elements for maximum front-to-back ratio. The precise angles required by the front and rear current will depend to some degree on the antenna geometry and thus may vary slightly from those graphed.</p>
+  <center>
+    <img src="mu5a-3.gif" width="472" height="357" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3. Graphic representation of the relationship between ZL Special element spacing and the phase angle required for maximum front-to-back ratio.
+  </center>
+  <p>The first consequence of the graph is to dispel the idea that the 2-element horizontal phased array is in any sense either a 135&deg; or a -45&deg; antenna. Within reason, there is a continuum of usable spacings and phasings. Consequently, the rationale for using wide-spaced planar folded dipoles for elements is lacking, and computer models can detect no advantage for that geometry.</p>
+  <center>
+    <img src="mu5a-4.gif" width="475" height="361" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 4. Front-to-back ratio vs. phase angle for two-element arrays.
+  </center>
+  <center>
+    <img src="mu5a-5.gif" width="475" height="361" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 5. Front-to-back ratio vs. current ratio at element feedpoints for two-element arrays.
+  </center>
+  <p>The second consequence of the graph is to indicate why many hams obtain usable results from casually designed ZL Specials, even if somewhat off the critical marks. <b>Fig. 4</b> and <b>Fig. 5</b> graph the results of modeling phased arrays at increasing departures from the optimal current phasing and the optimal current magnitude (relative to a front element current value of 1 at 0). If we arbitrarily set 20 dB front-to-back ratio as the minimum mark of an improved 2-element array relative to the standard Yagi, then ZL Specials may depart considerably from optimal values and still meet the criterion.</p>
+  <p>4. <strong><em>NEC and MININEC models using separate front and rear element sources are "forced" and may not be amenable to phaseline construction</em></strong>. By judiciously arranging the antenna geometry (element length, diameter, and spacing) and the relative current magnitudes and phase angles, we may obtain a deep rear null in many antenna models. In general, such antennas rarely translate into arrays that work with phasing lines of the ZL Special sort.</p>
+  <p>Virtually any forced or 2-source model can be built successfully under that condition that each element can be supplied with the correct magnitude and phase angle of current. Perhaps the only practical way to achieve this goal is through a lumped-constant network. ZL1LE has provided the analysis that underlies the design of such networks.</p>
+  <p>5. <strong><em>Horizontal 2-element phased arrays with phaselines are heavily interactive at all points of measurement</em></strong>. The basic antenna geometry consists of the element diameters and their lengths (both absolute and relative to each other) and the spacing between elements. Slight variations in any parameter will yield different values (magnitude and phase angle) of voltage, current, and impedance at the element feedpoints. The rear element values undergo transformation along the phaseline, depending upon the characteristic impedance and the velocity factor of the transmission line used. The phaseline front terminal values combine with the front-element values to produce a feedline matching situation.</p>
+  <p>NEC and MININEC 2-source models calculate the feedpoint values of magnitude and phase angle for voltage, current, and impedance for each element. Moreover, for available transmission lines--and for those one might build--we know the characteristic impedance and the velocity factor. Therefore, it is possible to analyze proposed ZL Special designs, to evaluate their feasibility and likely performance, and to adjust the design to a level of satisfactory performance. The following procedure will permit some precision in the process of design.</p>
+  <center>
+    <strong>Analyzing ZL Special Designs</strong>
+  </center>
+  <p>The analysis of 2-element phased arrays with phaselines is a stepped procedure that uses the values of voltage and current magnitude and phase provided by a 2-source model derived from NEC or MININEC analysis.<sup>4</sup> <b>Table 2</b> lists the meanings of the terms of the following equations as a handy reference. Most 2-source models used to obtain values for the following analysis will normally designate the element 1 current as 1 at a phase angle of 0&deg; and the element 2 current as a set of values optimized by trial. The magnitude of the rear element current will be close to 1 and the phase angle will be close to the value corresponding to the element spacing, as found in <b>Fig. 1</b>. Alternatively, one may use a front element current value of 0.5 and a correspondingly adjusted rear element current close to 0.5. The utility of the alternative will be explained later in the discussion.</p>
+  <pre>
+Equation Terms
+
+E<sub>fr</sub>    Voltage at the front element; appears as Element 1 voltage in modeling program outputs;
+       corresponds to Ein in general equations for transmission lines
+I<sub>fr</sub>    Current at the front element; appears as Element 1 current in modeling program outputs
+E<sub>rr</sub>    Voltage at the rear element; appears as Element 2 voltage in modeling program outputs;
+       corresponds to EL in general equations for transmission lines
+I<sub>rr</sub>    Current at the rear element; appears as Element 2 current in modeling program outputs;
+       corresponds to IL in general equations for transmission lines
+Z<sub>rr</sub>    Impedance at the rear element feedpoint
+I<sub>in</sub>    Current at the input end of the phasing transmission line; corresponds to Iin in general
+       equations for transmission lines
+E<sub>fp</sub>    Feedpoint voltage, equals Efr in "perfect" models of ZL Specials
+I<sub>fp</sub>    Total current at the antenna system feedpoint
+Z<sub>fp</sub>    Impedance at the antenna system feedpoint
+R<sub>fp</sub>    Resistive component of the feedpoint impedance, Zfp
+X<sub>fp</sub>    Reactive component of the feedpoint impedance, Zfp
+I<sub>r2</sub>    Recalculated rear element current
+l<sub>f</sub>    Length in feet
+l<sub>m</sub>     Length in meters
+l<sub>d</sub>     Length in electrical degrees
+l<sub>r</sub>     Length in radians
+Z<sub>O</sub>     Characteristic impedance of the phaseline
+VF     Velocity factor of the phaseline
+
+Note:  Each term for E, I, and Z will have an associated phase angle, theta.
+
+Table 2.      Terms of equations used in the analysis of horizontal 2-element phased arrays
+              using phaselines.
+       
+</pre>
+  <p>1. For any antenna geometry that yields a "perfect" ZL Special, the voltage at the front element feedpoint will be identical to the voltage at the input end of the phaseline connected to the rear element. We may use this fact as a starting point in our analysis of the antenna design, since it provides the necessary third term (in addition to the values of voltage and current at the rear element feedpoint) for calculating either the characteristic impedance of the phaseline or its length, where the other is given. The basic formula for calculating the voltage along a lossless transmission line is given by the equation,</p>
+  <center>
+    <img src="mu5ae1.gif" width="400" height="64">
+  </center>
+  <p>where E<sub>L</sub> and I<sub>L</sub> are the rear element feedpoint values, E<sub>in</sub> is the front element feedpoint voltage value, and the parenthetical expressions represent the phaseline length. We may simplify calculations by precalculating the line length into radians to obtain l<sub>r</sub>.<sup>5</sup></p>
+  <p>Since we cannot calculate the line length and Z<sub>O</sub> simultaneously, we must assume one or the other. Letting the line length equal the element spacing is most convenient. We can always set up a small utility program in BASIC to step the calculation through several plausible values of line length, each of which will require a different Z<sub>O</sub>. We must also make a judicious guess as to the likely velocity factor of the line. In general, if the proposed ZL Special design uses straight dipoles, use a figure in the 0.67 to 0.7 range, since the phaseline will likely have a low Z<sub>O</sub>. If the design uses folded dipoles, then an initial velocity factor of 0.8 will serve, since the range of the phaseline Z<sub>O</sub> will be from about 150 to 350 .</p>
+  <p>If we select l<sub>r</sub> and VF, rewrite the terms for front and rear element values, and solve for Z<sub>O</sub>, we obtain the following equation:</p>
+  <center>
+    <img src="mu5ae2.gif" width="400" height="81">
+  </center>
+  <p>If the array design is "perfect," it will require a phaseline with line length l<sub>r</sub> and the characteristic impedance, Z<sub>O</sub> to provide the correct phase and magnitude shift of current to the rear element.</p>
+  <p>2. To understand the conditions at the antenna feedpoint, we must also know the current at the input end of the phaseline. We may obtain this value from the standard equation for calculating the current along a transmission line (written here in terms of front and rear elements):</p>
+  <center>
+    <img src="mu5ae3.gif" width="400" height="77">
+  </center>
+  <p>The value of current obtained, along with its phase angle, will also be crucial in evaluating the proposed array design.</p>
+  <p>3. For the array, if perfect, the total current at the feedpoint is the sum of currents in the two branches, namely, the front element and the phasing line input end, or</p>
+  <center>
+    <img src="mu5ae4.gif" width="400" height="48">
+  </center>
+  <p>This equation, of course, is for a vector sum.</p>
+  <p>The phase angle of the total feedpoint current represents in "perfect" models the appropriate source current phase angle to obtain a forward element current phase angle of 0&deg; and a rear element current phase angle of the value obtained from the original model. If fed with a current at 0 phase angle, the antenna forward element will show a phase angle shifted in the positive direction by the amount of the phase angle of I<sub>fp</sub>, with the rear element current shifted positive by the same amount. The net difference between forward and rear element current phases will remain the same.</p>
+  <p>4. From the front element voltage and the feedpoint current, we may obtain the feedpoint impedance, along with values for the resistive and reactive components:</p>
+  <center>
+    <img src="mu5ae5.gif" width="550" height="77">
+  </center>
+  <p>The calculation of Z<sub>fp</sub>, of course, is again a matter of vector division involving the subtraction of I<sub>fp</sub>'s phase angle from the phase angle of E<sub>fr</sub>. R<sub>fp</sub> and X<sub>fp</sub> provide the values of resistance and reactance to be matched to the feedline for the system.</p>
+  <p>5. The preceding steps provide the crucial data for a "perfect" phased array. To test the feasibility of the design, simply recalculate the rear element current, I<sub>r2</sub>, using the calculated value of I<sub>in</sub> and Z<sub>O</sub>, along with E<sub>fr</sub>. Use the standard equation (with terms rewritten for the present problem).</p>
+  <center>
+    <img src="mu5ae6.gif" width="400" height="73">
+  </center>
+  <p>If the model's chosen geometry is perfect, then this calculation will simply return the current magnitude and phase angle of I<sub>rr</sub>. Anything less than perfect will show a divergence between I<sub>r2</sub> and I<sub>rr</sub>, especially with respect to the phase angle.</p>
+  <center>
+    <strong>Evaluating ZL Special Designs</strong>
+  </center>
+  <pre>
+                                 Test Models of ZL Specials
+       
+Name          El. Type      Front El. Lft        Rear El. Lft         El. Spacing Lft
+
+Folded Dipole Models
+
+Short         1" Cu         15.36'               15.68'               3.86'
+
+Off Z         1" Cu         16.06'               16.80'               4.31'
+
+1"            1" Cu         16.16'               16.16'               4.27'
+
+3/8"          3/8" Cu       16.26'               16.26'               4.27'
+
+Straight Dipole Models
+
+#12           #12 Cu        16.42'               16.42'               3.46'
+
+5/8"          0.625" Al     16.04'               16.04'               3.46'
+
+3/4"          0.75" Al      16.00'               16.00'               3.46'
+
+Notes:  Cu = copper; Al = aluminum.  Folded dipole element type dimension = width of the
+folded dipole; straight dipole element type dimension = element diameter.  The 1" folded dipole
+approximates the use of 450-Ohm ladder line as the element, while the 3/8" folded dipole
+approximates the use of 300-Ohm twinlead as the element.
+
+Table 3.      Test models of ZL Specials discussed in text.
+</pre>
+  <p>Performing the calculations just noted provides a significant body of data by which to evaluate the feasibility of a proposed ZL Special design. <b>Table 3</b> describes 7 models (from among the dozens in my files) for which <b>Table 4</b> provides selected results. The results appear in three groups. The first data group comes from 2-source models and provides the current magnitude and phase relationship between the elements, along with the models projected front-to-back ratio. The second data group comes from calculations in accord with the equation just described, listing the output Z<sub>O</sub>, the return current phase (and its difference from the design value), and the calculated feedpoint impedance. The last data group comes from applying the basic antenna model to a version of NEC capable of handling transmission lines within the model.<sup>6</sup> Using one or more values for the phaseline Z<sub>O</sub>, the data group provides the projected front-to-back ratio and the feedpoint impedance. All the antennas were modeled over real medium earth using NEC's more accurate ground modeling capabilities.</p>
+  <pre>
+                                          Modeling and Calculation Results with Test Models
+       
+Model         &lt;      two-source data          &gt;   &lt;      calculations                       &gt;   &lt;      test model results     &gt;
+Name          I @ El. 1  I @ El. 2     F-B (dB)    Zo Ohms Rtn I El. 2  Ph. Dif.    R      jX    Zo     F-B (dB)     R      jX
+
+Folded Dipole Models
+
+Short         0.5/0&deg;     0.49/-38.7&deg;   41.89       268.9  -63.61&deg;       24.91&deg;    55.8   -48.9  268.9     12.80    29.5   -18.1
+                                                                                                300       12.46    35.3   -12.8
+Off Z         0.5/0&deg;     0.49/-42.7    44.95       194.4  -42.63&deg;        0.07&deg;    52.3    36.3  194.4     45.38    52.4    36.3
+                                                                                                300       17.95    74.9    56.2
+1"            0.5/0&deg;     0.5/-42.9&deg;    39.52       330.2  -41.16&deg;        1.74&deg;    40.8    53.4  330       30.12    43.3    51.3
+                                                                                                300       25.64    37.8    44.9
+3/8"          0.5/0&deg;     0.49/-42.7&deg;   44.16       330.1  -42.69&deg;        0.01&deg;    42.0    42.7  330       44.19    42.0    42.6
+                                                                                                300       27.60    36.6    36.4
+Straight Dipole Models
+
+#12           0.5/0&deg;     0.5/-34.75&deg;   29.61        66.9  -35.44&deg;        0.69&deg;     6.7     6.6   71       27.17     7.1     5.8
+5/8"          0.5/0&deg;     0.5/-34.75    26.06        67.0  -36.19&deg;        1.44&deg;     7.1     7.7   71       26.63     7.2     8.8
+3/4"          0.5/0&deg;     0.5/-34.75    25.66        66.7  -36.57&deg;        1.82&deg;     7.2     7.5   71       25.46     7.2     8.8
+
+See Notes, Table 3.
+
+Table 4.      Some modeling and calculation results using test models described in Table 3.
+
+</pre>
+  <p>The model called "Short" represents a casual design I found in the literature. Although the model calculates a promising phaseline Z<sub>O</sub> of about 269 Ohms, thus suggesting the use of 300- twinlead for both the elements and the phaseline, notice the phase differential between the design figure and the return calculation. In general, any difference greater than &PlusMinus;4 degrees or so is likely to bring disappointment. Moreover, as the phase differential between the design value and the return calculation increases, the feedpoint impedance values grow more inaccurate. Compare the calculated value with either of the test models to the right, noticing the subpar front-to-back figures along the way.</p>
+  <p>Perhaps what made this model attractive was the wide-band low SWR of the antenna. Frequency sweeping the 300-Ohm phaseline model showed that the antenna would show an SWR below 2:1 for over a MHz of 10 meters. Unfortunately, horizontal 2-element phased arrays cannot be adequately designed by reference to SWR. Feeding the assembly must be the last design step, not the first.</p>
+  <p>The model named "Off Z" demonstrates another problematic situation. The 2-source model and the calculations show that the design is in principle quite feasible and capable of good performance, as indicated by the tiny 0.07 phase differential. However, the 194-Ohm characteristic impedance of the recommended phaseline is uncommon, to say the least. Attempting to execute this model using the nearest common transmission line as the phaseline, 300-Ohm twinlead, results in a serious degradation of performance. See the test model figures to the right. Phaseline Z<sub>O</sub> should be within about 10% of the calculated value for reasonably successful performance of the array. Unless you can build a short length of your own transmission line, which is quite feasible in many instances, many good models of ZL Specials must be set aside as impractical.</p>
+  <p>The two models we have so far evaluated used elements based upon Yagi theory: the rear element should--in a driven element-reflector design--be somewhat longer than the forward element. This mode of thinking is detrimental to ZL Special design. The remaining models in the group all use equal element lengths as a starting point. There are good reasons on occasion to alter the length of either (or both) the forward or the rear element, but those reasons have virtually nothing to do with the considerations crucial to Yagi design. We shall look at some design alterations after examining the better models on the list.</p>
+  <p>The 1" and 3/8" folded dipole models used good care in selecting the current magnitude and phase angle for the rear element, while the straight dipole models were more quickly settled by letting the current ratio between elements be 1:1. The use of 0.5 A as the current value permits a more rapid correlation of values with those of the NEC transmission line models using a source current value of 1 A. In actuality, the total antenna current for the antenna system is slightly higher than 1 A, since the phaseline transforms not only the current phase angle, but its value as well.</p>
+  <p>Both folded dipole models show similar results, despite their different lengths. Although the figures varies slightly as the length-to-diameter ratio changes, the folded dipole elements for a ZL Special should be about 2.44% shorter than a single self-resonant folded dipole at the frequency of interest. The #12 straight dipole model used elements only about 2% shorter than a self-resonant single dipole, while the tubular elements required a little under 2.9% shortening.</p>
+  <p>The 1" folded dipole model is interesting because it demonstrates the fall-off in performance (front-to-back ratio) as the phase differential between the design value and return calculation value increases. Although 30 dB is a respectable ratio, it is down nearly 10 dB from the 2-source model with only a 1.74&deg; phase differential. Attending more closely to the rear element current phase angle would likely have resolved the difference, but also resulted in a different value of phaseline Z<sub>O</sub>. Compare this model to the 3/8" model for a closer correlation of all relevant values.</p>
+  <p>In practical terms, the differential is moot, since 330-Ohm twinlead is not common. Both antennas promise very good performance with a 300-Ohm phaseline, if a figure of 25 to 27 dB for the front-to-back ratio can be considered very good. Compared to the reference Yagi, the figure certainly represent an improvement that may be both detectable and desirable. Note that the phaseline meets the &PlusMinus;10% criterion noted earlier.</p>
+  <p>Feeding a ZL Special that uses folded dipoles and equal-length elements is little problem. The resistive component of the feedpoint impedance presents a reasonable match to 50-Ohm coax, while the remnant inductive reactance can be canceled by the use of either a capacitive stub or a pair of capacitors, each with half the reactance value, in series with the two sides of the feedline at the feedpoint junction.<sup>7</sup> Indeed, it is characteristic of well-designed ZL Specials using equal length elements to have similar numerical values for the resistive and reactive components of the feedpoint impedance, in other words, for the feedpoint impedance to have a phase angle approaching 45&deg; inductive.</p>
+  <p>Similar results can be obtained from straight dipoles and 72- nominal twinlead. The three models differ only in the wire size used, with consequential differences in element length. The calculated phaseline Z<sub>O</sub> of 66.7 to 67 Ohms departs from the twinlead impedance by only about 6%, and the transmission-line models of the antennas verify antenna performance. Unfortunately, the very low feedpoint impedances, require careful attention to both design and construction to minimizes losses. A 71-Ohm twinlead or a 75-Ohm coax stub, something over 4' long will provide the required match to 50-Ohm coax, with either a capacitive stub or a parallel capacitor used to cancel the remaining reactance, which will be in the range of 150-200 Ohms.</p>
+  <center>
+    <strong>Improving ZL Special Performance</strong>
+  </center>
+  <p>One straightforward means of improving ZL Special performance is to construct a phaseline with a characteristic impedance and velocity factor that accords with calculations, after fully optimizing a 2-source model of the desired antenna. However, most builders will be limited to altering the antenna geometry to accord with the available transmission lines. In general, there are only two methods of achieving this goal.</p>
+  <p>First, you may change the spacing between elements. Unfortunately, element spacing is insensitive to change. Raising the required characteristic impedance of the phaseline for the straight dipole models demanded shortening the spacing to something around 2.5 feet. Lowering the required line impedance of the folded dipole models demanded an increase in spacing to around 7 feet. Neither move seems attractive mechanically.</p>
+  <p>Second, you may change the ratio of element lengths. Each model with equal-length elements was initially optimized with respect to element length for maximum front-to-back ratio. Only the ratio of element lengths remains to be changed in pursuit of a geometry that requires a phasing line of the desired characteristic impedance. The rule of thumb is this: to decrease the required Z<sub>O</sub>, make the front element shorter than the rear element. To increase the required phasing line Z<sub>O</sub>, make the front element longer than the rear element. The adjustments will be small if the original antenna requires a phaseline Z<sub>O</sub> within 10% of the desired value. In addition, either or both elements may require adjustment.</p>
+  <pre>
+                                                  Some Improved Test Models
+       
+Name   Type   Front El.   Rear El.  El. Spacing   &lt;      calculations                           &gt;  &lt; test model results &gt;
+       Wire      Lft         Lft       (feet)     Zo Ohms Rtn I El. 2 Ph. Dif.    R      jX    Zo  F-B (dB)    R      jX
+
+Folded Dipole Models
+1"     Cu     16.06'      16.16'      4.27'       300.2  -42.79&deg;     0.01&deg;      41.3   39.8  300    47.54    41.2   39.8
+3/8"   Cu     16.23'      16.34'      4.27'       299.8  -42.53&deg;     0.07&deg;      41.4   38.0  300    43.20    41.5   38.0
+
+Straight Dipole Models
+5/8"   Al     16.10'      15.98'      3.46'        71.0  -34.69&deg;     0.31&deg;       6.4    9.0   71    38.39     6.5    8.9
+3/4"   Al     15.98'      15.78'      3.46'        71.2  -33.95&deg;     0.80&deg;       5.7    7.3   71    34.17     5.9    7.1
+See Notes, Table 3.
+
+Table 5.      Modeling and calculation results using improved test models.
+
+</pre>
+  <p><b>Table 5</b> catalogs four improved models. The folded dipole models have front elements slightly more than 1" shorter than the rear. Not shown on the table are the new design values of rear element current magnitude and phase, which will change as the element-to-element ratio changes.</p>
+  <p>The straight dipole models show the reverse effect: to raise the required Z<sub>O</sub> from 67 to 71 Ohms, the rear element must be slightly shorter than the front element, with a consequential change in rear current magnitude and phase relative to the front element current. Because the curves approaching the maximum possible front-to-back ratio are steepest above 30 dB or so, very small changes in element dimensions produce large changes in front-to-back ratio.</p>
+  <p>Having shown that and how it is possible to refine ZL Special performance by adjustment of the antenna geometry, we must note the very proper question of whether such measure a worth while for the average home builder. <b>Fig. 6</b> superimposes two of the straight dipole antenna patterns, one for equal-length elements. the other improved. Although there is some improvement in the overall front-to-rear pattern (taking into account the entire region from 180&deg; to 360&deg;), the improvement is not large compared to the initial improvement over the reference 2-element Yagi.</p>
+  <center>
+    <img src="mu5a-6.gif" width="411" height="302" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 6. Comparative azimuth patterns for equal-length element and "improved" versions of the 5/8" straight dipole ZL Special (35' above real medium earth).
+  </center>
+  <p>Moreover, achieving the absolute maximum rear null in fixed construction may be beyond the building and measurement capabilities of most hams. Indeed, phased arrays with equal-length elements may have advantages that offset their slightly reduced front-to-back performance. Such an array is reversible if we attach to both elements ladder line feeders that are a multiple of a half wavelength (adjusted for the velocity factor). One feeder is attached to the line to the transceiver, the other left open as an indefinitely large impedance that does not significantly affect antenna operation.</p>
+  <p>However, carefully pruning a ZL Special for maximum null at the design frequency does center the front-to-rear pattern within a desired frequency span. For a front-to-back null of over 40 dB, the front-to-back ratio degrades uniformly above and below the center frequency. On 10 meters, the front-to-back ratio is better than 25 dB 25 kHz each side of the design center and about 20 dB 50 kHz each side of the design center. Less careful pruning will likely improve the front-to-back ratio in one direction from the center frequency, but degrade it in the other down to about 15 dB.</p>
+  <center>
+    <strong>Construction and Placement Notes</strong>
+  </center>
+  <p>All of the antennas noted in this analysis have been modeled at 35' above medium or average ground for consistency. More than many antennas, ZL Specials require modeling over real ground, rather than the construction of free space models, because they are somewhat sensitive to ground effects. This applies most especially to the array's front-to-back ratio.</p>
+  <center>
+    <img src="mu5a-7.gif" width="464" height="374" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 7. Yagi and ZL Special gain vs. height above ground from 20' to 40' over real medium earth.
+  </center>
+  <p><b>Fig. 7</b> and <b>Fig. 8</b> graph the gain and front-to-back ratio, respectively, of the ZL Special (the 5/8" diameter straight dipole model), with the comparable values for the reference Yagi provided as a standard. The gain curves are quite parallel. Their spacing is a graphing convenience; the difference in values makes little, if any, operational difference. However, the excursions in front-to-back ratio for the ZL Special are many times those for the Yagi. The curves are based on a single configuration for each antenna. While the Yagi shows a relative constancy of performance, the variability of the ZL Special's front-to-back ratio suggests that optimizing it for the anticipated height of use is certainly in order.</p>
+  <center>
+    <img src="mu5a-8.gif" width="478" height="367" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 8. Yagi and ZL Special front-to-back ratio vs. height above ground from 20' to 40' over real medium earth.
+  </center>
+  <p>As a further indication of the fact that Yagis and ZL Special operate according to quite different principles once we move beyond the mutual coupling of elements, the correlation of feedpoint impedance and other parameters differs for the two antennas. ZL Special front-to-back peaks and nulls tend to correspond with peaks and nulls in the reactive component of the feedpoint impedance. For driven-element-reflector Yagis, the front-to-back peaks and nulls correspond with their counterparts in the resistive component of the feedpoint impedance. By way of contrast, to the degree they are detectable, gain peaks and nulls show a reverse correspondence.</p>
+  <p>There is little that anyone can add to the construction of ZL Special, whether using straight dipoles or folded dipoles. Straight dipoles lend themselves to the use of rotary beam techniques. One caution is required: do not permit metal antenna structural elements (such as a boom or mast) to disturb the balance of the currents in the phaseline. Moreover, the sum of 45 years of ZL Special construction wisdom dictates the following rule: use parallel feedline, not coax, for the phaseline. A mixture of wood, PVC, and similar construction materials for the structural assembly can leave your twinlead phaseline unaffected. Unfortunately, the demise of 70-ohm twinlead as an easily obtained commodity has made the straight-dipole version of the ZL Special an endangered--if not an extinct--species of the antenna. What remains to build are twinlead folded dipole versions.</p>
+  <p>However, use caution when buying materials for a folded dipole ZL Special. Belden 8230, the standard 300-Ohm twinlead for many amateur applications has #20 stranded conductors and a nominal velocity factor of 0.80. It is the basis for the models and the test antenna studied in this article. Many common local sources of supply for twinlead no longer carry equivalents of this transmission line. The foam lines they do carry often have no listed velocity factory, and it is unlikely that the figure will be 0.80. Velocity factor is important chiefly in the physical length of the phasing line, which is perhaps the most critical factor in building a ZL Special.</p>
+  <p>Decades ago, when bamboo was cheap, taping 300- twinlead to support elements permitted folded dipole versions of the ZL Special to approximate rotary beam configurations. More recently, the idea of fixed beam installations, whether in an attic or in the field, has regained popularity, if for no other reason than necessity in today's tighter ham quarters. A twinlead ZL Special, following W7EL's lead, makes a good Field Day Special, since it rolls up into a small ball for transportation. Elevated at the ends and pointed roughly toward the main body of hams to be worked, the antenna outperforms dipoles by a good measure. Coastal hams can use a single feedline version, while midwestern operators may wish to opt for a reversible version.</p>
+  <center>
+    <img src="mu5a-9.gif" width="520" height="315" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 9. General sketch of a single-mast support structure for testing wire ZL Specials.
+  </center>
+  <p>As a test bed for validating modeling figures, I built the single-mast support system shown in <b>Fig. 9, 10, and 11</b>. With inner arms of Schedule 40 PVC and outer triangular sections of lighter PR 315 PVC, the assembly permitted me to place practically no metal in the vicinity of the antenna elements or the phase line. Support arms for the center connections to each folded dipole are optional. If you use them, light-weight half-inch nominal CPVC is recommended. All junctions are glued.</p>
+  <center>
+    <img src="mu5a-10.gif" width="496" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 10. Detail A of the support structure, showing the combination of PVC materials used in its construction.
+  </center>
+  <p>Although the assembly is a good bit more rigid than it appears at first sight, I do not recommend it for a permanent installation. The guys do not stabilize the structure in all axes and certain twisting motions are possible in high winds. In lighter winds, the structure is quite stable. Thus, it is adaptable to short-term portable operations if some of the junctions are only press-fitted into the couplings.</p>
+  <center>
+    <img src="mu5a-11.gif" width="472" height="361" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 11. Detail B of the support structure, showing the center plate and mast connection.
+  </center>
+  <p>Those who wish to hang the elements from their ends might use the 17' length, since a 10-meter 2-element phased array is just over 16' long. My own final version of the support system was about 15'9" long. The ends of each front-to-back arm were slit, with the twinlead pressed in place. A pair of holes punched in the insulation of the twinlead permitted the use of a cable tie to hold the element in place. The short ends sticking out beyond the limits of the structure were self-supporting and easily accessed for pruning.</p>
+  <p>The antenna tested was the improved 3/8" model in <b>Table 5</b>. The insulation on twinlead elements requires about 1-2% shortening (relative to the models) of the elements for resonance at 10 meters. (Note: the velocity factor of a transmission line used as a radiating antenna element is not the same as the velocity factor of the material used as a transmission line. As a radiator, twinlead is just another type of insulated wire.) The final lengths for the test frequency of 28.5 MHz and a height of slightly more than 20' were 16' and 16'1" using Belden 8230. Feedpoint series capacitors are 300 pF in each leg of the feedline on the antenna side of a choke balun. Since the impedance at resonance is in the neighborhood of 40 Ohms resistive, the lowest SWR does not necessarily indicate the frequency of the null, which will be at a slightly lower frequency. If heights other than 20' to 35' are used, these test numbers may be somewhat different.</p>
+  <p>Once pruned, the antenna worked as predicted, within the coarse methods available for tests. Point-to-point contacts established a front-to-back ratio at the design frequency that rivaled the Moxon rectangle, described earlier in this series. Performance held up across the first MHz of 10-meters, both in terms of anticipated front-to-back ratio and in terms of an SWR bandwidth within 2:1 limits. Unless one has a very special operating need, the extra work of obtaining a "perfect" null would not likely show up, since it is frequency specific and rapidly flattens with excursions away from the design frequency.</p>
+  <center>
+    <img src="mu5a-12.gif" width="516" height="275" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 12. General configuration of the 'BRD Zapper ZL Special.
+  </center>
+  <p>One variant of the ZL Special is especially apt for attic use (assuming that the broad surface faces the best QSOs). W9BRD bent the ends of straight dipoles toward each other and phase fed the resultant assembly.<sup>8</sup> <b>Fig. 12</b> shows the general outline of the antenna. The original antenna used equal length elements and a system of voltage feeding a transmission line segment between the element ends on one side. The dimensions shown are for a modified version using #18 wire unequal length elements and a 71- phasing line. The resulting feedpoint impedance is 33 + j45 Ohms, a tolerable match for coax once the inductive reactance is cancelled.</p>
+  <center>
+    <img src="mu5a-13.gif" width="402" height="346" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 13. Azimuth patterns of the 'BRD Zapper at 28.5 MHz, 20' and 35' over real medium earth.
+  </center>
+  <p><b>Fig. 13</b> shows the pattern at both 20' and 35' above real medium earth for the 'BRD Zapper. Relative to a model with linear elements, the closed geometry of the 'BRD Zapper costs a little under 0.5 dB of gain. At the higher elevation, the worst rear lobe is down over 25 dB. At 20' (perhaps an average attic height), the front-to-back ratio drops to about 20 dB, although further refinement of the geometry may restore much of the dimple in the most rearward direction. Perhaps the only competitive small parasitical antenna in this respect is the Moxon rectangle, reported on earlier in this series. In fact, either antenna would make a good fixed beam for attic use, and the Moxon would be easier to build, since it requires no phase line. The best reason for noting the 'BRD Zapper here is to demonstrate that the geometry of horizontal 2-element phased arrays is not exhausted by straight and folded dipoles.</p>
+  <p>In fact, this analysis of ZL Specials has not even come close to exhausting the possibilities for horizontal 2-element phased arrays. The lure of indefinitely deep rear nulls is likely to keep the creative juices flowing in many a ham builder. Hopefully, this exploration into modeling and analyzing ZL Specials has added a modicum of better understanding to the process. The operation of ZL Specials can be understood in terms of the voltages and currents at the terminals of each element and along the transmission line used to establish correct phasing. A combination of modeling and calculation makes the performance of a proposed version of the ZL Special far more predictable than we have thought in the past. My hat is off to all those past experimenters who made workable ZL Specials while laboring under a limiting set of assumptions. That is a testimony to persistence of trial and error efforts.</p>
+  <p>This study has limited itself to those versions of the 2-element horizontal phased array in which the common feedpoint is identical with the forward element feedpoint. This focus stems from my basic interest in resolving the nature of transmission-line phasing in these antennas. The common feedpoint can be placed anywhere between the elements, with transmission line current magnitude and phase conversion along two lengths of transmission line. This is the operative nature of the HB9CV antenna, some notes on which appear at this site: <a href="../phase/hb.html"><b>The HB9CV Phased Array and Gain Comparisons</b></a>. The use of gamma match line to the elements has often obscurred the nature of this antenna's feed and phase system. For an example of a phased horizontal array feed neither at the phase line center nor at the junction with an element, see my article in <i>Antenna Compendium</i>, Vol. 6 (ARRL), on "Two Hilltoppers for 10-Meters."</p>
+  <center>
+    <strong>Notes</strong>
+  </center>
+  <p>1. Prichard, "A New Driven Array," <em>Break-In</em> (May, 1949), 13-14; "Two Beams for the Price of One," <em>Break-In</em> (Jul., 1949), 15-17; "Some Notes on the Driven Arrays," <em>Break-In</em> (Sep., 1949), 5-7; and "Further Experimentation with the '3MH' Beam," <em>Break-In</em> (Dec., 1949), 13. ZL3MH credits two U.S. hams, W5LHI and W0GZR, for supplying him with the basic idea for the array, which was apparently developed commercially just prior to World War II. I have been unable to uncover the identities of the two hams who inspired Prichard. However, see the appended bibliography for some fascinating reading on the history of the ZL Special and its workings.</p>
+  <p>2. Judd, "The ZL Special," <em>Short Wave Magazine</em> (Jul., 1950), 337-339.</p>
+  <p>3. Moxon, <em>HF Antennas for All Locations</em> (RSGB, 1982), pp. 77, 222.</p>
+  <p>4. Similar results might be obtained by using any two of the three value sets, since E, I, and Z are interrelated. However, the use of E and I provides a very straightforward set of calculations. Too, concern for graphical outputs from NEC and MININEC often obscures the fact that these programs are precise calculational programs. The limits on the accuracy of the models produced relative to "real" antennas is a separate issue (or set of issues).</p>
+  <p>5. Supplementary equations for calculating line lengths, along with expansions of the equations in the text for use with complex E and I values are given in an appendix to this discussion.</p>
+  <p>6. The modeling programs used for this analysis were ELNEC 3 and EZNEC 1.</p>
+  <p>7. I owe this idea to Roy Lewallen, W7EL, who has implemented it with success. See Lewallen, "<a href="https://www.eznec.com/Amateur/Articles/Field_Day_Special.pdf" target="_blank">Try the 'FD Special' Antenna</a>," <em>QST</em> (Jun., 1984), 21-24.</p>
+  <p>8. Newkirk, "The 'BRD Zapper: A Quick, Cheap, and Easy 'ZL Special' Antenna," <em>QST</em> (Jun., 1990), 28-29.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <center>
+    <strong>Appendix 1: Using the ZL Special Equations</strong>
+  </center>
+  <p>Using the equations given in the main text for the ZL Special requires that we expand them to account for the fact that each voltage, current, and impedance may be a complex number, that is, a magnitude with a phase angle. As a convenience to anyone who might wish to put these calculations into a utility computer program, the following expansions are provided, along with some convenient additional calculations of casual interest in the analysis of horizontal 2-element phased arrays.</p>
+  <p>First, the rear element values of E<sub>rr</sub> and I<sub>rr</sub>, along with their associated phase angles, yield the impedance at the rear element, Z<sub>rr</sub>:</p>
+  <center>
+    <img src="mu5ae7.gif" width="400" height="74">
+  </center>
+  <p>where Z<sub>rr</sub> is the rear element feedpoint impedance and theta<sub>Zrr</sub> is its associated phase angle. Obtaining this figure allows one to determine the impedance phase change along the phaseline as a matter of interest.</p>
+  <p>The use of <b>Equation 2</b> in the text requires that we first convert the physical length of the phaseline, initially identical to the spacing between elements, into radians. This is a standard two-step process that begins by converting the physical length into an electrical length in degrees:</p>
+  <center>
+    <img src="mu5ae8.gif" width="450" height="80">
+  </center>
+  <p>where l<sub>d</sub> is the length of the line in degrees, f is the frequency in MHz, VF is the velocity factor of the line, and l<sub>m</sub> and l<sub>f</sub> are the initial lengths in meters and feet, respectively.</p>
+  <p>Converting degrees into and out of radians requires the familiar equations,</p>
+  <center>
+    <img src="mu5ae9.gif" width="400" height="73">
+  </center>
+  <p>where l<sub>r</sub> is the electrical length in radians.</p>
+  <p><b>Equation 2</b> in the text yields a value of Z<sub>O</sub> that produces the desired change of current phase with an incidental change of magnitude:</p>
+  <center>
+    <img src="mu5ae10.gif" width="400" height="75">
+  </center>
+  <p>Expanded to account for the complex numbers involved, it becomes</p>
+  <center>
+    <img src="mu5ae11.gif" width="650" height="85">
+  </center>
+  <p>Gathering real and imaginary terms in the numerator allows one to split the equation into its parts. However, since the denominator is also complex, inverting the parts allows further subdivision. Each real and imaginary subdivision pair may be recombined by vector addition. Reinverting and using vector addition once more produces the final result, the Z<sub>O</sub> of the phaseline.</p>
+  <p>Calculating the current at the input end of the phaseline, given the phaseline Z<sub>O</sub>, is straightforward:</p>
+  <center>
+    <img src="mu5ae12.gif" width="400" height="66">
+  </center>
+  <p>This equation expands into the following form:</p>
+  <center>
+    <img src="mu5ae13.gif" width="750" height="71">
+  </center>
+  <p>where the real and imaginary parts of the equation are recombined by vector addition.</p>
+  <p>Z<sub>in</sub>, the impedance at the input end of the phaseline, can be obtained from E<sub>fr</sub> and I<sub>in</sub> by the same calculation method used to obtain Z<sub>rr</sub>. The difference in the phase angle for the two impedances is the total impedance phase angle change for the phaseline.</p>
+  <p>Since the total feedpoint current is a vector sum, that is,</p>
+  <center>
+    <img src="mu5ae14.gif" width="400" height="48">
+  </center>
+  <p>the magnitude and phase angle of I<sub>fp</sub> are determined from</p>
+  <center>
+    <img src="mu5ae15.gif" width="905" height="77">
+  </center>
+  <p>Precalculation of various recurrent terms, of course, can simplify programming of such equations.</p>
+  <p>Determination of the feedpoint impedance, resistance, and reactance are self-explanatory from the equations in the main text, with the addition of one item:</p>
+  <center>
+    <img src="mu5ae16.gif" width="600" height="75">
+  </center>
+  <p>The recalculation of I<sub>r2</sub>, the rear element current magnitude and phase angle, via the standard formula,</p>
+  <center>
+    <img src="mu5ae17.gif" width="400" height="72">
+  </center>
+  <p>requires an expansion similar to that for calculating input current from load current, with some appropriate sign changes along the way. Expanded, the equation is</p>
+  <center>
+    <img src="mu5ae18.gif" width="650" height="53">
+  </center>
+  <p>The equation requires completion in the same manner as the calculation of I<sub>in</sub>.</p>
+  <p>Undoubtedly, this appendix provides superfluous detail for many readers and insufficient detail for others. If it assists a few readers, it will have served its purpose. Those who wish precision beyond the capabilities of average home construction may replace the lossless transmission line formulas with those for lossy lines. Terman's <em>Radio Engineer's Handbook</em> and Johnson's <em>Antenna Engineering Handbook</em> provide ready references.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <center>
+    <strong>ZL Special Bibliography</strong>
+  </center>
+  <p>Bluhm, "The Penny-Pincher's Dream," <em>QST</em> (Dec., 1965), 63-64.</p>
+  <p>Bradley, "The 'Half ZL Special'--a Beam for the City Dweller," <em>Break-In</em> (Jul., 1989), 9-10.</p>
+  <p>Bradley, "The 'Half ZL Special' Revisited," <em>Break-In</em> (Sep, 1991), 4-5.</p>
+  <p>Glover, "ZL Special for 2m," <em>Break-In</em> (Apr, 1985), 12.</p>
+  <p>Judd, "ZL Special 2m Beam," <em>Out of Thin Air</em>, pp. 56-59.</p>
+  <p>Judd, "The ZL Special," <em>Short Wave Magazine</em> (Jul., 1950), 337-339.</p>
+  <p>Kear, "'Five for Five:' (Five Decibels for Five Bucks)," <em>QST</em> (Jan., 1971), 40-42.</p>
+  <p>Lewallen, "Try the 'FD Special' Antenna," <em>QST</em> (Jun., 1984), 21-24.</p>
+  <p>McCoy, "The Scotsman's Delight," <em>QST</em> (Jun., 1963),24-26.</p>
+  <p>Moxon, "Two-Element Driven Arrays," <em>QST</em> (Jul., 1952), 28.</p>
+  <p>Moxon, <em>HF Antennas for All Locations</em> (RSGB, 1982), pp. 77, 222.</p>
+  <p>Newkirk, "The 'BRD Zapper: A Quick, Cheap, and Easy 'ZL Special' Antenna," <em>QST</em> (Jun., 1990), 28-29.</p>
+  <p>Prichard, "A New Driven Array," <em>Break-In</em> (May, 1949), 13-14.</p>
+  <p>Prichard, "Two Beams for the Price of One," <em>Break-In</em> (Jul., 1949), 15-17.</p>
+  <p>Prichard, "Some Notes on the Driven Arrays," <em>Break-In</em> (Sep., 1949), 5-7.</p>
+  <p>Prichard, "Further Experimentation with the '3MH' Beam," <em>Break-In</em> (Dec., 1949), 13.</p>
+  <p>Prichard, "Two Element Rotary: The '3MH Special,'" <em>Short Wave Magazine</em> (Dec., 1950), 666-667.</p>
+  <p>Prichard, "The 'ZL Special' Beams, <em>Break-In</em> (May, 1961), 129-130.</p>
+  <p>Prichard, "ZL Specials in 1985," <em>Break-In</em> (Oct., 1985), 11.</p>
+  <p>Schick, "A Shortened ZL-Special Beam," <em>CQ</em> (Jul., 1959).</p>
+  <p>---, "Modified 'ZL' Special, <em>Antenna Roundup</em>, Vol. 2 (Cowan Publishing, 1966), pp. 65-66.</p>
+  <p>Note: Special thanks go to Elaine Richards, News and Features Editor for PW Publishing Ltd., publishers of <em>Shortwave Magazine</em> and <em>Practical Wireless</em> for her kindness in supplying me with copies of articles on the ZL Special appearing in those journals. My thanks also go to Brian Egan, ZL1LE, for providing copies of ZL Special articles appearing in <em>Break-In</em>, and to Bridget DiCosimo of A.R.R.L. for finding similar materials that have appeared in <em>QST</em>.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="mu0.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Article Index Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hb9cv-zl-special'>HB9CV / ZL Special</a>, <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#phased-array'>Phased Array</a>, <a href='../topics.html#small-beams'>Small Beams</a></p><br>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Moxon, HF Upper, Yagi">
+  <title>Moxon-Modifying the C3-Type Tri-bander</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Moxon-Modifying the C3-Type Tri-bander</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The Force 12 C3 tri-band Yagi has become a very popular compact beam for the general operator. Nevertheless, its 35' wing-spread has prevented some would-be owners from purchasing the antenna because their available space is not sufficient for full-size 20-meter elements. I have over the years received a number of inquiries as to whether the 20-meter elements could be shortened by various types of loading.</p>
+  <p>In general, but not absolutely, the answer has been negative. Most forms of loading--except element-end loading--disrupt the current phase relationships between the fed driver and the slaved drivers, destroying the feed system.</p>
+  <p>However, the 2-element 20-meter portion of the array can in principle be replaced by a Moxon rectangle without disturbing the other elements of the array. The result is not only a beam with only a 25' side-to-side spread, but as well a boom length nearly 2' shorter than the original.</p>
+  <p>The following notes are designed only as a feasibility study to validate the replacement in principle. I developed the foundations for these notes in late 1999, but have not had the opportunity to implement them with an actual beam. Hence, I can only provide the information suggested by extensive modeling in NEC-4. However, as we shall see at the end of the article, reality has caught up with design theory.</p>
+  <p>Our first step is to understand something of how the C3-type array is designed. For that purpose, I shall not present a detailed model of the Force 12 C3. To obtain an authorized computer model of the antenna, one should contact the company directly. My model makes use of uniform-diameter elements and hence represents only a C3-type antenna, not the actual commercial version.</p>
+  <p>As well, many facets of the actual C3 are protected by patents and other proprietary considerations, for example, the open-sleeve feed system. Therefore, these notes are intended only as a design study for individual use and not for any commercial purpose whatsoever.</p>
+  <p><b>The C3-Type Tri-Band Antenna</b></p>
+  <p>The C3-type tribander consists of three antennas: a 20-meter 2-element driver-reflector Yagi, a 15-meter 2-element driver-reflector Yagi, and a 3-element driver-director Yagi. The general arrangement is sketched in outline in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="c3m-1.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following model description from EZNEC provides details of the element lengths and spacings.</p>
+  <pre>C-3-Type 20-10-m tribander                   Frequency = 14  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+
+1          -138.50, 34.000,  0.000       138.500, 34.000,  0.000 7.50E-01  43
+2          -132.35,119.000,  0.000       132.350,119.000,  0.000 7.50E-01  43
+3          -101.00,134.500,  0.000       101.000,134.500,  0.000 5.00E-01  33
+4          -97.000,146.500,  0.000        97.000,146.500,  0.000 5.00E-01  33
+5          -89.000,212.500,  0.000        89.000,212.500,  0.000 5.00E-01  33
+6          -195.00,130.250,  0.000       195.000,130.250,  0.000 1.00E+00  61
+7          -209.00,  0.000,  0.000       209.000,  0.000,  0.000 1.00E+00  61
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1          31     6 / 50.00   (  6 / 50.00)      1.000       0.000       I</pre>
+  <p>The elements are organized in the order 15 meters, 10 meters, 20 meters. My placement of the 20-meter elements at the end results from the fact that we shall eventually replace them with a Moxon rectangle. Note also that I have used 1" diameter elements for 20 meters, 0.75" for 15, and 0.5" for 10 meters.</p>
+  <p>The most central feature of the C3-type multi-band Yagi is the drive system. It makes use of open-sleeve coupling such that only the 20-meter element is driven, whatever the band in use. The 15-meter driver is slaved to the 20-meter element on the side of the fed-driver closer to the corresponding reflector. Likewise, the 10-meter slaved driver is on the side of the fed driver closer to the 10-meter directors.</p>
+  <p>I should note that the spacing and lengths of the slaved drivers relative to the fed driver may differ from the actual spacings used in a C3. Both NEC-2 and NEC-4 have some limitations when wires of different lengths and diameters are brought into close proximity. Even with great care in aligning segment junctions among the elements, the closer the spacing, the more the potential error in the model. Hence, the actual required slaved driver lengths and spacings may be different from those used in the model. However, the model is sufficiently accurate to establish the principles involved in the operation of a C3-type antenna.</p>
+  <center>
+    <img src="c3m-2.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 20-meters driver and reflector together form a 2-element beam of relatively standard design and performance. <b>Fig. 2</b> shows the free-space azimuth patterns of the NEC-4 model at the ends and center of 20 meters. The following table summarizes 20-meter modeled performance.</p>
+  <pre>Freq.       F-S Gain    F-B Ratio   Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          Degrees     R +/- jX Ohms     SWR
+14.0        6.44        10.48       68.8        44.7 - j 4.4      1.16
+14.175      6.13        10.90       69.6        55.4 + j 6.8      1.18
+14.35       5.84        10.51       70.2        65.9 + j16.6      1.49</pre>
+  <p>As the table shows, the performance is everywhere normal for a 2-element Yagi. The gain descends with frequency increases. The element spacing to achieve a 50-Ohm match reduces the front-to-back ratio slightly relative to that obtainable with closer spacing and a lower feedpoint impedance. However, the SWR curve for a direct feed system is outstanding.</p>
+  <center>
+    <img src="c3m-3.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Placing the 15-meter driver and reflector between the corresponding 20-meter elements results in close to optimal coupling, something that is more difficult to obtain had the 15-meter slaved driver been placed forward of the fed driver. However, a slaved driver generally has a narrower operating passband with respect to impedance than a directly driven element. The narrowing tends not to show up in terms of pattern shape, as evidenced by <b>Fig. 3</b>. However, the &lt;2:1 SWR passband on 15 meters is only about 360 kHz, somewhat less than the whole band. However, the peak SWR of about 2.8:1 is well within the range of antenna tuners built into modern transceivers. As well, the SWR curve will be noticeably shallower at the shack end of any common coaxial cable if the cable is over a wavelength long. The following table shows the modeled performance of the subject antenna on 15 meters.</p>
+  <pre>Freq.       F-S Gain    F-B Ratio   Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          Degrees     R +/- jX Ohms     SWR
+21.0        6.55        10.78       67.2        52.9 - j36.0      1.99
+21.225      6.20        11.19       68.6        44.1 + j 4.9      1.18
+21.36       5.99        10.92       69.6        39.3 + j28.5      1.96
+21.45       5.84        10.59       70.4        36.2 + j44.2      2.83</pre>
+  <p>The band-edge patterns of the 20-meter and 15-meter sections of the antenna are quite similar, as is the front-to-back level. Only the SWR curve reveals the presence of the open-sleeve coupling system, and it is still a highly workable set of values.</p>
+  <p>The 10-meter section of the antenna differs considerably from the 20-meter and 15 meter sections. Beginning with a slaved driver forward of the fed driver, there are two directors. Although there is no tuned 10-meter reflector, the 15-meter elements (especially) fulfill part of that function in a system known as forward-stagger design.</p>
+  <p>Note that the first director is quite closely spaced to the slaved driver. Although this director does not lose all of its gain-enhancing function, its chief role is in setting the impedance and the operating passband of the 10-meter section. It bears more than a small resemblance to the spacing that would be used in OWA designs. The result is a 900 kHz SWR passband with usable patterns above 29 MHz. <b>Fig. 4</b> shows the 28, 28.5, and 29 MHz free-space azimuth patterns for the modeled array.</p>
+  <center>
+    <img src="c3m-4.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following tables shows the reported properties of the 10-meter section across the first MHz of the 10-meter band.</p>
+  <pre>Freq.       F-S Gain    F-B Ratio   Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          Degrees     R +/- jX Ohms     SWR
+28.0        6.34        15.12       66.8        55.7 - j35.1      1.94
+28.5        6.55        16.65       68.8        45.0 + j 0.2      1.09
+28.9        6.80        17.68       70.4        36.0 + j26.6      2.00
+29.0        6.87        17.86       70.8        32.7 + j33.0      2.44</pre>
+  <p>Once more, the SWR curve at the shack end of a coaxial cable will likely be shallower than the one at the feedpoint terminals, and any remnant SWR in excess of 2:1 is easily handled by a built-in ATU in the transceiver. More significantly, the performance curve reflects a typical Yagi with directors, as the gain increases with increasing frequency. The use of two directors provides a bit higher gain across the operating passband than the driver-reflector sections used on 20 and 15 meters.</p>
+  <p><b>Replacing the 20-Meter Section with a Moxon Rectangle</b></p>
+  <p>If we replace the 20-meter elements with a Moxon Rectangle, we obtain an array with a smaller footprint: 10' narrower and almost 2' shorter. <b>Fig. 5</b> shows the outlines of such an array.</p>
+  <center>
+    <img src="c3m-5.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following model description permits a direct comparison of element length and spacing between the Moxon-ized version of the C3-type antenna and the basic model just examined.</p>
+  <pre>Moxon-C3-type tribander                      Frequency = 14  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+
+1          -138.50, 34.000,  0.000       138.500, 34.000,  0.000 7.50E-01  43
+2          -131.90,119.000,  0.000       131.900,119.000,  0.000 7.50E-01  43
+3          -101.00,134.500,  0.000       101.000,134.500,  0.000 5.00E-01  33
+4          -97.000,146.500,  0.000        97.000,146.500,  0.000 5.00E-01  33
+5          -89.000,212.500,  0.000        89.000,212.500,  0.000 5.00E-01  33
+6          -150.00, 88.250,  0.000  W7E1 -150.00,130.250,  0.000 1.00E+00   7
+7     W6E2 -150.00,130.250,  0.000  W8E1 150.000,130.250,  0.000 1.00E+00  51
+8     W7E2 150.000,130.250,  0.000       150.000, 88.250,  0.000 1.00E+00   7
+9          -150.00, 78.650,  0.000 W10E1 -150.00, 22.250,  0.000 1.00E+00  10
+10    W9E2 -150.00, 22.250,  0.000 W11E1 150.000, 22.250,  0.000 1.00E+00  51
+11   W10E2 150.000, 22.250,  0.000       150.000, 78.650,  0.000 1.00E+00  10
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1          26     7 / 50.00   (  7 / 50.00)      1.000       0.000       I</pre>
+  <p>If you examine wires 1-5, you will notice that the only change is to the 15-meter driver length--a slight adjustment needed to bring all of the SWR passbands back into alignment. I have left these elements at there original marks to facilitate the comparison. However, the Moxon reflector is 22.25" forward of the position of the former Yagi reflector.</p>
+  <center>
+    <img src="c3m-6.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Perhaps the most significant change in performance occurs on 20 meters, as the typical Moxon pattern replaces the 2-element driver-reflector pattern of the original array. <b>Fig. 6</b> shows the increased beamwidth, increased front-to-back ratio, and slight decrease in forward gain. The numbers associated with these patterns appear in the following table.</p>
+  <pre>Freq.       F-S Gain    F-B Ratio   Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          Degrees     R +/- jX Ohms     SWR
+14.0        6.40        16.56       77.2        43.0 - j11.4      1.33
+14.175      6.03        31.51       77.8        60.9 - j 3.3      1.23
+14.35       5.67        19.94       78.4        75.6 - j 1.1      1.51</pre>
+  <p>While the gain differential is unlikely to be detectable in operation, the increased front-to-back ratio will be readily noticed. The 10-degree wider beamwidth may or may not be useful, depending upon the type of operation. In a contest, it reduces the need for re-aiming the beam so often.</p>
+  <p>However, the key benefit of using the Moxon is the reduction in the side-to-side dimension of the array. However, every benefit is usually accompanied by a challenge. In this case, the difficulty lies in building element corners and a means of keeping the element ends in alignment. As well, unless good construction is used, the forward and rear elements may react to winds in differing rhythms, thus stressing the element tail assemblies. In short, Moxon rectangle construction for 20 meters may require a bit more careful planning than the usual 2-element Yagi.</p>
+  <center>
+    <img src="c3m-7.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>On 15 meters, the chief feature to notice is that there is no significant change in performance compared to the basic array from which this one is derived. The <b>Fig. 7</b> free-space azimuth patterns are virtually identical to those for the basic array, and the following table of modeled values confirms the appear of the patterns.</p>
+  <pre>Freq.       F-S Gain    F-B Ratio   Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          Degrees     R +/- jX Ohms     SWR
+21.0        6.63        11.08       67.0        61.9 - j37.3      1.99
+21.225      6.22        11.75       67.8        50.1 + j 8.4      1.18
+21.36       5.99        11.25       68.2        44.0 + j33.2      2.01
+21.45       5.84        10.74       68.4        40.3 + j49.4      2.91</pre>
+  <p>Gain values, where they differ at all, do so only in the meaningless hundredths column. All of the other values a mere smidgens apart from the numbers reported for the basic array. In short, confining the 15-meter elements within the Moxon rectangle results in no significant interactions in addition to those one might find when the elements are between Yagi elements for 20 meters.</p>
+  <center>
+    <img src="c3m-8.gif" width="640" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In similar fashion, the 10-meter performance--as sampled in the free-space azimuth patterns of <b>Fig. 8</b>--also replicates closely the performance on 10 meters by the original array. The following table, when compared with the corresponding table for the original antenna, confirms how closely the two perform.</p>
+  <pre>Freq.       F-S Gain    F-B Ratio   Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          Degrees     R +/- jX Ohms     SWR
+28.0        6.32        15.14       67.0        57.4 - j34.7      1.92
+28.5        6.61        16.51       67.4        46.8 + j 0.7      1.07
+28.9        6.90        17.38       68.0        36.5 + j26.8      1.99
+29.0        6.99        17.51       68.2        33.0 + j33.2      2.43</pre>
+  <p>In principle, then, it is possible to replace the 20-meter elements in a C3-type antenna with Moxon Rectangle elements with no loss of performance and only a change in the nature of the 20-meter patterns that reflect the differences between a 2-element Yagi and a Moxon Rectangle. In principle, one obtains a smaller array that might fit in spaces in which a full-size C3-type antenna might not fit.</p>
+  <p><b>The Differences Between Principles and Practice</b></p>
+  <p>The design exercise has established a principle, but there may be numerous problems to overcome in translating the principle into practice. Although I have mentioned a few along the way, let's review what they might be in one place.</p>
+  <p>1. <b>Modeling limitations</b>: I have called attention to the fact that NEC-2 and NEC-4 have limitations associated with closely spaced wires having different lengths and diameters, even when one is careful to set up those wires so that the segment junctions align as closely as possible. The closeness of the slaved drivers to the fed driver, especially on 10 meters, suggests that the element dimensions and spacing are only suggestive. They will require considerable adjustment in practice. For the 10-meter slaved driver forward of the fed driver, here is the guideline.</p>
+  <blockquote>
+    <p>A. Increasing the element length decreases the feedpoint resistance and makes the reactance more inductive (or less capacitive). Decreasing the element length does just the opposite, increasing the feedpoint resistance and making the reactance more capacitive (or less inductive).</p>
+    <p>B. Closing the spacing decreases the feedpoint resistance and makes the reactance more capacitive (or less inductive. Opening the spacing increases the resistance and makes the reactance more inductive (or less capacitive).</p>
+  </blockquote>
+  <p>If this is your first open-sleeve coupled beam, be extra patient. It is easy to forget the guidelines and adjust the wrong parameter. If that happens and the feedpoint values appear to be going awry, return the slaved element to its original length and spacing and start the procedure again. Make very small changes between feedpoint measurements until you get a good feel for how much each increment of change affect the feedpoint impedance.</p>
+  <p>2. <b>Element diameter taper and other construction points</b>: the models use uniform-diameter elements, which is normally impractical on the HF bands. For a practical antenna, one must first reconstruct the model using the element taper schedule that reflects proposed construction. The linear elements can be re-sized using Leeson correction factors. However, these corrections only apply to linear elements. Hence, the Moxon elements may require either the use of NEC-4 to obtain a reasonably reliable model or considerable experimentation during construction.</p>
+  <p>However, all is not thrown into a murky bog by this limitation. The Moxon elements can be built and tested independently. Once established, the remaining elements have almost no effect upon them. (Similarly, the 20-meter elements of the original array are almost wholly unaffected by the addition of the elements for 15 and 10 meters.)</p>
+  <p>There have been many techniques used for the construction of Moxon corners. One can bend aluminum around various forms by first filling the tubing with sand and then--if possible--warming it. However, numerous Moxon builders have found pre-bent sections of aluminum in many places. Among the most original was the use of leg-sections from lawn chairs that had been placed on a pile of discarded items. CPVC (thin-wall PVC) makes a cheap and reasonably rigid separator for the element ends. Polycarbonate tubing would be superior from a UV and RF perspective, but CPVC is quite serviceable.</p>
+  <p>Finally, it is wise to develop a simple bracket to keep the fed driver and the two slave drivers well aligned. Sheets of acrylic, Plexiglas, or polycarbonate placed about 6-7 feet outward from the boom and "trapping" all three drivers will reduce SWR excursions created by winds that wave the elements out of step with each other.</p>
+  <p>This design exercise is, in the end, only a proof of principle and an invitation to those who wish to experiment further. I have no wish to reduce sales of the original C3 antenna. However, for those with too little space for the original, the Moxon version may--with considerable construction care--prove to be a feasible alternative.</p>
+  <p><b>The OptiBeam OB6-3M</b></p>
+  <p>Since developing the models for the modified C-3-type antenna, I have encountered a new beam that resembles on the surface the C-3. OptiBeam of Germany makes a line of multiband Yagis that differs from the Force 12 line in 2 respects: the OptiBeams use a method of directly feeding all drivers and the beams themselves are somewhat heavier in construction.</p>
+  <p>I suggested to the makers indirectly that they might consider Moxon-izing their smallest model, and they have done so. Below is a photo of the OB6-3M, a 6 element, 3-band beam using a Moxon rectangle for 20 meters. Relative to the C3-type antenna, the OptiBeam small model uses only 2 elements on 10 meters, placing the driver behind the 20-meter element with only 1 director. The makers claim a wider operating bandwidth for this arrangement.</p>
+  <center>
+    <img src="c3m-9.gif" width="628" height="587" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For those who do not wish to experiment but instead directly purchase a finished version of the beam, the OB6-3M and the other beams in the OptiBeam line are available from <a href="https://www.optibeam.net/" target="_blank">OptiBeam</a>. Since I do not have a version of the antenna on hand, I cannot vouchsafe for the claimed specifications, but they are quite similar to those noted in the study above.</p>
+  <p>Reality sometimes does catch up with antenna modeling.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 06-08-2002. &COPY; L. B. Cebik, W4RNL. This item first appeared in</i> antenneX <i>for June, 2002. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="moxpage.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Moxon Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#moxon'>Moxon</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

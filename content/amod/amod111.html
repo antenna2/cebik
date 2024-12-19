@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dipoles: Variety and Modeling Hazards</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>111. Dipoles: Variety and Modeling Hazards<br>
+    Zigzag, Fold-Back, and Fan Dipoles</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>We have been examining the behavior of NEC and MININEC calculations for various kinds of dipoles, where the dipole is a center-fed near-resonant 1/2 wavelength antenna. In this final episode of the sequence, we shall be paying close attention to angles. All of the antennas that we shall discuss will use 1" diameter lossless wire at all points, and the environment will once more be free space at 28 MHz. By holding down the number of variables, we can once more focus on how each antenna modeling package treats the antenna's geometry.</p>
+  <p>So far, we have looked at linear, V'd, and folded dipoles, as well as at dipoles with tapered-diameter, bent, and hatted elements. In our final collection, we find zigzag, fold-back, and fan dipoles. The last sample is not a simple dipole, but actually a combination of dipoles for separate frequencies that share the same feedpoint.</p>
+  <p><i>Zigzag Dipoles</i></p>
+  <p>Zigzag dipoles are most common in the lower HF region. Very often, antenna builders have too little space for a full-size dipole. One way to squeeze the antenna into the available space is to create as symmetrically as possible a zigzag shape. Our sample zigzag shape will depart from the norm a bit. Most zigzag dipoles have a relative constant height above ground and change direction in the X-Y plane. Our samples will zigzag vertically. As well, we conventionally measure a zigzag dipole by drawing a virtual line from one tip to the other through the feedpoint. In this exercise, we shall hold the central part of the element at a constant value of Z--comparable to a constant height above ground--and run the zigzag ends in the Z-axis.</p>
+  <p>In fact, we shall look at two designs of the zigzag dipole. One version, shown on the left in <b>Fig. 1</b>, uses a 90-degree angle at the zigzag points. The other version, on the right, bends the zigzag farther so that the end wires form a 45-degree angle with the inner section of the dipole. In both cases, the center section will occupy about 50% of the dipole length (if it had been a linear dipole, that is, +/-50" (total 100"). The end sections will use whatever length we need to approach resonance at the source.</p>
+  <center>
+    <img src="amod111-1.gif" width="550" height="285" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As <b>Fig. 2</b> shows, both versions of the zigzag antenna qualify as dipoles by effecting a single transition between maximum and minimum current on each side of the centered source. As in past models, the center section of the model will use 21 segment in NEC and 20 segments in MININEC. The number of segments used in the end wires will depend on their length, but each segment will be approximately the same length as the segments in the center section.</p>
+  <p>In past exercises, I have started with a NEC-4 model and then tried to see by how much the NEC-2 results deviated from the reports of the NEC-4 model. I then transferred those dimensions to a MININEC model in AM. Often, I created a revised AM model at resonance in order to compare the results with the version of MININEC in MMANA. The latter versions has few, if any, corrections, while the AM version is highly corrected. In this exercise, we can abbreviate the procedure somewhat. I shall still begin with a NEC-4 model, if only because that starting point is consistent with past starting points. However, the amount of deviation among the cores will be too small to call for the creation of additional models. One contributing factor to this situation is the fact that for our angular models, all wires have the same diameter. The following table shows the results for both the 90-degree and the 45-degree zigzag dipoles.</p>
+  <pre>
+Zigzag Dipoles in NEC and MININEC
+All elements 1" diameter and lossless in free space.
+
+90-Degree Zigzag: Central Length: +/- 50", End Length: 56"
+Segmentation: NEC: 12-21-12, MININEC 12-20-12
+
+Program     Gain     Source Impedance     AGT       AGTdB     Corrected Gain
+            dBi      R +/- jX Ohms                            dBi
+NEC-4       2.03     45.27 + j0.86        1.005      0.02     2.01
+NEC-2       2.03     45.33 + j1.19        1.004      0.02     2.01
+AM          2.01     45.29 - j2.15        0.9986    -0.01     2.02
+MMANA       2.00     44.50 - j6.71
+
+45-Degree Zigzag: Central Length: +/- 50", End Length: 67.85"
+Segmentation: NEC: 14-21-14, MININEC 14-20-14
+
+Program     Gain     Source Impedance     AGT       AGTdB     Corrected Gain
+            dBi      R +/- jX Ohms                            dBi
+NEC-4       2.00     18.49 + j0.06        1.010      0.04     1.96
+NEC-2       1.99     18.57 + j1.17        1.008      0.03     1.96
+AM          1.94     18.79 - j2.27        0.9989     0.00     1.94
+MMANA       1.94     18.50 - j6.30
+</pre>
+  <p>The 90-degree zigzag dipoles form a tight cluster of results. Only the MMANA source impedance shows more than a +/-j2-Ohm reactance shift, and it is about -j4.5 Ohms relative to the AM model--close to the amount that we have come to expect in dipoles from the uncorrected frequency offset at 28 MHz. The NEC cores actually show slightly less ideal values of AGT than the AM MININEC value. Although the MMANA core does not return an AGT value, we would expect it to approximate the AM value, since the frequency offset would not affect the AGT computation. As well, the use of a high number of segments is sufficient to minimize any further offset from corner foreshortening.</p>
+  <p>The 1" diameter elements, although well within NEC segment-length to diameter (or radius) limits, is fat enough to create a degree of inter-penetration at the junctions of the 45-degree zigzag dipole. Hence, both the NEC-4 and the NEC-2 departures from the ideal (1.000) are about double the departures with 90-degree corners. In contrast, the AM version of MININEC is highly corrected for raw-MININEC corner aberrations. Hence, it yields an AGT value very close to ideal. The MMANA data is interesting because the source reactance is only about j4 Ohms off the AM value. In earlier episodes we noted the possibility that the frequency offset and the corner error potential might work in opposite directions. The difference in source reactance between AM and MMANA was between j5 and j5.5 Ohms for a linear dipole. The 90-degree zigzag reduced that value to about j4.5 Ohms, and the more acute angle of the 45-degree zigzag reduces the difference still further. We have at least partial confirmation of our earlier hypothesis.</p>
+  <center>
+    <img src="amod111-2.gif" width="445" height="225" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> provides E-plane patterns for the two zigzag dipole models. Due to our method of model construction, the modeling cores define the E-plane as aligned with the center section of the antenna, even though the wire extensions take off in opposite directions. Note the relatively low side-null values for these two antennas. The 90-degree version has side nulls that are down about 10 dB, while the 45-degree model sidelobes are down only about 5 dB, giving the pattern an oval appearance.</p>
+  <center>
+    <img src="amod111-3.gif" width="920" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In fact, the radiation fields from the zigzag dipoles broadside to the plane of the wires are not linear. The terms E-plane and H-plane generally apply to antennas with linear polarization, such that the E-plane is aligned with the polarization, and the H-plane is at right angles to the polarization. Because so much of the element resides in the extensions that are angular to the center section, a considerable portion of the radiation is in a plane other than the plane of the center section. The net result is elliptical polarization with the major axis at an angle to the center section of the antenna. The left two 3-dimensional plots in <b>Fig. 3</b> show to what degree the zigzag dipole tilt the radiation field. The key indicator is the location of the true side nulls. Those nulls are both quite deep. The Y-axis line shows how angularly far from the true nulls that we find the E-plane patterns in <b>Fig. 2</b>.</p>
+  <p><i>Fold-Back Dipoles</i></p>
+  <p>The pattern on the far right in <b>Fig. 3</b> represents a dipole with a different name, although it may initially seem like just another zigzag dipole with a tighter angle between the center section and the tip wires. First, we likely noticed from the tabular data that as we increased the zigzag angle, the end wires grew longer. As well, the source impedance dropped from a highly usable value with the 90-degree version to an impractically low value with the 45-degree version. To avoid having end wires that are longer than the entire center section and to restore--at least partially--the resistive component of the source impedance, we normally use a longer center section when we apply relatively extreme angles to the end wires. The longer center section combines with the fact that the end wires are more in line with the center section to produce a field that is almost oriented like the field for a linear dipole. Note that the Y-axis line almost (but not quite) coincides with the deepest part of the side null in the right-most 3-dimensional patter in <b>Fig. 3</b>.</p>
+  <p>The resulting antenna uses a center section that is about 70% the length of a linear dipole, that is, about +/-70" (total 140"). Although the antenna is in the same family as the zigzag dipoles, it usually bears the name "fold-back" dipole. The name arises from the origins of the antenna, in which the builder could not fit elements into a given space and therefore folded them back at some convenient angle not too far from the orientation of the center section. The angle for the sample is 20 degrees, which requires end wires that are about 59.2" each for resonance with all-1" element construction. If you reverse the antenna image, you will find another name for the antenna--the lazy N. We occasionally find the antenna used vertically with an off-center feedpoint at one end of the center section as a convenience. However, for consistency with our other models, I have left the antenna horizontal and center-fed. <b>Fig. 4</b> at the top shows the antenna outline, along with the relative current magnitude distribution along its total length.</p>
+  <center>
+    <img src="amod111-4.gif" width="350" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As suggested by the lower portion of <b>Fig. 4</b>, we have multiple ways to effect element fold-back. I once developed a B antenna (which one may also view as a sigma from the reverse side). For this exercise, I have modeled another fold-back antenna, again using the +/-70" center section of 1" lossless wire. The fold-backs are squared and parallel to the center wire section at a 2" distance. Note that the end sections for this antenna are longer than 1/2 the center section. One effect is to require that we place the end wires on opposite sides of the central wire, although this position has been optional with the earlier examples. Perhaps more significantly, note the relative current magnitude curve in <b>Fig. 4</b>. The feedpoint or source position does not mark the current peak. Rather, we have twin peaks that are somewhat separated from the source position. You might rightly ask whether this antenna qualifies as a true dipole under the definition that we imposed at the beginning. However, the only way to bring this antenna to resonance is to allow the deviant current curve. As well, the curve emerges as a natural evolution of such curves as we start with a linear dipole and gradually shorten the end section and add fold-back end wires. There are no discontinuities in the evolution of the current distribution. Therefore, we shall keep the model and save any disputation over the application of names for another day.</p>
+  <p>With the longer center section, we expect to find that NEC-4 and NEC-2 will yield better AGT values than they did for the 45-degree zigzag dipole with its shorter center section. The following table confirms our expectation. In fact, the 2 NEC cores and the AM version of MININEC yield a very tight grouping of values across the span of data columns. Only the MMANA source data are out of line, with the MMANA MININEC core showing a large difference from the AM MININEC core. In terms of source reactance, we see a difference of j14.8 Ohms. To account for this larger deviation, we may note that the corner error in uncorrected MININEC increases as we move toward more acute angles. At 20 degrees, even the relatively high segmentation of the model in not sufficient to overcome this problem in MMANA.</p>
+  <pre>
+Fold-Back Dipoles in NEC and MININEC
+All elements 1" diameter and lossless in free space.
+
+20-Degree Angled Fold-Back: Central Length: +/- 70", End Length: 59.2"
+Segmentation: NEC: 13-31-13, MININEC 13-30-13
+
+Program     Gain     Source Impedance     AGT       AGTdB     Corrected Gain
+            dBi      R +/- jX Ohms                            dBi
+NEC-4       1.94     29.95 - j0.09        1.003      0.01     1.93
+NEC-2       1.93     30.33 + j3.49        1.001      0.00     1.93
+AM          1.92     30.90 + j2.98        0.9986    -0.01     1.93
+MMANA       1.91     29.84 - j11.82
+
+Parallel Fold-Back: Central Length: +/- 70", Spacing 2", End Length: 78.2"
+Segmentation: NEC: 17-31-17, MININEC 17-30-17
+
+Program     Gain     Source Impedance     AGT       AGTdB     Corrected Gain
+            dBi      R +/- jX Ohms                            dBi
+NEC-4       1.59     15.33 - j0.13        0.921     -0.36     1.95
+NEC-2       1.61     15.28 + j2.27        0.926     -0.34     1.95
+AM          1.94     15.24 + j8.67        0.9983    -0.01     1.95
+MMANA       1.94     15.10 - j1.54
+</pre>
+  <p>The squared and parallel fold-back of the alternative model reveals a different problem in uncorrected MININEC. AM corrects for the error potential in very close wires. With a 2" center-to-center separation between the middle section and the fold-back sections of the antenna, the wire surfaces are only 1" apart. Under these conditions, the uncorrected version of MININEC in MMANA (at least in the version used for these exercises) shows a j10.2-Ohm difference in reactance relative to the AM model. The reactance shown in the source data for the AM model is a function of having begun with the NEC-4 modeled dimensions.</p>
+  <p>Both NEC-4 and NEC-2 show deficiencies in modeling the parallel fold-back geometry. Although the dimensions are likely off the mark (at least relative to the AM model indications), the most dramatic evidence lies in the AGT values for both NEC cores. The gain report is more than 1/3-dB off its proper value. The corrected value tallies very well with the AM gain value. In fact, NEC makes the fold-back dipole look far worse than it really is in terms of dipole performance. The most likely source of the error that yields the AGT values reveals is the proximity of the wires. We did not encounter such an error when we examined folded dipoles that used the same spacing, wire diameter, and segmentation level. However, the folded dipole used wires that had the same length, end to end. The fold-back dipoles use wires with different lengths, even though the segmentation produces segment junctions that are as well aligned as the required lengths permit. The situation is simply one of the documented weaknesses within NEC. In this case, note that the level of the problem is virtually the same for both NEC-2 and NEC-4.</p>
+  <center>
+    <img src="amod111-5.gif" width="445" height="225" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> provides E-plane patterns for both versions of the fold-back dipole. The angled fold-back model shows deeper side nulls than either of the zigzag dipoles, but as we saw in <b>Fig. 3</b>, the conventional E-plane does not quite coincide with the angle of the deepest nulls. The parallel fold-back model shows very deep nulls that are limited only by the need for end connecting wires between the center and the fold-back wires.</p>
+  <p>The fold-back dipoles show a pattern similar to the one that we encountered with zigzag dipoles. As we change construction in ways that require longer end wires, the source resistance decreases. Although the value for the 20-degree fold-back model falls within the usable range, the source resistance for the parallel fold-back model in impractically low. Such antenna performance features do not affect modeling adequacy and accuracy, but they may heavily influence the designs for antennas that we actually plan to build.</p>
+  <p><i>Fan Dipoles</i></p>
+  <p>The last of our exercise dipoles as actually two dipoles in one. A common technique used in both amateur and commercial dipole construction is tying together dipoles for more than one frequency by using separate dipole legs, but with a common feedpoint. Let's simulate this situation with combined dipoles for 28 MHz and for 14 MHz. The structure, for simplicity, will use 1" lossless wire throughout. The dipoles will have about a 30-degree angle between the wires for each frequency. Our question is not whether such a structure makes good building sense. Rather, we want to examine the best way to model such an antenna in order to provide reliable data reports.</p>
+  <center>
+    <img src="amod111-6.gif" width="535" height="310" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows a common way to model such antennas in both NEC and in MININEC. In NEC, we must place a source on a segment. With all wires joining at the center, we must choose which wire will receive the source. The source must be on either a 14-MHz wire or on a 28-MHz wire, but it cannot be on both. MININEC may give its users a false impression, since we normally say that pulses used for sources fall at segment junctions. Hence, it would appear that placing the source at one of the pulses at the junction of the wires would solve our problems. Conventional representations of the source position under these conditions will show it at the center of the junction. My representation in <b>Fig. 6</b> shows the source to be slightly offset and distinctly on either a 14-MHz wire or on a 28-MHz wire. The following table of source impedance values for the various options for the various cores confirms the situation.</p>
+  <pre>
+Unreliable Fan Dipoles for 14 and 28 MHz in NEC and MININEC
+All elements 1" diameter and lossless in free space.
+
+Program     Source     28-MHz Source Z     14-MHz Source Z
+            Element    R +/- jX Ohms       R +/- jX Ohms
+NEC-4
+            28 MHz     33.02 + j26.58      32.53 - j323.2
+            14 MHz     792.6 + j927.6      72.84 - j17.52
+AM          28 MHz     30.14 + j21.23       9.72 - j261.9
+            14 MHz     416.9 + j375.4      68.48 - j21.05
+</pre>
+  <p>The NEC and the MININEC values both show that if we place the source on a 28-MHz wire, then the 28-MHz source impedance value is reasonable. (I did not bother to resonate the model, although that fact has nothing to do with the source impedance pattern.) With the source on the 28-MHz wire, both types of cores show very aberrant values for the source impedance on 14 MHz. Without changing antenna dimensions, if we move the source to a 14-MHz, wires, then we obtain reasonable values of source impedance for 14 MHz. However, the 28-MHz source impedance values become wholly unusable. The small exercise shows that we must come up with an alternative procedure for modeling fan dipoles.</p>
+  <center>
+    <img src="amod111-7.gif" width="490" height="280" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows a pair of alternative schemes. Let's first concentrate on the upper portion of the figure. We may create a source wire that is 3 segment long in NEC and 2 segments long in MININEC. In each case, the source position is exactly centered in this wire. As well, the wire has identical segment lengths on each side of the source and prior to any current division that will take place due to the use of dual dipoles. The dipole legs connect to the ends of the central source wire. The following tables shows the results for NEC-4, NEC-2, AM, and MMANA.</p>
+  <pre>
+Fan Dipoles for 14 and 28 MHz in NEC and MININEC
+All elements 1" diameter and lossless in free space.  30-degree angle between wires.
+
+Program    Frequency     Gain     Source Impedance     AGT       AGTdB     Corrected Gain
+           MHz           dBi      R +/- jX Ohms                            dBi
+NEC-4:  3-Segment Source Wire
+           28            0.93     37.52 + j0.55        1.096      0.40     0.53
+           14            2.53     55.27 + j0.32        1.110      0.45     2.08
+NEC-2:  3-Segment Source Wire
+           28            1.24     35.10 + j3.87        1.185      0.74     0.50
+           14            2.85     51.33 + j1.53        1.196      0.78     2.07
+AM (MININEC):  2-Segment Source Wire
+           28            0.53     40.39 - j6.07        0.9951    -0.02     0.55
+           14            2.07     61.18 - j3.00        0.9994     0.00     2.07
+MMANA (MININEC):  2-Segment Source Wire
+           28            1.45     36.72 - j17.76
+           14            2.08     60.47 - j5.32
+Note:  For 3-Segment Source-Wire models, the 14-MHz element is +/-199.3".  The
+28-MHz element is +/-106.7".  Lengths include 1/2 the source wire.
+</pre>
+  <p>With the same dimensions for each model, and using the NEC-4 model as our starting point, we find very reasonable results for the dipoles on both bands using a common feedpoint. The tabular data strongly suggest that in this case, AM would have been the proper starting point. It yields nearly ideal AGT values, while the NEC cores depart significantly from the ideal. The problematical AGT values would not occur had we used thin wire, which might be typical of a fam dipole installation. However, our goal is not to overlook potential problems, but to locate and identify them.</p>
+  <p>The less-than-ideal NEC AGT values are functions of the angle between the dipole legs at the points of junction with the source wire. One indication of this fact is the higher or less ideal AGT value produced by NEC-2 relative to NEC-4. NEC-4 improves on the ability of the core to handle smaller angles. (Note that the smallest angle that either core can handle depends upon a number of variables. In this case, the large wire diameter and the fact that the wires to not form a field whose radiation is self-canceling result in the difficulty.)</p>
+  <p>The lower portion of <b>Fig. 7</b> shows a very usable work-around that is applicable to both NEC-2 and NEC-4, but is not possible within MININEC. The starting point for this version of the fan dipole is the use of wholly separate wires for the two dipoles. The source wires parallel each other at a minimum spacing. In this example, I used 2" center-to-center, although a slightly wider spacing would have been superior.</p>
+  <p>The key to having a single feedpoint is the placement of the source on one of the two source wires. Which wire makes no difference. Between the middle segment of each wire, we create a transmission line via the TL command. The line's characteristic impedance is inconsequential within broad limits. Given the approximate impedances from the first type of model, I used 50 Ohms. The key to achieving a true parallel connection is the length of the transmission line. Since NEC transmission lines are mathematical only, their length is not the spacing between the connection points unless we specify that value. Instead, the TL command allows us to make the line length any value whatsoever. Since in a near-zero-length line, the impedance will not transform by any detectable amount, we may use 1E-10 m as the length. In some implementations of NEC, a value this short may not be allowed; simply use the shortest line length that is allowed.</p>
+  <p>The resulting model is a more reliable NEC representation of the fan dipole. The dimensions may change relative to the common-wire source. In the following table, the 14-MHz legs are each 1.4" longer and the 28-MHz legs are each 2" shorter than in the previous model.</p>
+  <pre>
+Fan Dipoles for 14 and 28 MHz in NEC
+All elements 1" diameter and lossless in freee space.  30-degree angle between wires.
+
+Program    Frequency     Gain     Source Impedance     AGT       AGTdB     Corrected Gain
+           MHz           dBi      R +/- jX Ohms                            dBi
+
+NEC-4:  Transmission-Line Parallel Source
+           28            0.66     48.36 - j0.35        0.998     -0.01     0.67
+           14            2.08     64.07 - j0.34        0.999      0.00     2.08
+NEC-2:  Transmission-Line Parallel Source
+           28            0.65     48.96 + j0.25        0.992     -0.03     0.68
+           14            2.05     64.47 - j0.32        0.993     -0.03     2.08
+Note:  For 3-Segment Source-Wire models, the 14-MHz element is +/-200.7".  The
+28-MHz element is +/-104.7".  Lengths include 1/2 the source wire.
+</pre>
+  <p>NEC-4 registers slightly superior AGT values, likely due to its small improvement in handling the closely spaced center wires relative to NEC-2. These wires, of course, are in the physical region of peak current. A small increase in the center-wire spacing would have yielded virtually ideal AGT scores. Noting all of this, a fan dipole constructed to approximate the model would still require considerable field adjustment of the leg lengths to account for construction variables. Fan dipoles are considerably more finicky or sensitive to minor changes than are almost any of the other models that we have examined, with the parallel fold-back model as a potential exception.</p>
+  <p>Throughout the progression of models, we have recorded values for the 14-MHz tests that are consistent with any full-size dipole. The slight V in the legs lowers the gain and source resistance by very small amounts that fall below the level of being operationally significant. However, the 28-MHz source resistance is considerably lower, and the 28MHz maximum gain is both very low and more variable among the models. <b>Fig. 8</b> shows part of the reason for the difference in performance. The upper sketch shows the current distribution at 14 MHz along all of the fan-dipole wires. The current magnitude on the 28-MHz dipole legs is very low and barely noticeable. However, when we operate the fan at 28 MHz, the relative current magnitude along the 14-MHz legs is appreciably higher. The consequence is that the 14-MHz elements exert partial control over the 28-MHz pattern. Most notable is an increase in the vertical component of the total field, which increases radiation to the sides of the array. At 14 MHz, the radiation had been almost totally broadside to the array.</p>
+  <center>
+    <img src="amod111-8.gif" width="481" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The result of this complication is that the 14-MHz far field produces an almost ideal dipole pattern. The left side of <b>Fig. 9</b> shows 3-dimensional and E-plane plots at 14 MHz. With side nulls that are 20-dB down from maximum broadside gain, the pattern resembles the pattern for a V dipole, which is indeed what the antenna is at that frequency. The vertical component, which is at right angles to the main lobes, is very small, as shown by the small inner lobes of the pattern. Hence, the horizontal component and the total field form pattern lines that overlap for most of the E-plane circumference.</p>
+  <center>
+    <img src="amod111-9.gif" width="770" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At 28 MHz, the pattern has a much squarer appearance, as shown in the 3-dimensional and E-plane patterns to the right in <b>Fig. 9</b>. The side nulls are only about 8 dB below the maximum broadside gain, which does not occur on a perfect tangent to the antenna plane, but is offset slightly. The vertical component emerges from the combined radiation of the 14-MHz and the 28-MHz legs and rivals the horizontal component in strength--at least within about 8 dB. The total pattern, which is a combination of the 2 component patterns, takes on a much squarer shape. As well, it is sensitive to small changes in antenna shape--and in how the modeling software handles the calculations as one or more aspects of the antenna geometry press the limits of the modeling core. MMANA, for example, shows a higher maximum gain that is a function of calculating a larger vertical component. Hence, maximum gain occurs at a bearing well removed from the broadside tangent. In contrast, NEC and the AM version of MININEC calculate somewhat lower vertical components, and the maximum gain occurs only a bit off the broadside tangent line.</p>
+  <p>Fan dipole users and builders tend to presume that the antenna operates "just like" a single dipole at each of the operating frequencies. Some combinations in fact approximate such performance. However, the sample that we have used illustrates a common case in which the performance of at least one of the two dipoles is unlike the performance of a standard or linear dipole. The examples have exacerbated the problems both in the antenna design and in the modeling of the design by using fat 1" diameter wires. Thin-wire versions of the fan dipole may well display the phenomena to a much lower degree.</p>
+  <p><b>Conclusion</b></p>
+  <p>We have not by any means exhausted the possibilities for variations on the 1/2 wavelength near-resonant dipole. However, it is likely that these notes have exhausted you. Except for the standard or linear dipole with a uniform diameter, the examples in the series of episodes have aimed to reveal various modeling pitfalls within a fairly unified context that has featured one of the most common antennas used in communications work at all frequencies. My goal has been to exhibit the pitfalls in a concrete setting rather than simply listing pitfalls and producing divergent examples to display the potential problems.</p>
+  <p>Along the way, we have seen that the problems do not occur equally in all modeling cores. Each core has strengths and weaknesses when we press its limitations. Internally, MININEC exhibits the widest range of performance variability, since different implementations correct different numbers and types of raw MININEC difficulties. MMANA represents a virtually uncorrected core and AM represents a highly corrected and supplemented core. Versions of NEC-2 and of NEC-4 tend to yield very similar results to other versions of NEC-2 and NEC-4. However, the differences between the two NEC cores and the limitations that are common to both become the most significant features to observe when one is searching out modeling pitfalls.</p>
+  <p>Any summary judgment about the relative merit of a highly corrected MININEC and either version of NEC would be wholly out of place. We have examined the cores only as they model various forms of the dipole. We have not examined how each core handles spot loads. Nor have we examined the vast array of geometry and control commands within NEC that are not a part of MININEC. Not only is our database woefully shy of the level needed for a summary judgment, but as well, such a judgment might prove more harmful than useful. The goal is to use each core where it is most reliable, effective, and efficient in generating and reporting on a desired model. In that regard, dipoles only begin the modeling work; they do not end it.</p>
+  <p>Nevertheless, I find it interesting to count the ways that we can get into trouble modeling simple dipoles if we are not careful and alert, and if we do not use all of the facilities of a program to detect problems as well as to produce modeling reports.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

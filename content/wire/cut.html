@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Design, Dipole, Vertical, Delta Loop, Quad, Quad Loop, Yagi">
+  <title>Cutting Formulas</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/wirecad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="9"> <img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"> Blunting the Edge of Cutting Formulas</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>For some reason buried deep in the human psyche, the newer antenna builder craves a set of cutting formulas in order to build an antenna. All cutting formulas have the same general form:</p>
+  <blockquote>
+    <b>L<sub>(feet)</sub> = k / f<sub>(MHz)</sub></b> or <b>L<sub>(meters)</sub> = k / f<sub>(MHz)</sub></b>
+  </blockquote>
+  <p>There are also occasional cutting formulas expressed in inches and millimeters. Of course, "k" is the magic number that allows easy calculation of the element length, even without a hand calculator.</p>
+  <p>Cutting formulas have a special lure. They look like precise equation, in a class with Ohm's Law.</p>
+  <blockquote>
+    <b>I = E / R</b>
+  </blockquote>
+  <p>They also appear to be universal so that one can calculate the element length for any band whatsoever. They are also independent of the element diameter, a complicating factor. In fact, cutting formulas seem so simple and precise that we have to wonder why all antenna designers do not show the formulas in their work. On the other hand, cutting formulas are so popular that a number of antenna designers have incorporated them into their articles, even when not needed.</p>
+  <p>Unfortunately, cutting formulas that appear in many references suffer from a number of faults.</p>
+  <blockquote>
+    <ol>
+      <li>
+        <p>Cutting formulas are usually imprecise.</p>
+      </li>
+      <li>
+        <p>Some cutting formulas are simply wrong.</p>
+      </li>
+      <li>
+        <p>Many cutting formulas are based on crude assumptions.</p>
+      </li>
+      <li>
+        <p>Cutting formulas fail to take into account the element diameter.</p>
+      </li>
+    </ol>
+  </blockquote>
+  <p>These faults tend to blunt the seemingly sharp edge of the cutting formula. In fact, I never use them, and I tend to avoid translating antenna designs into cutting formulas. They are too dangerous.</p>
+  <h4>The Simple Dipole</h4>The most famous and perhaps nearly sacred cutting formula applies to resonant 1/2 wavelength dipoles. The situation appears in <b>Fig. 1</b>, and the following cutting formula fills in the question mark in the sketch.
+  <center>
+    <img src="cut-1.gif" width="353" height="154" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <blockquote>
+      <b>L<sub>(feet)</sub> = 468 / f<sub>(MHz)</sub></b>
+    </blockquote>
+  </center>
+  <p>If you wish the length in meters, then use 143 instead of 468. Now let's trace the origins of this famous equation that most radio amateurs commit to memory.</p>
+  <p>1. The magic number derives from shortening the number necessary for a true half wavelength in free space: 492. This half wavelength magic number derives from the number we would use for a full wavelength: 984. However, even the k-number of a full wavelength is imprecise. The frequency at which a wavelength is exactly 1 meter is 299.7925 MHz (with more decimal places possible within the limits of the current figure given in science and engineering sources.) So the magic number for a full wavelength in feet is closer to 983.57 and the corresponding number for a half wavelength is 491.79 (or thereabouts).</p>
+  <p>The reply to this news is normally that cutting formulas are designed for backyard wire cutting, not for precise physical laws. Of course, this admission directly contradicts one of the lures of cutting formulas: their appearance of precision. But it is a good admission, a step in the direction of a cure to the cutting-formula affliction.</p>
+  <p>2. The move from 492 down to 468 rests on some assumptions about wire dipole operation. There is a shortening effect based on the fact that wire has a physical diameter. Wire also has ends, creating what some simply call the "end effect." As well, wire has a finite conductivity, which also has a shortening effect. The sum of all "real-world" shortening effects for bare wire is about 5%, according to the assumption. 0.95 * 492 = 467.4, which we shall round upward for some unspecified reason to 468. (Note that this applies to bare wire. Insulation also adds to the shortening effect by another 2% to 5%, depending on the relative permittivity and the thickness of the insulation.)</p>
+  <p>If we press the assumption of a 5% shortening, it dissolves into a much more complex affair. Shortening effects due to the impossibility of using a wire with an infinitesimal diameter become highly dependent upon the wire diameter. Matters become even more complex at lower frequencies, where we use multiple parallel wires to simulate a single fat wire. At VHF, wire diameters may vary from a thin wire to a large tube or rod.</p>
+  <p>So we have to add another element of imprecision into the cutting formula magic number. The cutting formula is looking more and more like a simple phantom of an equation. But we are not done.</p>
+  <p>Let's model a simple resonant 1/2 wavelength dipole at various heights about ground. Below a height of about 2 wavelengths, a dipole is more susceptible to influences of the ground than many other sorts of horizontally polarized antennas. We shall look at 2 dipoles for 14 MHz. One is composed of AWG #12 (0.0808" diameter) copper wire. The other is formed from 1" aluminum tubing. We shall place the dipole at heights of 1/4, 1/2, 3/4, and 1 wavelength above average ground, with a free-space entry just for reference. The following table will show the resonant length as a function of a wavelength. That means translating the wire diameters into fractions of a wavelength. AWG #12 wire is very close to 1e-4 wavelength at 14 MHz, while the 1" diameter tube is close to 1e-3 wavelength in diameter. The table will also list the resonant impedance, but only to show that the NEC-4 modeling achieved resonance within +/-0.1 Ohm. Finally, the table will show the calculated "magic" number that should replace 468 for the conditions of the individual test.</p>
+  <pre>
+        Cutting Formula Numbers for a 14-MHz Resonant 1/2-Wavelength Dipole
+Diameter                     1e-4 WL                                  1E-3 WL
+Height         Length       Impedance       K            Length      Impedance       K
+  WL             WL         R+/-jX Ohms                    WL        R+/-jX Ohms
+Free Space     0.4848       72.79 + j0.03   476.8        0.4777      72.06 + j0.05   469.9
+1/4            0.4802       80.42 + j0.09   472.3        0.4714      79.21 + j0.06   463.7
+1/2            0.48795      69.94 - j0.05   479.9        0.4821      69.49 - j0.03   474.2
+3/4            0.4826       74.23 + j0.07   474.7        0.4746      73.25 - j0.02   466.8
+1              0.48655      71.90 - j0.05   478.6        0.4802      71.35 + j0.07   472.3
+</pre>
+  <p>Interestingly, none of the values for K falls on the value of 468. Although the cutting formula is based on wire, all of those values are well above 468. At 14 MHz, one has to reach a 1" diameter to come reasonably close to 468. Since scaling the dimensions involves changing not only the wire length, but the diameter as well, at 80 meters, we would need a 4" diameter wire to get similar results. An 80-meter dipole made from AWG #14 or #12 wire or 2-mm wire in metric nations) would need to be be much longer.</p>
+  <p>We might speculate that the originators of the sacred dipole cutting formula were--consciously or not--using real-life experience in arriving at their formula, a real life filled with trees, buildings, power lines, and other antenna field impediments. If that speculation has any merit--and it may not--then it neglects the very high variability of antenna fields as we move around the country from tree-filled forests and building-laden urban sites out to wide open spaces in the midwest and west. As well, the origins of the dipole cutting formula go back to the days when amateurs used wavelengths in the 200-meter range.</p>
+  <p>In the end, the dipole cutting formula is simply a crude approximation. From the table, we can easily see the wisdom of cutting the wire very much longer than the formula dictates. We shall need some wire to wrap around the insulator to make a mechanically secure connection. We can always make the wrap longer or cut off the excess. Unfortunately, this eminently practical approach to making a wire antenna does not work for any antenna using rods or tubes for elements. If a cutting formula leads us to make an element too long, we can always shave the length. However, if it leads us to make the element too short, we are back to square 1, with a tubular tomato plant stake to show for our initial efforts.</p>
+  <p>A variation on the dipole cutting formula is the one used, mainly at VHF/UHF, for 1/4-waveoength monopoles. <b>Fig. 2</b> outlines the situation.</p>
+  <center>
+    <img src="cut-2.gif" width="364" height="206" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's assume that we cut 4 radials, each 1/4 wavelength long. How long should we make the vertical monopole? The most common answer is to take the magic dipole number and halve it, usually with a conversion to inches for common US ways of measuring.</p>
+  <center>
+    <blockquote>
+      <b>L<sub>(feet)</sub> = 234 / f<sub>(MHz)</sub></b> or <b>L<sub>(inches)</sub> = 2808 / f<sub>(MHz)</sub></b>
+    </blockquote>
+  </center>
+  <p>Allowing for rounding, of course, we know this is only an approximation. More exactly, but not perfectly exactly, the length of a wave in inches is about 11802.54/f in MHz. That adjustment would change the value of k, the magic number for the cutting formula. More significantly, the diameter of the element will change the value even more. Since VHF monopoles at 146 MHz are normally at least 2 wavelengths or more above ground, we can simply compare free-space monopoles (and radials) made from AWG #12 (0.808" or about 1e-3 wavelength diameter) and from 3/8" (about 5e-3 wavelength) diameter.</p>
+  <pre>
+Cutting Formula Numbers for a 146-MHz Resonant 1/4-Wavelength Monopole with 4 Radials
+Note: all radials exactly 1/4 wavelength long.
+Diameter                     1e-3 WL                                  5E-3 WL
+Height         Length       Impedance       K            Length      Impedance       K
+  WL             WL         R+/-jX Ohms                    WL        R+/-jX Ohms
+Free Space     0.2473       23.59 - j0.04  2918.8        0.2450      28.91 + j0.07  2891.7
+</pre>
+  <p>The classic cutting formula magic number is about 5% off the mark and low. In most cases, builders end up either sloping the radials or making them shorter, while increasing the monopole length to come closer to a 50-Ohm feedpoint impedance. As we make these changes, the length of the monopole portion of the antenna changes. We could have easily started with a simple 1/4-wavelegth calculation and been on more solid ground than the cutting formula offers, since it usually ends up with an element that is too short.</p>
+  <p>The dipole and monopole examples are sufficient to illustrate 3 out of the 4 faults that we listed for cutting formulas. Cutting formulas are usually imprecise. They are often based on crude assumptions. Finally, they fail to take into account the element diameter.</p>
+  <h4>Delta Loops</h4>Some cutting formulas are simply wrong. However, the sacred dipole cutting formula is not so far off the mark that we can simply call it wrong. We have to turn to another formula for that honor.
+  <p>For reasons that we shall examine further on, the classic magic number usually given for a closed 1 wavelength loop of any shape is 1005. That is,</p>
+  <center>
+    <blockquote>
+      <b>L<sub>(feet)</sub> = 1005 / f<sub>(MHz)</sub></b>
+    </blockquote>
+  </center>
+  <p>To test this value, let's model 4 variations of the vertically oriented delta loop in free space. First, we can construct an equilateral triangle (base down, although that does not really matter in free space). We can feed it typically at the center of the bottom wire for primarily horizontal polarization. Alternatively, we can feed it about 25% of the up (or 1/4 wavelength down) one side for primarily vertical polarization. We can create a similar pair of triangles with a right angle at the apex, using either feed point. In order to be about 1/4 wavelength from the apex, the side-fed right-angle delta has a feedpoint about 16% up from the corner. <b>Fig. 3</b> outlines the alternatives, along with some critical dimensions for figuring the physical lengths of the sides.</p>
+  <center>
+    <img src="cut-3.gif" width="495" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we use an equilateral triangle, the height is about 0.866 times the length of a side, and all 3 sides are the same length. In a right-angle delta, the height is 1/2 the length of the bottom of base wire, and each sloping side is about 1.414 times the height. Where we feed the delta has a major impact on the radiation pattern, as shown in <b>Fig. 4</b>.</p>
+  <center>
+    <img src="cut-4.gif" width="445" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The two left-side azimuth patterns show only small pairs of brown kidneys, which is the remnant vertically polarized radiation. The dominant radiation is horizontally polarized for these two bottom-fed deltas. On the right, we have the equilateral and right-angle deltas using side feeding. The blue clover at the pattern center is about 25-dB down from maximum radiation and represents the remnant horizontally polarized component of the total field. The side-fed delta is a vertically polarized antenna.</p>
+  <p>Against this background, we can now try to find the length of resonant loops and from that information calculate the value of the magic cutting formula number k. We shall use AWG #12 wire at 14 MHz, so the wire is about 1e-4 wavelength in diameter. For these loops, I have relaxed my definition of resonance to a remnant reactance of +/-j1 Ohm. The antennas are in free space.</p>
+  <pre>
+        Cutting Formula Numbers for a 14-MHz Resonant 1-Wavelength Delta Loop
+Note:  All antennas use 1e-4 wavelength diameter wire
+Feedpoint                     Bottom                                   Side
+Dela           Length       Impedance       K            Length      Impedance       K
+ Type            WL         R+/-jX Ohms                    WL        R+/-jX Ohms
+Equilateral    1.0650       117.6 + j0.9   1047.5        1.0656      116.9 + j0.1   1048.1
+Right-Angle    1.0490       196.5 + j0.7   1032.1        1.0720      50.21 + j0.03  1054.3
+</pre>
+  <p>We know that the calculated numbers will change if we keep the #12 wire but change frequency, because then the wire will have a different diameter when measured in wavelengths. We also know that the value of k will change if we increase the element diameter. Unlike linear elements whose resonant lengths shrink as the element gets fatter, closed loops (and some nearly closed loops) require a larger perimeter length for resonance with fatter elements.</p>
+  <p>However, there are two much more important factors revealed by this exercise. First, the value of k for a cutting formula is different for all 4 delta loops. Second, none of the values is anywhere near 1005. For delta loops, the cutting-formula value is simply wrong.</p>
+  <h4>Quads From 1 to 3 Elements</h4>Perhaps the quad antenna is the real home for the magic loop perimeter number of 1005 in cutting formulas. So lets explore quad antennas ranging from 1 to 3 elements, as outlined in <b>Fig. 5</b>. Of course, the loop perimeter is 4 times the length of a side, since we shall look only at square loops, where the feedpoint is always at the center of one side.
+  <center>
+    <img src="cut-5.gif" width="562" height="267" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's begin our exploration of quad-loop antennas with the single loop. For this antenna, the 1005 magic value of k is routinely cited in cutting formulas. For a change of pace, let's test the value at 28.5 MHz, using AWG #12 copper wire for one version of the free-space square loop and 1" aluminum for the other.</p>
+  <pre>
+        Cutting Formula Numbers for a 28.5-MHz Resonant 1-Wavelength Square Loop
+Diameter                     AWG #12                                  1"
+Environment    Perimeter    Perimeter       K            Perimeter   Perimeter       K
+                 WL           Feet                         WL          Feet
+Free Space     1.0261       36.672         1045.2        1.11398     38.445         1095.7
+</pre>
+  <p>The magic cutting formula value for #12 wire at 10 meters is around the values calculated for similar wire in 20-meter delta loops. The 1" version of the antenna shows the effect on k of having a closed loop: the fatter the element, the larger the loop perimeter for resonance at any given frequency. The classic number of 1005 is badly off base, even with thin wire.</p>
+  <p>Perhaps the number fares better in the context of a 2-element quad. The most common number in various texts for cutting the elements of a 2-element driver-reflector quad are 1005 for the driver and 1030 for the reflector. Once we enter the realm of multi-element antennas, we must also have a cutting formula number for the element spacing. Classically, no numbers appear, although the some sources list values from about 120 to 125, for a spacing of about 1/8 wavelength. Once more, we can contrast AWG #12 copper wire 2-element quad beams with 1" aluminum versions. The elements are in free space. The quads are optimized for the best combination of gain, front-to-back ratio, and operating bandwidth.</p>
+  <pre>
+Cutting Formula Numbers for a 28.5-MHz Resonant 1-Wavelength Square Loop 2-Element Quad Beam
+Diameter                     AWG #12                                  1"
+Element        Perimeter    Perimeter       K            Perimeter   Perimeter       K
+                 WL           Feet                         WL          Feet
+Driver         1.0131       34.693          996.5        1.0250      35.372         1008.2
+Reflector      1.0737       37.056         1056.1        1.1214      38.701         1103.0
+Spacing        0.1590        5.489          156.4        0.1663       5.740          163.6
+</pre>
+  <p>Again, the classic cutting formula numbers prove irrelevant to actual 2-element monoband quad beam design. They are simply too far off to be of use and they fail to account for changes in the diameter of the elements.</p>
+  <p>We cannot leave the arena of quads without considering the 3-element quad beam. The conclusions will not change, but examining 3 element quads allows us to consider two other facets of magic cutting formula use and misuse. The first aspect of quad cutting formula numbers concerns their history. The numbers appearing and reappearing for 3-element quads are 975 for the director, 1005 for the driver, and 1030 for the reflector. These numbers arose in the 1970s as a function of an actual published design. The author calculated cutting formulas for his design, ostensibly as an aid to scaling it to other frequencies, but the source and function of the numbers grew dim with time as they gradually underwent editorial truncation into virtually absolute numbers for all quads, whatever the number of elements or the element diameter. The original set of numbers did not contain values for spacing. In the 1970s, most 20-meter quads used one of two standard spacing schemes. The reflector-driver spacing was either 8' or 10', and the driver-director spacing was usually 8'.</p>
+  <p>Since those days, we have learned a great deal more about quad beam design and performance. For example, we learned that we may design 3-element quads to feature different subsets of the performance values, because we cannot enhance all of the properties simultaneously. This is the second new facet of 3-element quad design: we can design at least 2 different types of 3-element quads. One will have reasonable 3-element gain, but superior front-to-back ratio and operating bandwidth. The other type of design will maximize the gain and front-to-back ratio, but will have a narrower operating bandwidth. Here, the notion of operating bandwidth does not just apply to the feedpoint SWR, but as well to the gain and front-to-back figures. <b>Fig. 5</b> presents a dual-pattern overlay of the azimuth patterns of the two quad types on their design frequency. Of course, the pattern can only show the gain aspect of the design differences.</p>
+  <center>
+    <img src="cut-6.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The two different design goals result in two different sets of dimensions. The following table samples the diversity of the dimensions--and the resulting values for K--for AWG #12 wire versions of each type of design.</p>
+  <pre>
+Cutting Formula Numbers for 28.5-MHz Resonant 1-Wavelength Square Loop 3-Element Quad Beams
+Version                       Wide-Band                                High-Gain
+Element          Perimeter    Perimeter     K              Perimeter   Perimeter     K
+                   WL           Feet                         WL          Feet
+Driver           1.0127       34.950        996.1          1.0218      35.265       1005.0
+Reflector        1.0618       36.644       1044.4          1.0581      36.517       1040.7
+Dr-Ref Spacing   0.1592        5.493        156.6          0.1773       6.117        174.4
+Reflector        0.9398       32.433        924.4          0.9821      33.894        966.0
+Dr-Dir Spacing   0.2986       10.305        293.7          0.2230       7.796        219.3
+</pre>
+  <p>In the high-gain design, we can find traces of the original cutting formulas that emerged from earlier days of quad design when builders kept boom lengths short for mechanical integrity. However, the high-gain values also tell us that cutting formulas are dangerous in beam design, since the loop perimeter will vary with the element spacing as well as with the other variables in quad design. Of course, the values for k that emerge also vary with the goals of the design, with considerable differences in dimensions between the wide-band and the high-gain designs. I should not need to note that the values for k developed from actual designs in these notes are themselves next to useless. They appear only for the contrast with the classically received and very wrong cutting formulas that still populate some antenna articles and texts.</p>
+  <h4>A Yagi Case</h4>Advances in quad design are less well known than enhancements to the design of Yagi arrays over the last quarter century. Hence, I was surprised to find a set of cutting formula values for a 3-element Yagi beam in one text that I explored. The magic numbers are as follows.
+  <blockquote>
+    <ul>
+      <li><b>Reflector: 492</b></li>
+      <li><b>Driver: 478</b></li>
+      <li><b>Director: 461.5</b></li>
+      <li><b>Spacing: 142</b></li>
+    </ul>
+  </blockquote>
+  <p><b>Fig. 7</b> shows the application of these numbers in terms of the Yagi structure. Note that the spacing applies equally to the reflector-driver spacing and to the driver-director spacing. As usual, the resulting dimensions are in feet for HF use.</p>
+  <center>
+    <img src="cut-7.gif" width="396" height="285" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At 14 MHz, these formulas result in the following element lengths and element spacing.</p>
+  <blockquote>
+    <ul>
+      <li><b>Reflector: 34.173'</b></li>
+      <li><b>Driver: 35.143'</b></li>
+      <li><b>Director: 32.964'</b></li>
+      <li><b>Spacing: 10.143'</b></li>
+      <li><b>Boom Length: 20.286'</b></li>
+    </ul>
+  </blockquote>
+  <p>To test these cutting formulas, I construct a NEC-4 model of the Yagi, using 1" diameter aluminum elements. The feedpoint impedance was so low that I gradually reduced the element size until the array showed a resonant feedpoint impedance. The successful element diameter was 3/16" (0.1875"). The performance values for the two versions of the antenna--using the exact element lengths and spacing specified by the cutting formula magic numbers--appear in the following table.</p>
+  <pre>
+Cutting-Formula Yagi for 14 MHz:  NEC-4 Free-Space Performance Reports
+Element         Gain     Front-to-Back      Feedpoint Impedance
+Diameter        dBi      Ratio dB           R +/- jX Ohms
+1"              8.74     12.04               8.77 + j19.3
+0.1875"         7.98     22.32              19.19 + j 0.9
+</pre>
+  <p><b>Fig. 8</b> shows the azimuth patterns of the 2 versions of the Yagi.</p>
+  <center>
+    <img src="cut-8.gif" width="445" height="332" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 1" version of the antenna comes closest to the element diameter that a builder might actually use. However, despite its higher gain, it shows a mediocre front-to-back ratio compared to most current designs, and the feedpoint impedance is far lower than current design use to minimize power loss at mechanical junctions and similar lossy parts of construction. The thin-element version is not realistic at 20 meters, but does show better front-to-back and feedpoint impedance values.</p>
+  <p>Now lets add a third factor into the mix. Most HF beam elements use nested tubing in several sizes. The tapered diameter of the resulting elements will call for length adjustments to take this factor into account. The amount of adjustment will vary with the total amount of taper and the relative lengths of each size of tubing used for parts of each element. No simple cutting formula can account for all of the variations possible in developing the element taper for an HF beam.</p>
+  <p>As a result of these considerations, cutting formulas for HF beams using tubular elements are completely useless. The prospective builder must either adhere to a published design in all the details of element structure or the builder must redesign the beam to the materials that he wishes to use. That task has no cutting formulas. However, there are antenna modeling software packages that can eliminate most of the field trials and failures on the road to a successful design.</p>
+  <h4>Conclusions</h4>
+  <p>We have explored the world of cutting formulas and found them to be more of a hindrance than an advantage. The best of them--for example, the dipole formula--is at most a very crude approximation of required wire length based on equally crude assumptions about the necessary shortening effects of real-world wire antennas. It failed to account for element diameter and for ground effects on the resonant length of a 1/2 wavelength dipole.</p>
+  <p>Some classic cutting formulas have proven to be simply wrong by wide margins, as in the case for the magic value of k normally given for 1 wavelength closed loops. The value of 1005 emerged long ago in a certain context and, by continual repetition and editorial truncation of the context, it came to be viewed as an absolute--an absolutely wrong absolute.</p>
+  <p>Cutting formulas for multi-element arrays are also useless. Most value sets originate in outdated designs of yesteryear and fail to account for more recent design developments--especially those developments that now routinely allow us to create multiple versions of a design type, each version optimized to feature a subset of the total performance parameters of the antenna.</p>
+  <p>As long as cutting formulas remain a staple of handbooks, texts, articles, and what we teach to new hams, they will continue to create more misunderstanding about antennas than their absence will create troubles getting started with the first amateur band antenna. While it is not possible to eliminate the classic dipole cutting formula from handbooks, since it has sacred status emerging from the mists of the long-ago era of early radio, perhaps we can make some progress by eliminating all other cutting formulas. All of the rest of them are attempts to apply a blunt instrument where a precision tool is both required and available.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><i>Updated 10-25-2004. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#delta-loop'>Delta Loop</a>, <a href='../topics.html#design'>Design</a>, <a href='../topics.html#dipole'>Dipole</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#quad-loop'>Quad Loop</a>, <a href='../topics.html#vertical'>Vertical</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

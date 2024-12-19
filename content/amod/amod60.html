@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NVIS Antenna Models and the Ground Type</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>60. NVIS Antenna Models and the Ground Type</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In past columns, we have noted some of the deficiencies of the systems of ground calculations associated with MININEC and with the fast or reflection coefficient system in NEC (-2 and -4). These two ground calculation systems both use (although not in exactly the same way) a simplified algorithm for the rapid calculation of ground effects on the far field of a signal. The NEC reflection coefficient system also applies the ground calculations to the source impedance calculations. However, MININEC always calculates the source impedance as if the antenna is over perfect ground.</p>
+  <p>The simplified calculation systems for ground effects emerged for various reasons. The original MININEC system had to do its calculations within the restrictions of early desk-top computer systems with as little as 640 KB of RAM. The NEC reflection coefficient system held a speed advantage over a more complete ground analysis system, a strong consideration with large models in the days of CPU speeds below 10 MHz.</p>
+  <p>NEC also incorporates the Sommerfeld-Norton (S-N) ground calculation system, which is the most accurate calculation system available on wire-based antenna simulation packages. While very accurate, it requires considerably more time to execute within a model, relative to the reflection coefficient system. However, for any NEC implementation, modern CPU speeds ranging from 200 MHz to 2 GHz tend to make the extra time required for execution of the S-N system less than significant. Indeed, perhaps the only use remaining for the reflection coefficient system in NEC is to make comparisons among ground effect calculation systems. For a comparison of the mathematical foundations of the various ground systems, the appropriate NEC manuals contain full information.</p>
+  <p>The limitations of the MININEC ground system and the NEC ground reflection system are matters of the height of the antenna wires above ground. Both systems begin to yield inaccurate results when any wire in the antenna system is at or below about 0.2 wavelengths and has any horizontal component to the radiation. Because the error gradually develops as we lower the wire closer to the earth, we may easily overlook it. As well, we cannot mark a clear and distinct point or height at which errors begin. Nonetheless, well below the boundary region, the errors are vivid, if one has some experience with what values are sensible at very low antenna heights.</p>
+  <p>In episode 37 of this series, we performed a small exercise with tilted dipoles with one end very close to the ground. As we tilted the dipole away from the vertical and toward the horizontal, the disparity between MININEC results and NEC-4 S-N results grew in proportion to the horizontal component of the tilted dipole radiation. The S-N system in either NEC-2 or NEC-4 is considered accurate down to several wire radii from the earth's surface.</p>
+  <p><b>NVIS Antennas and Models</b></p>
+  <p>Near Vertical Incidence Skywave (NVIS) propagation makes use of the fact that near-vertical signals do not all penetrate the ionospheric layers and disappear into space. Instead, a usable amount of signal is ordinarily reflected or refracted downward. A good brief account of the general parameters of NVIS propagation appears in Jaques d'Avignon, VE3VIA, "The NVIS Propagation Mode and the Ham," <i>The ARRL Antenna Compendium</i>, Vol. 5, pp. 129-134.</p>
+  <p>The most common form of NVIS antenna is a simple wire array placed relatively close to the earth's surface. The antenna types used include dipoles, loops, and in-phase fed pairs of dipoles or folded dipoles. Heights range from a few feet to about 1/4 wavelength. Above that height, the elevation angle of maximum radiation lowers enough to reduce the vertical radiation significantly. The object of a NVIS antenna is to radiate vertically as strongly as possible.</p>
+  <p>Antenna modelers are always interested in how much gain and what feedpoint impedance an antenna has. Hence, curiosity about NVIS antenna models goes back to the early days of MININEC. The models are simple--well within the 256 segment limitation of the original DOS-based MININEC program. Although Windows implementations of MININEC have removed the segmentation limit on models, they have not yet overcome the limitations of the MININEC ground calculation system.</p>
+  <p>Virtually by definition, all NVIS antennas use a height that places horizontal wires below the threshold for accurate results using the MININEC or NEC reflection coefficient ground systems. Hence, it is not out of place to present two modeling rules for NVIS antennas.</p>
+  <p>1. NEVER use MININEC to model a NVIS antenna.</p>
+  <p>2. NEVER use the NEC reflection coefficient ground system to model a NVIS antenna.</p>
+  <p>By default, we are left with a third rule:</p>
+  <p>3. Always use the NEC S-N ground system when modeling NVIS antennas.</p>
+  <p>The question these rules leave us is this: how much error can we expect if we use the "forbidden" ground or modeling systems with a NVIS antenna? Since a NVIS antenna may have wires ranging from virtually at the earth's surface to about 1/4 wavelength above the ground, there is no single answer. However, we can perform a series of exercises to show the growth of the error under varying conditions with various kinds of models. Since this column is finite, we can only sample a few cases. For convenience, all examples will use 3.9 MHz as the operating frequency.</p>
+  <p><b>A Wire Dipole</b></p>
+  <p>One common antenna that amateurs press into service for NVIS operations is the simple dipole. <b>Fig. 1</b> shows the basic outline of a #14 copper wire dipole, cut to 121' for the test frequency.</p>
+  <center>
+    <img src="amod60-1.gif" width="471" height="414" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At 3.9 MHz, a wavelength is 252.2', placing a quarter wavelength just below the 70' height mark. We can test the antenna at 10, 30, 50, and 70 feet above ground and compare the results that we get using different ground systems. EZNEC allows one to use NEC-2 (or NEC-4 in the Pro version) with not only the reflection coefficient and S-N systems, but as well with the MININEC ground system. The MININEC ground results correlate extremely well with the same ground system in its MININEC antenna property calculation environment. Therefore, we may conveniently make comparisons among ground system effects of reported antenna properties without leaving a single program.</p>
+  <p>The following table lists the results of modeling our NVIS dipole at the test heights using each of the ground systems.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+MININEC Ground
+Height             Gain         TO angle           Feedpoint Impedance
+(feet)             (dBi)        (degrees)          (R +/- jX Ohms)
+ 10                9.40         89                   5 - j 36
+ 30                8.04         90                  30 + j  0
+ 50                6.91         86                  66 + j  9
+ 70                5.90         52                  91 - j  6
+
+NEC Reflection Coefficient Ground
+Height             Gain         TO angle           Feedpoint Impedance
+(feet)             (dBi)        (degrees)          (R +/- jX Ohms)
+ 10                1.78         88                  31 - j 35
+ 30                6.15         88                  47 - j  4
+ 50                6.47         86                  72 - j  1
+ 70                6.03         52                  87 - j 15
+
+NEC S-N Ground
+Height             Gain         TO angle           Feedpoint Impedance
+(feet)             (dBi)        (degrees)          (R +/- jX Ohms)
+ 10                -.51         88                  53 - j  8
+ 30                5.64         88                  52 - j  4
+ 50                6.40         87                  73 - j  3
+ 70                6.04         52                  87 - j 16
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>If we model the NVIS dipole using a MININEC ground, we shall draw all of the wrong conclusions. The antenna height for maximum gain appears to be as close to the ground as we can manage and certainly no higher than about 10'. As well, we shall have a very low feedpoint impedance to consider when developing a system to match the antenna to the feedline and the feedline to the equipment.</p>
+  <p>However, even the reflection coefficient system of NEC shows how inaccurate the MININEC ground is under these circumstances. It correctly shows that the optimum height is somewhere around 50' or about 0.2 wavelengths above ground. The S-N system is more dramatic in its results (and more accurate). The gain of the dipole at a 10' height at 3.9 MHz is about 10 dB lower than the MININEC ground illusion. As well, the feedpoint impedance is an easily managed 50 Ohms.</p>
+  <center>
+    <img src="amod60-2.gif" width="376" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the comparative elevation patterns for the dipole at the 4 heights sampled in this modeling test. For NVIS work, the 50' height is closest to the optimum value in terms of radiation directed vertically. At slightly lesser gain, the 30' height is also usable--and, of course, anything between and around these values. The 70' height sacrifices vertical radiation for radiation at a lower angle. The 10' height is simply deficient in gain from any perspective.</p>
+  <center>
+    <img src="amod60-3.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the azimuth patterns of the dipole with an elevation angle of 60 degrees. Although the gain deficit of the 10' height is clear, perhaps the more important aspect of the azimuth patterns is their oval shape. Even though one thinks about NVIS work in terms of a circular pattern, operating needs in terms of target stations or areas may make an oval pattern more desirable on occasion than a purely circular one.</p>
+  <p><b>A Wire Loop</b></p>
+  <p>One technique used to obtain a more circular pattern in NVIS operation is to use a 1 wavelength loop instead of a dipole. <b>Fig. 4</b> shows the rudiments of such an antenna.</p>
+  <center>
+    <img src="amod60-4.gif" width="594" height="455" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The dimensions shown are somewhat arbitrary but close to correct for the 3.9-MHz operating frequency. The diagram shows a side-fed loop, although we might as easily have chosen a feedpoint at the loop corner or anywhere between. The results of comparing ground systems for this antenna at the test heights appear in the following table.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+MININEC Ground
+Height             Gain         TO angle           Feedpoint Impedance
+(feet)             (dBi)        (degrees)          (R +/- jX Ohms)
+ 10                10.15        90                   10 + j  8
+ 30                 8.60        90                   58 + j  2
+ 50                 7.48        90                  124 - j  4
+ 70                 6.05        101                 167 - j 45
+
+NEC Reflection Coefficient Ground
+Height             Gain         TO angle           Feedpoint Impedance
+(feet)             (dBi)        (degrees)          (R +/- jX Ohms)
+ 10                4.46         90                   36 - j 52
+ 30                7.11         90                   81 - j 16
+ 50                7.17         90                  132 - j 27
+ 70                6.26         101                 158 - j 63
+
+NEC S-N Ground
+Height             Gain         TO angle           Feedpoint Impedance
+(feet)             (dBi)        (degrees)          (R +/- jX Ohms)
+ 10                0.42         90                   95 + j 48
+ 30                6.32         90                   98 - j 12
+ 50                7.04         90                  136 - j 30
+ 70                6.26         102                 158 - j 65
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Once more, the MININEC ground system yields unbelievably optimistic reports of antenna performance at very low heights. The loop gain is reportedly almost 10 dB higher than the same antenna calculated using the S-N system. As well, the feedpoint resistance reported by the MININEC system is about a tenth of the value yielded by the S-N system. Of course, there is a relationship between the errors produced by the MININEC ground system at very low heights. The extremely low source impedance indicates erroneously high current levels that yield a high gain value.</p>
+  <p>Unfortunately, the ground errors cannot show themselves in the average gain test, since this test requires the use of free space (or a perfect ground for ground-mounted monopoles). All of these tests place the NVIS antennas above average ground (conductivity: 0.005 S/m; dielectric constant: 13).</p>
+  <p>The reflection coefficient system in NEC lowers the amount of error for any given low height, but still yields inaccurate results. If we compare the excess gain at 10' with the low feedpoint impedance, relative to the S-N report, we find the same pattern as in the MININEC results. The S-N system finds the best height for the loop to be in the vicinity of 50' at 3.9 MHz or about 0.2 wavelength above ground.</p>
+  <center>
+    <img src="amod60-5.gif" width="376" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The elevation patterns in <b>Fig. 5</b> show that same general properties as those for the dipole. the 50' height gives us the highest gain straight up of all of the test heights. 50' shows its highest gain somewhat off vertical, and 10' simply yields insufficient gain relative to what it might be at a better height.</p>
+  <center>
+    <img src="amod60-6.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The azimuth patterns in <b>Fig. 6</b> reveal that the use of a loop does indeed circularize the pattern compared to the pattern of a dipole. The 60-degree elevation angle applies to these patterns as well as to those of the dipole in <b>Fig. 3</b>. The departure from a circle is a little over 1 dB for heights from 30' to 70', with the stronger directions being in line with the feedpoint.</p>
+  <p><b>A Dipole and a Low Reflector</b></p>
+  <p>One type of antenna recommended by some for NVIS service consists of a dipole at about 1/4 wavelength above ground, with a low wire in line with the driven dipole. To simulate this type of antenna, I took the dipole we previously examined, placed it at 70' above average soil, and added a second wire the same length (121') at a height of 5' above ground. <b>Fig. 7</b> shows the general outline of the model.</p>
+  <center>
+    <img src="amod60-7.gif" width="476" height="517" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The results for the antenna appear in the following table, which includes both NEC-2 and NEC-4 reported values and the values for the earlier dipole at 70' without a parasitic wire below it.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+MININEC Ground:  70' and 5'
+Model              Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+NEC-4              5.75         52                  92 - j  8
+NEC-2              5.75         53                  92 - j  8
+Dipole only        5.90         52                  91 - j  6
+
+NEC Reflection Coefficient Ground:  70' and 5'
+Model              Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+NEC-4              5.67         50                  81 - j 20
+NEC-2              6.22         55                  88 - j 11
+Dipole only        6.03         52                  87 - j 15
+
+NEC S-N Ground:  70' and 5'
+Model              Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+NEC-4              6.09         53                  79 - j 11
+NEC-2              6.09         53                  79 - j 11
+Dipole only        6.04         52                  87 - j 16
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In the case of the dipole with its low parasitic reflector, the MININEC results are at odds with the NEC-4 S-N results in showing a lower gain with a higher source impedance. As noted earlier, these error directions are consistent with each other. The reflection coefficient results are interesting insofar as there are more distinct differences between NEC-2 and NEC-4 than for the other two cases.</p>
+  <center>
+    <img src="amod60-8.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the azimuth and elevation patterns for the array, which are remarkable similar to those for the dipole alone at 70' without the extra wire. The extra wire does little that the average ground beneath the driven element cannot do with respect to the far field radiation pattern or the feedpoint impedance.</p>
+  <p>The tightness of the figures for NEC-2, NEC-4, and the dipole alone in NEC-4 contrast with the somewhat wider span of numbers between the two-and one-wire arrays using a MININEC ground. The differential suggests that even if the driven wire is above the region of inaccuracy for MININEC ground, the almost functionless second wire close to the earth in the array does have an affect on the reported results.</p>
+  <p>A correspodent took me to task for using an example with the reflector wire the same length as the driver wire. So I surveryed the situation by leaving the driver as is and gradually lengthening the reflector wire. The following chart shows the results of the survey.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+NEC-4 S-N Ground:  70' and 5':  Driver 121'
+Refl. Length (ft)  Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+121'               6.09         53                  79 - j 11
+122'               6.14         52                  80 - j 10
+123'               6.18         52                  82 - j 10
+124'               6.20         52                  83 - j  7
+125'               6.21         53                  84 - j 10
+126'               6.21         52                  85 - j 10
+127'               6.21         53                  85 - j 11
+128'               6.21         53                  86 - j 11
+129'               6.20         53                  86 - j 11
+130'               6.20         54                  86 - j 12
+131'               6.19         53                  86 - j 12
+132'               6.19         53                  86 - j 16
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The reflector plays a very small role in increasing the gain of the dipole + reflector combination--0.12 dB relative to the initial model and 0.17 dB relative to the dipole alone, as modeled in NEC-4 using the SN ground system. Of course, this survey is in many ways beside the point, which is to compare the performance of modeling software with respect to the ability to adequately model various types of NEVIS arrays when one or more of the wires is close to the ground.</p>
+  <p><b>A Wire Loop and a Low Reflector</b></p>
+  <p>I repeated the modeling experiment using the 1 wavelength perimeter wire loop at 70' with a second loop at the 5' level. <b>Fig. 9</b> shows the general outlines of the model.</p>
+  <center>
+    <img src="amod60-9.gif" width="516" height="568" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following table follows the reflected-dipole format, but with data for the reflected loop.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+MININEC Ground:  70' and 5'
+Model              Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+NEC-4              6.90          92                164 - j 34
+NEC-2              6.90          95                164 - j 34
+Loop only          6.05         101                167 - j 45
+
+NEC Reflection Coefficient Ground:  70' and 5'
+Model              Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+NEC-4              5.76         108                144 - j 66
+NEC-2              6.50         100                159 - j 57
+Loop only          6.26         101                158 - j 63
+
+NEC S-N Ground:  70' and 5'
+Model              Gain         TO angle           Feedpoint Impedance
+                   (dBi)        (degrees)          (R +/- jX Ohms)
+NEC-4              6.47          97                159 - j 51
+NEC-2              6.47         100                159 - j 51
+Loop only          6.26         102                158 - j 65
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The loop situation shows something significant to modeling: once a source impedance has a relatively high reactive component, the pattern that we have observed of gain moving in one direction while the resistive part of the impedance moves in the other may no longer hold. The MININEC ground model shows excess gain relative to the NEC-4 S-N ground version, but the resistive impedance relationship does not hold. Nevertheless, the considerable size of the low reflector apparently increases the gain above the S-N model by a greater amount than the reflector did with the dipole.</p>
+  <p>The reflection coefficient model again shows significant variations between NEC-2 and NEC-4 core runs of the model. These variations apply both to the gain and to the source impedance. As well, the 8-degree difference in the elevation angle of maximum radiation occasion differences between the far field patterns, although the amount of variation would not likely be measurable in the field.</p>
+  <center>
+    <img src="amod60-10.gif" width="376" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> shows the S-N azimuth and elevation patterns for array with its reflector, patterns that do not differ noticeably from those for the loop alone.</p>
+  <p><b>Conclusion</b></p>
+  <p>The lower the wires of a NVIS antenna, the more unreliable will be the results from a model using either a NEC reflection coefficient ground or a MININEC ground. The inaccuracies of the MININEC ground system affect mainly the gain and feedpoint impedance reports, although those errors will also show up in the reported currents on the antenna elements. In some cases, the errors may slightly affect the far field pattern shape, although such distortions will normally be very slight.</p>
+  <p>The level of error becomes very seriously misleading with a MININEC ground in two respects. First, when the wires of a MININEC model are brought below about 0.1 wavelength, the gain increases and the source impedance decreases so that the result is wholly unrealistic. Second, the MININEC ground system error curve is such as to lead the idea that the lowest possible antenna height yields the strongest signal. Even the unreliable reflection coefficient system in NEC more correctly identifies the best height as falling in the region of about 0.2 wavelengths.</p>
+  <p>Those who wish to pursue studies of modeled ground calculation systems and low wires with a horizontal component may use the model descriptions below as starters.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                      EZNEC/4 ver. 3.0
+
+75-meter NVIS dipole                         5/18/02     10:40:54 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 3.9 MHz
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (ft)              End 2     Coord. (ft)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                      0,  -60.5,     50                  0,   60.5,     50       #14   51
+
+Total Segments: 51
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       1        50.00      50.00    26       1           0         V
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Real, High-Accuracy
+
+              --------------- MEDIA ---------------
+
+No.    Cond.    Diel. Const.  Height    R Coord.
+       (S/m)                  (ft)      (ft)
+1      0.005     13           0         0
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                      EZNEC/4 ver. 3.0
+
+75-m loop for NVIS                           5/18/02     10:43:12 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 3.9 MHz
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (ft)              End 2     Coord. (ft)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1          W4E2        0,      0,     30      W2E1        0,64.2564,     30       #14   51
+2          W1E2        0,64.2564,     30      W3E1  64.2564,64.2564,     30       #14   51
+3          W2E2  64.2564,64.2564,     30      W4E1  64.2564,      0,     30       #14   51
+4          W3E2  64.2564,      0,     30      W1E1        0,      0,     30       #14   51
+
+Total Segments: 204
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       1        50.00      50.00    26       1           0         I
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Real, High-Accuracy
+
+              --------------- MEDIA ---------------
+
+No.    Cond.    Diel. Const.  Height    R Coord.
+       (S/m)                  (ft)      (ft)
+1      0.005     13           0         0
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                      EZNEC/4 ver. 3.0
+
+75-m dipole/parasitic NVIS                   5/18/02     10:42:10 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 3.9 MHz
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (ft)              End 2     Coord. (ft)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                      0,  -60.5,     70                  0,   60.5,     70       #14   51
+2                      0,  -60.5,      5                  0,   60.5,      5       #14   51
+
+Total Segments: 102
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       1        50.00      50.00    26       1           0         V
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Real, High-Accuracy
+
+              --------------- MEDIA ---------------
+
+No.    Cond.    Diel. Const.  Height    R Coord.
+       (S/m)                  (ft)      (ft)
+1      0.005     13           0         0
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                      EZNEC/4 ver. 3.0
+
+75-m loop + parasitic NVIS                   5/18/02     10:44:11 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 3.9 MHz
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (ft)              End 2     Coord. (ft)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1          W4E2        0,      0,     70      W2E1        0,64.2564,     70       #14   51
+2          W1E2        0,64.2564,     70      W3E1  64.2564,64.2564,     70       #14   51
+3          W2E2  64.2564,64.2564,     70      W4E1  64.2564,      0,     70       #14   51
+4          W3E2  64.2564,      0,     70      W1E1        0,      0,     70       #14   51
+5          W8E2        0,      0,      5      W6E1        0,64.2564,      5       #14   51
+6          W5E2        0,64.2564,      5      W7E1  64.2564,64.2564,      5       #14   51
+7          W6E2  64.2564,64.2564,      5      W8E1  64.2564,      0,      5       #14   51
+8          W7E2  64.2564,      0,      5      W5E1        0,      0,      5       #14   51
+
+Total Segments: 408
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       1        50.00      50.00    26       1           0         I
+
+No loads specified
+
+No transmission lines specified
+
+Ground type is Real, High-Accuracy
+
+              --------------- MEDIA ---------------
+
+No.    Cond.    Diel. Const.  Height    R Coord.
+       (S/m)                  (ft)      (ft)
+1      0.005     13           0         0
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

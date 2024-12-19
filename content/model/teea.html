@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>The Tee-Match</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">The Tee-Match:<br>
+    NEC Illusions and MININEC Realities</h1>
+  </center>
+  <p><br></p>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  Prior investigations of the Tee-Match left the impression that perhaps fat Tee bars may be more effective that thin Tee bars by yielding slightly, if not significantly, greater antenna gain in large Yagi antennas. The present modeling investigation, which shifted the modeling engine from NEC to MININEC, strongly suggests that there is no significant difference in performance in antennas using a Tee match with bars ranging from 0.5 to 1.5 times the driven element diameter.
+  <h3>The Original T-Match Problem</h3>Many months ago, I attempted to apply NEC-4 to the modeling of a Tee-match system. The original system modeled was based on a 5-element 48'-boom Yagi design by W3LPL. The modeling was done at a height of 195' over medium earth. The Tee match elements are shown in the figure.
+  <center>
+    <img src="tee2.gif" width="400" height="168" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Of all the variables investigated, the relative diameters of the Tee-match bar to the main driven element had the greatest effect on the reported antenna gain.</p>
+  <pre>Antenna without Tee-match:
+Gain:  16.1 dBi @ 5 degrees
+Beamwidth:  52 degrees (does not change)
+F-B:   23.0 dB
+Feedpoint Z:  36.3 + 16.1 ohms
+
+Antenna with 0.5" diameter 48" Tee match rod, spaced 6":
+Gain:  15.31 dBi
+F-B: 23.13
+Feedpoint Z: 262 + 87.9 ohms
+
+Antenna with 0.5" diameter 48" Tee match rod, spaced 7.5":
+Gain: 15.5 dBi
+F-B: 22.8 dB
+Feedpoint Z:  215.7 + 87.55 ohms
+
+Antenna with 2.0" diameter 48" Tee match rod, spaced 7.5":
+Gain:  16.2 dBi
+F-B: 23.0 dB
+Feedpoint Z:  196.2 + 29.9 ohms</pre>
+  <p>The variability of results, including the increases in gain with increasing diameters of Tee-match rod, raised many questions about the adequacy of the model and limitations of even NEC-4 to correctly model the T-match situation. As subsequent investigation established, at 14 MHz, spacings of elements under about 9" (with variation for changes in element diameters) yield unreliable results in NEC-4. (Matters are worse in NEC-2.). Therefore, the notes were withdrawn from circulation.</p>
+  <p>However, many questions remained. One was a nagging feeling that perhaps the ratio of the diameter of the Tee rod to the main driven element might have some effect on antenna gain, although perhaps not to the extent suggested by the NEC-4 models. The second question concerned how to model the Tee match adequately on MININEC.</p>
+  <h3>Modeling in NEC and MININEC</h3>The original model of the W3LPL 5-element Yagi with a Tee-match is not suitable for MININEC. First, the antenna is too complexly structured, as the wire table shows:
+  <pre>5-element Yagi with Tee match (2" diameter Tee rod): Freq. = 14.2  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.--- End 1 (x,y,z :in)  Conn.--- End 2 (x,y,z :in)  Dia(in) Segs
+
+1          0.000,-217.00,2340.00  W2E1   0.000,-150.00,2340.00 7.50E-01  12
+2   W1E2   0.000,-150.00,2340.00  W3E1   0.000,-117.00,2340.00 8.75E-01   9
+3   W2E2   0.000,-117.00,2340.00  W4E1   0.000,-84.000,2340.00 1.00E+00   9
+4   W3E2   0.000,-84.000,2340.00  W5E1   0.000,-33.750,2340.00 1.12E+00   9
+5   W4E2   0.000,-33.750,2340.00  W6E1   0.000, 33.750,2340.00 1.25E+00  12
+6   W5E2   0.000, 33.750,2340.00  W7E1   0.000, 84.000,2340.00 1.12E+00   9
+7   W6E2   0.000, 84.000,2340.00  W8E1   0.000,117.000,2340.00 1.00E+00   9
+8   W7E2   0.000,117.000,2340.00  W9E1   0.000,150.000,2340.00 8.75E-01   9
+9   W8E2   0.000,150.000,2340.00         0.000,217.000,2340.00 7.50E-01  12
+10        86.000,-214.00,2340.00 W11E1  86.000,-150.00,2340.00 7.50E-01  12
+11 W10E2  86.000,-150.00,2340.00 W12E1  86.000,-117.00,2340.00 8.75E-01   9
+12 W11E2  86.000,-117.00,2340.00 W13E1  86.000,-84.000,2340.00 1.00E+00   9
+13 W12E2  86.000,-84.000,2340.00 W14E1  86.000,-48.000,2340.00 1.12E+00   9
+14 W48E1  86.000,-48.000,2340.00 W15E1  86.000,-33.750,2340.00 1.12E+00   3
+15 W14E2  86.000,-33.750,2340.00 W16E1  86.000, 33.750,2340.00 1.25E+00  15
+16 W15E2  86.000, 33.750,2340.00 W17E1  86.000, 48.000,2340.00 1.12E+00   3
+17 W50E2  86.000, 48.000,2340.00 W18E1  86.000, 84.000,2340.00 1.12E+00   9
+18 W17E2  86.000, 84.000,2340.00 W19E1  86.000,117.000,2340.00 1.00E+00   9
+19 W18E2  86.000,117.000,2340.00 W20E1  86.000,150.000,2340.00 8.75E-01   9
+20 W19E2  86.000,150.000,2340.00        86.000,214.000,2340.00 7.50E-01  12
+21       171.000,-199.38,2340.00 W22E1 171.000,-135.88,2340.00 7.50E-01  12
+22 W21E2 171.000,-135.88,2340.00 W23E1 171.000,-102.88,2340.00 8.75E-01   9
+23 W22E2 171.000,-102.88,2340.00 W24E1 171.000,-69.875,2340.00 1.00E+00   9
+24 W23E2 171.000,-69.875,2340.00 W25E1 171.000,-22.000,2340.00 1.12E+00   9
+25 W24E2 171.000,-22.000,2340.00 W26E1 171.000, 22.000,2340.00 1.25E+00   9
+26 W25E2 171.000, 22.000,2340.00 W27E1 171.000, 69.875,2340.00 1.12E+00   9
+27 W26E2 171.000, 69.875,2340.00 W28E1 171.000,102.875,2340.00 1.00E+00   9
+28 W27E2 171.000,102.875,2340.00 W29E1 171.000,135.875,2340.00 8.75E-01   9
+29 W28E2 171.000,135.875,2340.00       171.000,199.375,2340.00 7.50E-01  12
+30       349.000,-196.25,2340.00 W31E1 349.000,-119.25,2340.00 7.50E-01  15
+31 W30E2 349.000,-119.25,2340.00 W32E1 349.000,-86.250,2340.00 8.75E-01   9
+32 W31E2 349.000,-86.250,2340.00 W33E1 349.000,-53.250,2340.00 1.00E+00   9
+33 W32E2 349.000,-53.250,2340.00 W34E1 349.000,-22.000,2340.00 1.12E+00   9
+34 W33E2 349.000,-22.000,2340.00 W35E1 349.000, 22.000,2340.00 1.25E+00   9
+35 W34E2 349.000, 22.000,2340.00 W36E1 349.000, 53.250,2340.00 1.12E+00   9
+36 W35E2 349.000, 53.250,2340.00 W37E1 349.000, 86.250,2340.00 1.00E+00   9
+37 W36E2 349.000, 86.250,2340.00 W38E1 349.000,119.250,2340.00 8.75E-01   9
+38 W37E2 349.000,119.250,2340.00       349.000,196.250,2340.00 7.50E-01  15
+39       570.000,-183.75,2340.00 W40E1 570.000,-131.75,2340.00 7.50E-01  12
+40 W39E2 570.000,-131.75,2340.00 W41E1 570.000,-98.750,2340.00 8.75E-01   9
+41 W40E2 570.000,-98.750,2340.00 W42E1 570.000,-65.750,2340.00 1.00E+00   9
+42 W41E2 570.000,-65.750,2340.00 W43E1 570.000,-22.000,2340.00 1.12E+00   9
+43 W42E2 570.000,-22.000,2340.00 W44E1 570.000, 22.000,2340.00 1.25E+00   9
+44 W43E2 570.000, 22.000,2340.00 W45E1 570.000, 65.750,2340.00 1.12E+00   9
+45 W44E2 570.000, 65.750,2340.00 W46E1 570.000, 98.750,2340.00 1.00E+00   9
+46 W45E2 570.000, 98.750,2340.00 W47E1 570.000,131.750,2340.00 8.75E-01   9
+47 W46E2 570.000,131.750,2340.00       570.000,183.750,2340.00 7.50E-01  12
+48 W13E2  86.000,-48.000,2340.00 W49E1  86.000,-48.000,2332.50 1.25E-01   2
+49 W48E2  86.000,-48.000,2332.50 W50E1  86.000, 48.000,2332.50 2.00E+00  21
+50 W49E2  86.000, 48.000,2332.50 W16E2  86.000, 48.000,2340.00 1.25E-01   2</pre>
+  <center>
+    <img src="tee1.gif" width="300" height="232" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The antenna has 481 segments, organized to align corresponding segments on the elements while preserving the specified lengths of each diameter of material. All modeling was done using a 48" rod and varying only the length of the driven element end sections to restore the desired 200-ohm feedpoint impedance.</p>
+  <p>MININEC is limited to 256 segment antennas. Moreover, it was anticipated that the length of the Tee-bar and the parallel section of antenna element would have to be varied, in order to achieve the desired 200-ohm feedpoint impedance. With the W3LPL model, re-segmentation would become burdensome.</p>
+  <p>I chose a different model, based on a design (520-40 in YA) by K6STI, using constant diameter (1") elements. The 5-element, 40'-boom model employed 30 segments per element. This permitted adjustments to both the main element and the Tee bar with only local re-segmentation for some models to keep segments about the same length throughout the sequence of models.</p>
+  <p>In addition, MININEC 3.13 has its own limitations. I have established that within normal spacings of a couple of inches and up at 14 MHz, MININEC exhibits none of the problem characteristics of NEC with respect to close- spaced wires. However, MININEC has difficulties with corners: it cuts them off, thus providing results of limited reliability. These difficulties can be overcome by a. using enough segments in the model to make the corner cut-off insignificant, or b. by tapering element lengths so that corner segments are small and of equal length.</p>
+  <p>I chose the former procedure, since any change of Tee bar length or driven element length would require re-tapering the entire model. A final segmentation of 30 segments per complete element, however, made the segments adjoining the Tee-bar-to-Driven-Element connectors about twice as long as the connectors themselves. This limited the intrinsic accuracy of the reported lengths, relative to what might be found in adjusting a real Tee-match. However, the internal consistencies in the modeling sequence ensured that the results would be equally self-consistent.</p>
+  <p>A further modeling issue surrounds the different implementations of MININEC. AO, by K6STI, provides a correction factor by which AO's MININEC model results coincide with those from NEC-2 without change in modeling dimensions. ELNEC, by W7EL, does not contain this factor, but it does provide a parallel-wire corrector that provides better results with close- spaced wires. Since close-spaced elements form the subject of the study, ELNEC was the program of choice. However, this forced slight changes in the model dimensions relative to a corresponding model used for NEC and AO. Nonetheless, these changes do not affect the consistency of the results reported by MININEC.</p>
+  <p>The final model, shown for only one of the Tee-match situations, is shown in the following wire table. For this model, dimensions are in feet, except for wire diameter, which is in inches.</p>
+  <center>
+    <img src="tee3.gif" width="305" height="279" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>5-element Yagi with Tee match (1" diameter Tee rod): Freq. = 14.175  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.--- End 1 (x,y,z : ft)  Conn.--- End 2 (x,y,z : ft)  Dia(in) Segs
+
+1        -17.600,  0.000,  0.000        17.600,  0.000,  0.000 1.00E+00  30
+2        -16.900,  6.000,  0.000  W3E1  -3.500,  6.000,  0.000 1.00E+00  12
+3   W8E1  -3.500,  6.000,  0.000  W4E1   3.500,  6.000,  0.000 1.00E+00   6
+4  W10E2   3.500,  6.000,  0.000        16.900,  6.000,  0.000 1.00E+00  12
+5        -15.900, 12.000,  0.000        15.900, 12.000,  0.000 1.00E+00  30
+6        -16.100, 23.580,  0.000        16.100, 23.580,  0.000 1.00E+00  30
+7        -15.250, 39.500,  0.000        15.250, 39.500,  0.000 1.00E+00  30
+8   W2E2  -3.500,  6.000,  0.000  W9E1  -3.500,  6.000,  0.500 1.00E+00   1
+9   W8E2  -3.500,  6.000,  0.500 W10E1   3.500,  6.000,  0.500 1.00E+00   7
+10  W9E2   3.500,  6.000,  0.500  W3E2   3.500,  6.000,  0.000 1.00E+00   1</pre>
+  <p>This 159-segment model proved well-suited to MININEC's capabilities. A representative free space azimuth pattern is shown for reference.</p>
+  <center>
+    <img src="tee4.gif" width="635" height="331" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I have given these modeling details for the inspection of other modelers. Like antennas themselves, antenna models must be open to critical inspection if the reported results are to be trusted.</p>
+  <h3>The Results: Fat and Thin Tees are of Equal Value</h3>The only changes among models in the following sequence are alterations of the driven element length, the Tee bar length and diameter, and the segmentation of the driven element to maintain a constant segment length to the degree possible. Therefore, a tabular presentation of the data seems most efficient. All models are in free space. Length dimensions are in feet. Except for the reference model, all models are distinguished by the diameter of the Tee bar.
+  <pre>Model          D.E.      Tee       Gain      F-B       Feed Z
+               Length    Length    dBi       dB        R+/-jX
+Reference      33.20'    ----      9.827     22.15      25.5 - j0.96
+T-0.5          34.10'    8.40'     9.855     21.71     209.7 + j0.85
+T-0.75         33.90'    7.50'     9.789     21.81     210.7 + j1.36
+T-1.0          33.80'    7.00'     9.817     21.86     209.7 + j2.49
+T-1.25         33.80'    6.80'     9.832     21.86     198.6 - j1.27
+T-1.50         33.70'    6.50'     9.853     21.92     205.2 + j1.41</pre>
+  <p>In compiling these results, the reference antenna had its driven element divided into three wires, corresponding to those used in models having the Tee bar. The results are insignificantly different from a model that used a continuous driven element.</p>
+  <p>The gain reports are given to 3 decimal places to demonstrate how truly insignificant the differences are among the models. Re-segmenting Tee bar and the driven element at borderline cases (around 7') creates a higher degree of change in reported gain than changing the Tee bar diameter--at the extremes no more than 0.066 dB in the above table. Compare this to the full dB of difference in the NEC models. Likewise, front-to-back ratio changes by a maximum of 0.44 dB among the models.</p>
+  <p>The Tee bar length undergoes a different set of changes than with the W3LPL model (used for the original NEC studies), which had a pre-match feedpoint impedance in the vicinity of 40 ohms. Driven element lengths correctly show the requisite lengthening to provide the necessary inductive reactance for the Tee-match system.</p>
+  <p>Increasing the segmentation does alter all of the figures shown. The progression from 10 to 20 to 30 segments per element shows no abatement in the changes, which suggests that final convergence of the models has not been achieved and is unlikely to be achieved within MININEC's limits. However, operationally, the gain varies by less than 0.05 dB and the front- to-back ratio varies by less than 0.6 dB across this range of segmentation for any particular model. Only the feedpoint impedance changes by amounts calling for adjustment of the model. Therefore, the models shown are considered to be reliable indicators of gain and front-to-back ratio for the range of Tee bar diameters covered.</p>
+  <p>There is some small indication that further increases in the diameter of the Tee bar may indeed increase gain, but only in very small amounts. If the Tee bar is raised to twice the diameter of the main driven element, the gain reports as 9.882, which forms a progression of sorts on the high side of the chart. However, for an amount that is truly undetectable in operation, one acquires an ungainly mechanical construction problem.</p>
+  <p>At the other end of the scale, reducing the Tee-bar to 1/4 the diameter of the main element appears to approach an area where the lengths of both the bar and of the main element become critical, which translates into highly finicky adjustment. It is possible that the modeling may be trickier than the actual antenna. However, the following general proposition applies: the greater the diameter of the Tee bar, the broader and easier the adjustment.</p>
+  <h3>Conclusion</h3>NEC-4 models of the Tee-match system, when applied to a high gain antenna like the 5-element Yagi, are quite erroneous in their gain reports. Despite its limitations, MININEC gives every appearance of producing more reliable modeling results for this close-spaced structure.
+  <p>For the range of ratios of Tee bar to driven element (0.5 to 1.5), MININEC gives no indication that any particular ratio is better or worse than any other. Variations in the reported figures are insignificantly different in all respects, especially given the limitations of the models and the program.</p>
+  <p>The net result is this: within reason (+/- 50% of the main element diameter), any size Tee bar may be used with any size element with no change in antenna performance.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 1-7-98. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

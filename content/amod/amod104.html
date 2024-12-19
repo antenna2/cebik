@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PS: I Change</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>104. PS: I Change</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Suppose that we create a model of a ground-plane monopole with 4 radials. Let's use 7.15 MHz as the test frequency. The monopole will be 10.071 m long and 0.0125 m in radius. The radials will be 11.57 m long and 0.002 m in radius. We shall equip the model with a GM line so that we can readily change the height of the antenna assembly over ground, using the radials as the base height.</p>
+  <pre>
+CM monopole 7.15 MHz 25-mm dia.
+CM over ave gnd
+CM 90-deg radials
+CE
+GW 1 11 0 0 0 0 0 10.071 .0125
+GW 2 11 11.57 0 0 0 0 0 .002
+GM 1 3 0 0 90 0 0 0 2 1 2 11
+GM 0 0 0 0 0 0 0 83.858
+GE -1 -1 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 1 0 1 0
+FR 0 1 0 0 7.15 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The model might begin as high as 2 wavelengths over ground (using the constants for average ground in this case). However, we shall be interested in lower heights, down to and including placing the radials below ground. We shall have to change the model design just slightly to accommodate NEC-4 guidelines that require a wire or segment junction at Z=0. One easy way to achieve this is to run the monopole down to the ground. Then let the innermost segment of each radial slope from Z=0 down to the radial level. The remaining radials segments form a flat plane. The radials are 0.001 wavelength below ground, about 0.042 m or 1.65".</p>
+  <pre>
+CM monopole 7.15 MHz 25-mm dia.
+CM buried radials .001 wl
+CM 90-deg radials
+CE
+GW 1 11 0 0 0 0 0 10.071 .0125
+GW 2 1 1.05 0 -.042 0 0 0 .002
+GW 2 10 11.57 0 -.042 1.05 0 -.042 .002
+GM 1 3 0 0 90 0 0 0 2 1 2 11
+GE -1 -1 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 1 0 1 0
+FR 0 1 0 0 7.15 1
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>If we plot the data for models as they approach and then penetrate ground, we obtain an interesting set of discontinuities. All data use the usual units of measure.</p>
+  <pre>
+4-Radial 90-Degree Ground-Plane Monopole From 2-WL Up to Below Ground: Performance with Various Ground Types
+Free-Space Reference Performance        Monopole: Len 10.071 m, Radius 0.0125 m         Freq.: 7.15 MHz
+Rad-L m     Rad-R m     Gain dBi     Bmwidth     Resist     React
+11.57       0.002       1.35         102         21.34      0.06
+Ground Type             Average: C 0.005, P 13
+Height wl     Height m     Gain dBi     TO Angle     Resist     React
+0.1           4.193        0.24         70           24.35      -4.84
+0.05          2.096        0.10         67           28.64      -3.48
+0.025         1.048       -0.04         65           31.75       0.22
+0.01          0.419       -0.22         64           34.64       7.85
+0.005         0.210       -0.38         64           36.52      16.53
+0.001         0.042       -1.37         64           47.26      52.34
+-0.001       -0.042       -2.37         64           64.75       7.98
+-0.005       -0.21-       -2.49         64           66.25      10.30
+</pre>
+  <p>Note that as we enter the ground, the gain drops rapidly. More significantly, the feedpoint impedance changes considerably. If we add more radials, the transition will be less extreme, but the 4-radial model makes a useful tool, if for no other reason than to arouse a bit of curiosity.</p>
+  <p><b>Fig. 1</b> shows the relative current magnitude along the vertical monopole and along 2 of the 4 radials forming the ground plane. The model showing the current distribution is in free space, but any model having all of its wires above ground would show the same set of characteristics. I have set the maximum monopole current on the 4th segment of the radial as a marker. Note that the maximum radial current is just above the first monopole segment, indicating that we have very close to equal currents on the radials and on the monopole. Of course, each radial carries 1/4 of the total current below the feedpoint.</p>
+  <center>
+    <img src="amod104-1.gif" width="570" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Both current curves have very similar shapes. However, current magnitude does not tell us the complete story. The following list shows both the relative current magnitude and the current phase angle based on a source current of 1.0 at 0&deg;. If we count upward on the monopole to the 5th entry, we find a magnitude of 0.81245. The corresponding entry for the radial, counting downward, is 0.21420, very close to the 1/4 wavelength monopole value. As well, note the similarity of current-phase value at the monopole top and the radial end. Remember that the radial has a much smaller radius than the monopole.</p>
+  <pre>
+Monopole                       Radial
+Magnitude (A.)  Phase (Deg.)   Magnitude (A.)  Phase (Deg.)
+.09260          -2.93          .25147          -0.08
+.24609          -2.71          .24966          -0.27
+.38339          -2.49          .24298          -0.43
+.50941          -2.26          .23114          -0.56
+.62371          -2.01          .21420          -0.67
+.72512          -1.75          .19237          -0.78
+.81245          -1.47          .16600          -0.89
+.88456          -1.17          .13553          -0.99
+.94034          -0.82          .10146          -1.09
+.97902          -0.42          .06417          -1.19
+1.0000           0.00          .02318          -1.29
+</pre>
+  <p>If we lower the antenna so that the radials are below ground, we shall have to modify the model slightly. The monopole will just touch the ground. The radial wires will have 2 sections. The innermost segment will slope from ground level at the monopole base down to 0.001 wavelength below ground (about 0.042 m or 1.65"). The remaining segments will extend to 11.57 m to produce the same total length as the radials in the above-ground model. <b>Fig 2</b> shows the model and the relative current magnitudes, followed by a tabular listing of magnitudes and phase angles.</p>
+  <center>
+    <img src="amod104-2.gif" width="570" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>
+Monopole                       Radial
+Magnitude (A.)  Phase (Deg.)   Magnitude (A.)  Phase (Deg.)
+.09286          -6.00          .24242          -7.83
+.24693          -5.66          .21041          -28.95
+.38486          -5.30          .17479          -51.49
+.51154          -4.90          .14094          -73.58
+.62647          -4.47          .11038          -95.00
+.72839          -3.99          .08337          -115.4
+.81606          -3.44          .05966          -134.6
+.88806          -2.81          .03914          -152.5
+.94333          -2.06          .02223          -170.1
+.98087          -1.10          .00972          170.08
+1.0000           0.00          .00222          139.95
+</pre>
+  <p>Since the models differ very slightly in construction due to the need to develop subsurface radials, the monopole current magnitudes are very close, but not identical, to the values for the preceding model. However, we do find a difference in the current phase angle range. For identical source values (1.0 A. at 0&deg;), the preceding model tip current phase angle was only -2.93&deg;, whereas the model with buried radials has a tip-segment phase angle of -6.0&deg;. The above-ground model is a free-space version of the antenna with a source impedance of 21.35 + j0.07 Ohms. The model with buried radials uses average ground (C 0.005 S/m, P 13) and reports a source impedance of 64.69 - j 7.84 Ohms.</p>
+  <p>The differences between the radial currents for the above-ground and the buried radial models are far more dramatic. Visually, the radial curve differs by rapidly decreasing in current magnitude as we move from the hub outward. The table confirms the curve. At the 5th entry upward, the monopole shows a value of 0.81606, while the corresponding radial entry shows a value of 0.11038, only half the magnitude for that position on the above-ground radial. The current phase changes along the buried radial are far more radical than those along the above-ground radial. One NEC convention is to maintain all phase reports in the 0&deg;-180&deg; range. The outer-most value is equivalent to a value of -220.05&deg;, about 214&deg; out of phase with the tip of the monopole. Note that these values are not true tip values, but the values at a position roughly comparable to the center of the relevant wire segments in the models.</p>
+  <p>The comparison makes clear that the common above-ground portions of the two antennas yield essentially the same current distribution. However, the parts that move from above ground to below ground change their current distribution. Most modelers seem to be wholly unaware of this phenomenon. So it bears some exploration. Let's begin by reviewing some fundamentals about NEC's treatment of ground.</p>
+  <p>For any given ground quality, we measure (or find in some table) values for conductivity (sigma) and relative permittivity (epsilon-r). Relative permittivity rests on the permittivity in free space (epsilon-0). Essentially, the program combines the listed values for conductivity and permittivity into a complex relative permittivity (epsilon-g):</p>
+  <center>
+    <img src="amod104e1.gif" width="180" height="34">
+  </center>
+  <p>The term f is the frequency in Hz. As f changes, so too does the value of epsilon-g. Therefore, the effects of ground on buried-radial ground-plane antenna performance vary with conductivity, permittivity, and frequency.</p>
+  <p>NEC also calculates another value called ks, the wave number in the sinusoidal current expansion in NEC. This value applies to any wire within a medium other than free-space (or a vacuum). Hence, it applies to all insulated wires and to any wires below ground level (assuming that a real ground is operative in the model). The value of ks modifies the length of a wave for the calculation of current along a wire. Hence,</p>
+  <center>
+    <img src="amod104e2.gif" width="108" height="25">
+  </center>
+  <p>The current-propagation wave number has the effect of lengthen every applicable segment with respect to current calculations. The exact amount of lengthening depends upon the frequency and ground constants that the modeler selects.</p>
+  <p>We can easily determine the effect of the wave number on segment length by employing the PS command in NEC-4. The command requires only the command letters, with no following numerical entries. In fact, we can perform segment-length adjustment calculations without further model execution by following the PS command with EN, as in the following sample model. The model contains all of the GW, GN, FR, and EX elements to form a complete model, except that it lacks an output request other than the PS command. Hence, calculations stop after the PS command has done its work.</p>
+  <pre>
+GW 1 11 0 0 0 0 0 10.067 .0125
+GW 2 10 10.4823 0 -.04193 .953 0 -.04193 .002
+GW 2 1 .953 0 -.04193 0 0 0 .002
+GM 1 3 0 0 90 0 0 0 2 1 2 11
+GE -1 -1 0
+GN 2 0 0 0 13 .005
+EX 0 1 1 0 1 0
+FR 0 1 0 0 7.15 1
+PS
+EN
+</pre>
+  <p>Although the report in the NEC output file shows the value of ks, we may confine our attention to the effects on segment lengths. I ran models of 160-m and 40-m ground-plane monopoles with 4 buried radials through the PS command, using 3 diverse ground-quality values, those for very good (C 0.0303 S/m, P 20), for average (C 0.005 S/m, P 13), and for very poor (C 0.001 S/m, P 5) soil. I also ran the same model in free space to illustrate how much wire values change as we bury the radials. Note that in the following lists, all values are normalized to fractions of a wavelength. As well, I converted the entries from engineering to decimal notation. In both cases, the monopole physical segment length is 0.02183 wavelength with a physical radius of 0.000298 wavelength.</p>
+  <pre>
+Radial Segment Length and Radius
+Frequency        Soil Quality           Segment Length          Segment Radius
+1.85 MHz         None                   0.02273 WL              0.0000477 WL
+                 Very Good              0.3904                  0.0008194
+                 Average                0.1612                  0.0003383
+                 Very Poor              0.0713                  0.0001577
+7.15 MHz         None                   0.02273 WL              0.0000477 WL
+                 Very Good              0.2017                  0.0004233
+                 Average                0.09664                 0.0002028
+                 Very Poor              0.05376                 0.0001128
+</pre>
+  <p>To extract a simple example from the listing, the 7.15-MHz average-ground segment length is about 4.3 times the physical length, that is, the length in free-space when normalized to a fraction of a wavelength. With respect to current expansion, the radial point corresponding to the 5th monopole entry in the earlier model (<b>Fig. 4-2</b>) actually lies just inside the second segment, where we find a current magnitude of about 0.21. However, notice that the radius increases to the same degree, resulting in what appears to be a more rapid change of current phase angle. Since the current does not go to zero until we reach the radial tip, most of the table entries for the buried radial show very low values compared to the free-space model.</p>
+  <p>The NEC-4 manual recommends that we use lambda-s as the basis for calculating segment lengths for any wire within a medium other than free space, where free space includes any region above a real ground. Examining the PS command report shows that the calculated segment length for current expansion along a buried radial no longer agrees with the segment length for the monopole that is above ground. The segment-length difference appears at one end of the source segment, suggesting a possible error source in the model. The AGT cannot show this potential error, since the test uses free space as its venue. So the next question is what degree of error we might expect from not adjusting the segment length in accord with the value of lambda-s.</p>
+  <p>To obtain a sense of what error might be possible, I used the 40-m monopole and ran it in two forms, using very good, average, and very poor soil. The first run used the standard segmentation of the sloping-radial construction with a total of 11 segments per radial. The following lines sample the model over average ground.</p>
+  <pre>
+GW 1 11 0 0 0 0 0 10.067 .0125
+GW 2 10 10.4823 0 -.04193 .953 0 -.04193 .002
+GW 2 1 .953 0 -.04193 0 0 0 .002
+GM 1 3 0 0 90 0 0 0 2 1 2 11
+GE -1 -1 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 1 0 1 0
+FR 0 1 0 0 7.15 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>Next, I adjusted the number of segments in the radial entries (GW2) so that the calculated segment length for current expansion would more evenly match the monopole segment length. Again, here is a sample over average ground. Note the use of the PS command to allow confirmation of the segmentation.</p>
+  <pre>
+GW 1 11 0 0 0 0 0 10.067 .0125
+GW 2 40 10.4823 0 -.04193 .953 0 -.04193 .002
+GW 2 4 .953 0 -.04193 0 0 0 .002
+GM 1 3 0 0 90 0 0 0 2 1 2 44
+GE -1 -1 0
+GN 2 0 0 0 13 .005
+EX 0 1 1 0 1 0
+FR 0 1 0 0 7.15 1
+PS
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>For the adjusted models, the outlines in <b>Fig. 3</b> show the distribution of segments between the sloping and the straight portion of the radials. The monopole, of course, remains unchanged. The look of the model outline represents the physical dimensions and not the electrical length of segments as calculated by NEC for use in the current expansion.</p>
+  <center>
+    <img src="amod104-3.gif" width="800" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From the total of 6 models, I obtained the following results. The entries showing 11 segments per radial represent the unaltered models. The alternate model segment numbers represent values that yield calculated segment lengths about equal to those in the monopole.</p>
+  <pre>
+7.15-MHz Ground-Plane Monopole with 4 Buried Radials
+Soil Quality        Segments/Radial        Gain dBi         Source Impedance
+Very Poor           11                     -4.24            88.94 + 29.22 O
+                    26                     -4.13            86.63 + j26.22
+Average             11                     -2.36            64.60 + j7.29 O
+                    46                     -2.35            64.44 + j4.28
+Very Good           11                     0.46             50.91 + j8.19
+                    98                     0.24             53.53 + j5.75
+</pre>
+  <p>None of the possible error differences are either fatal or unambiguous. For example, the amount of difference is greatest for the antenna over very good soil, but so too is the increase in the radial wire radius. The calculated radius is greater than the monopole radius. In some instances, using the calculated values of segment length and radius as a basis for adjustment may lead to an impossible conflict among NEC guidelines. For precision work, the problem would require considerable thought before finalizing a model. However, for general guidance in determining trends and rough properties, using unaltered models with 11 segments per radial will largely suffice. Remember that NEC ground systems have other limitations. For example, they presume a homogenous ground from horizon to horizon and from the surface downward. In many cases, the actual ground will be stratified, and the exact values of conductivity may not be measurable to the depth of RF penetration.</p>
+  <p>Within the context of NEC models using buried radials, the exercise does provide a foundation for understanding the different current distributions that we find in those radials, relative to above-ground models.</p>
+  <p><b>A Note on IS and PS</b></p>
+  <p>Because the IS or insulated sheath command also places a non-free-space medium around a specified wire, NEC-4 will adjust the segment lengths and radii for implementing the current expansion. Out of curiosity, you may invoke the PS command in trial models to see what happens. Let's begin with a simple dipole for 7.15 MHz using a 0.001-m radius wire.</p>
+  <pre>
+CM 7.15-MHz dipole in free space
+CM Radius 0.001 m
+CE
+GW 1 21 0 -10.2 0 0 10.2 0 .001
+GE
+FR 0 1 0 0 7.15 1
+EX 0 1 11 0 1 0
+PS
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>With a length of 20.4 m, the dipole is resonant, showing a source impedance of 70.11 - j0.08 Ohms. The free-space gain of this lossless wire is 2.14 dBi.</p>
+  <p>Next, let's add an IS command to place an insulating sheath around the wire. We shall use a high-quality plastic with a relative permittivity of 3 and a conductivity of 1E-10. The insulation will be 2-mm thick, resulting in a sheath radius of 0.003 m (around the 0.001-m radius wire). An insulation thickness that equals the wire diameter might fall into the relatively heavy insulation category, although thicker insulations certainly exist.</p>
+  <pre>
+CM 7.15-MHz dipole in free space
+CM Radius 0.001 m
+CM insulated
+CE
+GW 1 21 0 -9.726 0 0 9.726 0 .001
+GE
+IS 0 1 1 21 3 1e-10 .003
+FR 0 1 0 0 7.15 1
+EX 0 1 11 0 1 0
+PS
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>To obtain resonance we must shorten the antenna to 95.4% of its bare-wire form. The source impedance reports 66.34 - 0.04 Ohms and a free-space gain of 2.11 dBi.</p>
+  <p>Note that both models implement the PS command, since it takes so little run time and report space. However, only the report for the insulated wire model is relevant to satisfy our curiosity. If we explore the PS portion of the report, we encounter some entries in normalized form, that is, expressed as fractions of a wavelength. These values are for the adjusted segment length and adjusted wire radius. We must calculate the normalized physical dimensions by dividing the physical segment length and radius by 41.92902 m, a wavelength at 7.15 MHz. Now we can compare the results within the limits expressed by the report entries.</p>
+  <pre>
+Insulated 7.15-MHz Dipole
+                                              Segment Length     Segment Radius
+Normalized Physical Dimensions                2.209E-2           2.385E-5
+Adjusted Dimensions for Current Expansion     2.209E-2           2.385E-5
+</pre>
+  <p>Within reporting limits, there is no difference in the values, although the effects of the insulation show up in the performance reports. However, the extent of the medium change is so small, that for all practical purposes, the modeler can ignore any segment length changes and use the same segmentation as he or she used for a bare wire model.</p>
+  <p>If the modeler specifies an upper medium (UM), usable only with the RCA ground system, the situation would be similar to specifying a ground, but apply to the region formerly treated as a vacuum or free-space. Under those conditions, application of the PS command in order to evaluate overall model segmentation is certainly in order.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

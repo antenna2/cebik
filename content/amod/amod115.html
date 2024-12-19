@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Single, Bifilar, and Quadrifilar Helices</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>115. Single, Bifilar, and Quadrifilar Helices</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Every so often, someone asks me if I have a sample file for a bifilar or a quadrifilar helix. Such helices are subject to numerous variations in mounting, connections, and feeding. Hence, rather than simply show a sample file, it may be useful to examine at least two ways in which we can create these antenna structures. In the following notes, we shall look at a version in which every segment appears as a separate wire and at a version that uses some of the "summary" or "global" geometry structure commands available in NEC-2 and NEC-4.</p>
+  <p>All helices within these notes will use a single set of specifications. The helix turns will have a radius of 1 meter. The turns will be separated by 1 meter, and we shall use 3 turns, for a total helix length of 3 meters. Throughout, there will be 20 segments per turn to simulate within reasonable boundaries a continuously nearly circular structure. The wire diameter will be 1 mm (0.001 m), which gives us a wire radius of 0.5 mm (0.0005 m). The importance of giving both the diameter and the radius will become apparent as we proceed through the methods that we shall explore.</p>
+  <p><b>A Review of Single-Helix Models using GH</b></p>
+  <p>In episodes 62 and 63 of this series, we explored in some depth the use of the GH command to form a helix. In those episodes, we noted that the GH command was a later addition to NEC-2 and may differ according to the version you might be using. To form a single helix having the requisite specifications in the version of the command used by NEC-Win Pro, we can employ the help screen shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod115-1.gif" width="465" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Several items are worth reviewing. The NEC-2 GH command requests a user specification of the spacing between turns and the total helix length, from which it calculates the number of turns. The helix uses a single wire radius throughout. The basic helix begins at Z=0 and progresses upward, with the first radius point along the X-axis. The basic helix orientation is right-handed. To create a left-handed helix, we would make the total length entry negative. The resulting model, carried only as far as the GE line plus a frequency entry, looks like the following lines.</p>
+  <pre>
+CM Single helix-nec-2
+CE
+GH 1 60 1 3 1 1 1 1 .0005
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>In NEC-4, the GH command changes its form, and the help screen in GNEC for our current structure appears in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod115-2.gif" width="465" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In NEC-4, we specify the number of turns (with fractional turns possible) and the total length of the helix; the command then calculates the space required for each turn. NEC-2 had offered us separate radii for the X- and the Y-axes, but NEC-4 employs a uniform radius. In part, this change results from the desire to give the user a choice between log and Archimedes spirals. Our simple structure uses the uniformly spaced Archimedes spiral. Like the NEC-2 helix, the NEC-4 version begins at Z=0 with the first radius point along the X-axis. However, to form a left-hand helix in NEC-4 requires that we use a negative numbers for the number of turns. The resulting NEC-4 model of the basic single helix appears in the following lines.</p>
+  <pre>
+CM Single helix-nec-4
+CE
+GH 1 60 3 3 1 1 .0005 .0005 1
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>In both cases, we entered the total number of turns in the helix, allowing the command to distribute them among the individual turns. <b>Fig. 3</b> shows the conventionalized outline of the helix that we created with the 2 versions of the GH command. The sketch includes segment markers to allow counting. More significantly, the sketch provides the reason why I chose the specifications for the sample model: they provide a very open structure so that we can hope to see the details of more complex helical arrangements.</p>
+  <center>
+    <img src="amod115-3.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A few reminders may be in order here. Foremost is one that even some experienced modelers forget. Even though the model structure shown in the sample model files has no excitation or output request, we can still run the model and obtain an output report. The first lines of this report appear in <b>Table 1</b>.</p>
+  <center>
+    <img src="amod115-t1.gif" width="875" height="140" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The output report is very useful for checking the correctness of our geometry entries. The lines replicate the instructions that we thought we gave the command (and sometimes, we do transpose numbers, mis-strike a key, etc.). As well, the NEC-4 GH command yields the total wire length in the helix, a useful piece of data for someone planning to build what he or she models.</p>
+  <p>The GH command is not the only way to form a single helix. For example, EZNEC provides a helix-formation facility that will produce a segment-by-segment models. Its version of the single helix in our example will have 60 wires.</p>
+  <p>If we wish to alter the position of either of our two sample models, we may employ the GM command. However, since this exercise will never get around to adding a source or an output request to the structural entries, we can leave the basic position alone. Besides, we shall have another use for the GM command. While we can employ as many GM commands as we need--so long as we use them in the correct order--minimizing other uses of them will make our fundamental use clearer.</p>
+  <p><b>A Bifilar Helix</b></p>
+  <p>There are several ways to form a bifilar helix. We shall give primary attention to two techniques. The first uses a program that creates geometry structures called NEC-Win Synth. Among the program's preset shapes is a bifilar helix. All that we need to do is to enter the critical data about the helix, namely our specifications from the beginning of these notes. <b>Fig. 4</b> shows the specification screen.</p>
+  <center>
+    <img src="amod115-4.gif" width="377" height="308" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The data are the same that we used to generate a single helix. Although the program offers the option of using the wire diameter or the wire radius, it happens to be set in the diameter mode. That fact explains why I gave both values in the beginning. Since the helix values are by now quite familiar, we can see what our creation looks like in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod115-5.gif" width="359" height="359" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The screen is part of the Synth program, which places the origin of the axes at the base of the created structure. Note that like the single helix, one of our double-helix starting points is along the X-axis. The program produces a wire-by-wire model in its own format, but you may save the structure file in the standard .NEC format for use in either NEC-2 or NEC-4. The model is incomplete as it emerges from Synth. It contains only the geometry structure and a frequency specification. You must add all other desired elements from within NEC-2 or NEC-4. The geometry section alone will contain 120 GW entries, as suggested by the following partial replication of the model.</p>
+  <pre>
+CM Bifilar helix from NEC-Win Synth 1.0
+CE
+GW 1 1 1.00000 0.00000 0.00000 0.95106 0.30902 0.05000 0.00050
+GW 2 1 0.95106 0.30902 0.05000 0.80902 0.58779 0.10000 0.00050
+GW 3 1 0.80902 0.58779 0.10000 0.58779 0.80902 0.15000 0.00050
+GW 4 1 0.58779 0.80902 0.15000 0.30902 0.95106 0.20000 0.00050
+GW 5 1 0.30902 0.95106 0.20000 0.00000 1.00000 0.25000 0.00050
+GW 6 1 0.00000 1.00000 0.25000 -0.30902 0.95106 0.30000 0.00050
+GW 7 1 -0.30902 0.95106 0.30000 -0.58779 0.80902 0.35000 0.00050
+GW 8 1 -0.58779 0.80902 0.35000 -0.80902 0.58779 0.40000 0.00050
+GW 9 1 -0.80902 0.58779 0.40000 -0.95106 0.30902 0.45000 0.00050
+GW 10 1 -0.95106 0.30902 0.45000 -1.00000 0.00000 0.50000 0.00050
+GW 11 1 -1.00000 0.00000 0.50000 -0.95106 -0.30902 0.55000 0.00050
+GW 12 1 -0.95106 -0.30902 0.55000 -0.80902 -0.58779 0.60000 0.00050
+GW 13 1 -0.80902 -0.58779 0.60000 -0.58779 -0.80902 0.65000 0.00050
+GW 14 1 -0.58779 -0.80902 0.65000 -0.30902 -0.95106 0.70000 0.00050
+GW 15 1 -0.30902 -0.95106 0.70000 0.00000 -1.00000 0.75000 0.00050
+GW 16 1 0.00000 -1.00000 0.75000 0.30902 -0.95106 0.80000 0.00050
+GW 17 1 0.30902 -0.95106 0.80000 0.58779 -0.80902 0.85000 0.00050
+GW 18 1 0.58779 -0.80902 0.85000 0.80902 -0.58779 0.90000 0.00050
+GW 19 1 0.80902 -0.58779 0.90000 0.95106 -0.30902 0.95000 0.00050
+---
+GW 110 1 0.95106 -0.30902 2.45000 1.00000 0.00000 2.50000 0.00050
+GW 111 1 1.00000 0.00000 2.50000 0.95106 0.30902 2.55000 0.00050
+GW 112 1 0.95106 0.30902 2.55000 0.80902 0.58778 2.60000 0.00050
+GW 113 1 0.80902 0.58778 2.60000 0.58779 0.80902 2.65000 0.00050
+GW 114 1 0.58779 0.80902 2.65000 0.30902 0.95106 2.70000 0.00050
+GW 115 1 0.30902 0.95106 2.70000 0.00000 1.00000 2.75000 0.00050
+GW 116 1 0.00000 1.00000 2.75000 -0.30902 0.95106 2.80000 0.00050
+GW 117 1 -0.30902 0.95106 2.80000 -0.58778 0.80902 2.85000 0.00050
+GW 118 1 -0.58778 0.80902 2.85000 -0.80902 0.58779 2.90000 0.00050
+GW 119 1 -0.80902 0.58779 2.90000 -0.95106 0.30902 2.95000 0.00050
+GW 120 1 -0.95106 0.30902 2.95000 -1.00000 0.00000 3.00000 0.00050
+GS 0 0 1.000000
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>You may arrive at a virtually identical model in EZNEC with only a few steps. The first would be to create a single helix to the desired specifications. The program will produce a 60-wire structure in the Wires table. Next, you may copy the wires just produced and then rotate them 180 degrees in either a clockwise or counterclockwise around the Z axis. There are also functions for moving and rotating all 120-waires of the structure so that it ends up where and how you want it in the model.</p>
+  <p>An alternative procedure that uses up much less model-file space uses the commands within NEC. Essentially, if we begin with the NEC-2 helix shown earlier, we need only use the GM command to rotate the helix by 180 degrees while replicating it once. The NEC-2 GM help screen appears in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod115-6.gif" width="507" height="359" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The total NEC-2 model (so far) is somewhat shorter than the Synth or EZNEC models.</p>
+  <pre>
+CM Bifilar helix-nec-2
+CE
+GH 1 60 1 3 1 1 1 1 .0005
+GM 1 1 0 0 180 0 0 0
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>The GM portion of the process when using NEC-4 looks almost exactly like the NEC-2 version, as suggested by the GM help screen for that core in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod115-7.gif" width="507" height="359" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For our present needs, which only require us to replicate the entire original structure--with the half-twist--the screens of NEC-2 and NEC-4 are alike. However, had we wished to manipulate partial structures, NEC-2 would have allowed us to specify only complete tags. NEC-4 allows specification of start and stop tag and segment numbers. The difference lies in what does not appear in the lower left corner of each help screen. Had we used the start-stop option, the following NEC-4 model would not have a GM line that looks so much like the corresponding NEC-2 line.</p>
+  <pre>
+CM Bifilar helix-nec-4
+CE
+GH 1 60 3 3 1 1 .0005 .0005 1
+GM 1 1 0 0 180 0 0 0
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>The results of using GM on the initial GH line in either NEC-2 or NEC-4 produces a bifilar helix with the appearance of <b>Fig. 8</b>.</p>
+  <center>
+    <img src="amod115-8.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although I have tipped the axes in a slightly different manner than I did in <b>Fig. 5</b>, the GH-GM combination produces a bifilar helix with the same structure and orientation as the one that emerged from NEC-Win Synth. Since I have omitted the segment markers, the verification that all is well requires that we run the partial model and check the data in the NEC output file. <b>Table 2</b> gives us the opening lines.</p>
+  <center>
+    <img src="amod115-t2.gif" width="878" height="172" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The bottom line of this section of the report tells us that we have a 120-segment structure, just as planned, while the antenna sketch from the program tells us that we have opposing helices. The output report goes on to provide data on each segment within the 2-tag model, allowing us to correlate the two helices point by point. However, the NEC output report lists the coordinates at the center of each segment. In the programs used here, you would have to look at the antenna view facilities to identify the coordinates at each end of each segment, just in case you later wished to connect another wire to the structure, even at the top or the bottom.</p>
+  <p>Note that none of the techniques that we have examined joins any of the helix ends. If you wish to create a connection, you will have to add a wire having the correct end coordinates.</p>
+  <p><b>A Quadrifilar Helix</b></p>
+  <p>We can easily create a quadrifilar helical structure using either of the techniques shown so far. The quadrifilar helix consists of 4 identical single helices separated by 90 degrees. In NEC-Win Synth, the process is as simple as selecting the correct pre-set shape from the list and then entering the vital specifications. <b>Fig. 9</b> shows the specifications screen for the quadrifilar helix.</p>
+  <center>
+    <img src="amod115-9.gif" width="337" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Compare the data entries for <b>Fig. 9</b> with those for <b>Fig. 4</b>. Nothing has changed except the output. As shown in <b>Fig. 10</b>, the structure now has 4 helices as requested. Like the bifilar structure, the top is open, so you will have to add crossing (usually non-touching) wires to close the upper end.</p>
+  <center>
+    <img src="amod115-10.gif" width="370" height="359" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since we now have 4 inter-laced helices, the spacing between adjacent turns has shrunk accordingly. However, the individual helices are all identical to the original single helix with which we began.</p>
+  <p>The Synth version (or an EZNEC version) of the quadrifilar helix with the initial specifications will have 240 wire entries, even before adding any connecting wires. The following lines sample the beginning and the ending of the geometry section of the model.</p>
+  <pre>
+CM Quadrifilar helix from NEC-Win Synth 1.0
+CE
+GW 1 1 1.00000 0.00000 0.00000 0.95106 0.30902 0.05000 0.00050
+GW 2 1 0.95106 0.30902 0.05000 0.80902 0.58779 0.10000 0.00050
+GW 3 1 0.80902 0.58779 0.10000 0.58779 0.80902 0.15000 0.00050
+GW 4 1 0.58779 0.80902 0.15000 0.30902 0.95106 0.20000 0.00050
+GW 5 1 0.30902 0.95106 0.20000 0.00000 1.00000 0.25000 0.00050
+GW 6 1 0.00000 1.00000 0.25000 -0.30902 0.95106 0.30000 0.00050
+GW 7 1 -0.30902 0.95106 0.30000 -0.58779 0.80902 0.35000 0.00050
+GW 8 1 -0.58779 0.80902 0.35000 -0.80902 0.58779 0.40000 0.00050
+GW 9 1 -0.80902 0.58779 0.40000 -0.95106 0.30902 0.45000 0.00050
+GW 10 1 -0.95106 0.30902 0.45000 -1.00000 0.00000 0.50000 0.00050
+GW 11 1 -1.00000 0.00000 0.50000 -0.95106 -0.30902 0.55000 0.00050
+GW 12 1 -0.95106 -0.30902 0.55000 -0.80902 -0.58779 0.60000 0.00050
+GW 13 1 -0.80902 -0.58779 0.60000 -0.58779 -0.80902 0.65000 0.00050
+GW 14 1 -0.58779 -0.80902 0.65000 -0.30902 -0.95106 0.70000 0.00050
+GW 15 1 -0.30902 -0.95106 0.70000 0.00000 -1.00000 0.75000 0.00050
+GW 16 1 0.00000 -1.00000 0.75000 0.30902 -0.95106 0.80000 0.00050
+GW 17 1 0.30902 -0.95106 0.80000 0.58779 -0.80902 0.85000 0.00050
+GW 18 1 0.58779 -0.80902 0.85000 0.80902 -0.58779 0.90000 0.00050
+GW 19 1 0.80902 -0.58779 0.90000 0.95106 -0.30902 0.95000 0.00050
+---
+GW 229 1 0.58779 0.80902 2.40000 0.30902 0.95106 2.45000 0.00050
+GW 230 1 0.30902 0.95106 2.45000 0.00000 1.00000 2.50000 0.00050
+GW 231 1 0.00000 1.00000 2.50000 -0.30902 0.95106 2.55000 0.00050
+GW 232 1 -0.30902 0.95106 2.55000 -0.58778 0.80902 2.60000 0.00050
+GW 233 1 -0.58778 0.80902 2.60000 -0.80902 0.58779 2.65000 0.00050
+GW 234 1 -0.80902 0.58779 2.65000 -0.95106 0.30902 2.70000 0.00050
+GW 235 1 -0.95106 0.30902 2.70000 -1.00000 0.00000 2.75000 0.00050
+GW 236 1 -1.00000 0.00000 2.75000 -0.95106 -0.30902 2.80000 0.00050
+GW 237 1 -0.95106 -0.30902 2.80000 -0.80902 -0.58778 2.85000 0.00050
+GW 238 1 -0.80902 -0.58778 2.85000 -0.58779 -0.80902 2.90000 0.00050
+GW 239 1 -0.58779 -0.80902 2.90000 -0.30902 -0.95106 2.95000 0.00050
+GW 240 1 -0.30902 -0.95106 2.95000 0.00000 -1.00000 3.00000 0.00050
+GS 0 0 1.000000
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>To create a quadrifilar helix using the NEC command set only requires that we add one more line to our bifilar model. It is another GM line. Since the GM lines are so similar between NEC-2 and NEC-4 in this application, a single sample will suffice for both cores. <b>Fig. 11</b> shows the required replication and manipulation.</p>
+  <center>
+    <img src="amod115-11.gif" width="507" height="359" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The new GM command operates on the entire existing structure, which includes tags 1 and 2. We increment the tag numbers by 2 so that the new helices will bear the numbers 3 and 4. We replicate the entire structure once and give the new helices a 90-degree rotation. Now we have the quadrifilar helix, as shown in the following model lines. The lines show the NEC-4 version, which differs from the NEC-2 version only in the GH entry.</p>
+  <pre>
+CM Quadrifilar helix-nec-4
+CE
+GH 1 60 3 3 1 1 .0005 .0005 1
+GM 1 1 0 0 180 0 0 0
+GM 2 1 0 0 90 0 0 0
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>We could have created the same structure with only one GM line, as shown in the following variant model. The GM line creates 3 replicas of the original helix spaced at 90-degree intervals around the Z-axis.</p>
+  <pre>
+CM Quadrifilar helix-nec-4
+CE
+GH 1 60 3 3 1 1 .0005 .0005 1
+GM 1 3 0 0 90 0 0 0
+GE
+FR 0 1 0 0 299.7925 1
+EN
+</pre>
+  <p>In either case, we can again use the NEC output file as one verification that our work is correct. <b>Table 3</b> shows the initial lines of the output file for the double-GM version of the model.</p>
+  <center>
+    <img src="amod115-t3.gif" width="876" height="200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Regardless of whether we use 1 or 2 GM lines to produce the quadrifilar helix, the result will have the appearance of <b>Fig. 12</b>. You may compare this helix to the quadrifilar helix in <b>Fig. 10</b> and to the other helical structures shown earlier.</p>
+  <center>
+    <img src="amod115-12.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The basic bifilar and quadrifilar structures are straightforward to produce, using either segment-by-segment techniques that yield many wires or using the GH and GM commands for a compact model file.</p>
+  <p><b>Which Model Should I Use?</b></p>
+  <p>In terms of producing a compact helix model file, nothing exceeds the GH-GM method of fashioning a bifilar or a quadrifilar helical assembly. However, the diminutive file size (which has no bearing on the comparative speed of the core run or on the size of the output file) comes at a cost. Except for the initial junction of the helices with the X-Y plane, the coordinate values for all junctions are unknown and require supplemental aids to discover. As noted, the antenna view function of NEC-Win Pro, GNEC and some other programs allow one to find any segment and learn its end-1 and end-2 coordinates.</p>
+  <p>In contrast, the seemingly very large geometry structure portions of files produced by NEC-Win Synth, EZNEC, and possibly other programs that create segment-by-segment helix models have the advantage of being quite transparent. By inspection, one can find any desired junction between segments/wires and use that junction for any other desired wire connection. Most evidently, this facility applies to the free ends at the top of the multiple helix, where cross connections are common. However, the ease of finding connections also applies when bridging lower sections of a helix for a feed system.</p>
+  <p>Since each wire of a multiple helix is independent in the segment-by-segment construct, connections to ground often become simpler. Many initial experiments with multiple helices employ a perfect ground as an initial surface. However, advanced models may employ wire grids having either simple or complex geometries. The grid may offer connection junctions that do not align precisely with the lowest segments of the helices. In most cases, with a segment-by-segment model, one can simply alter the lowest coordinates to coincide with a wire ground junction without unduly distorting the overall shape of the bifilar or quadrifilar structure.</p>
+  <p>In the end, the decisions as to which type of bifilar or quadrifilar model to adopt rests with the uses to which one puts the basic structure and the role it plays in the total model. Because the roles and uses are so numerous and varied, these notes have confined themselves to a single topic: forming the multiple helix with assurance that it is correct. The samples provided in this episode may serve as a guide to the production of multiple helices less amenable to graphical clarity and more adept at fulfilling useful communication functions.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

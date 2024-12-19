@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Dipole and the Coax</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>100. The Dipole and the Coax</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The most usual way to feed a resonant dipole uses a simple coaxial cable. Most basic handbooks and texts recommend that the system builder insert a common-mode choke at the feedpoint--between the dipole feedpoint terminals and the coaxial cable. Readily available forms of common-mode choke include a transmission line transformer with a 1:1 impedance ratio and a ferrite-bead collection following the designs proposed initially by Walt Maxwell (W2DU). In either case, the device establishes a compatibility between the balanced feedpoint of the dipole and the seemingly single-ended construction of the coaxial cable.</p>
+  <center>
+    <img src="amod100-1.gif" width="500" height="280" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> presents one traditional way to portray the situation at the dipole feedpoint. Its general purpose is to show why the insertion of a balun is important as a precautionary measure in dipole construction. By extension, the situation applies to any split element fed by coaxial cable. The dipole is merely the most fundamental case.</p>
+  <p>At any given instant, the currents between the coaxial cable center conductor and the inner side of the shield or braid are equal and opposite. However, according to the graphic, once the cable terminates at the dipole feedpoint, the current has multiple paths of travel. The diagram suggests that the center conductor has only a single path: the left leg of the dipole within the figure. However, the current from the braid has 2 paths: the right leg of the dipole in the figure and the outer side of the coaxial cable braid. The function of the choke is then to attenuate so far as possible the current that would appear on the coaxial cable braid outer side. It performs this function largely by introducing a large inductive impedance to such currents. The function is similar to that of an RF choke within an amplifier circuit. However, the arrangement must have a form that does not disturb the currents between the center conductor and the inner side of the cable braid.</p>
+  <center>
+    <img src="amod100-2.gif" width="452" height="326" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As suggested by <b>Fig. 2</b>, we then have 2 sets of currents to consider. The left portion not only portrays the current as directional, but also indicates the field between the center conductor and the inner side of the braid, so that we have at any point of measurement currents of equal magnitude but opposite polarity or phase angle. These are transmission-line currents in the conventional sense. If we replace the resonant antenna with a resistor of vanishingly small dimension (but still capable of converting the RF energy into heat without self-destruction), we should measure only transmission line currents at any measurement point. If we place a complex load of similarly small lumped components at the cable end, we shall obtain the same results, although the lack of a match between the cable characteristic impedance and the load will alter the pattern of current values along the line.</p>
+  <p>On the right in <b>Fig. 2</b>, we have the common-mode currents that appear on the surface side of the coaxial cable braid. Common-mode currents in theory may derive from either conductor, but always appear on the coaxial cable outer side due to skin effect. Therefore, in theory, the current on the braid outside side is the sum of currents other than transmission line currents on the entire coaxial cable structure. Since the transmission-line currents are equal in magnitude but opposite in phase angle, they cancel. The common mode currents are the remainder, whatever their source. Because common mode currents appear on the braid outer side, they are capable of radiation, just as the current on the antenna legs proper. Because those currents may appear all along the coaxial cable length, they may also be found at the transmitting equipment, where the cases form an irregular extension of the coaxial cable outer side. (Note: many writers would simply refer to the coaxial cable braid outer surface. However, at any frequency, there is always some depth to the current-conducting portion of the braid. Hence, I have used the term "outer side" instead. The depth of penetration, of course, is a function of frequency.)</p>
+  <p>The feedpoint of a dipole element represents a small gap in the antenna. Between the terminals of the gap, the feedline provides a series source of energy for the antenna, thus completing the path between those terminals. This very basic fact is important, because it drives the conventional method of trying to model the effects of common mode currents within both NEC and MININEC antenna modeling software. Neither software core is capable of physically modeling conventional coaxial cables. The transmission line function within NEC creates lossless non-radiating mathematical models of lines and hence cannot capture common mode radiation. Therefore, the method used to show common mode radiation is to place a third leg into the dipole. Its feedpoint end connects as closely as possible to one side of the feedpoint segment or pulse, depending upon the software used.</p>
+  <p>In these notes, we shall not question the appropriateness of the model as a means for effectively modeling common-mode currents on a coaxial cable feedline. That discussion belongs to another context. Within the prescribed modeling effort, there are a number of modeling issues that deserve review.</p>
+  <p><b>Modeling the "Coax" Wire With a Dipole</b></p>
+  <p>Therefore, let's begin with a simple dipole that is resonant at 29.97925 MHz, where 1 wavelength = 10 meters. If we use 1-mm diameter wire and make the dipole 0.485 wavelength (4.85 meters), the antenna will show a free-space resonant impedance in both NEC and MININEC. The MININEC model will use 30 segments so that the center feedpoint falls on a pulse. The corresponding NEC model uses 31 segments so that its center feedpoint falls at the center of a segment. Both models show a free-space gain of 2.14 dBi. The reported MININEC source impedance is 71.84 - j0.56 Ohms, while the reported NEC-4 source impedance is 71.99 - j0.43 Ohms. The two values are close enough to qualify the models as the same for the purposes of the exercise to follow. The MININEC software used here is Antenna Model, while the NEC-4 software is EZNEC Pro/4.</p>
+  <p>We shall try to model the coaxial cable using a 6.35-mm (1/4") diameter wire connected as close to the model source as possible. The conductor size corresponds roughly to the outer diameter of the braid in such cables as RG-58 and RG-8X. For the exercise, we shall use a third-wire length of 0.25 wavelength (2.5 meters). For the purposes of the exercise, the wire will run from its connection point straight downward, relative to a horizontal dipole. In modeling terms, we construct the dipole proper in the X-Y plane, with the third wire representing the coaxial cable modeled along the Z axis. <b>Fig. 3</b> shows--for the MININEC model--the difference between the simple dipole and the dipole plus its "coax" wire. The outline of the NEC model would be similar.</p>
+  <center>
+    <img src="amod100-3.gif" width="722" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The diagram does list the ends of each wire. That aspect of the figure will change as we move from one model to another. <b>Fig. 4</b> shows why, at least in part.</p>
+  <center>
+    <img src="amod100-4.gif" width="371" height="478" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The MININEC model places a source on a pulse, which occurs at the junction of two segments or wires. Since a junction of segments or wires contains an ambiguity relative to which of the segments has the pulse, the convention is to place the pulse on the higher-number segment (using an absolute segment count). Hence, the source pulse appears in the MINNEC model in the middle of <b>Fig. 4</b> on the second or right-leg wire of the dipole. In order to calculate current correctly, we must bring both wire 1 (the left dipole leg) and wire 3 (the coax wire) together so that both wires have end 2 at the junction of wire 2, end 1.</p>
+  <p>The model that we have just described brings the coax wire as close to the source as is possible. Presumably, this procedure adheres most closely to reality, as earlier described. The alternative modeling procedure in the lower part of <b>Fig. 4</b> creates a 2-segment center wire for the dipole itself. The coax wire connects to one side of the center wire. We shall use this model only briefly to make a comparison near the end of these notes.</p>
+  <p>In a NEC model, we cannot connect a coax wire directly to the source point. As the upper part of <b>Fig. 4</b> shows, the source occupies a segment, and by convention, we mark this fact by placing the source indicator in the center of the segment. At best, we must connect the coax wire to the segment or the wire junction occurring at one or the other end of the source segment. Since every segment has a definite length, the coax wire junction will be offset from the true center of the dipole. Part of the exercise will be to explore the effects of that offset. In this case, the source appears on the last segment of wire 1, which extends past the dipole center so that the source segment is centered within the overall dipole length.</p>
+  <p>NEC is sensitive to having the source segment be equal in length to the adjacent segments. The closer we can come to meeting this condition, the more accurate will be the reported source impedance. Hence, for both MININEC and NEC models, the goal was to use segment lengths as close to equal as feasible within the overall 30/31 segment structure of the 4.85-meter dipole.</p>
+  <p><b>Some MININEC Results</b></p>
+  <p>The MININEC model, as suggested by <b>Fig. 4</b>, uses 3 wires. The 1-mm diameter dipole wires are equal in length, and each has 15 segments. The length of the individual segments is 161.667 mm. The 6.35-mm-diameter coax wire is 2.5 m long and also uses 15 segments. Hence, the individual segments are 166.667 mm long, about 5 mm longer than those in the dipole.</p>
+  <p>The following table summarizes the reported characteristics of both the dipole alone (reference to "dpl1" on graphics) and the dipole with its coax wire added (reference to "dpl4" on graphics). AGT refers to the average gain test value.</p>
+  <pre>
+MININEC Models:  Standard Dipole vs. Dipole Plus Coax Wire: Free Space
+
+Model          Maximum Free-Space   Source Impedance     AGT
+               Gain dBi             R+/-jX Ohms
+Dipole         2.14                 71.84 - j 0.56       0.9999
+Dipole Plus    2.04                 45.68 - j12.85       0.9994
+</pre>
+  <p>The currents on each side of the source segment of the standard dipole are, of course, exactly equal for the symmetrical element. However, for the dipole + coax wire model, we find the following values. W1e2 means wire 1, end 2, etc. W2e1 is the source pulse for the antenna.</p>
+  <pre>
+Relative Current Levels at the Dipole + Coax Wire Feedpoint: MININEC
+
+            Current Components            Current Magnitude/Phase Angle
+Wire/End    Ireal          Iimag          Imag             Iphase
+W2e1 (SO)   1.00000E+00    0.00000E+00    1.00000E+00       0.000
+W1e2        3.01968E-01   -3.47609E-01    4.60453E-01     -49.019
+W3e2        6.98032E-01    3.47609E-01    7.79795E-01      26.473
+</pre>
+  <p>The real and imaginary components of the non-source wire ends add up to equal the current value of the source-wire end. The model, then, carries with it the presumption that the current on one side of the source pulse divides between the two existing wires on the other side. The wires are all lossless in the models. The higher current on the coax wire is a function of its greater diameter, its greater length, and the non-linearity of its direction relative to the dipole. MININEC does not have the NEC limitation relative to junction of wires having different diameters, as indicated by the AGT score of the dipole + coax wire model. Hence, the model's reported values require no correctives.</p>
+  <center>
+    <img src="amod100-5.gif" width="900" height="444" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> presents the 3-D patterns in free space for both the simple dipole and the dipole + coax wire models. The simple dipole "donut" pattern is useful for reference in gauging the differences that are part of the dipole + coax wire pattern. To what degree the pattern bulges appear in the pattern of the antenna over a real ground requires that we revise the model. So I moved the dipole to place it 1 wavelength (10 meters) above average ground (conductivity 0.005 S/m; relative permittivity 13). The open end of the coax wire is now 7.5 m above ground. The following table summarizes the performance data for the simple dipole vs the dipole + coax wire.</p>
+  <pre>
+MININEC Models:  Standard Dipole vs. Dipole Plus Coax Wire: 1 WL Above Average Ground
+
+Model          Maximum    TO Angle     Source Impedance
+               Gain dBi   degrees      R+/-jX Ohms
+Dipole         7.65       14           70.29 - j 5.62
+Dipole Plus    6.68       14           45.11 - j14.75
+</pre>
+  <p><b>Fig. 6</b> presents azimuth and elevation patterns for both antennas. In order to gather a feel for the maximum gain reduction associated with the dipole + coax wire model, focus on the pattern places marked "Note." In the azimuth pattern, note the shallower nulls off the dipole ends, with the side toward the coax wire being shallower than the opposite side of the pattern. As well, in the elevation pattern, note the shallower null between elevation lobes. Energy that creates these shallower nulls is not available in the main bi-directional lobes that determine the maximum gain of the antenna.</p>
+  <center>
+    <img src="amod100-6.gif" width="790" height="620" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Some NEC Results</b></p>
+  <p>As shown at the top of <b>Fig. 4</b>, the NEC model must have a slightly different structure relative to the MININEC model. The standard dipole uses 31 segments, each 156.452 mm long. The source is on segment 16 at the exact center of the dipole. When we add a coax wire, it must be at a junction of wires or segments. For simplicity within EZNEC, I cut the dipole wire into two pieces. Wire 1 is 2.503226 m long and has 16 segments. The source is on the last segment of this wire. Wire 2 is 2.346774 m long and has 15 segments. As a result of this division, the segment length remains unchanged and is the same on both wires. The coax wire, wire 3, begins at the junction of wires 2 and 3 and runs downward for 2.5 m. It uses 16 segments, each of which is 156.25 mm long, very close to the length of the segments in the dipole wires.</p>
+  <p>The dipole + coax wire model contains two problematical features. First, the junction of the coax wire and the dipole wire is displaced from the exact dipole center by half the length of a model segment. Second, the coax wire, with a diameter of 6.35 mm, differs from the 1-mm diameter of the dipole wires, creating an angular junction of wires with dissimilar diameters. NEC has a known limitation in such cases, and the error is greater in NEC-2 than NEC-4. The following table summarizes the free-space performance reports of the 2 cores for both the simple dipole and the dipole + coax wire models. There is no significant difference between NEC-2 and NEC-4 with respect to the simple dipole.</p>
+  <pre>
+NEC Models:  Standard Dipole vs. Dipole Plus Coax Wire: Free Space
+
+Model          Maximum Free-Space   Source Impedance     AGT       AGT-dB     Corrected
+               Gain dBi             R+/-jX Ohms                               Gain dBi
+Dipole         2.14                 71.99 - j 0.43       1.000      +/-0.0    2.14
+Dipole Plus
+  NEC-4        1.72                 44.95 + j16.99       0.958      -0.19     1.91
+  NEC-2        1.66                 45.70 + j17.33       0.943      -0.25     1.91
+</pre>
+  <p>The source resistance of the models is close to the value for the corresponding MININEC value. However, the reactive component of the source impedance is about 30 Ohms distant from the MININEC value. Therefore, I created the alternative MININEC model shown in <b>Fig. 4</b>. In this model, the junction of the coax wire is 1 pulse/segment away from the source. All of the segments in the dipole portion of the model have the same length. Placing the junction another half-segment-length away from the source has interesting consequences. First, the free space gain of the model is 1.92 dBi, virtually the same as the corrected gain values for the NEC-2 and NEC-4 models. Second, the source impedance report is 45.99 + j32.94 Ohms. The resistive component has not changed by much, but the reactive component is considerably more inductive than the NEC reports. The junction position of the coax wire with the dipole wire, relative to the source, appears to make a consistent and systematic difference to the reported reactance at the source.</p>
+  <p>The current reports for the NEC model also differ from those emerging from MININEC. NEC currents refer to specific segments, with the segment center taken as the virtual read-out position. The source segment current by assignment was 1 A RMS (the convention used within EZNEC software). Since the NEC core uses peak values, the NEC output report shows a corresponding value of 1.4142E0 as the peak value. The comparison of values must use the segment current on each side of the source segment. Hence, the perfect addition that we experienced with the MININEC model is not likely to appear. The question is to what degree we find the current division holding to the MININEC model standard. The following table tells us some of the story. The source is located on wire 1, segment 16. Wire 1, segment 15 is the adjacent segment on the dipole side without the coax wire. Wire 2, segment 1 is the first segment of the remainder of the dipole that meets with wire 3, segment 1, the first segment of the coax wire. The values are for NEC-4</p>
+  <pre>
+Relative Current Levels at the Dipole + Coax Wire Feedpoint: NEC-4
+
+               Current Components            Current Magnitude/Phase Angle
+Wire/Segment   Ireal          Iimag          Imag             Iphase
+W1s16 (SO)     1.4142E+00    -3.4217E-16     1.4142E+00        0.000
+W1s15          1.4047E+00    -7.9009E-03     1.4047E+00       -0.322
+W2s1           3.0643E-01    -3.9072E-02     3.0891E-01       -7.226
+W3s1           1.1108E+00     3.0984E-02     1.1112E+00        1.598
+</pre>
+  <p>The sum of the coax-side real current components is 1.4172E+00, which is only slightly higher than the real current on W1S15. The sum of the imaginary components is -8.088E-03, very close to the imaginary component on W1S15. Within the limits of the model adequacy, as indicated by the less-than-perfect AGT score, the currents add up correctly to indicate a current division on the coax-wire side of the dipole. However, relative to the MININEC model, we find two anomalies. First, the ratio of coax wire current to dipole wire current in the NEC-4 model is about 3.62:1, whereas in the MININEC model, the ratio is about 2.31:1. This difference is likely due to a combination of the position of the wire junction relative to the source position and the error introduced by the junction of wires with differing diameters.</p>
+  <p>The second anomaly between the cores is less easily explained. The MININEC model showed widely divergent phase angles between the currents on the dipole and coax wires: -49 degrees and +26.5 degrees, respectively. The NEC-4 model shows only a small divergence of the same current phase angles: -7.2 and +1.6 degrees, respectively. It is likely that the lack of coincidence between the wire junction and the source forms the ultimate reason for the small difference in phase angles within the NEC-4 models. The lack of coincidence of the phase angles would require careful measurement of an actual antenna situation in order to decisively tell us which modeling core provides the more realistic report.</p>
+  <p>Over real ground, using the same conditions as in the MININEC model, we obtain similar results, as shown by the following table. The dipole + coax wire model uses NEC-4 data.</p>
+  <pre>
+NEC Models:  Standard Dipole vs. Dipole Plus Coax Wire: 1 WL Above Average Ground
+
+Model          Maximum    TO Angle     Source Impedance
+               Gain dBi   degrees      R+/-jX Ohms
+Dipole         7.64       14           70.68 - j 5.64
+Dipole Plus    6.08       14           45.28 + j14.69
+</pre>
+  <center>
+    <img src="amod100-7.gif" width="500" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> provides comparative simple dipole and dipole + coax wire azimuth and elevation patterns. The simple dipole patterns--as well as the tabular data--are virtually identical to those for the corresponding MININEC model. The gain data for the NEC model of the dipole + coax wire is 0.6-dB lower than in the MININEC model, a value that exceeds the free-space AGT correction factor. However, the pattern elements that reduce maximum gain relative to the simple dipole are evident in the figure. Of course, due to the position of the source relative to the wire junction, the azimuth pattern shows a reversal between the deeper and shallower nulls off the dipole ends. The patterns also show the relative strengths of the vertical and horizontal components of the total far field.</p>
+  <p><b>Some Tentative Conclusions</b></p>
+  <p>The test models use an artificial situation to allow some detailed comparisons between MININEC and NEC models of a dipole + coax wire. The MININEC version of the model, using the highly corrected Antenna Model implementation of the core, still requires careful construction in order to effectively model the coax wire as an alternative path for currents right at the feedpoint of the dipole. NEC has several limitations that prevent such exacting models, including the source placement within a segment rather than at its junction and the weakness of its ability to handle angular junctions of wires having dissimilar diameters.</p>
+  <p>The results show both areas of correspondence and divergence. The resistive component of the source impedance shows a good correlation between models, although the reactive component is apparently sensitive to the position of the wire junction relative to the source. Gain and pattern values are comparable, if we allow for the imperfect AGT scores of the NEC models. Perhaps the greatest divergence appears in the reported current phase angles on the joining coax and dipole wires, along with the reported ratio of currents in each wire.</p>
+  <p>The exercise has aimed to compare NEC and MININEC models attempting to capture the coax braid as an alternative path for antenna currents. As such, it sets up an artificial and simplified situation. Any complete model of the situation must include all of the factors shown in <b>Fig. 8</b>. Indeed, the list of factors is incomplete, but suggests that modeling the coax wire is not a simple task. Any results that presumes an open-ended wire termination will be suspect with respect to reality. Even a high-impedance choke or balun added to a line at the end of a 1/4 wavelength coax run will not necessarily terminate the common-mode currents, since the antenna element impedance is also very high at that point. Nothing short of a complete model will do for modeling an actual situation.</p>
+  <center>
+    <img src="amod100-8.gif" width="451" height="272" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Throughout, I have referred to the currents on the outer side of the coax braid as common mode currents. It is not wholly clear that the usage is correct, if we conceive of such currents as an alternative path for the current on the inner side of the braid at the junction with the antenna feedpoint. However, since common-mode currents will appear only on the outer side of coax braid, they are in some respects indistinguishable from what we might otherwise call "alternate-path" currents.</p>
+  <p>Whether the alternate-route portrayal of these currents is complete in itself may rest on the measured feedpoint impedance of the dipole with the coax attached. (For a related set of experiments measuring dipole element and coax braid currents, see Roy Lewallen, W7EL, <a href="https://archive.org/details/arrlacv3/ARRL_AC_v1/page/n154/mode/1up" target="_blank">"Baluns: What They Do and How They Do It,"</a> <i>The ARRL Antenna Compendium</i>, Vol. 1, pp. 157-164.) In the test situation, we find a very large difference in the resistive components between the simple dipole and the dipole + coax wire models, regardless of the modeling software used. Confirmation of the simple alternate path scenario is as simple as measuring the impedance in the coaxial cable at the termination of the 0.25 wavelength line (without introducing any paths to ground or other disruptive conditions) and then back calculating to the actual feedpoint impedance at the dipole feedpoint.</p>
+  <p>The situation does demonstrate that modeling is not an end in itself. In many situations, the results of modeling require experimental confirmation, if only to show that a model either is or is not a model of the situation under analysis. Unlike the present model set--with the definite difference between the source resistance of a simple dipole and of the dipole + coax--not all proposed models present clear cut cases for deciding whether or not the model captures a given electrical situation.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

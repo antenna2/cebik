@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Appreciating EK</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>81. Appreciating EK</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episode 51, we encountered the inaccuracies that result in NEC-2 from too low a ratio between the segment length (Ls) and the wire radius (R). In the example, we used the following model, outlined in <b>Fig. 1</b>, to track the differences between NEC-4 results and NEC-2 results.</p>
+  <center>
+    <img src="amod81-1.gif" width="348" height="466" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+W4RNL 432 WB Yagi               Frequency = 432  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+1            0.000, -6.575,  0.000         0.000,  6.575,  0.000 5.00E-01  15
+2            5.807, -6.083,  0.000         5.807,  6.083,  0.000 5.00E-01  15
+3            9.626, -5.453,  0.000         9.626,  5.453,  0.000 5.00E-01  15
+4           15.748, -5.256,  0.000        15.748,  5.256,  0.000 5.00E-01  15
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The average segment length is about 0.8", while the diameter is 0.5", for a length-to-radius (Ls/R) ratio of 3.2:1. The following table records the modeled performance data from 420 to 250 MHz for the 4-element wide-band Yagi design.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                  Wide-Band 4-Element Yagi for 420-450 MHz
+
+  Core        Freq.  Free-Space     Front-Back    Source Impedance             50-Ohm
+              MHz    Gain dBi       Ratio dB      R +/- jX Ohms                SWR
+
+  NEC-4D      420    9.12           11.56         45.81 - j  2.99              1.114
+              430    9.23           12.14         56.30 + j  1.51              1.130
+              440    9.34           12.73         61.22 - j  2.38              1.230
+              450    9.55           14.31         49.47 - j  7.28              1.158
+
+  NEC-2       420    9.17           11.69         47.77 - j  1.14              1.053
+  w/o EK      430    9.27           12.20         58.14 + j  1.51              1.166
+              440    9.40           12.92         59.93 - j  4.57              1.221
+              450    9.64           14.99         42.72 - j  6.56              1.236
+
+  NEC-2       420    9.12           11.52         45.64 - j  2.99              1.120
+  w EK        430    9.23           12.11         56.12 + j  1.64              1.130
+              440    9.35           12.72         61.11 - j  2.20              1.230
+              450    9.55           14.29         49.40 - j  7.23              1.160
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The last portion of the table records the data we obtain when we implement the EK or extended thin-wire kernel command (EK). The use of this command restores the performance reports to good alignment with NEC-4 results. Hence, we should learn how, when, and why to use the EK command in NEC-2, as well as why it is unnecessary in NEC-4.</p>
+  <p><b>How</b>: The easiest step in the process is implementing the EK command. Immediately following the GE (geometry end command), we may write a new line:</p>
+  <pre>EK 0</pre>
+  <p>The line changes the approximation of the electrical field integral equation in the core calculations from the thin-wire kernel to the extended thin-wire kernel. Unfortunately, some entry level versions of NEC-2 do not give the user the option of using the extended kernel, although NEC2GO does implement it automatically whenever the wire radius exceeds a certain ratio to the segment length. The most recent (Version 4) EZNEC programs also appear to implement EK automatically. Programs that allow the user to write his or her own model file, such as NEC-Win Pro, provide for the use of the extended thin-wire kernel whenever the modeler deems it necessary. For a simple sample dipole, the model file will have the following appearance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM NEC-WIN Example
+CM Simple dipole antenna in Free Space
+CM Optimized for resonance at 300 MHz
+CE
+GW 1 9 0 -.2418 0 0 .2418 0 .0537
+GS 0 0 1
+GE 0 -1 0
+EK 0
+EX 0 1 5 0 1 0
+FR 0 1 0 0 300 1
+RP 0 181 1 1000 -90 0 1 1
+RP 0 1 360 1000 90 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p><b>Why</b>: The information necessary to appreciate the significance of the extended thin-wire kernel in NEC-2 appears early on in the user portion of the manual. "In the thin-wire kernel, the current on the surface of a segment is reduced to a filament of current on the segment axis. In the extended thin-wire kernel, a current uniformly distributed around the segment is assumed. The field of this current is approximated by the first two terms in a series expansion of the exact field in power of a<sup>a</sup> [where a is the wire radius]. The first term in the series, which is independent of a, is identical to the thin-wire kernel, while the second term extends the accuracy for larger values of a. Higher order approximations are not used because they would require excessive computation time."</p>
+  <p>"In either of these approximations, only currents in the axial direction on a segment are considered, and there is no allowance for variation of the currents around the wire circumference. The acceptability of these approximations depends on both the value of a/wavelength and the tendency of the excitation to produce circumferential current or current variation. Unless (2*pi*a)/wavelength is much less than 1, the validity of these approximations should be considered." One potential arena in which the validity of these approximations may be tested is the modeling of a boom connected directly to the parasitic elements of a Yagi antenna. In practice, the connection or the very close proximity of a boom to the parasitic elements alters the required length of the elements to preserve array performance. However, in NEC-2 and NEC-4--when modeled within the other limitations of the software--the boom has no effect upon the parasitic elements. The result strongly suggests that boom-to-element effects are functions of variations in circumferential currents, which NEC does not take into account. A fuller account of this phenomenon is a subject for another episode in this series.</p>
+  <p>The NEC-2 manual goes on. "The accuracy of the numerical solution for the dominant axial current is also dependent on [the ratio of segment length to radius or Ls/R]. Small values of [Ls/R] may result in extraneous oscillation in the computed current near free wire ends, voltage sources, or lumped loads. Use of the extended thin-wire kernel will extend the limit on [Ls/R] to smaller values than are permissible with the normal thin-wire kernel." In general, Ls/R must be greater than 8 for errors under 1% for the normal thin-wire kernel. This amounts to a segment length-to-wire-diameter ratio of 4:1, for programs that input wire thickness as a diameter. The manual notes that "reasonable solutions" have been obtained for the normal thin-wire kernel for Ls/R values down to about 2, with equally "reasonable solutions" for the extended thin-wire kernel for Ls/R values down to about 0.5. However, exact specification of the geometries involved does not appear. Hence, the most general guidance one might give is to use the EK command to implement the extended thin-wire kernel whenever the value of Ls/R goes below 8 (or a segment-length-to-wire-diameter ratio of 4). For straight-wire elements, the limit to Ls/R may be between 2 and 1 for very reliable results.</p>
+  <p>There are numerous other facets of extended thin-wire kernel implementation noted in the manual. For example, the normal thin-wire kernel is used--even if the EK command is implemented--at wire bends, such as those encountered in closed and nearly closed antenna geometries. Delta, quad, and Moxon rectangle geometries are samples of such antennas. At bends, the modeler should avoid very small values of Ls/R so that the surface of one wire at the junction does not penetrate into the central region of the other wire, a condition that "generally leads to severe errors."</p>
+  <p><i>Why EK is not used in NEC-4</i>: The NEC-4 manual provides a chapter outlining the differences between NEC-3 and NEC-4. Over the range of considerations relevant to the use of EK in NEC-2, NEC-3 is essentially the same as NEC-2--but is different in other respects. In NEC-4, "the thin-wire approximation is now implemented with the current treated as a filament on the wire surface and the boundary condition enforced on the wire axis."</p>
+  <p>"With the boundary condition enforced on the wire axes, the openings at wire ends should be closed with end caps. This is particularly important when the ratio of segment length to radius is on the order of 2 or less. Wire ends are closed with flat caps in NEC-4, with the current and charge density assumed continuous from the wire onto the cap." NEC-4 also includes optional caps for use with voltage sources with equally low values of Ls/R. "This approximate treatment was found to be about as effective as the extended thin-wire kernel included as an option in [NEC-2 and] NEC-3. The extended thin-wire kernel option (EK card) has been dropped from NEC-4.</p>
+  <p>The NEC-4 thin-wire kernel appears at first sight to replicate the extended thin- wire kernel of NEC-2 and NEC-3. Hence, results seemingly should be identical. However, the implementation of wire end caps and other alterations to the solution algorithms for wires tells us otherwise. Rather, expect results to be very close.</p>
+  <p>For relatively thin, straight wires having long segment lengths, where Ls/R is more than 8, there will be almost no difference between NEC-2 and NEC-4, even without implementing the extended thin-wire kernel in NEC-2. For values of Ls/R between 8 and 2, NEC-2 with EK and NEC-4 will normally show very close results. However, as the value of Ls/R passes 2 on its way downward, expect larger differences.</p>
+  <p>I have quoted directly from the NEC-2 and NEC-4 manuals because many users of antenna modeling software simply do not read them. As well, the self-consistent language within those manuals is guidance against misinterpretation of what the manuals record about the basis for NEC core operations. However, what we have been reviewing are simply the most relevant extracts from the fuller treatment provided by the manuals to cover not only the situation surrounding the EK card, but as well overall core operations. Hence, I fully recommend that every user of NEC-2 or NEC-4 (or even NEC-3) gradually become fully conversant with the provisions of the manuals. They were not written for the purpose of being supplanted by a series of one-line or more-easily remembered summary statements. Such statements may be useful as the beginning, but are never the ultimate end of understanding both the capabilities and the limitations of the cores.</p>
+  <p><b>When</b>: I have provided some general recommendations on when to invoke the EK card, where "when" means "at what Ls/R value." However, we might pause to go through a pair of small exercises in order to better appreciate the high generality of those recommendations.</p>
+  <center>
+    <img src="amod81-2.gif" width="341" height="151" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first exercise involves a simple dipole, the model for which I showed earlier. <b>Fig. 2</b> outlines the dipole. Nothing in the dipole will change except the radius of the one wire that makes up the model. Beginning with a radius of 0.0001 meters (0.1 mm), we shall increase the radius until we reach levels that allow us to create segment-length-to-radius values in the range from 4:1 down to 1:1. Since we shall not change the wire length, every increase in radius will carry us theoretically further from the initial resonance of the antenna. This move is intentional, since once we have significant reactance in the source impedance, differences created by running the model under various conditions will become more graphic.</p>
+  <p>Because we shall begin with a 1/2 wavelength resonant dipole, we should not expect much change in the gain or variation among models with respect to gain. Resonant dipoles change gain only very slowly with changing conditions, a common feature of most simple antennas resonated for a high source current. Therefore, the source impedance values will be our primary window on the differences. We shall run them without the EK card in both NEC-2 and NEC-4, and also with the EK card in NEC-2. All models were run on NSI's GNEC package, which contains both NEC-2 and NEC-4 cores. The following table captures the results.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                             A Dipole in NEC-4 and in NEC-2 With and Without EK
+
+Constants:           Free-Space Environment; Frequency: 300 MHz
+                     Length: 0.4836 m; Segments: 9; Segment Length: 0.5373 m
+                     Ls = segment length; R = radius
+
+Wire Radius: 0.0001 m               Ls/R: 537
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.12                  72.080 - j 0.001
+NEC-2 w/o EK         2.12                  72.079 - j 0.002
+NEC-2 w EK           2.12                  72.079 - j 0.002
+Wire Radius: 0.001 m                Ls/R: 53.7
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.13                  75.629 + j16.514
+NEC-2 w/o EK         2.13                  75.628 + j16.515
+NEC-2 w EK           2.13                  75.222 + j16.490
+Wire Radius: 0.01 m                 Ls/R: 5.37
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.18                  91.469 + j32.379
+NEC-2 w/o EK         2.18                  92.039 + j33.316
+NEC-2 w EK           2.18                  90.677 + j31.667
+Wire Radius: 0.0134 m               Ls/R: 4.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.20                  95.680 + j30.113
+NEC-2 w/o EK         2.20                  97.272 + j32.149
+NEC-2 w EK           2.20                  94.637 + j30.042
+Wire Radius: 0.0179 m               Ls/R: 3.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.22                  99.783 + j23.974
+NEC-2 w/o EK         2.22                  103.832 + j27.652
+NEC-2 w EK           2.22                  98.657 + j25.572
+Wire Radius: 0.0269 m               Ls/R: 2.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.26                  102.414 + j 5.134
+NEC-2 w/o EK         2.27                  114.262 + j 9.213
+NEC-2 w EK           2.27                  102.410 + j12.229
+Wire Radius: 0.0537 m               Ls/R: 1.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                2.38                  51.890 - j46.292
+NEC-2 w/o EK         2.43                  54.146 - j58.430
+NEC-2 w EK           2.47                  86.345 - j31.830
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Certain results appear incontestable. First, wherever there are differences among the results, the NEC-2-with-EK data are closer to the NEC-4 data than are the data from NEC-2-without-EK. Second, the values for a ratio of segment length to radius of 1.0 are sufficiently variable as not to be able to say which values are more reliable than the others. From the table alone, without external verification, it would even be presumptuous to assert that the NEC-4 values are the most reliable. At all other values, we have much more confidence in the coincidence between NEC-4 and NEC-2-with-EK.</p>
+  <p>The more difficult question to answer is when to implement the EK card in NEC-2. For Ls/R values above 5.37, the EK card is certainly unnecessary for the dipole. Even at the radius of 0.01 m, the NEC-2 results seem equally separated from the NEC-4 results, although in opposite directions. There is a change when we simply reduce the Ls/R value from 5.37 down to 4.0: the NEC-2-with-EK results are clearly more coincident with the NEC-4 results than NEC-2-without-EK. Hence, a segment-length-to-radius ratio in the range of 6 down to 4 seems an appropriate changeover to the use of EK for NEC-2 users.</p>
+  <center>
+    <img src="amod81-3.gif" width="256" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Coincidence between NEC-2-EK results and NEC-4 is not always a decisive reason for implementing the EK card in NEC-2. Consider, for example, a simple quad loop, such as the one outlined in <b>Fig. 3</b>. The EK version of the model follows.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Quad Loop
+CE
+GW 1,11, -0.1324,0,-0.1324, 0.1324,0,-0.1324, 0.0001
+GW 2,11, 0.1324,0,-0.1324, 0.1324,0,0.1324, 0.0001
+GW 3,11, 0.1324,0,0.1324, -0.1324,0,0.1324, 0.0001
+GW 4,11, -0.1324,0,0.1324, -0.1324,0,-0.1324, 0.0001
+GS 0 0 1
+GE 0
+EK 0
+EX 0 1 6 0 1 0
+FR 0 1 0 0 300 1
+RP 0 1 360 1000 89 0 1
+RP 0 181 1 1000 -90 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The loop is set for 300 MHz, with initial side lengths that are 0.2648 m, with 11 segments per side. With the initial wire radius of 0.0001 m, the segment lengths are 0.0241 m. As we increase the radius of the wire, the loop will drift farther from resonance. Since the geometry is closed, the loop will show capacitive reactance as we enlarge the wire (in contrast to the increasing inductive reactance of a straight wire under similar conditions). We can tabulate the results of modeling in NEC-2, NEC-2-without-EK, and NEC-2-with-EK.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                            A Quad Loop in NEC-4 and in NEC-2 With and Without EK
+
+Constants:           Free-Space Environment; Frequency: 300 MHz
+                     Side Length: 0.2648 m; Segments: 11; Segment Length: 0.0241 m
+                     Ls = segment length; R = radius
+
+Wire Radius: 0.0001 m               Ls/R: 241
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.30                  125.46 - j 1.213
+NEC-2 w/o EK         3.30                  125.46 - j 1.207
+NEC-2 w EK           3.30                  125.46 - j 1.207
+Wire Radius: 0.001 m                Ls/R: 24.1
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.29                  119.53 - j52.554
+NEC-2 w/o EK         3.29                  119.58 - j52.323
+NEC-2 w EK           3.29                  119.58 - j52.322
+Wire Radius: 0.0048 m               Ls/R: 5.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.28                  106.48 - j86.861
+NEC-2 w/o EK         3.26                  107.84 - j83.170
+NEC-2 w EK           3.26                  108.21 - j83.076
+Wire Radius: 0.006 m                Ls/R: 4.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.28                  102.50 - j91.561
+NEC-2 w/o EK         3.25                  104.60 - j86.457
+NEC-2 w EK           3.25                  105.33 - j86.268
+Wire Radius: 0.008 m                Ls/R: 3.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.29                  95.571 - j97.117
+NEC-2 w/o EK         3.20                  99.146 - j89.857
+NEC-2 w EK           3.22                  100.91 - j89.398
+Wire Radius: 0.012 m                Ls/R: 2.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.31                  80.679 - j102.15
+NEC-2 w/o EK         3.20                  87.361 - j92.323
+NEC-2 w EK           3.16                  93.264 - j90.958
+Wire Radius: 0.0241 m               Ls/R: 1.00
+Core                 Gain (dBi)            Source Impedance (R+/-jX Ohms)
+NEC-4                3.32                  37.507 - j80.703
+NEC-2 w/o EK         3.11                  43.091 - j78.095
+NEC-2 w EK           2.58                  81.412 - j80.556
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Variations of both gain and source impedance begin to appear with a segment- length-to-radius ratio of 5:1. Down to a ratio of about 2:1, the pair of NEC-2 results are closer to each other than either is to the NEC-4 result. The most likely reason for this divergence from the type of results we obtained from the straight dipole is the conditions of the model and how each core handles them. The NEC-4 applies its revised algorithm to all segments and junctions of the loop. The simplified thin-wire kernel of NEC-2 also applies to each segment and wire junction. Hence, we expect some divergence of results relative to NEC-4. The EK version of NEC-2 does not apply the extended thin-wire kernel to junctions of wires that are at an angle--the bent-wire case. As a consequence, its reports will coincide with neither NEC-4 nor NEC-2-without-EK.</p>
+  <center>
+    <img src="amod81-4.gif" width="412" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As we increase the wire radius, the surface of one wire at a junction penetrates farther into the central region of the other wire segment forming the junction, as suggested by the simple sketch in <b>Fig. 4</b>. As the penetration reaches a region where it alters the current calculation, the results grow less reliable. Between ratios of 5:1 and 3:1, we encounter a growing variance among the reports, with no internal guidance as to which may be the more nearly correct. In just the region that the EK card in NEC-2 provided significant modeling assistance in terms of the accuracy of results, it proves to be of little assistance with closed geometries and other bent-wire configurations without external means of verification.</p>
+  <p>The use of the EK card with NEC-2 thus finds its best range of uses with straight-wire elements of uniform diameter. For segment-length-to-radius ratios between 8:1 and 2:1, it yields results that are consistent with those emerging from NEC-4. Perhaps one day we shall see the EK facility appear as a user option on most entry-level NEC-2 software.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Refining Physical Transmission-Line Models</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>70: Refining Physical Transmission-Line Models</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>There are numerous occasions when we need to model transmission lines as physical-wire or GW entries. The advantage of physically modeling a transmission lines is the fact that it will show the losses found in reality. Using the TL facility produces lossless or ideal lines. (Perhaps some future version of NEC will modify the core to accept loss factors to expand the utility of this facility.)</p>
+  <p>However, for most purposes, the modeler is faced with certain limitations. <b>Fig. 1</b> shows one example.</p>
+  <center>
+    <img src="amod70-1.gif" width="126" height="158" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Coaxial cables are likely to defy physical modeling for almost all applications. The close-spacing of the wires within common cables (RG-8, -8X, -11, -17, -28, -58, etc.) even makes impractical modeling a cylinder with another wire along the center. For NEC-4, the dielectric between the wire and the cylinder is perhaps the smallest part of the problem, given the IS control entry.</p>
+  <p>However, it is possible to model physically many types of 2-wire parallel transmission lines. With a vacuum or dry air dielectric between and around the wires, parallel transmission lines answer to the equation</p>
+  <center>
+    <img src="amod70e1.gif" width="527" height="97">
+  </center>
+  <p>where Zo is the characteristic impedance of the line, S is the center-to-center spacing of the wires, and d is the diameter of the wire. <b>Fig. 2</b> illustrates the elements of the calculation. If the two wires have different diameters, some references replace the element d with the square root of the product of the two individual diameters.</p>
+  <center>
+    <img src="amod70-2.gif" width="406" height="267" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we create a parallel transmission line from 2 AWG #14 (0.0641" diameter) wires, calculations show a spacing of 1.367" for a 450-Ohm line. We can model this transmission line and check the calculation against NEC reports. We shall use NEC-4.1 in the program GNEC for the illustrations in this set of notes.</p>
+  <center>
+    <img src="amod70-3.gif" width="508" height="178" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We must pay reasonably careful attention to the model that we use for correlating NEC to standard calculations. First, as suggested by <b>Fig. 3</b>, the segment lengths should all be about 1.367" to correspond with the short source and load wires at the end of the transmission line. Second, the end wires do change the overall effective line length by a small amount. Therefore, the length selected for the check is 3/2 wavelengths, which minimizes the amount of error per half wavelength. For a test frequency of 14 MHz, the resulting model has 1852 segments.</p>
+  <p>The source is a standard voltage source of 1 volt at 0 degrees phase angle. The load is 450-Ohm and is purely resistive. At exactly 3/2 wavelengths, the source impedance should be exceptionally close to the load impedance if the model captures adequately the standard calculation method for parallel transmission lines.</p>
+  <p>The standard calculation for the relationship among the line characteristic impedances and the key physical line dimensions makes no reference to wire losses. Therefore, the initial trial of the model used a perfect or lossless line. The resulting source impedance was 450.003 + j 0.466 Ohms. Replacing the ideal wire with copper yielded an impedance reports of 450.979 + j 1.349 Ohms.</p>
+  <p>Since this is an exercise, I have reported the results using all decimal places provided by the program. In an exercise, there are no task-related specifications of the required precision, so using all of the data seems appropriate. However, it does appear that differences in the CPU and/or the operating system used in a computer may result in slight variations in reports. Most of these variations are confined to the second, third, or later decimal places. For practical purposes, the differences make no difference. However, they can be disconcerting to one experiencing them for the first time when moving from one computer to another, even when using the same program.</p>
+  <p>Even with copper wire, the modeled result is within about 0.2% of the calculated value. The obvious conclusion is that for purely air-dielectric lines, a physical model is quite adequate, so long as one does not try to bring the wires too close to each other.</p>
+  <p>The type of transmission line so far modeled at best reflects the actual parallel line that we call ladder line. This style of line consists of two wires held parallel by periodic spacers that are too small to create a significant velocity factor (VF), where a factor becomes significant as it grows lower than 1.0. Ladder line is but one of many styles of parallel transmission line, a few of which appear in <b>Fig. 4</b>.</p>
+  <center>
+    <img src="amod70-4.gif" width="341" height="292" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Far more commonly used by radio amateurs and general consumers are vinyl-covered lines, such as those shown in the lower part of <b>Fig. 4</b>. TV twin lead usually has a characteristic impedance (Zo) of 300 Ohms. The cheaper sorts use a solid flat area between the wires. To reduce losses, some varieties use a tubular form with air in the center hollow area. Since the strongest fields exist directly between wires, the tubular line tends to have a higher VF than the common type, perhaps 0.9 vs. 0.8. Another technique used to raise the VF is to cut windows in the flat vinyl area between wires. The technique also tends to raise the VF to about 0.9 and is most common in 400-450-Ohm lines.</p>
+  <p>Physically modeling a transmission line is limited to crude approximations unless it can also model the line's velocity factor. Many transmission line sections occur as parts of antennas, and the dimensions of those parts often account for the velocity factor of the line used in the assembly. Hence, an accurate model should be able to replicate or approximate the line's VF.</p>
+  <p>NEC-2 is limited to modeling parallel lines in an air/vacuum environment only. NEC-4, however, includes the IS (Insulated Sheath) control input that allows the user to specify for any given wire in the model an insulated covering. We explored the basics of using the IS input in column #50. Essentially, we specify a radius greater than that of the wire, along with a conductivity and a relative permittivity (dielectric constant).</p>
+  <p>Suppose that we wished to develop a 450-Ohm transmission line having a VF of 0.90. The development process begins with the fact that a physical wavelength of line will be 0.90 times the electrical wavelength. So we may take our original 3/2 wavelengths test transmission line and shorten it to 1.35 wavelengths. At 14 MHz, our test frequency, the length is 1138.13". Of course, to maintain the correct segment lengths, we shall reduce the number of segments on each long wire from 925 down to 833.</p>
+  <p>Before we make any other changes to the model, we may check the source impedance at the new length. The report was 493.005 - j 35.816 Ohms.</p>
+  <center>
+    <img src="amod70-5.gif" width="349" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the GNEC assist screen with labels upon all of the required entries. Perhaps the one entry that initially catches most modelers is the radius number. Although we were able to specify the wire coordinates in inches and then use a scaling entry (GS) to convert those coordinates into meters, as required by the core, control cards require direct entry in meters. Hence, the radius, which will be in the general vicinity of 0.09", must be entered in terms of meters, that is, about 0.002286. The entry shown is a bit smaller (0.882").</p>
+  <p>Assuming that we have an excellent insulating material, we may enter 1E-10 for the conductivity (0.0000000001 S/m). For single wires, there is little change in the performance of wires with conductivities from 1E-10 down to 1E-7 S/m. Much more influential on the performance will be the relative permittivity or relative dielectric constant. The value shown, 3.25, falls in the general range for vinyl plastics (2.5 to 3.5) in the HF range.</p>
+  <p>The following two brief model descriptions in ASCII entry form show the difference between the pre-insulated (VF = 1.0) and post-insulated (VF = 0.9) condition of the long transmission-line wires. Note that we have insulated only the long wires, leaving the source and load wires bare.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Parallel 450-Ohm TL Simulation
+CM cu AWG #14 wire
+CE
+GW 1 925 0 0 0 0 0 1264.59 .03205
+GW 2 1 0 0 1264.59 0 1.367 1264.59 .03205
+GW 3 925 0 1.367 1264.59 0 1.367 0 .03205
+GW 4 1 0 1.367 0 0 0 0 .03205
+GS 0 0 .02540
+GE 0
+EX 0 4 1 0 1 0
+LD 4 2 1 1 450 0 0
+LD 5 1 1 925 5.8001E7
+LD 5 2 1 1 5.8001E7
+LD 5 3 1 925 5.8001E7
+LD 5 4 1 1 5.8001E7
+FR 0 1 0 0 14 0
+RP 0 1 361 1000 90 0 1 1
+EN
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Parallel 450-Ohm TL Simulation
+CM cu wire + .9 VF via IS cards GW 1 & 3
+CE
+GW 1 833 0 0 0 0 0 1138.13 .03205
+GW 2 1 0 0 1138.13 0 1.367 1138.13 .03205
+GW 3 833 0 1.367 1138.13 0 1.367 0 .03205
+GW 4 1 0 1.367 0 0 0 0 .03205
+GS 0 0 .02540
+GE 0
+EX 0 4 1 0 1 0
+LD 4 2 1 1 450 0 0
+LD 5 1 1 833 5.8001E7
+LD 5 2 1 1 5.8001E7
+LD 5 3 1 833 5.8001E7
+LD 5 4 1 1 5.8001E7
+IS 0 1 1 833 3.25 1e-10 .00224
+IS 0 3 1 833 3.25 1e-10 .00224
+FR 0 1 0 0 14 0
+RP 0 1 361 1000 90 0 1 1
+EN
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The rest of the development effort is to find--using a constant conductivity value--a radius and a permittivity value that together bring the transmission line to resonance at, hopefully, 450 Ohms. In fact, any number of combinations will do the job as well as it can be done by this method. The following table shows eligible combinations of sheath radius and permittivity that yield reasonably close tallies. Remember that the length is preset to 90% of the air-dielectric length, so that the only changes being made are to the two IS entries.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      IS Radius and Permittivity Values for a 450-Ohm, 0.90-VF Line
+
+      Sheath Radius         Relative        Source Impedance
+      inches     meters     Permittivity    (R+/-jX Ohms)
+      0.09       0.002286   3.1             452.431 - j 0.967
+      0.09       0.002286   3.15            452.462 + j 0.461
+      0.0882     0.002240   3.25            452.437 - j 0.617
+      0.088      0.002235   3.25            452.430 - j 1.033
+      0.088      0.002235   3.3             452.456 + j 0.237
+      0.0878     0.002230   3.3             452.446 - j 0.186
+      0.0866     0.00220    3.4             452.442 - j 0.342
+      0.0858     0.00218    3.5             452.454 + j 0.153
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The inverse relationship between the sheath radius and the permittivity value is readily apparent. Somewhat less noticeable is the fact that the resonant (more accurately, the near-resonant) condition of the source resistance is about 2 Ohms higher than for the air-dielectric case. (Again, more precisely, about 2.5 Ohms higher than the perfect-conductor model and about 1.5 Ohms higher than the copper-wire case. The present model also uses copper wire.)</p>
+  <center>
+    <img src="amod70-6.gif" width="335" height="169" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> illustrates the situation. We have a combination of insulated sheathing plus an air dielectric between the wires. The greater part of the spacing uses an air dielectric, but the insulated sheathing of the wires is sufficient to change the Zo of the line itself. In a more complete form, the equation for calculating the characteristic impedance of a parallel transmission line is</p>
+  <center>
+    <img src="amod70e2.gif" width="527" height="97">
+  </center>
+  <p>where the added factor is the square root of the relative permittivity of the material between and around the lines. Hence, the Zo of the line is slightly different from our originally calculated 450 Ohms. However, since most of the space is air, we are only off by about 0.5%, with is close enough for most purposes. Nevertheless, further development can refine the characteristic impedance, if necessary.</p>
+  <p>For our purposes in this exercise, I shall declare that we are close enough. Our goal was to establish a means by which to model transmission lines having a desired velocity factor (0.90) and a selected characteristic impedance (450 Ohms). By the correct selection of a radius and a relative permittivity for a parallel transmission line, we can develop the necessary model within reasonably close tolerances.</p>
+  <p>If we need a lower value for the velocity factor, we shall find that the required IS entry--keeping the conductivity constant at 1E-10 S/m--requires nearly a doubling of both the sheath radius and the relative permittivity. For our sample line a radius of 0.0039 m (0.1535") and a permittivity of 7.0 yielded a source impedance of 454.316 - j 0.353 Ohms. The new source value continues to climb by another 2 Ohms. However, the doubling is not quite linear, since we obtained resonance with a 0.90 VF with a permittivity of 3.5 and a sheath radius of 0.00218 m (which would have yielded, if doubled, 0.00436 m).</p>
+  <p>Indeed, the non-linearity shows more clearly if we take the wire radius into account, since it is the sheath thickness--and not simply its outer radius--that is effective in establishing a given velocity factor. The thickness of the 3.5-permittivity sheath for a 0.90 VF was 0.00137 m, while the thickness of the 7.0-permittivity sheath for a 0.80 VF is 0.00309 m.</p>
+  <p>Nevertheless, the exercise does provide some guidance in the development of lines with any desired velocity factor. At least it does so by a trial-and-error method within the modeling software.</p>
+  <p>We have used a sample transmission line consisting of a pair of AWG #14 (0.0641" diameter) wires spaced 1.367" center-to-center. The use of this sample is not without reason. The wire size and spacing fall well within the ability of the NEC-4 core to model accurately if the segment junctions are well aligned. Of course, with parallel wires, we may obtain perfect alignment simply by assigning the same number of segments to each wire. With a segment length that is equal to the wire spacing, we assure that the source and load wires adjoin segments of the same length.</p>
+  <p>A further reason for using the specified sample line stems from the fact that the transmission line wire diameter can be the same as the diameter of the antenna wire to which it might be attached in a sample antenna + transmission line model. AWG #14 copper or copperweld wire is a very common value used in many installations, especially those designed for use in the amateur HF bands. However, if all we were concerned with was the feed line for a center-fed doublet, then we would not require all of the effort to establish a line velocity factor. We might with greater ease use the TL facility and externally adjust the required physical line length to achieve a set of electrical conditions.</p>
+  <p>Not all uses of transmission lines in antenna systems are so simple as modeling the main feedline of a center-fed doublet. Let's look at a different application and see what the modeling opportunities and limitations might be.</p>
+  <center>
+    <img src="amod70-7.gif" width="602" height="118" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the basic outlines of a 3/2 wavelengths center-fed doublet for the 20-meter amateur band. The difference between this antenna design and an ordinary doublet is the use in the center region of each half-element a 1/4 wavelength shorted stub, where the short occurs 1/2 wavelength from the feedpoint.</p>
+  <p>The interesting question surrounding the design proposal concerned the effects of the stubs on the pattern and gain of the antenna. The top portion of <b>Fig. 8</b> shows the pattern of the same antenna treated simply as a 3/2 wavelength doublet. At the prescribed length of 99', the antenna shows a typical 6-lobe pattern with a maximum strength of about 8.4 dBi, as modeled at an elevation angle of 14 degrees, based on its height of 50' above average ground. The antenna uses AWG #14 copper wire and extends left-to-right (or right-to-left) across the pattern plot.</p>
+  <center>
+    <img src="amod70-8.gif" width="426" height="1200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The center section of the figure shows the azimuth pattern when we create the parallel transmission-line stub using AWG #14 wire. The model for this azimuth pattern uses the very type of transmission line sampled earlier in the exercises, but with no insulated sheath. Hence, the velocity factor is very close to 1.0. As the pattern shows, there is a slight shift in the power distribution among lobes. The strongest lobes are now--by a slight margin--the 4 angling lobes relative to the wire, with a small reduction in the broadside lobes. By dividing power among 4 lobes, the overall maximum gain decreases fractionally to about 8.2 dBi, using the same elevation angle.</p>
+  <p>In the design proposal, however, the 1/4 wavelength stub section used material having a velocity factor of about 0.8. Hence, it seemed appropriate to investigate whether the antenna performance would change by assigning a velocity factor less than 1.0 to the modeled stub section. One stage in the modeling insulated the stub wires with insulation radii and permittivities consistent with the 0.9-VF line shown earlier. The result was the pattern in the lowest portion of <b>Fig. 8</b>. This pattern changes the relative strength of the lobes to increase the power in the broadside lobes and decrease it in the angling lobes, resulting in a maximum gain of about 9.2 dBi. Among the models tried, this one yields the strongest broadside lobe strength.</p>
+  <p>At best, the models in this series suggest some trends in performance, none of which offer much optimism that going to the extra lengths of construction complexity for the antenna will yield a comparable improvement in performance as compensation. However, the models--as limited as they are--do suggest trends and hence fall among a whole class of modeling efforts that I tend to classify as "suggestive" rather than definitive. Since they are not a decisive confirmation or refutation of the claimed principles of construction, they do not qualify as "proof-of- principle" models. Each of these categories of models has utility in a domain of modeling that is well shy of a definitive "analytical" model or a definite "design" model. Each category of model has functions within a task-defined set of limitations.</p>
+  <p>One of the limitations inherent to the evaluation of the design proposal is the fact that the physical antenna uses coaxial cable as the shorted stubs. Its physical length is as specified in the model, which means that its velocity factor makes the stubs--as stubs--electrically longer than the physical length.</p>
+  <p>The key factor of variance between the model and the physical antenna is the fact that when a shorted stub is not exactly 1/4 wavelength long, the reactance differs between a 50-Ohm stub and a 450-Ohm stub by a 9:1 ratio. Since the shorted stubs are longer than 1/4 wavelength, the reactance is capacitive, indicating a resonant or 1/4 wavelength frequency well below the 14-MHz test frequency. <b>Fig. 9</b> provides some graphic data on the reactances of shorted stubs from 10 through 80 degrees of electrical length.</p>
+  <center>
+    <img src="amod70-9.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The proposed antenna was to operate at a variety of frequencies, some far removed from the 14-MHz test frequency. Hence, it is not possible in the simplified exercise to substitute the 450-Ohm line--at any VF supplied by the use of an insulated sheath--for the coax line at all frequencies.</p>
+  <p>Had the antenna been differently designed, the differences reported by using the 450-Ohm line stub with and without an insulated sheath would have been far more dramatic. Let's move the short from the outer ends of the stubs to the inner ends. Now the distance from the center feedpoint to the far end of the stub--the open end--is about 1/2 wavelength, while the inner end is about 1/4 wavelength distant from the feedpoint. Then let's repeat our experiment of modeling the stub sections without sheathing--giving us a VF close to 1.0--and with a sheathing corresponding to the 0.9-VF transmission line sample.</p>
+  <center>
+    <img src="amod70-10.gif" width="800" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> shows the results. In this case, there is almost a full 2-dB increase in gain and a corresponding narrowing of the beamwidth for the sheathed version. As in the first version, we cannot claim that we have a definitive model, but we may be moving from a suggestive to a proof-of-principle model, relative to using transmission-line sections--even of coax--to tailor the performance of a wire antenna.</p>
+  <p>What principle applies to this particular antenna lies beyond the scope of the exercise. We have examined the use of the IS or insulated sheath control input of NEC-4 to simulate a transmission line with a velocity factor other than 1.0. There may be modeling occasions on which it is worthwhile to use this facility in more than a haphazard way to check out an actual design, the principles of a design, or the trends that would likely emerge from design variations. So long as we do not overstate the claims from a model, all of these goals are worthwhile.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

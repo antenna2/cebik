@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Vertical, HF Lower">
+  <title>The 5/8-Wavelength Mystique Part 1: 80-Meter Monopoles With Buried Radials</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/gpbut.gif" align="left" width="90" height="84" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">The 5/8-Wavelength Mystique<br>
+    Part 1: 80-Meter Monopoles With Buried Radials</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>For the lower-HF portion of the study, I selected 3.75 MHz as a reasonable test frequency, even though it is unlikely that anyone would have the wherewithal to construct a 164' 5/8 wavelength monopole. I also used 0.1" diameter copper wire throughout the 80-meter portion of the study. First, the wire size is quite reasonable for a radial system. A large radial system of 128 wires creates a major junction, and the use of relatively thin wire ensures that the shortest wire length (0.5') will create no significant problems of segment inter-penetration at the junction of the radials. Second, the use of 0.1" diameter wire throughout ensures that there are no angular junctions of wires having dissimilar diameters in the model. Moreover the losses of 0.1" diameter wire at 80 meters a quite low, allowing the results to stand for those which might be obtained with the much larger-diameter elements used in actual 80-meter monopoles.</p>
+  <p>Modeling a buried radial system requires attention to several constraints of NEC-4. First, the vertical elements must pass through the ground surface at a segment junction. This requirement is most easily met by using a 1-segment wire from the ground level to the radial junction, which is 0.5' below the ground surface. As well, the source segment should be of the same length as the segment immediately adjacent to it for maximum accuracy. Therefore, I used a 0.5', 1-segment wire for the source wire, the lower end of which is at ground level. Above the source segment, the vertical radiator was developed using segment length-tapering, a convenient facility on EZNEC software. The 1-segment wire above the feedpoint is 0.5' long, the one above that is 1.0' long, and so on until a maximum segment length of 8' was reached. <b>Fig. 3</b> provides a partial sketch of the technique.</p>
+  <center>
+    <img src="58-3.gif" width="695" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Angular wire junctions are most accurate if the segments that meet are the same length. Therefore, the radials were also created using segment length-tapering techniques, with the inner-most segment 0.5' long, as shown in <b>Fig. 3</b>. Model creation was speeded by another convenience of EZNEC, the ability to select the group of wires composing an initial radial and then simply specifying the total number of radials required by the model. For comparative purposes, I explored models using a MININEC ground with no radials as well as buried radial systems using 32, 64, and 128 radials per model. <b>Fig. 4</b> shows an outline sketch of the 32- radial model. For a discussion of the history and mathematics of classical ground calculations, see Rudy Severns, N6LF, "Verticals, Ground Systems, and Some History, " <i>QST</i> (July, 2000), 38-44. For a discussion of the techniques used in NEC-4 for the evaluation of the Sommerfeld/Asymptotic model, see Gerald J. Burke, <i>Numerical Electromagnetics Code--Nec-4: Method of Moments; Part II: Program Description--Theory</i> (LLNL: 1992), pp. 32-56.</p>
+  <center>
+    <img src="58-4.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To provide a cross section of the performance of the 1/4 wavelength and 5/8 wavelength monopoles, I used 4 different types of ground conditions, as shown in <b>Table 1</b>. As I demonstrated in Part 2 of the series, "Some Facts of Life About Modeling 160-Meter Vertical Arrays," in The National Contest Journal (2000 and 2001 in a 5-part sequence), the use of the traditional sequence of ground conditions called "very poor," "poor," "good," and "very good" provides a fair sampling of soil varieties for most lower HF purposes. As well, the modeling techniques for buried radial system using NEC-4 are described in more detail in that series. Also included are demonstrations of limitations in using the MININEC ground and the NEC-2 close-to-ground radial systems as substitutes for a fully modeled buried radial system.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 1.  Soil types used in the study.
+
+Soil Type           Conductivity              Permittivity
+                    Siemens/meter             dielectric constant
+Very Poor           0.001                      5
+Poor                0.002                     13
+Good (Average)      0.005                     13
+Very Good           0.0303                    20
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Many antenna analysts use MININEC or a version of NEC with a MININEC ground in order to simplify the modeling of vertical monopoles. Since EZNEC provides the MININEC ground as a user option, I produced a set of reference materials for the 64' 1/4 wavelength and the 164' 5/8 wavelength monopoles. <b>Table 2</b> provides data for the two verticals for the various soils. There is a single feedpoint impedance value listed, since MININEC calculates the impedance over a perfect ground, regardless of the soil type specified for the far field pattern.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 2.  1/4 and 5/8 wavelength vertical monopoles over MININEC ground.
+
+                       1/4 WL Monopole                    5/8 WL Monopole
+Soil Type        Gain     TO Angle     Feed Z       Gain      TO Angle      Feed Z
+                 dBi      degrees      R+/-jX       dBi       degrees       R+/-jX
+Very Poor        -1.73    28           37.0+j2.2     1.07     19            83.7-j477
+Poor             -0.26    26                         1.09     15
+Good              0.46    25                         0.47     13
+Very Good         2.51    19                         2.86     19
+
+Note:  Since use of a MININEC ground results in the calculation of the source impedance over
+a perfect ground, the single value of feedpoint impedance applies to all cases.
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The shorter monopole gain values follow what I shall term "naive" expectations: with improvements in soil quality, gain increases and the take-off (TO) angle (or elevation angle of maximum radiation) decreases. In contrast, the 5/8 wavelength radiator shows a decreasing gain value from very poor soil through good soil, with an increase only as we approach very good soil. This difference is explicable by reference to <b>Fig. 2</b>, which showed the difference in the position of maximum current along the radiator. (To be brief, the less conductive the soil, the higher the effective height of the 5/8 wavelength monopole current maximum above ground at the region of reflection that forms the far-field pattern. The 1/4 wavelength current maximum remains at ground level for any soil type.)</p>
+  <center>
+    <img src="58-2.gif" width="350" height="440" border="2" vspace="5" hspace="9">
+  </center>Most evident is the lower TO angle of the longer monopole for all soil qualities. <b>Fig. 5</b> places the patterns of the two monopoles over good ground, where the maximum gain is virtually the same. Evident is the lower TO angle for the longer antenna, along with the secondary high-angle lobe of radiation. For reception, it would appear that the quarter wavelength monopole would be somewhat quieter relative to high-angle QRN.
+  <center>
+    <img src="58-5.gif" width="640" height="255" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If general pattern shape were the only interesting factor in the comparison of 1/4 and 5/8 wavelength monopoles, the MININEC ground models might serve. However, The ability to model fully buried radial systems of various sizes leads to a number of questions concerning the effect of field size upon monopole performance. Therefore, I constructed models using 32, 64, and 128 radials for both monopoles, retaining the initial heights of 64' and 164', selected during the MININEC-ground modeling. The 64' height of the shorter antenna was nearly resonant under MININEC ground analysis. The 164' height is 5/8 wavelength at the test frequency of 3.75 MHz.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 3.  1/4 wavelength vertical monopoles over Sommerfeld-Norton ground with a buried radial
+             system of various sizes (3.75 MHz).
+
+Soil Type    No. Radials         Gain         TO Angle        Feedpoint Impedance
+                                 dBi          degrees         R +/- jX Ohms
+Very Poor
+                  32             -1.16        29              36.4 + j  8.8
+                  64             -0.43        30              34.0 + j  9.9
+                 128             -0.28        29              32.0 + j  8.0
+
+Poor              32             -0.07        26              39.4 + j 10.4
+                  64              0.53        27              36.6 + j 10.5
+                 128              0.70        26              34.2 + j  8.9
+
+Good              32              0.26        24              40.3 + j 10.0
+                  64              0.71        25              37.6 + j  9.7
+                 128              0.87        25              35.5 + j  8.4
+
+Very Good         32              2.20        19              40.0 + j  9.7
+                  64              2.39        19              38.6 + j  9.3
+                 128              2.53        19              37.3 + j  8.6
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p><b>Table 3</b> shows the results for the 1/4 wavelength monopole. For each soil quality, the addition of radials up to the tested limit, there is the expected gain increase. The increment of gain increase itself is most evident in the move from 32 to 64 radials and is most effective with the worst of the soil qualities used. The increment of improvement in the move from 64 to 128 radials is much smaller and is least over good soil.</p>
+  <p>The table shows a fluctuation in the TO angle, never more than one degree. This phenomenon is a function of rounding values to the nearest whole degree and is insignificant. More notable is the fact that modeling the buried radial system shows a set of progressions that a MININEC ground cannot show. For any given soil quality, the more numerous the radials, the lower the feedpoint impedance. (Due to the construction of the model, the feedpoint position is invariant throughout the sequence of models.) However, with one exception (32 radials over very good soil), the feedpoint impedance for any size radial field increases with improvements in soil quality.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 4.  5/8 wavelength vertical monopoles over Sommerfeld-Norton ground with a buried radial
+             system of various sizes (3.75 MHz).
+
+Soil Type    No. Radials         Gain         TO Angle        Feedpoint Impedance
+                                 dBi          degrees         R +/- jX Ohms
+Very Poor
+                  32              0.82        18              81.6 - j 445.5
+                  64              0.87        19              81.0 - j 447.0
+                 128              0.88        18              80.9 - j 447.6
+
+Poor              32              0.99        15              80.9 - j 446.4
+                  64              1.03        15              80.3 - j 447.9
+                 128              1.04        15              80.2 - j 448.6
+
+Good              32              0.47        13              80.4 - j 446.8
+                  64              0.51        13              79.8 - j 448.2
+                 128              0.53        13              79.6 - j 448.9
+
+Very Good         32              2.98        10              80.2 - j 448.8
+                  64              3.01        10              79.7 - j 449.8
+                 128              3.02        10              79.6 - j 450.9
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p><b>Table 4</b> shows comparable information derived from the model of the 5/8 wavelength radiator over the same radial systems. Radials were held to 1/4 wavelength (65.6') for all 80-meter models. Once more, there is a gain increase for any soil type with increasing numbers of radials, but the increments are much smaller and would be operationally insignificant. The general gain pattern for the long vertical varies in accord with the MININEC ground values, but at a lower level except for the use of a good ground. A good ground yields the lowest gain of the test group owing to the particular composite ground conductivity-permittivity phase angle in the calculation of ground effects in the Sommerfeld-Norton (S-N) system, a factor first noted (to the best of my knowledge) by Jack Belrose. Good ground is not always best for a vertical radiator. In passing, one should note that the ground used in modeling is homogenous and cannot take into account affects of stratified changes in ground quality with depth. Since radiation penetration at MF and lower HF is considerable, real conditions for a vertical monopole for 80 meters might vary considerably from the conductivity measurements made near the surface. Although the radial system may respond according to the model, the far field may vary in strength and TO angle from the modeled result.</p>
+  <center>
+    <img src="58-6.gif" width="640" height="255" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The use of a buried radial system does not alter one major result of the study, despite considerable variance between MININEC-ground and S-N ground. As shown in <b>Fig. 6</b>, there is no significant variation of gain between a 1/4 wavelength and a 5/8 wavelength radiator over good ground. The chief edge for the longer radiator lies in the lower elevation angle of the main lobe of radiation, but with the drawback of having a fairly strong higher lobe of radiation. Any advantage in gain for the longer radiator shows up over worse quality soils. With the largest radial fields, the 5/8 wavelength radiator shows a 0.5 dB advantage over a 1/4 wavelength radiator when the soil approximates the poor level and a full dB advantage when the soil is very poor. Over very good soil, the longer radiator again shows a half-dB advantage.</p>
+  <center>
+    <img src="58-7.gif" width="640" height="255" border="2" vspace="5" hspace="9">
+  </center>
+  <p>An interesting aspect of the 5/8 wavelength radiator is its pattern when we compare different soil qualities. For reference, <b>Fig. 7</b> shows the 1/4 wavelength patterns for very poor and very good soil using the 32-radial field. As we might expect, there is little to distinguish the pattern shapes. Essentially, only the signal strength and the TO angle have changed significantly. Making a similar comparison of 5/8 wavelength patterns yields a feature that has not been well-noted in amateur literature. In <b>Fig. 8</b>, we find the same decrease in signal strength and TO angle for the pattern taken over very poor soil. However, the angle and strength of the secondary lobe in the region of 50-55&oslash; elevation does not change over the range of soil qualities. Both conditions yield about the same susceptibility to high-angle QRN. Of course, if we speak in relative terms, the high-angle QRN over very poor soil will be stronger in comparison to the received signal strength from low-angle radiation.</p>
+  <center>
+    <img src="58-8.gif" width="640" height="255" border="2" vspace="5" hspace="9">
+  </center>For the purposes of comparison, I modeled a vertical dipole with the same top height s the 5/8 wavelength monopole. The model achieved resonance with the base 35.7' above ground. Although impractical to implement, the dipole was center-fed. The goal was to find out whether the 5/8 wavelength monopole showed any superiority over the dipole, since both antennas would show a current maximum at just about the same height. The dipole was modeled over a MININEC ground, over an S-N ground with no radials, and over an S-N ground having 32 radials. We can compare the results in <b>Table 5</b> with those for the long monopole in <b>Table 4</b>.
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 5.  1/2 wavelength vertical dipole over MININEC and Sommerfeld-Norton ground (with and
+             without a 32-radial ground plane) (3.75 MHz).
+
+Soil Type    Ground Type/        Gain         TO Angle        Feedpoint Impedance
+             No. Radials         dBi          degrees         R +/- jX Ohms
+Very Poor
+             MININEC/0           -0.27        18              75.3 + j 0.2
+             S-N/0               -0.11        17              72.8 + j 3.5
+             S-N/32               0.02        18              73.8 + j 4.7
+
+Poor         MININEC/0            0.36        15              75.3 + j 0.2
+             S-N/0                0.47        15              73.5 + j 2.5
+             S-N/32               0.55        15              74.5 + j 3.0
+
+Good         MININEC/0            0.11        13              75.3 + j 0.2
+             S-N/0                0.22        14              73.5 + j 1.6
+             S-N/32               0.28        14              74.1 + j 2.1
+
+Very Good    MININEC/0            3.04        11              75.3 + j 0.2
+             S-N/0                3.09        11              74.4 + j 0.6
+             S-N/32               3.10        11              74.6 + j 0.7
+
+Note:  Dipole was set for the same top height (164') as the 5/8 wavelength monopole, resulting
+in a bottom height of 35.7' for a near-resonant length of 0.1" diameter copper wire.
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Over very good ground, there is no practical difference in performance between the elevated dipole and the 5/8 wavelength monopole, regardless of the presence or absence of radials beneath the dipole. However, with soil worse than very good, the monopole shows an increasing gain advantage over the dipole--nearly a full dB over very poor soil. As well, the presence of a buried radial system (using 1/4 wavelength radials) beneath the dipole shows a small but definite performance improvement over a no-radial condition, and the effect becomes greater with worsening soil conditions. Whether the performance improvement is significant enough for the investment of resources in putting the radial system in place would be a user judgment.</p>
+  <p>The upshot of these studies into the performance of a 5/8 wavelength monopole over and against a 1/4 wavelength monopole can be summarized this way,</p>
+  <ul>
+    <li>1. The 5/8 wavelength radiator shows significant gain advantage over a 1/4 wavelength monopole only over soils that are poor or worse, but in any event, the gain advantage is far less than the theoretical 3 dB that yielded the 5/8 wavelength mystique.</li>
+    <li>2. The 1/4 wavelength monopole, besides its considerable mechanical simplicity, has an advantage in the absence of a secondary high-angle lobe of considerable strength relative to the main lobe; hence, the quarter wavelength radiator may be quieter in most installations.</li>
+    <li>3. The chief advantage of the 5/8 wavelength monopole lies in the lower TO angle for the main lobe.</li>
+  </ul>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 6.  Ground wave strength of 1/4 wavelength and 5/8 wavelength monopoles at 10
+             wavelengths from the antenna at ground level with 1000 watts (3.75 MHz).
+
+Soil Type        1/4 WL Gnd Wave       5/8 WL Gnd Wave        Difference
+                 milliVolts/meter      milliVolts/meter       percent
+Very Poor            54.04                 84.81                 57%
+Poor                 99.61                147.49                 48%
+Good                161.60                222.92                 38%
+Very Good           319.33                437.77                 37%
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The last point in part explains the preference--when feasible--for a 5/8 wavelength radiator in MF applications where ground wave strength is a design goal. <b>Table 6</b> provides ground wave values in mV/m at a distance of 2623' (10 wavelengths at 3.75 MHz) from the two types of monopoles, taken at ground level. The 5/8 wavelength radiator shows a significantly higher field strength. The percentage of increase in the field strength over that produced by the 1/4 wavelength radiator increases with decreasing soil quality.</p>
+  <center>
+    <img src="58-9.gif" width="640" height="255" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I must add one final note before turning to VHF applications of these radiators. Although there is no magic to using a precise 5/8 wavelength radiator relative to imprecisely approximating that height, there is a danger in letting the radiator become too long. As is the case with the related extended-double Zepp (the EDZ, a 1.25 wavelength center-fed radiator), further increases in radiator length reduce field strength perpendicular to the radiator and increase the strength of lobes at oblique angles to the radiator. The EDZ pattern in horizontal use devolves into 6 lobes of approximately equal strength when the radiator reaches 1.5 wavelengths. <b>Fig. 9</b> shows what happens when we let the monopole grow to a corresponding 3/4 wavelength height. The low-angle radiation disappears, and the strongest radiation is in the vicinity of a 45&oslash; elevation angle. This note is perhaps unnecessary for experienced antenna designers planning to use a monopole at its fundamental frequency. However, such antennas are often pressed into service on higher frequencies, where they are correspondingly longer in terms of wavelengths. Users often wonder at the absence of low-angle radiation without considering the effects of vertical length on the radiation pattern.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 04-17-2001. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="58-2.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Part 2: 2-Meter Elevated Ground-Plane Antennas</a></p>
+  <p><a href="58.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

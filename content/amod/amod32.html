@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A Case Study: Rotating a Beam</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>32. A Case Study: Rotating a Beam</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Another request for assistance yielded a case with some interesting possibilities for modeling by equation. It involves a common situation: two stacked beams. The problem arose when the individual noted that one of the beams would be fixed in position. The other would rotate. What would be the effect, if any, on the patterns when the beams were not in alignment? To answer this question, he was faced with the prospect of remodeling the rotating beam every time he wished to check another angle of divergence between the two.</p>
+  <p>There is a solution to this problem, and its form depends on the software in use. The solution can be applied to a spreadsheet or other calculating program, with the new rotating beam coordinates used to create a new model. If the software has a "modeling by equation" facility, the solution can be plugged into the software and the process of remodeling automated.</p>
+  <p>The following notes will step through the problem--very likely in too much detail for some and too little detail for others. However, it will indicate what a modeler can do to rotate one antenna relative to another.</p>
+  <p><b>Step 1: Simplify the design details.</b></p>
+  <p>Well designed horizontal arrays for the HF spectrum use tapered element schedules for each wire. Although the solution to be shown can be applied to every element step, that process introduces needless tedium into the process. So the first step is to simplify the beam design so that it uses uniform diameter wires for each element.</p>
+  <p>NEC-2 programs, such as NECWin Plus and EZNEC for Windows provide Leeson corrections for calculating the properties of arrays with linear elements having symmetrical stepped diameter structures. The correction produces equivalent elements having a uniform diameter. Since these substitute elements form the basis of calculation, the user should access the dimensions of these elements and use them for the project ahead.</p>
+  <p><b>Step 2: Center the beam on the boom.</b></p>
+  <p>Once we have a beam with uniform diameter elements, we should them place the beam mounting position at coordinates 0,0. There are numerous conventions used by modelers to develop antennas. Some place the reflector either at Y=0 or at X=0, so that all distances along the boom a cumulatively positive. Other modelers use a plus-minus system, so that the extreme elements are at the same distance from zero--whether or not the mid-point along the boom is the mounting point.</p>
+  <center>
+    <img src="amod32-1.gif" width="534" height="362" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows a model transformed from the first convention to the second. The second convention is closer to the desired goal of having 0,0 represent the mounting position. In the absence of a precise location of the true mounting point, the second convention can be used without introducing significant error into the resulting modeling tests.</p>
+  <p><b>Fig. 1</b> also shows the dimensions of the beam we shall use as our running example. It is a 3-element 20-meter Yagi with 1" diameter elements. One of the merits of the model is the none of the elements will fall at 0,0 in our transformation of position.</p>
+  <p><b>Step 3: Rethink the coordinates of the element ends.</b></p>
+  <p>We normally think of a beam as a set of linear elements with end coordinates. For the moment, we need think only of the end coordinates and ignore the wire between them. What we shall develop is a method of accurately producing end coordinates for any angular position of the beam. Then, by placing those coordinates in the correct places in the modeling wires table, a correctly dimensioned beam will result--pointed just where we desire.</p>
+  <center>
+    <img src="amod32-2.gif" width="445" height="490" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> holds the key to rethinking the coordinates. From the mounting position (0,0,), let each coordinate set (6 of them in this case) be a function of a (dotted) line of length L with an angle A relative to the initial boom axis. Note that we are using angles from 0 to 360 degrees. More accurately, we shall be using angles from 0 to 2PI radians, since most spreadsheets know angles only in terms of radians. However, we can always convert an angular measure in degrees to one in radians (or back again) by the conversion equation</p>
+  <center>
+    <img src="amod32e1.gif" width="506" height="83">
+  </center>
+  <p>where PI is carried to as many decimal places as you can stand.</p>
+  <p><b>Step 4: Calculate L1-Ln and A1-An</b></p>
+  <p>We may calculate the length of each radial (L1 through Ln) and angle (A1 through An) from the existing coordinates of our model that is centered on the mounting point. The necessary equations are basic trig:</p>
+  <center>
+    <img src="amod32e2.gif" width="389" height="82">
+  </center>
+  <p>where Xn and Yn are the coordinates for any of the point, An is the angle relative to the axis of reference, and Ln is the length of the radial from the mounting point (0,0). For the beam we are using as our example, we derive the following table for the 6 points. Since you may be using a hand calculator, use whatever shortcuts you know that are allowed by trig to place the angles in the proper quadrant.</p>
+  <pre>Coordinate Identification     Ln (")    An (degrees)   An (radians)
+Director End 1  (1)           230.2      54.0          0.943
+Director End 2  (6)           230.2     306.0          5.340
+Driver End 1    (2)           198.2      92.8          1.620
+Driver End 2    (5)           198.2     267.2          4.663
+Reflector End 1 (3)           247.6     123.1          2.149
+Reflector End 2 (4)           247.6     236.9          4.134</pre>
+  <p>For a given beam design, the lengths in the Ln column will remain constant.</p>
+  <p><b>Step 5: Calculate coordinates for a new angle.</b></p>
+  <p>To rotate the beam--in a clockwise fashion--we need only add to each angle the number of degrees (or radians) of rotation and then recalculate the coordinates. From the length of the radial and the angle, we may calculate the coordinates with equally basic trig equations:</p>
+  <center>
+    <img src="amod32e3.gif" width="412" height="59">
+  </center>
+  <p>where A' is the new angle resulting from the rotation.</p>
+  <p>Let's rotate our beam by 20 degrees and look at the new coordinates for the elements. 20 degrees is 0.349 radians. So we may simply increase the angles in the table above by this amount.</p>
+  <pre>Coordinate Identification     An (radians)        Xn        Yn
+Director End 1  (1)           1.292                221.3      63.4
+Director End 2  (6)           5.689               -128.8     190.8
+Driver End 1    (2)           1.970                182.7    - 76.9
+Driver End 2    (5)           5.012               -189.4      58.5
+Reflector End 1 (3)           2.499                148.4    -198.1
+Reflector End 2 (4)           4.483               -241.1    - 56.4</pre>
+  <p>If we rotate the beam another 70 degrees, we shall end up with a total 90- degree or 1.571-radian rotation. In this case, our dimensions will become those in the following table.</p>
+  <pre>Coordinate Identification     An (radians)        Xn        Yn
+Director End 1  (1)           2.514                135.2    -186.3
+Director End 2  (6)           6.911                135.2     186.3
+Driver End 1    (2)           3.191               -  9.8    -198.0
+Driver End 2    (5)           6.235               -  9.8     198.0
+Reflector End 1 (3)           3.720               -135.2    -207.4
+Reflector End 2 (4)           5.706               -135.2    -207.4</pre>
+  <p>In other words, the antenna has it original dimensions, with the X and Y axes transposed.</p>
+  <center>
+    <img src="amod32-3.gif" width="477" height="441" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows a top view of the three antennas: the original, with 20- degrees rotation, and with 90 degrees rotation to verify that the results indeed rotate around a common mounting point.</p>
+  <p><b>Step 6: Automate the model.</b></p>
+  <p>Although we can use the basic trig equations and our reformulation of the model coordinates to create new models for any orientation about the mounting point, systematic modeling of a rotating beam can be much simplified. However, the requirement is a software package with a "model- by-equation" facility, such as NEC-Win Plus. We may simply plug our design data and equations into the equations and wires pages of the built-in spread sheet.</p>
+  <center>
+    <img src="amod32-4.gif" width="637" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> illustrates the initial stage of the project. Column D becomes a reference column for the design's radial lengths and the angles from 0 to 360 degrees, but given in radians, the calculating basis for spread sheets. Column E identifies each of the D-entries in terms of the designations in the figures we have used so far. Column F contains 2 entries: a converter for changing entries in degrees to radians and a place (F3) to enter the rotation of the Yagi from its initial setting. Since most of us are accustomed to thinking in terms of degrees, the entry is in those terms.</p>
+  <p>Column B provides values for the pre-assigned variables A-J. A-G simply add the design angles to the additional rotation angle. H-J repeat the radial lengths as a matter of convenience.</p>
+  <center>
+    <img src="amod32-5.gif" width="638" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The page shows an entry of 20 degrees as the rotation of the basic 3- element Yagi. The Equations Values page, in <b>Fig. 5</b>, shows the calculated values for each of the adjusted angles, in column B. You can compare these values to those in one of the tables shown earlier.</p>
+  <center>
+    <img src="amod32-6.gif" width="637" height="459" border="2" vspace="5" hspace="9">
+  </center>We did not calculate the coordinates on the equations page, since we may do that on the Wires page through equations (<b>Fig. 6</b>). All X values will involve a sine, while all Y values require a cosine. H, I, and J are the appropriate radial lengths used to determine the values of the coordinates.
+  <center>
+    <img src="amod32-7.gif" width="636" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The values yielded by the equations--both those on the equations page and those on the wires page--appear in <b>Fig. 7</b>. Since we are working with a free space model, Z is zero. However, for a real problem involving stacked beams--one of which is fixed, Z would take a positive value. In fact, one may add further lines to this model to create the fixed beam using numerical values throughout--since it is a constant. Then, simply by placing a new value in degrees in F3 on the equations page, one can rotate the movable beam to find the pattern consequences of this form of stacking.</p>
+  <center>
+    <img src="amod32-8.gif" width="640" height="439" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the pattern of the rotating beam when moved 20 degrees from its initial orientation. The pattern values (gain and front-to-back ratio) plus the impedance data make a quick check on whether we have formulated our equations correctly.</p>
+  <p>Putting the rotating beam to use involves simply assigning a set of ground conditions and adding the fixed beam. <b>Fig. 9</b> shows the wires page for a sample situation. An identical beam to the rotating one has been added in lines 4-6. It has been left inert, on the premise that the upper rotating beam will be active alone when it is not aligned with the lower beam. Of course, the modeler is certainly free to change this premise, as well as the 50 and 90 foot heights assigned to the beams.</p>
+  <center>
+    <img src="amod32-9.gif" width="635" height="456" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In fact, it may be well for a modeler to investigate what happens within a site-specific model when the fixed beam driver is either closed or open at the feed point. The condition in the model is closed when no source is assigned to the driver wire. To open the driver, insert a very high resistive load (1E10) at the normal feed position on the wire.</p>
+  <center>
+    <img src="amod32-10.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For our simple sample, the inert lower driver is closed. <b>Fig. 10</b> combines azimuth patterns for the active upper antenna when in line with the lower antenna and when 20 degrees off clockwise. Nothing radical happens in this case. The gain differential is insignificant, as is the front-to-back ratio. However, as the figure reveals, there is some small distortion of the rear pattern as the antenna departs from the in-line condition. The source impedance shows a 2-Ohm change in reactance for this situation relative to the impedance of the upper antenna in isolation.</p>
+  <p>There is no requirement that the two beams in the stack be identical. In fact, one can combine beams of many sorts simply by cutting and pasting entry lines. However, it is wise to ensure that the various beams in the stack use segments of roughly equal lengths to ensure that there are enough segments per half wavelength at the highest frequency tested.</p>
+  <p>Although deriving and entering the equations needed to create a rotating beam takes three times as long as entering a single model, the net time saved will be considerable. If we take readings every 10 degrees, for example, the equations can save us about 80% of the time required to introduce individual models for each step of the way. The more complex the individual antenna models, the more time saved by the use of equations.</p>
+  <p>Sometimes it is worth the effort to develop some models by equation.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Traps</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>49. Traps</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>We have not so far had occasion to work with parallel R-L-C loads (LD1). The most notable use of such loads is to model traps, which we install to let an antenna be resonant on more than one frequency of operation. Let's go through an exercise and discover how we may convert traps into parallel R-L-C loads.</p>
+  <center>
+    <img src="amod49-1.gif" width="640" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Examine the wire table for a test model, given in NEC-Win Plus form in <b>Fig. 1</b>. You will find a 5-wire assembly for 21.1 MHz that we shall also operate on 14.1 MHz. The wire table is non-standard. Wire 1 is the center section of the antenna--essentially the 15-meter portion. Wires 2 and 3 are the 1-segment wires on which we shall install the traps. Wires 4 and 5 are the outward extensions from the traps to the tip of the elements on 20 meters. <b>Fig. 2</b> shows the outline of the antenna with a set of dimensions. The overall dimension of 27' 4" corresponds to the wire table tips. However, the inner 22' dimension is the space between the traps themselves and not the space of the center section (wire 1) alone.</p>
+  <center>
+    <img src="amod49-2.gif" width="577" height="233" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The antenna material is 1" diameter aluminum, and the environment is free space. Note that the trap wires are the same diameter as the remaining wires. Therefore, the model will not account for any effects created by the shape of the traps. We shall construct the 15-meter traps from the mathematical loading facility.</p>
+  <center>
+    <img src="amod49-3.gif" width="353" height="401" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One problem with a trap is that it is not yet a parallel R-L-C circuit. As shown in <b>Fig. 3</b>, a trap consists of a capacitor in parallel with a series resistance-inductance leg. Before we can create a parallel R-L-C load, we must convert the trap configuration into a true parallel configuration. Moreover, we shall have to do these for each frequency-band of operation.</p>
+  <p>In the following notes, we shall set up a procedure for calculating traps and converting them into parallel R-L-C loads. Basic to the procedure is the ability to convert inductances to inductive reactance and back as well as capacitances to capacitive reactances and back. Therefore, as a quick reference, here are the basic equations:</p>
+  <center>
+    <img src="amod49e1.gif" width="601" height="75">
+  </center>
+  <p>where X<sub>L</sub> is the inductive reactance, f is the frequency in hertz, and L is the inductance in henries. The same equations work if we use both MHz and uH.</p>
+  <center>
+    <img src="amod49e2.gif" width="624" height="80">
+  </center>
+  <p>where X<sub>C</sub> is the capacitive reactance, f is the frequency in hertz, and C is the capacitance in farads.</p>
+  <p>For our small exercise in converting traps, we shall begin with an inductor only and carry you through the process. The inductor is a 3.3 uH coil with a measured Q of about 235. By standard equation, we can find the inductive reactance. However, we must know the trap frequency. Ordinarily, we design traps to be resonant at or just below the lowest frequency of operation on the upper band. If we set our trap at 21.0 MHz, the inductive reactance is j 435.4 Ohms. Since the Q is 235, the series resistance of the coil is 1.853 Ohms. We can use the capacitive reactance equation to calculate the capacitor, which will be about 17.41 pF to provide the matching reactance for the coil at 21.0 MHz.</p>
+  <p>We need to convert the series resistance and reactance values into parallel equivalents. The standard conversions equations for going from a series to a parallel combination of resistance to reactance are</p>
+  <center>
+    <img src="amod49e3.gif" width="627" height="83">
+  </center>
+  <p>where R<sub>P</sub> and X<sub>P</sub> are the desired parallel equivalents to R<sub>S</sub> and X<sub>S</sub>, the original series values of resistance and reactance. The parallel resistance for the trap at its resonant frequency is 102,325 Ohms. The parallel reactance is j 435.4 Ohms, which will return a parallel coil of 3.3 uH.</p>
+  <p>However, we do not intend to operate the trap at 21.0 MHz, but at 21.1 MHz. To determine the parallel values at the operating frequency, we need to take a few steps. First, we shall find the inductive and capacitive reactance of the inductor and capacitor at the operating frequency. We may return to basic equations, or we may take this shortcut:</p>
+  <center>
+    <img src="amod49e4.gif" width="613" height="84">
+  </center>
+  <p>where X<sub>LA</sub> and X<sub>CA</sub> are the reactance values at the resonant frequency, F<sub>A</sub>, and X<sub>LB</sub> and X<sub>CB</sub> are the values of reactance at the new frequency, F<sub>B</sub>. For operation at 21.1 MHz, we obtain an inductive reactance of j 437.5 Ohms and a capacitive reactance of - j 433.4 Ohms. The required parallel reactance of this combination we may call X<sub>NET</sub>, which we may determine from this equation:</p>
+  <center>
+    <img src="amod49e5.gif" width="537" height="80">
+  </center>
+  <p>Note that the equation uses the absolute values of the reactances, not their originally signed values. For our test model at 21.1 MHz, the net or parallel reactance is - j 45,829 Ohms, although we do not have to enter that value, since we shall use the values of inductance and capacitance, 3.3 uH and 17.41 pF, respectively.</p>
+  <p>The parallel resistance for X<sub>NET</sub> can be derived approximately from the parallel resistance at resonance using this equation:</p>
+  <center>
+    <img src="amod49e6.gif" width="531" height="91">
+  </center>
+  <p>where R<sub>PB</sub> is the parallel resistance at the new frequency, F<sub>B</sub>, and R<sub>PA</sub> is the parallel resistance at the resonant frequency, F<sub>A</sub>. By raising the ratio of 21.1 over 21.0 to the 1.5 power--using the X<sup>Y</sup> function of a hand calculator--we find a new parallel resistance of 103,057 Ohms.</p>
+  <center>
+    <img src="amod49-4.gif" width="501" height="274" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now we are ready to install our approximate values into the parallel R-L-C load box for our test model. <b>Fig. 4</b> shows the NEC-Win Plus version of the entry. Remember that we have two traps and hence two parallel R-L-C loads to create. If we run the model at 21.1 MHz, we obtain a free-space gain of 2.05 dBi with a source impedance of about 71.9 - j 8.0 Ohms. If we check the EZNEC load data output, we find less than 0.1 dB loss from the trap. If we check the NEC-Win Plus power budget table, we find an overall efficiency of almost 98%, despite the use of an aluminum element.</p>
+  <center>
+    <img src="amod49-5.gif" width="618" height="345" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We may gauge the effectiveness of a trap in part by the degree to which it confines significant current levels to the 15-meter portion of the antenna. <b>Fig. 5</b> provides the EZNEC antenna view with the relative current magnitude showing. I have expanded the normal curve to show the just visible low currents on the outer ends of the wire, the portions designed to serve 20 meter operation. The fact that the source impedance is so close to the standard resonant 72 Ohms of a regular dipole further confirms the effectiveness of the trap.</p>
+  <p>However, we wish to operate the antenna at 14.1 MHz as well. For this operation, we shall need to modify the test model. This version of the model will have loads that approximate the values seen at the lower frequency, well below the trap's resonant frequency. We must recalculate the applicable parallel combination of resistance and reactance that applies to the new frequency. At 14.1 MHz, the reactance of the 3.3-microH coil is about j 292.4 Ohms, and the reactance of the capacitor is about j 648.5 Ohms. Using the same two equations as we did for 21.1 MHz, we obtain for 14.1 MHz a parallel or net reactance of j 532.2 Ohms and a parallel resistance of about 56,297 Ohms. Of course, we shall use the values of inductance and capacitance that we started with, namely, 3.3 uH and 17.41 pF in the parallel R-L-C load, but with the new parallel resistance value.</p>
+  <center>
+    <img src="amod49-6.gif" width="501" height="274" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For the revised model at 14.1 MHz, <b>Fig. 6</b> shows the values plugged into the NEC-Win Plus version of the load entry box. There are, of course, two traps to enter in parallel form. If we run the model at 14.1 MHz, we shall obtain a free-space gain of about 1.83 dBi, with a source impedance of about 66.8 + j 0.9 Ohms. EZNEC's load data table shows a loss that slightly over 0.2 dB from the trap equivalent load, while the NEC-Win Plus power budget table shows an efficiency of about 94.7%. Both supplementary values reflect the lower free-space gain at 20 meters.</p>
+  <center>
+    <img src="amod49-7.gif" width="634" height="351" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows part of the reason for the reduced gain. The overall length of the trap dipole is shorter than a full-size version. The shortness is reflected in the source impedance, which is lower than normal for a dipole. In the antenna view, we can also see the sudden decrease in current past the trap positions on the antenna element.</p>
+  <p>Part of the reduced efficiency is also due to the fact that the trap Q at 14.1 MHz is not the same as the coil Q that we used to estimate the parallel R-L-C load values. We may obtain the trap Q on 20 meters by reversing our calculations. We shall convert the parallel resistance and reactance into series values, using standard <i>ARRL Handbook</i> equations from Chapter 6:</p>
+  <center>
+    <img src="amod49e7.gif" width="623" height="95">
+  </center>
+  <p>where the letters have the same meaning as they had in the series-to-parallel conversion equations. If we process our parallel values through these formulas, we obtain a series resistance of about 5.0 Ohms and a series reactance of about j 532.3 Ohms. Since Q is simply the reactance divided by the resistance, we obtain a value of about 106, somewhat lossier than the value we might obtain considering the coil alone. In fact, the entire trap must be considered at every frequency of use, and we cannot assume that on frequencies below the resonant frequency of the trap that the coil alone determines the effects upon the antenna's performance.</p>
+  <p>The ability to transform a trap into a set of series values of resistance and reactance has a further benefit. If our interest in the trap antenna is confined to discreet frequencies, we may calculate the series values of resistance and reactance for each frequency, using the procedure that we have outlined. Then, we may use for each frequency a complex R +/- j X (LD4) load instead of the parallel R-L-C (LD1) loads that we have used in the exercise. However, because LD4 loads do not change reactance with frequency, we cannot perform frequency sweeps with them. Although we can perform frequency sweeps with parallel R-L-C loads, we should limit the frequency excursions that we allow if the load is a trap conversion. Since the value of resistance changes with frequency, a given calculated value will return accurate result only over a limited frequency span.</p>
+  <center>
+    <img src="amod49-8.gif" width="655" height="151" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Those who may work with traps extensively and who have EZNEC can lighten the burden of modeling traps by using the special entry in the load list provided by the program. <b>Fig. 8</b> shows the entry box for a trap, using the series resistance and coil inductance, as well as the parallel capacitor value. Note that the frequency of the trap can also be specified. Under these conditions, through a related but somewhat different set of calculations, EZNEC calculates the requisite load values for each frequency at which the trap may be used, even if none of those frequencies happens to be 21.0 MHz.</p>
+  <p>EZNEC users may revise the load entry for the test model and run it at both 21.1 and 14.1 MHz. At the higher frequency, the gain should be 2.05 dBi with a source impedance of 71.9 - j 8.0 Ohms. At 14.1 MHz, the corresponding values should be 1.83 dBi and 66.9 + j 0.9 Ohms. The approximation system shown earlier for use with any version of NEC-2, yields output values that are very usable compared to these. However, the appeal of the simple EZNEC trap entry system and of the ability to frequency hop without recalculation of load values is undeniable for individuals whose work requires extensive trap modeling.</p>
+  <p>In some ways, the degree of precision of the trap output data is related to more general questions of accuracy with respect to loads placed at some distance from the region in which the current changes slowly from one segment to the next. In our test model, the load is distant on 20 meters from the source, and from <b>Fig. 6</b>, we know that the current is changing fairly rapidly. Hence, the mathematical loads at the trap points will not calculate as accurately as closer in toward the source, and the inductor wire may have at least some affect on the total antenna length. Therefore, when working with trap antennas, allow considerable adjustment capability when moving from your model to the physical antenna.</p>
+  <p>We have not exhausted all that might be said about trap loads, but these exercises should enable you to proceed on your own.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

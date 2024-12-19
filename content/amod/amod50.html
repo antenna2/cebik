@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The NEC-4 IS Card: Insulated Wires</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>50. The NEC-4 IS Card: Insulated Wires</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>From time to time, I shall look at some of the advanced features of both NEC-2 and NEC-4 programs. By "advanced," I mean features not generally included on entry level programs such as EZNEC 3.0 or NEC-Win Plus. Both of these widely used and user-friendly programs reduce the list of available geometry inputs and program control cards in the interest of effectively guiding the user through the modeling process.</p>
+  <p>However, both the NEC-2 and the NEC-4 core programs allow a considerable number of additional geometry and control functions. When NEC-4 appeared, it not only improved the accuracy of calculations for tapered-diameter elements, but as well added a number of new inputs. The one in which I am interested this month is the IS card or input. IS stands for "insulated sheath." It provides a way for the user to analyze the performance of antenna wires with insulation.</p>
+  <p>For a long time, antenna builders have been aware that insulated antenna element wire has a velocity factor. The electrical length of an insulated wire will be longer than the physical length to a degree that depends upon the type and thickness of insulation. Expressed from a different perspective, a resonant dipole for some given frequency and wire diameter will be shorter if the wire is insulated than it will be if the wire is bare. How much shorter the insulated dipole will be depends on the insulation.</p>
+  <p>Unfortunately, there are no handy tables that are generally available to give us the velocity factors (VF) of insulated wires that are commonly used in wire antenna construction. However, experience has taught antenna builders that the values range from 0.99 down to 0.95 or so, depending on the type and thickness of the insulation. Perhaps the IS card of NEC-4 can give us some slightly better feel for insulated wire velocity factors, as well as introduce an advanced feature of a modeling program.</p>
+  <p><b>Modeling the Insulated Wire</b></p>
+  <p>An insulated wire, from the perspective of NEC-4, consists of a wire and an insulating sheath. The program assumes that the insulation begins at the exact surface of the wire and extends to some other point. The "other" point defines the radius of the sheath.</p>
+  <center>
+    <img src="amod50-1.gif" width="447" height="381" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows a sketch of the critical dimensions of an insulated wire and its model. We shall model the illustrated situation in GNEC, perhaps the only currently available commercial implementation of NEC-4 that allows the use of the IS input. Like the core itself, GNEC will expect that its wire geometry inputs list the wire radius and not its diameter. And the first step in setting up a model--without the insulation on the wires--is to set up the wire.</p>
+  <center>
+    <img src="amod50-2.gif" width="352" height="191" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the wire set-up panel from GNEC. The Tag number is simply the wire number. We shall give the wire 21 segments and place the source at its center (segment 11). In the examples that we shall explore, all dimensions will be metric, the fundamental unit of the NEC core. Hence, the single wire dipole--resonant at 30 MHz--will extend on each side of the X-axis along the Y axis +/-2.416 m. Likewise, the radius is in meters. 0.001 m = 1mm.</p>
+  <p>I selected the 0.001-m radius because 2-mm diameter copper wire is a very popular size for European antenna construction. A 2-mm wire is 0.07874" in diameter, just below the 0.0808" diameter of AWG #12 copper wire so popular with U.S. antenna builders.</p>
+  <center>
+    <img src="amod50-3.gif" width="483" height="293" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the basic antenna model in complete form for a free-space copper dipole resonated at 30 MHz. The CM or comment card is inaccurate because for the purposes of illustration, I have added a line that insulates the wire. However, we should first trace the other lines of the model. The GW line shows the wire we created in <b>Fig. 2</b>, and the following GE line ends the geometry section of the model. The EX lines specifies a voltage source placed at segment 11 of wire 1. The LD5 line provides the conductivity of copper as a material load on every segment of the wire. The FR or frequency request card shows a single frequency request of 30 MHz. The RP 0 line specifies a far-field azimuth (phi) pattern covering all 360 degrees around the antenna.</p>
+  <p>If we ignore the IS line for a moment and return to the bare-wire model, the antenna will show a free-space gain of 2.10 dBi and a source impedance of 72.536 + j 0.178 Ohms. I have listed the impedance to many more decimal places than we might make use of operationally. However, at certain points in our work, we shall be interested in numerical progressions, and so I have given the data to the limits provided by the program. The free-space source impedance of the bare-wire model will be important to us in more than one way as we proceed.</p>
+  <p>In <b>Fig. 3</b>, we inserted the IS line above the EX line. Let's see how to implement an insulated sheath for a wire.</p>
+  <center>
+    <img src="amod50-4.gif" width="349" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the line-assist screen for entering IS information. First, we must identify the wire to which the insulated sheath will apply, namely wire or tag 1 from the first to the last segment. Note that we have options here and may apply a sheath to only some or to all of the segments of a wire. Had we desired to leave the center segment bare, we could have specified 2 IS entries, one to cover segments 1-10 and the other to cover segments 12-21. The only restriction is that we cannot apply two sheaths to any single segment. Hence, we cannot model the multi-layering of different types of insulation.</p>
+  <p>Beyond the segment-coverage of the shield, we have 3 significant variables to enter. One of them is the sheath outer radius, as measured from the wire center line to the sheath surface. The depth or thickness of the shield is the sheath radius minus the wire radius. In the illustration, the sheath is 0.0005 m (or 0.5 mm) thick (about 0.0197").</p>
+  <p>Note that the IS input is a program control card, not a wire geometry card. Therefore, we must input the value for the sheath radius in meters. If you have used the TL (transmission line) facility within a more basic program, you have sampled inputting dimensional values within a program control card. However, for user convenience, the programmers allow you to use the same units that you specified for the geometry section of your model. The program performs any necessary conversion for you. For NEC itself, the only acceptable input for all such program control entries will be in meters. In contrast, we could have specified the wire coordinates in any units of measure and then used a GS card to scale them to meters for the core run. I set up the basic model in meters so as not to require us to think in multiple systems of units within this exercise.</p>
+  <p>The inputs also call for a relative permittivity (or relative dielectric constant). The value shown is hypothetical and for illustration only. As I noted earlier, I do not presently have access to a handy list of relative dielectric constant values for wire insulations that we commonly encounter. One of the few guides available comes from the checking sources like <i>Passive Electronic Component Handbook</i>, 2nd Ed, edited by Charles A. Harper (McGraw-Hill, 1997). The capacitor chapter provides an interesting--although not wholly relevant--list of plastics used as capacitor dielectrics, along with their approximate dielectric constants.</p>
+  <pre>Material                                          Approx. Permittivity
+Polyisobutylene                                             2.2
+Polytetrafluoroethylene (PTFE)                              2.1
+Polyethylene terepthalate (PET)                             3.0-3.2
+Polystyrene (PS)                                            2.5
+Polycarbonate (PC)                                          2.8-3.0
+Polysulfone (PSU)                                           2.8-3.2
+Polypropylene (PP)                                          2.2</pre>
+  <p>Common plastics, then, appear to have a range of relative permittivity values between 2 and 3. In contrast, the permittivity of a vacuum is by definition 1.0, and air is 1.0006. If we specify a relative permittivity value of 1.0 for any sheath, no matter how thick, we should obtain the performance of bare wire.</p>
+  <p>Note that we earlier specified that the two most interesting variables of insulation were its thickness and its type, which is expressed in the value assigned to the relative dielectric constant. In <b>Fig. 4</b>, we assigned the conductivity entry a very low value of 1E-10 S/m (or mhos/m). The assignment is arbitrary but not without reason. At any frequency of use, we assume that the insulation of an insulated antenna wire is highly effective. How ineffective must the insulating property be for the insulation to show some effect upon antenna performance?</p>
+  <center>
+    <img src="amod50-5.gif" width="647" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> suggests a partial answer. I took a particular situation and gradually increased the insulation conductivity. The original bare-wire dipole (+/-2.416 m) has a sheath that is 2 mm thick (for a total diameter of 6 mm or just under 1/4"). This relatively heavy insulation on a 2-mm wire has a permittivity of 3.0, the highest value scanned for these notes. I increased the conductivity in decades to produce the graph of source resistance and reactance in the figure.</p>
+  <p>Not until the conductivity passes the 1E-5 S/m level (100,000 Ohms per meter resistivity level) do the values of source resistance and reactance show any change from the values at the lowest level of conductivity. At this level, the material is becoming a semi-conductor more than an insulator. Virtually all insulating materials have conductivities less than 1E-5 S/m when used within their specified frequency and temperature ranges. Hence, setting the conductivity as a constant with the value of 1E-10 S/m poses no problems. As well, it reduces the number of variables with which we must concern ourselves to a manageable value of 2.</p>
+  <p><b>Scanning the Range of Insulation Permittivity and Thickness</b></p>
+  <p>A specific modeling task for analysis might require that we have reasonably exact values for the insulation thickness and relative dielectric constant. Since we do not have access to such figures, let's perform a different sort of modeling task. Let's survey a variety of insulation thicknesses applied to our 2-mm bare wire and see how they affect dipole performance as we systematically increase the relative permittivity from 1.0 to 3.0.</p>
+  <p>We shall check 3 insulation thicknesses: 0.5, 1.0, and 2.0 mm (a 1-2-4 progression). A 4-mm thick insulation on a 2-mm wire yields a 6-mm overall insulated-wire diameter, close to 1/4". Here is what the dimensions will look like in tabular form:</p>
+  <pre>                        Dimensions in Millimeters
+Wire       Wire       Insulation       Sheath          Sheath
+Diameter   Radius     Depth            Radius          Diameter
+ 2.0       1.0        0.5              1.5             3.0
+ 2.0       1.0        1.0              2.0             4.0
+ 2.0       1.0        2.0              3.0             6.0
+                          Dimensions in Inches
+Wire       Wire       Insulation       Sheath          Sheath
+Diameter   Radius     Depth            Radius          Diameter
+ .07874    .03937     .01969           .05906          .11811  (&lt; 1/8")
+ .07874    .03937     .03937           .07874          .15748  (5/32")
+ .07874    .03937     .07874           .11811          .23622  (&lt; 1/4")</pre>
+  <p>I have repeated the planned survey dimensions in inches for anyone not conversant with metrics.</p>
+  <p>We shall portray the results as a series of very similar graphs. Essentially, only the Y-axis will change as we check out various interesting parameters of antenna performance and size.</p>
+  <center>
+    <img src="amod50-6.gif" width="648" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> graphs for each of the 3 insulation depths the resonant frequency of the original bare-wire antenna as we increase the permittivity. As expected, assigning a permittivity value of 1.0 to the sheath yields the original 30-MHz resonant frequency. However, for any given insulation depth, increasing the permittivity reduces the resonant frequency. In other words, the antenna becomes electrically longer than its physical length would indicate. Likewise, for any given value of permittivity, increasing the thickness of the insulation also reduces the resonant frequency of the antenna.</p>
+  <p>Note that for any insulation thickness, the highest rate of departure from the bare-wire resonant frequency occurs with the initial values of permittivity above 1.0. All three curves gradually flatten, although the thicker the insulation, the slower the rate of flattening. We may also look at the rates of change from the other perspective: for any given permittivity, the highest rates of departure from the bare-wire resonant frequency occur with the initial thickness increases. Each curve represents a doubling of insulation thickness, but the distance between the lower two curves is not twice the distance between the upper two curves.</p>
+  <center>
+    <img src="amod50-7.gif" width="647" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> plots for each of the sheath thicknesses the resonant half length of the dipole element versus the increasing permittivity. I re-resonated each dipole by changing its length until the source impedance again reached a value where the reactance with less than +/- 1 Ohm. In fact, all of the checkpoints have reactances less than +/- 0.6 Ohm. This amount of "play" in resonant lengths does limit the precision of the curves, although the general sweep is well within any desired scale of accuracy.</p>
+  <p>Since the antenna model extends its element on each side of the X-axis, the element half-length is the most convenient unit of measure. As we might expect, for the insulated dipole to be resonant at 30 MHz, we must reduce its length, with both the insulation permittivity and depth contributing to the shortening effect.</p>
+  <p>A convenient rule of thumb used by many antenna builders is to use the ratio of the measured insulated wire resonant frequency and the anticipated bare-wire resonant frequency as the amount by which to multiply the wire length to arrive at an insulated wire antenna that is resonant at the originally desired frequency. For practical purposes within the scope of insulation depths and permittivity values in this exercise, the rule of thumb will work. However, as the permittivity approaches 3.0 and the insulation thickness approaches 2.0 mm on a 2-mm wire, the actual element length needed for resonance will be slightly shorter than the frequency ratio suggests. Therefore, when calculating the insulated wire velocity factor, one should use the resonant wire length rather than the frequency offset.</p>
+  <center>
+    <img src="amod50-8.gif" width="647" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 8</b>, we have the same data as in <b>Fig. 7</b>, but expressed in terms of a range of velocity factors for the insulated wire antennas. If we take the range of probable insulation permittivity values to run between 1.5 and 3.0, then 0.99 is about the lowest velocity factor that we encounter for wires with very thin, low permittivity insulation. However, wires with higher permittivity insulation that is also thick may have velocity factors that go well below the 0.95 value often cited as the approximate lowest value. Since a number of plastic materials have permittivities above 2.8, the antenna builder should be prepared to shorten the dipole more radically than indicated by rules of thumb wherever the insulation is thick.</p>
+  <center>
+    <img src="amod50-9.gif" width="648" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> calls to our attention and often overlooked aspect of the antenna wire's velocity factor. As we shorten a dipole for virtually any reason, the resistive component will decrease relative to its bare-wire resonant value. The bare-wire resonant resistance was just over 72.5 Ohms. All of the re-resonated 30-MHz sheathed dipoles yield resistive impedance values that are lower than the bare-wire value. The curves for the resistive impedance values track the curves in each of the other graphs shown here.</p>
+  <p>For low values of relative permittivity or for thin insulations, the amount of impedance decrease is largely insignificant to antenna operation, especially as a dipole. However, the highest decrease shown, about 7 Ohms, may become a noticeable amount if thick wires of the highest permittivity value are used in a complex parasitic array. Such arrays may exhibit low bare-wire impedances, and 6 more Ohms of decrease may become objectionable relative to initial design plans for systems of matching the antenna source to a feedline.</p>
+  <p>Nonetheless, the small demonstration using the NEC-4 IS program control card does show a fairly close correlation between experiential rules of thumb and reasonable values of insulation thickness and permittivity as modeled for a dipole. Of course, this exercise has covered only 2-mm diameter wire. Amateur antenna builders very often use other wire diameters, ranging from AWG #18 to AWG #10 or so. Whether we can extrapolate the values from this exercise to these other cases is uncertain unless someone runs the same exercise for a reasonable sampling of the other wire sizes.</p>
+  <p>The curves may also serve to answer some questions often posed by those new to antenna work. For example, upon learning that the oxide of aluminum that forms on all antennas made from the material is an insulator, folks often ask whether that oxide has any significant effect on performance. We may use any one of the graphs to perform a crude extrapolation, even knowing that the tabulated permittivity of the material is 2.5-2.8: since the oxide thickness is only a few molecules, the graph line for material would be barely discernable at the top of <b>Fig. 6</b>.</p>
+  <p>Although the most common uses of the IS program control card may be connected with the use of insulated wire in antenna structures, these are not the only uses. The wire that we construct as the core around which to model a sheath need not be a highly conductive or even a thin wire. We might assign the wire a fairly low conductivity, and NEC-4 also permits us to assign a value of permeability so that we may account for any effects due to the wire's magnetic properties. We may also sheath the wire, using a uniform depth as a limitation, with any values we might like for conductivity and relative permittivity. Unlike the dipole, we do not need to place a source on the wire itself. Instead, we may use plane-wave excitation with either linear or elliptic polarization.</p>
+  <p>I can imagine numerous possible--but not necessarily real--applications for such an arrangement. There are as many applications as there are two-tiered physical structures where our interest may lie in the currents induced in the inner or "wire" layer. Bone-to-marrow, weather-insulation-to-pipe, and sheathing-to-mechanical-lick-cable situations are but 3 possibilities among many.</p>
+  <p>The limiting factors for such modes of analysis are two. First, the situation must resemble an insulated wire so that a sheath covers a long inner element. We can create many shapes by linking such wires and sheathing all of them, although not necessarily with the same "material," that is, with the same values of conductivity, permittivity, and thickness. The second--and perhaps more challenging--limitation is our knowledge of the conductivity and relative permittivity of a broad spectrum of materials. However, both conductivity and permittivity are subject to measurement.</p>
+  <p>Although not assured, it may be possible to use the IS input in conjunction with a wire and a cylinder created from direct wire inputs to model a coaxial cable. However, there are numerous issues connected with such a structure if it is to simulate an existing coaxial cable. These issues include the effective surface coordinates of the inner side of the cylinder relative to the wire radius, the sensitivity at the test frequency of the structure to close-wire modeling limitations--including closely spaced wires of different diameters, and the relative lengths of segments meeting at junctions within the cylinder structure. However, in principle, the IS entry may be used to simulate the dielectric between the center wire and the cyclinder that represents the outer conductor.</p>
+  <p>In the end, antenna modeling software offers a great many more opportunities for RF analysis than the task of designing antennas can contain. The geometry input and the program control cards in the NEC-deck are simply tools to use in those processes. And, like all tools, they are subject to creative applications.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>
