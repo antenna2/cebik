@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Longwire, HF Multi Band">
+  <title>Long-Wire Antennas Part 2: Terminated End-Fed Long-Wire Directional Antennas</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Long-Wire Antennas<br>
+    Part 2: Terminated End-Fed Long-Wire Directional Antennas</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In Part 1 of this series, we examined some fundamental properties of both center-fed and end-fed unterminated long-wire antennas. Without the kind of data that our basic investigation showed, the terminated version of the end-fed long-wire antenna might seem more odd than natural. As we move from the symmetry of an unterminated antenna, sometimes called a "standing-wave" antenna, to the asymmetry of the patterns of a terminated wire that is the same length, the assimilation of the nature and growth of both elevation and azimuth lobes will hopefully carry over to naturalize the new patterns and performance values. The mark of success in the process might be that we are able to predict in very general terms "what happens next."</p>
+  <p><b>The Terminated End-Fed Long-Wire Directional Antenna</b></p>
+  <p>In both of our unterminated antennas, we find an interesting picture of the current and voltage along the wire. They each form standing waves (following the accounts of Balanis and of Kraus) with peaks every half wavelength and nulls every half wavelength such that the peaks and nulls are 1/4 wavelength apart. The voltage peaks where the current has a null and vice versa. This portrait of voltage and current behavior forms the basis for a large part of basic antenna analysis. It derives in part from treating the antenna as an open transmission line. At the end of any transmission line, an open condition results in the complete reflection of energy toward the source. Traditionally, such antennas have received the label "standing-wave" antennas, and the group includes most of the antennas that we commonly use.</p>
+  <p>In a long-wire antenna, we may add to the end of the wire away from the feedpoint an impedance or termination. If we select the right impedance, then the reverse or reflected energy flow is decreased ideally to zero, as suggested by the top portion of the sketch in <b>Fig. 1</b>. Under these ideal conditions, the fields or waves emerging as a consequence of the uni-directional energy flow result in radiation wholly directed toward the terminated end of the antenna wire. As well, the current at any position along the antenna wire will be the same. These conditions define the idea of a "traveling-wave" antenna.</p>
+  <center>
+    <img src="lw2-1.gif" width="565" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Any implementation of the terminated long-wire antenna consists not only of the wire that is parallel to the ground, but as well to 2 vertical sections. At one end of the antenna, we have a feedpoint, usually taken between the vertical leg and ground. At the other end, we find a vertical line as long as necessary to connect to the terminating impedance. The terminating impedance normally has one end directly connected to ground with the other end connected to the vertical wire. When the height of the antenna is very small relative to a wavelength, the antennas receive the label "Beverage antennas," after the individual who generated them originally. Today, such antennas--which are very long and low to the ground--find use as MF and lower HF receiving antennas. When the antenna is an appreciable distance above ground--as in the case of our wires that are 1 wavelength high--we may simply call it a terminated end-fed long-wire directional antenna.</p>
+  <p>The idealization of our terminated long-wire antenna normally does not account for the vertical wires needed to make both feedpoint and termination connections. (See Balanis and Kraus for different approaches to the analysis of such antennas. We shall by-pass their mathematical accounts, since our goal is to make such antennas more intuitively sensible.) Ideally, we can find a loading impedance that will provide the proper conditions for achieving full traveling-wave status. The calculation is based once more on treating the wire as a transmission line, and the load impedance must equal the characteristic impedance of the line. Balanis provides the following equation to approximate the proper value of the termination.</p>
+  <blockquote>
+    <b>R<sub>L</sub> = 138 log<sub>10</sub> (4h/d)</b>
+  </blockquote>
+  <p>where R<sub>L</sub> is the value of the impedance load in Ohms, h is the height of the wire, and d is the wire diameter, when both are in the same units. Note that the impedance of the line and hence the approximate load value is independent of frequency and dependent only upon a set of physical measurements that use the same units of measurement. Our wires will be 85.655 meters above ground. The wire diameter is 0.16" or 0.004064 meters. Plugging these numbers into the Balanis equations gives us an approximate load impedance of 680 Ohms. As we shall see, values between 600 and 1000 Ohms are quite usable, although we shall eventually settle on 800 Ohms as a useful value for our initial models.</p>
+  <p>As Kraus notes, a lumped impedance may greatly reduce reflections from the termination, but it cannot provide a non-reflecting termination. In fact, the most common form of termination is a non-inductive resistor (or series/parallel combination of resistors). Under these conditions, some standing waves remain, as shown in the lower portion of the sketch in <b>Fig. 1</b>. The lower rendition of a 10 wavelength terminated long-wire antenna derives from an EZNEC model and uses its facility to generate the pattern of current magnitude along the wires. One consequence of incomplete reflection elimination is to wind up with a feedpoint impedance that is not identical to the load resistance. The feedpoint impedance for the models in this part of the investigation were 600 Ohms or below. However, this impedance value is convenient, since open ladder line commonly comes in a 600-Ohm value, and the match is good (SWR 1.25:1 or less). Hence, the user of such antennas has a wide choice of means at the operating end of the line for effecting a match to the usual 50-Ohm input/output of a transceiver.</p>
+  <p>One common misconception about terminated long-wire antennas is that the reduction or elimination of reflected energy results in half the power being dissipated by the terminating impedance (resistor). In fact, the far end load on the antennas in this exercise dissipates about 25% of the power, as calculated by NEC.</p>
+  <p><i>Modeling Issues</i>: Modeling the terminated long-wire antenna presents a number of options and challenges, since NEC has some limitations that bear upon the models. <b>Fig. 2</b> outlines the options available.</p>
+  <center>
+    <img src="lw2-2.gif" width="450" height="310" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Option A brings the vertical elements of the antenna down to ground. The source or feedpoint is the first segment above ground of the left wire, while the terminating load appears on the last segment above ground at the far end of the antenna. In the EZNEC Pro/4 implementation of NEC, we have at least 4 ways to model the structure: over perfect ground, with a Sommerfeld-Norton (SN) average ground using NEC-4, with an SN average ground using NEC-2, and with a MININEC ground. Use of a perfect ground provides a reference baseline for checking the sensibleness of other models. However, neither NEC-2 nor NEC-4 recommends bringing a source wire to ground, since at a minimum, the source impedance is likely to be off the mark. The MININEC ground does not provide accurate impedance reports for the ground quality selected, since it is restricted to using the impedance report for perfect ground.</p>
+  <p>Despite the limitations, we can tabulate the results. As a test case, I shall use a 10 wavelength terminated antenna alternately using termination resistors of 600, 800, and 1000 Ohms. For each option, I shall list the maximum gain, the reported 180-degree front-to-back ratio, the elevation angle of maximum radiation, the beamwidth, the source impedance, and the 600-Ohm SWR at the test frequency.</p>
+  <pre>
+Test Performance Values for Modeling Option A
+
+Terminating     Maximum      Front-to-Back     Beamwidth     Elevation     Feedpoint Z     600-Ohm
+Load Ohms       Gain dBi     Ratio dB          degrees       Angle deg     R+/-jX Ohms     SWR
+1.  Perfect Ground
+600             13.98        29.04             26.4          15            439 + j 24      1.37
+800             13.91        26.38             26.2          15            476 + j 43      1.28
+1000            13.87        19.57             26.2          15            504 + j 59      1.23
+2.  Average SN Ground, NEC-4
+600             11.54        11.57             35.2          11            460 + j593      3.01
+800             11.49        12.63             35.2          11            495 + j588      2.85
+1000            11.45        12.87             35.2          11            524 + j587      2.75
+3.  Average SN Ground, NEC-2
+600             10.79        24.23             35.6          11            479 + j 14      1.26
+800             10.74        21.78             35.6          11            509 + j 35      1.19
+1000            10.72        18.11             35.6          11            532 + j 52      1.16
+3.  Average MININEC Ground, NEC-4
+600             11.09        23.58             35.4          11            439 + j 24      1.37
+800             11.01        22.71             35.4          11            476 + j 43      1.28
+1000            10.98        18.55             35.4          11            504 + j 59      1.23
+</pre>
+  <p>Using the sequence over perfect ground as a background reference, the NEC-2 results for the SN average ground and the MININEC average ground data appear to coincide fairly well. However, the NEC-4 runs for the SN average ground appear to yield somewhat high gain values with more than anticipated inductive reactance in the source impedance.</p>
+  <p>Option B represents an adaptation of a NEC-2 techniques for modeling vertical antennas with ground-plane radials. The return line between the load resistor and the source is 0.0001 wavelength above ground, about 3 times the diameter of the wire. Hence, the model violates no constraints, but as the following results for both NEC-2 and NEC-4 show, it yields a poor model of the terminated long-wire antenna.</p>
+  <pre>
+Test Performance Values for Modeling Option B
+
+Terminating     Maximum      Front-to-Back     Beamwidth     Elevation     Feedpoint Z     600-Ohm
+Load Ohms       Gain dBi     Ratio dB          degrees       Angle deg     R+/-jX Ohms     SWR
+1.  Average SN Ground, NEC-4
+600              7.68        16.93             35.4          11            1170 - j 97      1.97
+800              7.73        14.44             35.4          11            1182 - j 80      1.98
+1000             7.77        13.36             35.4          11            1192 - j 67      2.00
+2.  Average SN Ground, NEC-2
+600              7.68        16.10             35.4          11            1167 - j 99      1.96
+800              7.72        14.59             35.4          11            1179 - j 82      1.98
+1000             7.76        13.50             35.4          11            1188 - j 69      1.99
+</pre>
+  <p>Although NEC-2 and NEC-4 show a very close coincidence of data, the low gain, low front-to-back ratio, and high feedpoint impedance reports combine to suggest that this model is highly inadequate. However, the beamwidth and elevation-angle reports are consistent with the other models. NEC-4 does allow the use of a subterranean return wire, shown in option C in <b>Fig. 2</b>. To test this option, I placed a return wire 0.01 wavelength below ground level, connecting it to the above-ground vertical wires with short segments. Both the source and the load for the antenna remain above ground. Since this option is available only in NEC-4, the test-result table is quite short.</p>
+  <pre>
+Test Performance Values for Modeling Option C
+
+Terminating     Maximum      Front-to-Back     Beamwidth     Elevation     Feedpoint Z     600-Ohm
+Load Ohms       Gain dBi     Ratio dB          degrees       Angle deg     R+/-jX Ohms     SWR
+1.  Average SN Ground, NEC-4
+600             10.38        22.53             35.6          11             526 + j 87      1.23
+800             10.37        19.94             35.6          11             556 + j104      1.22
+1000            10.36        17.10             35.6          11             579 + j118      1.23
+</pre>
+  <p>The results are modest, but coincide roughly with the NEC-2 results in Option A. The front-to-back reports are consistent with those for perfect ground. The difficulties with the model include the model size, since the return wire requires as many segments as its above-ground counterpart, and the return wire may actually yield slightly low gain reports by carrying more current than the ground itself. A real installation would not likely use a buried ground wire.</p>
+  <p>Therefore, I tried option D, which replaces the below-ground structure of option C with 2 simple ground rods. Each rod is a 1-segment wire about 0.05 wavelength, which is the length of the segments in the vertical wires above ground. Therefore, the source has equal length segments on each side of the feedpoint segment. 0.05 wavelength is about 4.3 meters or 14'. This length may be longer than the average ground rod, but substituting shorter segments did not change the reports by any significant amount. The results of the test appear in the following table.</p>
+  <pre>
+Test Performance Values for Modeling Option D
+
+Terminating     Maximum      Front-to-Back     Beamwidth     Elevation     Feedpoint Z     600-Ohm
+Load Ohms       Gain dBi     Ratio dB          degrees       Angle deg     R+/-jX Ohms     SWR
+1.  Average SN Ground, NEC-4
+600             10.49        22.94             35.6          11             513 + j 69      1.22
+800             10.47        20.30             35.6          11             544 + j 87      1.20
+1000            10.46        17.29             35.6          11             567 + j102      1.20
+</pre>
+  <p>Except for the predicted very slight increase in maximum gain, all of the values correspond very well with those of the buried-return-wire model (C), but with a 45% reduction in model size. For users of NEC-4, it is likely that this style of model is about as adequate as we may get for a terminated long-wire directional antenna. In fact, for users of NEC-2, the basic model (option A) coincides well enough for general guidance. In physical reality, there will be structural variables that will inevitably limit the precision attainable by any model. For example, the models presume a flat wire horizontal to the ground, which is not likely to appear with copper wire and real supports. Even if all supports provide the same height, catenary effects will vary the actual wire height above ground along the antenna pathway.</p>
+  <p>During the model-testing procedures, I explored 2 other directions. One direction led to the variety of soil types over which one might place a terminated long-wire antenna. So I modeled the test series of 10 wavelength antennas over very good and very poor soil to see the effect upon the performance parameters.</p>
+  <pre>
+Test Performance Values for Modeling Option D over Various Soil Qualities
+
+Terminating     Maximum      Front-to-Back     Beamwidth     Elevation     Feedpoint Z     600-Ohm
+Load Ohms       Gain dBi     Ratio dB          degrees       Angle deg     R+/-jX Ohms     SWR
+1.  Very Good SN Ground, NEC-4
+600             11.86        25.20             33.6          12             474 + j 57      1.30
+800             11.81        23.43             33.5          12             508 + j 75      1.24
+1000            11.79        19.00             33.4          12             534 + j 89      1.22
+2.  Average SN Ground, NEC-4
+600             10.49        22.94             35.6          11             513 + j 69      1.22
+800             10.47        20.30             35.6          11             544 + j 87      1.20
+1000            10.46        17.29             35.6          11             567 + j102      1.20
+3.  Very Poor SN Ground, NEC-4
+600              9.21        21.93             33-S          10             630 - j 53      1.10
+800              9.23        17.54             33-S          10             653 - j 30      1.10
+1000             9.25        14.66             33-S          10             671 - j 11      1.12
+</pre>
+  <p>As we move from better soils to worse soils, the gain decreases by about 1.3-dB per step. However, note that over very poor soil, the gain trend reverses relative to the value of the terminating resistor. The front-to-back ratio reports also decrease with worsening soil. Each soil quality yields its own consistent beamwidth and elevation angle. The annotations for very poor soil indicate that the null between maximum gain peaks is sufficient to record separate lobes with at least a 3-dB null between. Hence, the beamwidth is an estimate. The resistive portion of the feedpoint impedance shows a non-linear rise with worsening soil quality. Nevertheless, all of the 600-Ohm SWR values fall well within the usable range.</p>
+  <p>The second direction of additional modeling shows the effects of using copper wire instead of perfect wire in the 10 wavelength antenna. Both tests use average SN ground.</p>
+  <pre>
+Test Performance Values for Modeling Option D with Lossless and Copper Wire
+
+Terminating     Maximum      Front-to-Back     Beamwidth     Elevation     Feedpoint Z     600-Ohm
+Load Ohms       Gain dBi     Ratio dB          degrees       Angle deg     R+/-jX Ohms     SWR
+1.  Average SN Ground, NEC-4, Lossless Wire
+600             10.49        22.94             35.6          11             513 + j 69      1.22
+800             10.47        20.30             35.6          11             544 + j 87      1.20
+1000            10.46        17.29             35.6          11             567 + j102      1.20
+2.  Average SN Ground, NEC-4, Copper Wire
+600             10.28        23.06             35.5          11             518 + j 70      1.21
+800             10.27        19.70             35.5          11             548 + j 85      1.19
+1000            10.26        17.37             35.5          11             571 + j 97      1.19
+</pre>
+  <p>Despite the very long length of the wire, copper losses at the test frequency only lower the gain by about 0.2 dB. All other performance values remain quite constant.</p>
+  <p>The reason that we are taking the trouble to model as adequately as feasible the terminated long-wire directional antenna is the difference that we find between its pattern and the pattern of an unterminated end-fed long-wire antenna. The differences appear in <b>Fig. 3</b> for 10 wavelength versions of both antennas. Although the terminated directional antenna is laden with sidelobes, the entire pattern provides a good front-to-rear ratio that can enhance communications by reducing rearward interference levels. Indeed, it is possible to use a remotely controlled switch to remove the load and return the antenna to an unterminated state for communications to the rear.</p>
+  <center>
+    <img src="lw2-3.gif" width="400" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When looking over the tabulated results for various ground qualities during the modeling testing procedure, we met with split lobes over very poor soil. In order to see better the progression of the forward-most lobes of the terminated antenna, we can examine <b>Fig. 4</b>. It provides the azimuth patterns over the 3 soil qualities and over perfect ground.</p>
+  <center>
+    <img src="lw2-4.gif" width="800" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The pattern over perfect ground has a single forward lobe, but all of the patterns over real ground show two peaks. As the soil quality decreases, the peaks grow farther apart, with an ever deeper depression in gain between them. Over very poor soil, the depression becomes an identifiable null, exceeding 3-dB relative to the maximum lobe strengths. Hence, the pattern identifies the peaks as separate lobes. The patterns strongly suggest that anyone who proposes to construct a terminated long-wire directional antenna should account in advance for the ground quality beneath and in the vicinity of the antenna. Depending upon the specifications of a given communications operation, the 3-dB null at the center of the 2 peaks over very poor soil might make a difference to antenna planning.</p>
+  <p>The terminated long-wire antenna has a very wide operating range in terms of the feedpoint SWR. The terminating resistor combined with the antenna height largely control the feedpoint impedance. As a specimen test, <b>Fig. 5</b> provides the 600-Ohm SWR curve for the test antenna using an 800-Ohm terminating impedance. The curve involves no change in the antenna, although the height--in wavelengths--varies from about 0.66 to 1.34 wavelengths above ground. It is clear that the 2:1 frequency range of the test run does not exhaust the usable SWR span for the antenna. However, it does cover one of the more usual amateur applications of a terminated wire, that is, operation from 20 through 10 meters.</p>
+  <center>
+    <img src="lw2-5.gif" width="572" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p><i>The End-Fed Terminated Long-Wire Directional Antenna and Its Patterns</i>: To produce a table of results for terminated long-wire antennas of various lengths and an associated gallery of patterns, I settled on an 800-Ohm termination for the models, using option D as the NEC-4 modeling foundation. The horizontal lossless wire is 1 wavelength above average ground. The total length value is the length of the horizontal span of the antenna and does not include the vertical legs. As in the test data, if the main lobe is split into 2 lobes with a distinct null (&gt;3 dB) between them, the beamwidth is an estimate with the letter "S" added to denote the split. TR Loss provides NEC's calculation of the percentage of applied power dissipated in the terminating resistor.</p>
+  <pre>
+End-Fed Terminated Long-Wire Directional Antenna Data
+Total Length    Maximum    Front-Back  Elevation     Beamwidth    Feedpoint Z   600-Ohm    TR Loss
+WL              Gain dBi   Ratio dB *  Angle deg     degrees      R+/-jX Ohms   SWR        %
+ 3               7.11      15.32         14            69-S       537 + j92     1.22       26
+ 4               7.99      16.48         13            59-S       539 + j90     1.21       25
+ 5               8.65      17.91         13            51-S       541 + j89     1.21       24
+ 6               9.15      18.30         12            46-S       543 + j89     1.20       24
+ 7               9.57      19.30         12            43.8       543 + j88     1.20       24
+ 8               9.92      19.51         12            40.2       544 + j88     1.20       23
+ 9              10.20      20.12         12            37.0       544 + j88     1.20       23
+10              10.47      20.30         11            35.6       544 + j87     1.20       23
+11              10.70      20.58         11            33.4       544 + j87     1.20       23
+</pre>
+  <p>The most constant data are the values for feedpoint impedance, 600-Ohm SWR, and power dissipated in the terminating resistor. The front-to-back ratio increases with antenna length. However, this value has a flag, since the value is related to the heading of peak gain, which is not the center of the pattern, that is, is not aligned directly with the wire itself. The maximum gain, the beamwidth and the elevation angle of maximum gain decrease with increasing total length.</p>
+  <p>The patterns associated with selected entries in the table appear in <b>Fig. 6</b>. Because the rate of change slows as we reach the upper length values, there are more patterns for the shorter lengths than for the longer. The azimuth patterns reflect both the tabular value entries plus the anticipated growth in the number of total sidelobes. However, because there are 2 1 wavelength vertical legs, the total number of lobes and peaks will be greater than for a corresponding unterminated end-fed long-wire antenna. Do not neglect the elevation patterns. They show a very complex structure that will call for further comment before we conclude.</p>
+  <center>
+    <img src="lw2-6.gif" width="600" height="630" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The terminated end-fed long-wire directional antenna is inexpensive and simple, assuming that one has access to the required non-inductive terminating resistor. It has 2 chief properties of merit, neither of which is raw gain. It is quite directional, although fraught with sidelobes. It is also extremely broad-banded in terms of SWR. The termination largely controls the feedpoint impedance. Large frequency excursions, of course, change not only the length of the antenna, but also the height above ground, when we measure both in terms of wavelength. However, a single antenna can cover most of the HF spectrum, if high and long enough at the lowest frequency. With increasing frequency, we obtain a narrower beamwidth and higher gain. Offsetting these variable qualities is the absence of any need for further impedance matching once we transform the average feedpoint impedance of the antenna to the value required by the transmitting and receiving equipment. Hence, the antenna is useful for directional low-angle communications that may require extreme frequency-changing agility.</p>
+  <p>The following table compares the maximum gain for terminated and unterminated end-fed long-wire antennas for lengths from 3 to 11 wavelengths. Note that the unterminated version is essentially bi-directional, although gain is slightly greater away from the feedpoint. As the antennas grow longer, the gain deficit for the directional long-wire antenna grows smaller. However, it is unlikely to become as low as 3 dB until the terminated long-wire antenna reaches wholly impractical lengths.</p>
+  <pre>
+Gain and Elevation Angle Comparison
+                Terminated Long-Wire          Unterminated Long-Wire         Gain
+Total Length    Maximum      Elevation        Maximum        Elevation       Difference
+WL              Gain dBi     Angle deg        Gain dBi       Angle deg       dB
+ 3               7.11        14               11.32          13              4.21
+ 4               7.99        13               11.99          13              4.00
+ 5               8.65        13               12.48          13              3.83
+ 6               9.15        12               12.90          12              3.75
+ 7               9.57        12               13.24          12              3.67
+ 8               9.92        12               13.50          12              3.58
+ 9              10.20        12               13.72          12              3.52
+10              10.47        11               13.96          11              3.49
+11              10.70        11               14.15          11              3.45
+</pre>
+  <p>One final property set needs illustration before we close the book on terminated long-wire directional antennas. We have noted the complexity of the lobe structure in both azimuth and elevation patterns. These 2-dimensional slices of the overall radiation pattern of the long-wire antenna do not do full justice to the overall radiation pattern of the antenna. To rectify this gap, at least partially, <b>Fig. 7</b> provides a 3-dimensional pattern for the 10 wavelength terminated antenna. The pattern is limited to 5-degree increments, lest finer detail turn the entire graphic into a simple opaque black-ink ball. The junction of the X, Y, and Z axes represents the antenna position relative to the pattern. Since the graphic shows a far-field pattern, the antenna itself is infinitesimally small. However, the wire extends along the Y-axis, with the terminating resistor on the +Y end (toward the field's projection of higher gain).</p>
+  <center>
+    <img src="lw2-7.gif" width="530" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graphic shows us two very significant features that might be lost if we confine ourselves solely to 2-dimensional patterns. First, the overall field is littered with a morass of sidelobes in virtually every direction except downward. This facet of very long-wire antennas concerned early developers of long-wire technology. The sidelobes waste power that deserves re-direction into the main forward lobe(s). As well, the sidelobes create and receive interference. Moreover, they do nothing to secure a point-to-point link, but instead allow reception of possibly sensitive communications to the sides of the antenna.</p>
+  <p>Second, the forward lobe structure contains an interesting oddity. Careful inspection is necessary to perceive the anomaly. At the second-lowest elevation angle (10 degrees in the graphic), we find the split lobe that marks the highest gain that the antenna can attain. At the next level (15 degrees in the graphic), the field has very nearly the same gain across the lower-level split region, but at a slightly lower gain value. Under some propagation conditions, the higher-angle smoother pattern might obscure the presence of the lower-angle split-lobe pattern. The complexity of even the forward-most lobe structure should be an important planning investigation, especially if one contemplates installing a terminated long-wire directional antenna over poor to very poor soil.</p>
+  <p><i>Bending the Terminated Long-Wire Antenna</i>: There is a technique by which we can remove the split radiation lobe of the terminated long-wire antenna, at least when the wire is many wavelengths long. We may bend it horizontally in the middle. In effect, we create a 2-element long-wire antenna, where each element is half the total horizontal wire length. (In this sample, we shall leave the 1 wavelength vertical wire and the "ground rods" from model D just as they are.) <b>Fig. 8</b> shows the general layout.</p>
+  <center>
+    <img src="lw2-8.gif" width="582" height="318" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One of the forward main lobes from the feedpoint-end section tends to align itself with one of the main forward lobes of the termination-end section, and the two lobes are aligned with the wire termination points. <b>Fig. 8</b> provides data for the 8 wavelength (or dual-4 wavelength) bent terminated longwire antenna. The required angle relative to the pattern centerline is 24 degrees for maximum gain. This value is a function of the antenna's 1 wavelength height, the average soil quality, and the wire length. Since the total horizontal wire length is 8 wavelengths, the angle creates a maximum antenna width of 1.63 wavelengths, but shortens the overall length to 7.31 wavelengths.</p>
+  <p>The following brief table compares the performance of the straight and bent 8 wavelength antennas. Bending the wire adds about 2.5-dB of overall gain, due to the additive affect of aligned lobes. However, the front-to-back ratio suffers by a like amount. The impedance hardly changes between the 2 antennas. The most notable change of all is the reduction in beamwidth from 40 to 20 degrees.</p>
+  <pre>
+End-Fed Terminated Long-Wire Directional Antenna Data:  Straight and Bent 8-Wavelength Models
+Version            Maximum    Front-Back  Elevation     Beamwidth    Feedpoint Z   600-Ohm
+(800-Ohm TR)       Gain dBi   Ratio dB    Angle deg     degrees      R+/-jX Ohms   SWR
+Straight 8 WL       9.92      19.51         12            40.2       544 + j88     1.20
+Bent 24 deg.       12.39      15.36         13            20.3       531 + j71     1.19
+</pre>
+  <p>The difference in beamwidth becomes readily apparent when we examine azimuth patterns for the 2 antennas in the table. <b>Fig. 9</b> provides the patterns. The bent version has eliminated the null between peaks by creating a single forward main lobe. As well, the bent antenna's patterns shows irregular sidelobe structures that result from off-axis additions and cancellations, relative to the clean lobe structure of the straight antenna. However, most of the bent antenna sidelobes tend to be weaker than those of the straight antenna.</p>
+  <center>
+    <img src="lw2-9.gif" width="440" height="230" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The bent terminated long-wire antenna is rarely used today. The straight terminated long-wire beam has lower gain, but it also enjoys 2 advantages: wider beamwidth and the ability to operate over a very wide frequency range at a constant impedance. The bent antenna might match the straight antenna's SWR curve, but the radiation pattern would become unusable beyond perhaps a 2:1 frequency range. The physical wire angle remains constant, but the electrical length of the wire--measured in wavelengths--changes for every change in operating frequency. The angle simply becomes incorrect to produce maximum gain in a single lobe as the operating frequency goes too high or too low. If we wish to obtain the added gain of the bent antenna's aligned main lobes, there are other designs that achieve the goal with more regular sidelobes and, in some cases, weaker sidelobes. In future episodes, we shall encounter some of those designs.</p>
+  <p><b>Conclusion to Part 2</b></p>
+  <p>So far, we have explored some of the performance properties of the simplest long-wire antennas, a single very long piece of wire placed horizontally over the ground. The notes have tried to impart a good sense of what happens as we lengthen the wire under 3 different feeding conditions: center feeding, end-feeding, and terminated end-feeding. By the use of extensive tabulated data and patterns from models of the antennas, I hope to have left reasonable expectations for the relative performance of the 3 basic types of long-wire antennas. Along the way, I have explored some of the modeling issues to reveal both my rationale for use the models involved and so that anyone else can recreate or improve them. Bending the wire at the end of the present episode in fact gives us a preview of the techniques that inform more complex long-wire arrays.</p>
+  <p>Still, we have only begun to explore long-wire technology. We have seen some of the shortcomings of the simple straight terminated long-wire directional antenna. The lobes are split. There are many side lobes. The forward gain is low. In an effort to overcome these problems, early designers ingeniously developed the V-beam and the rhombic. I have heard that Bruce would have preferred that his name be attached to the rhombic, for which he was a pioneer, rather than to the planar array that bears his name in many handbooks. In Parts 3 through 5, we shall not try to change the names of antennas, but we shall try to understand better both the long-wire V-beam and the rhombic antenna using some of the same techniques employed in the notes for Parts 1 and 2.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><i>Updated 07-01-2006. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for Jun, 2006. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><a href="lw3.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 3</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-multi-band'>HF Multi Band</a>, <a href='../topics.html#longwire'>Longwire</a></p><br>
+</body>
+</html>

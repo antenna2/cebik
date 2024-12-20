@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Matching">
+  <title>How to Make Your Tuner Work on Every Band</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10">ANTENNAS FROM THE GROUND UP<img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>7. My ATU Is No Darn Good<br>
+    or How to Make Your Tuner Work on Every Band</h3>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  Once in a while, every multiband antenna user finds him- or herself in this situation: the tuner will just not make a match on one or more bands. So we first check inside the tuner. Then we check all the antenna connections. Finally we check the manufacturer&thorn;s address so we can write a letter telling him what a rotten product he makes.
+  <p>Actually, the situation is most likely just as it should be--and all because you are not one of the three hams in the country who measured the parallel feedline up to the 135' or 102' multiband antenna.</p>
+  <p>To understand why matters are as they should be--and how we can make them better for us--we need to understand 3 things: 1. What is antenna is doing; 2. What the feedline is doing; and 3. What the ATU is doing.</p>
+  <p><b>What the Antenna Does</b>: With resepect to the antenna-feedline-ATU system, the antenna presents the feedline with a (normally) complex impedance. This impedance varies from one type of antenna to another and from one band to another, with lesser changes caused by height and wire size differences. Check the feedpoint impedances in the last two installments to see typical variations.</p>
+  <p><b>What the Feedline Does</b>: Every transmission line is also an impedance transformer. Unless there is a perfect match between the antenna feedpoint impedance and the characteristic impedance (Zo) of the feedline, the complex impedance (R &PlusMinus; jX) will vary all along the line, with values repeating only at 1/2wl or 180&deg; increments.</p>
+  <p>Many hams expect the impedance to vary in nice smooth curves. In fact, the curves are far from sinusoidal.</p>
+  <center>
+    <img src="gup7-1.gif" width="651" height="512" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graph above plots the resistive and reactive components of the impedance along a line that begins at the antenna with a feedpoint impedance of 100 -j50 ohms. These modest values yield a resistance rise near the midpoint of the line and a very rapid shift from inductive to capacitive reactance. This latter shift is characteristic of every line, although the position of the shift and the magnitude of the peak values are functions of the feedpoint impedance and the line Zo.</p>
+  <center>
+    <img src="gup7-2.gif" width="641" height="510" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The second graph plots impedances values for another antenna that presents a feedpoint impedance of 2220 - j3200 ohms. Note the differences in the magnitude of peak values and the different placement of the peaks.</p>
+  <p>You can plot graphs of this nature for any antenna feedpoint impedance and feedline type using the transmission line performance program in <a href="../radio.html#HAMCALC">HAMCALC</a>, which will give you tables of values every 5&deg; along the lossless line. For our purposes here, line losses are not significant to the exercise.</p>
+  <p>To find out about where along your own plot your feedline comes out (at the ATU terminals), divide the total feedline length by the length of 180&deg; (a half wavelength). Toss out the integers and multiply the remaining fraction or decimal by 180. The result is the number of degrees along the line your ATU sees.</p>
+  <p>Remember that these will be ball park figures. But for bands where your ATU has trouble, you should see either very high or very low values for R and/or very high values of X, either capacitive or inductive.</p>
+  <p><b>What the ATU Does</b>: Right now, I could give you the solution to the dilemma of getting the ATU to match the feedline-antenna system. However, let's go slowly enough to understand how antenna tuners work and why some--even most--have troubles with some combinations of R and jX on at least some bands.</p>
+  <p>ATUs come in two general types: inductively coupled tuners, like the Z- match, and networks, which are the bulk of commercial tuner designs. Both are subject to similar restrictions, but the networks make the problem a little clearer. Networks include all those letter combinations, like CLC, CL, LC, LCL, SPC, and the McCoy Ultimate Transmatch. HAMCALC has a program of great utility, written by ZL1LE, that will let you calculate the values of components for all these networks for matching almost any impedance from the feedline to almost any ATU input impedance. Of course, 50-ohm resistive (meaning no reactance) is the most common impedance to which we match.</p>
+  <center>
+    <img src="gup7-3.gif" width="463" height="439" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's consider the CLC network that so many manufacturers place on the market. Figure 3 presents the basic components of the network: a series input capacitor, a shunt inductor, and a series output capacitor. Nothing could be simpler. Or is this complete schematic hiding something beneath its bland features?</p>
+  <p>What the simple schematic is hiding is its relationship to its load, the antenna feedpoint impedance. The antenna is in series with the network, so let's draw the load as in Figure 4.</p>
+  <center>
+    <img src="gup7-4.gif" width="480" height="436" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can look at a network from two perspectives. One way, the one used in ZL1LE's transmatch program, is to treat the antenna impedance as the complex quantity to be matched to the ATU input impedance. The other way-- the one we may find it useful to use here--is to split the work into two parts. One part is the resistive part of the antenna impedance: that is the part the ATU matches to the input. The second part is the antenna reactance: that part the ATU output component must compensate for with an equal but opposite type of reactance.</p>
+  <p>If the antenna reactance is inductive, then it seems reasonable that the output capacitor should be able to find a matching setting so that the net reactance is 0. But what about capacitive reactance? There is no inductance in the output. How we do this job requires that we go back to the resistive load matching situation.</p>
+  <p>Every matching situation between the input impedance and the output impedance requires a set of values for Xc-in, Xl, and Xc-out. These values translate into values of Cin, L, and Cout for some specific frequency. But let's think in terms of X (reactance) for a moment.</p>
+  <p>Now let's set up a realistic matching problem at 14.15 MHz. The input impedance is 50 ohms resistive. Initially, the output impedance from the feedline is 100 ohms resistive. There are many settings of a CLC tuner that will provide a match, but for a loss factor under 2%, we need the value of Cin to be at least 175 pF. With an inductance at L of 0.8 &micro;H, the output capacitance should be about 197 pF or (in terms of reactance) -j57 ohms.</p>
+  <p>Now make the impedance at the feedline terminals of the ATU complex: 100 + j50 ohms. The values of Cin and L remain the same, but the value of Cout changes to 105 pF, for a capacitive reactance of -j107 ohms. Notice that this value is exactly -50 ohms different from the value needed to match the pure resistive load. Moreover, it is equal and opposite the reactance in the load, effectively canceling it.</p>
+  <p>With a CLC ATU, the values of inductive reactance that the network can cancel is limited only be the lowest value of the variable capacitor at Cout. Values of 10 to 20 pF are typical for large capacitors. However, there is a 2:1 variance in this lower limit, and that can make a difference in the reactance obtainable. At 14.15 MHz, our frequency in the example, 10 pf = 1125 ohms, while 20 pF = 562 ohms. That difference can make a big difference in the limits of inductive reactance for which the ATU can compensate.</p>
+  <p>Now let's turn the problem around and let the ATU feedline impedance be 100 - j50 ohms. Since the feedline reactance supplies all but 7 ohms of the 57 ohms needed to match the 100 ohms resistive part of the load, the capacitor must be set to a reactance of 7 ohms. However, at 14.15 MHz, this value of reactance corresponds to a capacitance of over 1580 pF, well beyond the range of most capacitors used in ATUs. 250 pF is a practical limit in higher power units, while 350 to 500 pF is about the maximum for QRP units using receiving capacitors.</p>
+  <p>In short, the requirements for a match are beyond the limits of the components. In every network, there are always a range of values that will effect a match. However, in this case, all of them are less efficient (or have greater losses) by a factor of 3 or more.</p>
+  <p>The test case used values which are low enough that we might think there is no problem with them. Operationally, of course, all ATUs would handle them with ease and we would not readily be aware of the greater losses of the less than optimum settings used. However, it is also clear that we can, with extreme values of R and high values of jX, reach the point where no value of the output capacitor will satisfy the conditions of even a lossy match.</p>
+  <p>For example, the first graph at 10.125 MHz shows an input impedance of 2220 - j3200 ohms. Although there are mathematical solutions for matching this load to 50 ohms, they require values of Cout less than 7 pF, a value tuners are not likely to achieve.</p>
+  <p>LCL networks have similar limits in the opposite direction of reactance. In fact, there is no such thing as a perfect tuner. Is there another way to attack the problem of getting a match--and even making it an efficient one?</p>
+  <p><b>Scissors and Tape Measure</b>: Since buying a new tuner is unlikely to add much tuning capability and is expensive, let's look for a cheaper way to solve the problem. The first step is to measure the length of the parallel feedline. Next, find or develop models of your multiband antenna, similar to those in the last two installments. These models will provide you with ballpark feedpoint impedances.</p>
+  <p>Third, calculate where along a span of 180&deg; your line hits the tuner terminals, as described earlier. Note that throughout this exercise, we are assuming that you are NOT using the 4:1 balun built into many tuners. If necessary to effect connections, use a line isolator choke. Better yet, install terminals suited to parallel feedline that connect directly to the network.</p>
+  <p>Use HAMCALC or another similar program to find the ballpark impedance for each band at the ATU terminals. It is best to run a table of values, because we shall need to refer to other points along the line.</p>
+  <p>Review the graphs at the beginning of this exercise. Notice that along any 180&deg; length of line, there are considerable stretches where the resistance and reactance are both fairly low. Those are values we want the ATU to see. For a CLC tuner, inductive (+jX) reactance is preferable, while LCL tuners prefer capacitive (-jX) reactance.</p>
+  <p>Using the information at hand, calculate a length of line which, if added to the present line, will place your ATU terminals in the proper position to see the desired impedance.</p>
+  <p>Because models and calculations yield only ballpark values that cannot take into account ground clutter, terrain, and construction techniques that place slight deformations into the real antenna, perfecting the results may require some cut and try methods. However, parallel line is cheap, and a failed experiment on one band may leave a line length long enough to trim for another band.</p>
+  <center>
+    <img src="gup7-5.gif" width="482" height="355" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Figure 5 illustrates the mechanical elements involved in line lengthening. You will need to find a place to insert line so that it is free and clear, in accord with the principles of good parallel feedline installation. Since it does not matter where along the line you make the addition, you may wish to consider an outdoor insertion point, one that may add a bit of droop to the system when lengthened but which can still be reconnected with ease. Avoid coils and tight hairpins of feedline.</p>
+  <p>If one end of the junction is at the house or shack wall, you can also make this the bad-weather disconnect for the antenna system. Add the special sections here and also connect the line to a ground rod in the event of approaching electrical storms.</p>
+  <p>Once installed, you may discover that the antenna tunes very well on many of the other bands that were not originally part of the problem. If so, make a list to keep at hand so that you only change the line length when necessary. Also copy down for each band the new settings of the ATU required by the new line length. You may even wish to experiment with different lengths of added line, seeking one that works on all your favorite bands.</p>
+  <p>Connectors are largely a matter of choice, since rarely are they critical on parallel feedline systems. If the line does not experience violent pulls, paired banana plugs and jacks used for test instruments can be handy. A myriad of other usable connectors are available, and are most likely already in your junk box.</p>
+  <p>You can, of course, create a monster switching system, remotely controlled from the operating position.</p>
+  <p>Ten years ago, you would have had to develop your "added-line" system solely by cut-and-try methods. Some folks are still satisfied with this shot-in-the-dark technique: they do not want to know whether their additions have improved or worsened the efficiency of their matching network, just so long as they get some kind of match. The tools we have today can upgrade our guesses into reasonable estimates and better understanding. That always helps.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 11-1-97. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="groundup.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to series index page</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#matching'>Matching</a></p><br>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, Yagi, HF Upper">
+  <title>The "Quad vs. Yagi" Question</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/quad.gif" align="left" width="91" height="91" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">The "Quad vs. Yagi" Question</h1><br>
+    <h3>L. B. Cebik, W4RNL</h3><br>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>The history of beam antennas commonly used by radio amateurs is filled with hyperbole at various stages in the development of each antenna type. The post-war years that saw the rise of the Yagi-Uda parasitic array as the de facto amateur standard in directional beams also witnessed outlandishly hopeful specifications and claims for relatively poor antenna designs. Eventually, ARRL had to ban gain specifications from advertisements for amateur beams. Fortunately, that phase of Yagi development is behind us. The current generation of Yagis--largely designed with the aid of computer software of various types--tends to live up to the stated claims. Computers are not the only source of our improved understanding of parasitic arrays. Books by Lawson and Leeson have contributed some baseline information and ideas that hold in check any tendencies to overstate or imprecisely state what given Yagi designs can and cannot do.</p>
+  <p>The history of the cubical quad antenna is equally fascinating. Bill Orr's 1959 book on the subject devotes a chapter to Clarence Moore's invention to overcome high-altitude problems at HCJB in Quito, Ecuador. After World War II, the quad design gradually spread until it had attracted a diverse group of devoted fans. The 2-element driver-reflector quad beam still rules the quad roost, although much larger arrays have appeared from time to time.</p>
+  <p>One interesting facet of quad lore is the fact that many of the early claims have not gone the way of early Yagi claims. They remain as part of the rationale often given for using quads. In fact, they have become ingrained sound bites, passed along to potential beam users. Among the interesting ones are the following--taken from no particular source, but only from e-mail inquiries to me over the years.</p>
+  <blockquote>
+    <p>Any beam's front-to-back ratio tends to vary depending on the installation environment, so the quad's front-to-back ratio is about as good as any beam's ratio.</p>
+    <p>The quad beam shows an absence of high-angle radiation.</p>
+    <p>A 2-element quad has about the same gain as a 3-element Yagi.</p>
+    <p>Quad beams tend to open and close bands, that is, they allow communications both before Yagis can make the same connection and after Yagis can no longer make the connection.</p>
+  </blockquote>
+  <p>All of these statements have had proponents and detractors from time to time. I have for many years avoided examining the quad-Yagi dispute in any direct comparison mostly because I had not devised a reasonable test for the last of the claims. To the best of my knowledge, the claim emerged in the early 1970s, while Yagi design still languished in the throes of pure trial and error, with an emphasis upon error. Yet the claim persists to this day, perhaps just because devising a test for it--one that did not rely simply on operator reports--was impractical, if not impossible.</p>
+  <p>The following notes will eventually deal with that claim. However, before we can do so, we must first set up a 2-element quad beam and a 3-element Yagi beam so that we have a fair test. NEC-4 software will be our vehicle so that all tests are replicable by anyone who wishes to perform them.</p>
+  <p><b>A 2-Element Quad Beam</b></p>
+  <p>Much of the old design information on 2-element quads, including cutting formulas, still persists in the literature. Most of the design data needs an update. Over time, we have come to appreciate not merely the performance of an antenna on a particular design frequency, but as well, the operating bandwidth of the antenna. Operating bandwidth includes not only the SWR curve, but as well the gain and the front-to-back curves. In some cases, we may even become interested in the operating bandwidth of a directional antenna's vertical and horizontal beamwidth. We shall not need to go quite that far, since both quads and Yagis show relative stability in those parameters within any of the amateur bands. However, a good design for any amateur beam is one that not only performs well on a specified frequency, but as well, performs nearly as well across an amateur band.</p>
+  <p>For our investigation, we shall design beams for the 20-meter band, using 14.175 MHz as the design frequency. However, we shall be keenly interested in how well these beams perform across all of 20 meters. For the 20-meter quad beam design, we shall use a driver-reflector arrangement, with each loop composed of 2-mm diameter copper wire. (2 mm is 0.0787", which falls between the common amateur wires, that is, AWG #14 and AWG #12.) The general outline appears in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="qyc-1.gif" width="400" height="290" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The design used here derives directly from the algorithms that I developed some years ago for designing quads for any element diameter within reason and for frequencies between 3 and 300 MHz. The goal of the optimization exercise that results in the algorithms was to develop designs having the widest possible operating bandwidth for both the SWR curve and the front-to-back ratio. In the course of those studies, it quickly became apparent that the SWR bandwidth problem was easier to handle than the front-to-back bandwidth challenge. The results yielded designs that used wider spacing between the driver and the reflector than most of the literature showed. The listed specifications strictly apply only to square loops, although diamond loop dimensions will be almost identical.</p>
+  <pre>
+Physical specifications for the 2-element quad used in these notes
+
+Dimension                   Meters         Feet          Wavelengths
+Reflector side              5.629          18.47         0.266
+Reflector circumference    22.517          73.87         1.065
+Driver side                 5.341          17.52         0.253
+Driver circumference       21.366          70.10         1.010
+Driver-Reflector spacing    3.286          10.78         0.155
+</pre>
+  <p>Note that is the wire size changes or the frequency changes, the listed dimensions may not directly scale. For the design frequency, we shall find the following NEC-4 reports of free-space performance. The lower portion of the report includes a matching section that I added to produce an exact 50-Ohm resistive impedance at the design frequency. We shall need this impedance later. The section is a 1/4 wavelength line with an arbitrary impedance necessary to produce the desire source impedance with the listed line length. The resulting source impedance is 50.000 +/- j0.000 Ohms. Any other lossless modeled network would do as well.</p>
+  <pre>
+NEC-4 report of free-space performance for the 2-element quad at 14.175 MHz
+Forward      180-Degree Font-     Beamwidth     Source Impedance
+Gain dBi     to-Back Ratio dB     degrees       R +/- jX Ohms
+7.05         40.59                76            132.1 - j0.01
+
+TL Zo       Line Length
+Ohms        meters
+81.27515    5.28795
+</pre>
+  <p><b>Fig. 2</b> shows the free-space E-plane pattern for the quad beam. The pattern shows the total field (blue), the horizontal component (red), and the vertical component (green). Although small, the vertical component may have some role to play later in these notes. We may also note in passing that the quartering rear lobes tend to offset the very high 180-degree front-to-back value.</p>
+  <center>
+    <img src="qyc-2.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To gauge better the merits and limits of the quad beam design, we must perform a frequency sweep of the antenna across 20 meters (14.0 to 14.35 MHz). <b>Fig. 3</b> graphs the forward gain and the 180 degrees front-to-back ratio of the antenna. Like all driver-reflector parasitic arrays, the quad beam shows a descending gain curve as we increase the operating frequency within the passband. The total change in forward gain across the band is about 0.9 dB, running from a high of 7.5 dBi to a low of 6.6 dBi.</p>
+  <center>
+    <img src="qyc-3.gif" width="744" height="396" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Many antenna designers insist upon a minimum 180-degree front-to-back ratio of 20 dB across an operating passband. This goal is almost impossible for any quad design of which I am aware. (I have not been able to trace the 20-dB demand to anyone who happens to dislike quads.) Although the design used here has the widest front-to-back bandwidth of any 2-element that I have encountered, it still falls short of the demand. The low-end ratio is about 15 dB and the high-end ratio is a little under 18 dB. I shall not judge whether these band-edge values are good enough. Rather, I shall just note that most quads designs fall far short of what the present design achieves in front-to-back bandwidth.</p>
+  <p>I noted earlier that the front-to-back bandwidth proved more challenging than the SWR bandwidth. With the matching section in place, the resulting 50-Ohm SWR curve appears in <b>Fig. 4</b>. The SWR is 1.5:1 or less across the entire 20-meter band.</p>
+  <center>
+    <img src="qyc-4.gif" width="590" height="265" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I am not recommending this design for replication--although one might build one as easily as any other 2-element design. My purpose has been to set-up a 2-element quad design with very good capabilities within its class. Now we need to turn to the design of a comparable Yagi.</p>
+  <p><b>A 3-Element Short-Boom Yagi</b></p>
+  <p>We need not re-invent any wheels when it comes to 3-element Yagi designs. The N6BV collection of Yagis in <i>The ARRL Antenna Book</i> gives us plenty from which to choose. For these notes, I have selected a variation of his short-boom design that in the 20-meter version would fit easily on a 16' boom. For these notes, I eliminated the tapered-diameter schedule and settled on 1" (25.4 mm) diameter aluminum elements. The general outline appears in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="qyc-5.gif" width="480" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I optimized the element length and spacing values for the uniform-diameter material. The results appear in the following physical specifications. Unlike the quad, you may scale the Yagi for different frequencies, so long as you remember to scale the element diameter as well as the element length and spacing values.</p>
+  <pre>
+Physical specifications for the 3-element Yagi used in these notes
+
+Dimension                   Meters         Feet          Wavelengths
+Reflector length            10.82          35.50         0.512
+Reflector-Driver spacing     1.84           6.03         0.087
+Driver length               10.19          33.43         0.482
+Driver-Director spacing      2.81           9.23         0.133
+Reflector-Director spacing   6.45          15.26         0.220
+</pre>
+  <p>At the design frequency (14.175 MHz), NEC-4 reports the following performance values. Since the feedpoint impedance is not 50 Ohms, I also added a matching section to the Yagi driver to yield a purely resistive impedance of 50.000 +/- j0.000 Ohms. (The decimal places shown are part of the NEC output report. The version used is the one that accompanies GNEC. In seeking out such precise numerical results, be aware that different compilers and even different computer CPUs may shows very slightly different values. Normally, the differences make no practical difference at all. They only make sense in the context of tests yet to come.)</p>
+  <pre>
+NEC-4 report of free-space performance for the 3-element Yagi at 14.175 MHz
+Forward      180-Degree Font-     Beamwidth     Source Impedance
+Gain dBi     to-Back Ratio dB     degrees       R +/- jX Ohms
+7.18         43.68                68            28.8 + j0.01
+
+TL Zo       Line Length
+Ohms        meters
+37.93215    5.284
+</pre>
+  <p>In terms of free-space performance, the only significant difference lies in the E-plane beamwidths of the two antennas. The quad beamwidth is about 8 degrees wider than the Yagi beamwidth. This difference would make a small difference in operation, but only in terms of how often we needed to rotate the beam to place a communications target within the main forward lobe. <b>Fig. 6</b> provides the free-space E-plane pattern corresponding to the one shown for the quad beam.</p>
+  <center>
+    <img src="qyc-6.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The most notable difference between <b>Fig. 6</b> and <b>Fig. 2</b> lies in the absence of any visible green trace. Unlike the quad pattern, the Yagi pattern shows no evidence of a vertical component that rises to a -40-dB level.</p>
+  <p>We noted this Yagi as a short-boom Yagi, and its gain at the design frequency is less than 0.15-dB higher than the gain of the quad. We may thus comment on one of our original quad claims, namely, that 2-element quad gain is about the same as 3-element Yagi gain. Such a claim applies only to short-boom Yagis, such as the 16' long version that we have examined. The claim would be utterly false is we compared the quad to a longer-boom 3-element Yagi. With a boom closer to 24', a Yagi would have an additional dB of forward gain with an acceptable front-to-back ratio and a workable source impedance. The danger in the original quad claim was its reduction to a sound bite, omitting the context in which it is correct.</p>
+  <p>As we did for the 2-element quad beam, we need to examine the Yagi performance across the entire 20-meter band. <b>Fig. 7</b> shows the forward gain and the 180-degree front-to-back ratio. Like all parasitic arrays with directors, the Yagi shows a rising gain curve as we increase the operating frequency. Although the gain curve appears to be as steep as the one for the quad--despite the opposing slope--we should carefully note the gain range. The gain varies from about 7.1 dBi to 7.3 dBi, a difference of only 0.2 dB across the band. We may compare this to the 0.9-dB gain range for the quad beam.</p>
+  <center>
+    <img src="qyc-7.gif" width="744" height="396" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Unlike the 2-element quad, the 180-degree front-to-back ratio of the Yagi remains well above 20 dB across the entire 20-meter band. Indeed, we may also compare the rearward lobes of the quad and the Yagi. Although the shapes are similar, the Yagi rearward lobes are considerably weaker. These facts lead us back to another of the original claims about quads, namely, that front-to-back ratio is too environmentally dependent for us to make reliable comparisons. Given the data that we have seen so far, this claim has the appearance of being a smoke screen for the quad's somewhat inferior performance with respect to rearward lobes. We shall return to this matter when we eventually place both antennas above ground.</p>
+  <center>
+    <img src="qyc-8.gif" width="590" height="265" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> provides the matched 50-Ohm SWR curve for the Yagi across the 20-meter band. The curve is not significantly different from the one for the 2-element quad. In both cases, the antennas used an artificial matching section impedance to achieve the perfect match at the design frequency. Using the nearest real cable in both cases would yield very similar SWR curves between the quad and the Yagi.</p>
+  <p><b>Quad and Yagi over Ground</b></p>
+  <p>Our exercise so far has had essentially one purpose: to create comparable 2-element quad and 3-element Yagi designs. Since the models are in free space, we need to bring them down to earth in order to evaluate their relative performance in a more realistic situation. A wavelength at 20 meters is approximately 70', a normal height for beams in amateur service. Therefore, we may create under each beam model an average ground 1 wavelength below. Since the beams are horizontally polarized, the exact ground quality will make only a small difference to the performance numbers. The main requirement is that we assign the same height to both beams.</p>
+  <p>The height of a quad's physical center-point may differ a bit from the electrical height, that is, the height that yields the same elevation angle of maximum field strength (TO angle) as a planar beam, such as a Yagi. In this case, assigning a 1 wavelength height to the quad's center produced the same TO angle as the Yagi.</p>
+  <pre>
+NEC-4 performance report for the 2-element quad and the 3-element Yagi
+at 14.175 MHz at 1 wavelength above average ground
+
+Quad
+Forward     TO Angle    Vertical      180-Degree Font-     Horizontal
+Gain dBi    degrees     Beamwidth     to-Back Ratio dB     Beamwidth
+12.30       14/76       16 deg        30.02                76 deg
+
+TL Zo       Line Length     Source Impedance
+Ohms        meters          R +/- jX Ohms
+82.8        5.32055         50.000 +/- j0.000
+
+Yagi
+Forward     TO Angle    Vertical      180-Degree Font-     Horizontal
+Gain dBi    degrees     Beamwidth     to-Back Ratio dB     Beamwidth
+12.51       14/76       16 deg        28.87                68 deg
+
+TL Zo       Line Length     Source Impedance
+Ohms        meters          R +/- jX Ohms
+37.2155     5.41325         50.000 +/- j0.000
+</pre>
+  <p>The data show that the two antennas have gain values that are only about 0.2 dB apart. Both beams show the same TO angle (where the first number is the elevation angle and the second is the theta angle). In fact, both beams show the same vertical beamwidth. The similarity of the elevation or theta patterns is evident in <b>Fig. 9</b>.</p>
+  <center>
+    <img src="qyc-9.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In both patterns, we find a second elevation lobe at about 45 degrees (theta or elevation). The quad's second lobe appears to be very slightly weaker than the one that appears in the Yagi pattern. In operation, both second lobes would have almost identical affects. The idea in one of the initial claims about quads that they do not produce high-angle radiation appears to be derived from the fact that horizontal antennas vertically spaced by 1/2 wavelength tend to cancel vertical radiation. However, the second elevation lobe is a considerable departure from the vertical. Moreover, the cancellation decreases rapidly as we reduce the spacing between wires. The quad wires are only 1/4 wavelength apart. The combination of these two conditions yields a second elevation lobe that is perfectly normal for any horizontal beam. As we move from the horizon to the zenith, we find that neither beam has significant radiation straight upward.</p>
+  <p>The bottom line with respect to transmitting elevation patterns is that neither antenna shows a significant advantage over the other. Nothing in the relative lobe strength or the vertical beamwidth would account for the supposed ability of the quad to open and close DX bands.</p>
+  <center>
+    <img src="qyc-10.gif" width="800" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> provides us with a comparison of the azimuth patterns for both beams using the TO angle as the pattern reference. As the data attest, the azimuth patterns have the same horizontal beamwidth as they had in free space. 1 wavelength is not a height that maximizes the front-to-back ratio. (3/8, 7/8, and 1-3/8 wavelength are all better heights for that purpose.) Hence, both beams show lesser values of 180-degree front-to-back ratio than they did in free-space. The quad has the higher value by a small margin. However, the quartering rearward lobes are considerably stronger than those of the Yagi. If we were to average the forward gain to rearward gain ratio throughout both rearward quadrants, the Yagi would achieve the better value. Since the antennas occupy the same environment, the smoke-screen claim among our original quad statements reveals itself as a cover-up for the fact that 2-element quads do not control their rearward lobes as well as a 3-element Yagi. A study of parasitic beams will show that the front-to-back ratio of a beam with one or more directors is capable of better rearward lobe reduction than a beam with only a reflector. The quad's complex mutual coupling does a better job at rearward lobe control than a single 2-element driver-reflector Yagi, but we require at least one director to fully tame the rearward lobes to a level at least 20 dB below the forward gain across the entirety of the rear quadrants.</p>
+  <p><b>A Receiving Test</b></p>
+  <p>Nothing in the transmitting patterns of the 2-element quad suggests any advantage over the Yagi relative to any of the claims with which we began. Perhaps the only claim not fully tested is the idea of the quad having superiority over a Yagi when the propagation is weak, that is, at the beginning and the ending of a daily cycle. Since the shape of the total field does not indicate any significant difference, we have only one remaining possibility, although it is a weak one. The quad did show a remnant vertical component to its radiation pattern. Years ago, I read a study--long since lost--that suggested that at one or the other end of a daily propagation cycle, the energy might not be as thoroughly skewed with respect to polarization as we take it to be when propagation is strong. Indeed, the study suggested that the dominant polarization might be at a 45-degree angle relative to either the vertical or the horizontal.</p>
+  <p>We can test this hypothesis in NEC-4 by altering the test conditions. Instead of setting up a source on the feedpoint segment, let's instead use a linear plane wave as the excitation. We shall set the source so that the beam's main forward lobe is aligned with it. We may also set the excitation at any vertical angle. We shall try theta angles from 70 degrees to 86 degrees (elevation angles from 20 degrees down to 4 degrees) to be certain that we cover all likely DX skip angles. <b>Fig. 11</b> shows the general set-up.</p>
+  <center>
+    <img src="qyc-11.gif" width="550" height="230" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Instead of placing a source at the former source segment, we shall place a 50-Ohm receiving load at that position. Using the receive pattern (PT) command, we may sample the current at that segment for comparison between the two types of beams. (This set-up is why the two beams used matching sections to produce a source impedance of exactly 50 Ohms resistive.) In all cases, we shall use a plane-wave excitation of 1 V/m for uniformity.</p>
+  <p>We shall go one step further. The linear plane-wave excitation command (EX1) allows us to vary the angle of the plane wave (eta) from 90 degrees (horizontal) to 0 degrees (vertical). Therefore, we may fairly test to see if the quad has sufficient sensitivity at any incoming polarization angle to give it an advantage over the Yagi.</p>
+  <center>
+    <img src="qyc-t1.gif" width="885" height="241" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 1</b> shows the tabular results of the exercise as applied to the quad beam. To provide a better appreciation of the variation of current magnitude on the antenna feedpoint as we change the polarization, <b>Fig. 12</b> plots the curves for selected theta/elevation angles.</p>
+  <center>
+    <img src="qyc-12.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The strongest curve at all plane-wave eta angles (except for 0 degrees) coincides with the TO angle for the antenna. The adjacent curves at 4 degrees above and below the TO angle are nearly equal. As we lower the TO angle to 6 degrees above the horizon, we find a considerable weakening of the current magnitude on the source segment. However, for horizontally polarized signals, the current magnitude is more than half the level we find at the TO angle.</p>
+  <p>We may perform the same exercise for the Yagi. The tabular results appear in <b>Table 2</b>.</p>
+  <center>
+    <img src="qyc-t2.gif" width="885" height="241" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Once more, we can more clearly see the smooth curves by graphing selected theta/elevation angles--the same ones that we used for the quad. Indeed, <b>Fig. 13</b> shows the same set of relationships among the curves that we saw in trhe quad graphic. Even at an elevation angle of 6 degrees, horizontally polarized signals have more than half the value of similarly polarized signals at the TO angle.</p>
+  <center>
+    <img src="qyc-13.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We may go a step further. Let's directly compare the current magnitudes on the source segment for both antennas at the TO angle (76/14 degrees theta/elevation). <b>Fig. 14</b> shows the resulting dual plot.</p>
+  <center>
+    <img src="qyc-14.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The plot shows that the curves are congruent throughout the range for eta. (Indeed, we may compare the current values for the TO angle with an eta of 90 degrees. Converting the ratio to dB, we obtain a gain difference of just over 0.2 dB, just the same as we obtained from the transmitting plots.)</p>
+  <p>To ensure that any performance differential is not a function of the signal's incoming angle, let's repeat the plotting process for a 4-degree elevation angle (86 degrees theta). <b>Fig. 15</b> supplies the outcome.</p>
+  <center>
+    <img src="qyc-15.gif" width="611" height="407" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Once again, we have congruent plots with no exceptions at any value of eta. The quad's remnant vertical component proves to be ineffective in improving cross-polarization reception relative to the Yagi with its purely linear elements. Nothing in the receiving test--with plane-wave sources at a variety of elevation angles and a thorough scan of polarization angles--gives us any reason to suppose that one antenna has an advantage over the other.</p>
+  <p><b>Conclusions and Historical Speculations</b></p>
+  <p>Both Yagis and quads are highly modelable antennas that do not come close to pressing any limitation of NEC software. If we set up highly comparable beams--a 2-element quad and a 3-element short-boom Yagi--we reach the inevitable conclusions that neither antenna has a decisive advantage over the other, no matter how we test them with the software. Therefore, the remnant claims for quads with which we began our exercise turn out to have little or no foundation. A 2-element quad only matches the gain of a short-boom 3-element Yagi but does not equal the gain of a long-boom 3-element Yagi. The potential for higher-angle radiation is roughly the same with both types of beams. The addition of a director to the Yagi gives it somewhat better control (or attenuation) of the rear lobes than we find in a quad with only a reflector. Finally, nothing in the receiving or transmitting patterns of the two types of antennas lends any support to the idea that one or the other is superior at daily band openings or closings.</p>
+  <p>The quad claims appear to be simple remnants of a bygone era in antenna design. Whereas Yagi proponents have largely grown silent with respect to early exuberant claims, the quad claims have hung around long after they have lost their foundation. There was a day--perhaps a quarter century ago or more (that is, prior to 1985) when such claims might have been true. Yagi home builders often confused front-to-back ratio for forward gain in the absence of adequate range tests. In the preceding decades (the 1960s and 1970s) even ZL-Specials and HB9CVs outperformed many of the existing Yagis. In that case, writers presumed that the Yagis were performing to their theoretical potential and then ascribed to the phased array unreasonably high gain values. (These claims also persisted well past their time.) So it is quite plausible that various quad designs outperformed common 3-element Yagis of earlier days.</p>
+  <p>However, those days are generally over. The present generation of Yagi designs (and not all Yagi makers use present-generation designs) achieve the peak performance of which a Yagi configuration is capable. Indeed, in the world of Yagis, we no longer expect to discover truly new designs with a performance miracle. Perhaps the best progress has appeared in the realm of multi-band Yagis and hybrids that use small or large phased driver arrangements to improve performance bandwidth.</p>
+  <p>A similar situation applies to quad beams. As we learn more about the basic properties of quad beams, we are discovering that they have both advantages and limitations. One of the lessons that we have had to learn is that we cannot simply transfer a Yagi design to quad loops. The mutual coupling between closed loops sets up requirements that may sometimes differ widely from those applicable to the Yagi's linear elements.</p>
+  <p>In the end, there are good reasons to use a quad and good reasons to use a Yagi. However, when it comes to deciding between a 2-element quad and a 3-element short-boom Yagi--when both are monoband beams--the considerations will (or should) not include expectations of great performance differences.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><i>Updated 07-23-2006. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Return to Amateur Radio Page</b></a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

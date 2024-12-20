@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Yagi, HF Lower">
+  <title>Substituting Wire Elements in Lower HF Arrays</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/wirecad.gif" align="middle" width="125" height="62" border="2" vspace="5" hspace="9"> A Note on Substituting Wire Elements in Lower HF Arrays <img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Wire beams are commonplace in the lower HF region. They have some uses at HF as well, for example, in LPDAs. In both cases, we sometimes fall into the belief that the wire array has all of the gain and performance of a comparatively similar array made from fat tubular elements.</p>
+  <p>Of course, that belief is simply false. A reduction in the diameter of elements of the proportions of a move from a fat tube to a skinny wire reduces not only the operating bandwidth (sometimes), but as well reduces the inter-element coupling that is critical to deriving full performance from a beam. For example, standard LPDA calculations make use of the element length-to-diameter ratio in determining element lengths, but little has been noted about the lowering of gain in moving from fat to skinny elements. Even a beam like the LPDA, that is utterly dependent upon phasing connections, remains equally dependent upon inter-element (mutual) coupling, and that coupling decreases with decreases in element diameter for a given Tau and Sigma.</p>
+  <p>In many cases, tubular elements cannot be used due to their length and/or weight. Hence, the builder is forced to use wire. However, he need not be confined necessarily to reduced performance. I have shown in a couple of places a method for using wire elements that retain the performance of fatter tubular elements.</p>
+  <center>
+    <img src="wirel-1.gif" width="474" height="263" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The technique is quite straight forward, as indicated by <b>Fig. 1</b>. For each element of a design originally created for single fat elements, create a double wire of the same length. Then, most likely through modeling (although field testing will also work), adjust the wire spacing so that the element is self-resonant on the same frequency as the original tubing element. The required spacing will vary with the wire size used. If a modeling approach is used to estimate the spacing, there are a few constraints that we shall look at further on.</p>
+  <p>It turns out that this arrangement works well for smaller diameter tubing equivalencies--say, up to 1 inch or 25 mm. For larger tubing, we encounter some limitations. The average tubing size--even in elements that start out at the element center as quite sizable--ends up quite modest even in lower HF beams. You can check out the equivalent uniform diameter for almost any tapered-diameter element on NEC-2 programs having Leeson corrections by looking at the substitute elements used in the actual NEC calculations. Access to these substitute elements is available in EZNEC, NEC-Win Plus, and similar programs.</p>
+  <p>However, we sometimes scale up array sizes from proven upper HF designs. Proper scaling requires that we increase all dimensions, including the element diameter, if we are to have what amounts to a true scaling. And only by a true scaling can we assure that the array will perform at the lower frequency to the level it promises at the higher frequency.</p>
+  <center>
+    <img src="wirel-2.gif" width="440" height="403" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I had occasion to go through this exercise with a 3-element 20-meter beam adapted from a K6STI design. The exercise was initially theoretical, so I was not the least troubled by the resultant 4" diameter elements that emerged in the 80-meter model. <b>Fig. 2</b> shows the basic outline of the Yagi, which will become the center of attention in what follows. Here is a table of dimensions.</p>
+  <pre>3-Element Yagi:  3.6 MHz:  4" diameter elements
+Element        Element Length (ft)      Spacing from Reflector (ft)
+Reflector      136.08                   ----
+Driver         129.94                   41.167
+Director       122.26                   88.767</pre>
+  <p>Wondering what the antenna might do if made from wire, I recreated it from 0.1" diameter wire. This diameter is between #12 and #10 AWG. The conversion required some proportional lengthening of elements to achieve a coincidence of maximum front-to-back ratio and driver resonance. The element spacing was retained, and only the element lengths were changed. The resulting wire beam had these modeling specifications.</p>
+  <pre>3-Element Yagi:  3.6 MHz:  0.1" diameter elements
+Element        Element Length (ft)      Spacing from Reflector (ft)
+Reflector      138.40                   ----
+Driver         132.40                   41.167
+Director       124.60                   88.767</pre>
+  <p>Both antennas were modeled as copper elements in free space for comparisons. For the design frequency of 3.6 MHz, the results were interesting, to say the least.</p>
+  <pre>NEC-4 Modeled Performance:  3-Element Yagis:  3.6 MHz
+Model          Gain      F-B Ratio      Feedpoint Z    Efficiency
+               dBi       dB             R +/- jX Ohms    %
+4"             8.14      27.3           25.5 - j 0.9   99.81
+0.1"           7.06      19.9           43.3 - j 2.9   95.87</pre>
+  <p>Using wire reduced gain by over 1 dB and the front-to-back ratio by about 7 dB. The feedpoint impedance increases nearly 70%, much more than the increased wire losses would indicate. The 4% differential in efficiency is not large enough to account for the source impedance increase. (NEC recognizes only wire material losses and spot load and other network losses in calculating efficiency. The latter will not be relevant to this exercise. Efficiency figures can be useful reference points, so long as we do not try to use them to account for every gain or loss in performance when comparing designs.)</p>
+  <p>If we use a current source of 1.0 at a phase angle of 0.0 degrees, we can gain further insight into the comparative performance of these arrays. We simply need to look at the element center current magnitudes and phase angles for the reflector and director elements for both beams.</p>
+  <pre>NEC-4 Modeled Element Currents:  3-Element Yagis:  3.6 MHz
+Model          Reflector I                   Director I
+               Magnitude      Phase          Magnitude      Phase
+4"             0.405          143.5          0.601          -134.0
+0.1"           0.414          126.1          0.456          -119.2</pre>
+  <p>Since the elements are both parasitic, the differential in current magnitudes and phase angles is reflective of the difference in mutual coupling between the elements and the driver. If the current values for the 4" model are to be considered as more ideal, then the values that appear on the elements of the 0.1" model are considerably off target.</p>
+  <p>In fact, the wire version of the array might require considerable redesign to peak its performance, including adjustments to element spacing and length. This fact is revealed in frequency sweeps of both antennas from 3.55 through 3.65 MHz.</p>
+  <center>
+    <img src="wirel-3.gif" width="647" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the modeled free-space gain curves for both antennas. The 4" model shows the gain curve across the modeled passband that we have come to expect from high performance 3 element Yagis: a modest but continuous increase of gain with frequency. In contrast, the wire model shows the lowest gain at the design frequency. This dip is indicative antenna operation at a different portion of the potential gain curve--somewhat lower in frequency than the corresponding curve positions for each of the 4" model gain numbers.</p>
+  <center>
+    <img src="wirel-4.gif" width="647" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, as shown in <b>Fig. 4</b>, the front-to-back peak has been sustained at or just below the design frequency. In this aspect of design, the 4" model curve encompasses the wire model curve.</p>
+  <center>
+    <img src="wirel-5.gif" width="647" height="523" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wire model actually has a wider operating VSWR bandwidth than the 4" model, as shown in <b>Fig. 5</b>. The wider VSWR bandwidth results in part from the higher resonant source resistance, so that equal amounts of reactance have a lesser effect on the SWR in terms of increasing its value. In fact, the wire model reactance from one passband limit to the other is only about 37% greater than that for the 4" model (40.3 vs. 29.5 Ohms), while the source resistance has climbed by 70 percent (43.3 vs. 25.5 Ohms). Hence, relative to the individual resonant source resistances, the wire beam will permit operation over more of 80 meters.</p>
+  <p>Despite the wider operating bandwidth, my aim was to see if I might obtain 4" performance from a wire version of the antenna. So I applied the two-wire technique described at the beginning of the exercise, only to be disappointed by the results. 2-wire elements, each the same length as those of the 4" model, but spaced to resonate at the same self-resonant frequencies, only brought me half way to the gain goal.</p>
+  <p>The 2-wire element substitutes required a spacing of 13" between 0.1" wires. Here we must note that my models will not use full precision in the interests of keeping numbers as rounded and simple as possible. So 13" spacing became convenient and close to the mark. However, the rounding of the spacing value was not sufficient to account for the gain value of 7.77 dBi, nearly 0.4 dB short of the mark.</p>
+  <center>
+    <img src="wirel-6.gif" width="463" height="346" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The answer lies in the insufficient coupling provided by the 2-wire model elements. So I added a third wire exactly between the 2, as shown in <b>Fig. 6</b>. The half-elements shown are matched by equivalent mirror images to the unseen right of the figure. The third wire does not substantially change the resonant frequency of the resulting element, so I left the outer spacing of 13" and hence ended up with a spacing of 6.5" between wires.</p>
+  <center>
+    <img src="wirel-7.gif" width="453" height="240" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Before we look at the results of the wire-beam models in detail, we can pause a moment to examine the element models, partially shown in <b>Fig. 7</b>. The rules for NEC note that closely spaced wires should have all segment junctions parallel to each other. As well, angular junctions should have segment lengths of approximately equal lengths. Finally, the source segment should be protected from multiple wire junctions, which results in a 3-segment center section for each element. (Although the parasitical elements might have been made continuous, I preserved the center sections in each that resulted from initial resonating tests.) Finally, results will be most accurate for multi-wire elements where the wires are closely spaced and parallel if the source wire is centered so that it meets equal wire lengths in both components of the element. The wires are joined at the outer ends.</p>
+  <p>Since the segments length of the wire from the center or source wire to the outer wires is 6.5" long, I made this value the segment length for the entire array. The center wire is 19.5" long in 3 segments. The elements beyond the limits of the figure have over 100 segments per wire on each side of center. Hence, the 2-wire model has over 1400 segment, while the 3-wire model tops 2100 segments. Although for some, this would be overkill, it meets all NEC guidelines. Only a little patience is needed while NEC grinds out the results during frequency sweeps.</p>
+  <p>Part of my interest in the wire models was to determine if each of these models had a single-wire model of roughly corresponding performance. That model would consist of a single fat wire per element, with the diameter chosen to approximate the performance of the corresponding wire model. Of course, the element lengths had to be adjusted relative to those for the 4" model in order to place peak performance at the design frequency.</p>
+  <p><b>1. The 2-Wire Model and a 1" Single Wire Model</b>: A 1" diameter element model yielded a set of performance curves roughly similar to those of the 2-wire model. We know the physical dimensions of the 2-wire model from the discussion above. The following table presents the physical aspects of the 1" model.</p>
+  <pre>3-Element Yagi:  3.6 MHz:  1" diameter elements
+Element        Element Length (ft)      Spacing from Reflector (ft)
+Reflector      137.50                   ----
+Driver         131.50                   41.167
+Director       123.76                   88.767</pre>
+  <p>The design-frequency (3.6 MHz) performance for the two models is in this table.</p>
+  <pre>NEC-4 Modeled Performance:  3-Element Yagis:  3.6 MHz
+Model          Gain      F-B Ratio      Feedpoint Z    Efficiency
+               dBi       dB             R +/- jX Ohms    %
+1"             7.77      25.7           32.7 - j 0.3   99.42
+2x0.1"         7.77      23.7           30.4 + j 2.6   96.73</pre>
+  <p>The comparable performance at the design frequency is readily apparent. Note, however, that the efficiency of the single wire 1" model is significantly higher than that of the 2-wire model, owing to the higher material losses and smaller surface area available from the pair of thinner wires. Indeed, the surface area ratio is about 5:1 in favor of the 1" model. Nevertheless, the increased mutual coupling made possible by the 2 spaced wires is sufficient to overcome the increased material losses and nets the same gain at the design frequency as the more efficient fat-wire model.</p>
+  <p>The comparison can be extended to the current magnitude and phase found on the parasitic elements with a source current of 1.0 at 0.0 degrees.</p>
+  <pre>NEC-4 Modeled Element Currents:  3-Element Yagis:  3.6 MHz
+Model          Reflector I                   Director I
+               Magnitude      Phase          Magnitude      Phase
+1"             0.407          134.9          0.556          -127.8
+2x0.1"         0.391          136.7          0.583          -132.1</pre>
+  <p>Note that the parasitic element current values of these two models are closer to each other than either is to the standard 4" model. The models might have more closely corresponded had the elements in the 2-wire model been spaced more precisely than the 13" used in the model. In fact, the 2-Ohm reactance value indicates not only a slight driver over-length for the spacing, but as well a similar situation for the other elements as well. Hence, the best SWR value and front-to-back peak occurs below the design frequency. In addition, for an equal-gain situation, the required mutual coupling among elements to overcome the higher material losses in the 2-wire model would also dictate slightly different parasitic element current values relative to the single wire model.</p>
+  <center>
+    <img src="wirel-8.gif" width="646" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The similarities and differences between the two models become more apparent when we perform frequency sweeps. In this case, due to the remnant inductive reactance of the 2-wire element replacements, I have dropped the lower limit of the sweep to 3.525 MHz. In the case of the gain sweep, shown in <b>Fig. 8</b>, the differences show up in different rates of increase in gain across the passband--not widely different, but different nevertheless.</p>
+  <center>
+    <img src="wirel-9.gif" width="646" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> shows the front-to-back ratio sweep for the two models. The 1" model reaches peak front-to-back ratio just below the design frequency, while the 2-wire model shows its peak about 25 kHz below the design frequency. The curve confirms the note above that some fine tuning of the 2-wire spacing (a slight narrowing) is necessary to create a true overlap of curves. However, the ultimate front-to-back peaks of both antenna are quite close, pushing above 27 dB. Moreover, extending the sweep scale shows that the curves are quite congruent, since the lower end differential is about the same as the upper end differential.</p>
+  <center>
+    <img src="wirel-10.gif" width="643" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The SWR curve in <b>Fig. 10</b>, tells a similar tale. The passband end differentials are reasonably close so that the offset between the curves does not lead to any misleading conclusions about the 2:1 operating bandwidths of the 2 models. They are essentially the same.</p>
+  <p>The end result--despite the small offsets in the curves and number--is the conclusion that for practical purposes, the 2 0.1" diameter wire elements with 13" spacing in the Yagi model provide the same performance potential as a single 1" tubular element set in the same model. The higher mutual coupling of the wire model offsets the higher material losses, resulting in a beam with the same performance over the range of vital performance parameters as that of a single fat element model.</p>
+  <p><b>1. The 3-Wire Model and a 2.85" Single Wire Model</b>: I would like to be able to say that the 3-wire model overcame all remaining differentials with the 4" model of the 3-element Yagi. However, some differential remained, although it might be considered minor. A 2.85" diameter element model yielded a set of performance curves roughly similar to those of the 3-wire model. Once, more, we know the physical dimensions of the 3-wire model from the discussion above. The following table presents the physical aspects of the 2.85" model.</p>
+  <pre>3-Element Yagi:  3.6 MHz:  2.85" diameter elements
+Element        Element Length (ft)      Spacing from Reflector (ft)
+Reflector      136.48                   ----
+Driver         130.30                   41.167
+Director       122.66                   88.767</pre>
+  <p>The design-frequency (3.6 MHz) performance for the two models is in this table.</p>
+  <pre>NEC-4 Modeled Performance:  3-Element Yagis:  3.6 MHz
+Model          Gain      F-B Ratio      Feedpoint Z    Efficiency
+               dBi       dB             R +/- jX Ohms    %
+2.85"          8.04      27.6           27.4 - j 1.7   99.75
+3x0.1"         8.04      21.7           26.0 + j 6.1   97.32</pre>
+  <p>The comparable performance at the design frequency is readily apparent. Note, however, that the efficiency of the single wire 2.85" model is still significantly higher than that of the 3-wire model, owing to the higher material losses and smaller surface area available from the trio of thinner wires. Indeed, the surface area ratio is about 9.5:1 in favor of the 2.85" model. Nevertheless, just as with the 2-wire model, the increased mutual coupling made possible by the 3 spaced wires is sufficient to overcome the increased material losses and net the same gain at the design frequency as the more efficient fat-wire model.</p>
+  <p>The comparison can be extended to the current magnitude and phase found on the parasitic elements with a source current of 1.0 at 0.0 degrees.</p>
+  <pre>NEC-4 Modeled Element Currents:  3-Element Yagis:  3.6 MHz
+Model          Reflector I                   Director I
+               Magnitude      Phase          Magnitude      Phase
+2.85"          0.410          141.1          0.588          -132.0
+3x0.1"         0.387          141.3          0.623          -137.2</pre>
+  <p>Once more, there are differences between the two models with respect to current magnitudes and phases on the parasitic element centers--but not great ones. The remnant 6-Ohm reactance on the 3-wore driver element is a result of having performed no adjustments in the spacing to compensate for the addition of the center wire. In fact, the reactance value on the driver also indicates not only a slight driver over-length for the spacing, but as well a similar situation for the other elements as well. Hence, the best SWR value and front-to-back peak occurs below the design frequency. As with the 2- wire model, for an equal-gain situation, the required mutual coupling among elements to overcome the higher material losses in the 3-wire model would also dictate slightly different parasitic element current values relative to the single wire model.</p>
+  <center>
+    <img src="wirel-11.gif" width="645" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, when we make allowances for the offset in self-resonant frequencies of the individual elements, the curves for the single 2.85" element model and for the 3-wire model remain remarkable congruent. <b>Fig. 11</b> shows the gain curves, which show even smaller differences than those we saw in <b>Fig. 9</b> across the same passband for the frequency sweep.</p>
+  <center>
+    <img src="wirel-12.gif" width="646" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Likewise, the two front-to-back ratio curves in <b>Fig. 12</b>, display excellent congruence with a displacement that is almost exactly 25 kHz. Compare not only the offsets at the front-to-back peaks, but as well the lower frequency 19+ dB point and the higher frequency 17+ dB points.</p>
+  <center>
+    <img src="wirel-13.gif" width="647" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 13</b> portrays a similar offset with respect to the SWR curve for both models. The shapes of the curves are virtually identical, despite the 25 kHz offset between them. In effect, bringing the entire set of curves for the two models into alignment would likely be a matter simply of adjusting the spacing of the wires in the 3-wire elements.</p>
+  <p>Alternatively, one might also slightly shorten the elements of the 3-wire model slightly. In actual construction practice, this procedure would become the most practical, since it is likely that the wire elements, including spacers, would be fixed in construction phases that precede raising the antenna to operating height.</p>
+  <p>The 3-wire model ends up slightly short of the goal of achieving the full gain of the initial 4" diameter element model. However, the deficit is only about 0.1 dB. Front-to-back performance can be as good as the initial model, and the feedpoint impedance will be comparable.</p>
+  <p>In effect, the exercise has established that it is possible to create thin wire models with multiple wires per element that simulate effectively the performance of fat tubular elements in beams and arrays--at least for this 3-element Yagi model. The requisite spacing and possibly the number of wires required will vary with the wire size chosen and the diameter of the element being simulated.</p>
+  <p>It is not sufficient simply to create elements from multiple wires. The spacing of the wires is of great significant in increasing the mutual coupling between wires that yields the desired level of performance, understanding that some excess coupling may be needed to overcome higher material losses in the wire substitutes. If nothing else, this exercise has suggested some interesting relationships between the roles of material losses and mutual element coupling in beam performance.</p>
+  <p>Besides the flat plane, other wire configurations are possible, including triangles, squares, and the traditional cage hexagon of wires. However, the extra weight of 6 wires, relative to the 3-wire plane used in the models presented here, may not be needed to effectively simulate fat wires. In the final analysis, two pieces of design work are needed. One is, for any proposed array, a set of models to establish the relative structures of equivalent multi-wire substitutes for a given fat single element. The other, of course, is a mechanical analysis to determine the best compromise among the physical properties of the resultant element. The properties might include ease of construction, durability in the proposed environment, and ease of raising the structure to its operating height.</p>
+  <p>Of course, the home antenna builder might well decide that using single wire elements is the simplest construction method and that the performance deficits relative to the ideal still fall within an acceptable level. While it is one thing to tangle at a computer with complex models of substitute multi-wire element substitutes, it is quite another to have to wrestle with the real thing, namely, the tangle-prone wire elements that require raising into operating position.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-10-2000. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

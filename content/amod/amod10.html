@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tapering to Perfection</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>10. Tapering to Perfection</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  Everyone who models HF (and low VHF) beams is faced with dealing with elements that do not have a constant diameter. We refer to such elements as tapered-diameter (or tapered radius) elements, in contrast to elements with a uniform diameter, that is, elements that are untapered. The latter have somehow picked up in some literature the self-contradictory name of mono-tapered elements.
+  <center>
+    <img src="amod10-1.gif" width="482" height="265" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Figure 1</b> exaggerates--but only to a degree--the amount of stepping involved in most elements composed of several diameters of aluminum tubing. Normally, the maximum diameter shift from one section to another is about 0.25". However, some designers use a short, fat center wire in the element to simulate the effects of element-to-boom mounting plates and hardware. In these cases, the diameter shift may amount to as much as 2".</p>
+  <p>Native NEC-2 cannot handle tapered-diameter elements. It simply yields inaccurate results--ordinarily by over-reporting the gain and under-reporting the source impedance of the element. Consequently, in some implementations of NEC-2, correction factors have been installed to yield more accurate results.</p>
+  <p>Let's begin by comparing some simple cases of uncorrected and corrected NEC-2 reports for some simple tapered-diameter elements set up as dipoles in the 14 MHz range. The following table repeats an exercise we first encountered in installment 3 of this series. The entries in the table beneath each numbered label represent, first, the distance from the elements center at which a diameter shift occurs and, second, the diameter(s) of the element between shift points. The "Cor." entries give the length from center and the diameter of the substitute element used by NEC-2 to provide corrected results.</p>
+  <pre>  Length(s) in inches         Free Space Gain          Source Impedance
+  Diameter(s) in inches         in dBi                 (R +/- jX Ohms)
+1.  Uniform element (no corrective needed)
+     -201.25...0                     2.12              71.8 - j 0.6
+            1.0
+2.  One step, far out
+     -204...-150...0       No Cor.   2.14              73.0 + j 4.4
+         .75    1.0
+     -201.45...0           Cor.      2.12              72.0 + j 0.4
+           0.966
+3.  One step, near center
+     -204...-50...0        No Cor.   2.22              72.4 + j 5.2
+         .75   1.0
+     -201.661...0          Cor.      2.13              71.8 - j 0.5
+           0.792
+4.  Two steps, modest taper
+-205.75...-100...-20...0   No Cor.   2.32              72.5 + j10.6
+       .75    1.0   1.25
+-201.49...0                Cor.      2.13              71.9 + j 0.1
+     0.889
+5.  Two steps, more extreme taper
+-208.5...-100...-20...0    No Cor.   2.82              67.6 + j17.1
+      .75    1.0   2.5
+-201.63...0                Cor.      2.13              72.1 + j 0.9
+     0.895</pre>
+  <p>Notice especially the trends. Without correction, the closer the diameter step to the element center (and the source), the higher the reported gain and the lower the reported source impedance. The more numerous the steps and the greater the step sizes, the higher the reported gain and the lower the reported source impedance. By entry number 5, the figures have grown incredible. In contrast, the corrected elements yield figures that are all quite reasonable for a resonant 14 MHz dipole.</p>
+  <p>The simple lesson from this exercise is always to use the stepped-diameter correction feature when modeling stepped-diameter elements. However, there are numerous limitations to the tapered-diameter element correction scheme, as well as some cautions to be observed in using it. So let's spend a little time understanding the feature and learning to use it wisely. In addition, let's also pick up the habit of making sure that it is in effect when we want it to be.</p>
+  <h3>A Bit of Background</h3>Wherever the tapered-diameter correction feature is implemented, it creates a substitute element for the tapered one. The substitute element has a uniform diameter and a length that yield essentially the same self-impedance as the tapered diameter element. Thus, the substitute can be expected to behave--either by itself or in an array of elements--in the same way as the tapered element.
+  <p>The first method of calculating substitute elements was developed (to the best of my knowledge) by Jim Lawson, W2PV, in chapter 7 of his classic <i><b>Yagi Antenna Design</b></i>. Brian Beezley, K6STI, created improve algorithms for use in his NEC-Wires program. A quite different system was developed and explained by Dave Leeson, W6QHS, in chapter 8 of his equally classic <i><b>Physical Design of Yagi Antennas</b></i>. EZNEC, by W7EL, implements the Leeson correctives, as does NECWin Plus.</p>
+  <p>The Leeson correctives were calibrated against the MN (K6STI) version of MININEC. Indeed, MININEC is considered to be the standard of comparison for all tests of tapered-diameter calculations. It exhibits no problems with tapering schedules of all sorts. (A "tapering schedule" is simply where along an element the diameter changes and by how much.) We shall a bit farther on do some comparing of MININEC with both corrected and uncorrected NEC-2 outputs.</p>
+  <p>The basic principle of the substitute element is to derive an element with a uniform diameter and the same self-impedance as the original tapered- diameter element. The calculation method is accurate at and near element resonance, where the current distribution along the element is nearly sinusoidal (that is, nearly a sine wave in shape). This condition sets a number of limitations for the use of the corrective.</p>
+  <h3>Some Practical Boundaries for Substitute Elements</h3>In practical terms, the limitations are straightforward if we remember the what the calculation method requires.
+  <p>1. The tapered-diameter element must be within about 15% of resonance for the substitute element to be an accurate replacement. The near-resonance requirement applies to the physical length of the antenna without regard to loads, transmission lines, and sources that may be present. EZNEC, for example, cuts off the availability of the correction factor if the element does not meet this standard.</p>
+  <p>In antennas with many elements, only those meeting this (and other) constraints will have substitute elements calculated. Consequently, a tri-band beam might have the elements for one band (as determined by the frequency selection) substituted, but not those for other bands. This places a requirement for caution in using the results of such a model. For example, on some tri-band beams, the forward 20-meter director can affect performance on 10-meter, especially in limiting the upper frequency performance on that band. Depending upon beam design, the 20 meter director may carry significant current on 10 meters and be somewhat long as a full wavelength element on the upper band. However, it would not ordinarily have an uniform-diameter substitute calculated for it when the antenna is modeled at 10 meters.</p>
+  <p>2. If the tapered-diameter element is open at both ends (a dipole), it must be symmetrical about a center point along (but not necessarily on) one of the axes of the coordinate system. This requirement demands that the steps in a dipole's taper occur at equal distances from the center point of the element and in equal diameter steps for each corresponding step. EZNEC, for example, flags non-symmetries. In modeling, perhaps the chief reason for the absence of symmetry is transposing numbers when entering them in the wires table.</p>
+  <p>3. Loads, transmission lines, and sources are permitted only at the center point. Only one of each is permitted if the midpoint of the symmetrical element has no wire junction. Where the center is at a wire junction, split sources and loads may be used on segment immediately adjacent to the center-point junction. A load at a distance from the center--whether a resistance/reactance load, a resistance/inductance/capacitance load, or a shorted or open length of transmission line--would create an abrupt non-sinusoidal change in current magnitude along the element length, thus violating one of the conditions of accuracy. Center loads, transmission lines, and sources do not ordinarily disturb the current magnitude curve, although they may limit its highest value. Once more, EZNEC identifies misplaced loads, sources, and transmission lines.</p>
+  <p>Note that a serious loading coil used to shorten an element severely would ordinarily be used with an element already too short to pass the length test. Hence, such antennas could not access the corrective process.</p>
+  <p>For monopoles, connection to ground is essential for the substitution system to work. In these cases, the antenna element must be within length boundaries with respect to 1/4 wl resonance, and all source, load, and transmission line attachments must be to the segment immediately adjacent to the ground.</p>
+  <p>4. The taper-diameter element must be truly linear--that is, all wires making up the tapered-diameter element must be collinear. Ends must be open or, at most, one end may be grounded. Therefore, tapered diameter sections of elements that make up a complex geometry disable the corrective system. As a result, tapered-diameter elements used in Moxon rectangles, quad loops, capacity-hat dipoles/monopoles, and similar antennas cannot be directly modeled in NEC-2.</p>
+  <center>
+    <img src="amod10-2.gif" width="580" height="299" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Figure 2</b> summaries the rules by calling attention to what goes beyond normal boundaries. The upshot is that the corrective system is quite limited in its applications. However, the design of HF Yagi beams and other arrays with linear tapered-diameter elements is such a widespread application of NEC-2 that the corrective system is considered essential to most users.</p>
+  <h3>Some Practical Examples and a Subtle Limitation</h3>Let us look at some examples of the tapered-diameter correction factor in operation to further our familiarity with it and to gain some sense of what counts as reasonable expectations of it. We shall look at some wire tables drawn from the EZNEC implementation of NEC-2. Then we shall examine 5 sets of output reports: 1. the results of a MININEC version of the model in AO; 2. the results of uncorrected EZNEC NEC-2; 3. the results of corrected EZNEC NEC-2; 4. the results of creating a single-wire uniform element of the same length, diameter and total number of segments as the substitute group of wires in the corrected NEC-2 report; and 5. the results of (uncorrected) NEC-4. The AO models will have their center sections decreased by one segment to properly place the source at the junction of segments and at the element center. NEC-4 models hypothetically should need no correction. The models are all of the driven elements of large Yagi antennas, so their independent source impedances may not be quite resonant.
+  <p>1. A 14.175 MHz driven element of W6NGZ design:</p>
+  <center>
+    <img src="amod10-3.gif" width="601" height="73" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>W6NGZ     Frequency = 14.175  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.---End 1 (x,y,z : in)  Conn.---End 2 (x,y,z : in)   Dia(in) Segs
+
+1       -205.95, 79.800,  0.000  W2E1 -156.00, 79.800,  0.000 6.25E-01   4
+2  W1E2 -156.00, 79.800,  0.000  W3E1 -120.00, 79.800,  0.000 7.50E-01   3
+3  W2E2 -120.00, 79.800,  0.000  W4E1 -72.000, 79.800,  0.000 8.75E-01   4
+4  W3E2 -72.000, 79.800,  0.000  W5E1  72.000, 79.800,  0.000 1.00E+00  13
+5  W4E2  72.000, 79.800,  0.000  W6E1 120.000, 79.800,  0.000 8.75E-01   4
+6  W5E2 120.000, 79.800,  0.000  W7E1 156.000, 79.800,  0.000 7.50E-01   3
+7  W6E2 156.000, 79.800,  0.000       205.950, 79.800,  0.000 6.25E-01   4
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           7     4 / 50.00   (  4 / 50.00)      1.000       0.000       I
+Ground type is Free Space</pre>
+  <p>This antenna is symmetrical in the X-axis. Leaving the Y coordinate at its original spacing from the reflector is no problem for implementing the correction factor. The AO model uses 12 segments in the long center element. Note that the center element occupies about 35% of the total element length. Here are the reports.</p>
+  <pre>Report Source       Gain dBi       Source Z (R+/-jX)
+AO                  2.13           77.0 + j 11.6
+NEC-2 (No Cor.)     2.21           77.3 + j 23.6
+NEC-2 (Cor.)        2.14           74.7 + j 11.9
+NEC-2 (1-Wire)      2.14           74.7 + j 11.9
+NEC-4               2.17           76.1 + j 12.9</pre>
+  <p>This 35-segment model shows only a slight displacement from the MININEC standard. The key difference is in the reactance report, which seriously displaces resonance in uncorrected NEC-2, while the corrected NEC-2 report coincides with the AO report. The 1-wire substitute element agrees exactly with the subdivided group that composes the substitute model of the element: both show a source resistance that is about 2.3 Ohms lower than the AO report. Finally, note that the NEC-4 report, while closer by far to the corrected NEC-2 and AO reports than to the uncorrected NEC-2 report, is still a bit high in gain and also in the reported source reactance.</p>
+  <p>2. A 14.175 MHz driven element of WB0DGF design:</p>
+  <center>
+    <img src="amod10-4.gif" width="620" height="64" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>WB0DGF    Frequency = 14.175  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.---End 1 (x,y,z : in)  Conn.---End 2 (x,y,z : in)   Dia(in) Segs
+1       -170.00,-209.50,  0.000  W2E1 -170.00,-156.50,  0.000 4.38E-01   7
+2  W1E2 -170.00,-156.50,  0.000  W3E1 -170.00,-132.50,  0.000 6.25E-01   3
+3  W2E2 -170.00,-132.50,  0.000  W4E1 -170.00,-82.000,  0.000 8.75E-01   6
+4  W3E2 -170.00,-82.000,  0.000  W5E1 -170.00,-36.000,  0.000 1.12E+00   6
+5  W4E2 -170.00,-36.000,  0.000  W6E1 -170.00,-10.000,  0.000 1.25E+00   3
+6  W5E2 -170.00,-10.000,  0.000  W7E1 -170.00, 10.000,  0.000 1.25E+00   3
+7  W6E2 -170.00, 10.000,  0.000  W8E1 -170.00, 36.000,  0.000 1.25E+00   3
+8  W7E2 -170.00, 36.000,  0.000  W9E1 -170.00, 82.000,  0.000 1.12E+00   6
+9  W8E2 -170.00, 82.000,  0.000 W10E1 -170.00,132.500,  0.000 8.75E-01   6
+10 W9E2 -170.00,132.500,  0.000 W11E1 -170.00,156.500,  0.000 6.25E-01   3
+11W10E2 -170.00,156.500,  0.000       -170.00,209.500,  0.000 4.38E-01   7
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           2     6 / 50.00   (  6 / 50.00)      0.707       0.000       V
+Ground type is Free Space</pre>
+  <p>Two features of this element design (symmetrical in the Y-axis) are notable for our purposes. First, the center section (composed of three wires of 1.25" diameter) is half the length of the W6NGZ design, so that the first diameter step occurs closer to the source. Second, the diameter steps cover a greater range than the W6NGZ design, now ranging from 1.25" down to 0.4375" (in contrast to the W6NGZ range from 1.0" to 0.625"). Now let's look at the reports.</p>
+  <pre>Report Source       Gain dBi       Source Z (R+/-jX)
+AO                  2.13           76.2 + j  0.8
+NEC-2 (No Cor.)     2.33           78.3 + j 30.9
+NEC-2 (Cor.)        2.13           72.4 + j  1.7
+NEC-2 (1-Wire)      2.13           72.4 + j  1.7
+NEC-4               2.21           75.8 + j  6.8</pre>
+  <p>The gain and source reactance reports of AO and corrected NEC-2 are aligned, while the source resistance differs by about 3.8 Ohms, slightly more than the difference reported in the W6NGZ design. Note the high gain and inductive reactance difference for uncorrected NEC-2. Finally, note that NEC-4--for this more highly tapered-diameter model--shows a gain value that is no longer trustworthy.</p>
+  <p>3. A 14.175 MHz driven element of K6STI design:</p>
+  <center>
+    <img src="amod10-5.gif" width="636" height="64" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>K6STI     Frequency = 14.175  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.---End 1 (x,y,z : in)  Conn.---End 2 (x,y,z : in)   Dia(in) Segs
+1       -203.50, 72.000,  0.000  W2E1 -138.00, 72.000,  0.000 5.00E-01   8
+2  W1E2 -138.00, 72.000,  0.000  W3E1 -96.000, 72.000,  0.000 6.25E-01   6
+3  W2E2 -96.000, 72.000,  0.000  W4E1 -48.000, 72.000,  0.000 7.50E-01   6
+4  W3E2 -48.000, 72.000,  0.000  W5E1  -4.000, 72.000,  0.000 8.75E-01   5
+5  W4E2  -4.000, 72.000,  0.000  W6E1   4.000, 72.000,  0.000 3.42E+00   1
+6  W5E2   4.000, 72.000,  0.000  W7E1  48.000, 72.000,  0.000 8.75E-01   5
+7  W6E2  48.000, 72.000,  0.000  W8E1  96.000, 72.000,  0.000 7.50E-01   6
+8  W7E2  96.000, 72.000,  0.000  W9E1 138.000, 72.000,  0.000 6.25E-01   6
+9  W8E2 138.000, 72.000,  0.000       203.500, 72.000,  0.000 5.00E-01   8
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     5 / 50.00   (  5 / 50.00)      1.000       0.000       V
+Ground type is Free Space</pre>
+  <p>This design uses a short, wide-diameter center section to simulate the effects of element-to-boom hardware. Apart from this short center section, the subdivision of the element is intermediate between the W6NGZ and WB0DGF designs.</p>
+  <pre>Report Source       Gain dBi       Source Z (R+/-jX)
+AO                  2.12           72.7 - j 13.1
+NEC-2 (No Cor.)     4.66           42.1 + j  5.1
+NEC-2 (Cor.)        2.16           68.9 - j 11.4
+NEC-2 (1-Wire)      2.12           69.6 - j 11.5
+NEC-4               3.06           59.1 - j  6.2</pre>
+  <p>This 51-segment element makes every effort to equalize segment lengths from wire to wire within the group, letting the 8" center length determine the segment lengths in the other wires. Even so, the element presses the correction factor limits, showing some difference in gain between the corrected NEC-2 result and the 1-wire substitute element. The effect of a fat short center segment is clearly apparent in the uncorrected NEC-2 result, with its very high gain and very low source impedance report. Note that with this type of segmentation, uncorrected NEC-4 yields quite untrustworthy results.</p>
+  <p>Despite the fact that even close attention to segmentation density yields corrected NEC-2 results that press the limits of the system, I encounter many carelessly segmented tapered-diameter elements. Perhaps the modelers believe that any old arrangement of segments adding up to more than 10 per half wavelength will do the job. However, the segments adjoining the source segment must be very close in length to the source segment itself. Moreover, it is always good practice to equalize segments lengths in any element. Let's see what happens if we carelessly segment the K6STI element.</p>
+  <p>3. A 14.175 MHz driven element of K6STI design (carelessly segmented):</p>
+  <center>
+    <img src="amod10-6.gif" width="637" height="61" border="2" vspace="5" hspace="9">
+  </center>
+  <pre>K6STI     Frequency = 14.175  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.---End 1 (x,y,z : in)  Conn.---End 2 (x,y,z : in)   Dia(in) Segs
+1       -203.50, 72.000,  0.000  W2E1 -138.00, 72.000,  0.000 5.00E-01   4
+2  W1E2 -138.00, 72.000,  0.000  W3E1 -96.000, 72.000,  0.000 6.25E-01   3
+3  W2E2 -96.000, 72.000,  0.000  W4E1 -48.000, 72.000,  0.000 7.50E-01   3
+4  W3E2 -48.000, 72.000,  0.000  W5E1  -4.000, 72.000,  0.000 8.75E-01   2
+5  W4E2  -4.000, 72.000,  0.000  W6E1   4.000, 72.000,  0.000 3.42E+00   1
+6  W5E2   4.000, 72.000,  0.000  W7E1  48.000, 72.000,  0.000 8.75E-01   2
+7  W6E2  48.000, 72.000,  0.000  W8E1  96.000, 72.000,  0.000 7.50E-01   3
+8  W7E2  96.000, 72.000,  0.000  W9E1 138.000, 72.000,  0.000 6.25E-01   3
+9  W8E2 138.000, 72.000,  0.000       203.500, 72.000,  0.000 5.00E-01   4
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     5 / 50.00   (  5 / 50.00)      1.000       0.000       V
+Ground type is Free Space</pre>
+  <p>The element is obviously the same as the one just run, but the segmentation has been cut to 25 segments total.</p>
+  <pre>Report Source       Gain dBi       Source Z (R+/-jX)
+AO                  2.12           72.7 - j 13.1
+NEC-2 (No Cor.)     5.04           38.2 + j  2.5
+NEC-2 (Cor.)        2.68           61.1 - j 10.8
+NEC-2 (1-Wire)      2.12           69.5 - j 12.0
+NEC-4               3.93           48.2 - j  5.8</pre>
+  <p>The AO numbers have not changed, but the only NEC report that shows sensible values is the 1-wire substitute. Both sets of figures are consistent with those for the carefully segmented version of the element. Both the raw NEC-2 and NEC-4 values are sufficiently off the mark to be completely unusable.</p>
+  <p>Of great importance is the fact that the corrected NEC-2 figures for this modeled element are also beyond the limits of reliability by a considerable margin. In previous models, we watched the margin of error in corrected NEC-2 reports grow, even in well-segmented elements. In this model, the corrected NEC-2 model and the 1-wire substitute have the same diameter, length, and total number of segment. The only difference between them is the length of segments, especially around the source point: the NEC-2 corrected model has very unequal segment lengths, while the segment length of the 1-wire substitute is uniform throughout the element. This demonstration shows that careful attention to segmentation of tapered-diameter elements is vital to deriving reliable results from the correction system.</p>
+  <h3>Some Practical Conclusions</h3>This episode has been light on the graphics and heavy on the tables, but for a purpose. The tables show the data that can help us improve our modeling techniques when employing the tapered-diameter correction factor implemented in various versions of NEC-2.
+  <p>The first step is to carefully model the tapered-diameter element so that it meets the basic criteria for implementing the correction system.</p>
+  <p>The second step is to check to ensure that the correction has been implemented. It is easy--despite programmers' best efforts--to overlook some error in the model set-up that may have prevented the automated correction system from working.</p>
+  <p>Third, even models that pass the basic tests require careful attention to segmentation to ensure that segments are as equal as the structure will permit.</p>
+  <p>Remember that errors tend to be cumulative so that unrealistically high gain reports on individual elements usually result in very significant over-estimates in the gain of an array within which the tapered-diameter elements are used. While such over-estimates may be momentarily pleasing to the designer's ego, they can be most assuredly embarrassing if caught by someone else.</p>
+  <p>Finally, even if you have access to NEC-4, do not assume that it is accurate in all cases. While NEC-4 improves on the performance of NEC-2 with respect to tapered-diameter elements, it has limitations which suggest that the correction system should also be used with it in all but the simplest tapered-diameter models.</p>
+  <p>The tapered-diameter element correction system is a valuable feature in any version of NEC-2 that implements it. However, it deserves to be used with both caution and care.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

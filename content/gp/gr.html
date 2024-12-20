@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Vertical, MF, HF Lower, Modeling">
+  <title>Models with Buried Radials: A Small Compendium</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/gr-but.gif" align="left" width="119" height="75" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Models with Buried Radials: A Small Compendium</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>I have written a number of notes in the past on modeling verticals antennas with buried ground radials using NEC-4. Nevertheless, I still receive numerous questions about buried ground radials. It appears that most inquirers have read all but the one item addressing their question.</p>
+  <p>So I thought I might combine a number of facets of modeled monopoles with buried radials into one note as a series of modeling tests. After developing our basic 2-MHz model of a near-resonant 1/4 wavelength monopole, we shall examine 6 different tests. In all tests, one of the variables will be the number of radials. I have chosen to use the geometric progression of 4-8-16-32-64-128 radials as the X-axis of virtually all graphs in this note, since it forms a logarithmic progression.</p>
+  <p>With one exception, we shall be looking at 3 different properties of each monopole as a Y-axis variable: gain in dBi, the feedpoint resistance in Ohms, and the feedpoint reactance in Ohms. The remaining test variable will appear as different lines on each graph. Here are the tests that you will encounter in this note.</p>
+  <ul>
+    <li>1. Radial wire size: 2, 4, and 8 mm diameter</li>
+    <li>2. Radial length: 0.15 through 0.40 wavelength in 0.05 wavelength increments</li>
+    <li>3. Radial insulation: separate insulation thickness and insulation permittivity tests</li>
+    <li>4. Monopole length: 0.20 through 0.60 wavelength in 0.1 wavelength increments</li>
+    <li>5. Soil conditions: Very poor, average, and very good soil</li>
+    <li>6. Frequency: 0.5, 1.0, 2.0, and 4.0 MHz</li>
+  </ul>
+  <p>For the last test only, we shall add one more survey: the field strength for a power of 1 kW at a distance of 1 km. The terms of this test should alert you to the fact that all measurements will be metric for the exercise.</p>
+  <h4>The Basic Model</h4>Unlike NEC-2, NEC-4 permits the use of buried wires, that is, wires that both are at and penetrate Z=0. As a wire penetrates the ground level, there must be either a segment or a wire junction at Z=0, along with a number of other restrictions. For example, the Geometry End or GE command must use a value of -1 as its first entry so that the command indicates a coming ground specification and prevents modification of the current expansion in the core calculations.
+  <p>Because the monopole and the radials normally have different diameters, with the base of the monopole close to ground, setting up a radial system usually requires 1 or more sloping wires to reach the depth of the radials, with the remaining radial length specified as a level wire. The sloping wire system, shown in <b>Fig. 1</b>, also allows the modeler to use a reasonable number of segments per wire and to keep the lengths of all segments close to equal throughout the model.</p>
+  <center>
+    <img src="gr-1.gif" width="491" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For the models in this note, the segment length is as close to 0.05 wavelength as is feasible in each case. For most models, we shall use a 2-MHz test frequency. I am not in this note interested in developing a 160-meter antenna, but the 2-MHz frequency is convenient for the geometric progressions that it allows with mostly integers. The monopole diameter is 10 mm (0.3937") by decision. That diameter is 5 times larger than the basic radial diameter (2 mm or 0.07874"), which itself splits AWG #12 and #14 wire diameters (0.0808" and 0.0641", respectively), the most commonly used radial sizes for amateur installations. AM BC work tends to use AWG #10 copper wire (0.1019" or or 2.59 mm).</p>
+  <p>The radial system itself will consist of 3 wires per radial. The first 0.05 wavelength wire slopes from the monopole base to ground, while the second wire of the same length slopes from ground to the level at which the remainder of the radial lives. For simplicity, the monopole base will be above ground by as much as the radials are below ground: 0.15 m (or 5.91"). The actual ground depth for radials is an insensitive matter, and depths from 3" to nearly 2' yield essentially the same performance figures for models that are otherwise alike.</p>
+  <p>Throughout the model exercise, I shall use the Sommerfeld-Norton ground calculating system available in both NEC-2 and NEC-4. This system has proven to be the most accurate so far committed to major antenna modeling software, although research continues in the effort to make ground calculations as precise as antenna structure calculations. The system is capable of replicating classic Brown-Lewis-Epstein results within fairly close tolerances, although it is not clear that the limits of the 1930s treatment are fully appreciated in all circles. NEC calculates the electrical length of the segments in the radial system according to the medium surrounding the wire, so the current distribution may vary from the same wires in a vacuum or dry air. For most tests, except the one in which I specifically vary the soil quality, the standard ground properties are a conductivity of 0.005 S/m and a relative permittivity of 13, the so-called average soil.</p>
+  <p>For baseline models using a near-resonant monopole and 1/4 wavelength radials, the system just described allows maximum economy of segments while falling well within recommended limits for NEC-4 models and providing considerable flexibility for models calling for non-standard monopole or radial lengths. Indeed, only in a few special cases will we examine plots of the models, since they all look like the sample in <b>Fig. 2</b>. The only differences will be in the far field maximum gain and sometimes the TO or Take-Off angle (the elevation angle of maximum radiation). In all cases in which the TO angle is listed, it will appear as a theta angle, the angle from the zenith down to the TO angle. 90 - theta will give you the elevation angle in more familiar terms.</p>
+  <center>
+    <img src="gr-2.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The modeling process becomes much simplified by modeling the radials and the monopole separately. The radial models use a combination of rotational symmetry and Numerical Green's files to provide a very compact way of both describing the radials and storing the radial matrix data. The following sample specifies 8 radials. However, to specify 128 radials requires only 2 changes. In the GR line, change 8 to 128. In the WG line that stores the data, change the file name, again by replacing 8 with 128. The 3 GW entries describe the 2 sloping and 1 level wire for the first radial, while the GR line replicates the radial the desired number of times at equal angular intervals.</p>
+  <pre>
+CM GRn 2-mm radials
+CE
+GW 1 1 0 0 .15 7.5 0 0 .001
+GW 1 1 7.5 0 0 15 0 -.15 .001
+GW 1 3 15 0 -.15 37.47 0 -.15 .001
+GR 1 8
+GE -1 -1 0
+GN 2 0 0 0 13.0000 0.0050
+LD 5 0 0 0 5.8e7 1
+FR 0 1 0 0 2 1
+WG gr8-2.ngf
+EN
+</pre>
+  <p>Note the the .NGF file will also contain applicable ground, loading, and frequency information. For consistency, the ground values in the sample model remain the same in most tests. All radials use copper wire. The largest .NGF files (128 radials) require only about 440 KB, a fraction of the storage space required for a model that uses wire repetition or replication rather than symmetry for the radial system. The largest file requires under 10 seconds to create using a relatively slow computer.</p>
+  <p>The companion final execution file is very simple, as the following sample shows.</p>
+  <pre>
+CM 10-mm vertical monopole
+CM grn-m
+CE
+GF 0 gr8-2.ngf
+GW 201 5 0 0 .15 0 0 36.515 .005
+GE -1 -1 0
+EX 0 201 1 0 1 0
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The geometry section begins by calling up the relevant .NGF file, followed by any additional structures. In this case, there is only a vertical monopole with its base at the hub of the radials. Since loading within the .NGF file does not extend beyond that file, the monopole for all test cases uses perfect or lossless wire. The monopole length is approximately the length of a resonant 1/4 wavelength monopole using a perfect ground. This measure gives us a reasonably automatic readout of how well each size of radial system approximates a perfect ground at 2 MHz with respect to the feedpoint impedance. Since the far field gain is largely a function of the uniform soil quality from the Fresnel region onward, differences in far field gain relative to radial system size give a measure of losses associated with sparse radial systems. The completion file also contains excitation and pattern request data, but uses the ground and frequency specifications from within the .NGF file. To call up a different size of radial system, simply modify the file name in the GF command.</p>
+  <p>The use of .NGF files for the radials not only yields small and easy to read model descriptions, it also creates fast run times, even on a slow computer. The largest combination of long monopole and 128 radials requires less than a minute to run on a 400 MHz machine. The limitation of this system of performing large numbers of test models is that you must have access within your version of NEC-4 to the entire command set for the core.</p>
+  <h4>Test 1: Radial Wire Size vs. Number of Radials</h4>A frequently asked question is whether the size of wires in a radial system makes any difference to monopole performance. Hence, it seemed reasonable to set up 1/4 wavelength radial systems using various wire sizes: 2, 4, and 8 mm in diameter. 2-mm wire is most common, but the progression should indicate something of an answer as to whether increasing the wire size will improve performance. The relevant data from the test runs appears in the table labeled <b>Test 1</b>.
+  <center>
+    <img src="gr-t1.gif" width="449" height="257" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There is a slight difference in gain using 128 radials over the 4:1 diameter ratio from the smallest to the largest wire: 0.05 dB. Where there are few radials, for example 4, the difference is larger: 0.22 dB. The situation is amenable to graphing to give a better sense of the differences along the way, as illustrated by <b>Fig. 3</b>.</p>
+  <center>
+    <img src="gr-3.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In no case does the improvement by using fat radial wires equal the improvement of doubling the number of radial wires. The net difference in gain for the thinnest wire in the set is 1.22 dB from a 4-wire to a 128-wire radial system. For the fattest wire, the difference is 1.05 dB. In no case does the TO angle vary from 67 degrees theta (23 degrees elevation). Hence, the use of very fat wires in a radial system may involve more work to handle the materials than it returns in performance benefits. As well, the increase even to 4-mm wire is impractical for non-commercial installations, since 4 mm is about 0.1575", just a bit smaller than AWG #6 wire.</p>
+  <p>The feedpoint resistance information provides us with a snapshot of two different phenomena. First, the feedpoint resistance decreases as we raise the number of radials from 4 to 128. The amount of that difference averages about 12.5 Ohms for the 3 sample wire sizes. The ratio of the difference in feedpoint resistance for a given radal system size to the value for the largest filed provides us with an estimate of losses that we might eliminate by radial system improvements. Note in <b>Fig. 4</b> that after we pass the 8-radial mark, the decrease is quite linear for all wire sizes.</p>
+  <center>
+    <img src="gr-4.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The second phenomenon to note is how close to each other the 3 wire sizes are with respect to the feedpoint resistance for any wire size. For 128 radials, feedpoint resistance varies by about 0.6 Ohms, while for the smallest field size (4 radials) the difference is under 2.7 Ohms when comparing the thinnest and the thickest wires.</p>
+  <p>Charting the feedpoint reactance for each model provides a measure of how close to or far from resonance the antenna system is with each size of radial field. This chart (<b>Fig. 5</b>) provides only general guidance, since the model has limitations. The monopole length (about 36.4 m) derives from a monopole of the same diameter with a perfect ground. The model was brought to near resonance, defined for our purposes as within +/-j1 Ohm of reactance. In the models using a radial system, the base of the monopole is 0.15-m above ground at the hub of the radials. Hence, the monopole and its radial system together do not form a perfect analog of the initial model. However, for each of the 3 radial wire sizes, the model using 128 radials approaches resonance within the same +/-j1 Ohm reactance limit.</p>
+  <center>
+    <img src="gr-5.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The three chart lines parallel each other very closely with little difference between wire sizes. Beyond 16 radials, the approach to resonance with a fixed monopole length is nearly linear for all radial wire sizes. Once more we find that doubling the number of radials effects a greater improvement than doubling or quadrupling the radial wire size. However, keep one fact in mind: the radial fields for all increments are exactly symmetrical. To model non-symmetrical fields would require a wholly different type of model in which each radial receives individual attention. That work would need a wholly new study.</p>
+  <h4>Test 2: Radial Length vs. Number of Radials</h4>The second most asked question about radial systems involves the length of the buried radials. Classic literature suggests that longer (than 1/4 wavelength) is better, while some recent literature suggests that shorter (than 1/4 wavelength) is better. So let's devise a small modeling experiment to see what NEC-4 might add to the array of suggestions.
+  <p>We shall use our 2-MHz, 10-mm diameter, near resonant 1/4 wavelength monopole over radial fields that use 2-mm diameter copper radials. The first variable, as always, will be the number of radials: 4 to 128. The second variable will be the physical length of the radials. The following table lists the tested lengths, recorded both as a fraction of a wavelength and in meters. In each test, as the radial length grew, so too did the number of segments so that the physical length of each segment remained relatively constant.</p>
+  <pre>
+Radal Lengths Tested with a 1/4 Wavelength Monopole over Average Ground
+
+Length  Wavelengths     Meters
+          0.15          22.48
+          0.20          29.98
+          0.25          37.47
+          0.30          44.97
+          0.35          52.46
+          0.40          59.96
+</pre>
+  <p>The results of the test runs yielded the table of values labeled as <b>Test 2</b>.</p>
+  <center>
+    <img src="gr-t2.gif" width="449" height="401" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One of the more interesting results emerges from the portion of the table recording the gain of the monopole. All gain values are for a TO theta angle of 67 degrees (23 degrees elevation). The pattern shows itself clearly in <b>Fig. 6</b>. For small radial fields, such as 4 or 8 radials, there is virtually no difference in system performance, regardless of radial length within the limits of the test runs. However, gain differences begin to appear as we increase the number of radials. By the time that we arrive at the largest field, we find over 3/4-dB difference in gain as a function of radial length.</p>
+  <center>
+    <img src="gr-6.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Radial length makes very little difference to the feedpoint resistance, although the pattern shown by the gain graph also holds for the resistance graph, at least for radials up to 0.25 wavelength. Above that radial length, the values form a nearly random pattern of crossing lines. See <b>Fig. 7</b>.</p>
+  <center>
+    <img src="gr-7.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The effects of radial length on the resonant frequency of the system, as recorded by the feedpoint reactance values, are quite small. <b>Fig. 8</b> displays the tightly grouped curves as we change the length from 0.15 up to 0.40 wavelength. With only 4 radials, we find virtually no difference in the reactance values. At 128 radials, there are graphically visible differences, but the total range is only about j5 Ohms. It is likely that for any given design, construction variables will create a larger variability.</p>
+  <center>
+    <img src="gr-8.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although NEC calculates the electrical length of the segments based on the medium within which the wires are situated, the longer electrical lengths do not results in radial resonances or other phenomena that yield significant variations in current distribution. In general, as shown in <b>Fig. 8a</b>, the current shows its highest radial values within the first 0.1 wavelength as measured from the radial hub. The current patterns shown in the 3 sample graphs use red for the highest value, in this case approaching 5E-4 A. The lowest value--approached by the blue portions of the radial lines is 2E-4A. The 3 radial fields are not to scale, but the intermediate colors indicate the length of a segment on each radial. One might increase the number of segments per radial for a more sensitive readout, but the general trend is clear from the simplified treatment of these graphs.</p>
+  <center>
+    <img src="gr-8a.gif" width="900" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The conclusion that we might draw from the exploration of radial lengths is that the larger the number of radials, the greater the advantages of using radials at least up to 0.40 wavelength. However, even with 128 radials, the 60% length increase between 0.25 wavelength and 0.40 wavelength radials yields only about 1/3-dB additional gain. Hence, the models suggest that the increase in radial length for a large radial field may not be very cost- and effort-effective. As the number of radials decreases, the advantage of longer radials disappears.</p>
+  <h4>Test 3: Insulated Radials vs. the Number of Radials</h4>Another frequently asked question concerns the use of insulated radials in place of the more common bare-wire radials. The builder's thought involves the lifetime of the radial, based on the assumption that insulated radials are better protested from wire-consuming effects of the soil in which they are buried. The question that remains is whether the insulation has any significant effect on the performence of the radial field as measured by overall system performance.
+  <p>To see what NEC-4 might report about insulated wires, I created 2 tests in accord with the 2 major variables involved in the use of insulated wires. For both tests, I retained the same 1/4 wavelength 10-mm diameter monopole with fields of 2-mm diameter copper radials that are a physical quarter wavelength buried 0.15 meter in average soil. As usual, the field sizes ranged from 4 to 128 radials.</p>
+  <p>Technically, there are 3 variables associated with wire insulation. The first is the insulation resistance. Modern plastic insulations have very high resistance values, far higher than would show any effect on overall insulation performance. So I set the conductivity value at 1E-10 S/m for all test runs. This move left us with the insulation thickness and the insulation's relative permittivity as variables.</p>
+  <p>For the thickness test (3a), I chose a permittivity value of 2.5, which is about midrange in the general span of current wire insulations. Then I used insulation thicknesses of 0.5, 1.0, and 1.5 mm to surround the 2-mm wire at the center. The resulting total diameters were 3-mm, 4-mm, and 5-mm for the test wires.</p>
+  <p>To test the effects of the insulation's permittivity (3b), I used a 2-mm diameter wire covered in insulation that is 1-mm thick, resulting in a 4-mm diameter wire assembly. Since the general range of plastic-based insulation is 2.0 to about 3.0, I tested the assembly with permittivity values of 2.0, 2.5, and 3.0. The center values for each test are the same, allowing us a frame of reference to see the variations occasioned by each variable. The results of the test runs appear in the table marked <b>Test 3</b>.</p>
+  <center>
+    <img src="gr-t3.gif" width="449" height="561" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We shall not try to present any graphs of the resulting data, because we would end up with a single blurred line for both test 3a and test 3b. There is no significant variation in the gain, the feedpoint resistance, or the feedpoint reactance over the range of each test. The tiny variations that do occur are associated mostly with the smallest number of radials, where the gain range is about 0.1 dB maximum. Values of feedpoint resistance and reactance fluctuate in a tiny meander that has no practical significance.</p>
+  <p>The results of these tests suggest that the use of insulated wires for radials--over the range of common insulation values--has no significant effect upon the performance of a quarter wavelength monopole over quarter wavelength radials. Hence, for an amateur installation, the selection of wire for the radial set may likely continue to be a matter of what is convenient and economical to obtain. As with all of the tests so far, the number of radials has an effect that outstrips all of the variables that we have so far examined.</p>
+  <h4>Test 4: Monopole Length vs. the Number of Radials</h4>Test 4 changes the trend as it examines monopole length in relation to the number of radials. In this set of tests, all radial systems will use 1/4 wavelength radials with a 2-mm diameter. The vertical radiator will be 10-mm in diameter. However, we shall vary its height from 0.20 wavelength to 0.60 wavelength in 0.10 wavelength increments. Because the test parameters require us to change the vertical monopole height in a uniform manner, none of the heights will replicate the performance of the near-resonant radiator used in other tests. All monopoles use the same segment lengths and the source or feedpoint is the lowest monopole segment.
+  <p>The test results appear in the table labeled <b>Test 4</b>.</p>
+  <center>
+    <img src="gr-t4.gif" width="577" height="353" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The feedpoint resistance and reactance listings are present as a reference. The wide divergence of the values prevents effective graphing, since variations within each monopole lengths would not show up as the number of radials increases. However, the feedpoint resistance does show a reverse trend for some lengths and a bit of meandering for other lengths. A similar meandering is also apparent in the values for the feedpoint reactance. The moderately high inductive reactance for the 0.5-waveloength monopole shows that--with the 1/4 wavelength radials--the antenna has not quite reached an electrical height of 0.5 wavelength.</p>
+  <p>Perhaps the most interesting facet of this test series is the list of gain values for the individual heights. In this case, a graph is both possible and illuminating. See <b>Fig. 9</b>.</p>
+  <center>
+    <img src="gr-9.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The chart shows more than one interesting trend. As the monopole grows longer, the models show less and less increase in gain with the increasing number of radials. For the 2 longest monopoles (0.5 and 0.6 wavelength), there appears to be no clear relationship between the gain value and the number of radials. Across the range of radials, the 0.5 wavelength monopole gain varies by only 0.08 dB, while the 0.6 wavelengthmonopole gain varies by 0.18 dB. In contrast, the gain of the shortest monopole varies by 1.65 dB as we increase the number of radials from 4 to 128.</p>
+  <p>The chart shows the TO theta angle of the individual monopoles. The listed angle remains constant across the full span of radial numbers. Translated into elevation terms, the taller the monopole, the lower the elevation angle of maximum radiation. <b>Fig. 10</b> shows some sample patterns.</p>
+  <center>
+    <img src="gr-10.gif" width="800" height="800" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The secondary upper-angle lobe of the pattern for the 0.6 wavelength monopole is interesting when we realize that there is essentially no gain difference between the 0.5 and 0.6 wavelength antennas, even with 128 radials. Over a real ground (average in this test sequence), monopoles between 0.6 and 0.7 wavelength do not show the gain advantage that accrues to theoretical calculations that use a perfect ground as a foundation. <b>Fig. 11</b> shows the patterns for 1/4, 1/2, and 5/8 wavelength monopoles over perfect ground. The maximum gain for the shortest monopole is just above 5.1 dBi. The half wavelength monopole achieve about 6.9 dBi. The 5/8 wavelength monopole reaches a value just over 8.1 dBi. Hence, in theory, the 5/8 wavelength monopole should show a 3-dB superiority to the 1/4 wavelength monopole, with a 1.25-dB advantage over the half wavelength monopole.</p>
+  <center>
+    <img src="gr-11.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Over real, lossy grounds, the difference between the 5/8 wavelength monopole over the 1/4 wavelength version drops to about a half-dB. There is no significant difference between the gain of a 1/2 wavelength monopole and a 5/8 wavelength monopole over real ground. However, the 1/2 wavelength monopole has a clean, single-lobe pattern without the high-angle lobe. For this reason, many BC engineers remain at the 1/2 wavelength level to avoid any untoward consequences of having secondary lobe radiation. At VHF and UHF, amateur installations may use a 5/8 wavelength radiator with an elevated ground plane in order to place the monopole region of highest current and maximum radiation at a slightly higher position--enough sometimes to clear portions of the vehicle or other metallic objects in the immediate region of the antenna.</p>
+  <p>A ground radial systems may in fact perform other functions than just completing the radiating antenna structure. Many, if not most, installations require a matching network at the antenna terminals. A large radial system provides a very low impedance ground path for the network relative to a power source installation--which often may fall within the overall radial field. The radial system may serve as the overall RF ground or as a supplement to large bus or strap connections among elements of the power distribution and matching system. This facet of radial system functioning does not show up in the models within this sequence of tests.</p>
+  <h4>Test 5: Soil Conditions vs. the Number of Radials</h4>For tests of various soil conditions, we may return to our quarter wavelength 2-mm radials and our near-resonant 10-mm diameter vertical radiator. At the 2-MHz test frequency, the variable will be the soil quality. We shall only sample the range of soil qualities, using our average or good soil as a center point.
+  <pre>
+Soil Qialities Used in Test 5
+Label             Conductivity       Relative Permittivity
+Very Good         0.0303 S/m         20
+Average           0.005 S/m          13
+Very Poor         0.001 S/m           5
+</pre>
+  <p>As the brief table suggests, the conductivity of the average soil is nearly the geometric mean between the conductivities of very poor and very good soil. (The actual geometric mean is 0.0055.) The permittivity of average soil is very nearly the arithmetic mean between the values for very good and very poor soil. (The actual arithmetic mean is 12.5.) Under these test conditions, we ought to see clear differences among the performance values produced for each soil condition. As well, we ought to see clearly the effects of using the range of radials included in the test sweep. The results of the test runs appear in the table labeled <b>Test 5</b>.</p>
+  <center>
+    <img src="gr-t5.gif" width="577" height="289" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The test models show significant differences not only in the gain for each soil quality, but as well in the TO theta angle, listed in the table. <b>Fig. 12</b> overlays the elevation patterns, showing the differences in relative strength and shape. The patterns use 128 radials. The higher elevation angles for the progressively poorer soils appears clearly in the graphic.</p>
+  <center>
+    <img src="gr-12.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>With respect to far-field gain, as shown in the table and in <b>Fig. 13</b>, soil quality has more to do with the gain value than does the number of radials in the ground system under the antenna itself. The worse the soil, the wider the gain range within the span of the radial fields sampled. Very poor soil produces a difference of over 2.6 dB between 4 and 128 radials, whereas average soil produces a difference of about 1.2 dB. Very good soil shrinks that difference to 0.5 dB. However, the worst gain for the smallest radial system over average soil is nearly a full dB greater than the best value for the largest radial field with very poor soil. Likewise, the worst gain for the smallest radial system over very good soil is well over a full dB greater than the best value for the largest radial field with average soil.</p>
+  <center>
+    <img src="gr-13.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Feedpoint resistance is a reasonable indicator of the losses occasioned by soil quality. Again, the spread of values between a 4-radial field and a 128-radial field suggest the effects of soil. For very poor soil, that spread is over 40 Ohms. Over average soil, that spread drops to 14 Ohms, while over very good soil, the differential is only 6 Ohms. Nevertheless, as we increase the size of the radial field, the feedpoint resistance converges toward 40 Ohms. <b>Fig. 14</b> shows the curves.</p>
+  <center>
+    <img src="gr-14.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One reason that the 3 curves of feedpoint do not fully converge is that fact that the monopole used in all cases is the same height, rather than being tailored to each soil condition. We find a similar situation with respect to feedpoint reactance, as illustrated by <b>Fig. 15</b>.</p>
+  <center>
+    <img src="gr-15.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In this case, it is the line for very poor soil that crosses the nearly parallel lines for the other two soil qualities used in this test sequence. Very good and average soil show spreads of about j50 Ohms for the range of radial field sizes, whereas the worst soil in the study shows a span of about j70 Ohms.</p>
+  <p>The values shown in this test sequence may be more reliable relative to reality for the feedpoint resistance and reactance than for the far-field gain. NEC assumes a uniform soil quality for both the immediate vicinity of the antenna and the more distant regions. In some areas, the region where principle reflections occur to form the far-field pattern may differ from the immediate vicinity of the antenna. However, in most cases measurements are confined to the immediate area occupied by the radial field. (In non-critical cases, these values may simply be lifted from existing tables for a region.) Nevertheless, these tests--and similar ones that might be performed using smaller increments between soil quality classifications--suggest that the ground quality may have as much to do with monopole performance as the radial field size. Indeed, the most evident trend is that the worse the soil, the more important it becomes to use a radial field size that allows the antenna to achieve its best performance for that soil. As well, while we normally cannot alter the soil quality under and around our antennas, we can make changes in the size of the radial field--at least until we hit a practial upper limit.</p>
+  <h4>Test 6: Frequency vs. the Number of Radials</h4>
+  <p>A less frequent but significant question often posed about models relates to frequency. Most sample modeling, such as the set of tests that we have so far run, use a constant frequency. However, from one set of sample runs to another, the test frequency may change, all for good reason within the context of each set of sample runs. Very often, without sufficient experience, a reader cannot correlate the results of one set of models with another set's output. What these readers do not fully appreciate is the fact that the losses due to soil quality are frequency specific.</p>
+  <p>To sample this phenomenon, I scaled the basic test model for 2 MHz up to 4 MHz and down to 1 MHz and 0.5 MHz. The basic system uses a 10-mm diameter near-resonant monopole and 2-mm 1/4 wavelength radials. Each scaled version uses the same proportions for both length and diameter of the system elements. As well, the sloping portions of the radial model were scaled to maintain the same proportions as the basic model and to ensure that all models used the same number of segments per radial, regardless of frequency. All tests used the standard, that is, the average soil quality constants.</p>
+  <pre>
+Dimensions of Test Models for Frequency Checks
+Frequency           Monopole                  Radial
+   MHz         Length      Diameter     Length      Diameter
+   0.5         146.06 m    40 mm        149.88 m    8 mm
+   1.0         73.03 m     20 mm        74.94 m     4 mm
+   2.0         36.515 m    10 mm        37.47 m     2 mm
+   4.0         18.2535 m   5 mm         18.735 m    1 mm
+</pre>
+  <p>To the usual catalog of gain and feedpoint values, I added a new category that may be useful in the context of the frequency tests: field strength using a power of 1 kW at a distance of 1 km from the antenna at ground level. The listed values appear at the bottom of the table labeled <b>Test 6</b>.</p>
+  <center>
+    <img src="gr-t6.gif" width="577" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As we change frequency, we obtain variations in both the maximum far-field gain and the TO theta angle. As the frequency increases, the elevation angle of maximum radiation also increases, as shown in the right-most column in the gain listings. However, regardless of the radial field size, the angle does not change for any of the test frequencies. Reflections that are crucial to far-field formation, of course, occur beyond the limits of the 1/4 wavelength radial systems used.</p>
+  <p>As we raise frequency, the maximum gain of which a near-resonant monopole is capable decreases, as shown both in the table and in <b>Fig. 16</b>. As well, as we raise the frequency, the greater that we find the difference in gain between the limits of the radial field sizes. At 0.5 MHz, the difference is only about 0.6 dB between 4 and 128 radials. However, at 4 MHz, the difference increases to nearly 1.8 dB. The difference increases with each frequency doubling, but not either in a strictly linear or a strictly geometric manner.</p>
+  <center>
+    <img src="gr-16.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As an indication of the higher soil losses with increased frequency, we may examine the feedpoint resistance data, shown in <b>Fig. 17</b>. The higher the frequency, the more dependent the antenna system is upon the number of radials in order to approach the lowest feedpoint resistance. Otherwise expressed, the higher the frequency, the greater the spread of feedpoint resistance values between 4 and 128 radials.</p>
+  <center>
+    <img src="gr-17.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Feedpoint reactance, however, does not show the same trends as feedpoint resistance. As <b>Fig. 18</b> illustrates, the reactance curves form a tight bunching with only a slight divergence at the level of the largest radial fields. I this regard, the reactance values are a measure of the accuracy of the frequency scaling, with allowance for the skin effect changes with frequency for the copper radials.</p>
+  <center>
+    <img src="gr-18.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As an added exercise, I performed ground-wave modeling calculations for each model in the sequence. I specified a distance of 1 km at ground level for each calculation. The standard excitation for each model was 1 V peak. I recorded the input power to the antenna as well as the field strength calculation in peak V/m. The square root of the ratio between the desired power (1 kW) and the recorded power gives us a multiplier to adjust the original field strength reading to the values corresponding to the uniform power level. (Since the feedpoint resistance changes for each model in each sequence, the model's input power will also change. Hence, the post-run calculation is necessary to obtain field strength values for a uniform power level. Some software has this facility built into the overall program structure.) <b>Fig. 19</b> provides a graphical view of the resulting field-strength values.</p>
+  <center>
+    <img src="gr-19.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graph provides an illustration of a principle often passed over hastily in texts and handbooks: as we increase frequency with a vertical antenna, the ground wave grows increasingly weaker at an exponential rate. NEC calculates the sum of surface and point-to-point waves. At the frequencies sampled in this test, it is the surface wave that diminishes most rapidly. Two of the frequencies of this test series fall in or very close to the AM BC band. Although the field strength differences are less at these lower frequencies than at the higher frequencies in the tests, they do show significant differences (about 8% with 128 radials).</p>
+  <p>As we increase frequency by doubling, the difference between readings at the extremes of the radial field sizes grows more pronounced. The difference as a percentage of the median field strength value increases nearly linearly as we move upward from one frequency to the next, growing by about 5% per frequency jump. At 1 MHz, the spread is under 10% from 4 to 128 MHz, while at 0.5 MHz, the spread is closer to only 5%. As a consequence, the lower the frequency, the more difficult it is to determine potential radial field degradation over time via field strength readings. An initial 128-radial field established to the strictest standards might degrade to a field equivalent to half or a quarter of the initial size with only a 2% drop in field strength at 1 MHz. This simplistic calculation, of course, presumes uniform degradation. Selective degradation of areas of the field may produce non-uniformities in the field of a single radiator. For multiple-tower arrays, determining the differences between selective field degradation pattern distortions and field distortions emerging from other sources (such as incorrect power distribution among the array towers) may prove to be an immense challenge.</p>
+  <h4>The End of the Beginning</h4>The sequence of tests in this brief compendium is designed to provide some answers to questions that have been posed to me, mostly by amateur radio operators. That question source provided the basis for setting the basic test frequency at 2 MHz: a nice round number that is also close to the 160-meter MF amateur band, where ground radial systems are matters of considerable concern. The basic question, often posed in other words to avoid transmitting a sense of either penury or laziness, is this: how few radials can I get away with and still have a maximally effective system? As we have seen, the answer is not simple. The span of tests that we have modeled suggests that for the common 1/4 wavelength monopole over average to poor soil, the number of radials in the field may be the most significant factor in reducing losses and improving performance.
+  <p>However, these modeling tests only illustrate some principles and do not provide final answers to the challenges of specific situations. As well, we have not run all of the tests for all of the possible interesting frequencies and physical arrangements we might generate as possible solutions. For example, we might develop models that sample radial lengths and monopole lengths together to find the best combination. We might also sample the effects of soil conditions that change at some specified distance from the monopole. In short, this brief collection of tests is a beginning and not an end to the development of a better understanding of the performance of monopoles and their associated radial systems. Finally, of course, we have not at all addressed the conditions surrounding phased arrays of towers with highly complex radial systems.</p>
+  <p>Nevertheless, these notes have attempted to address in one place a collection of questions frequently posed to me over the years. I hope the modeling data is useful as a start toward answering some of them.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 08-31-2004. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#modeling'>Modeling</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

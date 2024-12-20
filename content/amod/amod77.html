@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Developing Antenna Expectations Using Modeling Software</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>77. Developing Antenna Expectations Using Modeling Software<br>
+    1: Horizontal Wires in the Lower to Medium HF Range (continued)</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the first half of our exploration of the modeled characteristics of horizontal wire antennas, we examined a number of basic properties. Starting with the differences that we encounter when placing the antenna in free space or over a specified ground, we moved on to look at the effects of selecting a resonant or non-resonant wire length. We continued our investigation of length by extending the wire's electrical length in two ways: by multiplying the initial length while staying at the initial frequency (3.6 MHz) and by multiplying the frequency while retaining the initial length. Finally, we examined differences made by changing the wire diameter from its initial AWG #12 value to a range from AWG #4 through AWG #20. We saw the difference that wire size made in the source impedance of a constant length antenna and also the difference in resonant antenna length as we changed the wire size.</p>
+  <p>In each case, we focused upon two features of the properties. First, we wanted to see what trends developed--and, if possibly, why. Second, we made note of those trends that might make a significant operating difference, separating them from those that were numerically interesting but not operationally significant.</p>
+  <p>In this continuation of the investigation, we should complete our preliminary study. As you may recall, we set up a list of modeling tasks.</p>
+  <blockquote>
+    A. The antenna environment (free space or over ground)
+    <p>B. The length</p>
+    <dl>
+      <dd>
+        <dl>
+          <dt>1. Resonant vs. non-resonant lengths</dt>
+          <dt>2. Physical length vs. electrical length</dt>
+          <dd>
+            <dl>
+              <dt>a. Changing the physical length</dt>
+              <dt>b. Changing the frequency of operation</dt>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+    </dl>C. Wire diameter
+    <dl>
+      <dd>
+        <dl>
+          <dt>1. Effect on the feedpoint impedance</dt>
+          <dt>2. Length required for resonance</dt>
+        </dl>
+      </dd>
+    </dl>D. Height above ground
+    <dl>
+      <dd>
+        <dl>
+          <dt>1. Effect on the feedpoint impedance with a constant length</dt>
+          <dt>2. Length required for feedpoint resonance</dt>
+        </dl>
+      </dd>
+    </dl>
+    <p>E. Ground quality</p>
+    <p>F. Wire conductivity</p>
+    <p>G. Operating (SWR) bandwidth vs. wire (element) diameter</p>
+  </blockquote>
+  <p>Having completed items A through C, we may move on to items D through G. As was true in the first half of our work, each modeling task is quite simple, although most involve several repetitions, each time making a small specified change in the model. As well, we shall begin with a resonant AWG #12 copper wire center-fed dipole 1 wavelength above good ground (conductivity 0.005 S/m, permittivity 13). <b>Fig. 1</b> outlines the model. In most cases, we shall retain the minimal but adequate segmentation, using 11 segments for the half wavelength antenna in NEC models and 10 or 12 segments in MININEC models.</p>
+  <center>
+    <img src="amod77-1.gif" width="434" height="217" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Perhaps the only term for which we need a reminder is the idea of resonance. For our exercises, we shall treat an antenna as resonant if the source reactance is less than +/-j1 Ohm. As always, slight differences between programs may make slight differences in the actual numbers you find in your program reports. This situation applies not only to the differences between NEC and MININEC programs, but also to different implementations of each calculating core. However, the trends that we discover should not change.</p>
+  <p><b>D. Height Above Ground: 1. Effect on the Feedpoint Impedance with a Constant Length</b></p>
+  <p>A number of erroneous generalizations pervade introductory literature on center-fed dipole antennas. We saw from our look at the effects of wire diameter on resonant length that the simplified cutting formulas that inhabit handbooks are very imprecise. In addition, I often hear that, as we reduce the height of a dipole toward ground, the impedance goes down. Now we have a way to find out. Let's begin with our older free-space resonant dipole and run it up and down a ladder of height. That dipole was 133.1' (40.57 m) long and reported a source impedance of 73.73 - j0.27 Ohms.</p>
+  <p>To see what happens to the source impedance at various heights, let's check it every 0.1 wavelength from 0.25 wavelength up to 1.25 wavelength. We shall start at a 1/4 wavelength height because MININEC programs are generally inaccurate in reporting both the gain and the source impedance for antennas with a horizontal radiation component when they are 0.2 wavelengths or lower. If we perform the exercise, we shall obtain a table like the one that follows. Of course, we are retaining our 3.6-MHz test frequency.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                             Dipole Source Impedance Changes with Height Changes
+
+                     Height                                      Source Impedance
+                     WL             Feet          Meters         R +/- jX Ohms
+                     0.25            68.30         20.82         87.61 + j 17.01
+                     0.35            95.63         29.15         90.40 - j  4.69
+                     0.45           122.95         37.47         75.47 - j 14.13
+                     0.55           150.28         45.80         63.36 - j  5.76
+                     0.65           177.59         54.13         66.26 + j  6.55
+                     0.75           204.91         62.46         77.23 + j  7.86
+                     0.85           232.23         70.78         81.55 - j  0.87
+                     0.95           259.55         79.11         75.50 - j  7.08
+                     1.05           286.88         87.44         68.38 - j  3.85
+                     1.15           314.20         95.77         69.07 + j  3.34
+                     1.25           341.52        104.09         75.54 + j  4.44
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="amod77-2.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The data form a complex pattern that may be clearer in graphical form. <b>Fig. 2</b> shows the changes in both resistance and reactance, with reference to left and right scales, respectively. Note the both the resistance and the reactance cover two complete cycles of peaks and nulls within the 1 wavelength span of antenna heights. The height of peaks and the depth of nulls diminish as we increase height, but the cycle continues indefinitely as we further increase height (until we reach a height at which succeeding differences are too small to detect or calculate).</p>
+  <p>More interestingly, the peaks and nulls for resistance do not occur at the same heights as corresponding peaks and nulls of reactance--where we may temporarily define a peak reactance as the maximum inductive value and a reactive null as the maximum capacitive value. Resistive peaks and nulls occur about 1/8 wavelength higher than their closest reactive counterparts. Moreover, the amount of change is actually greater than most folks expect from a simple wire antenna.</p>
+  <p><b>D. Height Above Ground: 2. Length Required for Feedpoint Resonance</b></p>
+  <p>There is a second way to examine these changes. Let's reformulate our question into this one: what is the resonant length of a wire dipole of the same composition for each height on the list? To this question, we may add, what is the corresponding resonant source impedance? We may start with our free space model and place it over good ground at the various heights. Then we may juggle the length until we achieve resonance. Finally, we may record the resulting wire length and the resonant feedpoint impedance to obtain a table like the following one.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                              Dipole Resonant Wire Lengths with Height Changes
+
+       Height                                     Resonant Length              Source Impedance
+       WL            Feet           Meters        Feet           Meters        R +/- jX Ohms
+       0.25           68.30          20.82        131.84         40.18         85.27 + j 0.15
+       0.35           95.63          29.15        133.46         40.68         91.09 - j 0.05
+       0.45          122.95          37.47        134.22         40.91         77.24 + j 0.13
+       0.55          150.28          45.80        133.54         40.70         63.94 - j 0.07
+       0.65          177.59          54.13        132.60         40.42         65.56 - j 0.06
+       0.75          204.91          62.46        132.50         40.39         76.25 - j 0.07
+       0.85          232.23          70.78        133.18         40.59         81.69 + j 0.17
+       0.95          259.55          79.11        133.64         40.73         76.36 - j 0.12
+       1.05          286.88          87.44        133.40         40.66         68.81 + j 0.03
+       1.15          314.20          95.77        132.84         40.49         68.70 - j 0.08
+       1.25          341.52         104.09        132.72         40.45         74.93 - j 0.16
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Over the span of heights in the table, the range of resonant lengths varies by over 2' (0.6 m). As well, the resonant source impedance ranges from 64 to 91 Ohms, a span of 27 Ohms. The length reaches its maximums at greater heights than the maximums of source impedance. <b>Fig. 3</b> shows the relationship clearly. Note that, like the numbers in <b>Fig. 2</b>, the required resonant length for our wire undergoes two complete maximum-minimum cycles for each wavelength change of height.</p>
+  <center>
+    <img src="amod77-3.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The cycles that we have witnessed are not unique to simple dipoles. You will find similar phenomena in parasitic arrays based on the horizontal dipole, although with smaller excursions of resistance and reactance. Should you wish to pursue this aspect of horizontal antenna behavior further, examine the maximum gain values for each height. You will discover gain peaks at about 0.625 wavelength and 1.125 wavelength heights, with minimums near the 0.375 wavelength and 0.875 wavelength marks. Like the other dipole properties, both peaks and nulls are about 1/2 wavelength apart from the next peak or null. However, with respect to gain, there is another property to consider: the elevation pattern shape. Track the gain of the dipole at high elevation angles for both maximum and minimum gain values as you change antenna heights.</p>
+  <p>Since the gain and pattern shapes are applicable to our first table of values, using a constant antenna length, you may fairly conclude that the differences throughout the exercise are functions of the antenna's interaction with the ground. Even though that ground remained a constant in terms of its conductivity and permittivity, the antenna's height above it changed, resulting in altered patterns of ground reflections at a distance to add to or subtract from the direct radiation. As well, ground reflections in the immediate vicinity of the antenna resulted in variations in the source impedance as we changed heights. We saw the effects on resonant wire length and source impedance grow smaller with increasing height. We might well conclude that the effects will continue to diminish with further height increases until differences from step-to-step become too small to call for notice.</p>
+  <p><b>E. Ground Quality</b></p>
+  <p>Since the basic source of the changes that occur with dipole performance as we vary the height of the antenna above ground are a function of the antenna's interaction with the ground, a new question arises: will the performance of a dipole change (or change significantly) as we alter the characteristics of the ground beneath it. Of course, modeling software provides the means for reaching an answer.</p>
+  <p>Although there is no absolutely systematic reason for doing so, sampling of the effects of ground conditions on antennas typically uses four traditional categories of soil: very poor, poor, good, and very good. In fact, these categories perform quite well in providing a fair sampling of ground effects. Taken from FCC charts that date to the 1930s, we may define each ground quality level in terms of the associated conductivity and permittivity (relative dielectric constant).</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                           Some Useful Soil Types
+
+              Soil Type                    Conductivity                 Permittivity
+                                           S/m                          (Dielectric Constant)
+              Very Poor                    0.001                         5
+              Poor                         0.002                        13
+              Good                         0.005                        13
+              Very Good                    0.0303                       20
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>To create some trials, let's begin with our resonant dipole over good ground at a height of 1 wavelength at 3.6 MHz. Then we need only change the ground constants to obtain the simple table that follows.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                       Changes of Dipole Performance with Ground Quality: 1-WL Height
+
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             7.45          14                    72.35 + j 2.20
+              Poor                  7.66          14                    72.60 + j 0.76
+              Good                  7.85          14                    72.09 - j 0.07
+              Very Good             8.03          14                    72.28 - j 1.72
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Between the worst and best of the soil types listed, we find only a 0.6 dB difference in maximum gain. As well, the TO angle does not change at all. The resistive portion of the source impedance changes by well under 1 Ohm, and the reactance varies by less than 4 Ohms. All in all, the trial suggests that for a horizontal wire antenna, the ground quality will make little difference to the antenna performance.</p>
+  <p>MININEC users, of course, may track the far field gain values and TO angles. However, since MININEC reports the source impedance as if the antenna were over perfect ground, it cannot track the changes in the source impedance with changes in ground quality. For the present test, those changes are not significant to operation of the antenna.</p>
+  <p>However, the changes that we saw result from an antenna height of 1 wavelength above ground. Suppose that we simply drop the antenna height to a half wavelength, that is a height of 136.61' (41.64 m). Without readjusting the antenna length, let's repeat the trials we just performed to see what happens.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      Changes of Dipole Performance with Ground Quality:  1/2-WL Height
+
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             7.02          26                    69.58 - j 0.82
+              Poor                  7.38          27                    69.77 - j 3.69
+              Good                  7.74          28                    68.58 - j 5.20
+              Very Good             8.11          29                    68.61 - j 8.48
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Immediately we see that the gain differential between the worst and best soils has grown to about 1.1 dB. This level of difference is sufficient to show up in overlays of the elevation patterns for the antenna above the 4 different soil types, as shown in <b>Fig. 4</b>. As well, the TO angle is no longer constant, but actually increases with improved soil quality. Although the range of resistance change in the source impedance remains about 1 Ohm, the reactance change has increased.</p>
+  <center>
+    <img src="amod77-4.gif" width="376" height="345" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The overall changes remain small, but the closer we bring the antenna to the ground, the greater the effect of soil quality upon the performance figures. You may wish to examine the antenna using other heights than the 2 that we have sampled. As well, you may wish to check performance at various heights using the ground constants for salt water (5 S/m, 81).</p>
+  <p><b>F. Wire Conductivity</b></p>
+  <p>The range of materials that we employ as antenna element materials ranges from silver-coated conductors to stainless steel. All of the materials are conductors, but with various levels of conductivity. Most implementations of NEC and MININEC permit the user to specify the material in order to account for losses that result from the fact that no conductor is perfect (since super-conductive wires for lower HF use are not available).</p>
+  <p>In fact, the most general procedure for the modeler is to introduce a value for conductivity. The program then calculates the losses incurred by each segment assigned that value and adjusts the results accordingly. Losses, of course, reduce far-field gain and near-field strength. As well, since these losses are resistive, they tend to increase the resistive portion of the source impedance slightly. Since the losses also have a very small but calculable effect on the resonant length of a wire element, the reactance will also show a small change from one level of conductivity to another. A few programs, such as EZNEC, call for the entry of values of resistivity, the inverse of conductivity. The following table lists the values of conductivity and resistivity that we shall use. However, different sources provide different numbers--usually only slightly different--so these numbers are not absolute by any means. However, they provide enough diversity for our purposes.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  Some Values of Conductivity and Resistivity for Representative Conductors
+
+Material                            Conductivity                 Resistivity
+                                    S/m                          Ohms/m
+Perfect                             ----                         ----
+Silver                              6.289E7                      1.590E-8
+Copper                              5.747E7                      1.740E-8
+6061-T6 Aluminum                    2.500E7                      4.000E-8
+Brass                               1.563E7                      4.099E-8
+Zinc                                1.667E7                      6.000E-8
+Phosphor Bronze                     9.091E6                      1.100E-8
+Tin                                 8.772E6                      1.140E-7
+Type 302 Stainless Steel            1.389E6                      7.200E-7
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The values that we introduce are bulk values, which are adjusted relative to the wire surface area and skin effect into actual values per unit length. Hence, the effects of wire conductivity will vary with the surface area of the wire (as well as the frequency of use). To better see the effects of using different wire materials for antenna elements, we should not simply sample our AWG #12 wire (diameter 0.0808" or 2.05 mm). Instead let's use a range of material diameters. At the bottom end, we may sample AWG #20 wire (diameter 0.032" or 0.81 mm). The ratio of #12 to #20 wire is about 2.5:1. At the opposite end of the scale, let's specify a conductor 1" (25.4 mm) in diameter, about 12.4 times fatter than the #12 wire.</p>
+  <p>We shall use our #12 dipole at 1 wavelength above ground as the test vehicle. Because the source impedance will change so little, we shall be interested only in the maximum gain of the antenna. Since the maximum gain of a dipole does not change much as we move a little off the resonant frequency, we may perform the tests casually, retaining the initial dipole length throughout. The trends and degrees of performance change per change in material will not be altered by the procedure. However, you may refine the procedure to whatever degree you find most informative. The results of our runs appear in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      Changes in Maximum Dipole Gain with Changes in Wire Conductivity
+
+       Material                            Maximum Gain for Each Wire Diameter
+                                           AWG #20               AWG #12              1"
+       Perfect                             7.94                  7.94                 7.95
+       Silver                              7.70                  7.85                 7.94
+       Copper                              7.60                  7.85                 7.94
+       6061-T6 Aluminum                    7.56                  7.79                 7.94
+       Brass                               7.55                  7.79                 7.94
+       Zinc                                7.47                  7.76                 7.93
+       Phosphor Bronze                     7.29                  7.69                 7.93
+       Tin                                 7.28                  7.69                 7.93
+       Type 302 Stainless Steel            6.22                  7.29                 7.90
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The results have much to tell us. We expected the maximum gain to decrease with the increasingly poor conductivity of the materials as we move down our list of samples. For AWG #20 wire, the expectation seems to follow a nearly ideal pattern. The conductivity value for silver is nearly 3.8 times that for stainless steel, and there is a 1.5-dB net difference in gain. However, as we move up to AWG #12 wire, the difference between silver and stainless drops to just over 0.5 dB. With a 1" conductor, the difference is a mere 0.04 dB.</p>
+  <p>For each frequency, there is a diameter of element such that any larger diameter fails to improve the gain. In effect, the surface area of the conductor per unit length is sufficiently large that the conductor approaches the status of a perfect conductor. For our test frequency of 3.6 MHz, that diameter is in the vicinity of 1" (25.4 mm). Since there is no existing standard of just how well an element must perform to be accorded the "near-perfect" status, you will have to determine your own standard, most likely based on whatever design or analysis task you are performing.</p>
+  <p>The required diameter for near-perfection compresses the gain level of dipoles ranging from silver to stainless steel into a tight group without significant gain differential from the lowest to highest values. In part, the required diameter is a function of its ratio to the wavelength at the frequency of use. Although a 1" diameter stainless steel element for a 3.6-MHz dipole is impractical, much smaller diameters of "near-perfect" stainless steel conductors become feasible at VHF and UHF frequencies with insignificant loss relative to the more usual element material, aluminum. Where durability under extreme conditions may be necessary, antennas in this range often use stainless steel.</p>
+  <p><b>G. Operating (SWR) Bandwidth vs. Wire (Element) Diameter</b></p>
+  <p>The concept of "operating bandwidth" begins with the question of over what frequency range a given antenna will perform to specification. The specifications may include any of the operating parameters that we have come to associate with antenna use: gain, front-to-back ratio (if relevant), beamwidth, pattern "purity" (as defined for a given task), and source impedance. In some cases, source impedance is not a significant concern, as in the use of a doublet over a wide frequency range with an antenna tuning unit to effect a match to the equipment involved. However, in many circles, operating bandwidth and 2:1-SWR bandwidth have come to be nearly synonymous.</p>
+  <p>Dipoles are a good case in point. Our AWG #12 copper dipole at a height of 1 wavelength shows the following properties at 3.5, 3.6, and 3.7 MHz.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                              Operating Properties of an AWG #12 Copper Dipole
+
+Property                                                  Frequency in MHz
+                                           3.5                   3.6                  3.7
+Maximum Gain dBi                           7.67                  7.85                 7.99
+TO Angle degrees                           14                    14                   14
+Horizontal Beamwidth degrees               80.2                  79.6                 79.0
+Pattern purity                             fig-8                 fig-8                fig-8
+Source Impedance (R+/-jX Ohms)             68.80-j48.85          72.09-j0.07          75.86+j49.19
+72-Ohm SWR                                 2.376                 1.002                2.397
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Only 1 set of numbers suggests any limitation to the operating bandwidth of the antenna: the 72-Ohm SWR, as derived from the source impedance across the 3.5- to 3.7-MHz passband.</p>
+  <p>For other type of antennas, any of the operating properties may stray from specifications and hence defeat the use of an antenna for a given application over the desired passband. Mono-band quads very often have a wider SWR bandwidth than they do a front-to-back bandwidth, perhaps defined as a ratio of 20 dB or better. Other antenna may change pattern shape to undesirable forms. Some UHF long-boom Yagis suppress forward sidelobes by 20 dB or more only over a narrow bandwidth, even though the forward gain and SWR bandwidths are much wider.</p>
+  <p>With these cautions in mind, we may look at the SWR bandwidth of our dipole. We shall use the same set of dipoles that we employed for the conductivity studies, although we shall bring each to resonance at 3.6 MHz. The following table sets up the 3 copper dipoles for our exercise,</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 3 Dipoles Used for SWR Bandwidth Exercises
+
+Material                                   AWG #20               AWG #12              1"
+Length feet (meters)                       133.76 (40.77)        133.60 (40.72)       132.54 (40.40)
+3.6-MHz Source Impedance
+       (R +/- jX Ohms)                     74.58 - j 0.06        72.09 - j 0.07       70.58 - j 0.02
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>For convenience, we shall set the reference value for our SWR curves at 72 Ohms.</p>
+  <center>
+    <img src="amod77-5.gif" width="583" height="387" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> presents the three 72-Ohm SWR curves together. The curves show clearly the relationship of element diameter to the SWR bandwidth of a simple center-fed antenna. The 1" diameter version has a significantly wider bandwidth in terms of an SWR value below 2:1 than either of the wire dipoles. The #20 version has the worst of the 3 SWR bandwidths.</p>
+  <p>However, 1" elements are difficult to erect and maintain at 3.6 MHz, given their length in excess of 133' (40 m). Therefore, wire antenna users in the lower HF region often simulate larger elements with pairs (or cages) of wires. For example, we can simulate the large element with a pair of AWG #12 wires spread apart by about 12" (0.30 m). <b>Fig. 6</b> shows some of the modeling techniques used to capture this antenna.</p>
+  <center>
+    <img src="amod77-6.gif" width="538" height="288" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For the model, run both long wires in the same direction, a move necessary to use the feeding technique. Use enough segments so that the end wires (1 segment each) are about the same length as the segments in the long wires. Be sure to use the same number of segments in both long wires, since the close spacing requires good segment-junction alignment for maximum accuracy.</p>
+  <p>Place a source at the center of one of the long wires. From the source segment, run a TL-type transmission line to the center of the other wire. Specify a negligible length, for example 0.01' (3 mm). Assign the transmission line a characteristic impedance (Zo) of about twice the value expected at the source. In this case, a dipole would generally have an impedance between 70 and 75 Ohms, so a Zo of 150 Ohms will do. Let the velocity factor be 1.0, if applicable to your software. Unfortunately, this technique does limit the model to NEC-based software, since implementations of MININEC do not have a TL facility.</p>
+  <p>NEC gives the transmission line its assigned length, regardless of the physical distance between the terminal points. The effect of the minuscule TL length is to electrically join the source segment and its counterpart on the other wire as if the two were in a tapering junction. However, it saves the complexities involved in physically modeling the taper and often produces more accurate results, since it does not press NEC limits for angular junctions. The following small table gives the results of the modeling in comparison to the 1" dipole previously modeled.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                A Comparison of a 1" Copper Dipole vs. Paired AWG #12 Copper Wires at 3.6 MHz
+
+Property                     Antenna       1" Element            2xAWG #12
+
+Length feet (meters)                       132.54 (40.40)        131.60 (40.11)
+Maximum Gain dBi                           7.93                  7.91
+TO Angle degrees                           14                    14
+Horizontal Beamwidth degrees               79.8                  79.8
+Pattern purity                             fig-8                 fig-8
+Source Impedance (R+/-jX Ohms)             70.58-j 0.02          71.18-j 0.41
+72-Ohm SWR                                 1.020                 1.013
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The two antennas are virtually identical in performance. The paired AWG #12 wires do not quite reach the gain of the 1" element because their combined surface areas are still shy of what the single fat element achieves. However, the paired-wire dipole is more likely to be supportable in practice.</p>
+  <center>
+    <img src="amod77-7.gif" width="583" height="387" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> combines the 72-Ohm SWR curves for both antennas from 3.5 to 3.7 MHz. Actually, the dual-wire version has a slightly wider SWR bandwidth, suggesting that a wire separation of about 10" (0.25 m) would have achieved the initial goal.</p>
+  <p><b>Conclusion</b></p>
+  <p>We have covered a wide swath of properties associated with lower-HF wire horizontal dipoles and doublets, all of which are accessible via judicious modeling. Nevertheless, we have only scratched the surface. Many exercises remain for you to invent and develop to further refine your expectations from horizontal elements and antenna based upon them. You can replace assumptions, presumptions, and mythology with data derived from systematically modeling every aspect of the performance of basic antennas. From that data emerge more nearly correct expectations of the antennas that you design, build, or analyze.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

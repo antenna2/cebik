@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, HF Upper, Modeling">
+  <title>NEC-2 Models of LPDAs Some Special Considerations</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/lpda.gif" align="left" width="150" height="83" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">NEC-2 Models of LPDAs<br>
+    Some Special Considerations</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The most common software used to model log periodic dipole arrays (LPDAs) is probably NEC-2. NEC-2 allows us to use the TL facility to construct the phasing line from mathematical lines that suffer no problems with the fact that they must be reversed ass they connect with each set of elements. In its most common implementations, NEC-2 is cheaper than NEC-4 but has a high segment limit than MININEC.</p>
+  <p>If the models we generate have uniform diameters, then we encounter few problems with NEC-2 other than ensuring an adequate number of segments for each element on all the frequencies covered by the LPDA. However, suppose we encounter an antenna design with tapered element diameters, that is, with several sizes of tubing use to make up each element. <b>Fig. 1</b> shows a 7-element LPDA and allows you to distinguish the segment junction dots from the dots indicating a new tubing diameter.</p>
+  <center>
+    <img src="lpnec-1.gif" width="623" height="387" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The model description for this 14 to 30 MHz LPDA shows the element-diameter tapering complexity.</p>
+  <pre>7 el lpda 20-10m                       Frequency = 29  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -216.50,  0.000,  0.000  W2E1 -140.00,  0.000,  0.000 7.50E-01   8
+2   W1E2 -140.00,  0.000,  0.000  W3E1 -80.000,  0.000,  0.000 8.75E-01   6
+3   W2E2 -80.000,  0.000,  0.000  W4E1 -16.000,  0.000,  0.000 1.00E+00   6
+4   W3E2 -16.000,  0.000,  0.000  W5E1  16.000,  0.000,  0.000 1.12E+00   3
+5   W4E2  16.000,  0.000,  0.000  W6E1  80.000,  0.000,  0.000 1.00E+00   6
+6   W5E2  80.000,  0.000,  0.000  W7E1 140.000,  0.000,  0.000 8.75E-01   6
+7   W6E2 140.000,  0.000,  0.000       216.500,  0.000,  0.000 7.50E-01   8
+8        -183.88, 57.360,  0.000  W9E1 -140.00, 57.360,  0.000 7.50E-01   4
+9   W8E2 -140.00, 57.360,  0.000 W10E1 -80.000, 57.360,  0.000 8.75E-01   6
+10  W9E2 -80.000, 57.360,  0.000 W11E1 -16.000, 57.360,  0.000 1.00E+00   6
+11 W10E2 -16.000, 57.360,  0.000 W12E1  16.000, 57.360,  0.000 1.12E+00   3
+12 W11E2  16.000, 57.360,  0.000 W13E1  80.000, 57.360,  0.000 1.00E+00   6
+13 W12E2  80.000, 57.360,  0.000 W14E1 140.000, 57.360,  0.000 8.75E-01   6
+14 W13E2 140.000, 57.360,  0.000       183.875, 57.360,  0.000 7.50E-01   4
+15       -155.62,106.270,  0.000 W16E1 -140.00,106.270,  0.000 7.50E-01   2
+16 W15E2 -140.00,106.270,  0.000 W17E1 -80.000,106.270,  0.000 8.75E-01   6
+17 W16E2 -80.000,106.270,  0.000 W18E1 -16.000,106.270,  0.000 1.00E+00   6
+18 W17E2 -16.000,106.270,  0.000 W19E1  16.000,106.270,  0.000 1.12E+00   3
+19 W18E2  16.000,106.270,  0.000 W20E1  80.000,106.270,  0.000 1.00E+00   6
+20 W19E2  80.000,106.270,  0.000 W21E1 140.000,106.270,  0.000 8.75E-01   6
+21 W20E2 140.000,106.270,  0.000       155.625,106.270,  0.000 7.50E-01   2
+22       -132.50,147.980,  0.000 W23E1 -80.000,147.980,  0.000 8.75E-01   5
+23 W22E2 -80.000,147.980,  0.000 W24E1 -16.000,147.980,  0.000 1.00E+00   6
+24 W23E2 -16.000,147.980,  0.000 W25E1  16.000,147.980,  0.000 1.12E+00   3
+25 W24E2  16.000,147.980,  0.000 W26E1  80.000,147.980,  0.000 1.00E+00   6
+26 W25E2  80.000,147.980,  0.000       132.500,147.980,  0.000 8.75E-01   5
+27       -113.06,183.540,  0.000 W28E1 -80.000,183.540,  0.000 8.75E-01   3
+28 W27E2 -80.000,183.540,  0.000 W29E1 -16.000,183.540,  0.000 1.00E+00   6
+29 W28E2 -16.000,183.540,  0.000 W30E1  16.000,183.540,  0.000 1.12E+00   3
+30 W29E2  16.000,183.540,  0.000 W31E1  80.000,183.540,  0.000 1.00E+00   6
+31 W30E2  80.000,183.540,  0.000       113.060,183.540,  0.000 8.75E-01   3
+32       -95.940,213.870,  0.000 W33E1 -80.000,213.870,  0.000 8.75E-01   2
+33 W32E2 -80.000,213.870,  0.000 W34E1 -16.000,213.870,  0.000 1.00E+00   6
+34 W33E2 -16.000,213.870,  0.000 W35E1  16.000,213.870,  0.000 1.12E+00   3
+35 W34E2  16.000,213.870,  0.000 W36E1  80.000,213.870,  0.000 1.00E+00   6
+36 W35E2  80.000,213.870,  0.000        95.940,213.870,  0.000 8.75E-01   2
+37       -82.500,239.730,  0.000 W38E1 -48.000,239.730,  0.000 8.75E-01   3
+38 W37E2 -48.000,239.730,  0.000 W39E1 -16.000,239.730,  0.000 1.00E+00   3
+39 W38E2 -16.000,239.730,  0.000 W40E1  16.000,239.730,  0.000 1.12E+00   3
+40 W39E2  16.000,239.730,  0.000 W41E1  48.000,239.730,  0.000 1.00E+00   3
+41 W40E2  48.000,239.730,  0.000        82.500,239.730,  0.000 8.75E-01   3
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           2    39 / 50.00   ( 39 / 50.00)      1.000       0.000       I
+
+                -------- TRANSMISSION LINES ---------
+
+Line  Wire #/% From End 1   Wire #/% From End 1    Length     Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)              Ohms Fact Norm
+
+1    4/50.0  (  4/50.0)   11/50.0  ( 11/50.0)  Actual dist  100.0  1.00  R
+2   11/50.0  ( 11/50.0)   18/50.0  ( 18/50.0)  Actual dist  100.0  1.00  R
+3   18/50.0  ( 18/50.0)   24/50.0  ( 24/50.0)  Actual dist  100.0  1.00  R
+4   24/50.0  ( 24/50.0)   29/50.0  ( 29/50.0)  Actual dist  100.0  1.00  R
+5   29/50.0  ( 29/50.0)   34/50.0  ( 34/50.0)  Actual dist  100.0  1.00  R
+6   34/50.0  ( 34/50.0)   39/50.0  ( 39/50.0)  Actual dist  100.0  1.00  R
+7    4/50.0  (  4/50.0)  Short ckt (Short ck)   90.000 in    75.0  0.66
+
+Ground type is Free Space</pre>
+  <p>The design is an adaptation of a 20' LPDA designed by K4EWG for <i>The ARRL Antenna Compendium</i>, Vol. 3 (pp. 118-123). However, a few things have been changed, such as the length of the stub. Moreover, some of the construction features of the original--such as the overlapping elements and the large brackets--have not been captured in this model. Hence, it cannot be considered in any way an evaluation of the original antenna.</p>
+  <p>The model has several interesting features in addition to the tapered element diameter schedules, which parallel the original design. The 90" stub, composed of 75-Ohm, 0.66 velocity factor line moves the depression of feedpoint impedances outside the 14-30 MHz passband of the antenna. The 100-Ohm phasing line was selected for best modeled performance.</p>
+  <p>The use I want to make of the model is to revert to my old classroom days and give you a pop quiz. The question is this: <b>What is the most accurate way to model this LPDA?</b></p>
+  <p>As a hint, let me provide you with a series of representative figures taken from different ways of modeling the antenna. For each of the mid-band frequencies, there are 3 sets of performance numbers. The "NEC-4" entry gives the reports of NEC-4. The "NEC-2-C" entry provides the output data for NEC-2 with Leeson corrections in operation. Leeson corrections correct the inherent tendency of NEC-2 to give incorrect results for tapered diameter linear elements. Finally, the NEC-2-N" entry gives the NEC-2 data reports without the correction factors activated.</p>
+  <p>Here is the table of reported values. Frequency is in MHz, Gain is the free-space value in dBi, F-B is in dB, Feed Z is R +/- jX in Ohms, and the 50/75 Ohms SWR is self-explanatory.</p>
+  <pre>Freq      Core      Gain      F-B       Feed Z         50/75 Ohm SWR
+14.175    NEC-4     5.36       9.53     83.0 + j 8.8   1.69 / 1.16
+          NEC-2-C   5.30       9.48     77.9 + j10.8   1.61 / 1.16
+          NEC-2-N   5.49       9.73     82.5 + j 5.5   1.66 / 1.13
+
+18.12     NEC-4     6.26      13.61     67.4 - j10.3   1.42 / 1.20
+          NEC-2-C   6.24      13.58     69.0 - j 5.8   1.40 / 1.12
+          NEC-2-N   5.31      13.59     63.8 - j 9.3   1.34 / 1.24
+
+21.225    NEC-4     6.44      16.70     67.7 - j 1.5   1.36 / 1.11
+          NEC-2-C   6.46      16.70     66.8 - j 3.9   1.35 / 1.14
+          NEC-2-N   6.55      15.96     66.8 - j 0.3   1.30 / 1.16
+
+24.94     NEC-4     6.34      15.33     71.2 - j33.2   1.91 / 1.57
+          NEC-2-C   6.35      15.43     66.5 - j30.2   1.80 / 1.55
+          NEC-2-N   6.44      15.11     67.9 - j34.2   1.92 / 1.62
+
+29.0      NEC-4     6.17      19.36     65.5 - j26.5   1.70 / 1.49
+          NEC-2-C   6.17      19.69     59.5 - j28.1   1.71 / 1.61
+          NEC-2-N   6.20      19.38     61.4 - j28.6   1.73 / 1.59</pre>
+  <p>If all we wish to receive from the data reports is a general impression of how well the antenna might work within the ham bands covered by the design, then the answer to our question is simple. Any of the modeling techniques is sufficient to provide the general impression. Nothing fatal seems to be reported by any of the techniques, despite some variance among the numbers.</p>
+  <p>Uncorrected NEC-2, of course, is considered least accurate when modeling elements with a diameter-tapering schedule. We can note that the reports for this option tend to yield slightly higher gains than either of the other two options. NEC-4 is considered to be a very significant improvement on NEC-2 in the handling of tapered-diameter linear elements, and the values it yields are somewhat closer to the values offered by NEC-2 with the element diameter correction activated (using EZNEC Pro, for this exercise).</p>
+  <p>For precision work, in which numerical progressions might be important (in contrast to the simple operational significance of the data), NEC-4 results do not tally exactly with corrected NEC-2 (or with the application of the corrections to NEC-4 models). There is still some variance.</p>
+  <p>Moreover, in an LPDA model, the correction factor does not affect every element. It has a limit, being activated for wire groups composing an element within about 15% of 1/2 wl resonance. Hence, the figures for the corrected NEC-2 entries are misleading. On 20, only element 1 and 2 were corrected. 17, 15, 12, and 10 activated only one wire each: numbers 3, 4, 5, and 6, respectively. Wire 7 was not corrected in length for its taper within any model run. Hence, to call the modeling run "corrected" was a misnomer; at best, each run was only partly corrected.</p>
+  <p>NEC-2 is most accurate when the linear elements of a model have a uniform diameter. Under those conditions, a NEC-2 and a NEC-4 run on the same LPDA model will show virtually indistinguishable results. Hence, for the most accurate modeling results, it is advisable to convert each tapered diameter element into its equivalent uniform diameter element, using Leeson or similar equations. Utility programs are available for this task.</p>
+  <p>However, users of EZNEC and other NEC-2 software having the correction factor available (such as NEC-Win Plus) can do the work for us. Each program allows us to see the corrected uniform diameter element length and diameter. We may have to make several software runs, changing frequency each time, in order to compile a complete list of the equivalent elements, but that process is usually faster than entering all of the tapered diameter element lengths and sizes into a utility program.</p>
+  <p>For our little sample case, here is the resulting model.</p>
+  <pre>7 el lpda 20-10m                       Frequency = 14  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1        -212.91,  0.000,  0.000       212.910,  0.000,  0.000 8.93E-01  31
+2        -180.94, 57.360,  0.000       180.940, 57.360,  0.000 9.21E-01  27
+3        -153.52,106.270,  0.000       153.520,106.270,  0.000 9.49E-01  23
+4        -131.05,147.980,  0.000       131.050,147.980,  0.000 9.71E-01  19
+5        -111.88,183.540,  0.000       111.880,183.540,  0.000 9.88E-01  15
+6        -95.106,213.870,  0.000        95.106,213.870,  0.000 1.00E+00  15
+7        -81.342,239.730,  0.000        81.342,239.730,  0.000 9.74E-01  15
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           8     7 / 50.00   (  7 / 50.00)      1.000       0.000       I
+
+                -------- TRANSMISSION LINES ---------
+
+Line  Wire #/% From End 1   Wire #/% From End 1    Length     Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)              Ohms Fact Norm
+
+1    1/50.0  (  1/50.0)    2/50.0  (  2/50.0)  Actual dist  100.0  1.00  R
+2    2/50.0  (  2/50.0)    3/50.0  (  3/50.0)  Actual dist  100.0  1.00  R
+3    3/50.0  (  3/50.0)    4/50.0  (  4/50.0)  Actual dist  100.0  1.00  R
+4    4/50.0  (  4/50.0)    5/50.0  (  5/50.0)  Actual dist  100.0  1.00  R
+5    5/50.0  (  5/50.0)    6/50.0  (  6/50.0)  Actual dist  100.0  1.00  R
+6    6/50.0  (  6/50.0)    7/50.0  (  7/50.0)  Actual dist  100.0  1.00  R
+7    1/50.0  (  1/50.0)  Short ckt (Short ck)   90.000 in    75.0  0.66
+
+Ground type is Free Space</pre>
+  <p>The results offered by this equivalent model are as follows.</p>
+  <pre>Freq      Core      Gain      F-B       Feed Z         50/75 Ohm SWR
+14.175    NEC-2     5.26       9.27     81.4 + j 9.6   1.66 / 1.16
+
+18.12     NEC-2     6.18      13.40     68.7 - j10.9   1.44 / 1.19
+
+21.225    NEC-2     6.37      16.96     69.0 - j 1.3   1.38 / 1.09
+
+24.94     NEC-2     6.28      15.30     72.7 - j33.4   1.93 / 1.57
+
+29.0      NEC-2     6.12      19.20     66.8 - j25.3   1.68 / 1.44</pre>
+  <p>For generalized work, nothing startling emerges from the report. Impedance reports are closest to the NEC-4 reports. The gain reports are lower overall--by about 0.2 dB on the lower bands and by abut 0.1 dB on the upper bands. The greater effect on the lower frequencies of the LPDA passband is most likely due to the fact that the element taper schedule used tends to make the longest elements have the smallest equivalent uniform diameter. Normally in an LPDA design, we tend to expect the opposite trend.</p>
+  <p>Had the element tapering schedule been significantly more complex, we would have seen a wider variation among values between the equivalent model and the original. If the original had modeled mounting brackets, using substitute short large-diameter segments at the element centers, the differences between the equivalent and original models would likely have been as striking as they can be with many Yagi models. However, had I created such a model for our example, I might be open to the charge of melodrama.</p>
+  <p>Nonetheless, the amount of difference in the outputs from the various options strongly suggests that it is good modeling practice in NEC-2 always to develop and use the equivalent uniform diameter element model as the basis for design and analysis of LPDAs.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 09-29-99. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="lpd.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to LPDA Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#lpda'>LPDA</a>, <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

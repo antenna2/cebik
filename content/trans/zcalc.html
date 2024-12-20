@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Matching, Transmission Line">
+  <title>Values Along a Transmission Line</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/coax.gif" align="left" width="155" height="68" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Notes on Calculating Input Values from Load Values<br>
+    Along a Transmission Line</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <i>Note: This is a version of a presentation to college student-hams in 1994. Due to limitations in both the drawing system and the HTML system, substitute characters have been used in places. Greek letters are usually spelled out in the text (but not in equations). "L-script" is simply "l" in the text. In places, the standard footed slash that introduces a phase angle has been replaced by "@". Meanings should generally be clear for all other symbols and abbreviations used in the text.</i><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The input values of voltage, voltage phase angle, current, current phase angle, resistance, and reactance (along with impedance and impedance phase angle, if desired) depend upon two properties: the load value of these parameters and the length and characteristics of the transmission line. The load may be an antenna, a junction with one or more other transmission lines, a dummy load, or anything similar. Those with little experience in dealing with these concepts and quantities may be interested in reading the following review of the relationships among the various transmission line properties.</p>
+  <center>
+    <img src="zc-1.gif" width="692" height="345" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Everything begins by speaking the same language. <b>Figure 1</b> schematically represents most of the elements of transmission lines, while <b>Table 1</b> (at the end of the text) defines many of the abbreviations to be used in the text and the equations to follow. Since all calculations will be done in terms of degrees (or radians) along a wavelength of RF, let us note in passing the standard conversion equations:</p>
+  <center>
+    <img src="zce1.gif" width="286" height="42">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="zce2.gif" width="289" height="42">
+  </center>
+  <p>where L<sub>m</sub> is the initial length in meters and L<sub>f</sub> is the initial length in feet. The constants can be rounded to 1.2 and 0.366 respectively, but I usually prefer to save rounding for the last step in a series of calculations, despite the predilection of many to initially round everything to the smallest number of significant figures to be found in the data group.</p>
+  <p>Should you wish to write a basic program incorporating any of the material to follow, you will have to convert degrees into and out of radians. For quick reference, the conversion equations are these:</p>
+  <center>
+    <img src="zce3.gif" width="271" height="41">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="zce4.gif" width="277" height="42">
+  </center>
+  <p>where theta<sub>d</sub> is any angle (or l) in degrees, and theta<sub>r</sub> is any angle (or l) in radians.</p>
+  <p><strong>Impedance Transformation</strong></p>
+  <p>Let's begin with the transformation of impedance along the transmission line, beginning at the load. For every degree of travel, the impedance takes on a new value, with one exception. If the load is purely resistive and exactly matches the characteristic impedance of the line, then the impedance along the line is constant. However, if the load has any reactance or if the load does not match the characteristic impedance of the line, then resistance and reactance go through a cycle of changing values that repeat themselves every 180&deg;. All of what follows, of course, applies to lossless lines, which provides accurate enough results for the short lengths involved in most amateur applications.</p>
+  <p>Terman (<em>Radio Engineer's Handbook</em>, p. 186) provides the most general impedance equation:</p>
+  <center>
+    <img src="zce5.gif" width="346" height="90">
+  </center>
+  <p>where l is the length of the line and lambda is the length of a wavelength, both in the same units, that is, both in feet, meters, or degrees. The terms of the equation are therefore in radians automatically.</p>
+  <p>As a matter of completeness, we should note that Keucken (<em>Exploring Antennas and Transmission Lines by Personal Computer</em>, p. 181) provides the appropriate expansion of this equation for use in a computer:</p>
+  <center>
+    <img src="zce6.gif" width="349" height="45">
+  </center>
+  <p>Keucken's procedure is to calculate the numerator and denominator independently, converting each into polar notation. Z<sub>in</sub> then equals Z<sub>O</sub> times the ratio of the polar amplitudes, while the phase angle is simply the numerator angle minus the denominator angle. Rectangular coordinates emerge from standard sine and cosine calculations.</p>
+  <p>However, it is very often more useful to begin with and end with the resistive and reactive components of an impedance separately given (that is, given in rectangular rather than polar form). The <em>ARRL Handbook</em> for the early 1990s (p. 16-3) provides separate resistance and reactance equations:</p>
+  <center>
+    <img src="zce7.gif" width="331" height="70">
+  </center>and
+  <center>
+    <img src="zce8.gif" width="355" height="95">
+  </center>
+  <p>Equation 8 will return values with the correct signs, + for inductive reactance and - for capacitive reactance.</p>
+  <p>To obtain the impedance, simply take the square root of the sum of the squares:</p>
+  <center>
+    <img src="zce9.gif" width="281" height="30">
+  </center>
+  <p>and obtain the phase angle from</p>
+  <center>
+    <img src="zce10.gif" width="305" height="45">
+  </center>
+  <p>From the values of R<sub>in</sub> and X<sub>in</sub>, we can easily calculate the VSWR using the most general equation:</p>
+  <center>
+    <img src="zce11.gif" width="385" height="61">
+  </center>
+  <p>Since equations (7) and (8) are for lossless lines, the same VSWR value will result from R<sub>in</sub> and X<sub>in</sub> values taken at any length, from the antenna terminals on down the line. A few sample calculations should convince skeptics who have experienced changes in SWR readings in the shack with changes in line length that those changes arose from factors external to the basic antenna-feedline configuration. Adding loss factors to the R<sub>in</sub> and X<sub>in</sub> calculations will result in progressively lower VSWR values as the line length increases. Loss amendments or supplements to the basic equations are important at VHF or with very long line lengths at HF, but short HF lines used in many simple matching or phasing solutions rarely need the added complexities for results that are within measurement or construction accuracy limits. To explore the losses along a line and their effect upon VSWR readings, obtain a copy of the program TLA/TLW by N6BV, available from the ARRL.</p>
+  <p>Solving equation (11) for R<sub>in</sub> and X<sub>in</sub>, of course, will not return unique values. Instead, the equation will return families of values. The families of values--or curves--form the basis for the well-known Smith charts and its more recent computerized extensions, for example, the W7ZOI/ARRL program, <em>MicroSmith</em>.</p>
+  <p>Although SWR is the most familiar term used to describe the imedance matching situation in much literature, it is not the only term or even the most fundamental. More basic is the ratio of the reflected voltage to the incident voltage at any given position along a transmission line. An identical ratio applies to the reflected current and the incident current. Thus we may derive from the load resistance (R<sub>in</sub>), the load reactance (X<sub>in</sub>), and the line characyeristic impedance impedance (R<sub>0</sub>) a complex term called the reflection coefficient. (Note that because most transmission lines have negligible reactance, that we may reduce the line impedance to its resistive component.) Under these condition, we may calculate the reflection coefficient magnitude (|rho|) .</p>
+  <center>
+    <img src="zce11a.gif" width="374" height="55">
+  </center>
+  <p>However, rho is a complex term with real and imaginary components. In other words, rho has a phase angle, that we may also calculate. For most basic work, we tend to overlook the phase angle of the reflection coefficient and make use only of its magnitude.</p>
+  <center>
+    <img src="zce11b.gif" width="377" height="50">
+  </center>
+  <p>In many tests and handbooks, we find that authors then derive VSWR from the value of rho:</p>
+  <center>
+    <img src="zce11c.gif" width="377" height="40">
+  </center>
+  <p>You may recongnize equation 11 as an expansion of equations 11a and 11c. Essentially, SWR and the magnitude of the reflection coefficient measure the same thing, but use different scales. The list of ways in which we may handle ratio of reflected to incident voltage or current has a third entry called the return loss (RL), which we measure in dB:</p>
+  <center>
+    <img src="zce11d.gif" width="370" height="24">
+  </center>
+  <p>Some texts handle the return loss as a negative quantity, but most instruments that measure return loss treat the quantity as positive, resulting in the leading negative sign in equation 11d.</p>
+  <p><strong>Stubs</strong></p>
+  <p>If the load end of the line is short circuited so that R<sub>L</sub> = 0, and X<sub>L</sub> = 0, then</p>
+  <center>
+    <img src="zce12.gif" width="280" height="23">
+  </center>
+  <p>and the reactance is inductive. If X<sub>L</sub> = (an open circuit), then</p>
+  <center>
+    <img src="zce13.gif" width="288" height="23">
+  </center>
+  <p>and the reactance is capacitive. Equations 12 and 13, of course, are the standard equations for calculating the reactance of a length (less than 90&deg;) of transmission line. The results may be obtained directly from equation (8), assuming that it has been plugged into a BASIC program or something similar, by letting R<sub>L</sub> = 0.00000001 (as a place holder for 0.0, which may yield "Division by Zero" messages) and X<sub>L</sub> = 0 for inductive, shorted stubs. For capacitive, open stubs, plug 999,999,999 into both R<sub>L</sub> and X<sub>L</sub>.</p>
+  <p>Often, we know the reactance to be cancelled by a stub and desire the corresponding line length. If we let l<sub>L</sub> = the length of an inductive stub (in degrees) and likewise let l<sub>C</sub> = the length of a capacitive stub (in degrees), then the equations become</p>
+  <center>
+    <img src="zce14.gif" width="293" height="45">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="zce15.gif" width="296" height="44">
+  </center>
+  <p>The terms of equation (15), of course, can be inverted and the arctan taken of the result, a procedure common to calculator operations. To determine the physical length of the transmission line, apply equations (1) or (2), solving for L<sub>f</sub> or L<sub>m</sub>, as appropriate.</p>
+  <center>
+    <img src="zc-2.gif" width="540" height="468" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although we may apply stubs wherever compensatory reactance is required in an antenna-feedline system, the more general stub matching situation is presented in <b>Figure 2</b>. Here, we introduce a transmission Line between the antenna and the junction of the Feed line to the shack or rig. (Capitalized words here refer to elements in <b>Figure 2</b>.) The length of Line is chosen so that at the junction, the resistive component will be the same as the characteristic impedance of the Feed line. However, in most instances, there will be also be a reactive component which the addition of a parallel stub cancels. Note that under the condition of no series reactance, the series and parallel values of feedpoint impedance are identical and purely resistive. In the most general situation, there is no requirement that the Line, Stub, and Feed sections have the same characteristic impedance.</p>
+  <p>Although calculation of line length for the Line and the Stub have been largely left to graphical solutions, there is no reason why we should not directly calculate them, especially via a short computer program. The Line length calculation simply requires us to solve equation (7) for l and to convert that length in radians into degrees and feet via equations (1) through (4) as appropriate. The rewrite of (7) yields a quadratic:</p>
+  <center>
+    <img src="zce16.gif" width="387" height="53">
+  </center>
+  <p>Solving for l<sub>r</sub>, we obtain</p>
+  <center>
+    <img src="zce17.gif" width="401" height="112">
+  </center>
+  <p>Note that there are two solutions, since for every 180&deg; of line length (under mismatch conditions), there will be two points at which the resistive component has the same value. Applying equation (8) to the two lengths will yield opposing values of reactance. The limiting case is where the value under the radical goes to less than zero: this condition indicates that with the combination of line values chosen for the antenna values measured or derived from a modeling program, the resistive component never reaches the chosen Feed line characteristic impedance.</p>
+  <p>Converting the remnant series reactance into a parallel value provides the magnitude, with a sign change, that the stub reactance must equal to leave the junction with a purely resistive impedance that matches the Feed line Z<sub>O</sub>.</p>
+  <p>This excursion into stub-matching calculations simply illustrates the utility of equations (7) and (8). Knowing the impedance at the end of a length of a feedline terminated in a load, a short, or an open-circuit has too many uses to catalog here.</p>
+  <p><strong>Current and Voltage Transformation</strong></p>
+  <p>A knowledge of resistance and reactance along a transmission line will not answer every important question about a feed system. Often neglected are the classic and very useful equations for calculating the voltage and current, along with their respective phase angles, along a transmission line. Terman (p. 185) gives the basic current equation as</p>
+  <center>
+    <img src="zce18.gif" width="351" height="45">
+  </center>
+  <p>where l and lambda have the same meaning as with equation (5).</p>
+  <p>Note that the calculation of current at any point along a transmission line requires knowledge not only of the current and its phase angle, but as well of the voltage and its phase angle. Such information, if not measured, best comes from information provided by antenna modeling programs, which generally collect together E<sub>L</sub>, theta<sub>E</sub>, I<sub>L</sub>, theta<sub>I</sub>, R<sub>L</sub>, and X<sub>L</sub> in one listing or report. Although such data comes from a model and is often limited by being calculated over perfect, rather than real, ground, it may turn out to be more accurate than the output of the measuring instruments found in most ham shacks.</p>
+  <p>Expanding the Terman equation for load currents and voltages that are at other than a 0&deg; phase angle, we can first let ratio E<sub>L</sub>/Z<sub>O</sub> = I<sub>Z</sub>. Then,</p>
+  <center>
+    <img src="zce19.gif" width="332" height="23">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="zce20.gif" width="343" height="23">
+  </center>
+  <p>Substituting into equation (18), we arrive at the most general equation,</p>
+  <center>
+    <img src="zce21.gif" width="435" height="23">
+  </center>
+  <p>Let I<sub>H</sub> be the "real" component solution and I<sub>J</sub> be the "j" component solution. Then</p>
+  <center>
+    <img src="zce22.gif" width="286" height="30">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="zce23.gif" width="291" height="44">
+  </center>
+  <p>Unlike reactance that varies &PlusMinus;90&deg;, the phase angle of the current along a transmission line varies through a 360&deg; cycle. Since tangents are ambiguous, a corrective is in order, especially if these equations are loaded into BASIC or some similarly restricted language. <b>Table 2</b> provides a set of general correctives applicable to either voltage or current calculations.</p>
+  <center>
+    <img src="zce33.gif" width="371" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The Terman (p. 185) equation for finding the voltage anywhere along a lossless transmission line is</p>
+  <center>
+    <img src="zce24.gif" width="361" height="38">
+  </center>
+  <p>Letting I<sub>L</sub>Z<sub>O</sub> = E<sub>Z</sub>, expanding, and then gathering terms, we arrive at an equation exactly comparable to (21), and we proceed as in (22) and (23) to arrive at E<sub>in</sub> and theta<sub>Ein</sub>. Likewise, the correctives in Table 2 are required to follow the voltage phase angle through its 360&deg; swing.</p>
+  <p>Equations (7), (8), and (19) through (24) can put into a single program for simultaneous calculation for any specified collection of voltage, current, and impedance conditions at the load of a transmission line. To prevent division by zero, do not let I<sub>H</sub> or E<sub>H</sub> go to 0, but make it read some tiny fraction, such as 0.00000001. Likewise, force I<sub>J</sub> and E<sub>J</sub> to zero if either is between 0.001 and -0.001.</p>
+  <p>Given an operating frequency and the characteristic impedance and velocity factor of a transmission line, you can calculate the voltage, current, and impedance conditions for any length of line. Likewise, with a simple "FOR-NEXT" loop, you can produce a screen or a page of values to explore rates of change for any of the values. A very few such sheets will convince the hardiest skeptic that with complex loads, neither voltage nor current nor their phase angles change in symmetrical sine curves associated with basic AC theory. In general, values from 0&deg; to 90&deg; in 5 increments just about fill a monitor screen, while 0&deg; to 180&deg; in 5 increments will almost fill a sheet of paper. For paper printing, you can simply plug in the values on the 180&deg; line for a new run to complete an entire cycle. One of the easiest ways to check the accuracy of the equation transcriptions into the programming language is to add phase angles theta<sub>Z</sub> and theta<sub>I</sub>; they should equal theta<sub>E</sub>, although you may on occasion have to subtract 360&deg; from a sum to arrive at values of theta<sub>E</sub> that have started a new cycle. You can also spot check amplitude values with Ohm's law, although it may require calculation of Z<sub>in</sub> from R<sub>in</sub> and X<sub>in</sub>, if Z<sub>in</sub> is not part of the charted values.</p>
+  <p><strong>Feedpoint Conditions</strong></p>
+  <p>(<i>Note: equations 25 through 27 have been omitted from this version of the presentation, since they deal with a specialized application and are less generally useful.</i>)</p>
+  <p>2-element arrays, where the forward element is directly driven, require a phasing line that has a half-twist between two driven elements. In the case of the ZL Special, the line is approximately 45&deg; long with respect to transformation of the current, where the half-twist in effect places the rear element current 180&deg; minus the line length (45&deg;) out of phase with respect to the forward element current. The net effect is a reversed rear element current 315&deg; (or -45&deg;) out of phase with the forward element current. The general ZL Special configuration appears in <b>Figure 3</b>. We shall limit our interest in the antenna to the feedpoint conditions.</p>
+  <center>
+    <img src="zc-3.gif" width="657" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The input end of the phasing line for the 2-element horizontal array is in parallel with the forward element source. At this point, the voltage is the same for each branch of the current division, although the currents themselves may be quite different. If we calculate or derive from antenna modeling software the phase line input impedance and the forward element impedance, they will be given in series form. To obtain a single source impedance for this antenna, we shall require 1. a transformation to parallel values, 2. a parallel combining of the two, and 3. a return to series form for obtaining the feedpoint impedance of the combination relative to any feedline connection.</p>
+  <p>Converting the pair of series impedances into parallel form requires the standard conversion equations:</p>
+  <center>
+    <img src="zce28.gif" width="300" height="49">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="zce29.gif" width="288" height="49">
+  </center>
+  <p>It is usually arithmetically easier to invert these values into conductance and susceptance values, each parallel component of which may be added for a combined value and then to invert each result to obtain the parallel values for the resultant resistive and reactive components of the feedpoint impedance. Finally, use these standard equations to reconvert the combination to series form:</p>
+  <center>
+    <img src="zce30.gif" width="295" height="53">
+  </center>
+  <center>
+    <img src="zce31.gif" width="291" height="53">
+  </center>
+  <p>The calculations associated with feedpoint impedances of a horizontal 2-element array are amenable to BASIC and other utility program languages.</p>
+  <p>This exercise has aimed to demonstrate the mathematics of calculating feedline input values from load values for any transmission line and of calculating the length of matching stubs, along with the feedpoint impedance of rudimentary arrays. None of the equations are in any sense new, although only a few of the crucial ones--for example, those involving values of current and voltage, along with their phase angles--appear in any of the current handbooks readily available to radio amateurs. Once there was a point to these omissions, since Smith charts obviated some (but by no means all) of the tedious hand calculations. Without diminishing the utility of Smith charts, even the most rudimentary form of programming--that is, BASIC--can reduce the work of making direct calculations down to a matter of inputting data. Moreover, familiarity with the equations provides insight into what the Smith Chart is doing and how. Thus, it is perhaps time once more to place these very useful equations before the amateur community in readily available form for use by the ham interested in antennas and feedlines.</p>
+  <center>
+    <img src="zce32.gif" width="584" height="876" border="2" vspace="5" hspace="9">
+  </center>
+  <p><i>Most of the equations cited in this set of notes have been placed into utility programs among the <a href="../radio.html#HAMCALC">HAMCALC</a> collection, developed and regularly updated by George Murphy, VE3ERP. Since the collection of programs uses GWBasic, the equations (or their break down for implementation) is readily accessible to interested users. For an intersting and insightful way of looking at the elements of a Smith Chart, beginning with the reflection coefficient, see <a href="https://www.ac6la.com/stss.html" target="_blank">"Speedometers, Thermometers, SWR Meters, and Smith Charts"</a> by Dan Maguire, AC6LA.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><i>Updated 11-25-1998, 10-16-2006. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#matching'>Matching</a>, <a href='../topics.html#transmission-line'>Transmission Line</a></p><br>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, VHF / UHF, HF Upper, HF Lower">
+  <title>2-Element Quads as a Function of Wire Diameter Part 2</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>2-Element Quads as a Function of Wire Diameter<br>
+    Part 2: Automating the Design Process</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In Part 1 of this short series, we examined some of the properties of the 2-element monoband quad beam as they emerged from the wire size. For that exercise, we used a series of graphs based on selected models. The models used wire diameters from 3.16E-5 through 1E-2 wavelengths in diameter so that the X-axis of each graph would follow a linear pattern according to the common logarithm. The Y axes of the graphs explored various properties of the beam. The design specification for each model was that the driver should be resonant within +/-1 Ohm of remnant reactance and that the wire dimensions and element spacing should produce a maximum value of 180-degree front-to-back ratio. <b>Fig. 1</b> shows the salient quad dimensions.</p>
+  <center>
+    <img src="q2l2-1.gif" width="449" height="363" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The task of finding suitable beam dimensions was considerably eased by the use of "modeling by equation" techniques. The program used was NEC-Win Plus, but any other NEC-2 or NEC-4 program with a similar facility would work as well. All models used copper wire and were in free space.</p>
+  <center>
+    <img src="q2l2-2.gif" width="638" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the equations page of the model used to explore quad properties. The standard design frequency (variable G) is 28.5 MHz, which is roughly the geometric mean between the lowest HF frequency for which a 2-element quad might be built and the high VHF frequency to be used. By moving the design frequency down from a more perfect 30 MHz, the resulting model beams could be compared more easily to physical beams built for the 10-meter amateur band.</p>
+  <p>For each wire size select for variable H (multiplied by the wavelength in cell D3 to provide physical dimensions for the program), it became necessary only to vary three values. A is 1/8 of the driver circumference, while B is 1/8 of the reflector circumference. D is the spacing between elements. As a matter of course, I examined spacing in 0.005 wavelength increments to find highest front-to-back peak and then refined the spacing.</p>
+  <center>
+    <img src="q2l2-3.gif" width="638" height="455" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the equations version of the wires page. The wires corresponding to the variables are clear enough. Each model was swept in 0.01 MHz (10 kHz) increments to track the pattern of both resonance and the maximum front-to-back ratio. The closer to resonance, the smaller the change to the driver length variable A. The closer to maximum front-to-back ratio, the smaller the changes to the reflector length variable B. Then the spacing would be changed, with a further zeroing-in exercise until no further improvements could be made.</p>
+  <p>Note the Radiation Pattern entry. The gain and front-to-back ratio were obtained from a tabular readout. Since I needed only the 90-degree mark for gain and the 270-degree mark for rearward gain, I set the parameters for the radiation pattern to produce only 4 values. This set-up will not yield any usable graphical patterns, but it does simplify scanning the tabular readout.</p>
+  <p>From this preliminary work, which one might replicate either in greater detail or for other antennas, I obtained the data points for the graphs in Part 1. These graphs are simple "connect-the-dot" constructions that are useful for seeing patterns. However, they do not provide any basis for calculating 2-element quads for other design frequencies.</p>
+  <p>I subjected the data obtained from the systematic modeling exercise to regression analysis. At one time, such analysis was painstakingly slow. However, programs like DataFit automate the process, providing both tabular and graphical outputs to test the equations that result. For the 2-element quad, 4th-order equations yielded results that fell within about 0.5% of optimized models throughout the physical wire size limits and the frequency limits of the project, with the exception of very thin wires. Where the common log of the wire diameter in wavelengths was -4 or less, the error rate increase slightly. In all test cases, the resulting model had its resonant frequency and its maximum front-to-back frequency within about 10 kHz of the requested design frequency. These results were judged to be well within the construction variables for most antenna-building situations.</p>
+  <p>There is a limit to how well regression analysis can track data points. Higher-order equations tend usually (but not always) to provide a better track than lower-order equations. 4th-order equations were the maximum possible with the limited number of data points used.</p>
+  <center>
+    <img src="q2l2-4.gif" width="640" height="379" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Some data point sequences make easy curve fits for regression analysis. <b>Fig. 4</b> shows the reflector circumference curve produced by the analysis along with the original data points. A more exacting fit is hard to imagine.</p>
+  <center>
+    <img src="q2l2-5.gif" width="640" height="379" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, <b>Fig. 5</b> shows a more difficult fit between the curve and the data points for the rate of gain change. Although the curve comes close to the data points, the reversal of direction for the thinnest wire makes the shape of the curve peak more open to question. Remember that with the thinnest wire used, the 2-element quad reaches a coincidence between the frequency of maximum gain and the frequency of maximum front-to-back ratio. Hence, the rate of change is less than the next thinnest wire sized used. From 0.0001 wavelength wire diameters onward, the frequency of maximum gain is always lower than the frequency of maximum front-to-back ratio. For the purposes of the advisory approximation, the curve and the regression equation is perfectly adequate.</p>
+  <p>The equations produced by regression analysis are perfectly adequate for calculating all of the data we examined in Part 1 for all points between the listed data points. However, the equations have no inherent theoretic import for electronics or antennas beyond their ability to calculate.</p>
+  <p>The production of a set of calculating equations does have the merit of allowing one to create a small program in any number of media to automate the design process for 2-element quads that meet the basic specifications (resonance and maximum front-to-back ratio on the design frequency). By specifying the wire size and the design frequency, we can let the program generate the remaining data. Therefore, I produced the following little GW Basic program to do just this task.</p>
+  <pre>10 CLS:PRINT "Program to calculate the dimensions of a resonant square 2-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 then 160 else 170
+160 print "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 if d1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=.00336#:BD=.04966518519#:CD=.2731955556#:DD=.6716364021#:ED=1.644147937#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED
+210 AR=.003173333333#:BR=.0508237037#:CR=.3081977778#:DR=.8663851852#:ER=2.040064444#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER
+230 AS=-.003#:BS=-.03551851852#:CS=-.1553055556#:DS=-.2902116402#:ES=-.02540079365#
+240 SP=(AS*(D1^4))+(BS*(D1^3))+(CS*(D1^2))+(DS*D1)+ES
+250 AZ=1.976333333#:BZ=30.84751852#:CZ=172.4909722#:DZ=419.5162831#:EZ=519.8747579#
+260 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+270 AG=-.06333333333#:BG=-.7203703704#:CG=-3.010277778#:DG=-5.381375661#:EG=3.738769841#
+280 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+290 AW=1.688666667#:BW=23.76837037#:CW=124.9339444#:DW=295.8872328#:EW=281.2755159#
+300 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+310 AF=-.00266666667#:BF=.388#:CF=4.790666667#:DF=19.55485714#:EF=28.76628571#
+320 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+330 AN=-.08333333333#:BN=-.9462962963#:CN=-3.943055556#:DN=-7.582671958#:EN=-5.23234127#
+340 DG=(AN*(D1^4))+(BN*(D1^3))+(CN*(D1^2))+(DN*D1)+EN
+350 WL=299.7925/F:PRINT "Wavelength in Meters =";WL
+360 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+370 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+380 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+390 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+400 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+410 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+420 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+430 PRINT "Approximate Resonant Feedpoint Impedance =";ZR;"Ohms"
+440 PRINT "Approximate Free-Space Gain =";GN;"dBi"
+450 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+460 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+470 PRINT "Approximate Rate of Gain Change =";DG;"dB per 1% of Design Frequency"
+480 INPUT "Another Value = 1, Stop = 2: ";P
+490 IF P=1 THEN 10 ELSE 500
+500 END</pre>
+  <p>Line 140 contains something peculiar to GW Basic. "LOG" in GW Basic always mean the natural logarithm. Hence, a conversion factor is necessary to convert the natural log to a common log. If the medium to which this program may be transferred already knows the difference between "LOG" and "LN," the conversion factor can be dropped.</p>
+  <p>The program does not contain a module to convert AWG wires gauges into physical diameters, so the following table may be useful.</p>
+  <pre>AWG Size       Dia. Inches              Dia. mm
+18             .0403                    1.0236
+16             .0508                    1.2903
+14             .0641                    1.6281
+12             .0808                    2.0523
+10             .1019                    2.5883
+ 8             .1285                    3.2640</pre>
+  <center>
+    <img src="q2l2-6.gif" width="566" height="308" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> provides a truncated view of the screen data produced by the program. The test case is a 28.5 MHz quad using wire just slightly larger than #18 AWG. Conveniently, the selected wire size is 0.0001 wavelength in diameter. The remaining entries show the calculated data. The following table parallels the data from the program and from the test model that served as the 0.0001 data point. ("DF" means "design frequency.")</p>
+  <pre>Data                                    Calculated          Modeled
+Wire dia. in WL                         .0001 (input)       .0001 (input)
+Driver circumference in WL              1.0103              1.0106
+Refl. circumference in WL               1.0653              1.0656
+DE-Refl. Space in WL                    0.1557              0.156
+Resonant Feedpoint Z in Ohms            133.4               133.9
+Free Space Gain in dBi                  6.99                6.99
+2:1 VSWR Bandwidth in % of DF           7.8                 8.1
+&gt;20 dB F-B Ratio Bandwidth in % of DF   1.71                1.67
+Rate of Gain Change in dB per 1% of DF  1.24                1.25</pre>There are some cautions to be observed in using the program or its equations. At the frequency extremities of the program, that is, at low HF or middle to upper VHF, certain systematic variations will appear between the calculations and actual models of the antenna. They are best illustrated by reference to the following table. The 28.5 MHz reference frequency corresponds to the program design frequency and was used in the table above.
+  <pre>Frequency      Wire Size      Dia.      Gain      Feed Z    Efficiency
+  MHz            WL           inches    dBi       Ohms         %
+  3.5          0.0001         3.372"    7.12      131.3     98.82
+ 28.5          0.0001         0.414     6.99      133.4     96.69
+144.0          0.0001         0.0082"   6.79      137.8     92.85</pre>
+  <p>The rate of change of material losses in real materials does not occur at the same rate as the change in inter-element coupling. NEC calculates efficiency solely on the basis of material losses, which the table shows to increase with frequency if the wire diameter is held constant as a function of a wavelength. Increased material or resistive losses also appear as increases in the source impedance, not to mention small reductions in the antenna gain. Conversely, well below the design frequency, efficiency increases, gain increases, and the source impedance decreases.</p>
+  <p>Had the program been calibrated for lossless wire, there would have been no difference in the results at any of these frequencies. However, calibrating the program in terms of copper wire provides a more realistic basis for planning. The differences between copper and aluminum will be minimal. It is probably useful to note also that few amateur quads for 80 meters will be constructed from 3.37" diameter wires, and equally few built for 2 meters will use 0.0082" wire (about #32 AWG). Nonetheless, the advice given in Part 1 to use the fattest element diameter possible--or a simulation of a fat wire remains valid.</p>
+  <p>For those using a NEC program with a "model by equation" facility, such as NEC-Win Plus, the equations in the GW Basic program can be entered directly into the model itself.</p>
+  <center>
+    <img src="q2l2-7.gif" width="638" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the equations page for such a model. Columns E, F, and G contain the constants and equations for determining variables A, B, and C. Since each final equation (line 7) produces a value for the driver, reflector, and spacing in wavelengths, line 8 converts these values to physical values using the current dimensional units (inches in the figure). Of course, the values for the driver and reflector are for the total circumference, so the required values for A and B are 1/8 of the line 8 numbers.</p>
+  <p>Although this model has only the dimensional equations entered, there is no reason why one cannot also enter the other equations. The spread sheet is fully functional and has sufficient columns (out of sight to the right) to handle the supplemental calculations. One need only enter the design frequency and the wire size (in current dimensional units) to obtain results for both the model and the supplemental information. (Note that the spreadsheet here does know a LOG from a LN, so the conversion factor has been omitted in column D, line 4.)</p>
+  <p>Of course, one also needs to attend to the frequency or frequencies for the model, as noted in the upper left corner of the figure. In this case, a sweep of 0.01 MHz each side of the design frequency provides sufficient data to determine the resonant frequency and the frequency of peak front-to-back ratio. The radiation pattern can be modified for a full azimuth pattern, if one needs it.</p>
+  <center>
+    <img src="q2l2-8.gif" width="637" height="455" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The model itself appears in dimensional form in <b>Fig. 8</b>. The dimensions correspond precisely to the output from the Basic program, once one moves from feet to inches or back the other way.</p>
+  <p>The model in the figure has been set in order to correspond to our initial design case. However, let's survey a few designs using material that may be more likely at the chosen frequency than the constant 0.0001 wavelength wire we have so far used. In the tables below, C means calculated by the program and M means modeled results. In all cases, the reference models on which the program is based show a front-to-back ratio that is greater than 50 dB. Hence, the Front-to-Back column may be used as an indication of program accuracy, understanding the values change very rapidly near the peak. Hence, values of about 40 dB or so indicate a peak within about 10 kHz of the design frequency.</p>
+  <pre>     Wire Size      Frequency      Gain      Feed Z         F-B Ratio
+     (and log)         MHz         dBi       Ohms            dB
+1.  #12 20-meters
+C    0.0808 (-4.0)  14.175         6.99      133.2          ---
+M    0.0808         14.175         7.05      132.3          41.0
+
+2.  #14 20-meters
+C    0.0641 (-4.1)  14.175         6.95      131.6          ---
+M    0.0641         14.175         7.04      130.3          38.1
+
+3.  #14 40-meters
+C    0.0641 (-4.4)  7.15           6.76      126.2          ---
+M    0.0641         7.15           7.03      121.2          31.1
+
+4.  #14 6-meters
+C    0.0641 (-3.6)  50.5           7.07      138.1          ---
+M    0.0641         50.5           7.04      138.7          47.6
+
+5.  0.5" 2-meters
+C    0.5 (-2.2)     144            7.19      149.3          ---
+M    0.5            144            7.18      150.0          59.6</pre>
+  <p>The limitations noted earlier have appeared in full force. Thin wire models tend to show up to 1 to 1.5% errors in some data, while fat wire models come very close to calculated values. The break point falls at about the wire size where the log of the diameter in wavelengths reaches -4. However, the actual frequencies of peak front-to-back ratio are within 10 to 15 kHz of the calculated value. Thin wire models tend to show more rapid decreases in front-to-back ratio relative to the peak value for smaller changes in frequency. Consequently, the calculated values for antenna dimensions would easily fall within construction variables.</p>
+  <p>Because of the number of variables--especially compared to the single dimensional variable needed for a single quad loop--we cannot expect quite the same precision of result for 2-element quad beams. However, the program can go a long way toward easing the guesswork involved in the construction of these antennas. Given the need for field adjustment and in many cases the likely need to change the resonant frequency to place the SWR curve where we want it, the program should provide more adequate guidance to the 2-element quad builder than almost anything else around.</p>
+  <p>Note: A version of the GW Basic program is available in <a href="../radio.html#HAMCALC">HAMCALC</a>. The following links will take you to a download page where you may download the program as a. <a href="../download/q2le.nwp" download="q2le.nwp"><b>a NEC-Win Plus model file</b></a>, b. <a href="../download/q2l.bas" download="q2l.bas"><b>a GW Basic program</b></a>, or c. <a href="../download/2elqd.vbs" download="2elqd.vbs"><b>a VB script</b></a> generously made available by Randy Frum, AC4FD. Randy notes that the script will run natively on Windows ME and Windows 2000 and above and will run on other Windows operating systems (95, 98 and NT) if the Windows Scripting Host is installed (normally installed with IE 5 and above). Simply run the script from the "Run" command on your main screen. An on-line <a href="https://web.archive.org/web/20060909221156/http://www-mae.engr.ucf.edu/~ssd/ham/quadcalc.html" target="_blank"><b>Java script calculator</b></a> (web.archive.org). is available courtesy of the work of Steven Dick.</p>
+  <p>Before we leave our 2-element optimized quads, let's tackle one more question: can we improve the operating bandwidth of 2-element quads (especially the front-to-back ratio bandwidth) and avoid large, heavy, tubular elements? That will be our task in Part 3.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 12-01-2000, 11-14-2002, 03-24-2003. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for November, 2000. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="quadlist.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40">Go to Quad List</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

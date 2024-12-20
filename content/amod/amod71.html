@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Average Gain Test Revisited</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>71: The Average Gain Test Revisited</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In column 20, we examined the basic parameters of the Average Gain Test (AGT) as a test for model adequacy. This test is built into such commercial implementations of NEC as EZNEC and NEC-Win Plus, and has been adapted to the Antenna Model implementation of MININEC 3.13. However, a number of modelers do not use these programs, but instead use one of the public domain versions of the NEC-2 core. Hence, they must set up their own AGT, a fairly simple but elusive process unless one has some detailed instructions. Let's begin by reviewing some basic information from the earlier column.</p>
+  <p><b>AGT Basics</b></p>
+  <p>Essentially, we only need two numbers to perform the test: the input power and average radiated power. For a lossless antenna, the input power and the average radiated power should be equal in an ideal model. Whatever the gain in one or more favored directions, it will be offset by nulls in other directions. Over the entire sphere of free space, the total amount of radiated power can never exceed the power supplied to the antenna, and if the antenna is lossless, can never be lower than the input power. Hence, the ratio of average radiated power to supplied power should be 1. If the ratio differs by more than a small amount from 1, then the model may be considered suspect.</p>
+  <p>The conditions under which an adequate model will show an Average Power Gain (Gave) of 1 also establishes the conditions for performing the Average Gain test. The model is set in free space. (We shall look at setting the model over perfect ground in a moment.) The wire material must be perfect or lossless. All "real" or resistive parts of loads, networks, and transmission lines must also be set to zero.</p>
+  <p>For test purposes, the model is run by taking a regular sample of the radiation pattern every few degrees, and the results are averaged. (Note: for these tests, the sample is taken as a power and not as a power ratio, although one can be easily converted to the other.) The result is a fair reading of the average radiated power. To calculate the average power gain, we simply apply the following simple equation:</p>
+  <center>
+    <img src="amod71e1.gif" width="164" height="69">
+  </center>
+  <p>where Prad is the radiated power as averaged and Pin is the input power as calculated from source information.</p>
+  <p>What about k? For a free space model, k = 1. However, if the test lossless model is placed over perfect ground, then k = 2.</p>
+  <p>The results will not vary by much if the only loss in the antenna is wire loss for high conductivity materials of reasonably large diameters. However, for the most reliable figure of merit, the test is best run on a wholly lossless version of the model being tested.</p>
+  <p>The average gain figure that results from the test may be higher or lower than 1.0. One proposed gradation of model merit uses the following dividing points:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Gave Value Range                   Significance
+0.95 - 1.05                   Model is considered to have passed the test
+                              and is likely to be highly accurate.
+0.90 - 0.95 and 1.05 - 1.10   Model is quite usable for most purposes.
+0.80 - 0.90 and 1.10 - 1.20   Model may be useful, but adequacy can be
+                              improved.
+&lt;0.80 and &gt;1.20               Model is subject to question and should be
+                              refined.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The user may develop more strict limits for the adequacy of a model based on the specific tasks within which the model plays a role.</p>
+  <p>Most models that deviate in the test from an average gain of 1 show an inverse correlation between errors in gain and in the resistive component of the source impedance. As the gain climbs, the source impedance decreases, and vice versa. For limited purposes, the average gain value derived from the test can be used to correct both figures, using the following equations:</p>
+  <center>
+    <img src="amod71e2.gif" width="502" height="63">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="amod71e3.gif" width="380" height="63">
+  </center>
+  <p>Obviously, an average gain values that is greater than 1 will increase the input resistance and decrease the gain. Values less than 1 will do the opposite. One may simplify the gain correction by converting the AGT value into an equivalent value in dB:</p>
+  <center>
+    <img src="amod71e4.gif" width="237" height="37">
+  </center>
+  <p>If the resulting value in dB is positive, it is an amount by which the model reports are high and must be subtracted from the reports. If the converted gain value in dB is negative, it is the amount by which the reports are low and its absolute value must be added to the reports.</p>
+  <p>The list of suggested categories of adequacy of a model place the most ideal models in the AGT range from 0.95 to 1.05. An AGT value of 1.05 yields a conversion value of 0.21 dB, while a value of 0.95 converts to -0.22 dB. For some purposes, these differentials may be well within task limits, while for others, they may fall outside task limits. Hence, whether we use raw NEC report data or corrected values--even for quite adequate models--remains a user responsibility based upon the nature of the modeling task at hand.</p>
+  <p>The key limitations in the use of the correctives are two. First, if the AGT value is very high or very low, then the corrections are unlikely to give more than a suggestion of the corrected gain. The closer to a perfect value, the more likely the corrections will yield values that are reliable relative to a physical implementation of the modeled antenna.</p>
+  <p>The utility of the AGT test in warning of on inadequate model are obvious for large departures from the ideal values of 1.0 for a free-space run and 2.0 for a monopole array set over perfect ground. Large departures from the ideal call for a careful inspection of both the model and the many published limitations of NEC in order to detect and correct errors in the model. There are many conditions leading to error which the core will not call attention to by stopping its run. As well, some of these conditions may not be detected by the error-detection systems in commercial implementations of NEC. For example, closely spaced wires that do not inter-penetrate may have mis-aligned segments that will create errors in the NEC results. Ultimately, it is up to the modeler (and not the software) to develop the most reliable possible model and to establish that reliability.</p>
+  <p>Second, the corrective to the source impedance is reliable only if the reactance is very low. In other words, the antenna must be at or relatively close to resonance if the AGT value is to yield a reasonably accurate value for the source resistance. When reactance is high at the source segment, the source resistance correction may be suggestive, but is inadequate to be treated as reliable.</p>
+  <p>When AGT values are close to ideal, but depart by more than a very few percent from the ideal, individual models are often presented as yielding actual values of gain and impedance. In a perfect world, the reports should be adjusted by reference to the AGT, but usually, the differences are too small to make a significant difference for either analysis or for translating a model design into a physical reality. Unmodeled "lumps and bumps" in the physical antenna normally swamp such small variations between corrected and uncorrected model results.</p>
+  <p>However, reference to AGT values may be important in several types of modeling enterprises. For example, when modeling a series of related antennas for certain comparisons, it is wise to determine the AGT value of each model to ascertain that trends in gain and impedance are accurate, with no anomalous values that result from variations in the AGT values for the sequence of models. As a second type of example, I recently had occasion to compare the same model(s) using NEC and using MININEC. The initial results, using raw report data, produced gains over a half-dB apart, with similar differences in the source impedance. However, for the models in question, NEC AGT values were systematically high (averaging about 1.06), while MININEC results were equally systematically low (averaging about 0.94). When I compared corrected gain and source impedance values, they fell within 1% of each other.</p>
+  <p><b>Setting Up an Average Gain Test</b></p>
+  <p>Obtaining an AGT value is matter of reviewing the existing model and then setting up an RP 0 (Request for Pattern) input as a substitute for whatever other output request might be made. Suppose that we start with the following simple dipole model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Simple dipole antenna in Free Space
+CM Optimized for resonance at 300 MHz
+CE
+GW 1 9 0 -.2418 0 0 .2418 0 .0001
+GS 0 0 1
+GE 0 -1 0
+EX 0 1 5 0 1 0
+FR 0 1 0 0 300 1
+RP 0 181 1 1000 -90 0 1 1
+RP 0 1 360 1000 90 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The model has already eliminated all resistive loading. Indeed, there are no load (LD) entries at all. As well, the model is in free space. However, it still retains its requests for E-plane and H-plane patterns (AZ/phi and EL/theta patterns in modeling terms). It is not necessary to remove these lines or other properly structured output requests from a model to obtain an AGT value. However, for clarity, we shall substitute the requisite RP 0 entry for the ones in the initial simple model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Simple dipole antenna in Free Space
+CM Optimized for resonance at 300 MHz
+CE
+GW 1 9 0 -.2418 0 0 .2418 0 .0001
+GS 0 0 1
+GE 0 -1 0
+EX 0 1 5 0 1 0
+FR 0 1 0 0 300 1
+RP 0 181 361 1002 0 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Now let's extract the RP0 line and explore its necessary and optional properties.</p>
+  <pre>RP   0    181      361    1002   0      0      1      1
+    Type  # theta  # phi  XNDA   theta  phi    theta  phi
+          angles   angles see    start  start  incr.  incr.
+                          text</pre>
+  <p>The XNDA entry differs from the most common far-field pattern request only in the last or "A" integer. (In an RP request, the first 4 numeric entries are integers, and the remaining are floating decimals. XNDA is therefore not a single number, but a set of 4 integer entries in one.) A "0" indicates no request for averaging, while a "1" or a "2" requests averaging. The difference between "1" and "2" is that the latter suppresses printing to the output file of the individual values making up the total field defined by the phi and theta entries, while a "1" yields a sizable table of values. Which you choose depends upon the need for those values.</p>
+  <p>There are two dimensions to the theta and phi entries: their formulation and the increment used within that formulation. Let's look at them individually, beginning with the number of angles.</p>
+  <center>
+    <img src="amod71-1.gif" width="473" height="409" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows what we wish to obtain from each azimuth increment: an "orange" slice that samples each increment for theta from the zenith to its polar opposite. The number of theta angles will thus form a semicircle, and each new phi angle increment will produce another "orange" slice until we have sampled the entire free-space sphere.</p>
+  <p>For the sample line, we have chosen 1-degree increments for our fair sample. We might have chosen 91 theta angles and 181 phi angles, using a 2-degree increment in the last floating-decimal positions. Equally, we might have selected 0.5 as the angular increment, resulting in 361 theta angles and 721 phi angles. The object is always to create a complete sphere without repetition of angles, a problem that will cause erroneous results by counting some samples more than once. You may compare the results of the suggested line with another that simply doubles the theta angles from 181 to 361 to see what error might emerge. (The extra "1" is to ensure that we include both points at the limits of the slice.)</p>
+  <p>For a hemisphere, used when evaluating monopole arrays over perfect ground, use a theta value of half that required for a full sphere. Be sure to include the extra point, for example, 91 instead of 90) to include both end points. By starting with theta = zero, you assure that the hemisphere will just reach the perfect ground surface.</p>
+  <p>In fact, the selection of sampling increments (and the consequent number of sampled angles) does make a small difference in the AGT value--so small as to be numerically but not operationally interesting. For antennas with highly varied pattern shapes, very narrow beamwidths, many secondary lobes, etc., changing the sampling increment may make a much bigger difference than it does for our simple dipole with its "figure-8" pattern.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+             AGT Values as a Function of the Number of Samples
+                          Test Dipole:  9 Segments
+
+     Angular Increment        Reported AGT        Common Form
+     2 Degree (Phi/Theta)     9.95720E-01         0.9957
+     1                        9.95696E-01         0.9957
+     0.5                      9.95690E-01         0.9957
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In general, the smallest increment that the modeler can use yields the most accurate figure for the AGT and for any correctives used in the analysis of multiple models. However, for simple geometric shapes, a 1 or 2 degree angle is quite adequate in virtually all cases. In the days of slow PCs, one often heard the advice to use the largest angle applicable to the beamwidth of the antenna. As well, those slower days suggested making use of antenna pattern symmetry to reduce number of sampling points and the run time for an average gain test pattern, especially when recording the sampling point values. However, since the amount of time required for an AGT test of the simple dipole by the current generation of PCs is under 30 seconds on an "old" 400-MHz P-2 machine for the smallest increment in the table above, there is little reason not to use small angles for all antennas. The more complex the antenna geometry, the smaller will be the percentage of run time devoted to the AGT pattern, with or without a print- to-file of the sampled positions.</p>
+  <p>As a reference, here is the sort of report lines that you will receive from a NEC-4 output file (reduced to only the AGT lines) for an 11-segment dipole.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+AVERAGE POWER GAIN= 9.97119E-01
+                     SOLID ANGLE USED IN AVERAGING=( 4.0000)*PI STERADIANS.
+
+POWER RADIATED ASSUMING RADIATION INTO 4*PI STERADIANS = 6.91679E-03 WATTS
+
+
+                         - - - POWER BUDGET - - -
+
+                     INPUT POWER   = 6.93677E-03 WATTS
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Make sure that the solid angle used in the averaging is equal or very close to 2*pi steradians for a hemisphere over perfect ground or equal or very close to 4*pi steradians for a full free-space sphere. (Including both limits is essential in obtaining a true 2.0 or 4.0 value for the solid angle.) NEC-2 does not yield the radiated power report entry. However, I have listed the Power Budget Input Power line, which is actually a rounded (by 1 place) version of the power reported by the Antenna Input Parameters power entry. Multiplying the Average Power Gain times the Input Power will provide the Power Radiated value.</p>
+  <p>There is one more set of numbers that is interesting before we leave our over-kill of AGT. Our initial dipole was modeled using 9 segments. Let's see what happens as we increase the number of segments, each time moving the source position to center it.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                 AGT Values as a Function of Segmentation
+                     Test Dipole: 1-Degree Increments
+
+     Number of Segments       Reported AGT        Common Form
+       9                      9.95696E-01         0.9957
+      11                      9.97119E-01         0.9971
+      15                      9.98451E-01         0.9985
+      21                      9.99212E-01         0.9992
+      31                      9.99640E-01         0.9996
+      51                      9.99871E-01         0.9999
+      71                      9.99937E-01         0.9999
+     101                      9.99973E-01         1.0000
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>For some tasks, the differences will make no difference. For others, up to a point, increased segmentation may be advisable when measured against the parameters of a modeling task. However, note the decrease in the rate of increasing AGT value toward 1.0 with the higher levels of segmentation. Hence, even for the most exacting modeling task, there will be a cut-off, beyond which increasing the number of segments--even on this model with a very thin wire (radius = 0.1 mm) relative to total length (about 0.484 m)--will yield nothing useful.</p>
+  <p>In this regard, remember that there is a convergence test that is also useful in evaluating the adequacy of a model. With NEC, there is a region of segmentation density that yields the least change in output report values as we increase and decrease the density by small increments. For most purposes, this region represents the converged model. In the end, balancing the two tests provides the best measure of an adequate model.</p>
+  <p>However, there are two limitations in this generalization. First, not all models that yield close-to-ideal AGT numbers will converge, and not all models that converge will yield close-to-ideal AGT values. Second, there are models that will neither converge nor yield a satisfactory AGT value. Both tests represent necessary but not sufficient conditions of model adequacy. Hence, the final responsibility for producing an adequate model within the much-published limitations of the core software remains squarely on the shoulders of the modeler.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

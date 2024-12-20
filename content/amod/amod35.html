@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes on Using AZ-EL Plots</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>35. Notes on Using AZ-EL Plots Effectively</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The most common use for azimuth (AZ) and elevation (EL) plots might be summed up in the following example:</p>
+  <p>Suppose that we have a 3-element Yagi designed for 28.5 MHz composed of 1/2" diameter elements placed at a height of 35' above average ground. The following table describes the model of this antenna.</p>
+  <pre>3 el Yagi 1/2" al elements                   6/12/00     8:55:55 AM
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 28.5 MHz.
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.          End 1     Coord. (ft)              End 2     Coord. (ft)     Dia (in)  Segs
+     Conn.      X       Y       Z       Conn.      X       Y       Z
+1            -8.595,      0,     35              8.595,      0,     35       0.5    21
+2            -8.207,    5.2,     35              8.207,    5.2,     35       0.5    21
+3            -7.722, 11.212,     35              7.722, 11.212,     35       0.5    21
+
+Total Segments:  63
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       2        50.00      50.00    11       1           0         V</pre>
+  <p>The 3-element Yagi would look, in outline, like <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod35-1.gif" width="400" height="332" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Most of us have grown accustomed--perhaps too much so--to examining the AZ-EL plots for only a small amount of information: maximum gain, front-to-back ratio, and elevation angle of maximum radiation. Since we know that the maximum forward gain of the antenna is (literally) straight forward, we can begin with an elevation plot by setting the azimuth angle for it along the axis we chose as the front-back direction. In this case, let's assume that the element stretch from end-to-end along the X-axis, which makes the Y-axis the standard beam direction. So we shall set the AZ heading to 90 degrees. The resulting EL pattern looks like <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod35-2.gif" width="548" height="397" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From <b>Fig. 2</b>, we pick up the maximum gain figure (13.35 dBi) and the take-off (TO) angle (elevation angle of maximum radiation): 14 degrees. The next step is to call for an AZ plot, setting the elevation angle to 14 degrees. The result looks like <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod35-3.gif" width="523" height="468" border="2" vspace="5" hspace="9">
+  </center>
+  <p>An examination of <b>Fig. 3</b> yields a confirmation of the maximum gain as well as the front- to-back ratio: 25.05 dB in 180-degree F-B terms.</p>
+  <p>Very often, we neglect much of the information that is also included on these plots. For example, the horizontal beamwidth to the -3 dB or half-power points is 63.4 degrees. This data gives us some idea of the coverage of the antenna without having to change beam heading. It should also inform us of why it is a fairly futile exercise to try to orient a beam such that the reference heading of our rotator is correct to under 1 degree.</p>
+  <p>The EL plot informs us that the vertical beamwidth to the -3 dB points is 14.4 degrees. Although the horizontal beamwidth was composed of symmetrical pattern portions left and right of the centerline, we should never assume that the same is true of a vertical beamwidth value. In this instance, the symmetry around the centerline is not severely distorted. The upper -3 dB point is 6.6 degrees above the TO angle and 7.8 degrees below the TO angle. Our coverage to the half-power points ranges from 6.6 to 21 degrees, covering most of the skip angles we are likely to encounter on 10 meters.</p>
+  <p>Also notable in the elevation pattern is the secondary lobe at a higher angle. The plot informs us that its angle of maximum radiation is 45 degrees and that it is more than 3 dB weaker than the main lobe.</p>
+  <p>How we use this information to evaluate the potential performance of the antenna involves a number of factors that go beyond what the model tells us. First, we have to determine the weight to give each element of the information relative to the purpose for which we might install this antenna. Second, we must factor in information that may alter the reliability of the modeled numbers relative to the actual site situation of the antenna itself. For example, terrain variations may require special treatment outside the realm of NEC modeling to determine more precise expectations of the antenna when pointed in various directions.</p>
+  <p>Having said this much about AZ and EL plots, we tend to stop our investigation. In doing so, we often deny ourselves useful data that might be supplied by a few supplementary plots. Here are a couple of examples--using the same initial model--of what we might learn.</p>
+  <p><b>Case 1--an alternative direction</b>: Suppose that we have the 3-element Yagi set on a certain heading, perhaps the primary direction for communications. Now further suppose that there is a secondary heading about 20 degrees to the right of the primary bearing--with the new heading indicating a station or set of stations with which we wish to communicate.</p>
+  <p>One solution to this situation is to move the beam heading by 20 degrees. However, one might wonder whether this solution is necessary. The ultimate answer to the question might well involve the type of operation involved. Casual contact leaves the operator plenty of time to change the antenna direction. However, there are contest and similar operational contexts in which every movement that can be classified as unnecessary is eliminated as part of the operational strategy. Hence, for some contexts, the decision to move or not to move the antenna heading may acquire some significance.</p>
+  <p>One important piece of data that might enter into the decision process is how much signal strength we might lose by not moving the antenna. Alternatively, we can ask how much signal strength we would have in the secondary direction if we leave the heading in the primary direction. The answer is as simple as requesting a new elevation plot using a heading that is in the secondary direction.</p>
+  <p>For such plots, it is useful to set the outer ring of the plot at the maximum gain obtained from our initial elevation plot--in this instance, 13.35 dBi. The resulting elevation plot will then show graphically as well as numerically the difference in signal strength. <b>Fig. 4</b> shows the new plot.</p>
+  <center>
+    <img src="amod35-4.gif" width="525" height="401" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From the EL plot, we can discover that the gain in the secondary direction is 12.17 dBi, down 1.18 dB from the primary direction. Although we might have estimated these values from the initial azimuth plot, the ability to request alternative EL plots for any AZ bearing can provide a table of values that can contribute either to operational planning or to an evaluation of the potential antenna performance.</p>
+  <p><b>Case 2--an alternative elevation angle</b>: The TO angle or elevation angle of maximum radiation is not the only elevation angle that is important. An adjunct to many types of operation are programs and other sources that predict propagation. The predictions may also include estimated skip angles for different frequencies. These predictions in the short term may open the question of just how effective our subject antenna might be at its present height. Over a longer term, we might question whether or not it would be useful to change the antenna height to obtain better results.</p>
+  <p>Suppose, then, that we are interested in a skip angle of 10 degrees--4 degrees lower than the TO angle that we initially obtained from our general analysis of the 3-element 10-meter Yagi. We can simply set the elevation angle for an AZ plot to the 10-degree mark. Once more, it is useful to set the outer ring of the AZ plot to the maximum gain level from our initial analysis--13.35 dBi. Then, the new AZ plot will graphically as well as numerically show the difference in signal strength. The result appears in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod35-5.gif" width="522" height="462" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From <b>Fig. 5</b>, we learn that the forward gain at a 10-degree angle is 12.67 dBi, about 0.68 dB less than at the TO angle. We may also note in passing that the front-to-back ratio changes by only an insignificant amount. Just how we factor this information into the overall operational and construction planning will depend on all of the additional factors we have so far noted. Since we can request AZ plots for any elevation angle, we can develop detailed information across a spectrum of possible skip angles. Of course, all such data must be adjusted for any terrain affecting signal propagation to the antenna and its site.</p>
+  <p>These two cases are only the beginning of the kind of information that we can gather if it is useful to us. For example, if we propose to raise the height of the antenna--anywhere from the present height of 35' to an upward limit of 200'--we may wish to develop detailed data about beamwidths and angles. The higher we raise the antenna in terms of wavelengths above ground, the more elevation lobes we shall encounter. Even though the lowest lobe is usually the main lobe of interest, we must also note that each lobe will have a narrower beamwidth as we increase the antenna height. This factor should be added into the data mix we obtain relative to potential skip angle we may encounter in operation. If the antenna surpasses certain heights (in terms of wavelengths above ground), we may discover that the null between the two lowest lobes potentially deprives us of possible communications paths on some occasions.</p>
+  <p>For some of the necessary planning data, tables of values may suffice. In other instances, overlaying elevation plots can provide a graphic portrayal of both advantages and disadvantages.</p>
+  <p>The cases we have been examining were based upon simple variations upon an initial determination of the antenna's maximum gain and the elevation angle at which it occurs. For many types of antennas whose general properties at a given frequency are well established, this procedure works well and leads us quickly to the desired supplementary information. However, not all antenna properties are well known in advance for some frequencies of operation.</p>
+  <center>
+    <img src="amod35-6.gif" width="435" height="275" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As a case in point, consider the antenna in <b>Fig. 6</b>. It is a 40-meter off-center-fed antenna, with the transmission line set at approximately the 300-Ohm position on 7.15 MHz. The antenna is of #14 wire and models a transmission line of about 410 Ohms, that is, 1" wire separation. The line is 35' long, with the antenna positioned 70' above average ground.</p>
+  <p>The question we might pose is what the maximum gain might be for the antenna and at what TO angle, if we operate the antenna on 28.5 MHz. For our exercise, we shall present the antenna along the X-axis so that in the plots to follow, it would appear as a line from left to right across the center of the azimuth plots.</p>
+  <p>We shall quickly discover that the antenna pattern is neither broadside to the wire nor off the wire ends at the frequency of operation. In order to answer our questions, we shall have to develop a procedure that allows us to "creep up" on the values for maximum gain and TO angle.</p>
+  <p>In many instances, experience with similar antennas may let us start the process fairly close to the final values. However, for illustrative purposes, let's choose an arbitrary beginning point. We shall take an azimuth pattern at 14 degrees elevation and see where it leads. The pattern appears in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod35-7.gif" width="593" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From the azimuth pattern we obtain 2 critical pieces of data. For reference, we shall record the gain (a low value of -0.83 dBi). As well, we shall record the azimuth angle of maximum radiation: 177 degrees.</p>
+  <p>The next step is to request an elevation pattern at the azimuth angle of 177 degrees. From this elevation pattern, we obtain a new elevation angle of maximum radiation, 141 degrees. So we request an AZ pattern, using the new EL angle value. We continue the process until the AZ and EL patterns provide the same gain value and until the EL and AZ angle coincide on the respective plots. For this exercise, the following table summarizes the steps that led to final values.</p>
+  <pre>Preset            Preset      Current           Max. Gain         Angle of
+Angle Type        Angle       Pattern Type      dBi               Max. Gain
+  EL                14          AZ              - 0.83             177
+  AZ               177          EL                6.20             141 (39)
+  EL                39          AZ                6.60              19
+  AZ                19          EL                7.11              22
+  EL                22          AZ                9.02              34
+  AZ                34          EL                9.76               7
+  EL                 7          AZ                9.90              37
+  AZ                37          EL                9.90               7</pre>
+  <p>Note first that the last two steps in the table replicate the maximum gain. As well, each plot uses the other's angle of maximum radiation as the preset angle. This is generally the sign that one has arrived at the correct gain and angle values. There are some patterns so complex that it may be necessary to sample other regions of the overall plot fields, but these tend to be rare. Ordinarily, the number and placement of lobes will be a guide to suggesting further exploration.</p>
+  <center>
+    <img src="amod35-8.gif" width="615" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> provides a second factor to note. The AZ pattern clearly shows a null in the final pattern just where the initial pattern shows a lobe maximum. In the exploration of complex structures, it is never wise to assume that an AZ pattern retains a particular shape as we change the elevation angle. Although the antenna we used in the exercise seemed to be simple in structure, it was actually fairly complex. The horizontal portion consisted of a 2 wavelength collinear element. Since the parallel feedline does not have equal currents at its terminals, the line is unbalanced and makes a net contribution to the overall radiation pattern. The result is a complex radiation pattern whose elevation plots change with every change of azimuth bearing.</p>
+  <center>
+    <img src="amod35-9.gif" width="524" height="401" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Part of the pattern complexity appears in <b>Fig. 9</b>. We should note that the AZ heading for this plot is 37 degrees, that is, an angle that is neither along the plane of the wire nor broadside to it. In any data presentation, it is usually useful to mention this fact, since viewers tend to make erroneous assumptions about the azimuth bearings of elevation plots unless the correct bearing is called to their attention. It is for this very reason that I have moved the data from outside the plot region directly into the plot area.</p>
+  <p>In addition, we may note that the special elevation angle that was counted on a 0-180 degree scale. When counted above the horizon, the angle of 141 degrees translated to 39 degrees. Some programs restrict elevation angles to the range of 0 through 90 degrees. Had we used the 141-degree angle, the maximum gain heading would have appeared on the opposite side of the plot. That position might well have led to wrong conclusions about the actual direction of maximum radiation.</p>
+  <p>One technique for sorting out the various lobes, nulls, and oddities (if any) of the overall radiation pattern of a given antenna is to use a 3-D plot. 3-dimensional plots are commonly found in commercial implementations of NEC (and MININEC). They generally use a larger step size between azimuth and elevation pattern readings than might be used in 2-dimensional AZ and EL in order to speed the execution of the plot. However, they can be valuable adjuncts to the detailed information provided by standard AZ and EL plots.</p>
+  <center>
+    <img src="amod35-10.gif" width="550" height="447" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> provides an oblique view of the OCF that we have been exploring. Although the wider step size changes smooth curves into sharp angles, we can clearly see the exceptionally complex structure of the lobes and nulls at most elevation and azimuth angles. The pattern is oriented to place the strongest lobes, as revealed by the AZ and EL plots in <b>Fig. 8</b> and <b>Fig. 9</b>, in the foreground.. (Hence, the axis letters appear as mirror images.)</p>
+  <center>
+    <img src="amod35-11.gif" width="566" height="371" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> presents a 3-D view of the patterns as viewed down the antenna wire from its end. This view is useful to establish that there are no broadside patterns stronger than the one we identified as the lobe of maximum gain. As well, we can see that there are no significant lobes below the angle of maximum radiation.</p>
+  <center>
+    <img src="amod35-12.gif" width="548" height="342" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 12</b> presents a 3-D view of the pattern with the wire running directly from left to right. This view gives us a sense of the strength of the pattern off each of the antenna ends, with the long side of the antenna obviously yielding the strongest pattern. The view also confirms that there are no lobes at upper levels stronger than the one identified as the lobe of maximum radiation.</p>
+  <p>Some programs enable the user to specify a 2-D pattern from within the context of the 3-D pattern. To use this provision, one simply specifies graphically the "slice" desired for the 2-D view. In many cases, using both 3-D and 2-D patterns in conjunction can resolve more quickly the problem we set for ourselves of identifying the lobe of maximum radiation strength.</p>
+  <p>With some antennas--for example, VHF antennas a large heights above ground, the multiplicity of elevation lobes may elude 3-D analysis and yield a false picture of the radiation pattern structure. A pattern, whether 2-D or 3-D, simply connects the dots between readings. 5 degrees is barely sufficient for lobe identification at the frequency and height of the present antenna. For 2-D patterns, 1 degree steps between readings generally suffices for most HF antennas at any reasonable height and for VHF antennas at lower heights. Above about 5 wl in height, the use of a 0.1-degree step is advisable in 2-D plots in order to ensure that you capture all elevation lobes.</p>
+  <p>The cases we have examined in no way exhaust the potentials for AZ-EL plots to provide the modeler with useful information. However, they hopefully provide a start toward making new and productive use of this facility for those whose work has not yet gone beyond the "standard" sorts of patterns with which we began.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

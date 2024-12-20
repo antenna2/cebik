@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, HF Upper, VHF / UHF">
+  <title>Automating the Design of 3-Element Monoband Quad Beams Part 1</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Automating the Design of 3-Element Monoband Quad Beams<br>
+    Part 1: A Wide-Band Model</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The exercise of automating the design of 2-element quads raised the question of whether a similar technique might be applied to 3-element quads. One answer is in this set of notes.</p>
+  <p>For all quads, from 1 to <i>n</i> elements, performance depends in large measure upon the diameter of the loop wire as measured in terms of wavelength. Indeed, performance varies with the common logarithm of the wire diameter.</p>
+  <p>When we automated the design of 2-element quads, we chose as the primary parameter the spacing between elements such that it yielded the highest front-to-back ratio when the array was resonant. The design equations for 3-element quads retained the same feature, using the same progression of spacings between the reflector and the driven element. This selected spacing not only yields the highest front-to-back ratio, but as well it tends to yield the widest operating bandwidth. As we noted in the discussion of 2-element quads, quad array bandwidth is less a matter of the 2:1 SWR bandwidth and more a matter of the &gt;20 dB front-to-back ratio bandwidth.</p>
+  <p>The director was sized and spaced to yield a good gain with a resonant feedpoint impedance between 70 and 80 Ohms. In general, this procedure does not yield the very highest possible gain or the shortest boom length possible. However, it does produce a very good gain (as judged in quad terms) with the widest possible operating bandwidth. In a general way, the required driver-to-director spacing is nearly double that of the reflector-to-driver spacing. <b>Fig. 1</b> illustrates the relationship.</p>
+  <center>
+    <img src="q3le-1.gif" width="541" height="479" border="2" vspace="5" hspace="9">
+  </center>
+  <p>It is certainly possible to emphasize one parameter over another and achieve a different design from the one used in this exercise. In Part 2, we shall examine a higher-gain model. However, the compromise of gain and operating bandwidth in the version under study here yields a very workable 3-element quad design with boom lengths of about 0.4 wavelengths.</p>
+  <p>The procedures for developing the design algorithms are the same as for the 2-element quads. I optimized designs in the 10 meter band using wires between 0.0000316 wl and 0.01 wl. I then subjected the resulting curves to regression analysis to produce a series of equations that can be placed into a modeling program with model-by-equation facilities or into a utility program for simple calculation of dimensions and basic operating data. As I have noted in connection with simpler quad designs, regression equations do not have theoretic significance in and of themselves, but they do yield outputs that model as resonant quad arrays for any wire size within the set limits and for any HF or VHF frequency. As with the 2-element equations, the gain figures tend to be higher than the baseline at lower HF frequencies and lower than the baseline at VHF frequencies, since everything has been calibrated at 10 meters for copper wire elements.</p>
+  <p>The following GW Basic utility program requires only the entry of the wire size and the design frequency to set the calculations in motion. Since direct entry of AWG wire sizes is not included, the following table makes a good refresher:</p>
+  <pre>AWG Size          Dia. Inches             Dia. mm
+18                .0403                   1.0236
+16                .0508                   1.2903
+14                .0641                   1.6281
+12                .0808                   2.0523
+10                .1019                   2.5883
+ 8                .1285                   3.2640</pre>
+  <p>Besides the usual dimensional outputs, the program will also display the wire diameter as a function of a wavelength. The performance data includes the approximate gain at the design frequency, the feedpoint impedance, the 2:1 SWR bandwidth as a percentage of the design frequency, the &gt;20 dB front-to-back bandwidth as a percentage of the design frequency, and the rate of change of gain over a span of 1% of the design frequency. Remember that the line with the "LOG" entry is, for GW Basic, a natural log and requires a correction factor to create a common log. If you translate the program to another medium, you can drop the conversion factor if the medium recognizes common logs.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10 CLS:PRINT "Program to calculate the dimensions of a resonant square 3-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 L=.4342945*LOG(D*10^5):LL=L^2:LM=LL*.0128:LN=LM+1.0413:D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 THEN 160 ELSE 170
+160 print "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 IF D1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=.00064:BD=.01044148148#:CD=.06484444444#:DD=.1886626455#:ED=1.232080635#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED
+210 AR=.0009333333333#:BR=.01915555556#:CR=.13983333333#:DR=.4587492063#:ER=1.64042381#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER
+230 AI=-.0012#:BI=-.0209037037#:CI=-.13021111111#:DI=-.3498137566#:EI=.5941126984#
+240 IR=(AI*(D1^4))+(BI*(D1^3))+(CI*(D1^2))+(DI*D1)+EI
+250 AS=-.0033#:BS=-.03927777778#:CS=-.1724583333#:DS=-.3239603175#:ES=-.04951547619#
+260 SP=(AS*(D1^4))+(BS*(D1^3))+(CS*(D1^2))+(DS*D1)+ES
+270 AP=-.004866666667#:BP=-.06262962963#:CP=-.29347222222#:DP=-.6174457672#:EP=-.2289269841#
+280 IP=(AP*(D1^4))+(BP*(D1^3))+(CP*(D1^2))+(DP*D1)+EP
+290 AZ=-2.227066667#:BZ=-26.75247407#:CZ=-115.9142556#:DZ=-217.8183323#:EZ=-79.59203175#
+300 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+310 AG=-.07#:BG=-.7877777778#:CG=-3.350833333#:DG=-6.143888889#:EG=5.104166667#
+320 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+330 AW=-.05847333333#:BW=-.5028392593#:CW=-.4586494444#:DW=6.080227037#:EW=17.61091389#
+340 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+350 AF=.11695666667#:BF=1.717985556#:CF=9.6510925#:DF=25.23848992#:EF=27.78167988#
+360 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+370 AN=-.04666666667#:BN=-.5414814815#:CN=-2.302777778#:DN=-4.364074074#:EN=-3.092777778#
+380 DG=(AN*(D1^4))+(BN*(D1^3))+(CN*(D1^2))+(DN*D1)+EN
+390 WL=299.7925/F:PRINT "Wavelength in Meters =";WL;"    ";
+400 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+410 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+420 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+430 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+440 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+450 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+460 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+470 PRINT "Director Side =";(IR/4);" WL or";(IR/4)*WF;"Feet or";(IR/4)*WL;"Meters"
+480 PRINT "Director Circumference =";IR;" WL or";IR*WF;"Feet or";IR*WL;"Meters"
+490 PRINT "Director-Driver Space =";IP;" WL or";IP*WF;"Feet or";IP*WL;"Meters"
+500 PRINT "Approx. Feedpoint Impedance =";ZR;"Ohms   ";
+510 PRINT "Free-Space Gain =";GN;"dBi"
+520 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+530 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+540 PRINT "Approximate Rate of Gain Change =";DG;"dB per 1% of Design Frequency"
+550 INPUT "Another Value = 1, Stop = 2: ";P
+560 IF P=1 THEN 10 ELSE 570
+570 END
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p><b>Wire size and 3-Element Quad Performance</b></p>
+  <p>The effects of wire size on gain are as vivid for a 3-element quad as for a 2-element quad, as shown in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="q3le-2.gif" width="645" height="504" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In this figure, wire size is listed in wavelengths, using values that translate into a linear progression of the logarithms of the wire sizes. There is well over a dB difference in the gain of arrays using the thinnest wire size and arrays using the fattest wire size. Moreover, the increase in gain over the corresponding 2-element quad also increases with wire size. The thinnest wire size 3-element quad shows a 1.3 dB improvement in gain over a 2-element quad using the same wire, whereas the fattest wire 3-element quad shows a gain improvement of nearly 2 dB over its corresponding 2-element array.</p>
+  <center>
+    <img src="q3le-3.gif" width="647" height="501" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the change of maximum front-to-back ratio with increasing wire size. Theoretically, the curve should be smooth and almost linear across the scale. Since the checkpoint models were hand optimized, allowing the maximum front-to-back ratio to occur as little as 10-15 kHz from the design frequency yields the flat portion of the curve. However, in practice, this slightly less than optimal design curve makes no practical difference, since constructing a quad so that its front-to-back ratio maximum is precisely at the design frequency is more hope than reality. Nevertheless, the increase of both gain and front-to-back ratio with wire diameter demonstrates the importance that wire size has in effecting maximum mutual coupling between quad elements. Thin wire quads of the sort we generally construct at HF with #14 or #12 wire simply are not capable of achieving all of the performance that a quad can provide.</p>
+  <center>
+    <img src="q3le-4.gif" width="646" height="503" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The feedpoint impedances as a function of wire size appear in <b>Fig. 4</b>. Here, the curve is very real and not a function of optimizing variance. With the thinnest wire, the gain peak and the front-to-back ratio peak are very close together, yielding less than a peak feedpoint impedance value. As the wire size increases, the gain peak occurs well below the design frequency so that the front-to-back maximum value dominates the production of the feedpoint impedance.</p>
+  <center>
+    <img src="q3le-5.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the circumference of each of the 3 elements in wavelengths. As with the 2-element quads, the reflector size increases more rapidly than the driver size. However, the required reflector circumference is shorter in the 3-element quad than in the 2-element quad for any given wire size.</p>
+  <p>Interestingly, the director circumference does not follow the pattern for the other two elements. As the wire size increases, the required director size decreases. If we were to normalize the driver circumference so that it graphs as a straight line across the page, the director line would move down at almost the same rate as the reflector line moves up.</p>
+  <center>
+    <img src="q3le-6.gif" width="645" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The spacing graphic, in <b>Fig. 6</b>, gives some precision to the earlier remark that the driver-to-director spacing is about twice the reflector to driver spacing. In fact, the spacing from the driver to the reflector increases with wire diameter--between about 0.14 and 0.17 wl for the span of wire sizes included in the exercise. In contrast, the required director-to-driver spacing decreases with increases in wire size--from about 0.32 wl for the smallest wire to about 0.25 wl for the fattest wire.</p>
+  <p><b>Sample Frequency Sweeps</b></p>
+  <p>The full story of what happens as we change wire sizes becomes much more evident if we perform some frequency sweeps. So I designed quads using three wire sizes: 0.0131" (near to #28 AWG), 0.131" (near to #8 AWG), and 1.31". The design frequency was 28.5 MHz, and the wire sizes correspond to 0.0000316, 0.000316, and 0.00316 wl diameters. The frequency sweep used 0.1 MHz intervals from 28 to 29 MHz.</p>
+  <center>
+    <img src="q3le-7.gif" width="645" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 7</b>, we have the gain curves across the first MHz of 10 meters for the 3 quads. The lowest curve for the thinnest wire shows the gain peak within 0.1 MHz of the design frequency, with a rapid drop in gain at the low end of the band. For the middle-size wire, the gain peak is evident at 28.1 MHz, while for the fattest wire, gain is peak but flat for the first 0.2 MHz of the passband.</p>
+  <p>Equally evident to the gain advantage of the fattest wire is the very slow rate of gain decrease compared to the thinner wires. The thinner wires show a full half dB variance in gain across the passband, while the range of gains is only 0.2 dB for the fattest wire.</p>
+  <center>
+    <img src="q3le-8.gif" width="646" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The front-to-back curves in <b>Fig. 8</b> show several things. First, the slight displacement of the curve for the fattest wire downward in frequency by about 15 kHz corresponds to the flattened portion of the front-to-back curve in <b>Fig. 3</b>. Apart from that slight offset, the three curves are remarkable congruent with each other. The rates of decrease from the peak are similar for all three curves and are parallel both above and below the design frequency. Finally, note the steeper rate of decrease below design frequency than above design frequency. These curves are fully consistent with those for 2-element quads.</p>
+  <p>If we select some arbitrary dividing value, such as a 20 dB front-to-back ratio, it is clear that even the fattest wire version of the 3-element quad does not cover all of the 1 MHz passband of the exercise. In this regard, the 3-element quads designed here have slightly narrower front-to-back ratio operating bandwidths than corresponding 2-element models.</p>
+  <center>
+    <img src="q3le-9.gif" width="645" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A similar narrowing of the operating bandwidth applies to the 2:1 SWR dividing lined commonly used to denote acceptable performance, as shown in <b>Fig. 9</b>. Only the fattest wire model covers the entire passband. By judiciously lowering the resonant frequency of the middle-size wire model, it can be set to show under 2:1 SWR just about all the way across the passband. This fact results from the more rapid rise in SWR below design frequency than above it. Since the entire set of resonant feedpoint impedance is between 70 and 80 Ohms for all wire sizes at the design frequency, all SWR values in the curves are referenced to 75 Ohms.</p>
+  <p><b>Some Sample 3-Element Quad Arrays</b></p>
+  <p>To provide a sample of the program's output, here are some dimensions and performance data for a few 3-element quads.</p>
+  <pre>1.  20 meters, #14 wire, design frequency: 14.175 MHz
+Wire Diameter:                0.0641" or 7.70E-5 wl
+Reflector Circumference:      73.09'
+Driver Circumference:         70.06'
+Director Circumference:       65.31'
+Refl-Driver Spacing:          10.69'
+Driver-Dir Spacing:           21.58'
+Total Boom Length:            32.27'
+Feedpoint Impedance:          79.5 Ohms
+Free-Space Gain:              8.47 dBi
+SWR Bandwidth:                3.10% or 0.439 MHz
+&gt;20 dB F-B Bandwidth:         1.18% or 0.167 MHz
+Rate of Gain Change:          0.22 dB/1% of design frequency</pre>
+  <p>Although the quad array modeled here has an acceptable SWR across all of 20 meters, the front-to-back ratio becomes a limiting factor. On a crowded band such as 20 meters, front-to-back ratio is very often an important antenna design consideration. For most installations, therefore, the antenna would likely be designed for either the CW/digital end of the band or for the phone end of the band.</p>
+  <pre>2.  10 meters, #12 wire, design frequency: 28.5 MHz
+Wire Diameter:                0.0808" or 1.95E-4 wl
+Reflector Circumference:      36.64'
+Driver Circumference:         34.95'
+Director Circumference:       32.43'
+Refl-Driver Spacing:           5.49'
+Driver-Dir Spacing:           10.30'
+Total Boom Length:            15.79'
+Feedpoint Impedance:          77.2 Ohms
+Free-Space Gain:              8.74 dBi
+SWR Bandwidth:                3.34% or 0.952 MHz
+&gt;20 dB F-B Bandwidth:         1.41% or 0.402 MHz
+Rate of Gain Change:          0.21 dB/1% of design frequency</pre>
+  <p>Let's compare this array with another for the same frequency.</p>
+  <pre>3.  10 meters, 0.5" wire, design frequency: 28.5 MHz
+Wire Diameter:                0.5" or 1.21E-3 wl
+Reflector Circumference:      37.42'
+Driver Circumference:         35.22'
+Director Circumference:       32.39'
+Refl-Driver Spacing:           5.66'
+Driver-Dir Spacing:            9.57'
+Total Boom Length:            15.23'
+Feedpoint Impedance:          72.3 Ohms
+Free-Space Gain:              9.00 dBi
+SWR Bandwidth:                4.42% or 1.20 MHz
+&gt;20 dB F-B Bandwidth:         2.11% or 0.601 MHz
+Rate of Gain Change:          0.10 dB/1% of design frequency</pre>
+  <p>The 0.5" wire quad shows all of the dimensional characteristics in comparison to the #12 AWG version that we have seen in the curves. As well, 0.5" performance is slightly up, while the feedpoint impedance is slightly down relative to the #12 wire model. Most significantly, the SWR and front-to-back operating bandwidths for the fat-wire model are 30% or more greater than those of the thin-wire array. Of course, it is impractical to consider construction of a quad array for 10 meters that has half-inch diameter elements. However, we shall return to this problem before we close the book on this exercise.</p>
+  <pre>4.  6 meters, 0.25" wire, design frequency: 51 MHz
+Wire Diameter:                0.25" or 1.08E-3 wl
+Reflector Circumference:      20.87'
+Driver Circumference:         19.67'
+Director Circumference:       18.10'
+Refl-Driver Spacing:           3.16'
+Driver-Dir Spacing:            5.37'
+Total Boom Length:             8.53'
+Feedpoint Impedance:          72.4 Ohms
+Free-Space Gain:              8.99 dBi
+SWR Bandwidth:                4.14% or 2.11 MHz
+&gt;20 dB F-B Bandwidth:         2.05% or 1.05 MHz
+Rate of Gain Change:          0.11 dB/1% of design frequency</pre>
+  <p>The 6-meter version of the 3-element quad is similar in characteristics to the 0.5" 10-meter array, since the wire diameters are similar relative to a wavelength. However, even a wire size of about 0.001 wl is insufficient to provide a full front-to-back operating bandwidth for the wide 6-meter band. Elements closer to 1" in diameter would be necessary for this task.</p>
+  <pre>5.  2 meters, 0.1" wire, design frequency: 146 MHz
+Wire Diameter:                0.1" or 1.24E-3 wl
+Reflector Circumference:       7.31'
+Driver Circumference:          6.88'
+Director Circumference:        6.32'
+Refl-Driver Spacing:           1.11'
+Driver-Dir Spacing:            1.87'
+Total Boom Length:             2.98'
+Feedpoint Impedance:          72.2 Ohms
+Free-Space Gain:              9.00 dBi
+SWR Bandwidth:                4.24% or 6.19 MHz
+&gt;20 dB F-B Bandwidth:         2.19% or 3.20 MHz
+Rate of Gain Change:          0.10 dB/1% of design frequency</pre>
+  <p>The same 4-MHz bandwidth, when moved from 6 to 2 meters, presents less of a problem for a 3-element quad composed of 0.001 wl wire. The &gt;20 dB operating bandwidth now covers about 80% of the band. The use of 0.25" wire would easily permit the achievement of all benchmarks across the entire 2-meter band.</p>
+  <p>Hopefully, these examples will provide some guidance in developing a sense of the requisite wire size to achieve not only a desired gain level, but as well a desired operating bandwidth for 3-element quad arrays of the present design.</p>
+  <p><b>Simulating Large-Diameter Elements</b></p>
+  <p>In a past 2-element quad exercise, we looked at the use of spaced #14 AWG wires to simulate fatter single wires. In that effort, we used 2 #14 AWG copper wires spaced 5" apart and joined at the corners. We explored two different configurations and found no significant difference between them. The resulting 2-element quad easily replicated the performance of a 0.5" diameter quad, with a bit to spare. The consequences of substituting 2 thinner wires for one fatter one were a slight enlargement of the reflector and a slight decrease in the driver circumference.</p>
+  <p>I repeated the exercise for the 3-element 0.5" wire array noted among the examples. Since the number of variables increases with every new element, I restricted my efforts to planar loops, illustrated in <b>Fig. 10</b>. Note the structure of the planar loops, including the necessary corner wires. Optimizing the model required some further adjustments in director circumference and spacing, since the 2-element array showed the dual-wire version to act like a wire slightly fatter than a half-inch in diameter.</p>
+  <center>
+    <img src="q3le-10.gif" width="580" height="479" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Here is a comparison of the dimensions (in inches) between the two models. Note that the dimensions for the dual-wire model represent positions halfway between the two wires, so that the actual wire positions are +/- 2.5" relative to the coordinates that would emerge from the listed dimensions.</p>
+  <pre>Dimension                     0.5" Single Wire              2x#14 AWG Wires
+Reflector Circumference:      449.0"      1.084 wl          449.3"      1.085 wl
+Driver Circumference:         422.7"      1.021 wl          421.4"      1.018 wl
+Director Circumference:       388.6"      0.939 wl          385.3"      0.930 wl
+Refl-Driver Spacing:           67.9"      0.164 wl           67.9"      0.164 wl
+Driver-Dir Spacing:           114.8"      0.277 wl          111.0"      0.268 wl
+Total Boom Length:            182.7"      0.441 wl          178.9"      0.432 wl</pre>
+  <p>Although the differences are small, they are significant in arriving at the final operating characteristics of the array. While the dual-wire reflector is slightly larger than the single-wire elements, the dual-wire driver and director are both slightly smaller. As well, the dual-wire director is closer to the driver, resulting in a shorter overall boom length for the array.</p>
+  <p>Performance for the 3-element dual-wire array parallels that of its 2-element cousin. The model shows slightly less gain at the design frequency, but whether this minuscule gain loss is real or an artifact of the closely spaced wires in the model remains uncertain.</p>
+  <center>
+    <img src="q3le-11.gif" width="647" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> shows the gain curves for both versions of the array from 28 to 29 MHz. Immediately apparent is the fact that the dual-wire gain decreases more slowly than the single wire gain. Shallower gain curves are generally characteristic of fatter wires with higher overall gain--a fact which contributes to the uncertainty over the slight gain deficit in the dual wire model at the design frequency. However, the gain differences between versions of the antenna would make no operational difference at all.</p>
+  <center>
+    <img src="q3le-12.gif" width="645" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A second piece of evidence that the 5" spacing of the dual wire model acts similarly to a wire somewhat fatter than the 0.5" model appears in <b>Fig. 12</b>. The front-to-back curve of the dual-wire version is slightly wider than that of the 0.5" single-wire model. Again, the differences make no operational difference, but their existence is numerically significant in the process of equating dual-wire arrangements with corresponding diameters of single wires.</p>
+  <p>Comparing the feedpoint impedances between the two version of the array does not permit an easy chart. The dual-wire model uses a dual feed system of driver wires fed essentially in parallel. Hence, the composite feedpoint impedance required hand calculation. However, the following table of values may be useful in exploring the feedpoint situation. Resistances and reactances are in Ohms.</p>
+  <pre>Frequency               0.5" Single Wire                    2x#14 AWG Wires
+MHz               Resistance  Reactance   75-Ohm SWR        Resistance  Reactance
+28.0              53.10       -43.78      2.13              53.76       -38.55
+28.1              56.78       -34.52      1.80              57.97       -30.44
+28.2              60.57       -25.56      1.54              60.25       -22.55
+28.3              64.44       -16.90      1.33              63.57       -14.86
+28.4              68.33       - 8.51      1.16              66.89       - 7.34
+28.5              72.19       - 0.38      1.04              70.18       - 1.01
+28.6              75.99         7.54      1.11              73.43         7.20
+28.7              79.70        15.28      1.23              76.62        14.32
+28.8              83.31        22.89      1.36              79.73        21.36
+28.9              86.79        30.41      1.49              82.76        28.36
+29.0              90.16        37.88      1.63              85.73        35.37</pre>
+  <p>Both antennas would easily cover the first MHz of 10 meters with a VSWR under 2:1, although the 0.5" model might require a slight adjustment of the driver to bring its resonant point lower in the band. (Such adjustments to the driver, if modest, have no significant effects on the other operating characteristics of the array.)</p>
+  <p>Besides looking at raw feedpoint impedance values, it is often useful to examine the swing of both resistance and reactance across the passband in question. The dual-wire array changes resistance nearly 14% less than the single-wire model, while the dual-wire reactance changes nearly 10% less. Both numbers are clear indications that the dual-wire system with its 5" spacing represents a single wire that is larger than the 0.5" diameter used for comparison.</p>
+  <p>The bottom line on the exercise is that a set of dual-wire loops for a quad array can effectively improve 3-element quad performance relative to the customary single #14 AWG quad structure. Even if one discounts the gain advantage of the dual-wire array as operationally marginal, the improvement to both the SWR and front-to-back operating bandwidths is undeniably significant to all except those operators who use only small portions of the wider amateur bands.</p>
+  <p>The following links will take you to a download page where you may download the program as a. <a href="../download/q3lewb.nwp" download="q3lewb.nwp"><b>a NEC-Win Plus model file</b></a>, b. <a href="../download/q3l.bas" download="q3l.bas"><b>a GW Basic program</b></a>, or c. <a href="../download/3elwbqd.vbs" download="3elwbqd.vbs"><b>a VB script</b></a> generously made available by Randy Frum, AC4FD. Randy notes that the script will run natively on Windows ME and Windows 2000 and above and will run on other Windows operating systems (95, 98 and NT) if the Windows Scripting Host is installed (normally installed with IE 5 and above). Simply run the script from the "Run" command on your main screen. An on-line <a href="https://web.archive.org/web/20060909221156/http://www-mae.engr.ucf.edu/~ssd/ham/quadcalc.html" target="_blank"><b>Java script calculator</b></a> (web.archive.org) is available courtesy of the work of Steven Dick.</p>
+  <p>The process of converting one of the automated designs to a dual-wire version does require hand-optimization at present. However, the automated designs that emerge from the utility program shown in this article provide some useful starting points for developing realistic 3-element monoband quad arrays that live up to their theoretical potential. This wide-band design focuses on one potential; next month's high-gain design focuses on another.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 02-01-2001, 11-14-2002. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for January, 2001. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="quadlist.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40">Go to Quad List</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

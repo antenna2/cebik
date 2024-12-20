@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Moxon, HF Upper, Small Beams">
+  <title>Modeling and Understanding Small Beams Part 2: VK2ABQ Squares and The Modified Moxon Rectangle</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Modeling and Understanding Small Beams</h1>
+    <h3>Part 2: VK2ABQ Squares and The Modified Moxon Rectangle</h3>
+    <p><b>L. B. Cebik, W4RNL</b></p>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>Miniature directive antennas appeal to hams with little space. Commercially, the Butternut HF5B has enjoyed good success. However, its price tag has led numerous hams to look for home brew antennas. The folded X-Beam, examined in Part 1 of this series, was brought to ham attention by W2EEY as a simplified birdcage and empirically perfected by W9PNE. It has some proponents as well as a few critics. In the U.S., little else seems available to the home brewer.</p>
+  <p>The VKs and Gs, however, have long been familiar with a square antenna about the same size as the folded-X. The basic idea for the antenna is simple: take a single quad loop and tip it 90 degrees to put the wire in the horizontal plane. At the midpoints of the sides (calling the feedpoint wire the front and the parallel wire to it the rear), cut the loop and insulate the cut ends from each other while preserving the loop. It is reported that VK2ABQ, the antenna's sire, used coat buttons for insulators. The antenna now looks like a 2-element parasitic beam with a driven element and a reflector. It provides gain and front-to-back differential. Folding the ends inward, relative to a Yagi in normal linear configuration improves the front-to-back ratio at the loss of some theoretically possible forward gain. Moreover, loops for several bands (typically, 10, 15, and 20) can be laid out concentrically and fed from a single coaxial cable. <b>Fig. 1</b> shows the general layout.</p>
+  <center>
+    <img src="mu2a-1.gif" width="400" height="282" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig.1. General outline of a VK2ABQ "square" beam.
+  </center>
+  <p>There is an older history to the square, which you can read in <a href="../tales/old.html"><b>Everything Old Is New Again</b></a>.</p>
+  <p>One problem the potential square-builder faces in trying to replicate the VK2ABQ antenna is finding the right dimensions. The problem is not a lack of dimensions, but too many sets. <b>Table 1</b> and its notes list several sets taken from a couple of British sources.<a href="mu2a.html#N_1_"><sup>(1)</sup></a> Apparently, the antenna is somewhat sensitive both to the wires for the bands not in operation and to the method of construction. Different builders have used different amounts of metal in the hub and support spokes, leaving the new builder to play endlessly with wire lengths with not much clue as to what the goal should be. Although I have only scanned the literature, it appears that American builders have largely ignored the design. In fact, no one seems to have modeled the antenna to find out what it can theoretically do for amateur operation.</p>
+  <pre>                      A Sampling of Recommended Dimensions for the VK2ABQ "Square" Beam
+
+Source*       Moxon, p. 168; Hawker p. 334                       Hawker, pp. 315-316
+
+Arm length                    6' 2"                        6'  0"        5' 9"         5' 11"
+
+Perimeter length             34' 9"                       33' 11"       32' 6"        33'  5"
+
+Side length                   8' 9"                        8'  6"        8' 2"         8'  4"
+
+Formula/side                 248/f (MHz)                  242/f (MHz)   232/f (MHz)   238/f (MHz)
+
+*See Note 1 at end of text for references cited here.  All dimension in feet and nearest inches:
+
+Table 1.  A sampling of recommended dimensions for the VK2ABQ "square" beam.</pre>
+  <p>L. A. Moxon, in his <em>HF Antennas for All Locations</em>, provides the essential clue: "the main benefit [of a beam] accrues from the reduction of interference during reception, though the 4 to 6 dB gain provided by typical amateur beams is an important bonus and probably the reason which carries the most weight with the majority of amateurs."<a href="mu2a.html#N_2_"><sup>(2)</sup></a> Here is a theory of beam operation quite unAmerican is style: instead of gain, Moxon strives for front-to-back ratio as the most crucial aid to ham operation. His statement is an affirmation of the "good ears" theory of operation. Even more, it forms the basis for his rectangular improvement upon the VK2ABQ square.</p>
+  <p>Moxon's revelation of the operative notions behind his compact beam-building efforts provided the clue that made possible a venture into modeling these beams with MININEC. The goals were to ascertain their general performance capabilities and to find patterns of development toward optimum performance. By judiciously loading the reflector, one can fairly quickly find the maximum front-to-back ratio. Then, by adjusting dimensions, the modeler can create a pure loop, that is, one with little or no reactance at the driven element source and with little or no requirement for reflector loading.</p>
+  <p>Finally, there was the task of discovering whether the model dimensions play out in practice. For this exercise, I chose a single band antenna, a 10-meter version of an optimized Moxon rectangle to be precise. Construction minimized metal throughout. The results brought together several interrelated questions. First, given the complex geometry of this antenna, would MININEC reliably model reality? Second, was the antenna too sensitive to any metal in its plane to reflect its idealized MININEC model? Third, would the antenna live up to its theoretical promise? Finally, where does the VK2ABQ/Moxon antenna fit in the world of miniature or small or simple antennas?</p>
+  <p>This report tries to provide some tentative answers to a few of these questions by taking a systematic look at this "fallen-quad" beam. We shall examine a progression of models that begins with the VK2ABQ and ends up with an optimized Moxon rectangle. Then we shall look at the construction and performance of a real model. The report has some limitations, however. First, it does not model multiband versions of the antenna. Second, the use of metallic masts and hub spiders has not been explored. Nonetheless, the results are both promising and useful. They provide an understanding of the VK2ABQ/Moxon beam potential, and they form a basis for constructing some interesting real antennas for both limited space and portable operation.</p>
+  <center>
+    <strong>The VK2ABQ Square</strong>
+  </center>
+  <p>Moxon's search for a little gain and a lot of front-to-back ratio excludes the folded X-Beam from consideration here. <b>Fig. 2</b> shows why. Although the front-to-back ratio of an X-Beam can be very considerable in the narrow path directly opposing maximum gain, there are quartering rear sidelobes that never decrease far below about 10 dB less than maximum gain. On 10 meters in the U.S., such a pattern, which can yield a forward gain slightly higher than either of the designs we shall explore here, may satisfy the ham with limited space. Elsewhere in the world--on 20 and 15 especially--those rearward lobes would increase QRM levels excessively. One can sacrifice gain if the overall front-to-rear-area ratio can be improved. Precisely here lies the inspiration behind Fred Caton's invention, the VK2ABQ square.</p>
+  <center>
+    <img src="mu2a-2.gif" width="361" height="297" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 2. Free space azimuth pattern of a folded X-Beam per Anderson.
+  </center>
+  <p>Using the original design, optimized for least reflector loading and least reactance at the feedpoint, but retaining the close-spaced element ends, early models achieved respectable performance. <b>Fig. 3</b> shows the performance of an optimized model, while <b>Table 2</b> supplies the dimensions and analysis figures of the models that led up to this performance. For those unused to trying to capture an antenna with a model, the process may prove instructive.</p>
+  <center>
+    <img src="mu2a-3.gif" width="339" height="294" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3. Free space azimuth pattern of VK2ABQ model #6 (Table 1).
+  </center>
+  <pre>                       A Sampling from the Series of VK2ABQ "Square" Antennas Modeled
+
+Antenna              Dimensions (feet)            Reflector      Gain   Front-to-Back         Source Z
+              X      Y       Space  El. Length    Load (&PlusMinus;X)      (dBi)       (dB)              (R &PlusMinus; X)
+
+ 1.           8.8    8.8     0.2    17.4             0            4.2        16.3             133 + 23
+
+ 2.           9.0    8.8     0.8    17.0           +45            4.5        22.4             103 - 14
+
+ 3.           9.1    8.8     1.0    16.9           +60            4.3        22.2              94 - 28
+
+ 4.           9.2    8.8     1.2    16.8           +60            4.6        30.6              94 - 19
+
+ 5.           9.4    8.8     1.4    16.8           +60            4.7        34.2              88 - 24
+
+ 6.           9.8    8.8     1.6    17.0           +47            4.7        26.6              88 - 8.0
+
+Note:  All performance values are calculated free space figures.
+
+Table 2.  A sampling from the series of VK2ABQ "square" antennas modeled.</pre>
+  <p>Beginning with a model only slightly smaller than the largest encountered in British sources, I modeled antenna 1. Since all sources on the VK2ABQ recommended extremely close spacing of the driven element and reflector ends, I held this spacing at 0.2' or less. The resulting inductive reactance at the feedpoint showed that driven element was long. Moreover, the front-to-back ratio, while slightly better than a typical 2-element Yagi, was not up to expectations.</p>
+  <p>Tackling the second problem first, I began to increase the spacing between element ends. This move shortened the element lengths, since I held the front-to-back (Y) dimension constant. The front-to-back ratio began to improve dramatically, as models 2, 3, and 4 demonstrate. However, to achieve this calculated performance, it was necessary to insert an inductive load into the center of the reflector element, suggesting that the reflector was short for optimum performance. Note that in all models of the VK2ABQ, the elements are the same length, a design that is counterintuitive for someone familiar with Yagi configurations.</p>
+  <p>Model 5 achieves the best front-to-back performance, but at the cost of considerable inductive reactance at the feedpoint and the need for sizable reflector loading. Model 6 lengthened the element to bring down the feedpoint reactance successfully. However, it widens the gap between element ends beyond optimum and still requires reflector loading.</p>
+  <p>Modeling ceased at this point because of several factors. First, the forward gain of the beam was not improving significantly. The best VK2ABQ, while providing exceptional front-to-back ratio, produced a forward gain only bit higher than that of a single quad loop mounted in the normal plane. Second, the model was departing from square to a degree that made the Moxon rectangle the next logical step in the work.</p>
+  <p>However, before departing the VK2ABQ, we should notice the general pattern in <b>Fig. 3</b> once more. Unlike the X-Beam (<b>Fig. 2</b>), the VK2ABQ puts all its power in the forward lobe, with a beam width that settles in around 88 to 90 degrees between -3 dB points. The main lobe extends around to the sides so that direct side rejection is only half the front-to-back ratio. In comparison, the X-Beam has good front-to-side ratio (at the expense of the rearward lobes), and the dipole, single quad loop, and 2-element Yagi antennas have excellent front-to-side ratios. None of these antennas, however, can even approximate the VK2ABQ for the clean and empty wide rear quadrants. This feature may be useful in more than one application.</p>
+  <center>
+    <strong>The Moxon Rectangle</strong>
+  </center>
+  <p>To achieve better performance, Moxon lengthened the front and rear elements and shortened the side tails. The resulting rectangle requires very little more turning radius than the square, but improves the gain of the antenna considerably. Modeling Moxon's beam required some initial guesses at the actual 10-meter dimensions, since the builder created u-shaped insets at the corners to handle excess wire needed to make up the perimeter.<a href="mu2a.html#N_3_"><sup>(3)</sup></a> Nonetheless, only two steps yielded a pretty good Moxon beam model. <b>Fig. 4</b> shows the general outline of the Moxon rectangle, while <b>Table 3</b> shows the progression of models and their results.</p>
+  <center>
+    <img src="mu2a-4.gif" width="393" height="271" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 4. General outline of a Moxon "rectangle" beam.
+  </center>
+  <pre>                     A Sampling from the Series of Moxon "Rectangular" Antennas Modeled
+
+Antenna              Dimensions (feet)            Reflector      Gain   Front-to-Back         Source Z
+              X      Y       Space  El. Length    Load (&PlusMinus;X)      (dBi)       (dB)              (R &PlusMinus; X)
+
+ 1.           11.2   6.6     0.2    17.6           -20            5.3        22.5             115 + 86
+
+ 2.           11.0   6.6     0.2    17.4           - 5            5.2        21.3             114 + 69
+
+ 3.*          10.4   6.6     0.2    16.6 DE        +30            5.3        18.7             103 + 5.1
+                                    17.0 Re
+
+ 4.           11.0   6.6     0.8    16.6 DE        +35            5.5        37.0              80 - 3.6
+                                    17.0 Re
+
+ 5.           11.0   6.7     0.8    16.6 DE        +20            5.5        35.0              81 - 4.2
+                                    17.0 Re
+
+ 6.           11.2   6.6     0.8    16.6 DE        + 5            5.5        33.6              79 - 2.7
+                                    17.4 Re
+
+*Models from this point onward use unequal lengths for the driven element and the reflector.
+
+Note:  All performance values are calculated free space figures.
+
+Table 3.  A sampling from the series of Moxon "rectangular" antennas modeled.</pre>
+  <p>The initial models preserved the VK2ABQ close end spacing (although Moxon widened the gap). Model 2 is especially interesting, since it shows excessive driven element length in the inductively reactive source impedance. The reflector is about right for this configuration. However, the front-to-back ratio is not up to VK2ABQ standards. The next moves were a simultaneous increase of the gap between ends and an unbalancing of the forward and rear elements. Moxon prefers matched elements, tuning each of them to optimum performance remotely. That way, he can reverse the beam and do away with expensive and maintenance-intensive rotators. However, rotators are a way of life in the U.S. (a TV rotator will likely handle a 3-band Moxon beam), and there are many uses for portable beams that are hand-rotated or fixed in the field. Thus, I decided to continue the exercise in unequal element lengths.</p>
+  <p>In models 3, 4, and 5, we can see the approach to a model that would have a roughly resonant feedpoint and require no loading of the reflector. The last model, number 6, is considered optimum for these reasons. <b>Fig. 5</b> provides a free space azimuth pattern for comparison to other antennas. The modified Moxon rectangle is a close match to RG-11 or RG-59 coax for direct feed. The differentials of front-to-back ratio in models 4, 5, and 6 make little difference in practice, and the forward gains of the three models are the same.</p>
+  <center>
+    <img src="mu2a-5.gif" width="339" height="297" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 5. Free space azimuth pattern of Moxon rectangle #6 (Table 3).
+  </center>
+  <pre>              A Performance Comparison Among the VK2ABQ, the Moxon, and Some Reference Antennas
+
+              Antenna                      Conditions     Refl. Load    Gain   Front-to-Back          Source-Z
+                                                          (&PlusMinus;X ohms)     (dBi)       (dB)             (R &PlusMinus; X)
+
+VK2ABQ #6 (Table 2)                        Free Space      +47           4.7          26.6           88 -  8
+                                           35' Ave Gnd*    +47          10.3          30.8           98 - 13
+
+Moxon #6 (Table 3)                         Free Space      + 5           5.5          33.6           80 -  3
+                                                             0           5.6          24.1           76 +  1
+                                           20' Ave Gnd     - 5          11.1          20.4           81 -  6
+                                                             0          11.0          18.9           85 - 10
+                                           35' Ave Gnd     + 5          11.0          25.5           88 -  3
+                                                             0          11.1          21.9           83 +  1
+
+2-element Yagi (DE + Refl.)                Free Space      --            6.3          11.2           32 +  1
+(16.0'/17.5'/4.25' space)                  35' Ave Gnd     --           11.7          13.5           35 &PlusMinus;  0
+
+Single loop quad, #18 copper wire          Free Space      --            3.2          --             127 + 4
+(L=1040/f(MHz) or 9.12' per side)          35' Ave Gnd     --            8.5          --             125 - 6
+
+Wire dipole, #18 copper wire               Free Space      --            2.1          --              72 &PlusMinus; 0
+(L= 468/f(MHz) or 16.42'                   35' Ave Gnd     --            7.7          --              86 - 8
+
+*Average ground or earth:  dielectric constant = 13, conductivity 5 mS/m
+
+Note:  Compare free space figures only to other free space figures and over-ground figures only to other over-
+       ground figures.
+
+Table 4.  A performance comparison among the VK2ABQ, the Moxon, and some reference antennas.</pre>
+  <p>Free space is not a fully adequate indicator of these quasi-loop beams over real ground. The potential for needing reflector loading was too great simply to build the free space model and hope it would work. <b>Table 4</b> presents some comparative figures. Without any reflector load at all, the Moxon 6 model promised adequate performance at both 20 feet (a typical portable height) and 35 feet (a typical home-installation height) above medium earth. The 20' Moxon exhibits a small wide swell in rear coverage (<b>Fig. 6</b>), while the 35' Moxon demonstrates a more stepped appearance (<b>Fig. 7</b>). Both front-to-back ratios are reasonable for the heights, although neither reaches the level of the tiny free space rear lobes.</p>
+  <center>
+    <img src="mu2a-6.gif" width="342" height="294" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 6. Azimuth pattern of Moxon rectangle #6 20' above average earth.
+  </center>
+  <center>
+    <img src="mu2a-7.gif" width="345" height="292" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 7. Azimuth pattern of Moxon rectangle #6 35' above average earth.
+  </center>
+  <center>
+    <img src="mu2a-8.gif" width="337" height="292" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 8. Free space azimuth pattern of a reference 2-element Yagi.
+  </center>
+  <p>The Moxon beam shows a gain midway between the VK2ABQ and the typical 2-element Yagi. <b>Fig. 8</b> provides a free space azimuth pattern for a typical 2-element Yagi as a reference standard against which to compare the Moxon rectangle. Why the Moxon rectangle's gain is less than that of a linear 2-element Yagi, despite the absence of power in the rear lobe, may raise some questions. However, such questions reveal 2-dimensional thinking. Antennas are three dimensional devices. Besides forward and back, power may radiate up and down and anywhere between. Both the VK2ABQ and the Moxon rectangle radiate considerably more power to the sides and at high radiation angles relative to the horizontal than 2-element Yagis. <b>Fig. 9</b> demonstrates the difference in free space high angle radiation between the VK2ABQ and the Yagi, while a comparison of <b>Fig. 3</b> and <b>Fig. 8</b> reveals the 18-degree beamwidth difference. Although these properties hold down forward gain, they may prove useful in other applications.</p>
+  <center>
+    <img src="mu2a-9.gif" width="340" height="290" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 9. Free space elevation patterns of the Yagi in Fig. 8 and the VK2ABQ square in Fig. 3.
+  </center>
+  <p>Of concern to every small beam builder are bandwidth considerations for both the pattern and the feedpoint impedance. <b>Fig. 10</b> and <b>11</b> display the pattern bandwidth in sets of azimuth patterns taken at five points between 28 and 29 MHz. At 28 MHz and a 20-foot height, the front-to-back ratio of the rectangle drops to about 11 dB. At 29 MHz, the figure is also about 11 dB. These figures approximate a 2-element Yagi, but the Moxon exceeds the Yagi between 28.25 and 28.75. A similar pattern of reduced front-to-back ratio at band edges appears with the antenna at 35 feet, but the effect is smaller. Except for the lowest edge of the 10-meter band, the front-to-back ratio remains above 15 dB and above 25 dB at design center. At both heights, the forward gain, while less than that of a 2-element Yagi, remains fairly constant across the band.</p>
+  <center>
+    <img src="mu2a-10.gif" width="337" height="301" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 10. Pattern bandwidth of the Moxon rectangle at 20' using composite azimuth patterns at a 24-degree take-off angle.
+  </center>
+  <center>
+    <img src="mu2a-11.gif" width="339" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 11. Pattern bandwidth of the Moxon rectangle at 35' using composite azimuth patterns at a 24-degree take-off angle.
+  </center>
+  <p>With respect to feedpoint impedance, the Moxon rectangle is well-behaved across the entire first MHz of 10 meters. Since the design center frequency impedance is about 80 ohms at all heights, 75-ohm coax provides the best match, as shown in <b>Fig. 12</b> and <b>13</b>. However, the SWR relative to a 50-ohm transmitter output and cable never exceeds 2:1 from 28 to 29 MHz, thus simplifying matching requirements. As the test model verified, these anticipated values are close to reality, despite the limitation of MININEC in calculating impedance and SWR for perfect grounds only.</p>
+  <center>
+    <img src="mu2a-12.gif" width="400" height="313" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 12. SWR bandwidth of the Moxon rectangle at 20' for 50 and 75 ohm cables.
+  </center>
+  <center>
+    <img src="mu2a-13.gif" width="400" height="317" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 13. SWR bandwidth of the Moxon rectangle at 35' for 50 and 75 ohm cables.
+  </center>
+  <p>The Moxon rectangle's 3 dB gain over a dipole at the same elevation is useful, but the most significant Moxon feature is the reduction in all rear directions of potential QRM. At 6 dB per S-unit, the Moxon beam promises (at least, in model form) to reduce QRM by more than a full S-unit and perhaps as much as 2 S-units compared to a 2-element Yagi. Whether the beam could deliver on its model's promise required an exercise in building.</p>
+  <center>
+    <strong>Building a Moxon Rectangle</strong>
+  </center>
+  <p>Since the diversity of VK2ABQ dimensions in the literature suggests a sensitivity to the conductivity of the antenna structure, the portable Moxon beam requires a minimum of metal to test the model dimensions. Therefore, the beam I built was an exercise in plywood, PVC, and nylon cord. See <b>Fig. 14</b>. A center platform of well-varnished or fiber-glassed 3/8" plywood measured 22.4" by 13.2". These dimensions assured that the rectangular X-frame would have the proper angles. A pair of #10 1 1/2" stainless steel bolts (with washers and nuts) secures each of the four half-inch nominal thin-wall PVC arms. In place of the bolts nearest the corners of the platform, one may use 1/2" nominal PVC conduit clamps with #8 stainless steel hardware. Fifth and sixth arms project from the platform to the center of the driven element to support the feedline and to the center of the reflector element.</p>
+  <center>
+    <img src="mu2a-14.gif" width="426" height="294" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 14. Construction sketch of the 10-meter test Moxon rectangle.
+  </center>
+  <p>The platform has a center hole to pass a 3-foot length of 1" nominal schedule 40 PVC pipe. Two 2" corner brackets secure the platform to the pipe 18" down from the top. The brackets use bolts that pass through a bracket, the pipe, and the opposing bracket. Short #10 stainless steel hardware secures the brackets to the platform. Note that the brackets are above the platform, since it will rest on the 1 1/4" nominal PVC mast pipe, with a pair of bolts through the nested pipes to lock them together.</p>
+  <p>At the upper end of the platform pipe, an X-cut--enlarged and smoothed--provides a channel for eighth-inch nylon support cord. The cord ends pass through holes in opposing arms about 2/3rds the way out to the corner. Several wrappings of the cord before knotting reduce stress on this light guy. <b>Fig. 15</b> provides guidance for setting up the support guys.</p>
+  <center>
+    <img src="mu2a-15.gif" width="423" height="178" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 15. Sketch of the support guy system used with the test Moxon rectangle.
+  </center>
+  <p>Each arm is 6'6" long. Mounted on the plate about 1" from the center point (to allow room for the pipe hole), the arms extend about an inch beyond the precise corner points. Quarter-inch holes through the arm in the plane of the wire permit the insertion of plastic tubing to reduce stress on the element wires that pass through them.</p>
+  <p>Measure each element with some excess. Thread each element through the plastic corner tubes. To the ends of each element, attach about a foot of nylon cord to tie the element ends together and maintain spacing between them. Add the guys running across the X-cut in the vertical pipe. The result will be a well-braced Moxon rectangle for use in up to moderate winds.</p>
+  <p>Use part of the driven element's excess wire to provide whatever is needed to attach a simple dipole center insulator and coax fitting. When you are satisfied that the dimensions are correct enough for initial testing, snug up all the tie-off points. Do not solder the element ends wires yet, since some length adjustment may be needed to put the beam on target. (In fact, after completing all length adjustments, remove the cord from the element end. Solder the wrapped wire to secure it and make a loop. After cooling, reinsert the cords and resnug the assembly. This caution is needed, since nylon cord melts well before solder does.) Attach 75-ohm coax to the dipole center insulator, taping it to the extra PVC arm. One can also insert a choke or sleeve balun here to reduce chances of RF traveling down the outside of the coax braid. Alternatively, one can insert a 75-to-50 ohm balun or unun and use 50-ohm coax to the rig.</p>
+  <p>It is not necessary to make any of the initial adjustments and tests with the beam in the air. Lay the beam over a wooden prop so that the reflector is a few feet off the ground and the driven element points to the sky. With a low power signal, adjust the driven element lengths for the lowest SWR at the frequency of choice. Now erect the antenna in the normal plane at least 15 feet high. With a small signal source and a receiver, adjust the reflector for minimum signal off the rear. Try to keep the element ends about 9 to 10 inches apart. The SWR of the driven element should not be adversely affected. However, you may wish to lower the antenna and redo the driven element length one more time to finish the adjustment task. Only the most finicky operator should need to make further adjustments at height.</p>
+  <p>With minimal metallic mass in the mounting, the Moxon rectangle adjusts quite closely to the model dimensions. Although my test set-up does not permit test range figures, the antenna performs to expectations at a height of 20 feet. For signal strength, it does not quite match my 2-element beam at 35 feet, but the front-to-back ratio is much better, despite the height disadvantage. If you feed the antenna with 50-ohm coax cable, expect an SWR that varies from 1.5:1 to 1.9:1 in a rippling fashion across the first MHz of 10-meters. The normal dip in the resonance curve only appears with 75-ohm cable.</p>
+  <p>Point-to-point tests with local operators located 10 to 15 miles from the station confirmed the modeling exercises quite well. Using both received signals and reports of transmitted signals, the front-to-back ratio of the antenna averaged better than 4 S-units on a variety of transceivers, compared to a little over 2 S-units for my HF5B at 35 feet. The front-to-side ratio averaged a between 1 and 2 S-units, but signals fell off rapidly as the beam was rotated past the side point to the rear. These results cannot be translated into the 20-foot azimuth pattern figures (<b>Fig. 6</b>), since that pattern is taken at an elevation angle of greater than 20 degrees and assumes no ground clutter. Moreover, the relationship of S-units on a transceiver meter to dB of front-to-back ratio is too uncertain for quantitative comparison. However, for practical operation, the basic characteristics of the Moxon rectangle appear satisfactorily confirmed. Nonetheless, other construction methods using a greater metal mass in the support structure may require more extensive adjustment.</p>
+  <p>The wood-wire-PVC model of the modified Moxon rectangle has withstood stormy wind gusts of about 45 m.p.h., far above the design goal for the portable antenna. However, in continuous use, the wood platform is bound to age, and the thin nylon rope will fray. For permanent installations, a more robust construction method may be in order. Models of the rectangle using 3/4" aluminum tubing suggest that only the driven element needs adjustment to compensate for the fatter element diameter. Shortening the driven element tails by about 0.2' each, while maintaining the spacing from the ends of the reflector tails, brings the beam's operating characteristics into line with the wire model.</p>
+  <center>
+    <strong>Some Applications of the Moxon Rectangle</strong>
+  </center>
+  <p>The Moxon rectangle offers the ham with limited space the chance for a compact directional beam. Adding elements concentrically for other bands is possible. Moxon reported interaction between elements 15 and 10 meters and offers some hints on curing the problem. Of course, the multiband builder will have to experiment with element lengths for peak performance, as will the builder who uses more metal to support the arms.</p>
+  <p>If the builder does not make Gordian knots in the nylon guys and stays, the beam should disassemble in 15 minutes for transportation. The broad main lobe of the Moxon rectangle may serve Field Day and other operations well. It rivals W7EL's Field Day Special, but may be erected where there are no trees for end supports.<a href="mu2a.html#N_4_"><sup>(4)</sup></a> On either coast, a single fixed position would cover most of the U.S., while inland, a TV rotator or an Armstrong assistant will rotate the beam with ease. For many contests and other applications, front-to-back ratio may serve the operation better than raw gain.</p>
+  <p>The antenna offers a further potential. Given the wide beam angle both horizontally and vertically, plus the exceptional front-to-back ratio, the Moxon rectangle provides a very smooth curve in both X and Y planes when pointed straight up. See <b>Fig. 16</b> and <b>Fig. 17</b>. Off the flat of the reoriented beam, models show almost horizon to horizon coverage with minimal dips in the pattern at a wavelength height. Side-to-side, the coverage is very smooth, although it may require a pair of rectangles, each tipped 30 degrees or more to extend coverage to near the horizon. The patterns exhibit none of the vertical holes of vertical dipoles nor any of the pattern irregularities of simple horizontal antennas. Since satellite operations have reached the point for many birds of not requiring steerable arrays, the Moxon rectangle may be serviceable as a simple fixed antenna. Hybrid construction using aluminum tubes or rods for what are now the horizontal elements, with wire and cord for the ends, may simplify the building process, but preconstruction modeling is recommended to check the effects of larger element diameters.</p>
+  <center>
+    <img src="mu2a-16.gif" width="344" height="291" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 16. Elevation pattern of a vertically-oriented Moxon rectangle beam (#6) off the flat plane of the antenna.
+  </center>
+  <center>
+    <img src="mu2a-17.gif" width="336" height="294" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 17. Elevation pattern of a vertically-oriented Moxon rectangle beam (#6) off the edge plane of the antenna.
+  </center>
+  <p>Modeling the modified Moxon rectangle at 144.5 MHz with #14 copper wire for the elements produced the following dimensions: a rectangle 2.36' long by 1.32' wide, with a driven element 3.40' total length and a reflector 3.62' total length. These lengths translate into 0.52' end pieces for the driven element and 0.63' end pieces for the reflector, with a 0.17' space separating the end pieces. The 2-meter model showed all the properties of the 10-meter version at 1 wavelength above ground or ground plane. Elevated to several wavelengths above ground and pointed straight up, the patterns develop deep nulls between adjacent nulls lobes that multiply with height. Therefore, VHF and UHF scalings of the rectangle might use an artificial ground plane (a wire screen) below the reflector to tailor the pattern even further.<a href="mu2a.html#N_5_"><sup>(5)</sup></a> The driven element impedance drops to about 65 ohms due to the larger element diameter relative to the wavelength of the signal. This suggests that tubing models might approach a good match to 50-ohm coax. (A 10-meter model using 0.75 aluminum tubing produced a calculated 72-ohm source impedance, a 9 percent reduction relative to the #14 wire version.)</p>
+  <center>
+    <strong>Overall Evaluation</strong>
+  </center>
+  <p>In our quest for gain, we may have overlooked the important "good ears" principle of effective amateur operations. The modified Moxon rectangle presented here, as an improvement of the VK2ABQ square, offers exceptional front-to-back ratio with only two elements. Moreover, its pattern offers other potentials usable by field operators and possibly even by satellite operators. The beam lends itself to home construction with components easily accessed from hardware and home improvement outlets. As the "loose ends" in this report suggest, the modified Moxon rectangle offers a fertile field for experimentation with other materials. All in all, it is an antenna worth further study; even more, it is an antenna worth further use.</p>
+  <p>Some of the further experimentation is reported on in the notes at this site. See the <a href="../moxon/moxpage.html"><b>Moxon Rectangles and Online Calculator</b></a> page, where you will find a growing number of items on wire and tubing Moxons for HF and VHF.</p>
+  <p>However, if tubing and wire are more to your building taste than PVC and plywood, there are small beams for you. For example, linear-loaded Yagis can be 25% shorter than full-size Yagis with little loss in performance. But that is for next time.</p>
+  <center>
+    <strong>Notes</strong>
+  </center>
+  <p><a name="N_1_" id="N_1_">1.</a> See L. A. Moxon, <em>HF Antennas for All Locations</em> (R.S.G.B., 1982), p. 168; see also Pat Hawker, <em>Amateur Radio Techniques</em> (R.S.G.B., 1980), pp.315-316, p. 320, and p. 334. For a summary of work on the VK2ABQ square and the Moxon rectangle, see Erwin David, G4LQI, Ed., <em>HF Antenna Collection</em> (RSGB, 1991), pp. 23-28.</p>
+  <p><a name="N_2_" id="N_2_">2.</a> Moxon, p. 67.</p>
+  <p><a name="N_3_" id="N_3_">3.</a> Moxon, pp. 172-175.</p>
+  <p><a name="N_4_" id="N_4_">4.</a> See Roy Lewallen, W7EL, "<a href="https://www.eznec.com/Amateur/Articles/Field_Day_Special.pdf" target="_blank">Try the 'FD Special' Antenna</a>," <em>QST</em> (June, 1984), pp. 21-24.</p>
+  <p><a name="N_5_" id="N_5_">5.</a> See <em>A.R.R.L. Antenna Book</em>, 16th Ed. (Newington: A.R.R.L., 1991), pp. 19-7-19-9 for ideas in this vein.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="mu0.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Article Index Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#moxon'>Moxon</a>, <a href='../topics.html#small-beams'>Small Beams</a></p><br>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GC: Wire Segment Length and Radius Tapering</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>54. GC: Wire Segment Length and Radius Tapering</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>There are numerous occasions on which we wish to taper either the segment length or the radius (diameter) of a wire along its length. Entry-level programs restrict users to the GW, GS, and GE geometry cards, and this restriction makes tapering a complex procedure involving many wires. However, versions of NEC-2 and NEC-4 that make the entire set of geometry entries available to the user considerably simplify the procedure--and result in faster run times for the resulting model.</p>
+  <p>The key is the GC or geometry continuation card. Perhaps the best way to illustrate the use of the card is with a small example.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM bi-conical dipole--tapered radius and tapered segment lengths
+CE
+GW 1 5 0 0 -5.85 0 0 -0.336 0
+GC 0 0 .8 .5 .0833
+GW 2 1 0 0 -0.336 0 0 0.336 .0833
+GW 3 5 0 0 0.336 0 0 5.85 0
+GC 0 0 1.25 .0833 .5
+GS 0 0 .3048
+GE 0
+EX 0 2 1 0 1 0
+LD 5 1 1 5 3.0769E7
+LD 5 2 1 1 3.0769E7
+LD 5 3 1 5 3.0769E7
+FR 0 1 0 0 31.6 1
+RP 0 1 361 1000 90 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In almost all respects, everything about the model is standard. We have a dipole composed of 3 wires, each of which has some material loss (the LD5 entries). Wire 2 in the center has a standard voltage excitation, and the frequency of operation is 31.6 MHz. The model requests a single azimuth/phi pattern. The GS entry conversion constant tells us that the dimensions are in feet, and from the GW entries, we can see that the antenna extends along the Z-axis +/-5.85'.</p>
+  <p>However, we want to look closely at the GW1 and GW3 entries. They have a zero in the final radius column. The zero-entry for radius is NEC's method of alerting the program to a following or continuation card, namely the GC entry. (If you use an entry other than zero and have a following GC line, the core will alert you to a geometry error, but will not tell you exactly what it is.)</p>
+  <p>The GC card permits you to taper both the radius and the segment length within the specified number of segments in the preceding GW line. Both GW1 and GW3 specify 5 segments, mostly to allow me to present short tables in what follows.</p>
+  <p>The GC entry allows three different ways of handling the segment-length tapering, as shown in the triple screen grab of <b>Fig. 1</b>, taken from GNEC.</p>
+  <center>
+    <img src="amod54-1.gif" width="564" height="669" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Before we explore the differences among the three variations in segment length handling, note that the radius entry is the same for all three. NEC uses a single equation to taper the element radius, and it is not a simple linear taper. Given a starting and end segment radius, along with the number of segments in the wire, the radius will taper according to the following equation:</p>
+  <center>
+    <img src="amod54e1.gif" width="314" height="94">
+  </center>
+  <p>where R<sub>RAD</sub> is the ratio of two adjacent segment radii, RAD1 is the first specified segment radius, RAD2 is the specified last segment radius, and NS is the specified number of segments. Once the ratio is determined, the program simply multiplies each segment radius by the ratio to arrive at the next in the sequence.</p>
+  <p>In the sample .NEC file, the GC entry for GW3 in the final 2 columns shows .0833 and .5. These are the first and last radii values for a wire that increases in diameter along its length. The final two columns for the GC entry following GW1 are in reverse order, indicating a wire that decreases in diameter along its length. For the moment, it is incidental, but note that the radius of GW2, a 1-segment wire, is the same as the end radius for GW1 and as the start radius for GW3.</p>
+  <p>With respect to the tapering of segment lengths, we have three options, one of which we specify in the first integer place on the GC line:</p>
+  <ul>
+    <li>0 Used to specify a ratio between each adjacent segment on the wire</li>
+    <li>1 Used to specify the length of the first segment on the wire, with the remaining segments calculated by the program</li>
+    <li>2 Used to specify the length of the first segment and the last segment on the wire, with the remaining segments calculated by the program</li>
+  </ul>
+  <p>The sample program uses Type 0 segment length specifications. Had we desired only to change the wire radius but use equal length segments, we would have specified a ratio of 1.0, which would appear in the third column (first floating decimal place) in the GC line. <b>Fig. 1</b> shows a ratio of 0.9009 as the requested ratio for a Type 0 GC entry, while the sample program shows a value of 0.8 for GW1 and 1.25 for GW3. A value less than 1 indicates decreasing segment lengths along the wire, while a value greater than 1 indicates increasing segment lengths along a wire. Since 0.8 is the inverse of 1.25, we receive the clue that GW1 and GW3 will vary their segment lengths so that the resulting total dipole element is exactly symmetrical about the source segment/wire.</p>
+  <p>Let L be the total wire length, i be the segment number, and R<sub>v</sub> be the ratio of adjacent segment lengths. Then the length of the first segment, v<sub>1</sub>, emerges from the following equation:</p>
+  <center>
+    <img src="amod54e2.gif" width="314" height="94">
+  </center>
+  <p>The program then applies the user-selected ratio to the initial segment length value to determine the remaining segment lengths.</p>
+  <p>If we choose a Type 1 GC entry and specify the length of the first segment, we would refer to the middle panel of <b>Fig. 1</b>. The first-segment length selection, if there is one, always goes in the column to the right of the last radius entry in the GC line. The program then solves equation 2 for R<sub>v</sub>, the length ratio, by iteration and then proceeds as in a Type 0 GC line to calculate the successive segment lengths.</p>
+  <p>Both Type 0 and Type 1 segment length calculations use the value in the GW line for the number of segments on the wire. However, the situation changes if we use a Type 2 GC line and specify the length of the first and last segments. In this case, the GC calculations determine both the ratio of a segment length to the next and the number of segments in the wire. Let v<sub>1</sub> be the length of the first segment and v<sub>2</sub> be the length of the last segment. R<sub>v</sub> will be the ratio of adjacent segment lengths and N will be the number of segments in the wire.</p>
+  <center>
+    <img src="amod54e3.gif" width="458" height="91">
+  </center>
+  <p>Since N is rounded to an integer to populate the wire with an integral number of segments, the program recalculates R<sub>v</sub>. Thus, the final segment length may depart slightly from the requested value to accommodate the rounding without changing the requested wire length.</p>
+  <p>(Note: the NEC manuals employ a <i>delta</i> wherever I have written <i>v</i> to indicate a segment length. The use of a letter simplifies HTML coding.)</p>
+  <p>With this background, we may explore a couple of examples of GC use.</p>
+  <p><b>Creating a Bi-conical Dipole</b></p>
+  <p>To a limited degree, we may simulate a bi-conical dipole, that is a wire element whose radius increases continuously from the element center outward. However, the simulation has several restrictions. First, without resorting to wire-cage assemblies, the simulation will use a stepped-diameter element. Instead of decreasing the radius of the wire with each outward movement, we increase the radius. The use of this technique in NEC-2 is subject to the well-known limitation of the program when encountering any stepped-diameter element. It is unreliable. NEC- 4 is more reliable so long as the stepping increment is not too large.</p>
+  <p>Second, the source segment should not change radius or length relative to the immediately adjacent segments. By making the last segment of the first wire and the first segment of the third wire the same length and diameter as the single-segment source wire, we preserve this condition. <b>Fig. 2</b> shows the central portion of a bi-conical simulation using 3 wires and GC entries.</p>
+  <center>
+    <img src="amod54-2.gif" width="545" height="193" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we specify a Type 0 GC entry for both wires 1 and 3, we might initially set the segment length ratio to 1.0, insuring the production of equal segment lengths. We can easily pre-calculate the resulting segment lengths from the GW1 or GW3 entries and set the center wire to the same length in a reasonable number of iterations. The following chart from the NEC output file shows the resulting segment lengths and radii. The internal units of measure in NEC are meters, but the numbers correspond to our 11.7' dipole.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   0.00000   0.00000  -1.62098   0.32420   90.00000   0.00000   0.15240     0    1    2      1
+     2   0.00000   0.00000  -1.29678   0.32420   90.00000   0.00000   0.09737     1    2    3      1
+     3   0.00000   0.00000  -0.97259   0.32420   90.00000   0.00000   0.06220     2    3    4      1
+     4   0.00000   0.00000  -0.64839   0.32420   90.00000   0.00000   0.03974     3    4    5      1
+     5   0.00000   0.00000  -0.32419   0.32420   90.00000   0.00000   0.02539     4    5    6      1
+     6   0.00000   0.00000   0.00000   0.32419   90.00000   0.00000   0.02539     5    6    7      2
+     7   0.00000   0.00000   0.32419   0.32420   90.00000   0.00000   0.02539     6    7    8      3
+     8   0.00000   0.00000   0.64839   0.32420   90.00000   0.00000   0.03974     7    8    9      3
+     9   0.00000   0.00000   0.97259   0.32420   90.00000   0.00000   0.06220     8    9   10      3
+    10   0.00000   0.00000   1.29678   0.32420   90.00000   0.00000   0.09737     9   10   11      3
+    11   0.00000   0.00000   1.62098   0.32420   90.00000   0.00000   0.15240    10   11    0      3
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Note that the program counts segments in absolute numbers. The Tag numbers to the far right indicate the wire to which the segment numbers are assigned. The equality of segment lengths is clear from the near-middle column. As well, we can see the segment radius tapering performed by program calculations in the Wire Radius column.</p>
+  <p>A 3-wire model of the bi-conical simulation is nearly indistinguishable internally in NEC from a model composed of individual wires, each 1 segment long and each having an assigned radius. The following segmentation table shows just such a model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   0.00000   0.00000   1.62100   0.32420  -90.00000   0.00000   0.15200     0    1    2      1
+     2   0.00000   0.00000   1.29680   0.32420  -90.00000   0.00000   0.12100     1    2    3      2
+     3   0.00000   0.00000   0.97260   0.32420  -90.00000   0.00000   0.08890     2    3    4      3
+     4   0.00000   0.00000   0.64840   0.32420  -90.00000   0.00000   0.05710     3    4    5      4
+     5   0.00000   0.00000   0.32420   0.32420  -90.00000   0.00000   0.02540     4    5    6      5
+     6   0.00000   0.00000   0.00000   0.32420  -90.00000   0.00000   0.02540     5    6    7      6
+     7   0.00000   0.00000  -0.32420   0.32420  -90.00000   0.00000   0.02540     6    7    8      7
+     8   0.00000   0.00000  -0.64840   0.32420  -90.00000   0.00000   0.05710     7    8    9      8
+     9   0.00000   0.00000  -0.97260   0.32420  -90.00000   0.00000   0.08890     8    9   10      9
+    10   0.00000   0.00000  -1.29680   0.32420  -90.00000   0.00000   0.12100     9   10   11     10
+    11   0.00000   0.00000  -1.62100   0.32420  -90.00000   0.00000   0.15200    10   11    0     11
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Almost the only clue that we have a different model appears in the TAG NO. column, where we see 11 different wire numbers. However, we do have a second clue: the assignment to each segment a radius that reflects linear stepping. Simply as a matter of interest, you may wish to compare the radius values in this table to those calculated by using the GC card. The linear steps are each 0.03165 m, and the result is a continuously variable ratio between steps, one that decreases with increasing wire radius. In contrast, the earlier GC-calculated set of steps uses a ratio of about 1.565 for each step larger or smaller.</p>
+  <p>One question to consider when selecting a 1.0 ratio between successive segment lengths concerns the changing segment-length-to-radius ratio along the wire. Some modelers may prefer to use a more nearly constant or at least a slower changing ratio of segment length to radius. In the initial segmentation table, the length-to-radius ratio varies from 12.769 at the center to 2.127 at the outer ends of the dipole.</p>
+  <p>To bring those ratios some distance--but far from all the way--together, we may implement a changing segment length by specifying a ratio value other than 1.0. The original model shows a pair of rates: 0.8 for the decreasing radius side of the dipole and 1.25 for the increasing radius side. These values do not coincide with the radius ratio of 1.565, but they may go some distance in closing the gap. How much they close the distance appears in the following segmentation table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                               - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   0.00000   0.00000  -1.53310   0.49996   90.00000   0.00000   0.15240     0    1    2      1
+     2   0.00000   0.00000  -1.08314   0.39997   90.00000   0.00000   0.09737     1    2    3      1
+     3   0.00000   0.00000  -0.72316   0.31997   90.00000   0.00000   0.06220     2    3    4      1
+     4   0.00000   0.00000  -0.43519   0.25598   90.00000   0.00000   0.03974     3    4    5      1
+     5   0.00000   0.00000  -0.20480   0.20478   90.00000   0.00000   0.02539     4    5    6      1
+     6   0.00000   0.00000   0.00000   0.20483   90.00000   0.00000   0.02539     5    6    7      2
+     7   0.00000   0.00000   0.20480   0.20478   90.00000   0.00000   0.02539     6    7    8      3
+     8   0.00000   0.00000   0.43519   0.25598   90.00000   0.00000   0.03974     7    8    9      3
+     9   0.00000   0.00000   0.72316   0.31997   90.00000   0.00000   0.06220     8    9   10      3
+    10   0.00000   0.00000   1.08314   0.39997   90.00000   0.00000   0.09737     9   10   11      3
+    11   0.00000   0.00000   1.53310   0.49996   90.00000   0.00000   0.15240    10   11    0      3
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The segment length to radius ratio is 8.067 at the center and 3.278 at the outer end. How much importance this factor may have will depend upon the particular modeling project at hand. Had we doubled the number of segments in GW1 and GW3, adjusting the center segment length accordingly, the outer segments would have violated the conservative recommendation for a 4:1 segment length to radius ratio, and the revised model would not quite meet the recommendations. However, judicious use of the segment length ratio facility would ease the problem of meeting that recommendation--or any other applicable to a particular model.</p>
+  <p><b>Creating a Buried Radial System</b></p>
+  <p>NEC-4 offers the user the ability to place wires below the surface of the ground. The buried-wire capability allows more accurate modeling of vertical monopoles and related antennas that use buried ground-plane radial systems. Modeling such systems in the most economic manner relative to core run time without short-cuts that threaten the accuracy of the results is another good exercise for the GC entry.</p>
+  <center>
+    <img src="amod54-3.gif" width="470" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> sketches a radial system of 120-128 radials, as might be used in either an advanced amateur or commercial broadcast antenna system. (Many such systems employ secondary short radial systems close to the antenna base.) Let's set the vertical monopole at a maximum height of 40 m and give it a 25-mm diameter. The radials will be 2-mm in diameter and extend a full 1/4 wavelength from the antenna base or 40.9553 m.</p>
+  <p>The rules for ground penetration of the monopole require that the Z=0 level coincide with a segment junction, and to minimize chances for error, many experts recommend that this also be a wire junction. The radial system will be 0.16382 m below ground, which dictates that the wire length from Z=0 to the radial junction be that length. Equally important for accuracy is that the source segment and the segments adjoining it be of equal length. Since we wish the source to be on the lowest segment above ground, that segment must be 0.16382-m long, and as well, the segment above it.</p>
+  <p>These requirements would suggest that we construct the entire model from segments that are 0.16382-m long. The result would be an exceptionally large model in terms of segment numbers. However, a technique developed for MININEC can reduce the model size to manageable proportions. Some programs, such as EZNEC, implement a form of element length-tapering that calculates from a specified end 1 (or both ends toward the middle) increasing lengths on a 2:1 length ratio, starting from a user-specified shortest length to a user specified longest length. The result is a smaller model with no significant loss of accuracy (assuming judicious application of the tapering feature). The lower half of <b>Fig. 3</b> shows the general tapering principle involved.</p>
+  <p>The cost of tapering is a very significant increase in the number of individual wires, although this increase in no way matches the decrease in the total number of segments. A 128-radial version of the monopole, with element length-tapering applied to the main element as well as to the radials, results in 776 wires and 1550 segments. This is about the best one might do with an implementation of NEC that uses only the GW, GS, and GE geometry inputs. However, if the basic, pre-tapered, model had been transferred to NEC-4 in a program allowing the use of the GC entry, we might have saved about 645 of the wires. Since run time is an exponential function of both the number of segments and the number of wires, in many very large problems, we might save a significant amount of time.</p>
+  <p>Let's illustrate the differences between a hand-tapered model and a GC-tapered model using a somewhat smaller system. We shall take the same monopole and place it over only 4 radials. This move will shrink the repetitive radial portion of the model to readable proportions. An external tapering of the elements would present the following wire table (without the associated program control entries).</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 160-m 1/4 wl vert-4 bur radial
+CE
+GW 1,7,0.,0.,40.,0.,0.,5.242276,.0125
+GW 2,1,0.,0.,5.242276,0.,0.,2.621138,.0125
+GW 3,1,0.,0.,2.621138,0.,0.,1.31057,.0125
+GW 4,1,0.,0.,1.31057,0.,0.,.6552857,.0125
+GW 5,1,0.,0.,.6552857,0.,0.,.3276435,.0125
+GW 6,1,0.,0.,.3276435,0.,0.,.163821,.0125
+GW 7,1,0.,0.,.163821,0.,0.,0.,.0125
+GW 8,1,0.,0.,0.,0.,0.,-.163821,.0125
+GW 9,1,0.,0.,-.163821,.1638211,0.,-.163821,.001
+GW 10,1,.1638211,0.,-.163821,.4914632,0.,-.163821,.001
+GW 11,1,.4914632,0.,-.163821,1.146747,0.,-.163821,.001
+GW 12,1,1.146747,0.,-.163821,2.457316,0.,-.163821,.001
+GW 13,1,2.457316,0.,-.163821,5.078453,0.,-.163821,.001
+GW 14,7,5.078453,0.,-.163821,40.95526,0.,-.163821,.001
+GW 15,1,0.,0.,-.163821,1.2368E-8,.1638211,-.163821,.001
+GW 16,1,1.2368E-8,.1638211,-.163821,3.7104E-8,.4914632,-.163821,.001
+GW 17,1,3.7104E-8,.4914632,-.163821,8.6577E-8,1.146747,-.163821,.001
+GW 18,1,8.6577E-8,1.146747,-.163821,1.8552E-7,2.457316,-.163821,.001
+GW 19,1,1.8552E-7,2.457316,-.163821,3.8341E-7,5.078453,-.163821,.001
+GW 20,7,3.8341E-7,5.078453,-.163821,3.092E-06,40.95526,-.163821,.001
+GW 21,1,0.,0.,-.163821,-.1638211,2.4736E-8,-.163821,.001
+GW 22,1,-.1638211,2.4736E-8,-.163821,-.4914632,7.4209E-8,-.163821,.001
+GW 23,1,-.4914632,7.4209E-8,-.163821,-1.146747,1.7315E-7,-.163821,.001
+GW 24,1,-1.146747,1.7315E-7,-.163821,-2.457316,3.7104E-7,-.163821,.001
+GW 25,1,-2.457316,3.7104E-7,-.163821,-5.078453,7.6683E-7,-.163821,.001
+GW 26,7,-5.078453,7.6683E-7,-.163821,-40.95526,6.1841E-6,-.163821,.001
+GW 27,1,0.,0.,-.163821,1.9535E-9,-.1638211,-.163821,.001
+GW 28,1,1.9535E-9,-.1638211,-.163821,5.8606E-9,-.4914632,-.163821,.001
+GW 29,1,5.8606E-9,-.4914632,-.163821,1.3675E-8,-1.146747,-.163821,.001
+GW 30,1,1.3675E-8,-1.146747,-.163821,2.9303E-8,-2.457316,-.163821,.001
+GW 31,1,2.9303E-8,-2.457316,-.163821,6.056E-08,-5.078453,-.163821,.001
+GW 32,7,6.056E-08,-5.078453,-.163821,4.8839E-7,-40.95526,-.163821,.001
+GE -1
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The length-tapering of each element uses 32 wires. However, a GC-tapered equivalent model would use only 8 wires (including the untouched wires in the vicinity of the ground penetration).</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 160-m 1/4 wl vert-4 bur radial
+CE
+GW 1,11,0.,0.,40.,0.,0.,.327644,0
+GC 2 0 0 .0125 .0125 13 .16328
+GW 2,1,0.,0.,.327644,0.,0.,.163821,.0125
+GW 3,1,0.,0.,.163821,0.,0.,0.,.0125
+GW 4,1,0.,0.,0.,0.,0.,-.163821,.0125
+GW 5,12,0.,0.,-.163821,40.9553,0.,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 6,12,0.,0.,-.163821,0.,40.9553,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 7,12,0.,0.,-.163821,-40.9553,0.,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 8,12,0.,0.,-.163821,0.,-40.9553,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GE -1
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We have added to each long element a GC entry. The main element entry, below GW1, works from the top of the monopole downward, while the radial entries work from the junction outward for GW5 through GW8. The model specifies a Type 2 GC entry, with both the starting and ending segment lengths specified: 0.16281 and 13.5 for the radials. The main element begins with a 13.0-m first segment and works down to the 0.16281-m length.</p>
+  <p>The essential internal calculations appear in the geometry specification section of the NEC output file.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                   - - - STRUCTURE SPECIFICATION - - -
+
+                                     COORDINATES MUST BE INPUT IN
+                                     METERS OR BE SCALED TO METERS
+                                     BEFORE STRUCTURE INPUT IS ENDED
+
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+     1    0.00000    0.00000   40.00000     0.00000    0.00000    0.32764    0.00000     11        1    11       1
+         ABOVE WIRE IS TAPERED.  REQUESTED INITIAL AND FINAL SEG. LENGTHS = 13.00000  0.16328
+                                 RADIUS FROM  0.01250 TO  0.01250
+                                 COMPUTED NUMBER OF SEGMENTS =    12   LENGTH RATIO =  0.67526
+     2    0.00000    0.00000    0.32764     0.00000    0.00000    0.16382    0.01250      1       13    13       2
+     3    0.00000    0.00000    0.16382     0.00000    0.00000    0.00000    0.01250      1       14    14       3
+     4    0.00000    0.00000    0.00000     0.00000    0.00000   -0.16382    0.01250      1       15    15       4
+     5    0.00000    0.00000   -0.16382    40.95530    0.00000   -0.16382    0.00000     12       16    27       5
+         ABOVE WIRE IS TAPERED.  REQUESTED INITIAL AND FINAL SEG. LENGTHS =  0.16328 13.50000
+                                 RADIUS FROM  0.00100 TO  0.00100
+                                 COMPUTED NUMBER OF SEGMENTS =    12   LENGTH RATIO =  1.49568
+     6    0.00000    0.00000   -0.16382     0.00000   40.95530   -0.16382    0.00000     12       28    39       6
+         ABOVE WIRE IS TAPERED.  REQUESTED INITIAL AND FINAL SEG. LENGTHS =  0.16328 13.50000
+                                 RADIUS FROM  0.00100 TO  0.00100
+                                 COMPUTED NUMBER OF SEGMENTS =    12   LENGTH RATIO =  1.49568
+     7    0.00000    0.00000   -0.16382   -40.95530    0.00000   -0.16382    0.00000     12       40    51       7
+         ABOVE WIRE IS TAPERED.  REQUESTED INITIAL AND FINAL SEG. LENGTHS =  0.16328 13.50000
+                                 RADIUS FROM  0.00100 TO  0.00100
+                                 COMPUTED NUMBER OF SEGMENTS =    12   LENGTH RATIO =  1.49568
+     8    0.00000    0.00000   -0.16382     0.00000  -40.95530   -0.16382    0.00000     12       52    63       8
+         ABOVE WIRE IS TAPERED.  REQUESTED INITIAL AND FINAL SEG. LENGTHS =  0.16328 13.50000
+                                 RADIUS FROM  0.00100 TO  0.00100
+                                 COMPUTED NUMBER OF SEGMENTS =    12   LENGTH RATIO =  1.49568
+
+   GROUND PLANE SPECIFIED.
+
+   TOTAL SEGMENTS USED=   63     NO. SEG. IN A SYMMETRIC CELL=   63     SYMMETRY FLAG=  0
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Note that each GC request for tapering specifies the same radius for the starting and stopping segments. In this instance, we are interesting only in length-tapering the segments. The result uses shorter segment lengths closer into the junction and longer ones further out than the manual tapered model. To give a one-radial example, the following table tracks the segment lengths of a radial from this model from the geometry structure section of the NEC output file, immediately following the input request section that we have just viewed.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+
+    16   0.08164   0.00000  -0.16382   0.16328    0.00000   0.00000   0.00100   -28   16   17      5
+    17   0.28539   0.00000  -0.16382   0.24422    0.00000   0.00000   0.00100    16   17   18      5
+    18   0.59013   0.00000  -0.16382   0.36527    0.00000   0.00000   0.00100    17   18   19      5
+    19   1.04592   0.00000  -0.16382   0.54632    0.00000   0.00000   0.00100    18   19   20      5
+    20   1.72765   0.00000  -0.16382   0.81712    0.00000   0.00000   0.00100    19   20   21      5
+    21   2.74728   0.00000  -0.16382   1.22215    0.00000   0.00000   0.00100    20   21   22      5
+    22   4.27232   0.00000  -0.16382   1.82794    0.00000   0.00000   0.00100    21   22   23      5
+    23   6.55330   0.00000  -0.16382   2.73400    0.00000   0.00000   0.00100    22   23   24      5
+    24   9.96489   0.00000  -0.16382   4.08919    0.00000   0.00000   0.00100    23   24   25      5
+    25  15.06753   0.00000  -0.16382   6.11610    0.00000   0.00000   0.00100    24   25   26      5
+    26  22.69944   0.00000  -0.16382   9.14771    0.00000   0.00000   0.00100    25   26   27      5
+    27  34.11430   0.00000  -0.16382  13.68201    0.00000   0.00000   0.00100    26   27    0      5
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Whether from idle curiosity or some other purpose, we may contrast this scheme with the manually tapered comparable radial.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  SEG.   COORDINATES OF SEG. CENTER     SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.       X         Y         Z       LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+
+    15   0.08191   0.00000  -0.16382   0.16382    0.00000   0.00000   0.00100   -27   15   16      9
+    16   0.32764   0.00000  -0.16382   0.32764    0.00000   0.00000   0.00100    15   16   17     10
+    17   0.81911   0.00000  -0.16382   0.65528    0.00000   0.00000   0.00100    16   17   18     11
+    18   1.80203   0.00000  -0.16382   1.31057    0.00000   0.00000   0.00100    17   18   19     12
+    19   3.76788   0.00000  -0.16382   2.62114    0.00000   0.00000   0.00100    18   19   20     13
+    20   7.64108   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    19   20   21     14
+    21  12.76634   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    20   21   22     14
+    22  17.89160   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    21   22   23     14
+    23  23.01686   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    22   23   24     14
+    24  28.14211   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    23   24   25     14
+    25  33.26737   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    24   25   26     14
+    26  38.39263   0.00000  -0.16382   5.12526    0.00000   0.00000   0.00100    25   26    0     14
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The differences in output reports between the two systems of tapering--one continuous, the other with a user-specified limit to outer segment length--are not great. Both models show a theta angle of 73 degrees (17-degree elevation angle). The manually tapered model shows a gain of 2.10 dBi in contrast to the 2.06 figure for the GC-tapered model. The corresponding source impedance reports are 47.4 + j 14.5 Ohms and 47.5 + j 14.0 Ohms.</p>
+  <p>Although the 4-radial model saves us only 24 wires and hence little time on a modern PC, it is likely that a 128-radial model would save noticeable time. As well, more complex models, perhaps involving the shorter radials as well as the full size ones, might save enough time to make a difference in the course of a project.</p>
+  <p>Nevertheless, our foray into the use of the GC entry has been primarily to examine its capabilities and how to implement them. Ultimately, the aptness of the entry for a particular model is a judgment call by the modeler.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

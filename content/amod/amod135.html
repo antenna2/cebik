@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AM BC Modeling with NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>AM BC Modeling with NEC<br>
+    5. Multiple Tower Arrays</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>In our journey through the netherworld of AM BC towers modeled over perfect ground, we have examined the techniques needed with NEC cores (especially NEC-4) for obtaining the type of results that modelers obtain from specialized MININEC programs. Among the items that we have explored are the correlations among models using the NAB-recommended substitute single wire tower models, independent 3- and 4-leg tower models, and full-structure models. We noted along the way steps necessary to ensure that we supply a model with a set power (in all the samples, 1 kW) and the output command necessary to obtain field-strength readings (RP1). We noted that NEC itself uses peak values of voltage and current. Hence, field-strength readings and supplied current specifications require adjustment by the usual 0.7071 multiplier to convert them into RMS values. We also looked at various cases in which one or another model version appeared to be preferable for various reasons. For example, we turned to the 4 independent leg model to handle square towers that slope from bottom to top. However, for working with stepped-diameter towers, the single-wire substitute model provides the most advantageous model.
+  <p>All of our samples in the 4 preceding episodes used a single tower centered on the coordinate system center (X=0, Y=0). Typical of those one-tower models was the near resonant 234' tower at 1 MHz, with an 18" face of a triangular tower. The model that we used earlier looked almost like the one that we shall show here.</p>
+  <pre>
+CM near-resonant monopole, perfect ground
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 234 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 7.4897
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+RP 1 1 1 0000 0 0 1.00000 1.00000 3218.688
+EN
+</pre>
+  <p>The only difference between past models and this one is that the new version adds a second RP1 command at a distance of 2 miles to the original that uses a distance of 1 mile. Both commands use ground level as the observation height for the command. The basic data collection is in the following lines.</p>
+  <pre>
+Near Resonant (234') 18" Face Triangular Single-Wire Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile            F-S @ 2 miles
+35.65 - j 1.29    7.4897          5.14         1.999   0.00     275.1 mV/m @ -45.6 deg  137.5 mV/m @ -178.1 deg
+</pre>
+  <p>If the only field-strength value in which we have any interest is the magnitude (in peak mv/m as shown or adjusted to RMS), then we need not add the second RP1 request. For perfect ground, field-strength magnitude values decrease linearly with distance from the antenna. However, if we have any interest in the phase angle, the second request is necessary to obtain the additional figures.</p>
+  <p>In this episode, the tower that we have just modeled will play a significant role, but not solo. In this episode, we shall look at some very basic cases that employ two towers with considerations of the current magnitude and phase angle at each source--remembering that we are using the standard method in NEC to provide current sources. The task will sometimes involve more than simply adding a second tower to the GW portion of the list.</p>
+  <p><b>Two Towers Fed In-Phase for a Broadside Pattern</b></p>
+  <p>Suppose that we need a pattern like the one shown in <b>Fig. 1</b> to fulfill broadcast needs and restrictions. The simplest way to obtain it is with two towers, in this case, using broadside array techniques. In the present sample, we shall use only simple arrays to illustrate the modeling aspects. Actual arrays may be considerably more complex, and the resultant patterns may be equally complex. The pattern is laid out according to the compass-rose azimuth conventions favored by some agencies and many field engineers.</p>
+  <center>
+    <img src="amod135-1.gif" border="2" height="415" hspace="9" vspace="5" width="426">
+  </center>
+  <p>The desired coverage calls for a moderate increase in gain along the N-S axis with lesser gain in the E-W directions. One way to obtain such coverage is to arrange two towers about 1/4 wavelength apart in the E-W plane (+Y and -Y) and to feed them in phase. Initially, this feed requirement will use two sources, each supplied with the same current magnitude and phase angle, with the magnitude determined by our standard 1-kW power level. We shall use our single-wire substitute for a 234' tower in each case. A wavelength at 1 MHz is 983.571 feet, so the separation between towers is 245.893'.</p>
+  <pre>
+CM 2 near-resonant monopoles, perfect ground
+CM NAB substitute single-wire monopole
+CM in-phase feeding--1/-wl spacing
+CE
+GW 1 41 0 122.946 0 0 122.946 234 0.555
+GW 2 41 0 -122.946 0 0 -122.946 234 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 4.3339
+EX 0 30902 1 0 0.0 4.3339
+NT 30901 1 1 1 0 0 0 1 0 0 0
+NT 30902 1 2 1 0 0 0 1 0 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+RP 1 1 37 0000 0 0 1.00000 10.00000 1609.344
+EN
+</pre>
+  <p>The simple data collection, as we can see from the following lines, does not tell the full story, as it did for the single tower models. The collection also omits the 2-mile field-strength report.</p>
+  <pre>
+Two-Tower Broadside Array 18" Face Triangular Single-Wire Monopole Model Data
+
+Impedance (Ohms)    Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+53.24 - j17.40 x2   4.3339/tower    6.23 max.    1.999   0.00     311.5 mV/m @ -47.2 deg
+</pre>
+  <p>The impedance reports are for each tower, as is the current magnitude. The gain and the field-strength values are maximum values, taken in the northern direction (0 degrees, which corresponds to the +X direction on the geometry coordinate system). However, we shall be interested in both the gain and the field strength in various directions around the pattern. Because the field strength is likely to be the more important figure, we may wish to examine a table of figures taken at suitable intervals. The following sample from the model traces 1/4 of the pattern (because it is symmetrical) at 10-degree intervals.</p>
+  <pre>
+**** Electric Field: Phi Pattern ****
+Z=0, Freq=1, File=fcc51.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+  Phi      Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+   0.00   3.1157E-001    -47.23   5.3620E-022   -108.51
+  10.00   3.0868E-001    -47.23   4.3494E-022    105.73
+  20.00   3.0040E-001    -47.23   3.2047E-022   -167.59
+  30.00   2.8786E-001    -47.23   1.9626E-022    137.96
+  40.00   2.7271E-001    -47.23   6.6090E-023    -66.91
+  50.00   2.5687E-001    -47.23   6.6090E-023    113.09
+  60.00   2.4224E-001    -47.23   1.9626E-022    -42.04
+  70.00   2.3051E-001    -47.23   3.2047E-022     12.41
+  80.00   2.2293E-001    -47.23   4.3494E-022    -74.27
+  90.00   2.2032E-001    -47.23   5.3620E-022     71.49
+</pre>
+  <p>The E(theta) columns represent the vertical component of the field-strength calculations. The horizontal component (E(phi) is too small to be significant. To better visualize the changes in field strength as we move around the overall pattern, we may also graph the values, as shown in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod135-2.gif" border="2" height="386" hspace="9" vspace="5" width="592">
+  </center>
+  <p>The combination of data allows significant evaluation of the likely performance of the 2-tower broadside array. Of course, the sample selects a spacing between towers that yields less than the full broadside bi-directional gain of such towers. Wider spacing will yield more gain in the N-S direction with less gain in the E-W direction. As a certain point as we increase spacing, the oval pattern will gradually evolve into a figure-8.</p>
+  <p>Our interest does not lie in what we can do with towers so much as it lies in what we can include in and show by appropriate modeling. For example, we may wish to include in the model a composite feed system so that we have only a single source. The normal form of feeding the system would be to bring transmission lines from each tower to a central point so that each line is equal in length (and characteristic impedance) to the other. We may set up such lines by selecting the junction point and placing a short, thin wire to serve as the source as well as the junction between lines. Let's arbitrarily set up two 600-Ohm transmission lines, one from each tower. The terminal points for the lines and the source will be a position exactly centered between the towers (Y=0) and 245' (1/4 wavelength) away from the towers. The general outline of the model will have the appearance of the set-up in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod135-3.gif" border="2" height="336" hspace="9" vspace="5" width="350">
+  </center>
+  <p>To model this situation, without altering the tower positions or other attributes, we need a model that resembles the following lines.</p>
+  <pre>CM 2 near-resonant monopoles  perfect ground
+CM NAB substitute single-wire monopole
+CM in-phase common feeding--1/4-wl spacing
+CE
+GW 1 41 0 122.946 0 0 122.946 234 0.555
+GW 2 41 0 -122.946 0 0 -122.946 234 0.555
+GW 3 1 -245 0 1 -245 0 2 0.0001
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.5138
+NT 30901 1 3 1 0 0 0 1 0 0
+TL 1 1 3 1 600 0 ! User Defined VF
+TL 2 1 3 1 600 0 ! User Defined VF
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1 1
+RP 0 1 361 1000 90 0 1 1
+RP 1 1 37 0000 0 0 1.00000 10.00000 1609.344
+EN
+</pre>
+  <p>Form this model we may obtain the usual data collection.</p>
+  <pre>
+Two-Tower Broadside Array, Common Source, 18" Face Triangular Single-Wire Monopole Model Data
+
+Impedance (Ohms)    Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+872.8 - j1457.8     1.5138          6.23 max.    1.999   0.00     311.5 mV/m @ -47.2 deg
+</pre>
+  <p>Only the impedance and the required current for 1kW differ from the dual-source model. To confirm the high source impedance, we may independently calculate the current transformation down each 600-Ohm line, with a length of 274.12' based on the separate source impedance values of 53.24 - j17.40 Ohms. The result will be separate impedances of about 1754 - j2920 Ohms, which combine in parallel to 877 - j1460 Ohms, very close to the modeled values, considering the rapid change in value for each small increment of length.</p>
+  <p>If the impedance is inconvenience due to the 100.3-degree lines required, we may always change the position of the junction. The shortest lines occur when we place the junction in line with the towers at Y=0, as suggested by <b>Fig. 4</b>. The lines have shrunk to 45 degrees.</p>
+  <center>
+    <img src="amod135-4.gif" border="2" height="336" hspace="9" vspace="5" width="350">
+  </center>
+  <p>The only change to the model is in the placement of GW3, as the following partial model file shows.</p>
+  <pre>
+GW 1 41 0 122.946 0 0 122.946 234 0.555
+GW 2 41 0 -122.946 0 0 -122.946 234 0.555
+GW 3 1 0 0 1 0 0 2 0.0001
+</pre>
+  <p>We do not required changes in the TL command entries because we have used zeros (after the characteristic impedance entry of 600) to specify that the line length is the actual distance between the terminal points as defined by the wire entries.</p>
+  <pre>
+TL 1 1 3 1 600 0 ! User Defined VF
+TL 2 1 3 1 600 0 ! User Defined VF
+</pre>
+  <p>In the data collection, we find that the only resultant differences occur in the entries for the composite source impedance and the required peak current level needed at this impedance to achieve a 1-kW power level.</p>
+  <pre>
+Two-Tower Broadside Array, Common Source, 18" Face Triangular Single-Wire Monopole Model Data
+
+Impedance (Ohms)    Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+49.96 + j 278.9     6.3272          6.23 max.    1.999   0.00     311.5 mV/m @ -47.2 deg
+</pre>
+  <p>NEC employs lossless transmission lines for its calculations. At 1 MHz for virtually any line less than 1/2 wavelength long, the values for lossless line calculations will not differ significantly from calculations including line losses. The model set-ups also presume a velocity factor of 1.0. If the velocity factor of a line departs significantly from that value, one may always insert the electrical line length in place of our use of zero to force the program to use the actual distance between terminal points on the line.</p>
+  <p>Not all arrays require patterns with maximum field-strength values going north and south. Suppose that we require that the pattern have its gain maximum point aligned along an axis defined by compass heading of 60 and 240 degrees. In general, there are two major ways to achieve this goal. One is to set up each tower so that the broadside direction is automatically along the desired axis. The other method, shown here, is to set up the model in the simple manner shown earlier and then to turn the entire array around the Z-axis by the required 60 degrees. Note in the following model lines, that to turn the axis clockwise--as the present situation requires, we specify -60 degrees in the GM line. (+60 degrees turns the pattern counterclockwise.)</p>
+  <pre>
+CM 2 near-resonant monopoles  perfect ground
+CM NAB substitute single-wire monopole
+CM in-phase common feeding--1.4-wl spacing
+CM rotated for 60/240-deg AZ axis
+CE
+GW 1 41 0 122.946 0 0 122.946 234 0.555
+GW 2 41 0 -122.946 0 0 -122.946 234 0.555
+GW 3 1 -245 0 1 -245 0 2 0.0001
+GM 0 0 0 0 -60 0 0 0
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.5138
+NT 30901 1 3 1 0 0 0 1 0 0
+TL 1 1 3 1 600 0 ! User Defined VF
+TL 2 1 3 1 600 0 ! User Defined VF
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1 1
+RP 0 1 361 1000 90 0 1 1
+RP 1 1 37 0000 0 0 1.00000 10.00000 1609.344
+EN
+</pre>The model shown uses the long transmission lines. However, that fact only allows the GM rotation to show with clarity in <b>Fig. 5</b>.
+  <center>
+    <img src="amod135-5.gif" border="2" height="336" hspace="9" vspace="5" width="350">
+  </center>
+  <p>We need not show the data collection, since it has not changed. What has changed is the field-strength table. The magnitudes will be the same as the earlier sample shown, but the headings on which they occur will differ. Remember that for tabular information, NEC uses the phi or counterclockwise convention. Therefore, the 60-degree compass-rose azimuth bearing coincides with the phi 300-degree bearing in the following table.</p>
+  <pre>
+**** Electric Field: Phi Pattern ****
+Z=0, Freq=1, File=fcc53.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+  Phi      Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+   0.00   2.4224E-001    162.75   9.3641E-023   -108.70
+  10.00   2.3051E-001    162.75   7.5958E-023    105.52
+  20.00   2.2294E-001    162.75   5.5967E-023   -167.82
+  30.00   2.2032E-001    162.75   3.4275E-023    137.71
+  40.00   2.2294E-001    162.75   1.1542E-023    -67.17
+  50.00   2.3051E-001    162.75   1.1542E-023    112.83
+  60.00   2.4224E-001    162.75   3.4275E-023    -42.29
+  70.00   2.5687E-001    162.75   5.5967E-023     12.18
+  80.00   2.7271E-001    162.75   7.5958E-023    -74.48
+  90.00   2.8786E-001    162.75   9.3641E-023     71.30
+ 100.00   3.0041E-001    162.75   1.0848E-022    106.98
+ 110.00   3.0869E-001    162.75   1.2002E-022     53.35
+ 120.00   3.1158E-001    162.75   1.2792E-022    -66.10
+ 130.00   3.0869E-001    162.75   1.3192E-022    134.16
+ 140.00   3.0041E-001    162.75   1.3192E-022    -39.16
+ 150.00   2.8786E-001    162.75   1.2792E-022    161.09
+ 160.00   2.7271E-001    162.75   1.2002E-022     41.65
+ 170.00   2.5687E-001    162.75   1.0848E-022    -11.99
+ 180.00   2.4224E-001    162.75   9.3641E-023     23.69
+ 190.00   2.3051E-001    162.75   7.5958E-023    169.48
+ 200.00   2.2294E-001    162.75   5.5967E-023     82.82
+ 210.00   2.2032E-001    162.75   3.4275E-023    137.29
+ 220.00   2.2294E-001    162.75   1.1542E-023    -17.83
+ 230.00   2.3051E-001    162.75   1.1542E-023    162.17
+ 240.00   2.4224E-001    162.75   3.4275E-023    -42.71
+ 250.00   2.5687E-001    162.75   5.5967E-023    -97.18
+ 260.00   2.7271E-001    162.75   7.5958E-023    -10.52
+ 270.00   2.8786E-001    162.75   9.3641E-023   -156.31
+ 280.00   3.0041E-001    162.75   1.0848E-022    168.01
+ 290.00   3.0869E-001    162.75   1.2002E-022   -138.35
+ 300.00   3.1158E-001    162.75   1.2792E-022    -18.91
+ 310.00   3.0869E-001    162.75   1.3192E-022    140.84
+ 320.00   3.0041E-001    162.75   1.3192E-022    -45.84
+ 330.00   2.8786E-001    162.75   1.2792E-022    113.90
+ 340.00   2.7271E-001    162.75   1.2002E-022   -126.65
+ 350.00   2.5687E-001    162.75   1.0848E-022    -73.02
+ 360.00   2.4224E-001    162.75   9.3641E-023   -108.70
+</pre>
+  <p><b>Fig. 6</b> re-confirms the successful rotation by showing the far-field pattern for the revised model. The lines on either side of the main axis lines indicate the half-power beamwidth, suggesting that the gain is about 3 dB weaker at right angles to the main axis. You may correlate this to the ratio of the relevant field-strength reports by the usual equation in which PdB = 20 log<sub>(10)</sub>(E1/E2).</p>
+  <center>
+    <img src="amod135-6.gif" border="2" height="415" hspace="9" vspace="5" width="426">
+  </center>
+  <p>The notes so far have dealt with the simple case in which the sources for each broadside element are identical with respect to current magnitude and phase angle. Not all arrays of towers have such an easy requirement.</p>
+  <p><b>An Endfire Array of Two Towers</b></p>
+  <p>For directional patterns, that is, patterns with a dominant lobe in only one direction, array designers generally use end-fire techniques so that the pattern is in line with the towers rather than broadside to them. We shall employ only a very basic two-tower array to note the key modeling points of interest. However, some installations have used up to 4 towers to obtain specific pattern shapes. As well, in some instances, designs have combined broadside with end-fire techniques for truly large arrays. Since there are texts devoted to the design of such arrays, we may focus on translating endfire arrays into models over perfect ground. We shall retain our 234' tower with the single-wire equivalent of an 18" face on a triangular structure. As was clear in the broadside array, mutual coupling between towers in relatively close proximity alters the source impedance so that each tower in the array is no longer self-resonant. (Compare the source impedance values for the initial 2-source broadside model with the source impedance of the reference single-tower model at the beginning of these notes.) Our present exercise will require even closer attention to the impedances reported for each tower.</p>
+  <center>
+    <img src="amod135-7.gif" border="2" height="336" hspace="9" vspace="5" width="330">
+  </center>
+  <p>Our sample will use two towers separated by 1/4 wavelength. To set the main-lobe direction at north (0 degrees azimuth), we align the towers along the X-axis. To ensure that we place the array center at the coordinate center, each tower is 1/8 wavelength from X=0. The resulting geometry is simply our broadside array turned 90 degrees. In fact, if we were to feed the two sources in phase, we would obtain the earlier broadside pattern with the stronger field-strength reading east and west.</p>
+  <pre>
+CM 2 near-resonant monopoles, perfect ground
+CM NAB substitute single-wire monopole
+CM end-fire two-tower array
+CM 90-degree feeding--1/4wl spacing
+CE
+GW 1 41 122.946 0 0 122.946 0 234 0.555
+GW 2 41 -122.946 0 0 -122.946 0 234 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 5.3579 0
+EX 0 30902 1 0 0.0 5.3579
+NT 30901 1 1 1 0 0 0 1 0 0 0
+NT 30902 1 2 1 0 0 0 1 0 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+RP 1 1 37 0000 0 0 1.00000 10.00000 1609.344
+EN
+</pre>
+  <p>In the model, GW 1 is the forward tower, that is, the tower in the direction of the main lobe, with GW 2 to the rear. Basic array theory tells us that we shall obtain a highly directional pattern if we feed the towers so that the rear tower has the same current magnitude as the forward tower. However, the phase angle of the rear tower current should be +90-degree relative to the forward tower (or the forward tower phase angle should be -90 degrees relative to the rearward tower). Some software allows the modeler to enter the desired values directly into the input interface screens. However, we shall do it the "old-fashioned" way by manipulating the currents on the remote EX entries for our current-fed array.</p>
+  <p>The problem at hand is simplified by the use of equal current magnitudes. However, the EX entry in NEC lists the excitation voltage in terms of real and imaginary components of the voltage that we shall transform into a current via the NT entries. <b>Fig. 8</b> shows the help screens (a composite of 2 screens, one for each source) to assist us in sorting out the entries. The screens list both the components and the magnitude and phase angle, and we may set up the line by placing the values in either format. As the screen shows, the forward tower (1) is 90 degrees behind the rearward tower (2) with respect to the phase angle. Compare these entries to the EX commands in the model.</p>
+  <center>
+    <img src="amod135-8.gif" border="2" height="467" hspace="9" vspace="5" width="377">
+  </center>
+  <p>Now let's perform one more comparison: the EX entries with the currents that appear on the source segments of the two towers. We may glean this information from the NEC output file.</p>
+  <pre>
+**** Segment Current versus Frequency ****
+
+FREQUENCY     SEG.  TAG    COORD. OF SEG. CENTER     SEG.             - - - CURRENT (AMPS) - - -
+  (MHz)       NO.   NO.     X        Y        Z      LENGTH      REAL         IMAG.        MAG.        PHASE
+1.000000         1    1   0.1250   0.0000   0.0029  0.00580   -9.6451E-16  -4.3339E+00   4.3339E+00  -90.000
+1.000000        42    2  -0.1250   0.0000   0.0029  0.00580    4.3339E+00  -1.4008E-16   4.3339E+00    0.000
+</pre>
+  <p>Although we entered the source voltages with phase angles of 0 and 90 degrees for towers 1 and 2, respectively, the currents on the sources have phase angles of -90 and 0 degrees, respectively. We now understand two things. First, the voltage entries for the EX line have preserved their phase difference in the conversion to current values on the source segments. Second, the NT command responsible for the conversion shifts the entered phase angle by -90 degrees relative to the final current reports on the affected segments. If we forget this second fact, it shows up quite rapidly, since the pattern for entering the phase angles backwards will also be backwards.</p>
+  <center>
+    <img src="amod135-9.gif" border="2" height="415" hspace="9" vspace="5" width="426">
+  </center>
+  <p><b>Fig. 9</b> shows the resulting far-field patterns that merges from the model that we have constructed. If we truly needed to reduce the rearward radiation further, we may juggle both the magnitude and the phase angle of the EX entries until satisfied. However, once we have established the desired pattern, we would need to re-adjust the current magnitudes with respect to the total power supplied to the array as indicated by the power budget portion of the NEC output report, using the technique shown in the first of these episodes. The values shown are for our pre-set power level of 1 kW.</p>
+  <p>The methods for obtaining a main-lobe direction other than north are the same as for the broadside array. We may perform pre-modeling calculations so as to place the towers in the correct positions to yield a pattern with the desired heading, or we may construct the tower using the X-axis as the main line and then rotate the tower wires using the GM command. Let's rotate the array so that the main lobe has a heading of 315 degrees on the compass-rose azimuth scale. We need to inform the GM command to rotate the structure +45 degrees to effect the counterclockwise rotation, as shown in the following model.</p>
+  <pre>
+CM 2 near-resonant monopoles, perfect ground
+CM NAB substitute single-wire monopole
+CM end-fire two-tower array
+CM 90-degree feeding--1/4wl spacing
+CM 315-deg AZ heading via GM
+CE
+GW 1 41 122.946 0 0 122.946 0 234 0.555
+GW 2 41 -122.946 0 0 -122.946 0 234 0.555
+GM 0 0 0 0 45 0 0 0
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 5.3579 0
+EX 0 30902 1 0 0.0 5.3579
+NT 30901 1 1 1 0 0 0 1 0 0 0
+NT 30902 1 2 1 0 0 0 1 0 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+RP 1 1 37 0000 0 0 1.00000 10.00000 1609.344
+EN
+</pre>
+  <p><b>Fig. 10</b> shows the resulting pattern.</p>
+  <center>
+    <img src="amod135-10.gif" border="2" height="415" hspace="9" vspace="5" width="426">
+  </center>
+  <p>The data collection for both of our sample endfire arrays is the same.</p>
+  <pre>
+Two-Tower Endfire Array, Source at 90-Degree Phasing, 18" Face Triangular Single-Wire Monopole Model Data
+
+Tower  Impedance (Ohms)    Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+1      50.74 + j16.91      5.3579 @ -90    8.25 max.    1.999   0.00     393.5 mV/m @ -90.7 deg
+2      18.93 - j19.90      5.3579 @ 0 deg
+</pre>
+  <p>Obtaining the desired phase shift and power division with a single ultimate source is subject to many techniques that we shall leave to external calculations. However, it is possible to construct a fairly complex model with a combination of TL and NT entries to incorporate the desired technique into the model. However, for most purposes, obtaining the individual source impedance values and the source-segment current magnitudes and ratios allow these calculations to proceed most efficiently externally to the model.</p>
+  <p>The data collection shows the maximum values for gain and field-strength (the latter still in peak form and needing conversion to RMS). Since most installations will need values in many directions to correlate with field measurements, the modeler should attend to the RP1 tabular output. The sample that follows shows the values for the rotated example. Once more, remember that NEC output reports employ the phi or counterclockwise convention for listing azimuth angles. Therefore, the value applicable to a compass-rose heading of 315 degrees occurs between the phi entries for 40 and 50 degrees.</p>
+  <pre>
+**** Electric Field: Phi Pattern ****
+Z=0, Freq=1, File=fcc55.NOU
+
+            ---E (Theta)---     --- E (Phi) ---
+  Phi      Magnitude     Phase     Magnitude     Phase
+Degrees     Volts/m     Degrees     Volts/m     Degrees
+   0.00   3.8121E-001    -90.93   4.6724E-022   -153.51
+  10.00   3.8834E-001    -90.77   3.7881E-022     60.73
+  20.00   3.9181E-001    -90.66   2.7900E-022    147.41
+  30.00   3.9313E-001    -90.58   1.7082E-022     92.96
+  40.00   3.9347E-001    -90.54   5.7515E-023   -111.91
+  50.00   3.9347E-001    -90.54   5.7515E-023     68.09
+  60.00   3.9313E-001    -90.58   1.7082E-022    -87.04
+  70.00   3.9181E-001    -90.66   2.7900E-022    -32.59
+  80.00   3.8834E-001    -90.77   3.7881E-022   -119.27
+  90.00   3.8121E-001    -90.93   4.6724E-022     26.49
+ 100.00   3.6887E-001    -91.12   5.4160E-022     62.13
+ 110.00   3.5005E-001    -91.35   5.9964E-022      8.46
+ 120.00   3.2409E-001    -91.64   6.3956E-022   -111.03
+ 130.00   2.9115E-001    -92.01   6.6011E-022     89.18
+ 140.00   2.5232E-001    -92.49   6.6063E-022    -84.18
+ 150.00   2.0949E-001    -93.14   6.4106E-022    116.03
+ 160.00   1.6509E-001    -94.10   6.0193E-022     -3.46
+ 170.00   1.2182E-001    -95.61   5.4442E-022    -57.13
+ 180.00   8.2234E-002    -98.30   4.7023E-022    -21.49
+ 190.00   4.8653E-002   -103.96   3.8163E-022    124.27
+ 200.00   2.3437E-002   -119.59   2.8130E-022     37.59
+ 210.00   1.1594E-002   -170.26   1.7232E-022     92.04
+ 220.00   1.3540E-002    146.90   5.8035E-023    -63.09
+ 230.00   1.3540E-002    146.90   5.8035E-023    116.91
+ 240.00   1.1594E-002   -170.26   1.7232E-022    -87.96
+ 250.00   2.3437E-002   -119.59   2.8130E-022   -142.41
+ 260.00   4.8653E-002   -103.96   3.8163E-022    -55.73
+ 270.00   8.2234E-002    -98.30   4.7023E-022    158.51
+ 280.00   1.2182E-001    -95.61   5.4442E-022    122.87
+ 290.00   1.6509E-001    -94.10   6.0193E-022    176.54
+ 300.00   2.0949E-001    -93.14   6.4106E-022    -63.97
+ 310.00   2.5232E-001    -92.49   6.6063E-022     95.82
+ 320.00   2.9115E-001    -92.01   6.6011E-022    -90.82
+ 330.00   3.2409E-001    -91.64   6.3956E-022     68.97
+ 340.00   3.5005E-001    -91.35   5.9964E-022   -171.54
+ 350.00   3.6887E-001    -91.12   5.4160E-022   -117.87
+ 360.00   3.8121E-001    -90.93   4.6724E-022   -153.51
+</pre>
+  <p><b>Conclusion</b></p>
+  <p>The notes in this episode have focused on the modeling convention, methods, and cautions applicable to multi-tower installations. I have used very simple arrays in order to set the modeling aspects of the situation in bold relief. Far more complex arrays are possible--and with them come far more complex models.</p>
+  <p>Some implementations of NEC are set up to ease the process of modeling arrays. For example, EZNEC provides RMS input and output values of voltages and currents. As well, the use of current sources is completely hidden, allowing the user simply to set in place the desired source values for current magnitude and phase. Our use of a more generic form of NEC has had the goal of showing some of what may go on "behind the scenes" in such interfaces.</p>
+  <p>A five-episode run of notes on a single topic--however broad--might seem to answer most of the beginning level questions one might have about tower modeling. Unfortunately, there is at least one major category of question left over at the interface between AM BC tower modeling and tower modeling in general.</p>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" height="40" width="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

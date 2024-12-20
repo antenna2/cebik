@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling">
+  <title>Modeling Antenna Elements</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="25">Notes on Modeling Antenna Elements <img src="../images/antbott.gif" align="right" width="150" height="77"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>Having examined numerous antenna models from a wide variety of sources, I am struck by the diversity of ways in which antenna elements, subdivided into wires and segments, are created. The variety of ways in which wires are placed into the antenna geometry description makes it difficult for another modeler to read the wires page. Moreover, many of the models will produce correct far-field data and feedpoint information, but most will skew the antenna currents. This latter information can become quite important in analyzing why a complex antenna yields its particular set of performance outcomes.</p>
+  <p>The usual reasons given for the odd collections of wires making up an antenna model are convenience and speed. Many antenna specifications are for half elements, where the other half is presumed to be a mirror image. So we begin in the middle and work outward. Dimensions are given with positive numbers, and it is faster to do the positive side and then replicate it with minus signs. We go directly from whatever sketch or data sheet we have to the screen entries. I've been there, done that, and learned the hard way that slowing down at the beginning saves me a bucket of time later on when I try to troubleshoot my model.</p>
+  <p>So let me make some suggestions, scratched with chalk, not etched in stone. I'll also say why along the way.</p>
+  <p>First, do the model on a piece of paper before touching the keyboard of your favorite modeling program. That way, you can organize your keyboarding before you begin the computer work. Second, adopt a convention, like working from the far left to the far right (since so many of our American conventions are left-to-right in direction). Avoid working from the middle outward, however initially convenient that seems.</p>
+  <center>
+    <img src="mod1.gif" width="679" height="257" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now consider the simple dipole 8.25' long, 3/4" in diameter, and fed in the middle, shown in Figure 1. Even following our conventions, there are a couple of ways of setting down the X, Y, Z coordinates. My own preference is to center the antenna at 0,0,Z, where Z is an unspecified antenna height. That way, if I add elements projecting equally beyond the first element limits, I can place their coordinates as the same number but with a different sign. So my one wire antenna description looks like this (in free space):</p>
+  <pre>Wire End 1     x         y    z    End 2     x         y    z    Diameter
+ 1             -4.125    0    0              4.125     0    0     .75
+</pre>
+  <p>You may choose to place the wire ends in the Y dimension just by reversing X and Y entries. My feedpoint is now Wire 1 at the 50 percent mark, which exactly centers it. For MININEC, use an even number of segments; for NEC use an odd number of segments.</p>
+  <center>
+    <img src="mod2.gif" width="645" height="408" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now consider an element of a beam using many shorter sections of tubing that decreases in diameter as you progress outward. Let's assume an element that from center outward has these dimensions: 22" at 1.125" diameter; 36" at 1"; 24" at 0.825"; 24" at 0.75"; 24" at 0.625"; and 40.5" at 0.5". The first step is to obtain running totals: 22"; 58"; 82"; 106"; 130"; and 170.5".</p>
+  <p>I we follow our conventions, the full element will look like this on paper and in the geometry entry spread sheet:</p>
+  <pre>Wire End 1     x         y    z    End 2     x         y    z    Diameter
+ 1             -170.5    0    0              -130      0    0     .5
+ 2             -130      0    0              -106      0    0     .625
+ 3             -106      0    0              -82       0    0     .75
+ 4             -82       0    0              -58       0    0     .825
+ 5             -58       0    0              -22       0    0     1
+ 6             -22       0    0              22        0    0     1.125
+ 7             22        0    0              58        0    0     1
+ 8             58        0    0              82        0    0     .825
+ 9             82        0    0              106       0    0     .75
+10             106       0    0              130       0    0     .625
+11             130       0    0              170.5     0    0     .5
+</pre>
+  <p>This may seem like a long way to go, but for an accurate model, all these wires will have to be in the chart anyway. This left-to-right scheme just keeps them well-ordered. Note that wire 6 is the center section and can have the feedpoint specified at its center, with correct segmentation. For NEC, I might assign it 5 segments; for MININEC, 4. The sections with dimensions in the 20s might get 2 segments each, with the 36" section getting 3 segments, and the end sections 4 segments. This keeps segments lengths as close to equalized as this structure permits, while keeping the segments lengths well below maximum recommended length.</p>
+  <p>A rule of thumb: do not wed yourself to the minimum segments per half wavelength rule. The more complex the antenna, the more segments per half wavelength needed to arrive at convergence, the condition where adding further segments does not alter output values significantly. Closed 1 wavelength loops may require 40-60 segments total to achieve convergence. If you are working with a multiband beam, be sure to raise the number of segments per wire in the chart in proportion as you raise frequency.</p>
+  <p>For complex antennas with closely space elements, it is wise to align the segments as closely as possible from one element to another, especially with NEC. To keep myself in the habit, I try to do this with every antenna having parallel elements.</p>
+  <center>
+    <img src="mod3.gif" width="669" height="429" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now let's consider one final example, a shortened dipole with wire hats on each end. The hats consist of 4 radial wires and a perimeter wire. Where does the antenna start and end. Some quick modelers use the horizontal dipole ends and then separately model the wire structures outward and around. However, the wire hat assemblies are part of the antenna. An equally quick second answer is to treat the peaks where the radial wires end as the antenna beginning and ending. Both answers are wrong. The antenna begins and ends where the current goes to zero. MININEC gives a true zero reading, because it takes current nodes to be at the ends of segments. NEC takes current nodes to be at the center of segments, and so the lowest value will never be zero. However, you can get equally low values either side of a correctly chosen wire junction.</p>
+  <p>For this example, the antenna begins in four places: at the center of each of the four perimeter lengths. It ends in the comparable places at the other end assembly. Hence, a fully modeled version of this antenna will have, starting on the left end, 8 perimeter wires, each starting mid-length and ending at a radial wire peak. The 4 radial wires come next, working from peak to center, which happens to be the horizontal wire end point. Then we have the horizontal wire, center fed, followed by 4 radial wires working outward from the hub, and finally the 8 perimeter wires, 2 from each peak to common centers.</p>
+  <p>I tend to collect these wires by type so that I can adjust all the radials as a group, adjust perimeter wire lengths as a group, etc.</p>
+  <p>Once more, you can take shortcuts, but only if a. you can decide in advance that you will never need or want to know the correct current magnitudes and phases on each wire, or b. you are willing to reconstruct the model if you should ever become interested in such matters.</p>
+  <p>One more note: In each case, I ran the wire containing the feedpoint as a single wire fed in the center with either a voltage or current source. I could have ended each wire in the center and used a split feed (split voltage or split current). However, use care here. Some versions of NEC will return incorrect values of feedpoint impedance using split feed if you adopt the center-outward style of geometry construction. You may even get impossibly high negative resistances. (Note that some instances of negative feed resistances are correct values, but not in this particular instance.)</p>
+  <p>I hope these notes are useful toward the goal of achieving more reliable models that play correctly on the first run.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a></p><br>
+</body>
+</html>

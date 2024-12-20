@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Yagi, HF Upper">
+  <title>Modeling Yagis by Equation Part 2. High-Gain and Wide-Band Yagis</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Modeling Yagis by Equation<br>
+    Part 2. High-Gain and Wide-Band Yagis</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>In the first episode of this short series, we examined some of the properties of Yagi arrays that make the task of automated design somewhat tentative. At the bottom line, for any given performance parameter--and often for sets of parameters--there is no single set of dimensions that will achieve the goal. Despite this limitation and others pertaining to the use of algorithms as a basis for antenna construction, we did put together enough data points for a 4th-order regression polynomial set that is reliable with respect to the maximum front-to-back version of the 3-element Yagi. The emergent calculated models have 180-degree front-to-back ratios in excess of 50 dB and resonant feedpoint impedances very close to 29 Ohms throughout the range of calibration (that is, element diameters between 3E-4 and 1E-2 wavelength).</p>
+  <p>This episode will complete the work--so far as it has gone--by examining high gain and wide-band versions of the 3-element Yagi. As well, before closing the book on the project, we shall look again at the limitations of the effort and what they mean for the builder.</p>
+  <p><b>High-Gain 3-Element Yagis</b></p>
+  <p>The term "high gain" could be misleading if we do not quialify it from the start. Every 3-element Yagi exhibits a rising gain curve as frequency increases across the passband, assuming that the design also calls for some value of front-to-back ratio and some value of near-resonant feedpoint impedance. Hence, the term "high gain" means only the highest obtainable gain consistent with the other parameters in the set of design goals.</p>
+  <p>At the design frequency, I chose the highest gain possible with a front-to-back ratio of at least 24 dB. I selected the front-to-back figure as a means of ensuring that the design would meet the usual amateur standard of 20 dB front-to-back ratio across a span of frequencies. The second parameter is a feedpoint impedance of 25 Ohms. 3-element Yagis may obtain higher gain at lower impedances, but the target value of 25 Ohms tends to minimize losses and allows for very straightforward impedance matching techniques for a 50-Ohm coaxial cable. The high-gain design does not change its resistance as fast as the maximum front-to-back design with equivalent element lengthening or shortening. Hence, setting the driver for a gamma or a beta match will generally yield a resistive component no smaller than 22 Ohms. Of course, the builder can also use a 1/4 wavelength section of 35-Ohm cable (or parallel sections of 70-Ohm cable) to obtain a 50-Ohm match without changing the driver length relative to its listed resonant length.</p>
+  <center>
+    <img src="eq-yag-2-1.gif" width="495" height="329" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the relevant dimensions for the Yagi designs that we shall examine. The diagram will be equally applicable to wide-band design that we shall consider later. In accord with the conventions adopted in part 1 of this series, we shall use the reflector-to-director spacing rather than the driver-to-director spacing as one of our critical dimensions. As well, we shall calculate on the basis of element half-lengths, since those values are convenient to most antenna modeling. As in the first episode, we are aiming at equation-based designs making use of the spreadsheet facility built into NEC-Win Plus. The process begins with a set of data-point hand-optimized designs forming the basis for regression analysis. The polynomials from that analysis become the equations for the model.</p>
+  <pre>
+Table 1.  Hand-Optimized Models for Regression Analysis
+Element Length = Half-Lengths
+
+Element     Log of      Reflector   Driver      Director    Ref.-Dr.    Ref-Dir.
+Diameter    Diameter    Length      Length      Length      Spacing     Spacing
+WL                      WL          WL          WL          WL          WL
+3.16228E-4  -3.5        0.2496      0.24093     0.230       0.1579      0.3291
+5.6234E-4   -3.25       0.2488      0.23995     0.2285      0.167       0.3359
+1E-3        -3          0.2480      0.23853     0.22621     0.171       0.35084
+1.7783E-3   -2.75       0.2465      0.23668     0.22285     0.175       0.3465
+3.16228E-3  -2.5        0.2449      0.2342      0.2187      0.173       0.346
+5.6234E-3   -2.25       0.2435      0.23105     0.2134      0.171       0.34495
+1E-2        -2          0.24243     0.2273      0.2067      0.1675      0.3431
+</pre>
+  <p><b>Table 1</b> lists the data-point models for the high-gain set. They use the same element diameters we employed for the maximum front-to-back data-point models. However, the dimensions are quite different. Factors such as a longer overall boom length and shorter reflectors and drivers are functions of the high-gain goal. <b>Fig. 2</b> illustrates the gain curves for selected models.</p>
+  <center>
+    <img src="eq-yag-2-2.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Within the set of curves, we can notice an interesting pattern. The fatter the element, the shallower the slope of the curve with the rising frequency. Hence, some of the mid-size elements have a higher gain at the upper limit of the defined passband.</p>
+  <p>However, the properties do not all stem from a simple increase in element diameter. The highest gain at the design frequency--here set as 30 MHz--does not accrue to the largest-diameter element. That honor goes to the mid-range element diameter. The following table of NEC-4 performance values provides further evidence of that fact. See <b>Table 2</b>.</p>
+  <pre>
+Table 2.  NEC-4 Performance: Hand-Optimized Models, Pre-Regression Analysis
+
+Element           Free-Space        180-Degree        Feedpoint
+Diameter          Gain dBi          Front-Back        Impedance
+WL                                  Ratio dB          R +/- jX Ohms
+3.16228E-4        8.22              25.52             25.17 - j0.017
+5.6234E-4         8.27              25.43             25.18 - j0.112
+1E-3              8.31              24.90             25.04 - j0.096
+1.7783E-3         8.33              24.80             25.06 - j0.129
+3.16228E-3        8.32              24.79             25.16 - j0.152
+5.6234E-3         8.30              24.79             25.13 - j0.138
+1E-2              8.28              24.82             25.21 - j0.006
+</pre>
+  <p>The combination of setting a resonant feedpoint impedance and a minimum front-to-back ratio together create conditions that alter the general progression of gain curves. At the target impedance and front-to-back values, the fattest elements cannot achieve the gain level of some thinner elements. However, as elements grow even thinner, their gain levels drop from their peak value. At the same time, for the set feedpoint impedance, their front-to-back ratio potential increases. It peaks just below the design frequency, as shown in the graph of front-to-back ratios in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="eq-yag-2-3.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Despite the shift in the frequency of peak front-to-back ratio, the passband-edge values generally follow expectations: the fatter the element, the higher the front-to-back ratio at 29.1 and 30.7 MHz. I chose the indicated passband for exploration because it is the widest 2:1 SWR passband for the thickest element. <b>Fig. 4</b> gives us representative SWR curves for the range of element diameters for which the ultimate equation-based model holds good. Between the calibration limits, the 2:1 SWR passband ranges from 5% of the design frequency for the largest element down to 2.5% for the smallest. These values are considerably smaller than those associated with the maximum front-to-back ratio version of the Yagi and represent the price of obtaining higher gain from 3-elements.</p>
+  <center>
+    <img src="eq-yag-2-4.gif" width="572" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The decay of design-frequency operating parameters also shows up in the free-space E-plane patterns for the data-point models. <b>Fig. 5</b> compares patterns at the passband edges and at the design frequency for the thinnest and the thickest elements in the range. Even if we could match the thin-element version of the array to 50 Ohms while at a band edge, we would lack the front-to-back ratio that is important to many (but not to all) amateur operations.</p>
+  <center>
+    <img src="eq-yag-2-5.gif" width="600" height="450" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The maximum front-to-back Yagis used a pair of design criteria: maximum front-to-back ratio and a set feedpoint impedance. The high-gain versions balance 3 criteria: maximum gain, a minimum value of front-to-back ratio, and a set feedpoint impedance. As a result, we do not obtain a simple set of curves, all headed in the same direction. As shown in <b>Fig. 6</b>, the reflector-to-driver spacing reverses the direction from increasing with element diameter to decreasing with element diameter. The curve in the figure smoothes the ragged data points that result also from mixing so many variables in the hand-optimizing process.</p>
+  <center>
+    <img src="eq-yag-2-6.gif" width="800" height="474" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Some curves are even more complex, as evidenced by the reflector-director spacing, as shown in <b>Fig. 7</b>. Nevertheless, the element length curves are all "normal," that is, they all show decreasing lengths with increasing element diameters.</p>
+  <center>
+    <img src="eq-yag-2-7.gif" width="800" height="474" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Despite the oddities that results from combining operating parameters, regression curves fit neatly into NEC-Win Plus equations. <b>Fig. 8</b> shows the equations page in 2 forms, one displaying the equations themselves and the other showing the calculated values. If you wish to transfer the algorithms to another venue, such as a Windows utility program, the list of regression constants and the form of the equations appear in this figure. Writing the equations in Java script or C is straightforward. As with the previous equation-based models, the user decides on a unit of measure and enters the element diameter in that unit along with a design frequency.</p>
+  <center>
+    <img src="eq-yag-2-8.gif" width="780" height="674" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To go along with the equation page entries, we must have the wires page set up in variables, as shown in <b>Fig. 9</b>. The conversion of the maximum front-to-back equation-based model into a high-gain model actually required only that I change the entries for the constants on the equations page. All of the other entries and calculations (such as converting the diameter to a fraction of a wavelength and then taking its base-10 log) are exactly the same for both cases.</p>
+  <center>
+    <img src="eq-yag-2-9.gif" width="640" height="428" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although the high-gain data-point models employ some different curves relative to the maximum front-to-back models, the end result is a set of quite accurate results. <b>Table 3</b> shows the NEC-4 reports on the operating potential for calculated models. You may compare these results to those for the initial data-point models to discover that they compare as well as the corresponding sets for the maximum front-to-back models.</p>
+  <pre>
+Table 3.  NEC-4 Performance: Calculated Models, Post-Regression Analysis
+
+Element           Free-Space        180-Degree        Feedpoint
+Diameter          Gain dBi          Front-Back        Impedance
+WL                                  Ratio dB          R +/- jX Ohms
+3.16228E-4        8.22              25.58             25.19 + j0.004
+5.6234E-4         8.27              25.25             25.09 - j0.187
+1E-3              8.31              25.04             25.22 + j0.003
+1.7783E-3         8.32              24.91             25.32 - j0.025
+3.16228E-3        8.32              24.76             25.24 - j0.180
+5.6234E-3         8.30              24.79             25.11 - j0.108
+1E-2              8.28              24.82             25.21 - j0.014
+</pre>
+  <p>The data-point model impedances varied over a very small range, with the resistance changing only by 0.17 Ohm and the reactance by 0.15 Ohm. The calculated versions do almost as well, with the resistance varying by 0.23 Ohm and the reactance by 0.19 Ohm. Note that I have again used NEC-4 results. At the largest diameters, the segment-length-to-diameter ratio enters a region in NEC-2 that yields errors unless the EK command is available. For example, using uncorrected NEC-2,the largest model reports a gain of 8.33 dBi with a front-to-back ratio of 24.31 dB and feedpoint impedance of 24.53 + j2.25 Ohms. Because the performance figures for the high-gain models are not quite so individually critical as was the maximum front-to-back frequency of the earlier model, we might find the NEC-2 results usable for all practical purposes. However, being aware of the NEC-2 limitation is useful and often significant.</p>
+  <p><b>The Wide-Band 3-Element Yagi</b></p>
+  <p>When we develop a wide-band 3-element Yagi, we must change our perspective. We shall select a feedpoint impedance of 50 Ohms, although that value alone is not the ultimate impedance parameter. Instead, we shall seek the flattest 50-Ohm SWR curve feasible for each element diameter, even if it means that the value at the design frequency is not exactly 50 Ohms resistive. In addition, we shall seek a reasonable gain and front-to-back ratio. The goal will be a smooth set of gain and front-to-back curves so that performance is roughly the same everywhere in the passband.</p>
+  <p>Unfortunately, I have so far only been able to approximate these goals for the range of wire diameters used in the exercise (3E-4 to 1E-2 wavelength). Obtaining a 50-Ohm impedance is one of the main constraints, since it generally requires an increase in the reflector-to-driver spacing as the element diameter increases. Maintaining control on the array gain and front-to-back ratio results in array dimensions that are quire different from those we encounter in the maximum front-to-back ratio and high-gain designs. For example, the reflector length exceeds 1/2 wavelength and thus increases in length with increases in element diameter to maintain its reactance. The reflector length changes by about 4% over the range of element diameters, but the director changes by over 8%--in the normal direction, that is, by decreasing in length with increases in element diameter. The decrease in director length is accompanied by a decrease in the driver-to-director spacing.</p>
+  <p>The result of these dimensional changes--all of which have different rates of change--is a very noticeable change in the general proportions of the wide-band 3-element Yagi over the range of element diameters. <b>Fig. 10</b> shows the extremes of the range. The small-diameter version has the proportions of a general purpose Yagi, except that the gain is not yet approaching peak value. In contrast, the version with the largest element diameter is unique among the versions of the Yagi that we have encountered.</p>
+  <center>
+    <img src="eq-yag-2-10.gif" width="425" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The design used in these models derives from a Bill Orr (W6SAI) design from about 1990. (Joe Reisert, W1JR, later developed a similar design.) His initial work aimed at 10-meter use, with element diameters appropriate to upper HF antennas. The diameter was between about 0.0018 and 0.0025 wavelength. The design continuum used in developing the automated design model shows its best potential (but not its widest operating or SWR bandwidth) in this range of diameters.</p>
+  <p><b>Table 4</b> shows the dimensions of the hand-optimized data-point models developed in this exercise.</p>
+  <pre>
+Table 4.  Hand-Optimized Models for Regression Analysis
+Element Length = Half-Lengths
+
+Element     Log of      Reflector   Driver      Director    Ref.-Dr.    Ref-Dir.
+Diameter    Diameter    Length      Length      Length      Spacing     Spacing
+WL                      WL          WL          WL          WL          WL
+3.16228E-4  -3.5        0.2523      0.2409      0.2234      0.1510      0.2815
+5.6234E-4   -3.25       0.2526      0.2394      0.2198      0.1565      0.2935
+1E-3        -3          0.2530      0.2380      0.2160      0.1620      0.3050
+1.7783E-3   -2.75       0.2534      0.2367      0.2135      0.1765      0.3199
+3.16228E-3  -2.5        0.2545      0.2355      0.2104      0.1970      0.3378
+5.6234E-3   -2.25       0.2589      0.2345      0.2076      0.2220      0.3600
+1E-2        -2          0.2630      0.2380      0.2060      0.2670      0.3820
+</pre>
+  <p>The criteria that I used in the development of hand-optimized data-point models included the following items.</p>
+  <blockquote>
+    <ul>
+      <li>1. Maximum 50-Ohm SWR and operating bandwidth.</li>
+      <li>2. Peak 180-degree front-to-back ratio at 30.50 MHz for a design frequency of 30.0 MHz.</li>
+      <li>3. Minimum 50-Ohm SWR at 30.25 MHz for a design frequency of 30.0 MHz.</li>
+      <li>4. Upper 2:1 SWR frequency: 31.25 MHz.</li>
+    </ul>
+  </blockquote>
+  <p>Three of the four criteria involve the 50-Ohm SWR characteristics of the array. <b>Fig. 11</b> shows the curves for 4 of the 7 data-point models. Because the SWR value rises much more rapidly above the design frequency than below it, a relatively constant upper-end 2:1 frequency seemed warranted. For 3 of the 4 displayed curves, the models achieve the goal, but the thinnest wires proved incapable of setting the 2:1 value at the designated frequency and achieving the minimum SWR at 30.25 MHz. In order to extend the higher-frequency side of the curve, the impedance at the design frequency shows capacitive reactance (4.5 to 6 Ohms). Despite these design maneuvers, the curve remains broader below the design frequency for all element diameters.</p>
+  <center>
+    <img src="eq-yag-2-11.gif" width="572" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p>SWR bandwidth is not the sole consideration in a wide-band Yagi. The array must also have usable performance parameters that include both gain and front-to-back ratio. There is only a minor variation between the 180-degree ratio and the worst-case ratio, so these notes will use the 180-degree value as a reference point. To the degree possible, the front-to-back ratio peaks at 30.50 MHz in order to extend the operating bandwidth as far as possible on both sides of the design frequency (30 MHz in the initial design work). <b>Fig. 12</b> shows the curves for the same element diameters shown in the SWR curves.</p>
+  <center>
+    <img src="eq-yag-2-12.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>By setting the peak front-to-back ratio at 30.50 MHz, all of the curves--except for the thinnest element--pass through a value of about 18 dB at about 31.25 MHz and all have a 20-dB front-to-back ratio at 31 MHz. The curves all show a shallower rate of decrease in the front-to-back value below the peak frequency. The rate of decrease is inversely proportional to the element diameter. The thinnest wire reaches its lowest value before the lower limit of the frequency span sampled by the frequency sweep.</p>
+  <p>Ultimately, I defined the operating bandwidth in terms of the frequency span between the points at which the front-to-back ratio passed through the 18 dB mark. Although this value is a bit below the usual amateur standard of 20 dB, it seemed reasonable in light of the modest peak values reached by all of the data-point models. As well, wide-band Yagis normally have utility (multi-faceted or general purpose) functions in which the peak value is less important than a relatively even front-to-back performance.</p>
+  <p>The gain values for the Yagis are generally quite smooth from the lower limit of the operating passband for each version up through the design frequency. Above the design frequency, the gain shows a rising curve. The curve is similar for all 4 sample models. <b>Fig. 13</b> shows the curves for our 4 sample data-point models.</p>
+  <center>
+    <img src="eq-yag-2-13.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Below the design frequency, the two versions using thinner elements show an interesting "knee" in the gain curve. At a certain frequency below the design frequency, the gain drops at a more precipitous rate. The two versions using larger diameter elements also have knees, but those frequencies are below the limits of the frequency sweep. Equally interesting is the fact that the versions of the wide-band Yagi using elements with the largest diameters do not exhibit design-frequency gain levels equal to those of the mid-range elements. As the element diameter increases, the dimensions required to obtain the required 50-Ohm bandwidth and the front-to-back bandwidth are in conflict with dimensions needed for higher gain from the array. The needs of the continuum dictated that I accept the lower gain of the largest diameter version. One may, however, create an independent design that further optimizes gain with only a small cost to the front-to-back ratio within the operating passband. However, the independently developed version is likely to require a greater total boom length (reflector-to-director spacing).</p>
+  <p><b>Table 5</b> presents the design-frequency NEC-4 performance calculations for the entire set of data-point models. Compared to past tables of similar data, the present table includes 2 new columns. The SWR and the operating bandwidths are expressed as percentages by taking frequency range between the upper and lower limits and dividing it by the design frequency--with the obligatory multiplication by 100 to arrive at a percentage. The SWR limits use the usual 2:1 50-Ohm reference. Front-to-back values of about 18 dB define the operating bandwidth limits.</p>
+  <pre>
+Table 5.  NEC-4 Performance: Hand-Optimized Models, Pre-Regression Analysis
+SWR Bandwidth = 2:1 50-Ohm SWR range/design frequency.
+Operating Bandwidth = 18-dB front-to-back range/design frequency.
+
+Element           Free-Space  180-Degree  Feedpoint         SWR         Operating
+Diameter          Gain dBi    Front-Back  Impedance         Bandwidth   Bandwidth
+WL                            Ratio dB    R +/- jX Ohms     %           %
+3.16228E-4        7.06        20.09       48.27 - j6.023    6.2         4.5
+5.6234E-4         7.05        20.09       48.45 - j5.847    7.0         4.7
+1E-3              7.06        20.16       48.56 - j4.513    7.5         5.3
+1.7783E-3         7.10        20.94       49.12 - j5.193    8.3         5.5
+3.16228E-3        7.09        21.46       50.24 - j5.564    9.2         5.8
+5.6234E-3         7.09        22.09       48.84 - j5.484    10.3        6.7
+1E-2              6.88        23.37       47.40 - j4.660    11.1        7.5
+</pre>
+  <p>The operating bandwidth is about 65-70% of the SWR bandwidth, allowing for the fact that the numbers derive from graphical interpolations of frequency sweep figures. As comparative samples, the 20-meter amateur band has a 2.5% bandwidth, while all of 10 meters has a 5.9% bandwidth. The US 6-meter band has a 7.7% bandwidth, while the seemingly larger 70-cm band has only a 6.9% bandwidth. The wide-band 3-element Yagis in this set hold promise of providing coverage within the limits that define operating bandwidth for all of the bands listed for at least one or more of the listed element diameters. (Covering all of 6 meters may require either a reduction of operating standards to a 17-dB front-to-back ratio or individual tweaking of the design. However, for coverage of the upper 3 MHz of the band for a vertically polarized antenna used for FM and other communications with mobile stations, the required bandwidth is only 5.7%, which can be achieved with 3/4"-diameter elements, that is, 0.003 wavelength elements.)</p>
+  <p>Except for slight differences in gain and front-to-back ratio, all of the data-point models produce similar patterns, as shown in <b>Fig. 14</b>. The patterns are for the E-plane. H-plane patterns would show considerably more beamwidth. Unless the array--when vertically positioned--is at least 5 wavelengths or more above ground, the H-plane patterns above ground will have less gain than E-plane patterns for horizontally positioned antennas at the same center height.</p>
+  <center>
+    <img src="eq-yag-2-14.gif" width="600" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Regression analysis of the data-point models produced a very usable collection of 4th-order polynomials. Hence, creation of the automated design model in NEC-Win Plus required only two steps. 1. I replaced the set of regression constants in one of the existing models. 2. I changed the model file name before saving the file. <b>Fig. 15</b> shows the two versions of the equations page of the wide-band design model.</p>
+  <center>
+    <img src="eq-yag-2-15.gif" width="775" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There is no need also to display the wires page in either the "variables" or the "values" version. <b>Fig. 9</b> provides a view of the relevant forms used, since the wires page remains constant in its variable assignments for all 3 of the automated design models. Since <b>Fig. 15</b> shows all constants and the form of the regression equations, it has all of the information necessary for re-creating the design program in an alternative programming format.</p>
+  <p>To confirm the correctness of the design model, I recreated the data-point models using the design model as the source and running the resulting models in NEC-4. <b>Table 6</b> provides the NEC-4 performance calculations. You may compare the results with those in <b>Table 5</b>. As in all of the models, beware of using NEC-2 to develop performance figures for the largest diameter elements unless the EK command is available.</p>
+  <pre>
+Table 6.  NEC-4 Performance: Calculated Models, Post-Regression Analysis
+
+Element           Free-Space        180-Degree        Feedpoint
+Diameter          Gain dBi          Front-Back        Impedance
+WL                                  Ratio dB          R +/- jX Ohms
+3.16228E-4        7.06              20.02             48.34 - j5.933
+5.6234E-4         7.05              20.21             48.16 - j6.120
+1E-3              7.07              20.16             48.82 - j4.468
+1.7783E-3         7.09              20.71             49.96 - j4.715
+3.16228E-3        7.09              21.57             49.62 - j5.909
+5.6234E-3         7.07              22.21             49.10 - j5.531
+1E-2              6.89              23.38             47.39 - j4.580
+</pre>
+  <p>Of the three automated design models, the wide-band 3-element Yagi is perhaps the least perfect. The maximum front-to-back version of the array had a very definite marker of when the data-point model reached its goal: a 180-degree front-to-back ratio in excess of 50 dB, combined with the 29-Ohm resonant feedpoint impedance. The high-gain model required a judgment call on the point of optimizing completion, since the gain shows a rising curve with frequency. However, peaking the front-to-back ratio with a feedpoint impedance of 25 Ohms provided a reliable marker for all but the largest diameter element. The criteria for the wide-band version of the 3-element Yagi form a more complex set. Therefore, there is less assurance that the design has in all cases achieved the maximum bandwidth at reasonable performance parameters. Like the high-gain model, it shows a decreasing gain at the highest element diameter, suggesting that in both cases, one might wish to begin but not end the optimizing process with the automated design model.</p>
+  <p><b>What the Automated Models Cannot Do</b></p>
+  <p>As already noted, the automated models do not cover all possible 3-element Yagi design possibilities. If the front-to-back ratio is not a significant figure, it is possible to design higher gain Yagis on longer booms. If the feedpoint impedance has no minimum acceptable level, then free-space gain levels over 9 dB are obtainable.</p>
+  <p>As a practical matter, the range of diameters for which the automated models are calibrated do not cover thin-wire Yagis for the HF range. Only at VHF and UHF is the minimum diameter small enough to cover most wire elements. A 0.0003 wavelength element diameter is about 0.024" at 2 meters--about AWG #22 wire. However, for values in the middle ranges of element diameters within the model coverage, many practical designs are available.</p>
+  <p>Perhaps the most limiting HF restriction for the automated models is the fact that they produce dimensions for uniform-diameter elements. Above 55 MHz, uniform-diameter elements are the rule, but for up through 6 meters, uniform-diameter elements are the exception. More common is the practice of using tapered diameter elements. There are some utility programs available for converting uniform-diameter element dimensions into various combinations of stepped-diameter equivalents. However, there may be a simpler procedure that requires only entry-level software (EZNEC or NEC-Win Plus) that has the usual Leeson substitute element feature.</p>
+  <p>First, develop a set of dimensions from the automated program using your best guess at the average element diameter in the proposed stepped-diameter version. This is only a starting point from which to develop a more detail set of element tubes.</p>
+  <p>Second, using the element lengths derived from the first step as initial guides, develop a progression of element diameters and inner section lengths for the elements. You may use some published Yagis as guides, such as those appearing in the <i>ARRL Antenna Book</i> (ant recent edition). These guides, or software such as YagiStress by Kurt Andress, K7NV, will let you set up element diameter progressions with known values of wind survival. The key point here is to be certain that the end section of the thinnest tubing has room to expand its length relative to the length suggested by the automated model.</p>
+  <p>Third, make a model of the stepped diameter element and employ the stepped-diameter correction feature in your modeling software. Note the substitute uniform-element diameter.</p>
+  <p>Fourth, use the subsitute uniform-element diameter in the automated model to arrive at a new set of antenna dimensions.</p>
+  <p>Fifth, create a full model of the proposed antenna, using the stepped diameter inner sections. and the spacing provided by the automated model. Adjust the end lengths or outer element section lengths until the Leeson substitute element lengths match those of the automated design version.</p>
+  <p>If the Leeson substitute element diameter has not changed significantly, the resulting model should show performance values almost identical to those of the automated model. There may be slight differences due to remnant diameter differences and to the differences in the segmentation. In all cases, when using stepped-diameter elements, try to keep the segment lengths along each element the same, whether the element sections are long or short.</p>
+  <p>Because automated 3-element Yagi design has restricted utility, I likely shall not try to extend it to Yagis with more elements. With each additional element, the number of variables climbs and the results become less certain. For longer boom Yagis with more elements, I recommend the use of one of the Yagi optimizing programs. They require more exacting element structure information at the input end, but can produce a custom-optimized design according to the weight that you assign to the performance variables available for user entry.</p>
+  <p>Nevertheless, for utility 3-element Yagis of a few diverse designs, the automated models may be handy. As well, by studying the variations in design dimensions with changes in the element diameter, you may improve the accuracy of your rational expectations of Yagi performance in all of their operating categories.</p>
+  <p>If you wish to download one or more of the NEC-Win Plus automated design models, use the following links.</p>
+  <blockquote>
+    <p><a href="../download/3el-maxfb-yagi.nwp" download="3el-maxfb-yagi.nwp"><b>Maximum Front-to-Back Model</b></a></p>
+    <p><a href="../download/3el-highgain-yagi.nwp" download="3el-highgain-yagi.nwp"><b>High Gain Model</b></a></p>
+    <p><a href="../download/3el-wideband-yagi.nwp" download="3el-wideband-yagi.nwp"><b>Wide Band Model</b></a></p>
+  </blockquote>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 01-01-2005. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>(Dec., 2005). Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

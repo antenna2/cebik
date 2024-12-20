@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Vertical, MF, HF Lower, Modeling">
+  <title>The Insulated Radial Question</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>The Insulated Radial Question</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>One common question posed by radio amateurs on the verge of installing their first ground plane (GP) antenna for 160, 80, or 40 meters runs something like this:</p>
+  <blockquote>
+    I can obtain miles of insulated wire cheaply from the local home center. Will the use of insulated wire make any difference in the performance of my vertical, relative to bare wire?
+  </blockquote>
+  <p>Most experienced GP users usually say that the answer is "no." However, they then qualify the answer by adding something to the effect that in their experience or via the grape-vine, no adverse effects of insulated wire radials has been reported. Something in the reply puts a note of uncertainty on the answer.</p>
+  <p>NEC-4 can shed some additional light on the question and add a small note of greater confidence in the reply. Since this is not a mystery novel with a surprise ending, let's set forth the general conclusion: operationally, the use of buried insulated radials of common wire with common insulations will result in no detectable performance difference relative to a bare wire buried radial system. The NEC-4 performance figures, including the Sommerfeld-Norton ground calculations, will show some interesting numerical wiggles, but the sum of those wiggles will be far below the threshold of the construction variables involved in implementing a ground radial system.</p>
+  <p>With the conclusion out of the way, we can turn to a more interesting question: how did I reach that conclusion?</p>
+  <p><b>NEC-4 and Buried Radials</b></p>
+  <p>NEC-4 permits the modeler to place wires below the surface of the ground. Hence, NEC-4 can do what NEC-2 cannot: model a vertical monopole with a buried radial system. However, the model must adhere to certain NEC-4 guidelines, which will make the model somewhat more complex than just placing a wire for the vertical and a number of radial wires. <b>Fig. 1</b> shows something of the requirements.</p>
+  <center>
+    <img src="ir-1.gif" width="470" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although we shall not work with 128-radial GP systems, the general outline looks impressive and is actually an exercise in repetitive model entry. The key elements for both the vertical element and the radials appears in the lower part of the graphic.</p>
+  <p>Here are some of the constraints:</p>
+  <ul>
+    <li>1. A radial system is normally only a small distance below the ground surface.</li>
+    <li>2. The vertical wire that penetrates the ground must do so on a segment junction. To insure that a segment junction occurs at Z = 0, most experts recommend that we use a wire from the surface to the junction of the radials, and another wire for the vertical portion of the monopole from the ground upward.</li>
+    <li>3. We wish to feed the monopole at the lowest segment above ground to simulate base feeding. However, the source segment and the segments adjacent to it should be the same length to assure an accurate source impedance report.</li>
+    <li>4. The short wire from the ground down to the radial junction determines the length of the source segment and the segment above it. Since these wires are very short, the main vertical element wire would require a massive number of segments if it were uniformly segmented.</li>
+    <li>5. The wire segments joining at the radial junction should also be the same length as the short wire that meets them. Again, the radials, if uniformly segmented, would create a massive model in terms of the total number of segments.</li>
+  </ul>
+  <p><b>Fig. 1</b> shows how we can meet the criteria and still have a model size of reasonable proportions. We length-taper the wires forming both the radials and the vertical element above the source segment. We use short wire segment lengths where required and gradually increase the segment lengths outward towards the wire ends--well beyond the portion of the sketch shown. The results show a close correlation to those derived from a uniformly segmented model, but in a fraction of the run time.</p>
+  <p>Note: the same techniques of length tapering are applicable to numerous models within the scope of NEC-2.</p>
+  <p>There are more complex cases than the simple one that we set up here, but for examining the insulated radial question, we do not have to create a very complex model. Instead, we shall set up a 1.83-MHz vertical monopole exactly 40 meters long and 25-mm in diameter. We shall also explore systems of 4 and 8 radials, each exactly 1/4-wl long (40.955 m). The radials will be 2 mm in diameter, which is between AWG #14 and #12 wire.</p>
+  <p>One limitation of NEC-4 is normally a set of erroneous output reports wherever we have angular junctions of wires with dissimilar diameters. However, these errors disappear wherever we have a completely symmetrical arrangement of wires such that the net radiation from them is roughly zero. Top hats and radial systems fall into this category.</p>
+  <p><b>2 Systems of Length-Tapering Wires</b></p>
+  <p>Since the days of the first ELNEC MININEC programs, W7EL has offered users the ability to length taper elements. <b>Fig. 2</b> shows an 8-radial system using the ELNEC/EZNEC technique.</p>
+  <center>
+    <img src="ir-2.gif" width="441" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the figure, the circles represent wire junctions, while simple dots indicate segment junctions within wires. Essentially, EZNEC substitutes for each wire being length-tapered a series of wires. The user sets the shortest and the longest desired segment lengths for an existing uniformly tapered wire. Then the program creates at the designated wire end a single 1-segment wire of the shortest length. The next wire created is twice that length, and so on until we reach the longest desired segment length. The program creates the final wire using segments equal to or shorter than the specified longest segment length.</p>
+  <p>In the interests of space, we shall illustrate the principle using a 4-radial model, where both the radials and the vertical element use tapered-length wires and segments:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 160-m 1/4 wl vert-4 bur radial
+CE
+GW 1,7,0.,0.,40.,0.,0.,5.242276,.0125
+GW 2,1,0.,0.,5.242276,0.,0.,2.621138,.0125
+GW 3,1,0.,0.,2.621138,0.,0.,1.31057,.0125
+GW 4,1,0.,0.,1.31057,0.,0.,.6552857,.0125
+GW 5,1,0.,0.,.6552857,0.,0.,.3276435,.0125
+GW 6,1,0.,0.,.3276435,0.,0.,.163821,.0125
+GW 7,1,0.,0.,.163821,0.,0.,0.,.0125
+GW 8,1,0.,0.,0.,0.,0.,-.163821,.0125
+GW 9,1,0.,0.,-.163821,.1638211,0.,-.163821,.001
+GW 10,1,.1638211,0.,-.163821,.4914632,0.,-.163821,.001
+GW 11,1,.4914632,0.,-.163821,1.146747,0.,-.163821,.001
+GW 12,1,1.146747,0.,-.163821,2.457316,0.,-.163821,.001
+GW 13,1,2.457316,0.,-.163821,5.078453,0.,-.163821,.001
+GW 14,7,5.078453,0.,-.163821,40.95526,0.,-.163821,.001
+GW 15,1,0.,0.,-.163821,1.2368E-8,.1638211,-.163821,.001
+GW 16,1,1.2368E-8,.1638211,-.163821,3.7104E-8,.4914632,-.163821,.001
+GW 17,1,3.7104E-8,.4914632,-.163821,8.6577E-8,1.146747,-.163821,.001
+GW 18,1,8.6577E-8,1.146747,-.163821,1.8552E-7,2.457316,-.163821,.001
+GW 19,1,1.8552E-7,2.457316,-.163821,3.8341E-7,5.078453,-.163821,.001
+GW 20,7,3.8341E-7,5.078453,-.163821,3.092E-06,40.95526,-.163821,.001
+GW 21,1,0.,0.,-.163821,-.1638211,2.4736E-8,-.163821,.001
+GW 22,1,-.1638211,2.4736E-8,-.163821,-.4914632,7.4209E-8,-.163821,.001
+GW 23,1,-.4914632,7.4209E-8,-.163821,-1.146747,1.7315E-7,-.163821,.001
+GW 24,1,-1.146747,1.7315E-7,-.163821,-2.457316,3.7104E-7,-.163821,.001
+GW 25,1,-2.457316,3.7104E-7,-.163821,-5.078453,7.6683E-7,-.163821,.001
+GW 26,7,-5.078453,7.6683E-7,-.163821,-40.95526,6.1841E-6,-.163821,.001
+GW 27,1,0.,0.,-.163821,1.9535E-9,-.1638211,-.163821,.001
+GW 28,1,1.9535E-9,-.1638211,-.163821,5.8606E-9,-.4914632,-.163821,.001
+GW 29,1,5.8606E-9,-.4914632,-.163821,1.3675E-8,-1.146747,-.163821,.001
+GW 30,1,1.3675E-8,-1.146747,-.163821,2.9303E-8,-2.457316,-.163821,.001
+GW 31,1,2.9303E-8,-2.457316,-.163821,6.056E-08,-5.078453,-.163821,.001
+GW 32,7,6.056E-08,-5.078453,-.163821,4.8839E-7,-40.95526,-.163821,.001
+GE -1
+LD 5,1,0,0,5.7471E+7,1.
+LD 5,2,0,0,5.7471E+7,1.
+LD 5,3,0,0,5.7471E+7,1.
+LD 5,4,0,0,5.7471E+7,1.
+LD 5,5,0,0,5.7471E+7,1.
+LD 5,6,0,0,5.7471E+7,1.
+LD 5,7,0,0,5.7471E+7,1.
+LD 5,8,0,0,5.7471E+7,1.
+LD 5,9,0,0,5.7471E+7,1.
+LD 5,10,0,0,5.7471E+7,1.
+LD 5,11,0,0,5.7471E+7,1.
+LD 5,12,0,0,5.7471E+7,1.
+LD 5,13,0,0,5.7471E+7,1.
+LD 5,14,0,0,5.7471E+7,1.
+LD 5,15,0,0,5.7471E+7,1.
+LD 5,16,0,0,5.7471E+7,1.
+LD 5,17,0,0,5.7471E+7,1.
+LD 5,18,0,0,5.7471E+7,1.
+LD 5,19,0,0,5.7471E+7,1.
+LD 5,20,0,0,5.7471E+7,1.
+LD 5,21,0,0,5.7471E+7,1.
+LD 5,22,0,0,5.7471E+7,1.
+LD 5,23,0,0,5.7471E+7,1.
+LD 5,24,0,0,5.7471E+7,1.
+LD 5,25,0,0,5.7471E+7,1.
+LD 5,26,0,0,5.7471E+7,1.
+LD 5,27,0,0,5.7471E+7,1.
+LD 5,28,0,0,5.7471E+7,1.
+LD 5,29,0,0,5.7471E+7,1.
+LD 5,30,0,0,5.7471E+7,1.
+LD 5,31,0,0,5.7471E+7,1.
+LD 5,32,0,0,5.7471E+7,1.
+FR 0,1,0,0,1.83
+GN 2,0,0,0,20.,.0303
+EX 0,7,1,0,1.414214,0.
+RP 0,181,1,1000,90.,0.,-1.,0.,0.
+EN
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The file appears in generic NEC format. The model requires 32 wires for just 5 elements (a vertical plus 4 radials). As well, EZNEC creates a material loading entry for each wire, although these do not materially increase the model run time.</p>
+  <p>An alternative technique is available within NEC (2 or 4). It consists of the GC or geometry continuation card that we can apply to each wire. <b>Fig. 3</b> outlines that same model using this system.</p>
+  <center>
+    <img src="ir-3.gif" width="592" height="555" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that there are no wire junctions except at the hub of all of the radials. Instead, the GC card allows us to specify the length tapering, and the NEC core does the work of producing the required segments. We have options that include specifying the ratio of one segment to the next or of specifying the longest and shortest segment lengths and letting the core calculate the required ratio. Unlike the EZNEC system, which doubles the wire/segment length with each step and ends with a wire usually having 2 or more uniform segments lengths, the GC option provides a continually increasing segment length throughout the element being length-tapered.</p>
+  <p>Let's illustrate the look of such a model, again using a smaller 4-radial GP with a tapered vertical element:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 160-m 1/4 wl vert-4 bur radial
+CE
+GW 1,11,0.,0.,40.,0.,0.,.327644,0
+GC 2 0 0 .0125 .0125 13 .16328
+GW 2,1,0.,0.,.327644,0.,0.,.163821,.0125
+GW 3,1,0.,0.,.163821,0.,0.,0.,.0125
+GW 4,1,0.,0.,0.,0.,0.,-.163821,.0125
+GW 5,12,0.,0.,-.163821,40.9553,0.,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 6,12,0.,0.,-.163821,0.,40.9553,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 7,12,0.,0.,-.163821,-40.9553,0.,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 8,12,0.,0.,-.163821,0.,-40.9553,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GE -1
+LD 5,1,0,0,5.7471E+7,1.
+LD 5,2,0,0,5.7471E+7,1.
+LD 5,3,0,0,5.7471E+7,1.
+LD 5,4,0,0,5.7471E+7,1.
+LD 5,5,0,0,5.7471E+7,1.
+LD 5,6,0,0,5.7471E+7,1.
+LD 5,7,0,0,5.7471E+7,1.
+LD 5,8,0,0,5.7471E+7,1.
+FR 0,1,0,0,1.83
+GN 2,0,0,0,20.,.0303
+EX 0,3,1,0,1.414214,0.
+RP 0,181,1,1000,90.,0.,-1.,0.,0.
+EN
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The model requires only 8 wires--5 for the main parts of the elements and 3 in the ground entry region. The total number of segments is about the same for the 2 version of length-tapered GP antennas (63-64), but the number of wires is reduced by letting NEC do the tapering. While the run time difference is not significant on a 4-radial GP, it becomes significant for full AM BC radial systems. The difference lies in the fact that model calculation times climb exponentially with both the number of segments and the number of wires.</p>
+  <p>The following extract from a NEC output file illustrates just what NEC does internally with the GC card data applied to the appropriate GW card above it.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5    0.00000    0.00000   -0.16382    40.95530    0.00000   -0.16382    0.00000   12       16    27       5
+          ABOVE WIRE IS TAPERED.  REQUESTED INITIAL AND FINAL SEG. LENGTHS =  0.16328       13.50000
+               RADIUS FROM  0.00100 TO  0.00100
+               COMPUTED NUMBER OF SEGMENTS =    12   LENGTH RATIO =  1.49568
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    16   0.08164   0.00000  -0.16382   0.16328    0.00000   0.00000   0.00100   -28   16   17      5
+    17   0.28539   0.00000  -0.16382   0.24422    0.00000   0.00000   0.00100    16   17   18      5
+    18   0.59013   0.00000  -0.16382   0.36527    0.00000   0.00000   0.00100    17   18   19      5
+    19   1.04592   0.00000  -0.16382   0.54632    0.00000   0.00000   0.00100    18   19   20      5
+    20   1.72765   0.00000  -0.16382   0.81712    0.00000   0.00000   0.00100    19   20   21      5
+    21   2.74728   0.00000  -0.16382   1.22215    0.00000   0.00000   0.00100    20   21   22      5
+    22   4.27232   0.00000  -0.16382   1.82794    0.00000   0.00000   0.00100    21   22   23      5
+    23   6.55330   0.00000  -0.16382   2.73400    0.00000   0.00000   0.00100    22   23   24      5
+    24   9.96489   0.00000  -0.16382   4.08919    0.00000   0.00000   0.00100    23   24   25      5
+    25  15.06753   0.00000  -0.16382   6.11610    0.00000   0.00000   0.00100    24   25   26      5
+    26  22.69944   0.00000  -0.16382   9.14771    0.00000   0.00000   0.00100    25   26   27      5
+    27  34.11430   0.00000  -0.16382  13.68201    0.00000   0.00000   0.00100    26   27    0      5
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>As the extract shows, NEC internally converts the entry notation of a wire number and a set of segments within the wire into absolute segment numbers. For the first radial, wire #5, we have segment 16 through 27, each with a separate length according to the ratio that NEC calculated from our entry of start and end segment lengths.</p>
+  <p>Since the two length-tapering systems differ, we can ask which is more accurate. Here are results for bare-wire radials for 4 and 8 radial systems from the EZNEC results and from the GC results, as run on GNEC.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+GP Size           Gain        TO Angle          Source Impedance
+(# Radials)       dBi         degrees           R +/- jX Ohms
+
+4  EZNEC          2.10        17                47.33 + j 14.52
+4  GC             2.06        17                47.52 + j 13.97
+
+8  EZNEC          2.39        17                44.33 + j 12.60
+8  GC             2.35        17                44.48 + j 12.03
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Besides showing that the report differences fall well below operational significance, these numbers will also serve as references for our next step: the investigation of what happens when we insulate the radials.</p>
+  <p><b>Insulating Wires</b></p>
+  <p>NEC-4 adds a few new features absent in NEC-2. For example, NEC-4 allows an entry in the material loading line (LD5 in the above models) for permeability, which is 1 for non-magnetic wire materials like copper.</p>
+  <p>A most interesting addition is the IS card, where IS means an insulating sheath. What we can do with that card appears in the single annotated entry line that follows:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+IS     0       0        16       63         2            1e-10      .00125
+ID  New Data Tag #  Start Seg  End Seg  Permittivity  Conductivity  Radius
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>After the line identification, the first entry is 0 if we are entering new data. Then we specify the wire/tag number, along with the starting and ending segments for the insulated sheath. If we enter 0 for the tag number, we can use absolute segment numbers, a move that allows us to insulate all of the radials in one line. Segment numbers 16 through 63 cover all of 4 radials on the simpler model.</p>
+  <p>Just as we might for a ground quality specification, we enter a relative dielectric constant (or permittivity) value and a conductivity value. For this test case, the conductivity is very low to indicate excellent insulating properties: 1E-10 s/m. Most wires today use some form of plastic covering and most common plastic have permittivity values between 2.0 and 3.0. for the series of checks that we shall perform, I used values of 2.0, 2.5, and 3.0.</p>
+  <p>The radius must be greater than the wire radius: 0.001 m or 1 mm. For the series of checks, I used sheath radii of 0.00125, 0.0015, and 0.002. The first value gives a relatively thin insulation, which the last value results in an insulation diameter twice that of the wire itself.</p>
+  <center>
+    <img src="ir-4.gif" width="336" height="367" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> illustrates the relationship between the IS entry and the wires that we have just insulated.</p>
+  <p>The resulting model is little changed from the GC version we examined earlier. Here is a sample:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 160-m 1/4 wl vert-4 bur radial
+CE
+GW 1,11,0.,0.,40.,0.,0.,.327644,0
+GC 2 0 0 .0125 .0125 13 .16328
+GW 2,1,0.,0.,.327644,0.,0.,.163821,.0125
+GW 3,1,0.,0.,.163821,0.,0.,0.,.0125
+GW 4,1,0.,0.,0.,0.,0.,-.163821,.0125
+GW 5,12,0.,0.,-.163821,40.9553,0.,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 6,12,0.,0.,-.163821,0.,40.9553,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 7,12,0.,0.,-.163821,-40.9553,0.,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GW 8,12,0.,0.,-.163821,0.,-40.9553,-.163821,0
+GC 2 0 0 .001 .001 .163281 13.5
+GE -1
+IS 0 0 16 63 2 1e-10 .00125
+LD 5,1,0,0,5.7471E+7,1.
+LD 5,2,0,0,5.7471E+7,1.
+LD 5,3,0,0,5.7471E+7,1.
+LD 5,4,0,0,5.7471E+7,1.
+LD 5,5,0,0,5.7471E+7,1.
+LD 5,6,0,0,5.7471E+7,1.
+LD 5,7,0,0,5.7471E+7,1.
+LD 5,8,0,0,5.7471E+7,1.
+FR 0,1,0,0,1.83
+GN 2,0,0,0,20.,.0303
+EX 0,3,1,0,1.414214,0.
+RP 0,181,1,1000,90.,0.,-1.,0.,0.
+EN
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We can look at the results of our exploration using both 4- and 8-radial systems with insulated wires. The following table gives the results of GNEC runs, with the reported TO angle converted from GNEC's native theta angle into the more familiar elevation angle.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Dielectric.       Radius      Gain        TO Angle          Source Impedance
+Constant           mm         dBi         degrees           R +/- jX Ohms
+
+4 Radials
+2.0               .00125      2.13        18                46.81 + j 14.56
+                  .0015       2.26        18                45.63 + j 15.77
+                  .002        2.15        17                46.28 + j 12.36
+2.5               .00125      2.17        17                46.31 + j 14.02
+                  .0015       2.21        18                46.12 + j 14.56
+                  .002        2.42        17                43.67 + j 13.11
+3.0               .00125      2.16        18                46.73 + j 14.65
+                  .0015       2.21        18                46.06 + j 14.83
+                  .002        2.41        18                43.93 + j 15.54
+
+8 Radials
+2.0               .00125      2.34        18                44.60 + j 12.59
+                  .0015       2.45        17                43.61 + j 13.38
+                  .002        2.33        17                44.44 + j 11.77
+2.5               .00125      2.35        17                44.41 + j 12.16
+                  .0015       2.40        17                44.18 + j 12.80
+                  .002        2.51        17                42.80 + j 11.76
+3.0               .00125      2.36        18                44.31 + j 12.38
+                  .0015       2.39        17                44.21 + j 12.78
+                  .002        2.53        17                42.74 + j 13.08
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>If we compare the range of numbers with the values for a bare wire radial system, then we can see that, first of all, the variations make no operational difference that would not be masked by the ground and construction variables involved in a given installation. Relative to the modeled numbers, the bare wire model values for resistance fall into the high end of the range of insulated wire values, while the bare-wire reactance value falls about mid-range.
+  <p>We might have carried this investigation further into larger radial systems, but there is no need to do so. One condition of the study was to place all the test models over very good ground with a conductivity of 0.0303 and a permittivity of 20. This move tends to maximize any effects of radial insulation, and the results have shown quite minimal effects. There are interesting "wiggles" in the values as we change the sheath permittivity and radius, but these must await a different kind of study for proper interpretation.</p>
+  <p>A second reason for not extending the study emerges if we examine the range of variation of the od the values. The reported gain varies a total of 0.29 dB for the 4-radial model but only by 0.20 dB for the 8-radial model. The resistance varies a total of 3.15 Ohms and 1.85 Ohms for the 4- and 8-radial models, respectively. For those same models, the reactance varies a total of 2.66 Ohms and 1.63 Ohms.</p>
+  <p>In short, as we add more radials, the range of variation of values decreases. By the time we would reach 120 or 128 radials, we should expect little or no variation among values.</p>
+  <p><b>Conclusion</b></p>
+  <p>The ability of NEC to handle buried length tapered radials with insulation on them adds some measure of confidence to the general proposition that insulated radials of common wire and insulation types and thicknesses will not materially change the performance of a ground plane vertical antenna, relative to using bare wire radials. Modeling confirms common experience, at least over common soils.</p>
+  <p>There are several directions in which one might expand the investigation. Obviously, one might test the models over a myriad of soil quality combinations. As well, one might expand the range of insulation permittivity values for alternative insulation types, as well as explore higher values of conductivity to simulate what happens as insulation become corrupt with age. And, as the final test, one might cover a much larger range of radial system sizes, just to be sure that the trends indicated do hold true. It is a project out of which an engineering graduate student might generate a thesis or two. It has all of the earmarks of a good engineering thesis: minimal text and gobs of tables and graphs.</p>
+  <p>However, until such a thesis comes along to develop a comprehensive compendium of insulated radial data, perhaps this preliminary study will suffice to give GP builders confidence in that mile-long role of insulated wire from the surplus shop.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><i>Updated 05-01-2003. &COPY; L. B. Cebik, W4RNL. This item first appeared in</i> AntenneX<i>, Apr., 2003. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#modeling'>Modeling</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

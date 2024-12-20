@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Matching, Transmission Line">
+  <title>Some (Old) Notes on Home-Brew Parallel Transmission Lines</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/feedbut.gif" align="middle" width="145" height="75" border="2" vspace="5" hspace="9">Some (Old) Notes on Home-Brew Parallel Transmission Lines<img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Many hams have the urge to home-brew parallel transmission lines. The process seems simple enough, since all we need is a. some wire and b. some spacers to place periodically along the wire, positioned to maintain a relatively constant spacing. However, there is often a gap between the easy physical process and a knowledge of what it is that we have made. So the following notes are devoted to 2-wire parallel transmission lines with the hopes of clarifying a few ideas and bringing the product and its understanding a bit closer together. In the process, I have included some interesting material (at least interesting to me) drawn from handbooks that are between 60 and 70 years old.</p>
+  <p>Parallel feeders go back to the beginnings of radio. By 1930, the "two-wire untuned feeder system" was a standard ARRL <i>Handbook</i> feature. The <i>Jones Radio Handbook</i> of 1937 provides a table of line losses showing the advantages of open-wire feeders (a 440-Ohm line in the table) over lower impedance twisted-pair feeders (p. 70). The use of 600-Ohm lines was fairly standard, using a spacing of about 6". "To reduce radiation from the feeders to a minimum, the two wires should not be more than 10 to 12 inches apart." (<i>The Radio Amateur's Handbook</i>, 7th Ed., ARRL, 1930, p. 162.) Rarely did hams exceed the 6" spacing.</p>
+  <p>A number of rules of thumb emerged to remind hams of the 6" standard, and some of them evolved into rather vague "justifications." Rather than rehearse these old saws, let's simply look at the relationship between transmission line wires and the characteristic impedance of the resulting line.</p>
+  <h3>A Review of Some Basics</h3>
+  <p>Every transmission line has a characteristic impedance, and parallel transmission lines are no exception. The characteristic impedance (Zo) of a line depends on the physical properties of the line. For a 2-wire set, we have only two properties of note (assuming the use of a very conductive material, such as copper): the diameter of the wire and the spacing between the wires, as shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="par-1.gif" width="486" height="230" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There are a number of equations you may encounter for determining the characteristic impedance of a parallel transmission line, using the physical characteristics of the line as a basis. As we have noted, the key physical characteristics are the center-to-center spacing of the wires and the wire diameter. All basic equations involve the use of logarithms, either natural logs or common logs.</p>
+  <p>The most precise expression for the characteristic impedance (Zo) of a parallel transmission line, based on the physical spacing and diameter of the wires, is usually given in terms of an inverse hyperbolic cosine and the fundamental numerical constant e, which has a value of 2.718281828459 (as far as it is carried out here: the decimal string is endless).</p>
+  <center>
+    <img src="pare1.gif" width="566" height="110">
+  </center>
+  <p>where S is the center-to-center spacing between wires and d is the wire diameter, both in the same units. As well, S is considered to be very much larger than d.</p>
+  <p>The right side of equation 1 is the conventional algorithm for solving the equation to the left. It involves the use of natural logarithms (to base e) and can be initially simplified to the following expressions if A is equal to or greater than 1:</p>
+  <center>
+    <img src="pare2.gif" width="287" height="49">
+  </center>where
+  <center>
+    <img src="pare3.gif" width="610" height="45">
+  </center>and
+  <center>
+    <img src="pare4.gif" width="166" height="77">
+  </center>
+  <p>A more common equation that is useful in determining the characteristic impedance of parallel transmission lines involves common logarithms (to base 10):</p>
+  <center>
+    <img src="pare5.gif" width="241" height="76">
+  </center>
+  <p>where S and d have the same meaning as in the first equation. This equation provides adequately accurate results for most home constructed transmission lines, where the wire spacing is relatively wide compared to the wire diameter. For closely spaced wires or surfaces, the first equation is generally considered the more precise.</p>
+  <p>The equations apply to round wires only. When using square conductors or flat surfaces facing each others, the equations must be corrected.</p>
+  <center>
+    <img src="pare6.gif" width="179" height="43">
+  </center>
+  <p>where d is the effective diameter of the material and w is the width of the facing surface. Since square or flat-face conductors are used almost exclusively for low-impedance lines that cannot be obtained with round conductors, we shall note them here and pass on to more ordinary lines.</p>
+  <p>None of these equations account for the very small wire losses involved in using real materials, such as copper. There is some evidence that the greatest concentrations of electrons are on the facing surfaces of the parallel wires, with the consequence that losses may be larger for a given wire size in a transmission line than in other uses of similar wire. The result may be a need to de-rate the current carrying capacity of a wire by an AWG step or two. Nor do the equations account for the very small inductive reactance component of the characteristic impedance.</p>
+  <p>The equations for determining the characteristic impedance of a transmission line from the spacing and wire diameter can be tedious work. Much of this has been automated in a module of the <a href="../radio.html#HAMCALC">HAMCALC</a> suite of GW Basic electronics utility programs, available from George Murphy, VE3ERP. It is also useful simply to get a feel for the range of impedances values as they relate to common (round) wire sizes and common spacings. To that end, the following table may be useful to some folks.</p>
+  <pre>                             Parallel Wire Transmission Lines
+
+Wire Size (AWG)         #8          #10         #12         #14         #16
+Wire diameter (inches)  0.128       0.102       0.081       0.064       0.051
+
+Spacing (inches)              Characteristic Impedance (Zo) in Ohms
+
+0.5                     246.0       273.7       301.5       329.3       357.1
+1.0                     329.0       356.8       384.6       412.4       440.2
+1.5                     377.6       405.4       433.2       461.0       488.8
+2.0                     412.1       439.9       467.7       495.5       523.3
+2.5                     438.9       466.7       494.5       522.3       550.0
+3.0                     460.9       488.5       516.3       544.1       571.9
+3.5                     479.2       507.0       534.8       562.6       590.4
+4.0                     495.2       523.0       550.8       578.6       606.4
+4.5                     509.3       537.1       564.9       592.7       620.5
+5.0                     522.0       549.7       577.5       605.3       633.1
+5.5                     533.4       561.2       589.0       616.8       644.6
+6.0                     543.8       571.6       599.4       627.2       655.0</pre>
+  <p>The calculated values in the table are far more precise than we shall encounter in reality. However, within a percent or two, they accurately portray what we can expect from carefully constructed open-wire lines--that is lines using occasional spacers rather than a solid or perforated dielectric (insulation) that surrounds the wires and fills the space between them.</p>
+  <p>While some of us are drawn to tables, others prefer and benefit from more graphical presentations of the same information. The graph in <b>Fig. 2</b> presents the same data as in the table.</p>
+  <center>
+    <img src="par-2.gif" width="647" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Two facts are initially most notable about the graph. First, the progression of even wire sizes in the AWG scale yields linear increments of impedance for any given spacing. Second, as the spacing increases, the upward change in impedance grows smaller. The difference between impedances for 0.5 and 1.5 inch spacings is over 130 Ohms, but between 5 and 6 inch spacings, the difference is down to about 22 Ohms. Wide-spaced lines are therefore less critical relative to minor imperfections of construction.</p>
+  <h3>Some Magical Numbers: 300, 450, and 600</h3>We are used to encountering parallel transmission line with these values of characteristic impedance: 300, 450, and 600 Ohms. From the table of values, it is clear that constructing a 300-Ohm line in open-wire fashion would be difficult. First, the spacing is narrow and may require more spacers to keep the wires aligned. Second, small changes of spacing will create larger changes of impedance than with wider-spaced lines.
+  <p>Commercial 300-Ohm cable usually overcomes these difficulty by encasing the wires and the space between with a vinyl material having good RF characteristics--that is, introducing minimal losses at all frequencies of use. <b>Fig. 3</b> shows the cross section of two commercial options for 300-Ohm line, along with the cross section of what might be our home-brew open wire line.</p>
+  <center>
+    <img src="par-3.gif" width="486" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The use of a solid dielectric around and between the wires creates two phenomena of note. The first is a slightly higher loss than with open-wire lines. For most general purposes, the loss is small enough to neglect. However, under wet weather conditions, moisture on the line can change the characteristic impedance and introduce further losses. As well, the line can gather foreign materials that may also change the line's characteristics.</p>
+  <p>Second, the use of a dielectric around and between the wires lowers the velocity factor of the line. Typical 300-Ohm TV cable has a velocity factor of about 0.8, meaning that a wavelength of line is about 0.8 times the free-space wavelength for the frequency of use. In contrast, open wire line tends to have a velocity factor close to 1.0, depending on the number and type of spacers used. Rarely does well-constructed open-wire parallel transmission line have a velocity factor lower than about 0.98.</p>
+  <p>Although it is possible to construct 450-Ohm open wire transmission line, the most common commercial form also uses a vinyl dielectric. To reduce the losses and to increase the velocity factor, the line usually has windows, that is, openings in the material between the coated wires. The windows are structured to preserve the wire spacing while allowing the maximum air dielectric between wires. For these lines, velocity factors tend to range between 0.9 and 0.95. These commercial lines are inexpensive and convenient to use. In fact, the convenience may outweigh the cost differential relative to home brew lines, given the time required to construct lines.</p>
+  <p>Open wire lines of home-brew construction are generally called for under the following conditions:</p>
+  <ul>
+    <li>1. When the power level to be used may exceed the current carrying capacity of available commercial lines.</li>
+    <li>2. When the antenna to be used may be better matched to an impedance value that is not commercially available.</li>
+    <li>3. When the amateur has more material and time than money.</li>
+  </ul>
+  <p>Also on the commercial market are pre-prepared 600-Ohm open-wire lines, usually with plastic spacers. The bottom sketch of <b>Fig. 3</b> is a cross-section of common commercial 600-Ohm line. Like 450-Ohm line, commercial open-wire line tends to use small diameter conductors and narrower spacers. While suitable for moderate amateur power levels, the line can introduce resistive losses at higher power levels. This product was formerly more plentiful than today.</p>
+  <h3>Which Impedance and Why</h3>Constructing an open wire transmission line is a balance of two factors: the optimal impedance for the line and the ease of construction. Let's spend a moment on the first of these factors.
+  <p>Besides being cheaper to manufacture, TV-type transmission line uses a 300-Ohm impedance for convenience. Remember that the 300-Ohm figure is "nominal," meaning it is an approximation and may vary by 10% to 20%, depending upon the quality control of the manufacturing process. Its convenience stems from the emerging television industry in the post-WWII era. Folded dipole elements provided a rough match for the line, and TV sets were engineered to have 300-Ohm inputs. Outside of this industry, the line was used for its price and handiness, with little regard to matching. Amateurs used an antenna tuner (ATU) to compensate for reactance at the shack end of the line and to change the impedance to the emerging 50-Ohm coaxial cable standard. However, except for some briefly available transmitting versions of the line, the typical 300-Ohm line available today is composed of thin wires closely space (under 3/8").</p>
+  <p>Also available at one time was 75-Ohm transmitting line. With two round conductors capable of carrying significant power, an open wire 75-Ohm line is not possible, since the calculations would show the wires overlapping. The use of a dielectric material between and around the wires permitted the construction of the low impedance wire. In the U.S., only remnants of this cable remain.</p>
+  <p>Since we can more easily build 450-Ohm and 600-Ohm open-wire line, let's look at some reasons for choosing one value over the other.</p>
+  <ul>
+    <li>1. Wider spacing of the 600-Ohm line tends to make construction less critical than for 450-Ohm line.</li>
+    <li>2. Some antenna types for which we might use a given line tend to be better matched to one value than the other. Here are some examples.
+      <ul>
+        <li>a. A doublet used for all bands may encounter very high and very low impedances. A 600-Ohm line is often a good intermediate value to limit the voltage and current peaks on the line under the conditions of a mismatch on every band. However, if the highest impedance is about 1200-Ohms and the lowest is about 70 Ohms, then a 300-Ohm line is closest to the geometric mean between the extremes. If 300 Ohm line is impractical (for any of the reasons noted along the way), then 450-Ohm line may be the next best option.</li>
+        <li>b. Some antennas exhibit feedpoint impedances close to the characteristic impedance of one or the other line. Remember that a fairly wide range of resistance and reactance values can be presented to these high-value lines with a VSWR of under 2:1 (here used as a measure of voltage and current peaks). Although we tend to think in terms of 50-Ohm antenna feedpoint impedances, many good arrays have impedances ranging from 100 to 800 Ohms.</li>
+        <li>c. In some applications where the VSWR is low along the parallel line, a 450-Ohm line permits the use of transmission line transformers at the shack end rather than an ATU. A 9:1 transformer will yield a 50-Ohm match to a 450-Ohm impedance. (In fact, there are installations that use such transformers at both the shack and tower ends of long runs of 450-Ohm transmission line to reduce losses that would be incurred with an all-coax system.) In contrast, a 600-Ohm line matched to the antenna presents a 12:1 impedance ratio to the common 50-Ohm system, and matching may be restricted to the use of an ATU.</li>
+      </ul>
+    </li>
+  </ul>
+  <p>These examples only illustrate the need for analyzing all the factors at both ends of the transmission line to determine what line is best for the job at hand. The line is part of a system, and every system is only as good as its weakest part. Careless adoption of a transmission line impedance value may rob a given system of some measure of efficiency.</p>
+  <h3>Building Open-Wire Lines</h3>If this were 1931, we would receive the following advice on building parallel transmission line:
+  <blockquote>
+    "An impedance of 600 ohms is both convenient and standard, however, and is entirely satisfactory for amateur systems. The proper spacing for a 600-ohm transmission line is computed to a sufficient approximation by the following formula:
+    <center>
+      <img src="pare7.gif" width="170" height="40">
+    </center>
+    <p>where D is the distance between the centers of the feeder wires and d is the diameter of the wire." (<i>The Radio Amateur's Handbook</i>, 7th Ed., ARRL, 1930, p. 166)</p>
+  </blockquote>
+  <p>Unfortunately, the simple formula results in a spacing that is too wide for common wire sizes, such as AWG 12 or 14. The old equation gives us spacings of 7.9" and 6.3" for a 600-Ohm line, whereas the more exacting equations (which were in all of the Handbooks by 1936) show spacings of 6" and 5", respectively. (The <i>Jones Radio Handbook</i> of 1937 uses a figure of 150 X r, where r is the radius. For #12 and #14 wires, this simplified formula is more accurate. Pacific Radio Publishing, 1936, p. 54.) However, notice that erring on the high side for spacing introduces a smaller deviation from the desired impedance than using too narrow a spacing.</p>
+  <p>We may refer to either our table or graph to determine the approximate spacing for either 450-Ohm or 600-Ohm transmission lines. #14 wire requires about 1.5" for 450 Ohms and about 5" for 600 Ohms. #12 wire needs about 1.75" for 450 Ohms and about 6" for 600 Ohms. We may always resort to the equations for more exacting figures, but greater accuracy is rarely required at these impedance levels.</p>
+  <p>When we translate our computations into construction, we find the following 1930 recommendations:</p>
+  <blockquote>
+    "In building a two-wire feeder the wires should be separated by wooden dowels which have been boiled in paraffine. In this way, the feeder is given a tendency to swing in windy weather as a unit. When heavy glass or porcelain spacers are used the tendency is for each wire to vibrate with respect to the other, so causing changes in capacity between the wires and consequent changes in the emitted frequency. The wooden dowels can be attached to the feeder wires by drilling a small hole in the dowels, then binding them to the feeders with wire." (<i>The Radio Amateur's Handbook</i>, 7th Ed., ARRL, 1930, p. 169)
+  </blockquote>In the 1936 <i>ARRL Handbook</i> (13th Edition), we find the same information (p. 281), but the "e" has been dropped from "paraffin." We also find a recommendation for unbroken lengths of either #12 or #14 hard drawn copper wire for the feeders.
+  <p>In 1930, antenna feeders were coupled directly or inductively to the final tank circuit. Hence, changes in the feeder conditions affected the frequency of the keyed oscillator of which the tank was a part. Although we do not design our stations in this manner any more, the principle of using light dowels remains valid in terms of maintaining a constant characteristic impedance for the line. However, our choices in dowel material have vastly increased due to the introduction of a plethora of plastic materials that we can press into service.</p>
+  <p>Among the spacer materials in use today for home-brew open-wire feeders are the following:</p>
+  <ul>
+    <li>1. Wooden dowels, more usually marine varnished than boiled in paraffin.</li>
+    <li>2. Plastic rods of sundry sources, including Walmart coat-hangers and similar non-radio devices. However, polycarbonate rods with assured RF characteristics are inexpensive enough to replace materials of more questionable origins.</li>
+    <li>3. PVC and CPVC thin-wall tubing.</li>
+    <li>4. Strips of vinyl siding.</li>
+  </ul>
+  <p>We can extend the list, but the principle is clear. The spacer can be any light-weight material with reasonable good RF resistance in the HF region. Additionally, the material should be impervious to water. The material should also be durable under direct sun (high ultra-violet) conditions. Since the spacers of most open-wire transmission lines are under far less stress than such devices as insulated antenna supports, some materials (such as PVC) may prove more durable in transmission line uses than in other antenna applications.</p>
+  <center>
+    &lt;<img src="par-4.gif" width="359" height="500" border="2" vspace="5" hspace="9">&gt;
+  </center>
+  <p>The construction of lines has also not changed much over the years. <b>Fig. 4</b> shows two methods of using rod, dowel, and tubular spacers. At the top is the standard hole, used with a bridge-wire, as shown at the bottom. In the middle is a convenient variant, using a narrow slot plus a hole and bridge wire. This second technique permits the builder to "snap" the wires into place, rather than threading them down the entire length of the feeders. The third technique, useful when using plastic plates as spacers, has insets at each end for a tight wire fit. The wires is then pinned in places with a thin wire through the hole and is wrapped around the wire, with a solder fix. This method of construction also eliminates the task of threading each plate down the whole length of the feeder, but allows for pinning the wires in place permanently.</p>
+  <center>
+    <img src="par-5.gif" width="357" height="334" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 5</b>, we see how we might effectively use flexible strip materials. Drill a pair of holes at each end of each strip. Then, flex the strip and thread the wire through the holes. Releasing the strip should provide sufficient friction to hold the strip in place indefinitely.</p>
+  <p>Upon these basic methods there are innumerable further variations, as hams adapt almost anything to the task of setting feedline spacing. Whatever the spacer material and technique of construction, the distance between spacers should be as great as possible while still being close enough together to keep the distance between wires constant.</p>
+  <p>Although adapting non-radio materials to use in constructing parallel feeders is an old ham tradition, it may be better to invest in materials with known RF properties. To preserve light weight and good weather and sun resistance--without boiling dowels in paraffin--perhaps polycarbonate or equivalent rods may be the best feeder spacers available today. Nevertheless, this advance in materials technology is still very small compared to venerableness of open-wire transmission lines as a whole.</p>
+  <h3>A Final Note</h3>These notes have been devoted to considerations that go into the construction of a parallel transmission line. Installing them is another equally important matter. Current handbooks have excellent accounts of good engineering practice to use for installations, and I shall not review them here.
+  <p>However, I often hear of hams who violate these good engineering practices. They believe--sometimes rightly, sometimes erroneously--that a. they have gotten away with something and b. they are justified in recommending such practices to others. Whether or not a. is true, it is always bad electronics and bad amateur practice to recommend other than good engineering practice to other hams. These other folks may not be so lucky as the person who makes the recommendation thinks he or she has been, and they may not yet have the background to know why.</p>
+  <p>Nothing ruins the performance of beautifully made parallel transmission line like careless installation.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><i>Updated 1-6-2000, 12-28-2001. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#matching'>Matching</a>, <a href='../topics.html#transmission-line'>Transmission Line</a></p><br>
+</body>
+</html>

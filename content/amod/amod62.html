@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GH: Helix-Spiral Specification</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>62. GH: Helix-Spiral Specification</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episode 29 of this series, we explored the construction of a model of a helical dipole for 28.5 MHz. The techniques used there combined the model-by-equation facility of NEC-Win Plus with its spreadsheet blocking capabilities to produce the model solely by using the GW (wire geometry) input. In entry level programs, such as EZNEC and NEC-Win Plus, the GW input is the only way to create the individual wires and segments out of which a NEC model emerges.</p>
+  <p>Advanced NEC-2 and NEC-4 programs sacrifice some of the convenience of the spreadsheet functions in order to provide the user with all of the core input capabilities. So we shall examine a new way to create our helical dipole using the GH input--and then combine it with the GM input that we examined in the preceding episode.</p>
+  <p><b>The Old Helical Dipole</b></p>
+  <p>If we translate the NEC-Win Plus model into a standard ASCII format .NEC file, we shall obtain the following model:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM 28,5-MHz helical dipole
+CM radius 4", length 112", 1t=12"
+CE
+GW 1 3 0 4 0 2 2 3.4641 0.0404331
+GW 2 3 2 2 3.4641 4 -2 3.4641 0.0404331
+GW 3 3 4 -2 3.4641 6 -4 0 0.0404331
+GW 4 3 6 -4 0 8 -2 -3.4641 0.0404331
+GW 5 3 8 -2 -3.4641 10 2 -3.4641 0.0404331
+GW 6 3 10 2 -3.4641 12 4 0 0.0404331
+GW 7 3 12 4 0 14 2 3.4641 0.0404331
+GW 8 3 14 2 3.4641 16 -2 3.4641 0.0404331
+GW 9 3 16 -2 3.4641 18 -4 0 0.0404331
+GW 10 3 18 -4 0 20 -2 -3.4641 0.0404331
+GW 11 3 20 -2 -3.4641 22 2 -3.4641 0.0404331
+GW 12 3 22 2 -3.4641 24 4 0 0.0404331
+GW 13 3 24 4 0 26 2 3.4641 0.0404331
+GW 14 3 26 2 3.4641 28 -2 3.4641 0.0404331
+GW 15 3 28 -2 3.4641 30 -4 0 0.0404331
+GW 16 3 30 -4 0 32 -2 -3.4641 0.0404331
+GW 17 3 32 -2 -3.4641 34 2 -3.4641 0.0404331
+GW 18 3 34 2 -3.4641 36 4 0 0.0404331
+GW 19 3 36 4 0 38 2 3.4641 0.0404331
+GW 20 3 38 2 3.4641 40 -2 3.4641 0.0404331
+GW 21 3 40 -2 3.4641 42 -4 0 0.0404331
+GW 22 3 42 -4 0 44 -2 -3.4641 0.0404331
+GW 23 3 44 -2 -3.4641 46 2 -3.4641 0.0404331
+GW 24 3 46 2 -3.4641 48 4 0 0.0404331
+GW 25 3 48 4 0 50 2 3.4641 0.0404331
+GW 26 3 50 2 3.4641 52 -2 3.4641 0.0404331
+GW 27 3 52 -2 3.4641 54 -4 0 0.0404331
+GW 28 3 54 -4 0 56 -2 -3.4641 0.0404331
+GW 29 3 56 -2 -3.4641 58 2 -3.4641 0.0404331
+GW 30 3 58 2 -3.4641 60 4 0 0.0404331
+GW 31 3 60 4 0 62 2 3.4641 0.0404331
+GW 32 3 62 2 3.4641 64 -2 3.4641 0.0404331
+GW 33 3 64 -2 3.4641 66 -4 0 0.0404331
+GW 34 3 66 -4 0 68 -2 -3.4641 0.0404331
+GW 35 3 68 -2 -3.4641 70 2 -3.4641 0.0404331
+GW 36 3 70 2 -3.4641 72 4 0 0.0404331
+GW 37 3 72 4 0 74 2 3.4641 0.0404331
+GW 38 3 74 2 3.4641 76 -2 3.4641 0.0404331
+GW 39 3 76 -2 3.4641 78 -4 0 0.0404331
+GW 40 3 78 -4 0 80 -2 -3.4641 0.0404331
+GW 41 3 80 -2 -3.4641 82 2 -3.4641 0.0404331
+GW 42 3 82 2 -3.4641 84 4 0 0.0404331
+GW 43 3 84 4 0 86 2 3.4641 0.0404331
+GW 44 3 86 2 3.4641 88 -2 3.4641 0.0404331
+GW 45 3 88 -2 3.4641 90 -4 0 0.0404331
+GW 46 3 90 -4 0 92 -2 -3.4641 0.0404331
+GW 47 3 92 -2 -3.4641 94 2 -3.4641 0.0404331
+GW 48 3 94 2 -3.4641 96 4 0 0.0404331
+GW 49 3 96 4 0 98 2 3.4641 0.0404331
+GW 50 3 98 2 3.4641 100 -2 3.4641 0.0404331
+GW 51 3 100 -2 3.4641 102 -4 0 0.0404331
+GW 52 3 102 -4 0 104 -2 -3.4641 0.0404331
+GW 53 3 104 -2 -3.4641 106 2 -3.4641 0.0404331
+GW 54 3 106 2 -3.4641 108 4 0 0.0404331
+GW 55 3 108 4 0 110 2 3.4641 0.0404331
+GW 56 3 110 2 3.4641 112 -2 3.4641 0.0404331
+GS 0 0 .02540
+GE 0
+EX 0 28 3 0 1 0
+EX 0 29 1 0 1 0
+LD 5 1 1 3 5.8001E7
+LD 5 2 1 3 5.8001E7
+LD 5 3 1 3 5.8001E7
+LD 5 4 1 3 5.8001E7
+LD 5 5 1 3 5.8001E7
+LD 5 6 1 3 5.8001E7
+LD 5 7 1 3 5.8001E7
+LD 5 8 1 3 5.8001E7
+LD 5 9 1 3 5.8001E7
+LD 5 10 1 3 5.8001E7
+LD 5 11 1 3 5.8001E7
+LD 5 12 1 3 5.8001E7
+LD 5 13 1 3 5.8001E7
+LD 5 14 1 3 5.8001E7
+LD 5 15 1 3 5.8001E7
+LD 5 16 1 3 5.8001E7
+LD 5 17 1 3 5.8001E7
+LD 5 18 1 3 5.8001E7
+LD 5 19 1 3 5.8001E7
+LD 5 20 1 3 5.8001E7
+LD 5 21 1 3 5.8001E7
+LD 5 22 1 3 5.8001E7
+LD 5 23 1 3 5.8001E7
+LD 5 24 1 3 5.8001E7
+LD 5 25 1 3 5.8001E7
+LD 5 26 1 3 5.8001E7
+LD 5 27 1 3 5.8001E7
+LD 5 28 1 3 5.8001E7
+LD 5 29 1 3 5.8001E7
+LD 5 30 1 3 5.8001E7
+LD 5 31 1 3 5.8001E7
+LD 5 32 1 3 5.8001E7
+LD 5 33 1 3 5.8001E7
+LD 5 34 1 3 5.8001E7
+LD 5 35 1 3 5.8001E7
+LD 5 36 1 3 5.8001E7
+LD 5 37 1 3 5.8001E7
+LD 5 38 1 3 5.8001E7
+LD 5 39 1 3 5.8001E7
+LD 5 40 1 3 5.8001E7
+LD 5 41 1 3 5.8001E7
+LD 5 42 1 3 5.8001E7
+LD 5 43 1 3 5.8001E7
+LD 5 44 1 3 5.8001E7
+LD 5 45 1 3 5.8001E7
+LD 5 46 1 3 5.8001E7
+LD 5 47 1 3 5.8001E7
+LD 5 48 1 3 5.8001E7
+LD 5 49 1 3 5.8001E7
+LD 5 50 1 3 5.8001E7
+LD 5 51 1 3 5.8001E7
+LD 5 52 1 3 5.8001E7
+LD 5 53 1 3 5.8001E7
+LD 5 54 1 3 5.8001E7
+LD 5 55 1 3 5.8001E7
+LD 5 56 1 3 5.8001E7
+FR 0 1 0 0 28.5 1
+RP 0 1 360 1000 89 0 1 1
+RP 0 181 1 1000 -90 0 1 1
+EN
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>I have purposely listed the entire set of 56 wires and 56 loads, since assigning a material conductivity to individual wires is standard for programs such as NEC-Win Plus. Once in .NEC form, I could replace all of the LD5 lines with a single line, since the entire helical dipole is constructed from AWG #12 copper wire. The length is 112", which yields 9.33 turns of the helix. The helix is uniform throughout, using 12" per complete turn. Since each of the 56 wires has 3 segments, we end up with a total segment count of 168.</p>
+  <p>The model uses a split source which yields a free-space source impedance of 25.4 + j 5.4 Ohms and a gain of 1.74 dBi.</p>
+  <p><b>Recreating the Helical Dipole with GH</b></p>
+  <p>Initially, we shall use a single line to create the basic free-space helical dipole. The only entry will look like the top line of the following entry.</p>
+  <pre>GH  1    168  12  106  4   4   4   4   .0404
+GH  ITG  NS   S   HL   A1  B1  A2  B2  RAD
+    I1   I2   F1  F2   F3  F4  F5  F6  F7</pre>
+  <p>The line structure, like most other NEC-2 geometry entries, consists of 2 integer places and 7 floating decimal places. The use of integers in many of those entries is simply a function of using rounded numbers to keep the example easy-to-read and to have the new model correspond as closely as possible with the old. Here is a list of the entries and their explanations.</p>
+  <p><b>ITG</b>: This entry assigns a tag number to all of the segments making up the helix (or spiral). For simplicity, we assign a 1 here.</p>
+  <p><b>NS</b>: The number of segments into which the helix (or spiral) will be divided. Note that the new helical dipole will be constructed of a single wire composed of many segments. We shall retain the 168 value from the old model.</p>
+  <p><b>S</b>: The turn spacing, as measured from a consistent point on successive turns. In NEC-2, the turn spacing for helixes and spirals will be constant or linear. The model assigns a 12" spacing between turns, the same value as used in the old model.</p>
+  <p><b>HL</b>: The total length of the helix. Here we assign--for reasons that we shall discover--a value of 106" instead of the 112" of the initial model. If HL is zero, then we obtain a flat spiral. Some implementations of NEC-2 may yield a division-by-zero error if HL=0. However, one may always give HL a very low value to avoid this problem and retain an essentially flat spiral. If HL is negative, the output is a left-handed spiral; if positive, the helix is right-handed. Since the helical dipole does not care about its hands, we have assigned a positive number.</p>
+  <p>The following 4 entries rest on the fact that NEC-2 grows its helices along the Z-axis. For a free-space model, this presents no problems, even for our HF helical dipole, since we can always use a theta pattern instead of a phi pattern to obtain the typical dipole figure-8 pattern. As well, we shall look at ways to reorient the helix once we have finished constructing it.</p>
+  <p><b>A1</b>: The radius of the helix along the X-axis at Z=0 (the helix starting point). Since we used a "radius" of 4" from center to hexagon point in our old model, we shall use 4 as the radius.</p>
+  <p><b>B1</b>: The radius of the helix along the Y-axis at Z=0 (the helix starting point). Once more, we assign a 4.</p>
+  <p><b>A2</b>: The radius of the helix along the X-axis at Z=HL (the terminating point of the helix). Since our helix is uniform in radius, we assign another 4.</p>
+  <p><b>B2</b>: The radius of the helix along the Y-axis at Z=HL (the terminating point of the helix). Since our helix is uniform in radius, we assign another 4.</p>
+  <p><b>RAD</b>: The wire radius. Since we are using AWG #12, the radius is 0.0404.</p>
+  <p>If we were designing a flat spiral, then HL would be zero or virtual zero, and A2 and B2 would not have the same values as A1 and B1. However, A2 and B2 must grow or shrink together to prevent intersecting wires within the spiral. In a helix, it is not necessary to maintain a constant radius, although that is the most common form. We can create a spiral helix by using different values for A1/B1 and A2/B2 while using a non-zero value for HL. The result will be roughly conical, with the more open end higher or lower depending on our selection of A and B values.</p>
+  <p>A limitation of the NEC-2 helix creation line is that it does not permit variation of the pitch as we move along the helix. This limitation has no effect on our simple model.</p>
+  <p>The GH input does not appear in the original (1981) NEC-2 user's manual. It is classified as a non-official addition to NEC-2. Nonetheless, it is a highly useful addition.</p>
+  <center>
+    <img src="amod62-1.gif" width="538" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the complete simple helix model. since the wire units are in inches, we add the scaling line (GS) to convert them to meters. As well, since we specified a total of 168 segments in the model to coincide roughly with the original model, we use a split-feed system. However, rather than occurring on adjacent wires, as in the original, they occur on adjacent segments of our single tag: segments 84 and 85, specifically. As well a single load (LD5) line suffices to give the model wire copper's conductivity. The RP0 line specifies a theta pattern.</p>
+  <center>
+    <img src="amod62-2.gif" width="255" height="656" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> places the two helices side by side, but not perfectly to scale. The old model has 9.33 turns, while the new one has 8.83 turns, given the fixed 12-inch turn spacing in each model. If the new model curves seem smoother than the old, that is no illusion. The old model uses 3 segments per straight line, while the new model has a new angle for each segment.</p>
+  <p>The new model returns a free-space gain of 1.73 dBi and a source impedance (combining the split-feed in series) of 22.6 - j 1.9 Ohms. But it does so with a length of 106" rather than the original 112".</p>
+  <center>
+    <img src="amod62-3.gif" width="573" height="344" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can capture something of the reason for the length difference from the views of <b>Fig. 3</b>. The original model used a hexagon to simulate a circle. For general building guidance, the simulation is reasonable. However, with a radius to a point of 4", the circumference of the hexagon is somewhat shorter than that of a circle with the same radius. Hence, we would require greater length to equal the total wire in the much more circular helix created by the GH entry.</p>
+  <p>One modeling benefit of using the GH facility is that we can prune our helix model to length simply by changing 1 number in the GH line (HL). Changing the length of the original model requires that we add, remove, or modify one or more GW entries.</p>
+  <p>The NEC output report on the helix provides some useful information not readily available from the original model. The following extract from the output file for our simple "GH" model is helpful in checking our design or finding out some of its properties.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+     HELIX STRUCTURE-   AXIAL SPACING BETWEEN TURNS =  12.000 TOTAL AXIAL LENGTH = 106.000
+  1  RADIUS OF HELIX =     4.000     4.000     4.000     4.000           0.04040     168        1   168       1
+     THE PITCH ANGLE IS   25.5228
+     THE LENGTH OF WIRE/TURN IS   27.8506
+      STRUCTURE SCALED BY FACTOR   0.02540
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.09885    0.01648    0.00801    0.03706   25.62438  99.46429   0.00103     0    1    2      1
+     2    0.08816    0.04765    0.02404    0.03706   25.62438 118.39286   0.00103     1    2    3      1
+     3    0.06794    0.07368    0.04007    0.03706   25.62438 137.32143   0.00103     2    3    4      1
+     4    0.04036    0.09173    0.05609    0.03706   25.62438 156.25000   0.00103     3    4    5      1
+     5    0.00842    0.09986    0.07212    0.03706   25.62438 175.17857   0.00103     4    5    6      1
+     6   -0.02443    0.09719    0.08814    0.03706   25.62438-165.89286   0.00103     5    6    7      1
+     7   -0.05463    0.08402    0.10417    0.03706   25.62438-146.96429   0.00103     6    7    8      1
+     8   -0.07893    0.06175    0.12020    0.03706   25.62438-128.03572   0.00103     7    8    9      1
+     9   -0.09470    0.03280    0.13622    0.03706   25.62438-109.10715   0.00103     8    9   10      1
+    10   -0.10022    0.00031    0.15225    0.03706   25.62438 -90.17857   0.00103     9   10   11      1
+    11   -0.09490   -0.03221    0.16828    0.03706   25.62438 -71.25000   0.00103    10   11   12      1
+    12   -0.07932   -0.06126    0.18430    0.03706   25.62438 -52.32143   0.00103    11   12   13      1
+-----
+    80    0.04264    0.09070    1.27408    0.03706   25.62438 154.82140   0.00103    79   80   81      1
+    81    0.01091    0.09962    1.29011    0.03706   25.62438 173.74997   0.00103    80   81   82      1
+    82   -0.02200    0.09777    1.30613    0.03706   25.62438-167.32145   0.00103    81   82   83      1
+    83   -0.05252    0.08535    1.32216    0.03706   25.62438-148.39288   0.00103    82   83   84      1
+    84   -0.07737    0.06370    1.33819    0.03706   25.62438-129.46431   0.00103    83   84   85      1
+    85   -0.09385    0.03516    1.35421    0.03706   25.62438-110.53574   0.00103    84   85   86      1
+    86   -0.10018    0.00281    1.37024    0.03706   25.62438 -91.60717   0.00103    85   86   87      1
+    87   -0.09567   -0.02984    1.38627    0.03706   25.62438 -72.67860   0.00103    86   87   88      1
+    88   -0.08082   -0.05926    1.40229    0.03706   25.62438 -53.75003   0.00103    87   88   89      1
+    89   -0.05723   -0.08227    1.41832    0.03706   25.62438 -34.82146   0.00103    88   89   90      1
+-----
+   157    0.01339    0.09932    2.50810    0.03706   25.62438 172.32138   0.00103   156  157  158      1
+   158   -0.01955    0.09829    2.52412    0.03706   25.62438-168.75005   0.00103   157  158  159      1
+   159   -0.05038    0.08663    2.54015    0.03706   25.62438-149.82148   0.00103   158  159  160      1
+   160   -0.07576    0.06561    2.55618    0.03706   25.62438-130.89291   0.00103   159  160  161      1
+   161   -0.09294    0.03748    2.57220    0.03706   25.62438-111.96434   0.00103   160  161  162      1
+   162   -0.10008    0.00531    2.58823    0.03706   25.62438 -93.03577   0.00103   161  162  163      1
+   163   -0.09639   -0.02744    2.60426    0.03706   25.62438 -74.10720   0.00103   162  163  164      1
+   164   -0.08227   -0.05723    2.62028    0.03706   25.62438 -55.17862   0.00103   163  164  165      1
+   165   -0.05926   -0.08082    2.63631    0.03706   25.62438 -36.25005   0.00103   164  165  166      1
+   166   -0.02984   -0.09567    2.65233    0.03706   25.62438 -17.32148   0.00103   165  166  167      1
+   167    0.00281   -0.10018    2.66836    0.03706   25.62438   1.60709   0.00103   166  167  168      1
+   168    0.03516   -0.09385    2.68439    0.03706   25.62438  20.53566   0.00103   167  168    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>I have left only 3 turns--the two ends and the turn in the source region- -in this report to reveal the segment-by-segment change of angle in a GH helix. The helix extends from Z=0 to Z=2.6924 m (106"). The values in the Z column do not match these terminal values, since they are values for the center of each segment.</p>
+  <p>Among the useful data provided in the NEC output report is the pitch angle (25.522 degrees) and the length of wire per turn (27.8506"). From the latter value, knowing that we have 8.833 turns, we can derive the total length of wire in the helix: 246". (Since each wire in the original model is 4.47" long--allowing for the pitch of the turns--and we have 56 wires, the total wire length in that model is 250".)</p>
+  <p><b>Manipulating the Helical Dipole</b></p>
+  <p>The helical dipole that we just created is vertical and extends from Z=0 to Z=HL. It is unlikely that this position is what we might desire for the finished product. However, we may change a number of positional features of the structure by using the GM input that we reviewed in the preceding episode.</p>
+  <p>Let's begin by rotating the structure reactive to the X-axis. Our goal will be to set the structure into what would be a horizontal orientation extending from Y=0 to Y=HL. A single entry on a GM card placed just after the GH card will do the job.</p>
+  <center>
+    <img src="amod62-4.gif" width="538" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the revised model. Note that we have entered a -90-degree rotation in order to come up with positive values for the Y-axis entries. The following extract from the NEC output file gives us a view of what we accomplished.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+                                     COORDINATES MUST BE INPUT IN
+                                     METERS OR BE SCALED TO METERS
+                                     BEFORE STRUCTURE INPUT IS ENDED
+
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+     HELIX STRUCTURE-   AXIAL SPACING BETWEEN TURNS =  12.000 TOTAL AXIAL LENGTH = 106.000
+  1  RADIUS OF HELIX =     4.000     4.000     4.000     4.000           0.04040     168        1   168       1
+     THE PITCH ANGLE IS   25.5228
+     THE LENGTH OF WIRE/TURN IS   27.8506
+      THE STRUCTURE HAS BEEN MOVED, MOVE DATA CARD IS -
+        0    0 -90.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+       GM command acting on tag #'s            0 through            0
+  inclusive.
+      STRUCTURE SCALED BY FACTOR   0.02540
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.09885    0.00801   -0.01648    0.03706  -62.79489 108.92291   0.00103     0    1    2      1
+     2    0.08816    0.02404   -0.04765    0.03706  -52.48438 134.75235   0.00103     1    2    3      1
+     3    0.06794    0.04007   -0.07368    0.03706  -37.67732 146.87851   0.00103     2    3    4      1
+     4    0.04036    0.05609   -0.09173    0.03706  -21.29291 152.34449   0.00103     3    4    5      1
+     5    0.00842    0.07212   -0.09986    0.03706   -4.34627 154.29633   0.00103     4    5    6      1
+     6   -0.02443    0.08814   -0.09719    0.03706   12.69518 153.68493   0.00103     5    6    7      1
+     7   -0.05463    0.10417   -0.08402    0.03706   29.44213 150.22438   0.00103     6    7    8      1
+     8   -0.07893    0.12020   -0.06175    0.03706   45.24815 142.10108   0.00103     7    8    9      1
+     9   -0.09470    0.13622   -0.03280    0.03706   58.42714 124.31185   0.00103     8    9   10      1
+    10   -0.10022    0.15225   -0.00031    0.03706   64.37504  90.37230   0.00103     9   10   11      1
+    11   -0.09490    0.16828    0.03221    0.03706   58.62722  56.17144   0.00103    10   11   12      1
+    12   -0.07932    0.18430    0.06126    0.03706   45.52954  38.12186   0.00103    11   12   13      1
+-------------
+    80    0.04264    1.27408   -0.09070    0.03706  -22.55676 152.07639   0.00103    79   80   81      1
+    81    0.01091    1.29011   -0.09962    0.03706   -5.63323 154.24218   0.00103    80   81   82      1
+    82   -0.02200    1.30613   -0.09777    0.03706   11.41387 153.81986   0.00103    81   82   83      1
+    83   -0.05252    1.32216   -0.08535    0.03706   28.19972 150.61245   0.00103    82   83   84      1
+    84   -0.07737    1.33819   -0.06370    0.03706   44.11424 142.96058   0.00103    83   84   85      1
+    85   -0.09385    1.35421   -0.03516    0.03706   57.60257 126.18023   0.00103    84   85   86      1
+    86   -0.10018    1.37024   -0.00281    0.03706   64.32867  93.34651   0.00103    85   86   87      1
+    87   -0.09567    1.38627    0.02984    0.03706   59.40185  58.17066   0.00103    86   87   88      1
+    88   -0.08082    1.40229    0.05926    0.03706   46.64632  39.04739   0.00103    87   88   89      1
+    89   -0.05723    1.41832    0.08227    0.03706   30.98812  30.29621   0.00103    88   89   90      1
+    90   -0.02744    1.43434    0.09639    0.03706   14.29458  26.50571   0.00103    89   90   91      1
+-------------
+   155    0.07152    2.47605   -0.07020    0.03706  -40.05297 145.59858   0.00103   154  155  156      1
+   156    0.04488    2.49207   -0.08960    0.03706  -23.81736 151.78846   0.00103   155  156  157      1
+   157    0.01339    2.50810   -0.09932    0.03706   -6.91952 154.17381   0.00103   156  157  158      1
+   158   -0.01955    2.52412   -0.09829    0.03706   10.13116 153.93953   0.00103   157  158  159      1
+   159   -0.05038    2.54015   -0.08663    0.03706   26.95272 150.97652   0.00103   158  159  160      1
+   160   -0.07576    2.55618   -0.06561    0.03706   42.96780 143.77073   0.00103   159  160  161      1
+   161   -0.09294    2.57220   -0.03748    0.03706   56.74142 127.94738   0.00103   160  161  162      1
+   162   -0.10008    2.58823   -0.00531    0.03706   64.20849  96.30074   0.00103   161  162  163      1
+   163   -0.09639    2.60426    0.02744    0.03706   60.13300  60.27703   0.00103   162  163  164      1
+   164   -0.08227    2.62028    0.05723    0.03706   47.74811  40.02946   0.00103   163  164  165      1
+   165   -0.05926    2.63631    0.08082    0.03706   32.21882  30.74262   0.00103   164  165  166      1
+   166   -0.02984    2.65233    0.09567    0.03706   15.57208  26.67626   0.00103   165  166  167      1
+   167    0.00281    2.66836    0.10018    0.03706   -1.44899  25.63317   0.00103   166  167  168      1
+   168    0.03516    2.68439    0.09385    0.03706  -18.43868  27.12110   0.00103   167  168    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The entries make it clear that the extension of the helical dipole that formerly appeared in the Z-column now appears in the Y-column.</p>
+  <p>Since it is also unlikely that we would want the helical dipole to lie partially above and partially below ground when we add a ground system to the model later on, we should likely raise the antenna in the Z-axis. Perhaps 30' or 360" will do as a start. As well, many modelers prefer to have their antennas centered, with equal amounts extending + and - relative to the axis at right angles to them. This move would require that we move the structure along the Y-axis by -53 (a 53" move toward the negative portion of the Y-axis).</p>
+  <p>We need not add a second GM card. Our total revision involves a rotation first, followed by two translations. Since the GM card rotates before translating--our desired order of operation--we may include all 3 requests on a single card, as shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod62-5.gif" width="602" height="468" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since the GM card will precede the GS or scaling card, we may make all entries in the unit of measure that we used for the GH line. The final model (at least for this exercise) appears in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod62-6.gif" width="538" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We need only look at an extract from the NEC output file to see if we succeeded in all of our moves.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+     HELIX STRUCTURE-   AXIAL SPACING BETWEEN TURNS =  12.000 TOTAL AXIAL LENGTH = 106.000
+     1  RADIUS OF HELIX =     4.000     4.000     4.000     4.000           0.04040     168        1   168
+1
+     THE PITCH ANGLE IS   25.5228
+     THE LENGTH OF WIRE/TURN IS   27.8506
+      THE STRUCTURE HAS BEEN MOVED, MOVE DATA CARD IS -
+        0    0 -90.00000   0.00000   0.00000   0.00000 -53.00000 360.00000   0.00000
+       GM command acting on tag #'s            0 through            0
+  inclusive.
+      STRUCTURE SCALED BY FACTOR   0.02540
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.09885   -1.33819    9.12752    0.03706  -62.79489 108.92291   0.00103     0    1    2      1
+     2    0.08816   -1.32216    9.09635    0.03706  -52.48438 134.75235   0.00103     1    2    3      1
+     3    0.06794   -1.30613    9.07032    0.03706  -37.67732 146.87851   0.00103     2    3    4      1
+     4    0.04036   -1.29011    9.05227    0.03706  -21.29291 152.34449   0.00103     3    4    5      1
+     5    0.00842   -1.27408    9.04414    0.03706   -4.34627 154.29633   0.00103     4    5    6      1
+     6   -0.02443   -1.25806    9.04681    0.03706   12.69518 153.68493   0.00103     5    6    7      1
+     7   -0.05463   -1.24203    9.05998    0.03706   29.44213 150.22438   0.00103     6    7    8      1
+     8   -0.07893   -1.22600    9.08225    0.03706   45.24815 142.10108   0.00103     7    8    9      1
+     9   -0.09470   -1.20998    9.11120    0.03706   58.42714 124.31185   0.00103     8    9   10      1
+    10   -0.10022   -1.19395    9.14369    0.03706   64.37504  90.37230   0.00103     9   10   11      1
+    11   -0.09490   -1.17792    9.17621    0.03706   58.62722  56.17144   0.00103    10   11   12      1
+    12   -0.07932   -1.16190    9.20526    0.03706   45.52954  38.12186   0.00103    11   12   13      1
+--------
+    80    0.04264   -0.07212    9.05330    0.03706  -22.55676 152.07639   0.00103    79   80   81      1
+    81    0.01091   -0.05609    9.04438    0.03706   -5.63323 154.24218   0.00103    80   81   82      1
+    82   -0.02200   -0.04007    9.04623    0.03706   11.41387 153.81986   0.00103    81   82   83      1
+    83   -0.05252   -0.02404    9.05865    0.03706   28.19972 150.61245   0.00103    82   83   84      1
+    84   -0.07737   -0.00801    9.08030    0.03706   44.11424 142.96058   0.00103    83   84   85      1
+    85   -0.09385    0.00801    9.10884    0.03706   57.60257 126.18023   0.00103    84   85   86      1
+    86   -0.10018    0.02404    9.14119    0.03706   64.32867  93.34651   0.00103    85   86   87      1
+    87   -0.09567    0.04007    9.17384    0.03706   59.40185  58.17066   0.00103    86   87   88      1
+    88   -0.08082    0.05609    9.20326    0.03706   46.64632  39.04739   0.00103    87   88   89      1
+    89   -0.05723    0.07212    9.22627    0.03706   30.98812  30.29621   0.00103    88   89   90      1
+    90   -0.02744    0.08814    9.24039    0.03706   14.29458  26.50571   0.00103    89   90   91      1
+--------
+   156    0.04488    1.14587    9.05440    0.03706  -23.81736 151.78846   0.00103   155  156  157      1
+   157    0.01339    1.16190    9.04468    0.03706   -6.91952 154.17381   0.00103   156  157  158      1
+   158   -0.01955    1.17792    9.04571    0.03706   10.13116 153.93953   0.00103   157  158  159      1
+   159   -0.05038    1.19395    9.05737    0.03706   26.95272 150.97652   0.00103   158  159  160      1
+   160   -0.07576    1.20998    9.07839    0.03706   42.96780 143.77073   0.00103   159  160  161      1
+   161   -0.09294    1.22600    9.10652    0.03706   56.74142 127.94738   0.00103   160  161  162      1
+   162   -0.10008    1.24203    9.13869    0.03706   64.20849  96.30074   0.00103   161  162  163      1
+   163   -0.09639    1.25806    9.17144    0.03706   60.13300  60.27703   0.00103   162  163  164      1
+   164   -0.08227    1.27408    9.20123    0.03706   47.74811  40.02946   0.00103   163  164  165      1
+   165   -0.05926    1.29011    9.22482    0.03706   32.21882  30.74262   0.00103   164  165  166      1
+   166   -0.02984    1.30613    9.23967    0.03706   15.57208  26.67626   0.00103   165  166  167      1
+   167    0.00281    1.32216    9.24418    0.03706   -1.44899  25.63317   0.00103   166  167  168      1
+   168    0.03516    1.33819    9.23785    0.03706  -18.43868  27.12110   0.00103   167  168    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The average Z value is 9.144 m or 30'. The model extends from Y=-1.3462 m to +1.3462 m (that is, -53" to +53"). The values shown for segments 1 and 168, of course, represent the Y coordinates of the segment center, so their values will be just shy of the tag end coordinates.</p>
+  <p><b>Conclusions and Cautions</b></p>
+  <p>This little exercise set in using the GH entry--along with the GM entry-- to create helical structures has aimed at familiarization with some of the modeling economies that are available in implementations of NEC-2 that make all of the geometry cards available to the user. The original model of our helical dipole used 56 GW entries, while the revised model used only 1 GH and eventually 1 GM entry to do the same work. As well, we need only one LD5 entry to provide the dipole with copper's conductivity throughout.</p>
+  <p>For our efforts, we received the benefit of having a helix that better simulates a spiral curvature. The angle changes with every segment, rather than with every third segment, as in the original. The result is a structure that yields a slightly different required length for resonance and a slightly different source impedance.</p>
+  <p>When constructing models of helical structures, we need to remain aware of all NEC limitations. If we make the radius of the helix too small for the wire radius used, then we may run against the segment-length-to-wire- radius limits of NEC. If we confine the space required by 1 turn to a value that is too low, then the wire proximity may violate NEC limitations. Proximity errors may increase if the parallel segment junctions are not in very close alignment. Most of these problems will show up within one of two tests. First, most NEC implementations have some sort of error checking routine to pre-test a model relative to many of the NEC guidelines. Second, we can perform an average gain test as a check on model adequacy.</p>
+  <p>The limitations on helical models do not impinge on the design and modeling of most helical antenna designs for the VHF region and above. In these antennas, turns are relatively widely spaced with a large radius to the spiral. However, the limitations will often be approached and surpassed in attempts to model compact helical dipoles for HF service. Typically, such dipoles use fairly closely spaced wires on forms with under a 2" diameter. The GH facility can create the requisite wire structure, but the user must be cautious with the results.</p>
+  <p>These notes apply only to the NEC-2 implementation of the GH entry. The NEC-4 version of the entry has a different format, so that a NEC-2 model with a GH entry does not import directly into NEC-4. By shrinking the helix radius entries into single values for the start and end, the entry opens room for specifying differential start and stop wire radii. As well, instead of asking for the spacing of a full turn and the total length of the helix, the NEC-4 entry asks for the total length and the number of turns. Finally, the NEC-4 version of GH allows two different types of spirals. Since both NEC-2 and NEC-4 use only 7 floating decimal entries, entry meanings will change when moving from one program to the other.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

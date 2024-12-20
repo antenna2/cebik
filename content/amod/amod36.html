@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Getting a Grip on AZ/EL and Phi/Theta</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>36. Getting a Grip on AZ/EL and Phi/Theta</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Among the unappreciated subtleties of NEC (in any version from -2 to -4) is the fact that the radiation pattern outputs make use of different conventions from those we ordinarily apply to antennas in both amateur and field engineering work. We tend to think of the horizontal dimensions for an antenna pattern in azimuth terms, which correspond to the headings on a standard compass. For elevation, we count from the ground upward.</p>
+  <p>However, the NEC core does its work with radiation patterns using the conventions of phi and theta angles. Folks using "raw" NEC must either adopt the phi/theta angle counting scheme or be ready to make conversions into azimuth/elevation (AZ/EL) on a scratch pad. Those using commercial implementations of NEC have access to pre-conversions that show up as AZ/EL headings in the graphical and tabular outputs of NEC programs. In some programs, users may have a choice of graphical labels for some plots.</p>
+  <p>However, not everything may be as it seems, that is, as pure elevation and azimuth plots. Therefore, perhaps it may be useful to start at the beginning and carry ourselves into the conventions used by at least a couple of commercial programs. In this way, we can become prepared for almost anything.</p>
+  <p>In the course of our discussion, we shall uncover some implementation schemes that use the term "azimuth" but which are not quite pure azimuth structures. Our purpose in noting these departures is not to be critical. Very often, there are good programming reasons for the variants. We need to understand what is before us and how to interpret it well, and that will be our primary goal in looking at the structures of pattern plots.</p>
+  <p><b>Elevation and Theta</b></p>
+  <p>The simple beginning in our effort to get a handle upon both theta angles and elevation angles is to differentiate the two systems. The rule of thumb goes something like this: theta angles count downward from the zenith heading (directly overhead along the Z axis on the coordinate system). Elevation angle count from the horizon upward. Hence, for starters, we can think of a horizon as 90 degrees theta or zero degree elevation. Likewise, directly above the antenna is zero degrees theta and 90 degrees elevation.</p>
+  <p>This simple convention works well for some purposes. For example, when we specify the elevation angle in a commercial version of NEC, we enter a value between 0 and 90. Likewise, if we specify a theta angle, we normally specify a value between 90 and 0. This practice is necessary when requesting an azimuth pattern for an antenna over real ground.</p>
+  <p>However, this step is only the beginning of our understanding of how NEC counts. Examine <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod36-1.gif" width="439" height="381" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The circle in <b>Fig. 1</b> represent a free-space 360-degree set of bearing that is possible for an antenna in free space. For antennas above ground, we use only the upper half of the circle. To understand how the NEC calculating core performs its radiation pattern duties, let's look on the inside of the circle. By convention, the direction to the right is the primary heading for theta (and for elevation) angles, and its theta value is +90. As we move up the circle, the angle decreases to 0. Moving back down the circle to the left, we find -90 as the value. This scheme is convenient, since for antennas above the horizon line, we have values between 0 and 90 in both directions.</p>
+  <p>The situation becomes somewhat more complex if we extend the circle to the full 360 degrees for a free space pattern. By the time we return to our starting point, the inner circle reads -270. In many ways, this is a perfectly sensible scheme, since we can simply specify +90 degrees as the finish point for any theta pattern, whether over ground or in free space. The starting point then becomes 90 degrees minus 180 degrees for patterns over ground or 90 degrees minus 360 degrees for patterns in free space. (Remember that for NEC-2 patterns over ground, direct horizontal values (+90 and -90 degrees theta) are illicit.)</p>
+  <p>If we turn our attention to the labels outside the circle, we encounter the conventions applicable to elevation patterns. Over ground, we have two choices, in the main. We can count upward from the right from 0 to 90 degrees overhead and back down to 0 at the left horizon point. Alternatively, we can count from 0 to 180 degrees moving from the far right to the far left. This latter scheme is useful when we wish to deal with a free- space pattern, since we can continue the count to the low point value of 270 and than back to 360 or 0 degrees.</p>
+  <p>Notice that on a circle, theta values increase in a clockwise direction, while elevation values increase in a counterclockwise direction--if we adopt the convention of placing the prime direction or orientation to the right on the graph.</p>
+  <p>One of the commercial implementations of NEC that I use, EZNEC, uses elevation angles instead of theta angles, since elevation is the standard used by most practical antenna folks. The program's graphical output for elevation patterns of all types uses a single set of labels, shown in the free-space pattern for a 3-element Yagi in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod36-2.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The EZNEC scheme exactly follows the conventions shown in the general scheme in <b>Fig. 1</b>. Incidentally, version 2 of EZNEC is used for this exercise, since the patterns show the labels at all times. Version 3.0 is now available for Windows, but uses the same scheme. However, the graphical angles are not labeled.</p>
+  <p>The other NEC program that I use is NEC-Win Plus. It offers the user a choice of theta or elevation angles for the plots. Moreover, the user can also select from 4 different sets of labels for elevation/theta plots (with the designations arranged from left to tight on the actual graphic):</p>
+  <ul>
+    <li>1. -90/0/90 (theta)</li>
+    <li>2. 180/90/0 (elevation)</li>
+    <li>3. 0/90/180</li>
+    <li>4. 0/90/0</li>
+  </ul>
+  <p>The first two selections replicate the standard theta and the elevation scheme also used by EZNEC. The third option is useful for reversed patterns. The fourth provides elevation angles in simple numbers for both directions away from the zenith. <b>Fig. 3</b> provides a sample of a free-space pattern using the 0/90/0 scheme. Notice that area below the hypothetical horizon uses negative values, with the lowest point using a -90 degree value.</p>
+  <center>
+    <img src="amod36-3.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Differences in the conventions used--either as provided by the software writer or as selected by the user--begin to show up in elevation patterns for antennas above ground. Let's set our 3-element Yagi about 1 wavelength above ground. In the EZNEC scheme, the new elevation pattern looks like <b>Fig. 4</b>.</p>
+  <center>
+    <img src="amod36-4.gif" width="640" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 0-90-180 degree counting scheme (from right to left) requires that the user do some mental or pencil arithmetic to determine the elevation angle of the lowest rear lobe in the figure--which happens to be 13 degrees--the same as the main forward elevation angle. Not all antennas yield such symmetry.</p>
+  <center>
+    <img src="amod36-5.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The NEC-Win Plus pattern (<b>Fig. 5</b>), using the 0/90/0 degree elevation scheme obviates the need for the simple arithmetic, although accurate location of the rear lobe angle would require that I alter the graphic by choosing 1. thinner lines for the plot and 2. a full screen plot that would be too large for easy replication in the format used in these columns. Both programs offer a wide selection of color and line widths to suit user preferences and specific applications of the graphics.</p>
+  <p>In general, the differences between implementations of elevation pattern heading conventions is too slight to make a difference in how we use the programs. In all cases, we can easily arrive at the elevation angle we need to use in the overall antenna analyses we perform.</p>
+  <p><b>Azimuth and Phi</b></p>
+  <p>Theoretically, the differences between azimuth and phi angle systems are less complicated than those for elevation and theta. With azimuth and phi patterns, we always count a full 360 degrees around a circle, as shown in <b>Fig. 6</b>. We simply count in different directions. However, the use of the upper point of the circle as the stating or zero point is arbitrary.</p>
+  <center>
+    <img src="amod36-6.gif" width="408" height="418" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The inner part of the circle shows the phi counting scheme (used by the NEC core), which moves counter-clockwise around the circle. The outer labels show the standard azimuth scheme, which counts clockwise around the circle. The two schemes coincide at zero and 180 degrees.</p>
+  <p>Some small difficulties of user orientation arise when implementations of NEC develop the azimuth pattern graphics for their programs. Then we begin to see some variations on the standard azimuth scheme. Most of the variations result from the fact that converting a phi pattern requires--for complete conversion to azimuth conventions--a full conversion of the data table that NEC produces. A simple re-labeling of the headings will not suffice to do a complete job. Hence, we find some shortcuts.</p>
+  <center>
+    <img src="amod36-7.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the azimuth pattern of our 3-element Yagi at a height of 1 wavelength above ground. By setting the elevation angle to the "take-off" angle or the angle of maximum radiation (13 degrees in this case), we obtain an azimuth pattern. Note that EZNEC (Version 2) sets the zero point to the right. In this manner, the background graphical setting, consisting of dots and heading numbers, is the same for both azimuth and elevation patterns. However, 90 degrees is not clockwise to the left of the zero point, but counter-clockwise to the right of the zero point. Hence, EZNEC's patterns are actually phi patterns.</p>
+  <p>In the latest (Windows) version of EZNEC, the label-less pattern grid avoids the problem of orienting oneself to either phi or azimuth conventions. The user has a choice between counting counter-clockwise from zero (the phi convention) or using compass bearing (the azimuth convention), but this choice shows up only in data entries.</p>
+  <center>
+    <img src="amod36-8.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 8</b>, we see the NEC-Win Plus azimuth pattern for the same antenna under the same conditions. NEC-Win Plus sets the zero point at the top of the graph and labels everything in standard azimuth terms. So far, it appears that orientation in the azimuth scheme presents no problem at all.</p>
+  <p>The question of orientation toward the graphical pattern outputs does not become readily apparent until we decide to construct models in alternative ways to those most often used. For example, all of the models of the 3-element Yagi we have so far examined extend their linear elements along or parallel to the Y-axis. The forward portions of the antenna (or the front end of the boom) has a positive value on the X-axis, while the rear has a negative X-value.</p>
+  <p>Now let's reverse the procedure. We shall model the same antenna with the linear elements extended left and right along or parallel to the X-axis. The front of the array will have a positive Y value, and the rear will have a negative Y-value. If we run this model, it will show exactly the same gain, front-to-back ratio, source impedance, and element currents as the first model. So the only remaining question is how it will appear in the azimuth pattern graphics.</p>
+  <center>
+    <img src="amod36-9.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> shows the EZNEC version of the azimuth pattern. The forward lobe points toward 90 degrees, the heading of the Y-axis for positive values. However, contrary to azimuth conventions, the graphical heading is counterclockwise relative to the zero point. In short, we have a phi pattern.</p>
+  <center>
+    <img src="amod36-10.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 10</b>, we have the NEC-Win Plus azimuth pattern. In this case, standard azimuth counting is employed in a clockwise direction. However, to place the pattern without converting the NEC table, the forward heading of the pattern now points to 270 degrees, the opposite direction of the positive forward Y-values (which would normally go to 90 degrees on a standard azimuth pattern).</p>
+  <p>My point in setting these items into print is not either to review the two software implementations of NEC or to be critical. Rather, the aim is to orient the user so the he or she understands how to read the data that appears on these patterns. Initially, the difference of each from standard azimuth patterns are negligible because the antennas for our test produce symmetrical patterns along their centerlines. Hence, left and right make no difference at all.</p>
+  <p>Not all antennas yield symmetrical patterns, and in some cases, left and right can make anywhere from a small to a large difference.</p>
+  <center>
+    <img src="amod36-11.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>To illustrate, let's use an antenna with only a small non-symmetry. It is a parasitic beam for 2-meters at a height of about 30' and modeled with the elements in the +/-X axis and the forward direction as a positive value of Y. <b>Fig. 11</b> is the azimuth pattern in EZNEC, with the forward direction at 90 degrees. However, notice the rear quadrants, where the pattern becomes obviously larger on one side than on the other. The pattern in this case shows the larger lump at about 215 degrees, about 125 degrees from the forward direction. The actual point in the rear where the signal strength is greatest is on the more diminutive rear lobe, about 125 degrees in the other direction from the forward lobe centerline. Note that we have to determine each differential by arithmetic. As well, the increasing values of the heading as we moved left would be what we might expect had we been using a phi pattern rather than an azimuth pattern.
+  <center>
+    <img src="amod36-12.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 12</b>, we see the NEC-Win Plus equivalent pattern. The bearing differentials are the same, but this time measured from a forward heading of 270 degrees--180 degrees in reverse of our expectations from having set the forward heading in the positive direction along the Y axis. However, the increasing values to the right of the forward lobe is consistent with the standard azimuth conventions.</p>
+  <p>In each case, the exigencies of software development have created slight differences in the manner in which azimuth patterns are portrayed. For a symmetrical pattern, the differences make little or no difference and one can make few errors by virtue of the non- standard presentations. However, with non-symmetrical patterns, errors are possible. Although not likely to be significant in the case we are using as an illustration, the errors might well be important in other instances. Many off-center-fed multiband antennas, for example, show a pattern that is very sharply stronger to one side of center than to the other. There are arrays that are directional by virtue of the element phasing relationships rather than by virtue of geometry. In all such cases, the critical question is this: which side is which?</p>
+  <p>The answer is fairly straightforward: ignore the heading numbers and place yourself as an ideal observer at the center of the pattern. Face in the direction that represents forward in the coordinate system within which you created the antenna structure. Non-symmetries will now be correctly identified in terms of left and right relative to your position. If you place a zero or north in the direction you are facing, then east will be to your right and west to your left. The pattern will be correct in either program for this way of looking at things.</p>
+  <center>
+    <img src="amod36-13.gif" width="443" height="426" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig 13</b> is a graphic representation of the way to ensure that you are correctly oriented toward non-symmetrical azimuth patterns, whatever their outer markings. Imagine yourself at the center of the antenna and the pattern. The antenna we are using here is a 2- element half-square--hence, the vertical elements at the ends of the horizontal phase lines. Since the horizontal members are parallel to the X-axis, the forward direction is in a positive direction in the Y axis. Notice that the feedpoint is on the side of the antenna showing the larger lobe.</p>
+  <p>We have noted that the latest version of EZNEC has an option to use compass bearings instead of counting counter-clockwise from the X-axis. The latter system is the one used in earlier versions of the program and shown in the illustrations so far. The new option is more than a way to count clockwise in the azimuth manner. It changes, for some modeling exercises, the way we should model to have the antenna pattern register as facing north or to zero degrees.</p>
+  <center>
+    <img src="amod36-14.gif" width="531" height="485" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 14</b> illustrates an azimuth pattern in the new mode. As with the other patterns for the half-square beam, the horizontal portions of the elements are parallel to the X-axis, with the forward direction defined as a positive value of Y. The height requires a 3- degree elevation angle to record maximum radiation on the azimuth pattern. Because the antenna presents a slightly non-symmetrical pattern, the main lobe is offset 3 degrees from zero.</p>
+  <p>Note that to place the forward direction ar zero degrees on the pattern, one must model the antenna with the element extending parallel to the X-axis. This is the opposite convention from the one used in other implementations of either phi or azimuth patterns, where the elements must parallel the Y-axis to get a forward reading of zero degrees.</p>
+  <p>Although the pattern bears no heading labels, it does read correctly with respect to azimuth headings. Notice the line in the rear right quadrant, indicating the strongest side-lobe. The line, from the data series below the graphic, shows a bearing of 124 degrees, which is a correct number in azimuth terms relative to the zero heading directly up the page.</p>
+  <p>The purpose in surveying all of these options and variants of elevation/theta and azimuth/phi labels on graphics is to make you aware of the differences. By becoming aware of them, they will not take you by surprise when you develop and then interrogate a pattern. You will know in advance the conventions themselves and the particular ways in which they are implemented by at least some software. You should be able to adapt these notes to cover any other piece of modeling software that you may be using.</p>
+  <p>Since in all cases, the patterns are correct and correctly oriented to an ideal observer, the labels are simply ways to keep track of various facets of the pattern. Should absolutely correct azimuth labels be essential to some form of presentation, you can always run a screen grab of a pattern and then process it through a painting program. You need only change the labels to a set that is most suited to the presentation task.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

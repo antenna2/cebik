@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Moxon">
+  <meta name="description" content="Moxon rectangle notes and online calculator. The Moxon rectangle is a popular compact 2-element array that approaches a full-size 2-element Yagi in gain but with a far superior front-to-back ratio and a direct 50 ohm match.">
+  <title>Moxon Rectangles and Online Calculator</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <table width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+      <td width="200" align="left"><img src="../images/moxbut.gif" align="middle" width="119" height="61" border="2" vspace="5"></td>
+      <td align="center">
+        <h1>Moxon Rectangles and Online Calculator</h1>
+        <h3>L. B. Cebik, W4RNL</h3>
+      </td>
+      <td width="200" align="right"><img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5"></td>
+    </tr>
+  </table>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <hr>
+  <!-- 29-Nov-2023 (K1LH): Calculator moved to top of page. Calculate button and 93 ohm option added, depandance on body tag removed (Thanks ChatGPT!) -->
+  <h2>Moxon Rectangle Dimension Calculator</h2><img src="moxpage-1.gif" title="Moxon calculator dimensions diagram" alt="Moxon calculator dimensions diagram" align="right" width="371" height="275" border="2" vspace="5" hspace="9">
+  <form name="moxcalc" id="moxcalc">
+    <table>
+      <tbody>
+        <tr>
+          <td>Frequency :</td>
+          <td><input type="text" name="freq" value="50.2" onchange="generate(this.form)"> MHz</td>
+        </tr>
+        <tr>
+          <td>Wire Diam :</td>
+          <td><input type="text" name="diam" value="12" onchange="generate(this.form)"> <select name="wireunits" onchange="return generate(this.form)">
+            <option selected="selected">
+              gauge
+            </option>
+            <option>
+              millimeters
+            </option>
+            <option>
+              inches
+            </option>
+          </select></td>
+        </tr>
+        <tr>
+          <td>Impedance :</td>
+          <td><select name="impedance" onchange="generate(this.form)">
+            <option value="50">
+              50 Ohm
+            </option>
+            <option value="93">
+              93 Ohm
+            </option>
+          </select></td>
+        </tr>
+        <tr>
+          <td>Output Units :</td>
+          <td><select name="outputunits" onchange="return generate(this.form)">
+            <option>
+              feet
+            </option>
+            <option selected="selected">
+              inches
+            </option>
+            <option>
+              millimeters
+            </option>
+          </select></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button type="button" onclick="generate(document.moxcalc)">Calculate</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Results:</p>
+    <table>
+      <tbody>
+        <tr>
+          <td>A</td>
+          <td><input disabled="disabled" type="text" name="a"></td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td><input disabled="disabled" type="text" name="b"></td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td><input disabled="disabled" type="text" name="c"></td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td><input disabled="disabled" type="text" name="d"></td>
+        </tr>
+        <tr>
+          <td>E</td>
+          <td><input disabled="disabled" type="text" name="e"></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <script language="JavaScript">
+  var gaugedata = new Array(
+  "000000", "0.580000",
+  "00000", "0.516500",
+  "0000", "0.460000",
+  "000", "0.409642",
+  "00", "0.364796",
+  "0", "0.324861",
+  "6/0", "0.580000",
+  "5/0", "0.516500",
+  "4/0", "0.460000",
+  "3/0", "0.409642",
+  "2/0", "0.364796",
+  "1/0", "0.324861",
+  "1", "0.289297",
+  "2", "0.257627",
+  "3", "0.229423",
+  "4", "0.2043",
+  "5", "0.1819",
+  "6", "0.1620",
+  "7", "0.1443",
+  "8", "0.1285",
+  "9", "0.1144",
+  "10", "0.1019",
+  "11", "0.0907",
+  "12", "0.0808",
+  "13", "0.0720",
+  "14", "0.0641",
+  "15", "0.0571",
+  "16", "0.0508",
+  "17", "0.0453",
+  "18", "0.0403",
+  "19", "0.0359",
+  "20", "0.0320",
+  "21", "0.0285",
+  "22", "0.0253",
+  "23", "0.0226",
+  "24", "0.0201",
+  "25", "0.0179",
+  "26", "0.0159",
+  "27", "0.0142",
+  "28", "0.0126",
+  "29", "0.0113",
+  "30", "0.0100",
+  "31", "0.0089",
+  "32", "0.0080",
+  "33", "0.0071",
+  "34", "0.0063",
+  "35", "0.0056",
+  "36", "0.0050",
+  "37", "0.0045",
+  "38", "0.0040",
+  "39", "0.0035",
+  "40", "0.0031",
+  "41", "0.0028",
+  "42", "0.0025",
+  "43", "0.0022",
+  "44", "0.0020",
+  "45", "0.0018",
+  "46", "0.0016",
+  "47", "0.0014",
+  "48", "0.0012",
+  "49", "0.0011",
+  "50", "0.0010",
+  "51", "0.00088",
+  "52", "0.00078",
+  "53", "0.00070",
+  "54", "0.00062",
+  "55", "0.00055",
+  "56", "0.00049"
+  );
+
+  var gauges = new Array();
+  for (i = 0; i < gaugedata.length; i += 2) {
+  gauges[gaugedata[i]] = gaugedata[i + 1];
+  }
+
+  var numeric = new RegExp("^(\\d\\d*|\\d*\\.\\d\\d*|\\.\\d\\d*)$");
+
+  function generate(moxcalc) {
+  moxcalc.a.value = "";
+  moxcalc.b.value = "";
+  moxcalc.c.value = "";
+  moxcalc.d.value = "";
+  moxcalc.e.value = "";
+
+  // check that frequency is sane
+  var freq = moxcalc.freq.value;
+  if (!freq.match(numeric)) {
+    alert("Frequency " + freq + " not numeric");
+    moxcalc.freq.select();
+    return;
+  }
+
+  // check the wire diam
+  var diam = moxcalc.diam.value;
+  var diameter;
+  var wireunits = moxcalc.wireunits.options[moxcalc.wireunits.selectedIndex].text;
+  if (wireunits == "gauge") {
+    if (gauges[diam] == "") {
+      alert(diam + " is not a valid gauge");
+      moxcalc.diam.select();
+      return;
+    }
+    diameter = gauges[diam];
+  } else {
+    if (!diam.match(numeric)) {
+      alert("Diameter " + diam + " not numeric");
+      moxcalc.diam.select();
+      return;
+    }
+    if (wireunits == "millimeters") {
+      diameter = diam / 25.3995;
+    } else {
+      diameter = diam;
+    }
+  }
+
+  var WD = Math.log(freq * diameter / 11802.71) / Math.log(10); // log of the wire diameter in wavelengths
+
+  if (WD < -6 || WD > -2) {
+    alert("Wire diameter out of model range");
+    return;
+  }
+
+  var conv = 983.5592 / freq;
+  var outunits = moxcalc.outputunits.options[moxcalc.outputunits.selectedIndex].text;
+  if (outunits == "inches") {
+    conv *= 12;
+  } else if (outunits == "millimeters") {
+    conv *= 304.794;
+  }
+
+  var impedance = moxcalc.impedance.value;
+  var a, b, c, d, e;
+
+  if (impedance === "50") {
+    a = (-0.0008571 * WD * WD + -0.0095714 * WD + 0.33985714) * conv;
+    b = (-0.0021429 * WD * WD + -0.0203571 * WD + 0.00828571) * conv;
+    c = (0.00180952 * WD * WD + 0.01780952 * WD + 0.05164286) * conv;
+    d = (0.001 * WD + 0.07178571) * conv;
+    e = b + c + d;
+  } else if (impedance === "93") {
+    a = (-0.0012 * WD * WD + -0.011228571 * WD + 0.284942857) * conv;
+    b = (-0.001019048 * WD * WD + -0.009890476 * WD + 0.064342857) * conv;
+    c = (0.00366667 * WD * WD + 0.031352381 * WD + 0.094207143) * conv;
+    d = (0.000757143 * WD + 0.100492857) * conv;
+    e = b + c + d;
+  } else {
+    alert("Invalid impedance value");
+    return;
+  }
+
+  moxcalc.a.value = Math.round(a * 100) / 100;
+  moxcalc.b.value = Math.round(b * 100) / 100;
+  moxcalc.c.value = Math.round(c * 100) / 100;
+  moxcalc.d.value = Math.round(d * 100) / 100;
+  moxcalc.e.value = Math.round(e * 100) / 100;
+  return true;
+  }
+  </script>
+  <p><b>Online Moxon Calculator:</b> Above is a version of the Moxon dimension calculator that you may use right on this page, thanks to Joe Faber, KG4UHP, who created the JAVAScript and gave me permission to place it here. Remember that the dimensions apply to Moxon rectangles that use the same diameter material throughout. Decide on the design frequency and the diameter of the elements. You may use inches or millimeters for the diameter--or you may select an AWG wire gauge. Be certain to select the unit of measure for the output. Then, click on any of the output boxes if the calculations have not already appeared.</p>
+  <p>2024 Update: Added 93 ohm option used in <a href="../vhf/ms2.html">Simplifying the Turnstile Moxon Rectangle Fixed-Position Satellite Antennas</a>, removed dependence on body tag.</p>
+  <p><b>MOXGEN:</b> A stand-alone Windows program that calculates the dimensions of a Moxon rectangle for a near-50-Ohm feedpoint impedance, as described in "Designing Moxon Rectangles by Equation and by Model," has been developed by Dan Maguire, AC6LA. You may obtain a free copy from his website: <a href="https://www.ac6la.com/moxgen1.html" target="_blank"><b>www.ac6la.com/moxgen1.html</b></a>. The program will also create a model in .EZ format for use with EZNEC or in .NEC format for use with NEC-Win software or with generic NEC programs. The only required input entries are the design frequency and the diameter of the wire or tubing to be used. Dan's site also contains a number of other very useful programs for modelers and others interested in antenna design and analysis.</p>
+  <hr>
+  <h2>Moxon Rectangle Notes</h2>
+  <p>The Moxon Rectangle is growing in popularity as a compact 2-element array that approaches a full-size 2-element Yagi in gain but with a far superior front-to-back ratio and a direct match for the standard 50-Ohm coaxial cable. The antenna can be built as a wire array--especialy for the lower HF regions--or as a rotateable aluminum beam. For convenience, I have pulled together the growing selection of Moxon Rectangle notes into this single subdirectory and organized them in the order of recommended reading--unless you already know what you are looking for.</p>
+  <ul>
+    <li>
+      <a href="../mu/mu2a.html"><b>VK2ABQ Squares and Moxon Rectangles</b></a> (7-25-1999)
+    </li>
+    <li>
+      <a href="mox20.html"><b>The Moxon Rectangle: A Review</b></a> (12-18-1999, 02-28-2005)
+    </li>
+    <li>
+      <a href="mox.html"><b>An Aluminum Moxon Rectangle for 10-Meters</b></a> (4-6-1998)
+    </li>
+    <li>
+      <a href="moxon.html"><b>Wire Moxon Rectangles for 40-10 Meters</b></a> (1-1-1997, 6-10-1999)
+    </li>
+    <li>
+      <a href="mox40.html"><b>Further Notes on 40-Meter Wire Moxon Rectangles</b></a> (5-4-1999)
+    </li>
+    <li>
+      <a href="moxpat.html"><b>Notes on the Moxon Rectangle Pattern</b></a> (2-22-2000)
+    </li>
+    <li>
+      <a href="dd.html"><b>The Double-D Antenna</b></a> (3-18-1997, 5-4-1999)
+    </li>
+    <li>
+      <a href="mbm.html"><b>Multi-Banding the Moxon Rectangle</b></a> (8-12-1999)
+    </li>
+    <li>
+      <b>Using Moxon Rectangles for WARC-Band Antennas<br></b>
+      <ul>
+        <li>
+          <a href="1712m.html"><b><i>Part 1</i>: Some 17-12 Meter Ideas</b></a> (05-01-2000, 08-04-2000)
+        </li>
+        <li>
+          <a href="3017m.html"><b><i>Part 2</i>: Some 30-17-12 Meter Ideas</b></a> (06-01-2000, 07-04-2006)
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="c3m.html"><b>Moxon-Modifying the C3-Type Tri-Bander</b></a> (06-01-2002)
+    </li>
+    <li>
+      <a href="mvhf.html"><b>The Moxon Rectangle on 2 Meters</b></a> (10-01-1999)
+    </li>
+    <li>
+      <a href="moxbld.html"><b>Building a 2-Meter Moxon</b></a> (12-18-1999)
+    </li>
+    <li>
+      <a href="moxgen.html"><b>Designing Moxon Rectangles by Equation and by Model</b></a> (10-01-2000)
+    </li>
+    <li>
+      <a href="4030.html"><b>40 + 30 = 50 (Not 70)</b></a> (10-23-2001)
+    </li>
+    <li>
+      <a href="20moxp.html"><b>A Truly Portable Moxon Rectangle for Nearly No-Tool Field Assembly</b></a> (02-01-2003)
+    </li>
+    <li>
+      <a href="6m.html"><b>Moxon Rectangles for 6 Meters</b></a> (02-03-2003)
+    </li>
+    <li>
+      <a href="mox1712.html"><b>The Elusive Moxon Nest</b></a> (06-01-2003)
+    </li>
+    <li>
+      <a href="moxstack.html"><b>Part 1: Vertically Stacking Horizontally Oriented Rectangles</b></a> (12-04-2003)
+    </li>
+    <li>
+      <a href="moxst2.html"><b>Part 2: Vertically Stacking Vertically Oriented Rectangles</b></a> (12-04-2003)
+    </li>
+    <li>
+      <a href="moxv.html"><b>HF Vertically-Oriented Moxon Rectangles: A 40-Meter Example</b></a> (12-28-2004)
+    </li>
+    <li>
+      <a href="moxstep.html"><b>Stepped-Diameter Moxon Rectangles for 20 through 10 Meters</b></a> (04-01-2006)
+    </li>
+  </ul>
+  <p>Additonal information on building wire and tubing versions of Moxon rectangles for a direct 50-Ohm feed is available in <i><b>Simple and Fun Antennas for Hams</b></i>, ed. Hutchinson and Straw (ARRL, 2002), pp. 12-19 to 12-28.</p>
+  <p>The <a href="https://moxonantennaproject.net/" target="_blank"><b>KD6WD Moxon Antenna Project</b></a> is another good source of information on various construction techniques, especially for the operator needing a light-weight or a semi-stealthy antenna.</p>
+  <p><b>Moxon Rectangle Notes</b> is also available in PDF book format with model sets on the <a href="../bookant.html">Books Page</a>.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 07-04-2006. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#moxon'>Moxon</a></p><br>
+</body>
+</html>

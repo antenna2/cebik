@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A Case Study: a 90' Wire</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>31. A Case Study: a 90' Wire</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>I assisted another amateur radio operator in analyzing his antenna, since it had largely evaded modeling. The purpose of the exercise was to provide some general information on the modeled performance of the antenna across the MF-HF amateur frequency spectrum for a typical amateur radio wire antenna fed by an antenna tuner. The purpose was not to be overly precise, and indeed, the input data and modeling conditions would have precluded precision. However, even carefully constrained modeling of a general nature can be useful. The following exploration is a case in point.</p>
+  <center>
+    <img src="amod31-1.gif" width="718" height="334" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The basic antenna is shown in <b>Fig. 1</b>. The radiator is about 90' long and runs from near the ground at the left (shed) to a maximum height of 25' about 50' from the shed and then down to a height of about 15' at the far right tree. It is fed at the base of the wire at the junction with the buried radial wires. The antenna may be variously classified as an end-fed random wire or as the type of antenna to which it most closely corresponds at each frequency of operation.</p>
+  <p>The sketch supplied was incomplete. Therefore, I made a few assumptions that will not materially affect the modeled outcomes. First, I assumed that true north was straight up the page of the sketch. If north has a different bearing, one will have to adjust the azimuth headings in this report accordingly. I had to use a compass to approximate the angles of the wire.</p>
+  <p>Second, the owner did not specify the wire size. I assumed #12 AWG copper wire. For the number of approximations required by this exercise, a small change in wire size will produce no radical changes in the patterns or impedances reports.</p>
+  <p>Third, the owner did not specify the conductivity and dielectric constant of the soil in his area. Maps suggest that the conductivity is about 0.002 Siemens per meter, which corresponds to the class of soil listed as "poor." The corresponding dielectric constant is about 13. However, it may in fact be lower than this level, depending upon subsoil structure. For example, the dielectric constant of shale is about 7. Nonetheless, given other approximations, the difference will not alter projected performance by much.</p>
+  <p>Before looking at the model of this antenna, let me note something about what this report can and cannot tell. What the NEC-2 models of the antenna provides is a general portrait of anticipated performance characteristics with the assumption of a level homogenous soil beneath the antenna. There are limitations to the data that emerges.</p>
+  <p>1. NEC-2 cannot account for variations in the patterns created by the immediate terrain. The subject terrain is likely to be quite hilly, but not mountainous. An immediate hill may yield a stronger signal in the direction from the hill through the antenna, but this cannot be assured without the application of supplementary software into which topographical features can be placed. However, an awareness of one's immediate topography can assist one in accounting for differences in the model and actual operation.</p>
+  <p>2. NEC-2 cannot place radials on or beneath the ground, as they are at the subject site. However, placing radials very close to the ground provides a very reasonable approximation of in-ground radial performance, with errors well within the limitations of other approximations made in this report.</p>
+  <p>3. The antenna owner has chosen EZNEC as his modeling vehicle. Two factors limit the ability of this program to model both natural and constructed structures beyond the antenna wires. First, EZNEC permits only 500 segments, which limits the available segments for such structures. Second, the program allows only a single wire loss (or conductivity) value for all wires. Secondary structures in the vicinity of the antenna may require many different conductivity values for their approximating wire-grid structures. However, since no data on secondary structures was provided, modeling must do without them. The effects of such structures must remain an estimate used in conjunction with this report.</p>
+  <p><b>The Model</b></p>
+  <p>The EZNEC model for NEC-2 analysis of the antenna requires 8 wires, as shown in the side and top views of <b>Fig. 2.</b></p>
+  <center>
+    <img src="amod31-2.gif" width="540" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following model description has been annotated for correlation with <b>Fig. 2</b>.</p>
+  <pre>Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn.--- End 1 (x,y,z : ft)  Conn.--- End 2 (x,y,z : ft)  Dia(in) Segs
+
+Radiator wires
+1   W3E1   0.000,  0.000,  0.200  W2E1  45.500, 21.000, 25.000    # 12   50
+2   W1E2  45.500, 21.000, 25.000        82.607,  7.500, 15.000    # 12   40
+Radials
+3   W4E1   0.000,  0.000,  0.200        30.000,  0.000,  0.200    # 12   30
+4   W5E1   0.000,  0.000,  0.200        10.607, 10.607,  0.200    # 12   15
+5   W6E1   0.000,  0.000,  0.200         0.000, 90.000,  0.200    # 12   90
+6   W7E1   0.000,  0.000,  0.200         0.000,-60.000,  0.200    # 12   60
+7   W1E1   0.000,  0.000,  0.200  W8E1 -10.000,  0.000,  0.200    # 12   10
+8   W7E2 -10.000,  0.000,  0.200       -10.000,-50.000,  0.200    # 12   50
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           1     1 /  1.00   (  1 /  0.00)      1.000       0.000       V
+
+Ground type is Real, high-accuracy analysis
+Conductivity = .002 S/m    Diel. Const. = 13
+
+              --------------- MEDIA ---------------
+Medium       Conductivity(S/m)   Dielectric Const.    Ht(ft)   R Coord(ft)
+
+1                2.000E-03            13.00           0 (def)     0 (def)</pre>
+  <p>The direction of each radial is an estimate based upon the original sketch. The two 60' radials have been arranged so that one is straight, while the other moves west for 10' and then south for the remaining 50'. This is as close to accurate as the sketch would permit.</p>
+  <p>In NEC modeling, longer wires are subdivided into segments to permit the accurate calculation of mutual impedances, currents, and other output data. The segmentation of wires that NEC-2 recommends is approximately 9-11 segments per half wavelength (with a minimum of about 5 per half wavelength) at the shortest wavelength used. At 28.5 MHz, a wavelength is about 34.5' long, and the radiator is about 2.6 wavelengths long. Since the wire (#12) is thin, additional segmentation density is allowable and was used in the model to assure convergence, given the non-standard geometry of the assembly. A uniform segment length of 1' was used throughout the model. The result is a model using 345 segments.</p>
+  <p>The antenna source or feedpoint is the lowest segment of the radiator wire nearest the junction of the radials. This approximates the actual feed system, which employs an automated tuning system.</p>
+  <p><b>What the Model Suggests</b></p>
+  <p>Given the numerous approximations required to model the antenna, the modeling output data must be taken as suggestive and indicative, but not precise. The following table provides a summary of the data for 160 through 10 meters (with 80-75 sampled at 3.6 and 3.9 MHz). The TO angle is the elevation angle of maximum radiation. It is a function of taking an elevation pattern in the azimuth heading of strongest radiation. The maximum gain in dBi is the gain at this elevation angle and azimuth angle. There are three exceptions. On 80 and 40 meters, the TO angle exceeds all but NVIS use, and so an alternative angle of 50 degrees was also used to sample gain. Comparing the TO angle gain value with the arbitrary lower angle value gives some idea of the rate of gain decrease as the signal angle departs from the TO angle.</p>
+  <p>There are a pair of azimuth headings. The first corresponds to the heading provided by EZNEC, which actually counts azimuth in "phi" angle terms, that is counterclockwise. The second heading presumes that the compass heading of North is straight up the page, in accord with the original sketch. Therefore, the heading is a compass bearing resulting from that assumption. Finally, the table provides a report of estimated feedpoint impedance. given the assumptions of the model, the actual values of resistance and reactance may easily vary by 20% from the listed figures.</p>
+  <pre>Frequency      TO        Max. Gain EZNEC     Compass   Feedpoint Z
+  MHz          angle       dBi     azimuth   azimuth   (R +/- jX Ohms)
+  1.8          38        -6.7      169       281         25 - j 330
+  3.6          61        -3.0      215       235        180 + j 510
+               (50)      (-3.1)
+  3.9          63        -2.6      213       237        310 + j 760
+               (50)      (-2.8)
+  7.1          79        3.5       266       184         60 - j 180
+               (50)      (2.8)
+ 10.1          53        3.0        48        42       2300 - j 790
+ 14.1          44        3.1       314       136        245 + j 390
+ 18.1          45        3.2        91         1        135 + j  70
+ 21.1          40        4.5       343       107        470 - j 660
+ 24.9          35        5.0       343       107        660 + j 590
+ 28.5          32        4.0       346       104        220 + j 110</pre>
+  <p>The table contains some interesting data patterns. First, only on 30 meters does the antenna system offer a feedpoint impedance that may challenge the capabilities (or efficiency) of an automatic tuner. Second, except on the lowest bands, the antenna offers a reasonably constant gain. However, tables do not tell the entire story and should be read in conjunction with relevant azimuth and elevation patterns for the antenna. The following patterns and commentary employ an azimuth pattern taken at the TO angle except for the three cases listed as exceptions in the table. The elevation patterns are taken at the azimuth heading of maximum gain, which may require the user to orient himself to see properly what those patterns show.</p>
+  <center>
+    <img src="amod31-3.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>1.8 MHz</b>: <b>Fig. 3</b> supplies the patterns for this frequency. The solid line represents the total pattern. The dotted line represents the horizontal component, and the dashed line represents the vertical component. At 160 meters, note that the vertical component dominates the total pattern. Maximum radiation is in the direction opposite the length of the wire, that is, toward the west, using the conventions set forth earlier. A gain figure of -6.7 dBi seems low, but only about 2 S-units below the value that might emerge from a dipole that was set at least 1/2 wavelength above the ground. Because lower frequency RF penetrates the ground more deeply, and the ground is often stratified, the effects of the modeled ground may vary from those of real ground.</p>
+  <center>
+    <img src="amod31-4.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>3.6 MHz</b>: In <b>Fig. 4</b> we find azimuth and elevation patterns for 80 meters. The strengthening of the horizontal component broadside to the wire (but weakly along the length of the wire) tends to circularize the overall pattern. There is much high-angle radiation, but note in the elevation pattern the slow rate of decrease with the lowering of the elevation angle. Hence, performance at lower angles is likely to be consistent with higher angle performance.</p>
+  <center>
+    <img src="amod31-5.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>3.9 MHz</b>: The similarity of the patterns in <b>Fig. 5</b> to those in <b>Fig. 4</b> suggests that only small changes in performance occur across the span from 80 to 75 meters. There is actually a slight gain decrease, which results from the fact that the antenna is in a transition from dominance by the vertical component to dominance by the horizontal component. However, the wire is very low for a horizontal wire at this frequency, resulting in a higher TO angle.</p>
+  <center>
+    <img src="amod31-6.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>7.1 MHz</b>: On 40 meters, as shown in <b>Fig. 6</b>, the antenna begins to perform somewhat like an end-fed 1/2 wavelength wire, and the length is actually less than 3/4 wavelength. The proximity to the earth yields a high TO angle, but the increasingly dominant horizontal component yields a pattern roughly broadside to the bent wire radiator, favoring North-South paths (given the initial conventions of the study). The near 3/4 wavelength of the radiator yields a feedpoint impedance against the ground plane that has an expected low resistive component.</p>
+  <center>
+    <img src="amod31-7.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>10.1 MHz</b>: On 30 meters (<b>Fig. 7</b>), the radiator is nearly 1/2 wavelength long, and like end-fed half wavelength antennas in general shows a high impedance. The pattern is a curious mix of horizontal and vertical component elements, with the horizontal component becoming increasingly dominant. However, both the wire slant and bend combine to give the antenna a NE-SW orientation. Drawing a line across the azimuth pattern on this axis will yield the elevation pattern.</p>
+  <center>
+    <img src="amod31-8.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>14.1 MHz</b>: <b>Fig. 8</b> is the beginning of two phenomena of note. One is the final domination of the horizontal component of the total pattern. The other is the development of multiple lobes. Since the antenna is now about 1.5 wavelengths long, additional lobe structures are to be expected. However, the slope and bend of the antenna yield fewer deep nulls than a pure horizontal doublet. Fewer deep nulls also tend to be accompanied by less strong major lobes. Hence, the pattern is nearly omni-directional, but at a modest gain level.</p>
+  <center>
+    <img src="amod31-9.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>18.1 MHz</b>: The lobe structure becomes more apparent in <b>Fig. 9</b> for the 17-meter band. This band also shows a danger in reading only tabular data. The strongest lobe is nearly due north. However, that lobe a fairly narrow. Almost as strong is the very broad lobe to the southeast, which is likely to yield more impressive coverage in actual operation. (This note, of course, does not take into consideration the potential effects of terrain and surrounding structures.)</p>
+  <center>
+    <img src="amod31-10.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>21.1 MHz</b>: The 15-meter patterns in <b>Fig. 10</b> reveal the continued evolution of lobe and null structures as the antenna becomes longer as a function of the wavelength in use. The low height of the antenna, relative to the dominance of the horizontal component, yields a fairly high TO angle. However, as the elevation pattern shows, the rate of gain decrease with a lower angles is slow, and there remains usable gain to quite low elevation angles.</p>
+  <center>
+    <img src="amod31-11.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>24.9 MHz</b>: Once more the patterns in <b>Fig. 11</b> show further development of lobes and nulls. However, overall, the patterns for 15 and 12 meters are very reasonably coincident. This fact permits one to anticipate strong and weak paths from one band to the next. As the frequency continues to increase, the antenna shows a distinct east-west orientation of major lobes.</p>
+  <center>
+    <img src="amod31-12.gif" width="640" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>28.5 MHz</b>: The 10-meter patterns in <b>Fig. 12</b> are simply more complexly wrinkled versions of those for 15 and 12 meters. The east-west orientation--along the length of the radiator--dominates, but without many deep nulls away from the main lobes.</p>
+  <p><b>Of What Use Is the Analysis?</b></p>
+  <p>The modeled analysis of the antenna provides a generalized picture of how the antenna is likely to perform, once the data is adjusted for terrain and other interfering factors. It also shows the evolution of the antenna's patterns with increasing frequency. The end result is something like this: the antenna provides modest gain and performance potential within the matching abilities of an automated tuner on virtually all of the amateur bands from 160 through 10 meters--with only the impedance on 30 meters being potentially problematical.</p>
+  <p>The model is also useful when placed in conjunction with other models of possible system alterations or improvements. For example, suppose one were to erect a wooden vertical support at the shed, perhaps 30' tall. Would such a structure yield a better or worse antenna? One option would be to run the initial length of the wire up the support and then over to the trees. However, one might limit the total length to 90' or one might uses about 120' of wire in the radiator. Determining which of these options, if either one, offers better performance than the current radiator would be indicated (but not guaranteed) by modeling the options.</p>
+  <p>Another potential change in the system would be the addition of either more or longer radials--or both. Just how much, if any, improvement one might garner from an improved radial field can be loosely estimated from modeling various possibilities in this are.</p>
+  <p>Besides measuring alterations to the present antenna system, one might also use the analysis of the current antenna as a baseline for considering other antenna types. In large measure (but not absolutely), comparisons among antenna types and configurations equally affected by local terrain and ground clutter will remain valid.</p>
+  <p>Nonetheless, in using the numbers and patterns that have emerged from the analysis, one must be mindful of the limitations outlined early in the report. Not only are terrain and secondary structures not accounted for, but as well, there are a number of approximations that went into the model. Consequently, the model is best used for the trends it shows and not for the absolute values of the output numbers. However, even in a more modest role, the analysis is both useful in itself and potentially useful when contemplating system alterations.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

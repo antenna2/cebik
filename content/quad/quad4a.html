@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, HF Upper">
+  <title>Quad Models Part 4a Alternative Common Feeds for Multi-Band 2-Element Quad Beams</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/quad.gif" align="left" width="91" height="91" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Some Model Quads:<br>
+    4a. Alternative Common Feeds for Multi-Band 2-Element Quad Beams</h1>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>When we specify an interest in a 2-element 5-band quad beam, we are usually, but not always, saying more than just these facts. Ordinarily, we are also looking for an array that is compatible with a 50-Ohm (or at most a 75-Ohm) coaxial cable system. Under these circumstances, I have on a number of occasions--for reasons we shall presently illustrate--recommended separate feed lines to each driver in the quad array, most often combined at a remote switch near the hub of the antenna. Over the years, a number of individuals have made some discoveries and rediscoveries that are worthy of note as alternatives to the remote switching idea. In the process of looking at these alternatives, we may also understand somewhat better a. what goes on in an array with a common feed system and b. some different ways of overcoming the less-than-optimal parts of what is going on.</p>
+  <h3>The Separate-Feed Standard</h3>In order to make some valid comparisons, let's use a single antenna throughout the exercise. Although we shall perform some modifications on the antenna as we proceed, let's begin with these dimensions for the "spider" 2-element, 5-band beams used in Part 4 of this series:
+  <pre>Frequency Spacing   L Driver  C Driver  L Refl.   C Refl.   Segment
+ MHz       feet      feet      feet      feet      feet      per side
+28.5       4.31      8.64     34.56      9.20     36.80        7
+24.94      4.93      9.90     39.60     10.20     40.80        9
+21.22      5.79     11.63     46.52     12.06     48.24       11
+18.12      6.79     13.66     54.64     14.06     56.24       13
+14.17      8.68     17.50     70.00     18.06     72.24       15</pre>
+  <p>In modeling terms, the following EZNEC description is more complete.</p>
+  <pre>5-band quad:  1/8 wl sp                      Frequency = 28.5  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : ft)  Conn.--- End 2 (x,y,z : ft)  Dia(in) Segs
+
+1   W4E2  -4.320,  2.155, -4.320  W2E1   4.320,  2.155, -4.320    # 14    7
+2   W1E2   4.320,  2.155, -4.320  W3E1   4.320,  2.155,  4.320    # 14    7
+3   W2E2   4.320,  2.155,  4.320  W4E1  -4.320,  2.155,  4.320    # 14    7
+4   W3E2  -4.320,  2.155,  4.320  W1E1  -4.320,  2.155, -4.320    # 14    7
+5   W8E2  -4.600, -2.155, -4.600  W6E1   4.600, -2.155, -4.600    # 14    7
+6   W5E2   4.600, -2.155, -4.600  W7E1   4.600, -2.155,  4.600    # 14    7
+7   W6E2   4.600, -2.155,  4.600  W8E1  -4.600, -2.155,  4.600    # 14    7
+8   W7E2  -4.600, -2.155,  4.600  W5E1  -4.600, -2.155, -4.600    # 14    7
+9  W12E2  -5.815,  2.897, -5.815 W10E1   5.815,  2.897, -5.815    # 14   11
+10  W9E2   5.815,  2.897, -5.815 W11E1   5.815,  2.897,  5.815    # 14   11
+11 W10E2   5.815,  2.897,  5.815 W12E1  -5.815,  2.897,  5.815    # 14   11
+12 W11E2  -5.815,  2.897,  5.815  W9E1  -5.815,  2.897, -5.815    # 14   11
+13 W16E2  -6.030, -2.897, -6.030 W14E1   6.030, -2.897, -6.030    # 14   11
+14 W13E2   6.030, -2.897, -6.030 W15E1   6.030, -2.897,  6.030    # 14   11
+15 W14E2   6.030, -2.897,  6.030 W16E1  -6.030, -2.897,  6.030    # 14   11
+16 W15E2  -6.030, -2.897,  6.030 W13E1  -6.030, -2.897, -6.030    # 14   11
+17 W20E2  -8.750,  4.334, -8.750 W18E1   8.750,  4.334, -8.750    # 14   15
+18 W17E2   8.750,  4.334, -8.750 W19E1   8.750,  4.334,  8.750    # 14   15
+19 W18E2   8.750,  4.334,  8.750 W20E1  -8.750,  4.334,  8.750    # 14   15
+20 W19E2  -8.750,  4.334,  8.750 W17E1  -8.750,  4.334, -8.750    # 14   15
+21 W24E2  -9.030, -4.334, -9.030 W22E1   9.030, -4.334, -9.030    # 14   15
+22 W21E2   9.030, -4.334, -9.030 W23E1   9.030, -4.334,  9.030    # 14   15
+23 W22E2   9.030, -4.334,  9.030 W24E1  -9.030, -4.334,  9.030    # 14   15
+24 W23E2  -9.030, -4.334,  9.030 W21E1  -9.030, -4.334, -9.030    # 14   15
+25 W28E2  -4.950,  2.465, -4.950 W26E1   4.950,  2.465, -4.950    # 14    9
+26 W25E2   4.950,  2.465, -4.950 W27E1   4.950,  2.465,  4.950    # 14    9
+27 W26E2   4.950,  2.465,  4.950 W28E1  -4.950,  2.465,  4.950    # 14    9
+28 W27E2  -4.950,  2.465,  4.950 W25E1  -4.950,  2.465, -4.950    # 14    9
+29 W32E2  -5.100, -2.465, -5.100 W30E1   5.100, -2.465, -5.100    # 14    9
+30 W29E2   5.100, -2.465, -5.100 W31E1   5.100, -2.465,  5.100    # 14    9
+31 W30E2   5.100, -2.465,  5.100 W32E1  -5.100, -2.465,  5.100    # 14    9
+32 W31E2  -5.100, -2.465,  5.100 W29E1  -5.100, -2.465, -5.100    # 14    9
+33 W36E2  -6.830,  3.393, -6.830 W34E1   6.830,  3.393, -6.830    # 14   13
+34 W33E2   6.830,  3.393, -6.830 W35E1   6.830,  3.393,  6.830    # 14   13
+35 W34E2   6.830,  3.393,  6.830 W36E1  -6.830,  3.393,  6.830    # 14   13
+36 W35E2  -6.830,  3.393,  6.830 W33E1  -6.830,  3.393, -6.830    # 14   13
+37 W40E2  -7.030, -3.393, -7.030 W38E1   7.030, -3.393, -7.030    # 14   13
+38 W37E2   7.030, -3.393, -7.030 W39E1   7.030, -3.393,  7.030    # 14   13
+39 W38E2   7.030, -3.393,  7.030 W40E1  -7.030, -3.393,  7.030    # 14   13
+40 W39E2  -7.030, -3.393,  7.030 W37E1  -7.030, -3.393, -7.030    # 14   13
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           4     1 / 50.00   (  1 / 50.00)      1.000       0.000       V</pre>
+  <p>With separate feedpoints, the array produces the following results at the design frequencies for each of the 5 bands.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+14.17           7.23           32.4                 84 - j 0
+18.12           7.32           25.8                 61 - j 0
+21.22           7.23           28.9                 53 + j 0
+24.95           7.16           24.7                 42 + j 0
+28.5            7.48           20.3                 40 - j 0</pre>
+  <center>
+    <img src="cf-1.gif" width="670" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the 20, 15, and 10 meter free-space azimuth patterns for this array. Note that each is a well-behaved pattern with very distinct side-nulls and a standard rear pattern for antennas of this type. Each is virtually indistinguishable from a monoband quad beam pattern for the same frequency.</p>
+  <h3>Common Feed</h3>
+  <center>
+    <img src="cf-2.gif" width="354" height="382" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Quad common feed is usually achieved in one of the three ways shown in <b>Fig. 2</b>. At its most simple, the system simply involves connecting the driver wires for each band together at a certain point. Alternatively, we can connect the wires together at the terminals of a balun to adjust the impedance for a match to coaxial cable. A third method is to use a transmission line section to feed the wires in phase with each other. The first two system deform the drivers of some bands by introducing non-horizontal angles to the lower driver wire. The phasing line system does not.</p>
+  <p>At the suggestion of WD8JOL, who has been planning a revision to a GEM quad, I experimented with introducing a 150-Ohm phasing line to the driver of the 0.125 wavelength spaced model above--which is similar in arrangement to the GEM quad. The phase line--as a physical matter--can be constructed from reasonably heavy wire and polycarbonate or similar spacers. For a model, the TL facility does all of the necessary work. Like Parker's model, I obtained best results by connecting the main source or feedline to the 17-meter element. For planar element sets using the same system, connection to the 20-meter element is normally best.</p>
+  <p>The feedpoint impedance for all bands at their design frequencies is close enough to 100 Ohms to presume that the coax line will be fed through a 2:1 balun of some sort. The results obtained from this arrangement are shown in the following table.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+14.17           7.21           23.8                103 - j 20
+18.12           7.21           24.3                 97 - j  2
+21.22           7.15           27.0                100 + j  6
+24.95           7.26           27.1                121 + j 25
+28.5            5.89           21.2                 95 + j 36</pre>
+  <p>The results will vary somewhat with the exact element dimensions. For the design used here, the low ends of the bands showed higher than acceptable SWR values. However, the most important thing to notice is the pattern shape, which is shown in free-space azimuth patterns for 20, 15, and 10 in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="cf-3.gif" width="670" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Typically, with any form of common feed, the first casualty is the front-to-side ratio. Remember that the patterns of <b>Fig. 3</b> are in free space, and the side nulls are reduced as the antenna is placed closer to the ground. If we begin with reduced front-to-side ratios, matters tend to become progressively worse with lower heights. The reduced front-to-side ratio is evident even at 20 meters and wholly disappears for 10 meters. The particularly poor front-to-side ratio at 10 meters results from the fact that with a single common feed, the 20 meter element uses a significant portion of the fed 10-meter power and radiates at angle wide of the center line. The composite pattern for these two bands (with minor affects from the 12-meter elements) gives us the 10-meter azimuth shape shown in <b>Fig. 3</b>.</p>
+  <p>Many operators may find the pattern and lower 10-meter gain to be complete satisfactory in exchange for the simplicity of a common feed system. Others may wish to discover an alternative which avoids the cost of a remote switch but which also preserves the pattern shape of independently fed drivers.</p>
+  <h3>Dual Phase Lines</h3>In the search for a common feed with well-behaved patterns, we often overlook the fact that feeding a quad loop never yields perfect conditions on the top wire, that is an element center with the same current magnitude and phase (adjusted for the reversal of direction) as at the center of the lower element. One way to overcome this imperfection is to feed both the top and bottom element centers. In this case, we shall use phasing lines to both sets of element centers, as shown in <b>Fig. 4</b>.
+  <center>
+    <img src="cf-4.gif" width="472" height="354" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If the modeled loop is continuous, and modeled continuously "around the horn," you will discover that the model calls for a half-twist in the feedline junction assembly to achieve in-phase feeding. However, with dual feed, this convention of modeling--which is very useful with single-feed-point-per-loop systems--is not accurate. You must use in reality an untwisted feed. More accurately, you should model dual-feed loops by beginning at the far left center (or far right center) and then model both upper and lower loop halves in the same direction. Then, the model will reflect reality in all details and the in-phase feeding will be straight-forward.</p>
+  <p>With the dual feed system, the result is an almost total absence of current on the 20 meter elements when 10-meter energy is fed to the system. As a result, we obtained the following results from the spider beam rearranged for two 150-Ohm phasing lines.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+14.17           7.27           23.5                 77 + j 38
+18.12           7.19           23.4                 49 - j 14
+21.22           7.20           27.0                 57 + j  5
+24.95           7.49           21.6                 72 + j 35
+28.5            7.77           22.1                104 + j 53</pre>
+  <p>The results were obtained using 150-Ohm phase lines, with junction lines of 100 Ohms. At the design frequencies, the junction would be satisfactory for a 75-Ohm main cable for this particular exercise. However, the SWR bandwidth may not be satisfactory at the lower ends of the wider bands.</p>
+  <center>
+    <img src="cf-5.gif" width="670" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Despite these limitations, great strides have been made in the control of the patterns, as shown by the examples in <b>Fig. 5</b>. For all bands, the front-to-side ratios have been restored. As well, 10-meter performance has improved even beyond the level shown for independently fed drivers. However, I should add a reminder here that in none of the feed systems do we overcome the inherently narrow banded operating characteristics of a 2-element thin-wire quad, whether a monoband version or a multi-band array. The gain changes rapidly across the band, and the front-to-back ratio peaks above 20 dB only for a narrow band segment. These characteristics are inherent in the small diameter elements and the spacing used.</p>
+  <p>Not all versions of the dual-phase-line feed system for 2-element multi-band quad arrays will show impedances that combine for some sort of coaxial cable main feeder. However, in all cases, the system may be used with parallel feedline as the phase-line connectors and as the main feedline. Of course, the user would need a balanced antenna tuner. Moreover, care must be taken in routing the parallel line so that it maintains an adequate distance from the tower or mast and so that it remains distant from the rotator housing as the antenna is turned throughout its cycle. These measures are not difficult, but they may be initially foreign to those most used to handling coaxial feedlines.</p>
+  <h3>Single-Loop Feed</h3>If we are going to use a dual-feed system that puts the center of both the upper and the lower horizontal elements in phase--and if we are going to use parallel feedline and a tuner in the process--than we might as well eliminate all but the 20-meter driver. With both horizontal elements fed in phase, the resonance of this element no longer matters. In fact, we may construct a quad array that resembles the simplified sketch in <b>Fig. 6</b>.
+  <center>
+    <img src="cf-6.gif" width="448" height="337" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Such a system goes as far back as the 1969 work of DJ4VM and has been recently improved upon by Dr. Hartmut Waldner, DF6PW. Harmut's version of the antenna--in operation--uses a diamond configuration and is likely to be published in the near future. For my modeling investigations, I have applied the principle to the planar array of KC6T and to the 0.125 wavelength spider array. In the latter case, I simply removed all of the driver wires from the model except the ones for 20 meters. I then used 450-Ohm parallel line to feed the top and bottom horizontals of the remaining driver and took impedance reading at their junction. The exercise established that the principle may be applied with equal success to both planar and to spider arrays.</p>
+  <p>The results obtained from the spider array are in line with those from the DF6PW array and are in the following table.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+14.17           7.21           25.2                 61 + j270
+18.12           7.72           20.1                187 - j544
+21.22           8.02           18.6                 33 - j180
+24.95           8.40           15.0                 14 - j 43
+28.5            8.47           14.7                 11 + j 51</pre>
+  <p>Immediately apparent is the higher gain of the system as the frequency is increased. The cost of the higher gain is a loss of some front-to-back ratio from 15 through 10 meters. Only an individual operational goal analysis will tell a prospective builder whether the trade-off is a reasonable one.</p>
+  <center>
+    <img src="cf-7.gif" width="670" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The patterns are well controlled on all bands, as shown in <b>Fig. 7</b>. Of course, the table makes clear that to obtain these values, the feed system must be based on parallel feedline and a balanced ATU. Indeed, Harmut reports that he has relieved his shack of considerable RF by rebuilding a network tuner into a balanced link-coupled tuner. The lines used in the model tests were 450-Ohm transmission lines. However, any parallel line should work about as well.</p>
+  <p>Overcoming the upper band pattern distortion of a common-feed multi-band quad array, then, has more than one route to solution. For those wedded to coaxial cable feed techniques, the separately fed driver system will continue to be the most attractive. However, dual feed of the driver or drivers holds an equal potential for returning the quad patterns to good behavior on all bands. To sustain the desired peak front-to-back ratios, the dual phase lines to a full array of feeders may be the best route. For added upper band gain at the cost of some of the front-to-back ratio, the single loop driver can be attractive--especially since it does away with 4 ice-gathering wire loops in the array.</p>
+  <p>In none of the exercises did I make any modifications to the dimensions of any of the loops in the 0.125 wavelength spider array. I simply added phase lines and/or removed unneeded elements. Hence, I cannot say that the optimum performance has been achieved. However, it appears from initial modeling tests that closer-spaced arrays attain higher peak gains than more widely spaced arrays. Compared to planar arrays, there might be a slight advantage in single-loop feed systems to the spider version over planar versions.</p>
+  <p>Of course, for many operating purposes, the simpler system of combining feedlines in the most traditional ways may prove satisfactory. In antenna matters, there are always alternatives. Which system is superior requires careful measurement against operating goals and local circumstances by the potential user. These notes are simply a vehicle of making builders aware that there are alternative methods for achieving a combined feed for a multi-band 2-element quad array.</p>
+  <p>My thanks to Dr. Harmut Waldner, DF6PW, for calling my attention to the need to change the way we model quads when going to multiple-feed loops.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><i>Updated 7-16-2000, 9-4-2000. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="quad5.html"><img src="../images/fwdrd.gif" width="40" height="40"> <b>Go to Monoband Quads of More Than 2 Elements</b></a></p>
+  <p><a href="quad.html"><img src="../images/rtnhome.gif" width="40" height="40"> <b>Return to Quad Model Index</b></a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Return to Amateur Radio Page</b></a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a></p><br>
+</body>
+</html>

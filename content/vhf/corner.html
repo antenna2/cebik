@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Corner Reflector">
+  <title>Corner Reflectors Revisited Again Part 1: A Systematic Look at Planar Reflector Sides</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/cornbut.gif" align="left" width="84" height="83" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Corner Reflectors Revisited Again<br>
+    <br>
+    Part 1: A Systematic Look at Planar Reflector Sides</h1>
+  </center>
+  <p><br></p>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>The corner reflector array has been around since 1938, and Kraus described his initial experiments and analyses in paper published in 1939 and 1940. Indeed, he applied for a patent on the corner reflector antenna in 1942. Since then, the antenna has had an on-and-off career among radio amateurs, television broadcasters, and other VHF and UHF users.</p>
+  <p>In the preceding century (1999), I developed some preliminary modeling studies of corner reflectors for the 70-cm band. See <a href="corn1.html">"Corner Reflectors Revisited"</a>. In that 3-part exercise, I examined primarily reflectors composed of 0.375" diameter rods spaced 2" center-to-center. The reflectors suggested--over the limited number of sizes explored--that with rod construction, reflector arrays exhibited minor periodic variations in gain as the reflector dimensions varied. Between 2 peak gain levels, the horizontal side length of a reflector might grow considerably, with a minor gain minimum between the peaks.</p>
+  <p>Although rod-based reflectors served well over a good period of time, they have passed out of favor to other antenna types. However, for upper VHF regions, they are still quite serviceable. UHF reflectors would more likely use closely spaced screens or solid surfaces. Naturally, the idea arose for an exploration of these reflectors using wire-grid models similar to the ones used to study planar reflectors. The modeling techniques exist to simplify systematic studies of such arrays. As well, I wondered if the periodic behavior of the rod reflector would also show up in wire-grid reflectors.</p>
+  <p><b>The Basic Study Set-Up</b></p>
+  <p>As in the study of planar reflectors, I used 299.7925 MHz as the test frequency so that 1 meter = 1 wavelength. The wire-grids consist of 0.1-m (wavelength) segments using a diameter of 0.0159 m (segment length / PI). As demonstrated in the course of studying planar reflectors, there is no need to use closer spacing of the wires in the grid, since tightening the grid by even a factor of 4 did not alter the results significantly.</p>
+  <p>The 90-degree corner reflector is a somewhat different beast than a simple rectangular planar reflector. It consists of two planes, normally at right angles to each other. Centered in the array is a driver, normally a simple dipole, because one can derive all of the performance desired from the array by adjusting the reflector dimensions. <b>Fig. 1</b> shows the general layout of a small reflector and its driver, along with an identification of some of the key terms applied to the reflector.</p>
+  <center>
+    <img src="corner-1.gif" width="405" height="535" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In modeling terms, I shall lay out each reflector so that its apex--the wire formed at the reflector center--lies on the +/-Z axis, or in conventional terms, vertically. Hence, the dipole will also be vertical. The apex wire will have X- and Y-axis coordinates of 0, 0. Hence, the dipole will be spaced from the apex by a distance registered along the X-axis, and the reflector will spread open left and right in the +/-Y dimension.</p>
+  <p>The vertical dimension will thus provide the array height or the length of the apex wire. The horizontal dimension will usually refer to the length of each side from the apex of the reflector to the open end. Since each side makes a 45-degree angle to the coordinate axes, the actual forward dimension (in the X direction) will be 0.707 times the side length. The total distance between wires at the open ends of the sides is the aperture and is 1.414 times the length of a side.</p>
+  <p>As I did in the study of planar reflectors, I shall assume a priority for a 50-Ohm feedpoint system. You may set the dipole feedpoint impedance at almost any reasonable impedance (say, between 50 and 100 Ohms) simply by changing the space between the dipole and the apex, with some small adjustments of the dipole length to restore resonance. As shown in the earlier study, higher impedance drivers tend to produce wider 2:1 SWR bandwidths. For the present survey, I shall use the same 0.008 m (8 mm) dipole diameter used in the study of planar reflectors. Fatter dipoles will likely yield wider SWR bandwidths, although we shall not have space to examine that potential in this initial exploration.</p>
+  <p>As I did for the planar reflector study, I shall use a set of Green's files to separately model the reflectors. The benefit is that the Green's file produced by the reflector models can be used in a variety of models using other than the standard dipole driver--all without having to re-run the largest part of the model, that is, the reflector itself.</p>
+  <p>Although more complex than the basic rectangles of the planar reflectors, the corner reflector models are still quite simple. The following lines show the NEC file for the smallest of the reflectors used. It has a vertical height of 1.0 m (wavelength) and horizontal dimensions of 0.5 m (wavelength) on each side of the reflector apex.</p>
+  <pre>CM Basic Corner Reflector: 299.7925 MHz; 1 m = 1 wl
+CM T1 = center line, T2, T3 = verticals + GM
+CM T4, T5 = horizontal centers + GM
+CM Density = 0.1 m x 0.1 m
+CM Size = 1.0 m x 1.0 m, File = C-Vn-Hn.WGF
+CE
+GW 1 10 0 0 -.5 0 0 .5 .0159
+GW 2 10 0 -.1 -.5 0 -.1 .5 .0159
+GM 0 4 0 0 0 0 -.1 0 2 1 2 10
+GW 3 5 0 0 0 0 -.5 0 .0159
+GM 0 5 0 0 0 0 0 -.1 3 1 3 5
+GM 0 5 0 0 0 0 0 .1 3 1 3 5
+GM 0 0 0 0 45 0 0 0 2 1 0 0
+GW 4 10 0 .1 -.5 0 .1 .5 .0159
+GM 0 4 0 0 0 0 .1 0 4 1 4 10
+GW 5 5 0 0 0 0 .5 0 .0159
+GM 0 5 0 0 0 0 0 -.1 5 1 5 5
+GM 0 5 0 0 0 0 0 .1 5 1 5 5
+GM 0 0 0 0 -45 0 0 0 4 1 0 0
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+WG c-v10-h05.WGF
+EN </pre>
+  <p>GW 1 sets up the apex wire. GW 2 and the following GM line establish the vertical wires on one side of the reflector. GW 3 and the following 2 GM lines set up the wires in the horizontal direction. Finally, the last GM line bends the array from GW 2 onward the requisite 45 degrees. GW 4, GW 5, and their associated GM lines do the same thing on the other side of the apex wire. After specifying the free-space medium and the test frequency, the partial results are saved into a designated WGF file for use with various drivers.</p>
+  <p>The basic model sets up 10 vertical grid squares and a total of 10 horizontal grid squares (5 on each side of the apex. The largest reflector in the set uses a vertical dimension of 2.0 m (wavelengths), with side lengths of 1.6 m (wavelengths). The result is a set of squares that runs 20 vertically by 32 horizontally. As the following lines show, the reflector model is no larger as a file, although the number of segments and the resulting .WGF file are both many times larger than for the small reflector.</p>
+  <pre>CM Basic Corner Reflector: 299.7925 MHz; 1 m = 1 wl
+CM T1 = center line, T2, T3 = verticals + GM
+CM T4, T5 = horizontal centers + GM
+CM Density = 0.1 m x 0.1 m
+CM Size = 2.0 m x 3.2 m, File = C-Vn-Hn.WGF
+CE
+GW 1 20 0 0 -1 0 0 1 .0159
+GW 2 20 0 -.1 -1 0 -.1 1 .0159
+GM 0 15 0 0 0 0 -.1 0 2 1 2 20
+GW 3 16 0 0 0 0 -1.6 0 .0159
+GM 0 10 0 0 0 0 0 -.1 3 1 3 16
+GM 0 10 0 0 0 0 0 .1 3 1 3 16
+GM 0 0 0 0 45 0 0 0 2 1 0 0
+GW 4 20 0 .1 -1 0 .1 1 .0159
+GM 0 15 0 0 0 0 .1 0 4 1 4 20
+GW 5 16 0 0 0 0 1.6 0 .0159
+GM 0 10 0 0 0 0 0 -.1 5 1 5 16
+GM 0 10 0 0 0 0 0 .1 5 1 5 16
+GM 0 0 0 0 -45 0 0 0 4 1 0 0
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+WG c-v20-h16.WGF
+EN</pre>
+  <p>All models use NEC-4 (GNEC). NEC-2 models may require slight revisions of the GM lines and should invoke the EK command.</p>
+  <p>The model that adds the dipole is a paragon of simplicity:</p>
+  <pre>CM Dipole .331 m from planar reflector
+CE
+GF 0 c-v10-h05.WGF
+GW 101 11 .331 0 -.2116 .331 0 .2116 .004
+GE 0 -1 0
+EX 0 101 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN </pre>
+  <p>The sample version calls up the Green's file for the smallest reflector. To call up any other reflector in the set, you only need to change the GF line to specify the file name of that reflector. Hence, you may have--if you wish--a single model, or as many models as there are reflectors in the survey set. If you counted up the models required to handle the horizontal dimension changes (12) and the number needed to handle the 0.2-m (wavelength) increments of the vertical dimension (6), the total set of reflectors numbers 72. This set is twice the number used in the planar reflector study.</p>
+  <p>The corner-reflector study also makes a few other adjustments. First, because we have so many horizontal increments, the main graphs of performance will reverse the conventions used in the planar study. Each vertical dimension will have its own line, and the X axis will record the steps in the horizontal dimension. Second, I "reset" each new collection of models, where a new set uses a new horizontal increment and covers vertical dimensions from 1.0 to 2.0 m (wavelengths). The resetting process consisted of adjusting the spacing of the dipole from the apex and the dipole's length to arrive at a 50-Ohm SWR value of 1.00:1. This procedure allowed somewhat more sensitive (but not perfectly sensitive) readouts of variations in the feedpoint resistance and reactance with changes in the vertical dimension of the reflector.</p>
+  <p><b>Some Basic Performance Parameters of Standard Corner Reflector Arrays</b></p>
+  <p>By a standard corner reflector, I mean only one that has a 90-degree angle. The dipole itself varies in its closest approach to the reflector from 0.228 m to 0.234 m, a distance just slightly longer than each half of the dipole itself. The following table lists the reflector horizontal dimensions, the distances from the apex to the dipole, and the dipole length to achieve the noted 50-Ohm SWR value with the shortest vertical dimension in each group. Every dipole has a 0.008-m diameter. The distance of closest approach to the reflector is 0.707 times the spacing from the apex.</p>
+  <pre>
+Horizontal Side          Spacing from        Dipole Length
+Length (m/wl)            Apex (m/wl)         (m/wl)
+0.5                      0.331               0.4232
+0.6                      0.325               0.4232
+0.7                      0.323               0.4238
+0.8                      0.324               0.4240
+0.9                      0.325               0.4238
+1.0                      0.324               0.4238
+1.1                      0.323               0.4239
+1.2                      0.324               0.4242
+1.3                      0.325               0.4242
+1.4                      0.326               0.4238
+1.5                      0.325               0.4234
+1.6                      0.323               0.4236</pre>
+  <p>As the table makes clear, the required spacing of the dipole from the reflector apex fluctuates in a very small but regular way. The dipole lengths are simply those needed to zero out the reactance to the degree possible until the 50-Ohm SWR reads 1:1. Although none of the fluctuations makes a significant operational difference, the numerical progressions are interesting in their own right.</p>
+  <p>We may characterize the performance of a corner reflector--at least over the range of reflector sizes sampled--as very well-behaved. We shall encounter a vertical dimension of maximum gain potential, although the exact vertical dimension will vary a small amount with the horizontal dimension. For any group of vertical dimensions, the average gain increases as we increase the reflector horizontal dimension. The only place where the array may find energy for increased gain is in the beamwidth. The H-plane beamwidth shows the greatest decrease as we enlarge the horizontal dimension of the reflector. This makes sense, since this beamwidth is at right angles to the dipole and extends on either side of the maximum gain heading in the direction of the reflector sides. The E-plane patterns show lesser influences of changes in horizontal reflector size, and this pattern emerges "out the open ends" of the reflector structure. <b>Fig. 2</b> samples the E-plane and H-plane patterns of the smallest and the largest reflectors horizontally. Both pattern sets use the reflector vertical dimension producing maximum gain.</p>
+  <center>
+    <img src="corner-2.gif" width="852" height="830" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Immediately noticeable in the figure is the fact that the vertical dimensions producing maximum gain differ for the two sizes of horizontal reflector sides. Equally noticeable is the fact that as we move from small to large reflectors, the H-plane beamwidth--as indicated by the red lines--changes much more than the E-plane beamwidth. We may pass over the changes in shape of the forward lobe, since the transition from an essentially round forward lobe to a bell-shaped lobe is common to most planar reflector situations. More significant is the rear lobe structure, as viewed with an eye toward the worst-case front-to-back ratio. With the small reflector, the worst-case front-to-back ratio is just over 20 dB. The larger reflector yields a worst-case front-to-back ratio that is over 30 dB. Although (as we shall see) the 180-degree ratio fluctuates considerably, the worst-case values tend to progress steadily as we lengthen the sides of the reflector.</p>
+  <p>The corner reflector shares an important feature with its planar cousin. Once we establish a spacing of the dipole from the reflector apex, the SWR curve does not vary significantly as we change the size of the reflector. <b>Fig. 3</b> overlays two curves from very different size reflectors to demonstrate the similarity of the curves.</p>
+  <center>
+    <img src="corner-3.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The curve passes through the 2:1 SWR level at about 288 MHz and again at 315 MHz, for a total span of 27 MHz. This value represents a 9.0% SWR passband for a driver with a 0.008-m diameter. We shall not be able to examine what may happen with other element diameters within this initial study. Instead, we need to examine more closely some of the detailed data from the survey of reflector array performance. Since free-space forward gain is always of interest, we may begin with <b>Fig. 4</b>.</p>
+  <center>
+    <img src="corner-4.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain chart X-axis records the length of individual reflector horizontal sides, so the overall physical length that one would use for planning materials is twice the value shown. Each line represents a different vertical reflector height. The meaning of each line is self-explanatory. If you wish to scan what happens for any given horizontal dimensions with a changing vertical height, simply scan the values vertically on the chart.</p>
+  <p>If we do some vertical scanning, we shall notice that the changes of reflector height produce similar ranges of gain numbers for every increment of horizontal side length. Actually, there is an interesting and somewhat subtle curve, which we can show in the following table. The two lines indicate, first, the horizontal dimension increment (Horizontal Length) and, second, the range of gain from 1.0 to 2.0 m (wavelength) of height (Delta Gain).</p>
+  <pre>
+Horizontal Length in m/wl   0.5    0.6    0.7    0.8    0.9    1.0    1.1    1.2    1.3    1.4    1.5    1.6
+Delta Gain in dB            0.80   0.96   1.05   1.06   1.07   1.16   1.28   1.38   1.38   1.30   1.22   1.19
+</pre>
+  <p>The curve indicates in a suggestive, if not a definitive, way the overall effect of increasing the vertical dimension of a reflector for any given horizontal dimension. The lowest gain always corresponds to a vertical height of 1.0 m. Maximum gain occurs with a vertical height of either 1.4 m (for the smaller reflectors) or 1.6 m (for reflectors with sides at least 0.9 m). The maximum gain differential occurs with horizontal dimensions of 1.1 and 1.2 m.</p>
+  <p>Throughout the range of horizontal lengths surveyed, the longer the sides, the higher the peak gain and the higher the average gain, taking into account all of the values for vertical dimensions. The only cross-over occurs between the vertical lines for 1.4 and 1.6 m, between horizontal increments of 0.8 and 0.9 m. If the curves were steeper, we would see that the vertical height required for maximum gain actually undergoes a continuous increase across the span of horizontal dimensions. The amount by which the preceding and succeeding vertical heights show a decrease from the peak value varies gives an indication of the likely height of the peak value between the surveyed vertical heights. Using simple proportional parts, we obtain a continuous increase in vertical height throughout the gain chart as we increase the horizontal dimension. When the side length reaches about 1.7 or 1.8 m, the required vertical height for maximum gain will increase to 1.8 m, assuming that the trends hold beyond the chart limits.</p>
+  <p>Another way to look at the gain curves with respect to maximum gain is to examine the rate of gain increase from one peak to the next. The following 2-line table provides the data, with the proviso that we have already established that the graphs and survey do not in all cases reveal the actual peak gain. Where the gain is almost the same at two successive surveyed points, the actual peak is likely somewhere between the two points and has a value higher than either of the two listed values.</p>
+  <pre>
+Horizontal Length in m/wl         0.5    0.6    0.7    0.8    0.9    1.0    1.1    1.2    1.3    1.4    1.5    1.6
+Successive Gain Increase in dB    ----   0.63   0.47   0.34   0.33   0.39   0.39   0.32   0.18   0.09   0.11   0.15
+</pre>
+  <p>We find the expected general decrease in the rate of change between steps as we move away from the smallest reflectors, where each step is a significant increase in the horizontal dimension. However, after the changeover in the vertical height required for maximum gain, we find an increase in the successive gain rise, followed by a rapid decline. However, the decline returns to an increase at the upper end of the chart. Part of the periodic behavior can be accounted for in the fact that we have surveyed distinct points along the continuum of possible vertical and horizontal dimensions. However, part may also be due to the dimensions themselves.</p>
+  <p>In the earlier study of rod-based reflectors, we found elements of periodic behavior in the dimensions of those arrays, even to seeing gain reductions. With continuous surface reflectors, simulated here by wire-grid constructs, we do not encounter gain reductions. However, we do find changes in the rate of gain increase that suggest at least some residual periodic behavior.</p>
+  <center>
+    <img src="corner-5.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At first sight, the curves for the 180-degree front-to-back ratios in <b>Fig. 5</b> may appear to be a senseless morass. However, we can make some good sense out of the curves by some judicious vertical and horizontal scanning. Of course, horizontally, the shortest vertical heights and the shortest horizontal sides yield the lowest front-to-back values. However, above a horizontal side length of about 0.7 m, the valleys of the curves give a good approximation of the worst-case front-to-back ratio, regardless of how high a peak value may rise. In general, larger the reflector in terms of both vertical and horizontal dimensions, the better the overall front-to-back performance.</p>
+  <p>For any size parasitic reflector, such as those on a wide-band Yagi (the DL6WU designs, for example), a fixed reflector length over a wide frequency range will show multiple peaks in the 180-degree front-to-back ratio. The reflector size changes shown in <b>Fig. 5</b> represent an obverse manner of showing similar information, this time by keeping the frequency constant and varying the reflector size. All of the reflector sizes--using the vertical increments to distinguish them--show at least two peaks. The shortest reflector peaks at a side length of 0.7 m. The next 3 vertical sizes (1.2 through 1.6 m) peak with a side length of 0.8 m. The 1.8-m reflector peaks at 0.9-m side length. Interestingly, when the vertical height reaches 2.0 m, the side length must reach 1.2 m for a peak 180-degree front-to-back ratio.</p>
+  <p>Second peaks show a somewhat different pattern. The shortest (1.0-m) reflector shows its peak with a 1.2-m side length. The 1.2-m vertical reflector has its peak at the same side length, although the peak is almost indistinct. The reflectors with vertical dimensions of 1.4, 1.6, and 2.0 m show a second peak at a side length between 1.4 and 1.5 m. However, the vertical 1.8-m reflector has a very distinct peak at 1.4 m side length.</p>
+  <p>From the perspective of an optical analogy to the corner reflector, the seeming irregularities of the changes in gain rates and the front-to-back peaks would be anomalies. However, the corner (and the planar) reflectors are somewhat hybrid beasts, exhibiting partial optical properties and partial parasitic element properties. If we change the position of the dipole with respect to the reflector apex, we change the front-to-back ratio behavior. However, changing the reflector dimensions also changes that behavior, but in ways that suggest parasitic element behavior. The rod-based reflector structures appear to show a higher proportion of parasitic behavior, since they are capable of periodic gain reductions as we increase reflector size. In the more solid wire-grid reflector models, those changes are reduced to changes in the rate of gain increase. However, the front-to-back behavior of the planar facets of the corner reflector suggest that parasitic element behavior remains the dominant mode of reflector operation.</p>
+  <p><b>Beyond Just the Gain Behavior</b></p>
+  <p>So far, we have surveyed the most common aspects of array behavior to which many antenna evaluators attend: the forward gain (in free-space terms), the front-to-back ratio, and the SWR curves. However, there are other facets of the ways in which corner reflectors perform that give us some interesting insights into their operation. We shall pay close attention to two such facets: the -3 dB (half-power) beamwidth in both the E- and H-planes, and the small but interesting changes in the feedpoint impedance as we change the reflector's vertical dimension.</p>
+  <center>
+    <img src="corner-6.gif" width="700" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> orients us to the difference between the E-plane and the H-plane patterns with a corner reflector. The dipole driver is parallel to the apex wire of the reflector. The E-plane pattern is one that is in the planes formed by these two wires. It is not confined by the reflector sides directly. Rather, it is confined mostly by the forward directivity of the array. A dipole in free space has an E-plane beamwidth of about 75-80 degrees. We may use this figure as a reference point when examining E-plane patterns for the corner reflector.</p>
+  <p>The H-plane pattern is at right angles to the dipole. In free space, the dipole's H-plane pattern is a circle. When we place the dipole within the confines of the corner reflector, the dipole fields and the reflector sides strongly interact to confine the resulting pattern.</p>
+  <center>
+    <img src="corner-7.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> presents the E-plane beamwidth data using the convention set up for the gain and front-to-back information. The beamwidth data has an additional limitation. It emerges as a post-core-run calculation and is normally presented to the nearest integer in degrees. Therefore, we find the graph has the appearance of a multiple set of stairways. Nonetheless, we can glean some valuable information from the graph.</p>
+  <p>If we scan the graph vertically as a start, we discover that the range of values for the span of vertical reflector heights is limited. The smallest reflector horizontally shows a spread of 8 degrees decrease as we increase the vertical height. With a side length of 1.6 m, we increase the change of beamwidth to only 14 degrees.</p>
+  <p>Looking at the chart horizontally, we find that the 1.0-m high reflector changes its E-plane beamwidth by only 4 degrees as we extend the sides from 0.5 m to 1.6 m. With a vertical height of 2.0 m, the difference in beamwidth between the shortest and the longest reflector side length is 10 degrees.</p>
+  <p>From a composite perspective, the shortest and smallest reflector yields the widest E-plane beamwidth, about 58 degrees. The minimum E-plane beamwidth is 40 degrees, a value that occurs at the maximum gain vertical and horizontal dimensions: 1.6-m vertically and 1.5 and 1.6 m horizontally. Above the maximum gain point, the beamwidth tends to increase by about 2 degrees. The total beamwidth span of 18 degrees reflects the somewhat narrow gain span of the array: 4.2 dB from minimum to maximum.</p>
+  <center>
+    <img src="corner-8.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The H-plane beamwidth changes by a much greater amount overall, as shown in <b>Fig. 8</b>. The total range runs from 74 down to 34 degrees, or about 40 degrees. Some curves show a very slight dip (never more than 2 degrees) at the reflector size yielding maximum gain for any curve. However, it is clear that the H-plane beamwidth is almost wholly a function of the reflector side length. As we would expect, the rate of decrease slows down with increasing side lengths, since each new increment of side length becomes progressively a smaller fraction of the overall reflector size increase.</p>
+  <p>A well-controlled 10-element Yagi has about the same gain as the largest corner reflector in our survey. Such an array has a boomlength in the 2.15-wavleength range. By way of comparison, the highest gain corner reflector of our series has sides that are 1.6 wavelength long for a 1.13 wavelength front-to-back dimension. The aperture is about 2.26 wavelengths, with a vertical height of 1.6 wavelengths. The gain levels are very comparable. So, too, are the E-plane beamwidths--about 40 degrees. However, the Yagi has an H-plane beamwidth that is over 44 degrees, compared to the 34-degree beamwidth of the corner reflector. In addition, the Yagi displays forward sidelobes in the H-plane, while the corner reflector exhibits a single forward lobe, as shown in <b>Fig. 2</b>. This comparison does not recommend one antenna over another. Instead, it brings to the fore characteristics that may prove significant to one or another set of design specifications.</p>
+  <p>The final data set at which we should take a look concerns the feedpoint behavior of corner reflectors. For the survey, the dipole length and its spacing from the reflector apex was set to provide a 50-Ohm SWR of 1.00:1 using a vertical dimension of 1.0 m. I reset the dipole length and spacing for each new increment of the horizontal or side length. However, I maintained the dipole length and position as the vertical dimension grew through its six increments.</p>
+  <p>The resulting data showed an interesting variability in terms of stability. In no case did the values change radically with changes in vertical height. However, there are cases that we might consider more stable and others that we might consider less stable. In terms of the SWR range, the most stable case (horizontal side length = 1.3 m) showed a range that never exceeded 1.02:1. The least stable case showed a peak value of 1.05:1. <b>Fig. 9</b> shows the patterns with changes in the vertical reflector dimension. Although the overall range is small, the differences in the peak values for the two cases show a 2.5:1 difference.</p>
+  <center>
+    <img src="corner-9.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Interestingly, the difference is, for the most part, not a matter of changes in the resistive component of the impedance. As shown in <b>Fig. 10</b>, the most stable case has a maximum resistance range of 0.86 Ohm, while the least stable case has a range of 0.92 Ohm. Moreover, the two curves--within the limitations of the modeling techniques used to establish them--show good congruence.</p>
+  <center>
+    <img src="corner-10.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The culprit, that is, the source of the SWR divergence between the two cases is the range of reactance at the feedpoint of the two dipoles driving the different size reflectors. As <b>Fig. 11</b> shows, there is a considerable differential between the maximum ranges of reactance for the two cases. The 1.3-m reflector displays a reactance variation of 1.15 Ohms. However, the range for the 1.5-m reflector is nearly double, at 2.22 Ohms,</p>
+  <center>
+    <img src="corner-11.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although the most stable and least stable cases occur with reflector sizes that are close to each other, no two successive increments of horizontal side length show the same pattern. Nor is there a clearly identifiable repetition of patterns. In short, the feedpoint behavior of the corner reflector is not a simple matter of reflector dimensions. (However, the patterns, if any, might be a complex matter of reflector dimensions, involving the area of the two planes and the regions of illumination or maximum reflector currents within them.)</p>
+  <p>The interest in the feedpoint behavior of the corner reflector, even though it is below the level of operational significance, arises out of the fact that we have been accumulating a collection of variable behaviors. The two most evident ones involved the range of gain across each set of vertical dimensions as we increased the horizontal side dimension and the amount of gain increase at maximum gain for each successive increment of side-length increase. Unfortunately, the available beamwidth data was not sufficiently sensitive to show similar undulations, if any exist.</p>
+  <p>Bar-based reflector structures displayed a wider range of behaviors, especially with respect to gain. With wire-grid planes, the variations reduce to small undulations that this survey has only imprecisely identified.</p>
+  <p><b>Unfinished Business</b></p>
+  <p>In the course of our survey of corner reflector sizes, we have by-passed a number of interesting questions in order to remain focused on the continuum of reflector size increases with a simple dipole driver. Within the focus of our efforts using wire-grid reflector planes to simulate closely spaced screens or solid surfaces, we may fairly reach the following conclusions.</p>
+  <blockquote>
+    1. For the range of horizontal side lengths studied, a dipole-driven corner reflector reaches maximum gain with a vertical dimension between 1.4 wavelengths and 1.6 wavelengths, with the likely precise vertical size growing as the horizontal side length grows.
+    <p>2. The maximum gain obtainable from a corner reflector shows continuous growth from horizontal side lengths of 0.5 wavelength through 1.6 wavelengths. However, there appear to be variations or undulations in the rate of growth with linear increases in the side length.</p>
+    <p>3. The worst case front-to-back ratio shows generally increasing values with the overall size of the reflector surfaces. The maximum value of 180-degree front-to-back ratio shows at least two distinct peaks across the span of side lengths used in the survey, although those peaks show differences in the peak value and in the side length of occurrence relative to the vertical dimension.</p>
+    <p>4. E-plane beamwidth shows only small and steady decreases with increases side length, with minimum values occurring at of near reflector size yielding maximum gain for a given side length. H-plane beamwidth is almost completely a function of the horizontal side length and shows a steady decrease with increasing side-length increases.</p>
+    <p>5. Operationally, a 50-Ohm 8-mm diameter dipole driver shows a 9.0% 2:1 SWR bandwidth. Reflector size makes virtually no difference to the SWR curve. Feedpoint behavior is operationally stable, but shows some interesting minor undulations.</p>
+  </blockquote>
+  <p>Despite the long list of conclusions that we may draw from the survey, others remain for further study. For example, one might wonder if there is a reflector size that would show an actual decrease in gain with a further increase in reflector side length. As well, from time to time, investigators have suggested some slight revisions to the general corner reflector shape in order to improve array performance.</p>
+  <p>The driver has also occasioned some suggested revisions, such as the use of a bi-conical or a fan driver element. As well, one might try to press into service driver systems that display some bi-directional gain in the H-plane and see if they are suitable for service with a corner reflector.</p>
+  <p>Sampling these questions deserves more than one additional foray into the angular world of corner reflectors.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 06-01-2005. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>May, 2005. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="corner2.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 2</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#corner-reflector'>Corner Reflector</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

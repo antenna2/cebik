@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Longwire, HF Multi Band">
+  <title>Long-Wire Antennas Part 1: Center-Fed and End-Fed Unterminated Long-Wire Antennas</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Long-Wire Antennas<br>
+    Part 1: Center-Fed and End-Fed Unterminated Long-Wire Antennas</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Among the oldest directional antennas are the ones labeled "long-wire" antennas. Dating to the late 1920s and early 1930s, we still find some of these antennas in active use--not only in amateur circles, but as well in government and military service. Classic names, such as Beverage and Bruce attach to early developments of long-wire antennas. In the group, we include bi-directional antennas such as the long center-fed doublet and end-fed wire, along with more directional arrays such as the terminated long-wire, the terminated V-beam, and the rhombic.</p>
+  <p>The theory of long-wire antennas appears early on in most college antenna texts. Once noted, along with the obligatory collection of basic equations that describe some long-wire properties, most authors pass on, never to touch the long-wire group again. Amateurs come upon one or more representatives of the group and wonder what they do and how they do it. Few have access to the seminal articles out of which long-wire technology arose or even to classic books in the field, such as Harper's <i>Rhombic Antenna Design</i> or Walter's <i>Traveling Wave Antennas</i>. Today, some of the terminology surrounding long-wire antennas seems strange. For example, how long is a long-wire antenna? Some folks see a 135' doublet (or even a 135' end-fed wire) and think of it as a long-wire antenna. On 80 meters, where the wire is about 1/2 wavelength, it is not a long-wire. However, on 10 meters, the wire is 4 wavelengths and is entering into the realm of long-wire aerials. There is no definite boundary that marks the entry point to long-wire antennas. However, when we examine the properties of long wires to see what performance properties that we want to derive from them, then we shall quickly learn that "long-wire" means for practical purposes "many wavelengths long."</p>
+  <p>The ready availability of a vast literature on long-wire antennas seemingly makes these note superfluous. The end of each episode in this series has a short list of basic references. However, I receive numerous questions about the properties of long-wire, enough to suggest that a review of long-wire technology might be in order. We shall have occasion in these notes to touch upon a few of the equations defining long-wire antennas, but we shall mostly try to develop a more visually intuitive understanding of their basic properties. Antenna modeling software has the ability to provide polar plots of antenna patterns and other important data that will assist us in this process. As well, by the judicious use of the software, we shall discover that some of the more complex equations that define some of the equally complex forms of long-wire antennas will become unnecessary: we can design optimized long-wire arrays wholly within the software.</p>
+  <p>Along the way, we, we shall encounter some traditional terms, such as rhombic "tilt angle" and "traveling-wave" antenna. Many college texts are gradually replacing the term "traveling-wave" with "non-resonant" or "terminated." As we shall discover, a terminated antenna is one that ends with a resistance. Since the resistance will dominate the feedpoint impedance, the antenna becomes non-resonant over a fairly wide operating bandwidth. How these two ideas relate to the term "traveling-wave" we shall learn at the proper place along our path.</p>
+  <p>Everything begins with the wire antenna, plain and simple. So our journey will start with the center-fed doublet that is familiar in its shorter forms. We shall also look at longer forms of the doublet, as well as at long end-fed wires. Virtually everything in long-wire technology depends on how lobes develop as we increase the length of a wire. Most important will be the direction in which the strongest or main lobes point relative both to the broadside direction (that is, the direction for the lobes of a half wavelength dipole) and to the axis of the wire itself.</p>
+  <p>Understanding lobe development is a major part, but only one part of our foundation in understanding long-wire antennas. In Part 2, we shall introduce a second critical element to the creation of long-wire beams, a resistor to terminate the end-fed wire and create a directional long-wire antenna. Along the way, we shall look at a number of interesting questions involving antenna height, wire losses, and ground quality as they bear upon long-wire antennas. These factors introduce both physical antenna issues and modeling issues. Therefore, we shall have to reserve the final steps of our meanderings for the later episodes. There, we shall encounter the V-beam and the rhombic. Both classic arrays have terminated and unterminated forms, as well as a few complexities. The V antennas will occupy the whole of Part 3, while the rhombic will occupy us for Parts 4 and 5.</p>
+  <p>Before we can fully appreciate the early work that developed the V-beam and the rhombic, we must begin our trek in more familiar territory. Since--as noted--everything begins with the doublet, that is the place to take the first step.</p>
+  <p><b>The Center-Fed Doublet</b></p>
+  <p>We shall want to examine what happens to a center-fed wire doublet as we change its length in 1 wavelength increments from 1 to 11 wavelengths. We might extend the exercise further, but the rate of change decreases as the antenna becomes longer, and the limit set here is long enough for us to get hold of all of the fundamental ideas. One key to understanding long-wire antennas is to shift our thinking about antenna size. Instead of thinking in physical lengths, such as X meters or Y feet, we shall think wholly in terms of wavelengths. Hence, as we increase the frequency, the physical length of a wave becomes shorter. So a 10 wavelength antenna at 80 meters is physically 8 times longer than a 10 wavelength antenna at 10 meters.</p>
+  <p><i>The Model</i>: If we are to make fair comparisons among antennas--even in modeled form--we must set up some parameters that will remain unchanged from model to model. Obviously, the antenna length from end to end will always be variable in every exercise. For simplicity, I shall use the physical length (measured in wavelengths) rather than the actual electrical length as the increment. The electrical length of a wire antenna is always slightly more than the physical length due to end effects. The actual physical shortening required to obtain an exact electrical length varies somewhat, but many books cite a general value of about 0.95 as the ratio for a simple 1/2 wavelength dipole. If we cut a dipole to be physically 1/2 wavelength, then it will be about 5% long electrically and show inductive reactance at the feedpoint. However, the so-called end-effect occurs for only 1 half wavelength of a long-wire antenna, since it has only 2 ends, no matter what its overall length may be. Therefore, the longer the antenna, the less that the end effect creates a difference between the physical and electrical lengths. At 1 wavelength overall, the 5% dipole difference is only 2.5%. At 10 wavelengths, the differential is only 0.25%. All antenna models will use 20 segments per wavelength.</p>
+  <p>All real wire materials have some loss that varies with frequency, but not in a linear manner. Not only does the material loss decrease the maximum gain obtainable, it also has a small affect on the feedpoint impedance. Moreover, it has a further small shortening effect--like the end effect itself, but somewhat smaller in scale. However, material loss shortening of the physical wire acts all along the antenna and not just at the ends. To eliminate this factor, our models will use lossless or perfect wire.</p>
+  <p>We need a test environment. I shall place all long-wire models 1 wavelength above average ground (conductivity 0.005 S/m, permittivity 13). In theory, the main elevation lobe of a horizontal antenna is tightly connected to the height of the antenna above ground. Texts on long-wire antennas usually give an equation for selecting the height of a proposed antenna in terms of the desired elevation angle required for a communications link.</p>
+  <blockquote>
+    <p><b>H<sub>wl</sub> = 1 / (4 sin a)</b></p>
+  </blockquote>
+  <p>where H is the height in wavelengths and a (usually given as alpha) is the elevation angle. Since a good bit of science now prefers to count angles from the zenith (overhead) downward as a theta angle, a or alpha is simply 90 - theta, and vise versa. We may estimate the elevation angle of our antennas initially by reversing the equation:</p>
+  <blockquote>
+    <p><b>a = arcsin 1 / ( 4 H<sub>wl</sub>)</b></p>
+  </blockquote>
+  <p>You may see arcsin written also as sin<sup>-1</sup>. Theoretically, our 1 wavelength height should produce elevation angles that are consistently 14.48 degrees. We shall set the software to increment patterns in 1-degree intervals. Since the calculated angle is almost directly between increments, we shall be satisfied if the angles appear as either 14 or 15 degrees.</p>
+  <p>The effects of ground are not constant for all frequencies. Even for a horizontal wire 1 wavelength above ground, the ground losses change, increasing as we raise the frequency. To sample the degree of change, let's set the wire diameter for all models at the test frequency of 3.5 MHz. We shall use 0.16" diameter wire, approximately AWG #6. If we perfectly scale our antenna for other frequencies, then the wire size changes as well. At 7 MHz, it is 0.08" (AWG #12). At 14 MHz, it is 0.04" (AWG #18). At 28 MHz, the size drops to 0.02" (AWG #24). Next, let's use a 1 wavelength wire at 1 wavelength height and scale it over the set of frequencies to sample the maximum gain values.</p>
+  <pre>
+Maximum Gain Values:  1 WL Wire at 1 WL Above Average Ground
+Frequency     Wire Dia.     Maximum Gain
+MHz           inches        dBi
+3.5           0.16          9.83
+7.0           0.08          9.67
+14.0          0.04          9.54
+28.0          0.02          9.47
+Gain differential 3.5 vs. 28 MHz:  0.36 dBi
+</pre>
+  <p>Although the differential is small, it is numerically evident. Hence, we should conduct all modeling tests using as consistent a set of values for all possible aspects of the antenna and modeling environment. Our choice of the ground quality also has an effect upon gain values. Indeed, the effect of changing the ground quality is more pronounced than the effect of changing the test frequency. Let's take our 1 wavelength antenna at its 1 wavelength height and check it using 3 different levels of soil quality.</p>
+  <pre>
+Maximum Gain Values:  1 WL Wire at 1 WL above Various Grounds
+Ground     Conductivity  Relative      Maximum Gain     Maximum Gain
+Label      S/m           Permittivity  dBi @ 3.5 MHz    dBi @ 28.0 MHz
+Very Poor  0.001          5             9.41            9.01
+Average    0.005         13             9.83            9.47
+Very Good  0.0303        20            10.02            9.75
+Gain differential: VP to VG Soil        0.61            0.74
+</pre>
+  <p>Although the differentials between very good (VG) soil and very poor (VP) soil are similar, it is clear that ground effects on antenna losses are not completely linear. Nevertheless, the effects do not change enough to invalidate the general trends in center-fed doublet patterns if we select any other HF frequency to replace the 3.5-MHz test frequency for our investigation.</p>
+  <p>One way to eliminate the effects of all loss sources is to model all antennas in free space using perfect or lossless wire. These condition allow us to scale an antenna with no change in performance values. Scaling, of course, means proportionately adjusting for frequency or wavelength the length of elements, the spacing between elements in a multi-element array, and the diameter of the elements. However, to make the comparisons among long-wire antennas reasonably realistic, we shall employ a given height (1 wavelength) and a specific ground quality (called "average") and omit only the smallest loss sources, such as wire material and frequency.</p>
+  <p><i>The Center-Fed Doublet and Its Patterns</i>: We are now ready to show the results of setting up long-wire center-fed doublets ranging from 1 wavelength to 11 wavelengths in 1 wavelength increments. For each increment, we shall be very interested in 3 key data items. First is the maximum gain of the strongest lobe or lobes in the doublet radiation pattern. We shall call this value simply the maximum gain. Second, we shall note the elevation angle of maximum gain for the main lobe or lobes, also called the TO or take-off angle. The number should--by theory--always be 14 degrees. Finally, we shall note the azimuth angle of one of the main lobes relative to the antenna wire. If the main lobe is perfectly broadside to the wire, the angle will be 0 degrees. We shall count in a consistent direction away from broadside toward one end of the antenna wire if the main lobe departs from the broadside direction. The larger the number for the azimuth angle, the closer the main lobe comes to aligning with the wire end. A value of 90 degrees will indicate that the main lobe is directly off of and aligned with the antenna wire from end to end. Since our investigation is confined to pattern properties, we shall not list the feedpoint impedance or other data that models might give us. The following table gives us the results of our examination.</p>
+  <pre>
+Center-Fed Doublet Data
+Total Length    Maximum      Elevation     Azimuth Angle of
+WL              Gain dBi     Angle deg     Main Lobe deg
+ 1               9.83          14             0
+ 2               9.36          14            33
+ 3              10.16          14            45
+ 4              10.93          14            52
+ 5              11.47          14            57
+ 6              11.85          14            61
+ 7              12.14          14            63
+ 8              12.43          13            65
+ 9              12.65          13            67
+10              12.82          13            68
+11              13.01          13            70
+</pre>
+  <p>The chart shows the growing gain of the main lobes of the center-fed doublet, once the number of lobes reaches 4 (at the 2 wavelength mark). The increased strength of the main lobe is accompanied by a decreasing beamwidth. As well, the angle moves steadily toward the ends of the wire, but never reaches that point. In fact, at 11 wavelengths, the main lobes are still 20 degrees shy of a true end-orientation. Also note that the elevation angle of the strongest lobe drops slightly as the antenna length passes the 7 wavelength point. The angle would show a smoother curve if the increment between sampling points had been smaller than 1 degree. However, the drop is real and may be more dramatic with other types of long-wire antennas.</p>
+  <p>What the chart cannot show is the growth in the number of lobes and their relative strengths as we increase the length of the antenna. <b>Fig. 1</b> provides a gallery of sample elevation and azimuth plots to illustrate the growth of lobes in both directions. You may gauge the shrinking beamwidth from the red line marking the half-power points on the main lobes. The elevation patterns are taken along a line using the azimuth angle in the table. The azimuth patterns are taken at the listed elevation angles.</p>
+  <center>
+    <img src="lw1-1.gif" width="800" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The pattern selections are closer together for shorter versions of the doublet, since the azimuth angle of the main lobes changes more rapidly. As the antenna grows longer, the rate of azimuth-angle change decreases. However, of considerable note is the total number of lobes in each pattern. For antennas that are very close to integral numbers of wavelengths long, we can express the total number of lobes in a simple equation.</p>
+  <blockquote>
+    <b>N<sub>dblt</sub> = 2 L<sub>wl</sub></b>
+  </blockquote>
+  <p>where N<sub>dblt</sub> is the number of identifiable lobes and L is the doublet length in wavelengths. Lobes do not suddenly appear, but rather emerge, grow, peak, diminish, and finally disappear. The cycle occurs for every progression from one integral wavelength to the next. At the midpoint between integral lengths, L.5 wavelengths, the number of doublet lobes becomes considerable larger. The antenna pattern shows the growing lobes of the next integral length plus the diminishing lobes of the preceding integral length. So the equation becomes somewhat messier.</p>
+  <blockquote>
+    <b>N<sub>dblt</sub> = 2 (L<sub>wl</sub> + L<sup>+1</sup><sub>wl</sub>)</b>
+  </blockquote>
+  <p>where L is the preceding integral wavelength value and L<sup>+1</sup> is the next integral wavelength value. Since a 2 wavelength doublet has 4 lobes and a 3 wavelength doublet has 6 lobes, a 2.5 wavelength doublet has 10 total lobes. The main lobes are still those furthest from the broadside angle to the wire. The existence of 10 lobes forces the azimuth angle of the main or outer lobes to be further from broadside than for either of the two integral lengths (2 and 3 wavelengths) used in the sample calculation.</p>
+  <p><b>The End-Fed Long-Wire Antenna</b></p>
+  <p>Understanding the pattern evolution of the center-fed doublet gives us a baseline against which to measure succeeding steps in the development of long-wire antennas, and eventually directional long-wire antennas. The doublet patterns were all very symmetrical as a consequence of feeding the antenna at the center. However, most practical long-wire antennas feed the antenna at one end. In terms of models, we may simply move the feedpoint to the last segment. The segmentation remains the same: 20 segments per wavelength. The test frequency remains 3.5 MHz, and the lossless wire is still 0.16" in diameter. The antennas are 1 wavelength above average ground.</p>
+  <p>Therefore, we may proceed directly to the table of results that tells us the maximum gain, the elevation angle, and the azimuth angle of the main lobe(s) of the end-fed wires. Note that we here avoid any use of terms like "end-fed Zepp" and similar informal names for the antenna. They are all end-fed wires. As well, we by-pass any discussion of antenna installation practicalities, such as the imbalance of current magnitudes and phases on the parallel feedline normally used with such antennas.</p>
+  <p>However, we shall expand the table of gathered data by reducing the increment of length between antennas in the list. Instead of proceeding in 1 wavelength increments, we shall step along in 0.5 wavelength intervals.</p>
+  <pre>
+End-Fed Wire Antenna Data
+Total Length    Maximum      Elevation     Azimuth Angle of
+WL              Gain dBi     Angle deg     Main Lobe deg
+ 1               8.44          14            37
+ 1.5             9.45          14            49
+ 2              10.27          13            56
+ 2.5            10.86          13            60
+ 3              11.32          13            63
+ 3.5            11.68          13            65
+ 4              11.99          13            67
+ 4.5            12.26          13            69
+ 5              12.48          13            70
+ 5.5            12.71          12            71
+ 6              12.90          12            72
+ 6.5            13.08          12            73
+ 7              13.24          12            74
+ 7.5            13.38          12            75
+ 8              13.50          12            76
+ 8.5            13.64          11            76
+ 9              13.72          11            77
+ 9.5            13.87          11            77
+10              13.96          11            77
+10.5            14.07          11            78
+11              14.15          11            78
+</pre>
+  <p>The end-fed wire antenna begins at 1 wavelength by showing a small gain deficit relative to the center-fed doublet. However, the end-fed wire quickly catches up and shows more gain in the main lobe than the corresponding doublet. In fact, by the 11 wavelength version, the end-fed wire has over a 1.1-dB gain advantage. The added maximum gain accompanies a larger decrease in the elevation angle of maximum radiation as the antenna grows longer. The third column adds further information to digest: the azimuth angles are much larger for any given total end-fed antenna length than for doublets of the same length. In fact, the 1 wavelength version shows an azimuth angle that is greater than zero, suggesting that it has more than 2 lobes. <b>Fig. 2</b> can go a long way toward clearing up the differences between doublet and end-fed wire patterns when both have the same length.</p>
+  <center>
+    <img src="lw1-2.gif" width="800" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The increased maximum-gain value of the end-fed antenna over the doublet arises from the fact that even with lossless wire, the end-fed azimuth pattern shows a displacement away from the fed end and toward the open end of the antenna. The difference in strength between the strongest lobes away from the feedpoint and those toward the feedpoint is just about twice the value of the improved maximum gain figure. Expressed in other terms, if the 10 wavelength antenna has a 1.1-dB advantage over the doublet in maximum gain, then it also shows about a 2.2-dB front-to-back ratio. The lobes toward the feedpoint will be about 1.1-dB weaker than the corresponding lobes for a doublet. The end-fed wire is already directional, but not to a very significant degree.</p>
+  <p>The more obvious feature of the radiation pattern gallery is the increase in the total number of lobes for each antenna length. In fact, the end-fed wire answers to a quite different equation for calculating the number of lobes:</p>
+  <blockquote>
+    <b>N<sub>ef</sub> = 4 L<sub>wl</sub></b>
+  </blockquote>
+  <p>where N<sub>ef</sub> is the total number of identifiable end-fed wire lobes and L is the end-fed wire length in wavelengths. So the 10 wavelength end-fed wire has a total of 40 lobes. To squeeze that many lobes into the same 360-degree pattern requires that each lobe have a smaller beamwidth (that is, be narrower). As well, the main lobes have an angle farther from broadside and closer to the wire end than for a doublet of the same length. In fact, the two main lobes at each end of the antenna wire begin to fuse into a single large lobe with a deep inset. Compare these lobes with the very separate lobes of the doublet.</p>
+  <p>The data that we gather from the end-fed single long-wire unterminated antenna will play an important role in the design of more complex arrays. The data is in many ways height-specific (with additional cautions regarding the soil quality as a possible further modifier of the data). The azimuth angle of the main lobe varies with the antenna height and length. Using an increment of 1 wavelength between antenna lengths, the following table compares data for lossless long-wires 0.5-, 1-, and 2 wavelengths over average ground.</p>
+  <pre>
+Comparative Data:  Unterminated Long-Wire Antennas at 0.5- 1-, and 2-Wavelengths Above Average Ground.
+                Height = 0.5 Wavelength                   Height = 1.0 Wavelength                   Height = 2.0 Wavelength
+Length    Maximum      Elevation     Azimuth        Maximum      Elevation     Azimuth        Maximum      Elevation     Azimuth
+WL        Gain dBi     Angle deg     Angle deg      Gain dBi     Angle deg     Angle deg      Gain dBi     Angle deg     Angle deg
+ 1         7.99        27            40              8.44        14            37              8.75         7            37
+ 2         9.11        25            61             10.27        13            56             10.75         7            54
+ 3         9.85        24            70             11.32        13            63             11.72         7            61
+ 4        10.33        22            74             11.99        13            67             12.62         7            66
+ 5        10.68        21            78             12.48        13            70             13.23         7            68
+ 6        10.95        20            81             12.90        12            72             13.75         7            70
+ 7        11.19        19            83             13.24        12            74             14.22         7            72
+ 8        11.40        18            84             13.50        12            76             14.62         7            73
+ 9        11.60        17            85             13.72        12            77             14.97         7            74
+10        11.79        16            85             13.96        11            77             15.28         6            75
+11        11.97        15            85             14.15        11            78             15.57         6            76
+</pre>
+  <p><b>Fig. 3</b> compares the maximum gain of the end-fed wire antenna at each height and length. These curves are completely unexceptional, but may be useful as a reference.</p>
+  <center>
+    <img src="lw1-3.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although we may be tempted to focus upon the gain data, those numbers may not be the most important for the long-term use of the information. The elevation angle columns tells us that the lower we place a single unterminated long-wire antenna, the faster the elevation angle of maximum radiation decreases as we increase the long-wire antenna length. <b>Fig. 4</b> converts the numbers in curves. The stair-stepping results from the fact that elevation angles use a 1-degree increment.</p>
+  <center>
+    <img src="lw1-4.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Still more significant for designing more complex long-wire arrays is the azimuth angle of the strongest lobe relative to the broadside direction (in these models). For any given antenna length, the azimuth angle of the strongest lobes changes with antenna height. <b>Fig. 5</b> shows the amount of change with height for each sampled antenna length. Once more, the 1-degree radiation pattern increment limits the smoothness of the curves. However, we may clearly see that the lower the antenna height for any given antenna length, the closer that the main lobes approach the axis of the wire and the closer they grow to each other on each side of the wire.</p>
+  <center>
+    <img src="lw1-5.gif" width="722" height="481" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The azimuth angle has been a very convenient measure for our initial examination of both center-fed and end-fed long wire antennas. It has shown us by how much the main or strongest lobes of the antenna pattern move from the broadside or zero-degree position as we make the wire longer, as counted in wavelengths. In other applications, for example, the discussion of V and rhombic arrays to come in future parts of this series, we shall view the same angle from a different perspective. We shall be interested in the amount by which the main lobe is displaced from the axis of the wire, defined as a line drawn along and beyond the antenna wire. In literature about long-wire arrays, the off-axis angle is usually designated as "alpha," although we shall use the letter "A" as a designation in these notes. <b>Fig. 6</b> shows the relationship of the 2 angles.</p>
+  <center>
+    <img src="lw1-6.gif" width="395" height="440" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We shall eventually convert the azimuth-angle values to angle-A values with respect to the wire. The relationship is simply this: Angle A = 90 - (Az Ang) degrees. We need not do the aritmetic now. However, these angles and their derivatives will come in handy in later parts of this series.</p>
+  <p>Since most of our experience is with shorter antennas--say about 1/2 wavelength long--we may not fully appreciate the difference between center and end feeding for wires that are the same length. For example, a 1 wavelength doublet has only 2 lobes, while a 1 wavelength end-fed wire has 4 lobes. Both antennas show 2 complete excursions of current magnitude, showing 2 maximum current points at approximately 1/4 and 3/4 wavelength along the wire. The only other significant variable is the phase of the currents in each excursion. <b>Fig. 7</b> shows us the difference in this parameter.</p>
+  <center>
+    <img src="lw1-7.gif" width="375" height="240" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The center-fed doublet graph shows that the currents have the same phase in each half of the overall antenna length. Hence, the radiation pattern has only two lobes with contributions from each half of the total wire length. Not until the antenna reaches a significantly greater length (2 wavelengths is the next step in our pattern development sequence) will each half of the doublet show a current phase reversal. Therefore, we do not find 4 lobes until we reach the 2 wavelength mark. (Of course, a 1.5 wavelength antenna will show 6 lobes as the initial 2 diminish and the next 4 emerge and grow.) With the end-fed wire, the currents in each half of the initial 1 wavelength wire are 180 degrees out of phase relative to each other. Hence, we see 4 lobes at this shorter length.</p>
+  <p>Unlike the center-fed doublet, the end-fed wire shows only a single progression of the number of lobes in the azimuth pattern. Therefore, the single equation for calculating the number of lobes applies not only to wire lengths that are at or near integral wavelengths; as well, it applies to wire lengths at are at or near N.5 wavelengths.</p>
+  <p>Indeed, the way in which lobes appear and grow differs markedly between center-fed and end-fed antennas that are the same length. <b>Fig. 8</b> provides a glimpse of the process by tracking the lobe structure of the two types of antennas from 2 wavelengths to 3 wavelengths, in 0.25 wavelength increments. I chose this set of lengths so that the lobes are clear and countable--even when they are very small. However, similar graphs are possible between any 2 length markers.</p>
+  <center>
+    <img src="lw1-8.gif" width="800" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>At 2.5 wavelengths, the two patterns are almost identical, differing only in the end-fed wire's small front-to-back ratio that results from a slight forward tilt to the pattern. The center-fed antenna shows its new lobes at angles outside the existing set of 4 lobes, and in between any pair of existing lobes. The presence of the new outer-most lobes forces the existing lobes toward a more broadside direction. At 2.25 wavelengths, the old lobes are still the strongest, but show a more broadside angle than when they were alone at 2 wavelengths. Beyond 2.5 wavelengths, the new lobes dominate and the old ones shrink. At 2.75 wavelengths, the old lobes are barely visible. By 3 wavelengths, we find only 6 lobes at their familiar positions. The following table tracks the progression.</p>
+  <pre>
+Lobe Development in Center-Fed and End-Fed Wires Between 2 and 3 wavelengths
+   Antenna              Center-Fed                        End-Fed
+Length          Max. Gain       Main Lobe        Max. Gain       Main Lobe
+WL              dBi             Az. Angle        dBi             Az. Angle
+2.0              9.36           33 deg           10.27           56 deg
+2.25            10.22           28               11.37           59
+2.5             10.33           59               10.86           60
+2.75            10.33           51               10.91           62
+3.0             10.16           45               11.32           63
+</pre>
+  <p>In contrast to the center-fed lobe development progression, the end-fed antenna has new lobes that emerge just to the rear of the broadside direction, where we define "rear" with respect to the general direction toward the end-fed wire's feedpoint. The 2.25 wavelength and 2.75 wavelength end-fed antennas are comparable, as each one introduces a new lobe pair. The lobe progression acquires symmetry on each side of the wire (except for the slight differential in the main lobes) only as the antenna approaches a multiple of a half wavelength.</p>
+  <p>We should not neglect the elevation patterns in the gallery shown in <b>Fig. 2</b>. If we compare the number of elevation lobes for the doublet and for the end-fed wire, we find more lobes in each corresponding end-fed wire pattern. This feature of end-fed wire antennas will eventually play a role in our evaluation of terminated end-fed long-wire directional antennas. Just how complex the overall pattern of an end-fed wire may become shows up in the 3-dimensional pattern from a 10 wavelength end-fed wire in <b>Fig. 9</b>. The pattern is limited to a 5-degree increment between pattern readings, so some details are missing. However, reducing the increment to show more detail would convert the line-based sketch into a solid black blob.</p>
+  <center>
+    <img src="lw1-9.gif" width="600" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Two features of the 3-dimensional pattern are especially prominent. First, the upper angles in every direction show a plethora of lobes. A free-space representation of the far-field radiation would show a tunnel with relatively smooth ridge rings for each new lobe, counting back from the tunnel entrance formed by the strongest lobes. However, our radiation pattern takes place over real (or "lossy") ground, disturbing the ring structure as we increase the elevation angle of interest. Many of the upper-angle lobes have significant strength. Second, the forward-most lobes (along the axis labeled Y) have an interesting feature. The lowest and strongest lobe (at 10 degrees in the graphic) shows the deep null along the Y-axis between lobe peaks on either side. However, at 15 degrees elevation, the forward lobe structure displays a far-more-even front, with only a small gain depression along the Y-axis. This feature of end-fed wire patterns will become very prominent when we tackle the terminated end-fed antenna in Part 2.</p>
+  <p>Before we leave the open-ended long-wire antenna, we should briefly note that the ground plays an ever-more profound role in end-fed wire antenna performance as the wire grows longer. Let's compare the 10 wavelength end-fed wire over very good, average, and very poor grounds. In contrast to our original notes, which used a 1 wavelength doublet, we shall now be looking at a very long antenna (856.55 m or 2810' at 3.5 MHz).</p>
+  <pre>
+Maximum Gain Values:  1 WL Wire at 1 WL above Various Grounds
+Ground     Conductivity  Relative      Maximum Gain     Elevation     Azimuth Angle of
+Label      S/m           Permittivity  dBi @ 3.5 MHz    Angle deg     Main Lobe deg
+Very Poor  0.001          5            13.55             10            77
+Average    0.005         13            13.96             11            77
+Very Good  0.0303        20            14.65             12            79
+Gain differential: VP to VG Soil        1.10
+</pre>
+  <p>The ground quality not only changes the maximum gain attainable from the antenna, but as well changes the elevation angle of maximum radiation. The better the soil, the higher the TO angle. But even over very good soil, the elevation angle of maximum radiation is significantly lower than the calculated value of 14.5 degrees.</p>
+  <p><b>Conclusion to Part 1</b></p>
+  <p>In some respects, we have not gone very far in our exploration of long-wire antennas. We have merely contrasted the behavior of center-fed doublets and end-fed wires from 1 to 11 wavelengths. Along the way, we have examined many of the variables that might alter the performance progressions in the tables. Our goal has been to become familiar with the performance parameters of long unterminated wires. The pattern galleries and tables can serve to remind us of these properties as we proceed further.</p>
+  <p>The end-fed wire, in particular, holds great importance for our future exploration. It is the foundation of all other long-wire arrays. That collection, of course, includes both complex rhombics and the simplest of the directional terminated antennas. Hopefully, from the perspective of developing reasonable expectations from end-fed wires, the foundation in these notes is sufficiently solid to make succeeding steps smoother on the trail of terminated long-wire antennas.</p>
+  <p><b>A Few Basic References</b></p>
+  <p>Entire books exist on the subject of terminated directional long-wire antennas, with special attention to the V-beam and the rhombic. However, for a basic introduction to the subject, the following college texts, handbooks, and seminal articles might be useful.</p>
+  <p>Balanis, C. A., <i>Antenna Theory: Design and Analysis</i>, 2nd Ed., pp. 488-505: a college text.</p>
+  <p>Boswell, A. G. P., "Wideband Rhombic Antennas for HF," <i>Proceedings of the 5th International Conference on Antennas and Propagation</i> (ICAP87), April, 1987: a source of wide-band rhombic design information.</p>
+  <p>Bruce E., "Developments in Short-Wave Directive Antennas," <i>Proceedings of the IRE</i>, August, 1931, Volume 19, Number 8: the introduction of the terminated inverted V and diamond (rhombic) antennas.</p>
+  <p>Bruce E., Beck A.C., and Lowry L.R., "Horizontal Rhombic Antennas," <i>Proceedings of the IRE</i>, January, 1935, Volume 23, Number 1: the classic treatment of rhombic design, repeated in many text books.</p>
+  <p>Carter P. S., Hansell C. W., and Lindenblad N. E., "Development of Directive Transmitting Antennas by R.C.A Communications, Inc.," <i>Proceedings of the IRE</i>, October, 1931, Volume 19, Number 10: a fundamental treatment of long-wire V antennas, along with the next entry.</p>
+  <p>Carter P. S., "Circuit Relations in Radiating Systems and Applications to Antenna Problems," <i>Proceedings of the IRE</i>, June, 1932, Volume 20, Number 6: the second of the fundamental analyses behind long-wire V antennas.</p>
+  <p>Foster, Donald, "Radiation from Rhombic Antennas," <i>Proceedings of the IRE</i>, October, 1937, Volume 25, Number 10: a more general treatment of rhombic design, with the introduction of stereographic design aids.</p>
+  <p>Graham, R. C, "Long-Wire Directive Antennas," <i>QST</i>, May, 1937: an excellent summary of long-wire technology to the date of publication.</p>
+  <p>Harper, A. E., <i>Rhombic Antenna Design</i> (1941): a fundamental text on rhombics, based on engineering experience, with tables and nomographs as design aids..</p>
+  <p>Johnson, R. C. (Ed.), <i>Antenna Engineering Handbook</i>, 3rd. Ed., Chapter 11, "Long-Wire Antennas" by Laport: similar but not identical material to the relevant pages of Laport's own volume.</p>
+  <p>Kraus, J. D., <i>Antennas</i>, 2nd Ed., pp. 228-234; 502-509: a college text.</p>
+  <p>Laport, E. A., <i>Radio Antenna Engineering</i>, pp. 55-58, 301-339: a summary of long-wire technology up to the date of publication (1950).</p>
+  <p>Laport, E. A., "Design Data for Horizontal Rhombic Antennas," <i>RCA Review</i>, March, 1952, Volume XIII, Number 1: rhombic design data based on the use of stereographic aids developed by Foster.</p>
+  <p>Laport E. A., and Veldhuis, A. C., "Improved Antennas of the Rhombic Class," <i>RCA Review</i>, March, 1960, Volume XXI, Number 1: the introduction of the off-set dual rhombic.</p>
+  <p>Straw, D. (Ed.), <i>The ARRL Antenna Book</i>, 20th Ed., Chapter 13, "Long-Wire and Traveling-Wave Antennas." See also older versions of the volume, for example, Chapter 5 of the 1949 edition, which gives long-wire technology a more thorough treatment on its own ground, rather than in comparison to modern Yagi technology.</p>
+  <p>Stutzman, W. L., and Thiele, G. A., <i>Antenna Theory and Design</i>, 2nd Ed., pp. 225-231: a college text.</p>
+  <p>Walter, C. H., <i>Traveling Wave Antennas</i> (1965): a classic and very thorough text on traveling-wave fundamentals for all relevant types of antennas.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><i>Updated 06-01-2006. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for May, 2006. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><a href="lw2.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 2</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-multi-band'>HF Multi Band</a>, <a href='../topics.html#longwire'>Longwire</a></p><br>
+</body>
+</html>

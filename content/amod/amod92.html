@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculating Circular Gain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>92. Calculating Circular Gain</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In its RP0 or far-field output report, NEC provides a good bit of information. To illustrate, I have extracted a single line from a 180-degree theta (elevation) report.</p>
+  <pre>
+                              - - - RADIATION PATTERNS - - -
+
+  - - ANGLES - -          - POWER GAINS -        - - - POLARIZATION - - -    - - - E(THETA) - - -    - - - E(PHI) - - -
+  THETA     PHI        VERT.   HOR.    TOTAL      AXIAL     TILT   SENSE     MAGNITUDE    PHASE      MAGNITUDE    PHASE
+ DEGREES  DEGREES       DB      DB      DB        RATIO     DEG.               VOLTS     DEGREES       VOLTS     DEGREES
+
+    0.00    90.00    10.39     3.84   11.261    0.46544    -3.89  RIGHT     1.00721E+00   -99.56    4.73544E-01   163.94
+</pre>
+  <p>Most users rely upon the polar plot facilities built into their implementations of NEC for the relevant data and overlook the valuable information in the tabular report. However, the report is an extremely useful tool as well as a source of data. It will always be in basic NEC formulation using phi and theta angles, although some implementations of NEC convert or quasi-convert the angles to azimuth and elevation. A theta angle of zero degrees is the zenith directly overhead, while the phi angle of 90 degrees indicates a heading along the Y-axis.</p>
+  <p>The next three entries are the ones most printed along with polar plots: the power gains in dBi for the total field, the horizontal component and the vertical component. Allowing for rounding, the component powers add up to the total field power level, however, not by direct addition of dB. Rather, we must first convert the values in decibels into dimensionless power gain, using the standard procedure of dividing the value in dB by 10 and taking the antilog (base 10) of the result. The horizontal gain is 10.94, while the vertical gain is 2.42, for a total of 13.36. The dimensionless power pain of the total field is 13.37, although this simple exercise must allow for rounding of the original double-precision calculation numbers.</p>
+  <p>The central columns are relevant to elliptically polarized antennas. Although very important to numerous application involving elliptical polarization, we shall pass over them in this exercise. Basic explanations of the terms "axial ratio" and "tilt angle" appear in many basic college antenna texts, for example, Balanis, <i>Antenna Theory: Analysis and Design</i>, 2nd Ed. (Wiley, 1997), pp. 64-73. Perhaps the most important function of this data within this exercise is to remind us that even circular helices yield elliptically rather than circularly polarized patterns, where a perfectly circularly polarized pattern would have an axial ratio of 1.0. Although ideally, a linearly polarized pattern would have an axial ratio of zero, NEC will classify a pattern as linear when the minor axis is many orders of magnitude smaller than the major axis so that a practical calculation of the value results in a zero value. Apparently, to avoid excessively large numbers, NEC inverts the classic or textbook definition of axial ratio to "minor axis over major axis." Considerable effort is presently underway in many quarters to improve the circularity of polarization of antennas for special applications, with the quadrifilar design receiving extensive design scrutiny.</p>
+  <p>Relative to the central set of three columns, our interest is in the last entry, the sense. It tells us whether a circularly or elliptically polarized antenna has right-hand (clockwise) or left-hand counterclockwise) polarization. Since virtually no antenna will produce a pure circularly polarized signal that is only one or the other hand, the sense tells us which pattern will dominate--the left-hand or the right-hand pattern. Some newer modelers are often surprised that one can produce patterns for the respective circular polarizations, but <b>Fig. 1</b> shows in the EZNEC example that we certainly can.</p>
+  <center>
+    <img src="amod92-1.gif" width="445" height="235" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In fact, the patterns are drawn for the model from which the RP 0 report line has been drawn. In NEC format, the model appears in the following lines.</p>
+  <pre>
+CM General Helix over Perfect Ground
+CE
+GH 1 100 5 .6959 .191 .191 .0005 .0005 0
+GE 1 -1 0
+GN 1
+EX 0 1 1 0 1 0
+FR 0 1 0 0 299.7925 1
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p>The third numeric entry on the GH line is positive (and records the number of turns in this NEC-4 version). Hence, the helix formed is a right-hand helix with a dominant right-hand polarization. <b>Fig. 2</b> shows the outlines of the helix over perfect ground to show the correspondence of the model and the patterns in <b>Fig 1</b>, where the right-hand pattern dominates.</p>
+  <center>
+    <img src="amod92-2.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The RP 0 request in this model produces the report from which I drew the sample line. All other lines in the model are very standard.</p>
+  <p>Returning to our sample report line, the final columns provide the Etheta and Ephi field intensities. These values are simply proportional measures, since we have not specified in the request any specific distance from the coordinate system center. As a result, many modelers treat these entries as idle relative to the first order business of finding the total field gain of the antenna. The specific sample line is for the zenith angle overhead and the helix is pointed straight up. Hence, we might believe that the total field value is the maximum gain. However, because the pattern is a combination of left-hand and right-hand components, the actual maximum total field gain heading is a degree off the zenith or 0-degree theta angle heading.</p>
+  <p>We can calculate the pattern values for both the left-hand and right-hand patterns using the previously ignored Etheta and Ephi data. Some implementations of NEC, such as EZNEC Pro, GNEC, NEC-Win Pro, and NEC-Win Plus, already perform these calculations. EZNEC Pro offers the patterns and a tabular form of the calculations as a pattern option. The Nittany-Scientific programs provide circular polarization data and patterns in its MultiPlot feature. If you are using a generic NEC core, you can also calculate the information and apply it to almost any polar plotting module to which you may have access.</p>
+  <p>In order to see how the calculation proceeds, let's repeat the relevant parts of our sample line.</p>
+  <pre>
+  - - ANGLES - -  - POWER GAIN -  POLARIZATION    - - - E(THETA) - - -    - - - E(PHI) - - -
+  THETA     PHI       TOTAL       SENSE          MAGNITUDE     PHASE      MAGNITUDE     PHASE
+ DEGREES  DEGREES      DB                        VOLTS         DEGREES    VOLTS         DEGREES
+
+    0.00    90.00   11.261        RIGHT          1.00721E+00   -99.56     4.73544E-01   163.94
+</pre>
+  <p>The procedure begins by taking the real and imaginary components of each value of E (theta and phi), which appear in terms of magnitude and phase angle in the sample line.</p>
+  <blockquote>
+    <ul>
+      <li><b>vetr = EthetaMag * cos(Ethetaphase); theta real</b></li>
+      <li><b>veti = EthetaMag * sin(Ethetaphase); theta imaginary</b></li>
+      <li><b>vepr = EphiMag * cos(Ephiphase); phi real</b></li>
+      <li><b>vepi = EphiMag * sin(Ephiphase); phi imaginary</b></li>
+    </ul>
+  </blockquote>
+  <p>Depending upon your calculating medium, you may have to convert the phase angles to radians to arrive at the correct values for the sines and cosines, for example in many spreadsheets. These initial values are simply intermediate steps. We next must re-combine the collection into units that reflect the polarization of the antenna.</p>
+  <blockquote>
+    <ul>
+      <li><b>velr = 0.5*(vetr + vepi); left real circular component</b></li>
+      <li><b>veli = 0.5*(veti - vepr); left imaginary circular component</b></li>
+      <li><b>verr = 0.5*(vetr - vepi); right real circular component</b></li>
+      <li><b>veri = 0.5*(veti + vepr); right imaginary circular component</b></li>
+    </ul>
+  </blockquote>
+  <p>Now we can combone the circular components into values of magnitude by standard "SQRT of SQRs" techniques.</p>
+  <blockquote>
+    <ul>
+      <li><b>elm = sqrt(velr*velr + veli*veli); left magnitude</b></li>
+      <li><b>erm = sqrt(verr*verr + veri*veri); right magnitude</b></li>
+    </ul>
+  </blockquote>
+  <p>What we now have are the magnitudes of the left-hand and the right-hand electrical fields in volts (peak). The move from these voltage magnitudes to pattern data in dBic (dBi circular) requires a few more steps. The following are the calculations required for the conversion.</p>
+  <p><b>a. Power Gain</b>: Convert the Total Field Gain into a dimensionless gain measure:</p>
+  <blockquote>
+    <ul>
+      <li><b>PwrGn = antilog (base 10) (TtlFldGn/10)</b></li>
+    </ul>
+  </blockquote>
+  <p>Note: My spreadsheet does not return antilogs to base 10, but does return antilogs to base e. The spreadsheet formulation compensates for that limitation. The @EXP function returns the antilog to the base <i>e</i>, and the multiplier is the standard log-ln conversion.</p>
+  <blockquote>
+    <ul>
+      <li><b>@EXP((TtlFldGn*2.3025851)/10)</b></li>
+    </ul>
+  </blockquote>
+  <p><b>b. Voltage Gain Ratio vs. Power Gain Ratio</b>: Square the ratio of the right voltage magnitude (erm) to the left voltage magnitude (elm). This squared ratio is the ratio of the dimensionless power gains for right and left patterns.</p>
+  <blockquote>
+    <ul>
+      <li><b>RatSq = (erm/elm)^2</b></li>
+    </ul>
+  </blockquote>
+  <p>The next steps are predicated on the assumption that the sum of the two dimensionless circular power gains is the dimensionless total field power gain.</p>
+  <p><b>c. Right Gain</b>: Right Gain and Left Gain are 2 unknowns subject to simultaneous equations. Selecting Right Gain first, we obtain the following.</p>
+  <blockquote>
+    <ul>
+      <li><b>GnRt = RatSq * PwrGn/(1 + RatSq)</b></li>
+    </ul>
+  </blockquote>
+  <p><b>d. Right Gain dBi</b>: Conversion to dBi is standard.</p>
+  <blockquote>
+    <ul>
+      <li><b>GnRtdBi = 10 * log(GnRt)</b></li>
+    </ul>
+  </blockquote>
+  <p><b>e. Left Gain</b>: Left Gain is simply the power gain minus the right gain (all dimensionless).</p>
+  <blockquote>
+    <ul>
+      <li><b>GnLf = PwrGn - GnRt</b></li>
+    </ul>
+  </blockquote>
+  <p><b>f. Left Gain dBi</b>: Conversion to dBi is standard</p>
+  <blockquote>
+    <ul>
+      <li><b>GnLfdBi = 10 * log(GnLf)</b></li>
+    </ul>
+  </blockquote>
+  <p>For our single sample line of RP 0 reporting, we obtain the following values.</p>
+  <pre>
+Theta     ERM     ELM     Sense   RatSq   PwrGn   GnRt     GnRtdBic   GnLf     GnLfdBic
+0         .7393   .2697   right   7.516   13.369  11.799   10.718     1.570    1.959
+</pre>
+  <p>A spreadsheet or other program can be set-up to handle as many entries as we might need to encompass a full pattern for the range of angle that we choose. In fact, let's compare a fuller range of values for our sample helix and see what the RP 0 lines look like when sampled every 10 degrees in a theta pattern from one horizon to the other.</p>
+  <pre>
+GH5-08-1a                              - - - RADIATION PATTERNS - - -
+
+  - - ANGLES - -          - POWER GAINS -        - - - POLARIZATION - - -    - - - E(THETA) - - -    - - - E(PHI) - - -
+  THETA     PHI        VERT.   HOR.    TOTAL      AXIAL     TILT   SENSE     MAGNITUDE    PHASE      MAGNITUDE    PHASE
+ DEGREES  DEGREES       DB      DB      DB        RATIO     DEG.               VOLTS     DEGREES       VOLTS     DEGREES
+  -90.00    90.00    -9.36  -148.77   -9.357    0.00000     0.00  LINEAR    1.03655E-01    70.66    1.10934E-08   -51.70
+  -80.00    90.00    -7.05    -6.59   -3.801    0.40133   -47.10  RIGHT     1.35220E-01    83.37    1.42590E-01   -52.82
+  -70.00    90.00    -3.56    -3.67   -0.607    0.20487   -44.61  RIGHT     2.01953E-01    99.75    1.99439E-01   -57.10
+  -60.00    90.00    -2.80    -6.54   -1.269    0.06595   -32.93  LEFT      2.20486E-01   116.54    1.43387E-01   -71.72
+  -50.00    90.00    -5.07   -10.68   -4.018    0.35876    21.30  LEFT      1.69708E-01   157.82    8.90534E-02  -151.60
+  -40.00    90.00    -1.02    -2.59    1.275    0.56022    35.00  RIGHT     2.70616E-01  -135.73    2.25904E-01   164.19
+  -30.00    90.00     4.83     1.49    6.483    0.68079     1.68  RIGHT     5.30634E-01  -112.46    3.61516E-01   158.86
+  -20.00    90.00     8.19     3.33    9.421    0.56596    -4.79  RIGHT     7.81870E-01  -104.15    4.46826E-01   160.14
+  -10.00    90.00     9.89     3.99   10.887    0.50102    -4.55  RIGHT     9.50856E-01  -100.57    4.81993E-01   162.68
+    0.00    90.00    10.39     3.84   11.261    0.46544    -3.89  RIGHT     1.00721E+00   -99.56    4.73544E-01   163.94
+   10.00    90.00     9.83     2.93   10.635    0.44749    -3.71  RIGHT     9.43675E-01  -100.68    4.26509E-01   162.74
+   20.00    90.00     8.05     1.20    8.865    0.45047    -3.45  RIGHT     7.69033E-01  -104.32    3.49384E-01   159.62
+   30.00    90.00     4.56    -1.46    5.530    0.49995     0.19  RIGHT     5.14647E-01  -112.48    2.57304E-01   157.80
+   40.00    90.00    -1.65    -4.82    0.060    0.50176    27.07  RIGHT     2.51829E-01  -135.28    1.74695E-01   165.86
+   50.00    90.00    -6.13    -6.49   -3.297    0.35333    43.47  LEFT      1.50288E-01   152.44    1.44159E-01  -168.60
+   60.00    90.00    -3.18    -5.19   -1.059    0.74593   -18.59  LEFT      2.11052E-01   109.98    1.67502E-01  -149.83
+   70.00    90.00    -3.54    -5.01   -1.201    0.56213   -35.58  LEFT      2.02554E-01    94.54    1.70983E-01  -145.53
+   80.00    90.00    -6.46    -8.74   -4.441    0.42198   -34.22  LEFT      1.44683E-01    81.98    1.11320E-01  -145.85
+   90.00    90.00    -8.48  -151.11   -8.476    0.00000     0.00  LINEAR    1.14726E-01    73.72    8.47569E-09  -146.31
+</pre>
+  <p>Notice that the pattern changes its sense along the selected sampling path. At the horizons, the Etheta values dominate to a degree the allows NEC to classify the pattern as linear. The left-hand and right-hand reversals may be less apparent until we perform the circular pattern calculations on them.</p>
+  <pre>
+       Values Calculated by the Listed Equations                   Reference
+Theta    ERM    ELM     Sense      GnRtdBic    GnLfdBic         R-H Gn    L-H Gn
+-90      .0518  .0518   linear     -12.367     -12.367          -12.37    -12.37
+-80      .1278  .1105   right      -4.529      -11.916          -4.53     -11.91
+-70      .1675  .1105   right      -2.178      -5.786           -2.18     -5.79
+-60      .1226  .1399   left       -4.891      -3.743           -4.89     -3.74
+-50      .0578  .1226   left       -11.414     -4.891           -11.42    -4.89
+-40      .2399  .0676   right      0.943       -10.056          0.94      -10.06
+-30      .4460  .0847   right      6.329       -8.100           6.33      -8.10
+-20      .6136  .1701   right      9.100       -2.045           9.10      -2.04
+-10      .7153  .2378   right      10.432      0.866            10.43     0.87
+0        .7393  .2697   right      10.718      1.959            10.72     1.96
+10       .6841  .2611   right      10.044      1.679            10.04     1.68
+20       .5585  .2116   right      8.283       -0.148           8.28      -0.15
+30       .3860  .1287   right      5.072       -4.469           5.07      -4.47
+40       .2057  .0682   right      -0.393      -9.977           -0.40     -9.98
+50       .0635  .1329   left       -10.605     -4.190           -10.61    -4.19
+60       .0274  .1885   left       -17.890     -1.150           -17.88    -1.15
+70       .0506  .1805   left       -12.578     -1.529           -12.58    -1.53
+80       .0486  .1196   left       -12.924     -5.105           -12.93    -5.10
+90       .0574  .0574   linear     -11.486     -11.486          -11.49    -11.49
+</pre>
+  <p>The higher gain in the Left-Hand Gain column for the entries sensed as left becomes much more apparent. Of course, the table--or any enlargement of it--becomes suitable for creating a polar or rectangular plot of the two circular components of the overall helix pattern. The reference columns are taken from the tabular output of EZNEC Pro, version 4, and serve to demonstrate that the calculation method shown here is consistent with techniques currently in use. Note that I do not say that the method is in fact the method used in EZNEC, since I did not reference that code when working out these calculations. Rather, the results of the calculations are consistent with those of EZNEC (and of the other programs mentioned early on in this exercise.)</p>
+  <p>As one final exercise, let's see what happens for a helix that is left-handed, as in the following example.</p>
+  <pre>
+CM General Helix over Perfect Ground
+CE
+GH 1 100 -5 .6959 .191 .191 .0005 .0005 0
+GE 1 -1 0
+GN 1
+EX 0 1 1 0 1 0
+FR 0 1 0 0 299.7925 1
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>The only difference between this model and the one that we have previously used is the minus sign in the third entry of the GH or helix-forming line. The negative value for the number of turns creates a left handed helix, as shown in <b>Fig. 3</b>.
+  <center>
+    <img src="amod92-3.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The sample RP 0 line that corresponds to the one for the previous example appears in the NEC output file.</p>
+  <pre>
+                              - - - RADIATION PATTERNS - - -
+
+  - - ANGLES - -          - POWER GAINS -        - - - POLARIZATION - - -    - - - E(THETA) - - -    - - - E(PHI) - - -
+  THETA     PHI        VERT.   HOR.    TOTAL      AXIAL     TILT   SENSE     MAGNITUDE    PHASE      MAGNITUDE    PHASE
+ DEGREES  DEGREES       DB      DB      DB        RATIO     DEG.               VOLTS     DEGREES       VOLTS     DEGREES
+    0.00    90.00    10.39     3.84   11.261    0.46544     3.89  LEFT      1.00721E+00    80.44    4.73544E-01   163.94
+
+Reference:  Corresponding line for the right-hand helix
+    0.00    90.00    10.39     3.84   11.261    0.46544    -3.89  RIGHT     1.00721E+00   -99.56    4.73544E-01   163.94
+</pre>
+  <p>Very little has changed, but the changes make a world of difference. Only the tilt angle and the Etheta phase angle have different numbers. However, those numbers alter the circular polarization calculations.</p>
+  <pre>
+Theta     ERM     ELM     Sense   RatSq   PwrGn   GnRt     GnRtdBic   GnLf     GnLfdBic
+0         .2697   .7393   left    0.133   13.369  1.570    1.959      11.799   10.718
+
+Reference:  Corresponding line for the right-hand helix
+0         .7393   .2697   right   7.516   13.369  11.799   10.718     1.570    1.959
+</pre>
+  <p>The values for the zenith angle show a flip-flop that is not true of the values for the entire pair of left- and right-hand patterns. <b>Fig. 4</b> shows some of the detail.</p>
+  <center>
+    <img src="amod92-4.gif" width="445" height="235" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Below the zenith angle, the patterns for the left- and right-handed versions of the helix differ considerably--at least when examining them for fine detail. A comparison of the two model views in <b>Fig. 1</b> and <b>Fig. 3</b> will uncover the basic reason. The left-hand helix uses the same phi angle as the right-hand helix, but departs the ground plane at essentially a 90-degree angular difference to produce a true mirror image of the right-hand helix patterns. The left-hand patterns are a mirror image of the patterns we might obtain for the other helix by giving it a 90-degree phi-angle adjustment.</p>
+  <p>This exercise has provided a procedure by which you can calculate your own circular power gain patterns, if you are using an implementation of NEC that does not include them. Since they involve only data within the RP 0 section of the output report, the calculations are equally applicable to NEC-2 and NEC-4, even though the sample model is from NEC-4. If you already have provision for obtaining circularly polarized power gain patterns in your implementation of NEC, then perhaps the exercise will provide some insight into at least one way to obtain them.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

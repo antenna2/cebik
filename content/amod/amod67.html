@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wire Grids 1: Plane and Simple</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>67. Wire Grids 1: Plane and Simple</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Except for the use of surface patches--which are not generally available on entry level NEC software--the method of simulating a solid or closely meshed surface is through the use of wire grids. Note that I am including closely spaced meshes--such as window screening--along with solid planar surfaces in the wire-grid pool. <b>Fig. 1</b> gives us the initial story.</p>
+  <center>
+    <img src="amod67-1.gif" width="393" height="314" border="2" vspace="5" hspace="9">
+  </center>
+  <p>NEC is based upon round conductors and thus cannot directly model a flat surface. This limitation shows up vividly in UHF modeling, where NEC has difficulty simulating integrated antenna elements and transmission lines composed of flat thin strips of copper on a glass or similar substrate. At lower frequencies, from VHF downward, we can simulate flat planes by constructing a grid of interconnected wires having the same outline area as the solid surface. In fact, for basic modeling of rectangular surfaces, some entry-level software--such as NEC-Win Plus and EZNEC Pro--provide semi-automated systems. The user inputs certain dimensions and the program creates the requisite wires and intersections for the plane in the form of a set of wires or GW entries.</p>
+  <p>In fact, the two software packages just cited illustrate two different ways in which we can go about creating a wire grid. <b>Fig. 2</b> illustrates the difference.</p>
+  <center>
+    <img src="amod67-2.gif" width="445" height="252" border="2" vspace="5" hspace="9">
+  </center>
+  <p>On the left, we find a small number of wires, just enough to populate the two directions of the plane. The intersections of the grid, except for the 4 corners, consist either wholly of segment junctions or of combinations of wire and segment junctions. Although beginning modelers are often cautioned to use a wire junction for every crossing pair of wires that touch, it is legal to NEC's rules to have wires joined at segment junctions.</p>
+  <p>The advantage of this systems revolves around the fact that the run time for a model depends upon both the number of segments in the model and the number of wires. Although the total number of segments in the left construct equals the number of segments in the construct to the right, the number of wires is considerably lower--and the run time is accordingly shorter. However, the advantage is accompanied by a disadvantage. If we move either end coordinate of any one of the wires, the entire set of junctions along the wire (except for the unmoved end) becomes a set of either non-junctions or illegal wire crossings at other than a wire end or a segment junction.</p>
+  <p>For this reason, one might equally create the same wire grid using the system at the right. Here, every junction is a wire end. The result is somewhat greater flexibility in model revision. We can take a given wire and move it a bit. Then we need only revise the end coordinates of a few other wires (from 1 to 3) to restore the integrity of the grid. We can take a simple rectangle and fold down the corners or make other simple geometric revisions with fair ease. The price that we pay for this flexibility is to have as many wire as we have segments, thus extending the run time for the core.</p>
+  <p>Wire grids are subject to some rules--actually, more like some rules of thumb. For example, the most common wire/segment length used in most wire grids is 0.1 wavelength. This value is about twice as long as the recommended length for a segment in a dipole (about 0.05 wavelength). Wherever the current levels are high or change rapidly from one wire-grid element to the next, the modeler should use a shorter segment length. However, when wire grids simulate planes that are not very active in the antenna system, that is, they have relatively low and nearly uniform currents, some modelers have used segments lengths longer than 0.1 wavelength. Even the 0.1 wavelength baseline segment length yields a sizable model, since the number of segments in the wire grid will be about 220 times the area of the plane when measured in square wavelengths.</p>
+  <p>Ideally, the surface area of the grid should approximate the surface area of the plane being modeled. This often leads to the use of fairly "fat" wires, since the grid wire diameter should equal the grid spacing or segment length divided by PI. Obviously, the more wires in a grid of a certain set of outside dimensions, the smaller the segment length becomes and hence, the smaller the wire diameter needs to be.</p>
+  <p>These basic rules of thumb are subject to numerous variations according to the kind of surface that we are trying to simulate with a wire grid. A screen mesh may vary in its opening size and may not need the wire diameter required by a simulation of a flat plane. Likewise, a plane with a very coarse surface may more adequately model with thinner wires or longer segments. There is no simple infallible route to wire-grid modeling.</p>
+  <p>In this episode, we shall restrict ourselves to relatively simple wire grids that we can create using automated wire-grid facilities within modeling programs. All of our examples will focus on rectangular planes. In fact, all will serve as reflectors for various kinds of arrays. We shall eventually return to wire grids used to create other types of shapes. But in the beginning, simple planes or combinations of planes will alert us to some fundamentals of wire-grid modeling.</p>
+  <p><b>A Corner Reflector</b></p>
+  <p>One of the simplest high-performance arrays available for UHF service is the corner reflector. The antenna consists of a dipole and two flat surfaces joined along one edge. The apex of the tent-like reflector is behind the dipole at a certain distance that is largely a matter of the desired feedpoint impedance. Performance is a periodic function of the reflector dimensions, with larger reflector planes (up to a point) yielding higher gain. The corner reflector array is a wide-band antenna with stable performance values for a 25% bandwidth (at least). Some designers have used fan dipoles and other geometries to further increase the operating bandwidth.</p>
+  <center>
+    <img src="amod67-3.gif" width="600" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows two model outlines for a corner reflector. They correspond to typical ways of constructing the antenna. One style of construction uses a series of rods or tubes arranged to simulate a flat plane, with each rod being considerably longer than the dipole element and in the same plane. The other style of construction makes use of either a solid surface or a rigid screen to form the reflector planes. A screen tends to show less wind resistance than a solid surface and is popular in larger reflectors used at lower frequencies.</p>
+  <p>There is a tendency on the part of modelers to use the rod model as a substitute for the wire-grid version. The rod model uses (in this particular case) only 24 wires and 586 segments. The wire-grid version, for reflector planes having an identical overall area as the rod-planes, requires 613 wires and 622 segments. (The slightly higher segment count is a function of the dipole using several segments in its single wire, while each element of the wire grids uses 1 segment per wire.)</p>
+  <p>When joining two independently created planes along one edge, be sure to delete the duplicate edge wire at the junction.</p>
+  <p>In this example, whether or not the rod model can substitute for the wire-grid model depends on the degree of refinement we require for the output data. The following brief table will illustrate the point. It presents the reported performance figures for the two models, which use identical dipoles at identical distances from the apex of the two planes of the reflector, each plane having the same outer dimensions.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Model            FS Gain         180-Deg          Feedpoint Impedance
+                 dBi             F-B dB           R +/- j X Ohms
+Rod              11.25           29.90            92.6 - j 4.0
+Wire-Grid        11.80           30.52            88.2 - j 0.3
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>For many purposes, the output data of each model is adequate. However, we can notice some difference. Note that each model is most likely adequate as a model of the particular construction type that it simulates. The question we posed was whether the simpler rod model might suffice as a model of a solid surface corner reflector that the wire-grid simulates. In general, the answer seems to wobble on a fence.</p>
+  <p>The wire grid used in our initial comparison employed 0.1 wavelength segments. So we might also ask whether that model is adequate or whether we should use a reflector model with shorter segment lengths, perhaps 0.05 wavelength. <b>Fig. 4</b> illustrates the difference between the low-density and high-density planes.</p>
+  <center>
+    <img src="amod67-4.gif" width="600" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>While the low-density model required 613 wires and 622 segments, the new model demands 2279 wires and 2289 segments. Doubling the segment density results in a total wire count that is 4 times the original, minus some segments for the edges. Obviously, one's software must have a segment capacity able to handle the number of segments and wires.</p>
+  <p>Let's compare the performance results.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Model            FS Gain         180-Deg          Feedpoint Impedance
+                 dBi             F-B dB           R +/- j X Ohms
+Low Density      11.80           30.52            88.2 - j 0.3
+high Density     11.71           31.62            88.4 - j 0.8
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>For this particular application, increasing the segment density yielded no significant change in results. Unfortunately, about the only way to determine whether we need to use a wire grid with shorter segments is to actually model the antenna using both density levels. Of course, once you have the larger model, you might as well use it.</p>
+  <center>
+    <img src="amod67-5.gif" width="600" height="220" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the design-frequency E-plane patterns for the three models. It is clear that the two wire-grid models have very similar patterns. However, there are noticeable differences in the rearward portions of the pattern for the rod model. Although they make only a slight difference in this case, let's not forget them as we look at further examples.</p>
+  <p><b>A Flat Plane Reflector with a Double-Quad Driver</b></p>
+  <p>Although it has a fairly long history, the double-quad has re-emerged as a high-performance UHF antenna when placed ahead of a flat-plane reflector. Fed across a gap at the center, the antenna is capable of a 50-Ohm impedance, convenient for conventional coax feeding. However, the exact impedance is also a function of the double-quad dimensions and the spacing from the reflector without much alteration of performance. Like the case of the corner reflector, the antenna is more sensitive to the size of the reflector plane.</p>
+  <p>As we did for the corner reflector, let's create both a rod and a wire-grid reflector. All we need is a single plane, so our work is much simplified. We shall use identical outside dimensions for both types of reflector planes. The modeling results appear in sketch form in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod67-6.gif" width="317" height="489" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Neither reflector is optimally sized necessarily. For our purposes, it is only necessary that we make them the same size, use the same double quad, and place the driven element the same distance from the reflector. The rod model shows vertical rods, since the double quad is essentially a side-driven pair of quads in parallel.</p>
+  <p>The next step, of course, is to compare the reported outputs from NEC-4.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Model            FS Gain         180-Deg          Feedpoint Impedance
+                 dBi             F-B dB           R +/- j X Ohms
+Rod Ref. D-Q      9.65           21.59            55.5 - j 3.4
+W-G Ref. D-Q     10.06           29.48            48.6 - j 10.7
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Whether or not differences in gain and impedances reports are significant or trivial depends upon the modeling task at hand. What is undeniable is the very large difference in the reported front-to-back ratio--about 8 dB. We may wish to ask why there is so much larger a difference in the front-to-back ratios for this case and so little for the corner reflector.</p>
+  <p>The answer lies in the nature of the driven elements. The corner reflector used a dipole that was aligned with the rods in the reflector. However, our double-quad array uses a driven element ,which is not polarized wholly in a plane parallel to the rods. The side-fed quad loop has only a dominant vertical component (if we take a perspective on the antenna as if it were above a ground surface), but retains a small but significant amount of radiation with a horizontal component. Hence, the wholly vertical reflector rods are less effective than the full mesh of a screen or a solid surface reflector.</p>
+  <p>My goal in presenting this particular model is to make a simple point: just because a simplified rod model (22 wires, 381 segments for the double quad) is adequate for some cases, we may still require the bulkier wire-grid model (1013 wires, 1245 segments of 0.05 wavelength for the double quad) in other cases. One must always analyze the nature of the driving antenna rather than assuming the a smaller rod model is "good enough."</p>
+  <center>
+    <img src="amod67-7.gif" width="400" height="220" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> displays the E-plane patterns for the two models. The differences in rearward performance show up clearly.</p>
+  <p><b>A Tri-Plane Reflector Array</b></p>
+  <p>The tri-plane reflector is only sparingly used, although it has some interesting properties. Not the least of these properties is the fact that it uses a monopole driven element, where one plane of the reflector is also the "ground plane" for the monopole. A second interesting feature is that the main lobe of the antenna emerges in a direction roughly equidistant angularly from each of the reflecting surfaces.</p>
+  <p>The interesting part of these phenomena for the modeler is how to obtain a model over ground of the antenna when we aim it so that the signal is a parallel to the ground as possible. Let's make the game more interesting by desiring to have a version that is horizontally polarized and a version that is vertically polarized. <b>Fig. 8</b> shows the steps in the set of transitions. Let's see how we moved from one to the next.</p>
+  <center>
+    <img src="amod67-8.gif" width="550" height="1050" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In any automated system of wire grid generation, it is usually easiest to develop a set of rectangular planes by using the axes of the coordinate system as one of the edges. Hence, the initial set of three sides for the tri-plane reflector are oriented in this manner, as shown in the top sketch of the three views. The driven monopole shows faintly inside the reflector as the line connecting the green segment-junction dots. Since 3-sided corner reflector theory is based upon reflector and monopole dimensions given in terms of wavelengths, I constructed the model in these terms. The grid wires are 0.1 wavelength, and the overall dimensions of each side of the reflector are 2.0 by 2.0 wavelengths. The model used 2461 wires and 2468 segments, with an 8-segment monopole driven element.</p>
+  <p>The performance of the array is somewhat better than that of a corner reflector with its reflector planes optimized. The free-space gain is about 16.2 dBi, with a front-to-back ratio of 35.7 dB. <b>Fig. 9</b> provides the E-plane pattern of the array.</p>
+  <center>
+    <img src="amod67-9.gif" width="376" height="345" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The more important performance feature for this exercise is the fact that the direction of radiation at its maximum is about 45 degrees from any of the 3 planes. Since I had constructed the planes in a positive direction from the coordinate center (0, 0, 0), the pattern in <b>Fig. 9</b> is taken at a phi (azimuth) and a theta (elevation) angle of 45 degrees.</p>
+  <p>The original wire grid structure emerged from the EZNEC system. However, if I wanted to have vertically and horizontally polarized version of the antenna for use over ground, I would have had to build the array from scratch for each orientation. Instead, I converted the model into a standard .NEC format file and imported it into NEC-Win Plus. There, I used the rotation capabilities to rotate the entire array to the correct positions. Then, in order to have three corresponding patterns. I re-opened the file in EZNEC Pro.</p>
+  <p>The two lower figures show the resulting models. The driving monopole will not be parallel to the Z-axis for the vertically polarized model. The driver is parallel to one of the seams of the reflector, and hence will be at a 45-degree angle to the Z-axis. Likewise, the horizontally polarized version shows a driver that is at 45 degrees to the axis along which we find the maximum radiation.</p>
+  <p>The point of using the tri-plane reflector array as an example in this context is to alert you to the fact that various modeling programs have different facilities for manipulating the collection of wires that form wire-grid planes. In this case, by some judicious exportations and importations, I was able to easily re-develop the array wire-grid structure to a favorable orientation within the strictures of entry-level programs that use only the GW or basic wire creation input for the task.</p>
+  <p>Those using a more generalized NEC core may lack some of the automated wire-grid building features, but these users have a powerful feature absent in the entry-level programs. After building a single plane, one may use the GM input--described in past columns--to replicate and re-orient the initial plane to form and place the 3 sides of the overall reflector. The caution to exercise here is to omit the edge wire along one side of the initial plane. When you create a new plane with the GM card, be sure that its edge with a missing wire (or wire set) meets the next plane along an edge having the wire (set) in place. When you have the entire set of 3 planes constructed, fill in any missing wire edges with a final wire or wires. In general, this procedure is simpler than trying to remove duplicate wires later. As well, it is normally easier to create one plane, replicate it twice, with rotation to set the joining edges together, and finally to rotate the entire structure to the final desired position than it is to build the entire structure in its final orientation. To go from a horizontally polarized to a vertically polarized version of the array requires only changes to the final GM input line.</p>
+  <p><b>Other Planar Structures</b></p>
+  <p>The last of our examples, the tri-plane reflector, is, of course, half a cube. Extending our development to produce a solid cube 2 wavelengths along any edge would require about 4500-4800 wires and segments, using a wire or segment length of 0.1 wavelength.</p>
+  <p>Many wire-grid structures do not demand such densities. Many buildings require that we model only the conductive steel frames. However, when doing such modeling, it is important to keep in mind basic NEC requirements. We should strive for equal-length adjacent segments, especially those having higher current levels or rapid changes of current level from one segment to the next. As well, the wire diameter used in each wire of the grid should be about the same as the wire in any adjacent wire. This latter requirement is more stringent in NEC-2 than in NEC-4. However, even NEC-4 has limitations with respect to the amount of stepping in wire diameter along a straight line and at angular junctions. Finally, be certain not to use wire diameters and segment lengths such that an angular wire junction will let one wire penetrate too far into the center area of the other wire.</p>
+  <p>Wire-grid planes have proven highly effective in modeling solid and closely meshed surfaces well into the UHF range. We have only sampled one use of the wire-grid, namely, to model reflector planes. However, this simple introduction to wire-grid structures has given us a platform from which to remind beginning wire-gridders of some of the restrictions on such structures and some of the software facilities available for creating and manipulating wire grids.</p>
+  <p>Advanced wire-grid development is a special talent requiring both a drafting and an antenna background. There are detailed wire-grid models of exceedingly complex structures, such as ships, airplanes, helicopters, ground vehicles, and even human bodies. Most of these models are proprietary, that is, they are privately held by the firms that developed them for various antenna and EMI/RF compatibility studies. Nonetheless, some of the principles and the difficulties of modeling complex structures can be organized into some useful tips. That is for next time.</p>
+  <p>As well, there are software packages that can ease the process of developing a wide variety of common shapes. For example, making a wire-grid horn or parabola can be a very time-consuming task unless one has a program that synthesizes the shape and needs only some basic data, such as certain critical dimensions. Similar remarks apply to generalized vehicle shapes, even if we do not require all of the fine detail of an in-house proprietary model. For many purposes, we can evaluate antenna placements on a vehicle using a generic shape, such a the shape of a van, an SUV, or a pick-up truck, each having correct main dimensions.</p>
+  <p>In a future column, we shall return to wire grids as we move from the plane and simple to the angular and awkward.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

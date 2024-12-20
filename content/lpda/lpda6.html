@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, HF Upper">
+  <title>A 10-Meter LPDA Phase 6: A Yagi Standard and Alternative</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">A 10-Meter LPDA<br>
+    Notes on a Work in Progress<br>
+    Phase 6: A Yagi Standard and Alternative</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  Sometimes reviewing the standard against which a design project has set its specifications can yield some new ideas. So I thought it useful to look at the basic short-boom 3-element Yagi that prompted me to formulate the project goals.
+  <h3>A 3-element 10-Meter Yagi on an 8' Boom</h3>The 3-element Yagi that I have been using as a standard is derived from a K6STI design that is available on the YA program that accompanies <i><b>The ARRL Antenna Book</b></i>. The YA program uses a tapered-diameter element version, but for comparative modeling purposes, I tend to use a version with uniform 0.5" diameter elements. The EZNEC model description pretty much tells the entire design story.
+  <pre>3el Yagi K6STI 310-08 no taper     Frequency = 28-29  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.---End 1 (x,y,z : in)  Conn.---End 2 (x,y,z : in)   Dia(in) Segs
+1        -105.93,  0.000,  0.000       105.926,  0.000,  0.000 5.00E-01  21
+2        -96.892, 36.000,  0.000        96.892, 36.000,  0.000 5.00E-01  21
+3        -92.443, 90.000,  0.000        92.443, 90.000,  0.000 5.00E-01  21
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1          11     2 / 50.00   (  2 / 50.00)      1.000       0.000       V
+No loads specified
+                -------- TRANSMISSION LINES ---------
+Line  Wire #/% From End 1   Wire #/% From End 1    Length     Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)              Ohms Fact Norm
+1      2/50.0  (  2/50.0)  Short ckt (Short ck)   55.000 in    50.0  1.00
+Ground type is Free Space</pre>
+  <center>
+    <img src="lpda-61.gif" width="626" height="304" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The antenna outline sketch summarizes the overall dimension of the model.</p>
+  <p>The shorted transmission line stub is a beta match at the feedpoint, simply registered with 50 Ohm cable, although it would be much shorter with high impedance line. However, for modeling convenience, low impedance stubs are often handy. A 1" change at 50 Ohm represents a 9" change for 450-Ohm line, so incremental length changes are less sensitive with low-impedance cable. The actual characteristic impedance of the beta match shorted stub (or hairpin) can be inserted just prior to construction.</p>
+  <p>The native impedance of the antenna prior to matching is 27 Ohms resistance with a capacitive reactance of about -j25 Ohms. Hence, the antenna is a good candidate for a beta match. However, the driven element can be extended to resonance and matching accomplished with a 1/4 wl 37.5-Ohm section (paralleled 72-Ohm cables). Performance differential is negligible.</p>
+  <center>
+    <img src="lpda-62.gif" width="640" height="326" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The combined free space azimuth patterns, taken from NEC-4, show the degree to which the antenna is extremely well-behaved across the first MHz of 10 meters. Indeed, the antenna has been tweaked so that the front-to-back patterns at 28 and at 29 MHz are about the same along the 180-degree line. Maximum 180-degree front-to-back ratio occurs just about at 28.5 MHz. The curves for the rear quadrant show that the worst-case front-to-back ratio is about the same all across the band.</p>
+  <p>Because the differences between MININEC and NEC will become important in this set of notes a little later, it seemed useful to compare the two programs with respect to the major operating parameters of the standard antenna. NEC-4 figures come from EZNEC Pro, while MININEC figures come from AO.</p>
+  <center>
+    <img src="lpda-63.gif" width="647" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain curves for the antenna under the two programs are very closely coincident. Even with laboratory conditions, it would be difficult to determine which is closer to reality, and the minuscule numeric differences make no operational difference at all. As with most Yagi designs using one or more directors, the gain increases with frequency. It continues to climb above 29 MHz, but becomes largely unusable for reasons having to do both with the front-to-back ratio and with the source impedance.</p>
+  <center>
+    <img src="lpda-64.gif" width="648" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The front-to-back curves have insufficient data points to show their congruity in detail. However, the peak front-to-back ratio of the NEC-4 model is actually just below 28.5 MHz, while the AO max occurs right at 28.5 MHz. There is less than 50 kHz difference in the front-to-back peak, another numeric difference that makes no difference at all operationally. Note that the front-to-back ratio deteriorates rapidly above 29 MHz, limiting the utility of the antenna above that frequency.</p>
+  <center>
+    <img src="lpda-65.gif" width="648" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 2:1 50-Ohm operating bandwidth for the antenna models come from two different bases. The NEC-4 line is a true 50-Ohm SWR line based on the beta match stub placed in the model itself. The match stub length was adjusted to yield the relatively coincident end points on the curve. The AO line is based on a match at the center frequency and is useful in noting the more rapid climb in SWR above center frequency than below it. In fact, the source resistance of the antenna prior to match begins to drop very rapidly above 29 MHz, making it difficult to achieve any kind of match at all and still cover the first MHz of the band.</p>
+  <p>As short-boom (8' and under at 10 meters) Yagis go, this is an excellent design. It sustains a free space gain of at least 7 dBi across the band, with better than 20 dB 180-degree front-to-back ratio across the same span. The source impedance is stable enough to permit common matching schemes to provide a very reasonable set of values for 50-Ohm coax, and the basic impedance is high enough to permit high efficiency without too much concern for resistive losses at connections (although this source of loss is very often overlooked by builders). So, for the record, these are the reasons I tend to use this design as a short-boom 3-element standard against which to measure other antenna designs.</p>
+  <h3>The Possibility of a Wide-Band Yagi Design</h3>While looking at the 3-element short-boom standard Yagi, I began to wonder about various techniques for creating wider band Yagis without increasing the boom length. One possibility was to use the "extra" element employed by the NW3Z long-boom Yagi design (6 elements in 48' for a 20-meter model). However, going to a 4-element design by this method required that the second or forward director be much farther out from the driven element than the 8' boom permitted.
+  <p>A second design direction was to employ open-sleeve coupled drivers, one tuned low in the band and the other high. <i><b>The ARRL Antenna Book</b></i>, in Chapter 7, has an excellent introduction to open-sleeve coupling written by Roger Cox, WB0DGF. However, most of the design work has been applied to widely separated frequencies. An 80/75-meter dipole appeared in <i><b>QST</b></i> sometime back (meaning that I do not remember just when and have not yet found the article). This method seemed promising--if the reflector-to-director spacing could be held to 96" or so.</p>
+  <p>A design emerged from NEC-4 modeling, using open-sleeve coupling, a reflector, and a director. The reflector-to-driver spacing--as well as the master-to-slave driven element spacing--was set to provide a direct 50-Ohm match across the entire 10-meter band. The director was placed at the maximum forward position allowed by the original specifications--and turned out to be in just about the right position. Forward and rearward changes of position--even with small changes of element length--do not alter the performance in any significant way.</p>
+  <p>The final NEC-4 model appears in this EZNEC description:</p>
+  <pre>4-el WB             Frequency = 28-29.7  MHz.
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+              --------------- WIRES ---------------
+Wire Conn.---End 1 (x,y,z : in)  Conn.---End 2 (x,y,z : in)   Dia(in) Segs
+1        -106.00,  0.000,  0.000       106.000,  0.000,  0.000 5.00E-01  27
+2        -102.50, 40.500,  0.000       102.500, 40.500,  0.000 5.00E-01  27
+3        -94.500, 44.000,  0.000        94.500, 44.000,  0.000 5.00E-01  25
+4        -90.500, 96.000,  0.000        90.500, 96.000,  0.000 5.00E-01  23
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1          14     2 / 50.00   (  2 / 50.00)      1.000       0.000       V
+No loads specified
+No transmission lines specified
+Ground type is Free Space</pre>
+  <center>
+    <img src="lpda-66.gif" width="622" height="293" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The outline sketch summarizes the dimensions of the antenna. The two drivers are segmented so that their segment junctions are as parallel as the elements permit, a necessity due to the close proximity of the two wires. Essentially, the reflector and rear driver control the low end of the band, while the forward driver and director control the upper end of the band. The relative control can be loosely demonstrated by recording the current magnitude (relative to 1.0) and phase at element centers for frequencies of 28, 28.8, and 29.7 MHz.</p>
+  <pre>Frequency           28.0           28.8           29.7
+Reflector           0.69/ 95.5     0.43/ 71.3     0.33/ 52.7
+Driver 1            1.00/  0.0     1.0/   0.0     1.0/   0.0
+Driver 2            0.74/-98.0     0.97/-111.1    1.67/-120.1
+Director            0.55/-135.4    0.71/-171.2    1.14/136.8</pre>
+  <p>First, notice the relatively balanced current magnitudes on the 2 drivers at the mid-band frequency, and compare these values to those for each band edge. Second, note the relatively smooth decrease in relative current magnitude on the reflector with increasing frequency. Third, note both the increase in relative current magnitude and the wide phase shift across the 10-meter band. In no case does the current on an element decrease to a wholly ineffectual level (say, less than 0.1); however, which elements dominate performance is clearly evident.</p>
+  <center>
+    <img src="lpda-67.gif" width="640" height="369" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The overall composite free space azimuth patterns for the antenna from 28- 30 MHz in 0.5 MHz steps give a hint at potential performance. The 30 MHz pattern can be discounted as outside the band of interest, although it shows the trend for the antenna at its upper frequency limit. The free space gain of 7.82 dBi also applies to 30 MHz, showing that the antenna, like any Yagi with a director, increases gain as the frequency increases. Within the 10-meter band, performance is promising, if not perfect-- relative to the specifications for the original project.</p>
+  <p>The possibility of turning to a Yagi design offers a saving in both overall weight and in construction complexity. Each element can be mounted in one of the standard ways, and the feedline will by more nearly in line with the mast than with the LPDA design. Indeed, a standard boom-to-mast plate can be employed without concern for harmful interaction between the mast and the elements. In all, the omitted LPDA antenna transmission line and supporting hardware and brackets might amount to over 2.5 pounds in weight saved, reducing the final antenna weight to the 12 to 12.5 pound region.</p>
+  <h3>Performance Potential</h3>The wide-band Yagi will not achieve all of the design goals of the project, but it will come close. However, before looking at the performance potential graphs, we must note a limitation in the NEC-4 model of the antenna. NEC (whether -2 or -4) does not yield wholly accurate results when wires are too closely spaced. The degree of inaccuracy is a combined function of wire diameter, closeness of spacing, and frequency. The 3.5" spacing of the master and slave drivers falls just within the region of sensitivity. When wires are too close, NEC tends to over-report the gain and under-report the source impedance. The gain figure, however, is the most sensitive when wires are at the fringe of the sensitivity area, as they are in this example.
+  <p>Therefore, it was necessary to also model the antenna in MININEC (AO, in this case) as a cross-check on the figures produced by NEC-4. We have already seen that for models that do not press program limitations, the two programs yield highly comparable figures. When NEC limits are pressed, MININEC provides a reasonable counterweight.</p>
+  <center>
+    <img src="lpda-68.gif" width="648" height="523" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain graphs graphically illustrate NEC-4's likely over-reportage. The two curves are almost perfectly congruent, but NEC-4 reports about 0.16 dB more gain than MININEC, giving the illusion that the antenna free space gain never falls below 7 dBi. The 6.9 dBi minimum figure of MININEC is likely more accurate. Whether or not the difference is operationally significant, it is difficult to sustain a gain of 7 dBi for the antenna when the director is less than fully active--which the current tables show it not to be at the low end of the band.</p>
+  <center>
+    <img src="lpda-69.gif" width="647" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 180-degree front-to-back curves are quite comparable, even though there is a very slight frequency offset between the two programs with respect to the frequency of maximum front-to-back ratio. NEC-4 report that maximum to occur just above 29 MHz. That the two peak figures should coincide despite differences in gain reporting is natural: NEC-4 tends to over-report all gain values in the plane of the antenna, and those reports include both forward and rearward gain. Thus, the difference tends to remain approximately the same as the MININEC report.</p>
+  <p>The design--as reported in either program--only meets the 20 dB front-to-back ratio criterion for the span between 28.25 and 29.50 MHz. The front-to-back performance falls off to roughly 17.5 dB at the band edges. At these extremes, the director and reflector cannot both be fully effective at the same time. At mid-band, where both are fully effective, front-to-back performance is impressive.</p>
+  <center>
+    <img src="lpda-60.gif" width="646" height="523" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The SWR curve reported by NEC-4 is outstanding, never exceeding 1.2:1 across the entire 10-meter ham band. However, NEC-4 tends to under-report the source resistance in this type of case. MININEC reports highly acceptable figures that never exceed 1.3:1, based on higher values of both source resistance and capacitive reactance.</p>
+  <p>The final evaluation of the design is that it comes exceptionally close to meeting the original design goals, even by MININEC reckoning. The low end gain only misses the 7 dBi figure by a small margin. The band-edge front- to-back ratio deficits relative to the criteria are not so great as to disable use of the antenna for most purposes. The SWR performance exceeds even reasonable expectations. When weight reduction and simplified construction are added to the mix, the design becomes very attractive.</p>
+  <h3>Perfecting the MININEC Model</h3>If MININEC figures are more accurate than NEC-4 figures, it stands to reason that the design should be optimized for the MININEC system. Actually, the required changes in dimensions and spacing are quire small. The drivers required a bit of respacing from each other as well as from the reflector--and these moves set the director closer to the reflector--but only by a half inch. Changes in element lengths were equally small.
+  <p>The following tables, derived from AO, illustrate the changes and their consequences in modeled performance.</p>
+  <pre>4-Element Wide-Band Yagi
+Free Space Symmetric       28.75 MHz              4 6060-T6 wires
+
+Parameter (Inches)       Revised Model            Original Model
+Reflector length              212.50                   212.00
+Driver 1 length               205.50                   205.00
+Driver 2 length               189.50                   189.00
+Director length               180.80                   181.00
+Spacing from Reflector
+Driver 1                       39.50                    40.50
+Driver 2                       43.50                    44.00
+Director                       95.50                    96.00
+
+28.000 MHz:   Impedance        52.7 - j 8.0            51.0 - j9.4
+              SWR              1.18                    1.20
+              Wire Losses      0.03 dB                 0.03 dB
+              Efficiency       99.4%                   99.4%
+              Forward Gain     6.90 dBi                6.93 dBi
+              F/B              18.53 dB                18.23 dB
+
+28.250 MHz:   Impedance        53.0 - j 8.9            51.7 - j 10.2
+              SWR              1.20                    1.22
+              Wire Losses      0.03 dB                 0.03 dB
+              Efficiency       99.4%                   99.4%
+              Forward Gain     6.87 dBi                6.90 dBi
+              F/B              20.69 dB                20.61 dB
+
+28.500 MHz:   Impedance        52.1 - j 8.3            51.2 - j 9.4
+              SWR              1.18                    1.21
+              Wire Losses      0.03 dB                 0.03 dB
+              Efficiency       99.3%                   99.3%
+              Forward Gain     6.88 dBi                6.91 dBi
+              F/B              23.09 dB                23.30 dB
+
+28.750 MHz:   Impedance        50.9 - j 6.3            50.5 - j 7.3
+              SWR              1.13                    1.16
+              Wire Losses      0.03 dB                 0.03 dB
+              Efficiency       99.3%                   99.3%
+              Forward Gain     6.93 dBi                6.96 dBi
+              F/B              26.06 dB                26.75 dB
+
+29.000 MHz:   Impedance        50.4 - j 3.6            50.8 - j 4.5
+              SWR              1.07                    1.10
+              Wire Losses      0.03 dB                 0.03 dB
+              Efficiency       99.2%                   99.2%
+              Forward Gain     7.02 dBi                7.04 dBi
+              F/B              28.49 dB                29.39 dB
+
+29.250 MHz:   Impedance        51.2 - j 1.4            52.7 - j2.4
+              SWR              1.04                    1.07
+              Wire Losses      0.04 dB                 0.04 dB
+              Efficiency       99.1%                   99.1%
+              Forward Gain     7.14 dBi                7.17 dBi
+              F/B              25.74 dB                25.60 dB
+
+29.500 MHz:   Impedance        52.9 - j 2.1            56.2 - j 3.5
+              SWR              1.07                    1.14
+              Wire Losses      0.05 dB                 0.05 dB
+              Efficiency       98.9%                   99.0%
+              Forward Gain     7.28 dBi                7.32 dBi
+              F/B              21.03 dB                20.57 dB
+
+29.750 MHz:   Impedance        51.4 - j 9.0            56.8 - j 12.8
+              SWR              1.20                    1.31
+              Wire Losses      0.06 dB                 0.06 dB
+              Efficiency       98.6%                   98.6%
+              Forward Gain     7.44 dBi                7.48 dBi
+              F/B              17.10 dB                16.57 dB
+
+30.000 MHz:   Impedance          36.5 - j 16.6         41.0 - j 24.5
+              SWR                 1.64                 1.76
+              Wire Losses         0.10 dB              0.10 dB
+              Efficiency         97.7%                 97.8%
+              Forward Gain        7.59 dBi             7.64 dBi
+              F/B                13.87 dB              13.29 dB</pre>
+  <p>The revised model provides a more balanced SWR across the 10-meter amateur band with 9 Ohms or less capacitive reactance at the source and a variation of only 2.6 Ohms in the source resistance. The front-to-back ratios at the band edges are numerically better balanced at a maximum cost of 0.05 dB gain.</p>
+  <p>Will the differences actually make a difference? Not likely. However, the comparative figures may act as a guide to construction, giving some hint as to which element may need lengthening or shortening and which spacing may need slight adjustment.</p>
+  <p>Nevertheless, even though it falls short of the absolute design criteria, the wide band Yagi with open-sleeve coupled drivers is highly competitive with the 4-element LPDA. Both designs give us a short-boom (8') antenna that covers all of 10 meters with performance that is consistent with the performance of 3-element, 8'-boom Yagis over only half the band.</p>
+  <p>It seems that the design exercise, which I suspected might not be complete, really is not done after all. Even this work leaves some open questions. For example, can I save some weight by tapering the element diameters, using 0.5" and 0.375" tubing and not lose anything in performance? I'll bet that question alone will lead me to some others before I buy aluminum, plastic, and hardware.</p>
+  <p>Remember that I am not on a deadline. The inquiry is not driven by an upcoming contest or DXpedition. So I can take my time and explore all the nooks and crannies that show themselves along the way. The only major problem is that the paper output from gathering models and data already weighs as much as the proposed Yagi and is fast approaching the weight of the LPDA.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 11-18-98. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><a href="lpda7.html"><img src="../images/yagismbt.gif" align="bottom" width="36" height="33"> Go to Phase 7: Wide-Band Yagis: Element Diameter Questions</a></p>
+  <p><a href="lpda.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to LPDA Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#lpda'>LPDA</a></p><br>
+</body>
+</html>

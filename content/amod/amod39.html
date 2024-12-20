@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radials: Complex Radial Systems</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>39. Radials: Complex Radial Systems</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the past two columns, we examined some of the modeling issues surrounding vertical antennas using radials systems. These columns, like all those in this series, were predicated on using a version of NEC-2 as the basic modeling core. We were left with some questions of modeling complex radial systems, which we shall examine in this column. However, it may be useful to begin by reviewing the limitations of NEC-2 with respect to radial systems.</p>
+  <p>NEC-2 does not permit wires either on or below ground. Therefore, radial systems must be constructed above ground, usually at a minimum height of about 0.001 wavelength. NEC-2 also recommends limiting the number of wires at a junction to about 30, making a 32-radial system about the largest that is practical. As noted in pervious columns, there are some work-arounds, but these parameters generally set the limits for vertical antenna radial systems. Model size can be reduced by using length-tapering techniques, which allows many 32-radial systems to be modeled within the 500-segment limit of some commercial implementations of NEC-2.</p>
+  <p>However, modelers should be aware that there are significant differences in reports from above-ground radial system models--even when pressed to the limit of proximity to the ground--and buried radial system models. Of course, buried radials are only feasible in NEC versions above NEC-2. However, without some sense of what NEC-4 might report for a buried radial system, the NEC-2 modeler might uncritically accept a report from the NEC-2 above- ground system model as reflecting accurately what occurs with a buried radial system.</p>
+  <p>Therefore, consider the following simple model: a 40-m element for 1.83 MHz with a diameter of 25 mm (nearly 1"). The diameter for the model was chosen to simplify the modeling of the radial systems, since the length-to-diameter ratio would be better than 4:1 throughout. The radials will consist of 2-mm diameter wires.</p>
+  <center>
+    <img src="amod39-1.gif" width="600" height="226" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The ground treatment for separate above-ground and buried radial systems is indicated in <b>Fig. 1</b>. The radials in the above-ground system will be 0.001 wavelength above ground (0.164 m or about 6.5"). A fixed-length 1-segment source wire that is 0.001 wavelength long is at the base of the vertical. The radials and the main element above the source segment are length-tapered from 0.001 wavelength to 0.04 wavelength, which ensures that segments adjacent to the source segment are the same length as the source segment itself.</p>
+  <p>The buried radial system requires a wire junction at ground, so we shall add a 1-segment wire below ground. It is 0.001 wavelength long to match the depth of the radials. The radials and main element above the source wire are length-tapered as in the above-ground model.</p>
+  <p>I constructed radial systems using 4, 8, 16, 32, 64, and 128 radials for the models using NEC-4. The 128-radial system approaches the practical limit of small angles between wires and may result in somewhat dubious results for radial systems of that size. However, the trends in the two types of radial systems are fascinating, as the following tables reveal.</p>
+  <pre>
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Table 1.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001
+wavelength above ground; NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  31 wires; 61 segments
+Very Poor         -1.90       27                41.91 + j 18.38
+Poor              -0.33       25                40.27 + j 22.38
+Good               0.66       22                41.28 + j 23.89
+Very Good          2.45       17                42.26 + j 21.04
+
+8-radials:  55 wires; 109 segments
+Very Poor         -1.47       27                37.49 + j  3.69
+Poor               0.03       25                36.84 + j  6.82
+Good               1.01       22                37.99 + j  8.78
+Very Good          2.81       17                38.89 + j  9.56
+
+16-radials:  103 wires; 205 segments
+Very Poor         -1.34       27                35.91 - j  1.80
+Poor               0.09       25                36.08 + j  0.89
+Good               1.06       22                37.37 + j  2.61
+Very Good          2.92       16                37.91 + j  4.36
+
+32-radials:  199 wires; 397 segments
+Very Poor         -1.29       27                35.09 - j  3.55
+Poor               0.09       25                35.69 - j  1.05
+Good               1.04       22                37.24 + j  0.48
+Very Good          2.92       16                37.83 + j  2.46
+
+64-radials:  391 wires; 781 segments
+Very Poor         -1.23       27                34.36 - j  3.63
+Poor               0.10       25                35.24 - j  1.36
+Good               1.02       22                36.97 - j  0.10
+Very Good          2.91       16                37.91 + j  1.99
+
+128-radials:  775 wires; 1549 segments
+Very Poor         -1.12       27                33.81 - j  3.04
+Poor               0.17       25                34.80 - j  0.95
+Good               1.03       22                36.51 + j  0.04
+Very Good          2.87       16                37.97 + j  1.89
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Table 2.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001
+wavelength below ground; NEC-4.
+
+Soil Type         Gain        TO Angle          Source Impedance
+                  dBi         degrees           R +/- J X Ohms
+
+4-radials:  32 wires; 62 segments
+Very Poor         -4.37       27                87.04 + j 25.31
+Poor              -2.49       25                72.45 + j 19.47
+Good              -0.71       23                60.96 + j 20.42
+Very Good          2.10       17                47.34 + j 14.52
+
+8-radials:  56 wires; 110 segments
+Very Poor         -3.11       28                65.90 + j 18.09
+Poor              -1.51       25                58.63 + j 15.18
+Good              -0.04       23                52.43 + j 15.94
+Very Good          2.60       17                44.34 + j 12.60
+
+16-radials:  104 wires; 206 segments
+Very Poor         -1.61       28                52.71 + j 12.43
+Poor              -0.16       25                49.71 + j 12.18
+Good               0.86       23                46.79 + j 12.83
+Very Good          2.79       16                42.20 + j 11.18
+
+32-radials:  200 wires; 398 segments
+Very Poor         -1.32       27                44.89 + j  7.54
+Poor               0.17       25                43.44 + j  9.55
+Good               1.12       22                42.67 + j 10.46
+Very Good          2.94       17                40.48 + j 10.03
+
+64-radials:  392 wires; 782 segments
+Very Poor         -1.19       27                40.68 + j  4.11
+Poor               0.32       25                39.43 + j  7.08
+Good               1.26       22                39.73 + j  8.50
+Very Good          3.05       17                39.06 + j  9.07
+
+128-radials:  776 wires; 1550 segments
+Very Poor         -1.12       28                38.60 + j  2.18
+Poor               0.17       25                37.32 + j  5.29
+Good               1.03       23                37.91 + j  6.99
+Very Good          2.87       17                37.94 + j  8.27
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+</pre>
+  <p>With better soil quality, the differences in the above-ground and buried radial models are not severe. However, with very poor soil, the 4-radial systems show a great disparity: nearly 2.5 dB. As the graph in <b>Fig. 2</b> shows, buried radial systems show a rapid rise in gain as radials increase from 4 to 16, but the curves are much shallower after that point. Although the curve for very poor soil continues to rise through 128 radials, the curves for better soils actually decrease in gain from 64 radials upward. Hence, my trepidation over the 128-radial models.</p>
+  <center>
+    <img src="amod39-2.gif" width="648" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Perhaps the most telling differences between above-ground and buried radial system models lies in the source impedance reports. <b>Fig. 3</b> graphs the source resistance of above-ground and buried radial systems for very poor and very good soil through the range of radials used. Note that there is no aberration in the curves, with a steady descent in all cases--hence, a reservation in my trepidation about the 128-radial models. The above-ground and buried radial models for very good soil are quite parallel and not very far apart. However, for very poor soil, the buried radial system model reports much higher values of source resistance with lower numbers of radials.</p>
+  <center>
+    <img src="amod39-3.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The upshot is that above-ground radial systems have severe limitations in their role as substitutes for buried radial systems. If one plans to seriously model buried radial systems, then an investment in NEC-4 is likely the best course.</p>
+  <p>The model that we just used limited the diameter of the main element to an unnaturally low size for 160 meters, and the radials were purposely buried over 6" deep so that a relatively simple model might be used. However, there are many cases of shallower radials and fatter main elements. Either of these cases can press the NEC limits for a good length-to-diameter ratio for the segments.</p>
+  <center>
+    <img src="amod39-4.gif" width="688" height="435" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The problem has a fairly straightforward solution--and likely not the only one feasible. <b>Fig. 4</b> sets up a radial system for a main element that is 0.125 m (about 4.92") in diameter, along with a radial system buried only 0.082 m (0.0005 wavelength or 3.3") deep, the dimension D on the sketch. If we use our rule of thumb of keeping the wire lengths in models with complex geometry at a 4:1 length-to-diameter ratio, then the minimum wire or segment length will be 0.5 m, the lengths of A1 and A2 on the sketch.</p>
+  <p>We can start the main element (relative to ground) 0.082 m above ground and use a 1-segment source wire followed by a tapered-length remainder of the element, with the tapering having a 0.5-m minimum length and perhaps a 5-m maximum length for the segments. The first sloping portion of each radial will be from a height of 0.082 m to zero, with the second going from zero to -0.082 m. Since the sine of the angle is 0.082 over 0.5, the angle is 9.44 degrees. The cosine of this angle is .986, so the dimension along the ground is 0.493 m. Little harm would be done in using a round number like 0.5 for this dimension with shallow angles. However, for angles above 30 degrees--which are common in such models--the sloping wire length requires the use of this excursion from dimension to sine to angle to cosine to dimension. Hence, using the full progression of calculations is recommended for all cases.</p>
+  <p>The following table contains partial descriptions (3 of 32 radials in each case) of two models: one is a simple buried radial systems like the one used with the 25-mm main element; the other is a sloping radial model used with a 250-mm main element. The contrast in modeling may reinforce the technique just described.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                     Simple Junction Between Main Element and Radials
+160-m 1/4 wl vertical, tapered radials          Frequency = 1.83  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : m )  Conn. --- End 2 (x,y,z : m )   Dia(mm) Segs
+1            0.000,  0.000, 40.000  W2E1   0.000,  0.000,  5.242 2.50E+01   7
+2     W1E2   0.000,  0.000,  5.242  W3E1   0.000,  0.000,  2.621 2.50E+01   1
+3     W2E2   0.000,  0.000,  2.621  W4E1   0.000,  0.000,  1.311 2.50E+01   1
+4     W3E2   0.000,  0.000,  1.311  W5E1   0.000,  0.000,  0.655 2.50E+01   1
+5     W4E2   0.000,  0.000,  0.655  W6E1   0.000,  0.000,  0.328 2.50E+01   1
+6     W5E2   0.000,  0.000,  0.328  W7E1   0.000,  0.000,  0.164 2.50E+01   1
+  Tapered-length portion of main element
+7     W6E2   0.000,  0.000,  0.164  W8E1   0.000,  0.000,  0.000 2.50E+01   1
+8     W7E2   0.000,  0.000,  0.000  W9E1   0.000,  0.000, -0.164 2.50E+01   1
+  Fixed wires of main element
+9    W15E1   0.000,  0.000, -0.164 W10E1   0.164,  0.000, -0.164 2.00E+00   1
+10    W9E2   0.164,  0.000, -0.164 W11E1   0.491,  0.000, -0.164 2.00E+00   1
+11   W10E2   0.491,  0.000, -0.164 W12E1   1.147,  0.000, -0.164 2.00E+00   1
+12   W11E2   1.147,  0.000, -0.164 W13E1   2.457,  0.000, -0.164 2.00E+00   1
+13   W12E2   2.457,  0.000, -0.164 W14E1   5.078,  0.000, -0.164 2.00E+00   1
+14   W13E2   5.078,  0.000, -0.164        40.955,  0.000, -0.164 2.00E+00   7
+  First tapered-length radial
+15   W21E1   0.000,  0.000, -0.164 W16E1   0.161,  0.032, -0.164 2.00E+00   1
+16   W15E2   0.161,  0.032, -0.164 W17E1   0.482,  0.096, -0.164 2.00E+00   1
+17   W16E2   0.482,  0.096, -0.164 W18E1   1.125,  0.224, -0.164 2.00E+00   1
+18   W17E2   1.125,  0.224, -0.164 W19E1   2.410,  0.479, -0.164 2.00E+00   1
+19   W18E2   2.410,  0.479, -0.164 W20E1   4.981,  0.991, -0.164 2.00E+00   1
+20   W19E2   4.981,  0.991, -0.164        40.168,  7.990, -0.164 2.00E+00   7
+  Second tapered-length radial
+21   W27E1   0.000,  0.000, -0.164 W22E1   0.151,  0.063, -0.164 2.00E+00   1
+22   W21E2   0.151,  0.063, -0.164 W23E1   0.454,  0.188, -0.164 2.00E+00   1
+23   W22E2   0.454,  0.188, -0.164 W24E1   1.059,  0.439, -0.164 2.00E+00   1
+24   W23E2   1.059,  0.439, -0.164 W25E1   2.270,  0.940, -0.164 2.00E+00   1
+25   W24E2   2.270,  0.940, -0.164 W26E1   4.692,  1.943, -0.164 2.00E+00   1
+26   W25E2   4.692,  1.943, -0.164        37.838, 15.673, -0.164 2.00E+00   7
+  Third tapered-length radial (or 32 total radials)
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     7 / 50.00   (  7 / 50.00)      1.000       0.000       V
+
+Ground type is Real, high-accuracy analysis
+Conductivity = .005 S/m    Diel. Const. = 13
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                     Angular-Wire Junction of Main Element and Radials
+160-m 1/4 wl vertical, buried radials                 Frequency = 1.83  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : m )  Conn. --- End 2 (x,y,z : m )   Dia(mm) Segs
+1            0.000,  0.000, 40.000  W2E1   0.000,  0.000,  4.328 2.50E+02   9
+2     W1E2   0.000,  0.000,  4.328  W3E1   0.000,  0.000,  2.328 2.50E+02   1
+3     W2E2   0.000,  0.000,  2.328  W4E1   0.000,  0.000,  1.328 2.50E+02   1
+  Tapered-length portion of main element
+4     W3E2   0.000,  0.000,  1.328  W5E1   0.000,  0.000,  0.328 2.50E+02   1
+  Fixed length section of main element
+5    W10E1   0.000,  0.000,  0.328  W6E1   0.945,  0.000,  0.000 2.00E+00   1
+6     W5E2   0.945,  0.000,  0.000  W7E1   1.890,  0.000, -0.328 2.00E+00   1
+  Two sloping wires of first radial
+7     W6E2   1.890,  0.000, -0.328  W8E1   2.890,  0.000, -0.328 2.00E+00   1
+8     W7E2   2.890,  0.000, -0.328  W9E1   4.890,  0.000, -0.328 2.00E+00   1
+9     W8E2   4.890,  0.000, -0.328        40.960,  0.000, -0.328 2.00E+00  10
+  Tapered-length portion of first radial
+10   W15E1   0.000,  0.000,  0.328 W11E1   0.927,  0.184,  0.000 2.00E+00   1
+11   W10E2   0.927,  0.184,  0.000 W12E1   1.854,  0.369, -0.328 2.00E+00   1
+  Two sloping wires of second radial
+12   W11E2   1.854,  0.369, -0.328 W13E1   2.834,  0.564, -0.328 2.00E+00   1
+13   W12E2   2.834,  0.564, -0.328 W14E1   4.796,  0.954, -0.328 2.00E+00   1
+14   W13E2   4.796,  0.954, -0.328        40.173,  7.991, -0.328 2.00E+00  10
+  Tapered-length portion of second radial
+15   W20E1   0.000,  0.000,  0.328 W16E1   0.873,  0.362,  0.000 2.00E+00   1
+16   W15E2   0.873,  0.362,  0.000 W17E1   1.746,  0.723, -0.328 2.00E+00   1
+  Two sloping wires of third radial
+17   W16E2   1.746,  0.723, -0.328 W18E1   2.670,  1.106, -0.328 2.00E+00   1
+18   W17E2   2.670,  1.106, -0.328 W19E1   4.518,  1.871, -0.328 2.00E+00   1
+19   W18E2   4.518,  1.871, -0.328        37.842, 15.675, -0.328 2.00E+00  10
+  Tapered-length portion of third radial (of 32 total radials)
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     4 / 50.00   (  4 / 50.00)      1.000       0.000       V
+
+Ground type is Real, high-accuracy analysis
+Conductivity = .005 S/m    Diel. Const. = 13
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="amod39-5.gif" width="647" height="453" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Sloping radials are not the only complexity that we may encounter when working with radial systems for vertical arrays. <b>Fig. 5</b> shows two intersecting radial systems for a 2-element array. Only a few wires have been shown in the sketch to preserve some clarity. Between the two radial systems, there is a line of intersection, which for most purposes can be taken as being defined by the midpoint between the two radial systems. Actual radials might well pass over and under each other, as indicated by the dashed extensions in the figure. However, it is also common to join electrically the ends of relevant radials so that the junctions form a line corresponding to the vertical dashed line in the sketch. The junctions along the line of intersection may be connected by wires or simply left open.</p>
+  <center>
+    <img src="amod39-6.gif" width="623" height="423" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows a 3-system set of intersections. The principles are the same for any number of intersecting radial systems. The key problem in constructing a model is getting rid of overlapping wires, since the NEC core will reject any model with wires that intersect at other than segment junctions. Instead, we need to calculate the coordinates of each intersecting radial so that we end up with true wire junctions.</p>
+  <center>
+    <img src="amod39-7.gif" width="553" height="418" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The technique is very straight forward, although its execution can be tedious for very large radial systems. Refer to <b>Fig. 7</b> for guidance. We can find the line of intersection along (let us say) the X axis. Hence, we know the X coordinate of any radial to be shortened for a junction along this line. Since the original and the shortened radial coordinates define a pair of congruent triangles, the ratio of the new (shorter) X-axis coordinate to the original is also the ratio of the new Y-axis coordinate to the original. Of course, both of these numbers are most easily obtained if the origin of the radial system on which we do the original shortening is X=0 and Y=0. (We can always displace the entire system once our calculations and modifications are complete.)</p>
+  <p>If we are using uniform segmentation of the radial wires, then the same ratio that we used to determine the coordinates also tells us the number of segments to use in the shorter radial. The total number of calculations will actually be smaller than we might expect, since we can simply use the values that we get for the positive Y direction in the negative direction with a sign change (assuming an evenly symmetrical radial model). These new radial terminations also become the terminating coordinates for the second radial system where it intersects the first. If a multiple radial system is used and if the junction lines are equally spaced from the center element, the numerical values--with sign adjustments--are applicable to both junction sets. Only the process of entering the values on the wire chart is somewhat tedious and error-prone.</p>
+  <p>The techniques of generating complex radial fields apply equally to those we place above ground and to those we bury. From the notes developed here and using whatever automated facilities may exist within your particular NEC software, you can generate quite reasonable models for virtually any vertical antenna or array that uses a radial system. As we have seen from the preceding columns, such models are much preferable to the all-to-common over-simplifications that we have used in the past.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

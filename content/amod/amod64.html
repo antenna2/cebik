@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>An Orientation to the NEC Output File</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>64. An Orientation to the NEC Output File</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Most beginning NEC modelers employ one of the entry-level programs, such as EZNEC or NEC-Win Plus. These programs are amazing pieces of software for a number of reasons. They ease the task of inputting the information necessary to create a model. As well, the provide a mass of distilled output data that the user most wants and re-forms it into tables and graphics that make it the most readable. One cost of having so much convenience is that the entry-level programs must restrict the number of wire geometry and control inputs made available to the user.</p>
+  <p>Because the entry-level programs are so convenient, many users have little idea of what is going on behind the scenes to create the graphics and tables. They may never look at the output file produced by the NEC core which is doing the calculating (except for some post-run additional calculations for user convenience). So I thought that we might take a look at an output file and see what it can tell us--or at least show us from where the output functions of our modeling program gets their information.</p>
+  <p>EZNEC (short of the Pro version) does not give the user access to the NEC output file. However, that file is always accessible in NEC-Win Plus and in advanced programs. So we shall be looking at NEC-Win programs in this exercise. We shall use both NEC-Win Plus and NEC-Win Pro, although both produce an output file with the extension .NOU to save the core-run output. (A core "run" is simply the operation of the NEC calculating portion of the overall program, which shows only as thermometer bars in EZNEC and as a temporary sub-screen in NEC-Win software.)</p>
+  <center>
+    <img src="amod64-1.gif" width="640" height="294" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's begin with a small model, the one shown in NEC-Win Plus format in <b>Fig. 1</b>. The wire layout consists of 2 wires for a 30-meter Yagi. The wire has a diameter of 2 mm (0.0787"), and the dimensions are all in meters. The wire is copper, and the source is at the center of wire 1. The upper left corner let's us know that we shall run the antenna at 10.125 MHz only. The "No Ground" label tells us the antenna is in free space. We have requested 2 radiation patterns. Modeling conventions designate them as azimuth and elevation patterns, but in free space, they are best termed E-plane and H-plane patterns, respectively.</p>
+  <center>
+    <img src="amod64-2.gif" width="619" height="217" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the modeling outline of the array. Each element has 21 equal-length segments. The red source segment is at the center of the element designated as the driver. Since the remaining element is longer, it functions as a reflector. NEC functions with neither of these forms of model set-up. The .NWP file for the model in <b>Fig. 1</b> is in spreadsheet format, while the outline is a graphic. NEC requires a simple ASCII file consisting of lines of characters meeting certain standards. The standard for input data vary according to the type of line.</p>
+  <center>
+    <img src="amod64-3.gif" width="527" height="358" border="2" vspace="5" hspace="9">
+  </center>
+  <p>NEC-Win Plus creates an input file for the model that has the very same form as one that we might create by typing into a simple text editor. This file has the format used by NEC-Win Pro and other advanced programs that give the user access to all of the geometry and control inputs that are usable with NEC. (See <b>Fig. 3</b>.) The GW lines provide the coordinates of the wires, the number of segments in them, and the wire radius (1 mm). Since all dimensions are already in meters, the GS or scaling line uses a factor of 1.</p>
+  <p>The EX line provides data for the voltage source, specifying its location on wire or tag 1, segment 11, with a magnitude of 1.414 and a phase angle of zero. Each wire or tag has a corresponding LD5 line to specify that the wires have the conductivity of copper (5.8E7 s/m). The FR line sets the single frequency of the calculations, while the two RP0 lines request standard azimuth and elevation patterns. The former is at zero degrees elevation, while the latter is at an azimuth angle of zero degrees. However, these patterns--in basic NEC terms--are really phi and theta patterns. The give-away is the "90" entry, which specifies the theta angle for the phi, counting from overhead to the horizon. In the theta pattern itself, the 90-degree entry simply specifies the starting point for the pattern data. Both patterns request 361 data points so that the total pattern will close on itself and not leave a 1-degree gap.</p>
+  <center>
+    <img src="amod64-4.gif" width="424" height="730" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the resulting E-plane and H-plane (azimuth/phi and elevation/theta) patterns that emerge from the core calculations. The E-plane pattern counts degrees in a counter-clockwise direction, indicating a phi rather than a true azimuth pattern. The H-plane pattern shows 90 degrees at the virtual horizon, with 0 degrees at the top, indicating its true identity as a theta and not an elevation pattern.</p>
+  <center>
+    <img src="amod64-5.gif" width="300" height="150" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Most programs provide the user with selected tabular data. <b>Fig. 5</b> shows the VSWR report from NEC-Win Pro. Invisible to the user is the fact that only some of the reported data comes from the NEC calculations directly: the information on the input impedance. The VSWR figure comes from a post-run calculation made by the program and dependent upon the user's insertion of an impedance reference figure.</p>
+  <p><b>What the Core Output Looks Like and Tells Us</b></p>
+  <p>With this much orientation, let's turn to the actual NEC output file for this model and see what it looks like and what it has to tell us--and where it is silent. The report is an ASCII document, making it convenient for moving part or all of the data into other programs for viewing or manipulation. The best place to begin is at the beginning of the file created by the core run.</p>
+  <pre> **********************************************
+    NUMERICAL ELECTROMAGNETICS CODE (NEC-2D-P)
+ **********************************************
+
+ Enhanced version, copyright 1997-2001 Nittany Scientific
+
+ Run date:  08:39:25 on 04-JUN-2002
+
+ Parameter dimensions:
+
+   NEC2D Version:  2.5
+   Maximum # of segments:            42
+   Maximum # of segments in core:            42
+   Maximum # of new connections to NGF segments:           180
+   Maximum # of sources:             1
+   Maximum # of degrees of symmetry:             1
+   Maximum # of networks:             0
+   Maximum # of segments at a junction:             1
+   Maximum # of loads:             2
+   Maximum # of frequencies or angles:           361
+
+ **********************************************</pre>
+  <p>The NEC calculation core operates best when certain parameters are at least as large as required by the size of the model but not so much larger that they slow down the speed of the matrix and other calculations made by the core. Originally set by a separate file, most implementations of NEC use an automated system of setting the parameters.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+                                     COORDINATES MUST BE INPUT IN
+                                     METERS OR BE SCALED TO METERS
+                                     BEFORE STRUCTURE INPUT IS ENDED
+
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+  1    0.00000   -7.06000    0.00000     0.00000    7.06000    0.00000    0.00100     21        1    21       1
+  2   -4.30000   -7.52500    0.00000    -4.30000    7.52500    0.00000    0.00100     21       22    42       2
+      STRUCTURE SCALED BY FACTOR   1.00000
+
+   TOTAL SEGMENTS USED=   42     NO. SEG. IN A SYMMETRIC CELL=   42     SYMMETRY FLAG=  0
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The first entry in the output file is a record of the wire geometry of the model. This section serves as an important check for the modeler to discover whether the intended model actually materialized. Note that the core assigns each wire a tag number. These will normally be the same as the wire numbers, but not when implementing certain complex structures.</p>
+  <p>As well, the structure section of the report assigns to each segment in the model an absolute segment number. The tag number serves as a way of tracking the location of the absolute segments within the model.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.00000   -6.72381    0.00000    0.67238    0.00000  90.00000   0.00100     0    1    2      1
+     2    0.00000   -6.05143    0.00000    0.67238    0.00000  90.00000   0.00100     1    2    3      1
+     3    0.00000   -5.37905    0.00000    0.67238    0.00000  90.00000   0.00100     2    3    4      1
+     4    0.00000   -4.70667    0.00000    0.67238    0.00000  90.00000   0.00100     3    4    5      1
+     5    0.00000   -4.03429    0.00000    0.67238    0.00000  90.00000   0.00100     4    5    6      1
+     6    0.00000   -3.36190    0.00000    0.67238    0.00000  90.00000   0.00100     5    6    7      1
+     7    0.00000   -2.68952    0.00000    0.67238    0.00000  90.00000   0.00100     6    7    8      1
+     8    0.00000   -2.01714    0.00000    0.67238    0.00000  90.00000   0.00100     7    8    9      1
+     9    0.00000   -1.34476    0.00000    0.67238    0.00000  90.00000   0.00100     8    9   10      1
+    10    0.00000   -0.67238    0.00000    0.67238    0.00000  90.00000   0.00100     9   10   11      1
+    11    0.00000    0.00000    0.00000    0.67238    0.00000  90.00000   0.00100    10   11   12      1
+    12    0.00000    0.67238    0.00000    0.67238    0.00000  90.00000   0.00100    11   12   13      1
+    13    0.00000    1.34476    0.00000    0.67238    0.00000  90.00000   0.00100    12   13   14      1
+    14    0.00000    2.01714    0.00000    0.67238    0.00000  90.00000   0.00100    13   14   15      1
+    15    0.00000    2.68952    0.00000    0.67238    0.00000  90.00000   0.00100    14   15   16      1
+    16    0.00000    3.36190    0.00000    0.67238    0.00000  90.00000   0.00100    15   16   17      1
+    17    0.00000    4.03429    0.00000    0.67238    0.00000  90.00000   0.00100    16   17   18      1
+    18    0.00000    4.70667    0.00000    0.67238    0.00000  90.00000   0.00100    17   18   19      1
+    19    0.00000    5.37905    0.00000    0.67238    0.00000  90.00000   0.00100    18   19   20      1
+    20    0.00000    6.05143    0.00000    0.67238    0.00000  90.00000   0.00100    19   20   21      1
+    21    0.00000    6.72381    0.00000    0.67238    0.00000  90.00000   0.00100    20   21    0      1
+    22   -4.30000   -7.16667    0.00000    0.71667    0.00000  90.00000   0.00100     0   22   23      2
+    23   -4.30000   -6.45000    0.00000    0.71667    0.00000  90.00000   0.00100    22   23   24      2
+    24   -4.30000   -5.73333    0.00000    0.71667    0.00000  90.00000   0.00100    23   24   25      2
+    25   -4.30000   -5.01667    0.00000    0.71667    0.00000  90.00000   0.00100    24   25   26      2
+    26   -4.30000   -4.30000    0.00000    0.71667    0.00000  90.00000   0.00100    25   26   27      2
+    27   -4.30000   -3.58333    0.00000    0.71667    0.00000  90.00000   0.00100    26   27   28      2
+    28   -4.30000   -2.86667    0.00000    0.71667    0.00000  90.00000   0.00100    27   28   29      2
+    29   -4.30000   -2.15000    0.00000    0.71667    0.00000  90.00000   0.00100    28   29   30      2
+    30   -4.30000   -1.43333    0.00000    0.71667    0.00000  90.00000   0.00100    29   30   31      2
+    31   -4.30000   -0.71667    0.00000    0.71667    0.00000  90.00000   0.00100    30   31   32      2
+    32   -4.30000    0.00000    0.00000    0.71667    0.00000  90.00000   0.00100    31   32   33      2
+    33   -4.30000    0.71667    0.00000    0.71667    0.00000  90.00000   0.00100    32   33   34      2
+    34   -4.30000    1.43333    0.00000    0.71667    0.00000  90.00000   0.00100    33   34   35      2
+    35   -4.30000    2.15000    0.00000    0.71667    0.00000  90.00000   0.00100    34   35   36      2
+    36   -4.30000    2.86667    0.00000    0.71667    0.00000  90.00000   0.00100    35   36   37      2
+    37   -4.30000    3.58333    0.00000    0.71667    0.00000  90.00000   0.00100    36   37   38      2
+    38   -4.30000    4.30000    0.00000    0.71667    0.00000  90.00000   0.00100    37   38   39      2
+    39   -4.30000    5.01667    0.00000    0.71667    0.00000  90.00000   0.00100    38   39   40      2
+    40   -4.30000    5.73333    0.00000    0.71667    0.00000  90.00000   0.00100    39   40   41      2
+    41   -4.30000    6.45000    0.00000    0.71667    0.00000  90.00000   0.00100    40   41   42      2
+    42   -4.30000    7.16667    0.00000    0.71667    0.00000  90.00000   0.00100    41   42    0      2
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The segmentation information is useful in determining whether all aspects of the geometric structure wind up where you intend. The present straight-wire model offers no question marks, but catenary wires, arcs, and helices can present many questions that an examination of the segmentation can answer. Note, however, that the information specifies the center point of each segment on the Cartesian coordinate system--not the segment ends or junctions. However, the +/-I list provides a list of connections, which can be useful in determining whether all segments having a desired junction actually hit the junction point.</p>
+  <p>The presence of a GE entry indicates the end of the geometry section. At this point, the output report records the control inputs as a series of line entries. Note that all of the integer entries that fall into floating decimal positions take on engineering notation. Hence, the frequency in the FR line is no longer 10.125, but 1.01250E+01.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ ***** DATA CARD NO.   1 EX     0     1    11     0  1.41421E+00  0.00000E+00  0.00000E+00  0.00000E+00
+0.00000E+00  0.00000E+00
+ ***** DATA CARD NO.   2 LD     5     1     1    21  5.80010E+07  0.00000E+00  0.00000E+00  0.00000E+00
+0.00000E+00  0.00000E+00
+ ***** DATA CARD NO.   3 LD     5     2     1    21  5.80010E+07  0.00000E+00  0.00000E+00  0.00000E+00
+0.00000E+00  0.00000E+00
+ ***** DATA CARD NO.   4 FR     0     1     0     0  1.01250E+01  1.00000E+00  0.00000E+00  0.00000E+00
+0.00000E+00  0.00000E+00
+ ***** DATA CARD NO.   5 RP     0     1   361  1000  9.00000E+01  0.00000E+00  1.00000E+00  1.00000E+00
+0.00000E+00  0.00000E+00
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The frequency holds sufficient significance to receive a separate region of the output report to itself.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - - - - FREQUENCY - - - - - -
+
+                                    FREQUENCY= 1.0125E+01 MHZ
+                                    WAVELENGTH= 2.9610E+01 METERS
+
+ APPROXIMATE INTEGRATION EMPLOYED FOR SEGMENTS MORE THAN   1.000 WAVELENGTHS APART
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Following the frequency, the report lists any loads, whether they specify RLC, R-X, or simple element conductivity.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                               - - - STRUCTURE IMPEDANCE LOADING - - -
+
+       LOCATION          RESISTANCE   INDUCTANCE  CAPACITANCE       IMPEDANCE (OHMS)     CONDUCTIVITY    TYPE
+    ITAG FROM THRU          OHMS        HENRYS       FARADS        REAL      IMAGINARY    MHOS/METER
+
+       1    1   21                                                                       5.8001E+07     WIRE
+
+       2    1   21                                                                       5.8001E+07     WIRE
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The report will also record the antenna environment, which is simple in this model (free-space). As well, it records the time expended so far on basic matrix calculations--a very brief time for this simple model. Often, examining the timing--especially of a model that has been left unattended during its run--can provide clues either to the adequacy of the model or to the computer set-up on which one runs the model.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                  - - - ANTENNA ENVIRONMENT - - -
+
+                                            FREE SPACE
+
+                                - - - MATRIX TIMING - - -
+
+                        FILL=    0.110 SEC.,  FACTOR=    0.000 SEC.
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The core has so far calculated the mutual impedances among all of the segments in the model. However, before it can calculate the currents on each segment--a necessary prerequisite to determining the antenna power gain in any chosen direction--it must account for the source or excitation. Therefore, it records all of the source input data, along with calculations predicated on the source and factors already calculated. Only then can the program calculate the segment currents.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                          - - - ANTENNA INPUT PARAMETERS - - -
+
+TAG   SEG.    VOLTAGE (VOLTS)         CURRENT (AMPS)         IMPEDANCE (OHMS)        ADMITTANCE (MHOS)      POWER
+NO.   NO.    REAL        IMAG.       REAL        IMAG.       REAL        IMAG.       REAL        IMAG.     (WATTS)
+1    11 1.41421E+00 0.00000E+00 2.85369E-02-9.87696E-04 4.94981E+01 1.71318E+00 2.01786E-02-6.98406E-04 2.01787E-02
+
+                             - - - CURRENTS AND LOCATION - - -
+
+                                 DISTANCES IN WAVELENGTHS
+
+
+  SEG.  TAG    COORD. OF SEG. CENTER     SEG.            - - - CURRENT (AMPS) - - -
+  NO.   NO.     X        Y        Z      LENGTH     REAL        IMAG.       MAG.        PHASE
+     1    1   0.0000  -0.2271   0.0000  0.02271   2.5339E-03 -1.9134E-04  2.5411E-03   -4.318
+     2    1   0.0000  -0.2044   0.0000  0.02271   7.0345E-03 -5.1543E-04  7.0533E-03   -4.191
+     3    1   0.0000  -0.1817   0.0000  0.02271   1.1146E-02 -7.8904E-04  1.1174E-02   -4.049
+     4    1   0.0000  -0.1590   0.0000  0.02271   1.4929E-02 -1.0156E-03  1.4963E-02   -3.892
+     5    1   0.0000  -0.1362   0.0000  0.02271   1.8343E-02 -1.1912E-03  1.8381E-02   -3.716
+     6    1   0.0000  -0.1135   0.0000  0.02271   2.1338E-02 -1.3112E-03  2.1378E-02   -3.516
+     7    1   0.0000  -0.0908   0.0000  0.02271   2.3866E-02 -1.3714E-03  2.3905E-02   -3.289
+     8    1   0.0000  -0.0681   0.0000  0.02271   2.5881E-02 -1.3682E-03  2.5917E-02   -3.026
+     9    1   0.0000  -0.0454   0.0000  0.02271   2.7347E-02 -1.2979E-03  2.7378E-02   -2.717
+    10    1   0.0000  -0.0227   0.0000  0.02271   2.8238E-02 -1.1534E-03  2.8262E-02   -2.339
+    11    1   0.0000   0.0000   0.0000  0.02271   2.8537E-02 -9.8770E-04  2.8554E-02   -1.982
+    12    1   0.0000   0.0227   0.0000  0.02271   2.8238E-02 -1.1534E-03  2.8262E-02   -2.339
+    13    1   0.0000   0.0454   0.0000  0.02271   2.7347E-02 -1.2979E-03  2.7378E-02   -2.717
+    14    1   0.0000   0.0681   0.0000  0.02271   2.5881E-02 -1.3682E-03  2.5917E-02   -3.026
+    15    1   0.0000   0.0908   0.0000  0.02271   2.3866E-02 -1.3714E-03  2.3905E-02   -3.289
+    16    1   0.0000   0.1135   0.0000  0.02271   2.1338E-02 -1.3112E-03  2.1378E-02   -3.516
+    17    1   0.0000   0.1362   0.0000  0.02271   1.8343E-02 -1.1912E-03  1.8381E-02   -3.716
+    18    1   0.0000   0.1590   0.0000  0.02271   1.4929E-02 -1.0156E-03  1.4963E-02   -3.892
+    19    1   0.0000   0.1817   0.0000  0.02271   1.1146E-02 -7.8904E-04  1.1174E-02   -4.049
+    20    1   0.0000   0.2044   0.0000  0.02271   7.0345E-03 -5.1543E-04  7.0533E-03   -4.191
+    21    1   0.0000   0.2271   0.0000  0.02271   2.5339E-03 -1.9134E-04  2.5411E-03   -4.318
+    22    2  -0.1452  -0.2420   0.0000  0.02420  -8.7033E-04  1.1146E-03  1.4141E-03  127.985
+    23    2  -0.1452  -0.2178   0.0000  0.02420  -2.4453E-03  3.1118E-03  3.9576E-03  128.161
+    24    2  -0.1452  -0.1936   0.0000  0.02420  -3.9163E-03  4.9537E-03  6.3148E-03  128.329
+    25    2  -0.1452  -0.1694   0.0000  0.02420  -5.2948E-03  6.6605E-03  8.5086E-03  128.483
+    26    2  -0.1452  -0.1452   0.0000  0.02420  -6.5590E-03  8.2103E-03  1.0509E-02  128.620
+    27    2  -0.1452  -0.1210   0.0000  0.02420  -7.6828E-03  9.5767E-03  1.2278E-02  128.738
+    28    2  -0.1452  -0.0968   0.0000  0.02420  -8.6411E-03  1.0734E-02  1.3780E-02  128.835
+    29    2  -0.1452  -0.0726   0.0000  0.02420  -9.4114E-03  1.1659E-02  1.4984E-02  128.911
+    30    2  -0.1452  -0.0484   0.0000  0.02420  -9.9753E-03  1.2334E-02  1.5863E-02  128.965
+    31    2  -0.1452  -0.0242   0.0000  0.02420  -1.0319E-02  1.2744E-02  1.6398E-02  128.998
+    32    2  -0.1452   0.0000   0.0000  0.02420  -1.0435E-02  1.2882E-02  1.6578E-02  129.009
+    33    2  -0.1452   0.0242   0.0000  0.02420  -1.0319E-02  1.2744E-02  1.6398E-02  128.998
+    34    2  -0.1452   0.0484   0.0000  0.02420  -9.9753E-03  1.2334E-02  1.5863E-02  128.965
+    35    2  -0.1452   0.0726   0.0000  0.02420  -9.4114E-03  1.1659E-02  1.4984E-02  128.911
+    36    2  -0.1452   0.0968   0.0000  0.02420  -8.6411E-03  1.0734E-02  1.3780E-02  128.835
+    37    2  -0.1452   0.1210   0.0000  0.02420  -7.6828E-03  9.5767E-03  1.2278E-02  128.738
+    38    2  -0.1452   0.1452   0.0000  0.02420  -6.5590E-03  8.2103E-03  1.0509E-02  128.620
+    39    2  -0.1452   0.1694   0.0000  0.02420  -5.2948E-03  6.6605E-03  8.5086E-03  128.483
+    40    2  -0.1452   0.1936   0.0000  0.02420  -3.9163E-03  4.9537E-03  6.3148E-03  128.329
+    41    2  -0.1452   0.2178   0.0000  0.02420  -2.4453E-03  3.1118E-03  3.9576E-03  128.161
+    42    2  -0.1452   0.2420   0.0000  0.02420  -8.7033E-04  1.1146E-03  1.4141E-03  127.985
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The excitation data is needed for the current calculations. If you look closely at the impedance entries, you will see--in slightly different notation--the impedance report that went into the VSWR table shown in an earlier figure. NEC does not calculate VSWR values, but those are simple enough to implement in a post core-run action.</p>
+  <p>I have included the entire current listing for this small model to provide you with a sense of how the internal parts of the output report interrelate. Note that the entries list the center coordinates for each segment, corresponding to the list we viewed in the segmentation data. For each segment, we find a current given in two forms: by the real and imaginary components and by a magnitude and phase angle. Some programs provide facilities for creating a rectangular plot of the current along a wire or sequence of wires. This data--in either tabular or graphical form-- can be useful in determining the properties of elements within an antenna array. As well, the current level at the center of each wire is often useful data for understanding especially the operations of arrays using elements in the neighborhood of 1/2 wavelength. Hence, it is important to be able to locate a wire center segment by reference to its absolute segment number. (Some programs, such as EZNEC, translate the current table into a format that restores the original wire and segment numbers used in the creation of GW entries.)</p>
+  <p>Note that the current levels are very low, making it difficult in some cases to clearly see the relative current level along an element. Using a current source (discussed in an earlier column in this series) can provide a basis for showing all current levels relative to a source current magnitude of 1.0. Such a source is also convenient in phased arrays for setting each source with a specific current magnitude and phase angle. As we have shown in earlier columns, we may also calculate for a voltage source the magnitude necessary to produce a power of a given level--taking into account that NEC uses and reports peak values of voltage and current, whereas power is always an RMS calculation. This calls for a revision of the user-input for the voltage magnitude and a rerun of the core--unless the program has a provision for calculating this value after the user specifies a desired power level (EZNEC). Using different power levels or equalizing them for all revisions of the model does not effect the power gain calculations that appear in the radiation patterns under an RP0 request. However, setting a power level is very useful to near field and ground wave calculations.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 2.0179E-02 WATTS
+                                           RADIATED POWER= 1.9644E-02 WATTS
+                                           STRUCTURE LOSS= 5.3508E-04 WATTS
+                                           NETWORK LOSS  = 0.0000E+00 WATTS
+                                           EFFICIENCY    =  97.35 PERCENT
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Some programs omit some aspects of the power budget. However, the total input power is useful as a check on any manual adjustment of the voltage magnitude to achieve a desired power level. The radiated power is subject to two types of subtractions from the input power. Structure losses are those losses owing to LD5 (wire conductivity) loads. One reason that I chose a wire array is to let you change the wire conductivity from a perfect or lossless wire to a copper wire to an aluminum wire, etc. You will observe changes in the radiated power and the overall efficiency of the antenna.</p>
+  <p>Network losses owe to the use of any RLC or R-X loads that have a resistive component. As well, networks with less than unlimited conductance will also create losses. Since such loads and networks may be anywhere along the elements, the same load will not necessary show the same overall loss at every position. Any loads created by the use of transmission lines (such as open or shorted stubs) will be lossless (in contrast to the same types of loads in their physical implementations). In addition, external losses created by matching networks that are not part of the model will not show up in the efficiency report.</p>
+  <p>We are finally ready to read out the pattern requests. However, I shall truncate the two reports to only a few lines each.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[Phi pattern]                                   - - - RADIATION PATTERNS - - -
+
+  - - ANGLES - -           - POWER GAINS -       - - - POLARIZATION - - -    - - - E(THETA) - - -    - - - E(PHI) - - -
+  THETA     PHI        VERT.   HOR.    TOTAL      AXIAL     TILT   SENSE     MAGNITUDE    PHASE      MAGNITUDE    PHASE
+ DEGREES  DEGREES       DB      DB      DB        RATIO     DEG.              VOLTS/M    DEGREES      VOLTS/M    DEGREES
+   90.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10773E+00   -64.63
+   90.00     1.00    -999.99    5.65    5.65    0.00000   -90.00  LINEAR    1.87706E-13   115.37    2.10715E+00   -64.63
+   90.00     2.00    -999.99    5.64    5.64    0.00000   -90.00  LINEAR    3.75218E-13   115.38    2.10542E+00   -64.62
+   90.00     3.00    -999.99    5.63    5.63    0.00000   -90.00  LINEAR    5.62342E-13   115.39    2.10254E+00   -64.61
+   90.00     4.00    -999.99    5.61    5.61    0.00000   -90.00  LINEAR    7.48885E-13   115.41    2.09851E+00   -64.59
+   90.00     5.00    -999.99    5.59    5.59    0.00000   -90.00  LINEAR    9.34656E-13   115.43    2.09334E+00   -64.57
+   90.00     6.00    -999.99    5.56    5.56    0.00000   -90.00  LINEAR    1.11946E-12   115.45    2.08703E+00   -64.55
+   90.00     7.00    -999.99    5.53    5.53    0.00000   -90.00  LINEAR    1.30312E-12   115.48    2.07961E+00   -64.52
+   90.00     8.00    -999.99    5.50    5.50    0.00000   -90.00  LINEAR    1.48545E-12   115.52    2.07107E+00   -64.48
+   90.00     9.00    -999.99    5.46    5.46    0.00000   -90.00  LINEAR    1.66625E-12   115.56    2.06143E+00   -64.44
+   90.00    10.00    -999.99    5.41    5.41    0.00000   -90.00  LINEAR    1.84536E-12   115.60    2.05070E+00   -64.40
+-----
+   90.00   351.00    -999.99    5.46    5.46    0.00000    90.00  LINEAR    1.66625E-12   -64.44    2.06143E+00   -64.44
+   90.00   352.00    -999.99    5.50    5.50    0.00000    90.00  LINEAR    1.48545E-12   -64.48    2.07107E+00   -64.48
+   90.00   353.00    -999.99    5.53    5.53    0.00000    90.00  LINEAR    1.30312E-12   -64.52    2.07961E+00   -64.52
+   90.00   354.00    -999.99    5.56    5.56    0.00000    90.00  LINEAR    1.11946E-12   -64.55    2.08703E+00   -64.55
+   90.00   355.00    -999.99    5.59    5.59    0.00000    90.00  LINEAR    9.34656E-13   -64.57    2.09334E+00   -64.57
+   90.00   356.00    -999.99    5.61    5.61    0.00000    90.00  LINEAR    7.48885E-13   -64.59    2.09851E+00   -64.59
+   90.00   357.00    -999.99    5.63    5.63    0.00000    90.00  LINEAR    5.62342E-13   -64.61    2.10254E+00   -64.61
+   90.00   358.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    3.75218E-13   -64.62    2.10542E+00   -64.62
+   90.00   359.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    1.87706E-13   -64.63    2.10715E+00   -64.63
+   90.00   360.00    -999.99    5.65    5.65    0.00000   -90.00  LINEAR    2.19582E-22   115.37    2.10773E+00   -64.63
+=====================
+[Theta pattern]                                 - - - RADIATION PATTERNS - - -
+
+  - - ANGLES - -           - POWER GAINS -       - - - POLARIZATION - - -    - - - E(THETA) - - -    - - - E(PHI) - - -
+  THETA     PHI        VERT.   HOR.    TOTAL      AXIAL     TILT   SENSE     MAGNITUDE    PHASE      MAGNITUDE    PHASE
+ DEGREES  DEGREES       DB      DB      DB        RATIO     DEG.              VOLTS/M    DEGREES      VOLTS/M    DEGREES
+   90.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10773E+00   -64.63
+   91.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10762E+00   -64.62
+   92.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10729E+00   -64.62
+   93.00     0.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10673E+00   -64.61
+   94.00     0.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10596E+00   -64.59
+   95.00     0.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10496E+00   -64.57
+   96.00     0.00    -999.99    5.63    5.63    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10374E+00   -64.54
+   97.00     0.00    -999.99    5.63    5.63    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10230E+00   -64.51
+   98.00     0.00    -999.99    5.62    5.62    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10064E+00   -64.47
+   99.00     0.00    -999.99    5.61    5.61    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.09876E+00   -64.43
+  100.00     0.00    -999.99    5.60    5.60    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.09665E+00   -64.39
+------------
+  441.00     0.00    -999.99    5.61    5.61    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.09876E+00   -64.43
+  442.00     0.00    -999.99    5.62    5.62    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10064E+00   -64.47
+  443.00     0.00    -999.99    5.63    5.63    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10230E+00   -64.51
+  444.00     0.00    -999.99    5.63    5.63    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10374E+00   -64.54
+  445.00     0.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10496E+00   -64.57
+  446.00     0.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10596E+00   -64.59
+  447.00     0.00    -999.99    5.64    5.64    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10673E+00   -64.61
+  448.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10729E+00   -64.62
+  449.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10762E+00   -64.62
+  450.00     0.00    -999.99    5.65    5.65    0.00000    90.00  LINEAR    0.00000E+00     0.00    2.10773E+00   -64.63
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The radiation reports--whether for phi or theta--offer a variety of data for each bearing defined by a combination of phi and theta angles. The format for the reports selected here is for a 2-dimensional pattern in which one angular system is progressively calculated while holding the other constant. Other patterns are possible, including 3-dimensional patterns that sample the entire sphere around the antenna at specified intervals.</p>
+  <p>The reports offer, of course, the total power gain--recorded in dBi using an isotropic radiator as a comparator--and its vertical and horizontal components. The report also offers polarization information, which is not especially useful in this particular model using linear elements. Finally, we find a record of the electrical fields tangential to the X-Y axes (theta) and parallel to it (phi). Although many general modelers focus only upon the antenna power gain, the other data has extensive applications, depending upon the type of antenna and upon the properties of highest interest.</p>
+  <p>We should note a few seeming oddities in the report. First, the theta pattern ends at an angle of 450 degrees. This ending point stems from the starting point on the virtual horizon (90 degrees) and the fact that the core counts in a positive direction. The polar H-plane plot that we earlier observed has done a post-run reset of the angles to correspond to something more familiar.</p>
+  <p>Since the antenna is in free space and is composed of linear elements, it is polarized in parallel to the X-Y axes. There is no significant radiation at right angles to this orientation. Hence, the vertical power gain is virtually zero. NEC records such a power gain--in dBi--as -999.99, an insignificantly low but non-zero value.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ ***** DATA CARD NO.   7 EN     0     0     0     0  0.00000E+00  0.00000E+00  0.00000E+00  0.00000E+00
+0.00000E+00  0.00000E+00
+
+ RUN TIME =     0.330
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The EN entry marks the end of the core run. Note that we obtain a registration of the total run time. This value happens for the present entry to be 3 times the value of the matrix fill and factor value recorded earlier. Those who implement version of NEC commercially are ever on the search for ways of compiling the original FORTRAN program so that it calculates faster. In conjunction with the latest 2 GHz, fast memory bus machines, these techniques have converted runs that took overnight into runs that barely allow one to inhale properly.</p>
+  <p>We have taken you through the structure of the NEC output report for a simple model on which we placed equally simple demands. However, I hope the exercise orients you to the output report sufficiently well so that you can navigate around more complex reports--perhaps involving plane wave sources, requests for ground waves or near field data, and those making use of one or more of the supplementary geometry inputs. The next step is to transfer the output report to a spreadsheet on which you may manipulate the data in further useful ways. The output tables and graphics of any given implementation of NEC may cover most of the important data, but they cannot cover all possible present and future interests. The only way to make full use of the NEC output data is to return to the output report itself. The more comfortable you are in navigating that report, the more interesting and useful information you can draw from it.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

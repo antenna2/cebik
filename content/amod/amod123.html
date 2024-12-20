@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radiating and Transmission-Line Currents</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>123. Radiating and Transmission-Line Currents</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In episode 100 of this series, we examined the modeling work-around often used to test a coaxial-cable-fed antenna for common mode currents. However, we seem to have no comparable work-around for detecting common-mode currents when we use parallel transmission lines. In fact, the help screens that accompany EZNEC record the following statement: "I don't know of any way to accurately model common-mode effects on a two-wire transmission line (that is, how to model a radiating two-wire line). If it's necessary to do this, the line will have to be modeled as two parallel wires."</p>
+  <p>Interestingly, if we model a resonant dipole and a resonant folded dipole at the same frequency, we may examine the current tables and discover that the current magnitudes and phase angles that we encounter seem to have very little in common. We can perform the same test with a folded monopole and a single-wire monopole. The results will be the same. Both of the single-wire antennas will show a near-cosine-wave decrease in current magnitude as we move from the feedpoint to the wire end, and the phase angle will change by only a few degrees. The folded versions show current values very different from the single-wire models.</p>
+  <center>
+    <img src="amod123-1.gif" width="345" height="196" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the physical arrangement of both the parallel transmission line and the folded dipole. It also raises the question of what these two structures have in common, besides the parallel wires, of course. The answer is quite straightforward. The currents that we record in models are actually composites of two types of currents. Because we have closely spaced wires that form transmission lines in both cases, we should expect to find transmission-line currents (I<sub>T</sub>. At any selected pair of point directly opposite each other along the line-pair, we should find current magnitudes that are equal, but with phase components that are 180 degrees opposite.</p>
+  <p>If the current values that we record in our model (assuming a reasonably well constructed model) do not meet this condition, then we also have radiation currents (I<sub>R</sub>). Radiation currents have the same phase angle on both wires. When we encounter them on the antenna structure proper, such as along a folded dipole, we find the currents that are effective in making the wire structure an antenna. When we encounter them on a parallel transmission line, we usually (but not always) groan, since we generally do not wish our feedlines to radiate. As well, such currents, unless remediated, can created a number of problems at the equipment end of the feedline. Under these conditions, we tend to call radiation currents by a different name: common-mode currents. However, we are still talking about radiation currents.</p>
+  <p>The radiation currents that we find on parallel transmission lines are the same as the currents that we sometimes find on the outer surface of the outer conductor in a coaxial cable. However, skin effect gives transmission-line and radiation currents separate paths in a coaxial cable. This condition also changes the methods of remediation or control of those currents, since we may introduce methods of attenuating the common-mode currents without affecting the transmission-line currents. When we have a parallel transmission line, we have difficulty sorting out the two types of currents, let alone attenuating one type without affecting the other type. Antenna models that create parallel transmission lines using wires will record only the composite current values.</p>
+  <p><b>Externally Calculating Radiation and Transmission-Line Currents</b></p>
+  <p>As much as we might wish our NEC and MININEC software to perform all antenna and feedline calculations for us, there are many useful calculations that we must perform externally to the core computations. Some are so widely used that those who implement NEC and MININEC often include them in their packages. Typical examples are the SWR calculations on which we rely. Some packages also include the calculation of the left-hand and right-hand components of circular polarization. Both of these calculations are further derivations from the output results of the core and not performed by the core itself.</p>
+  <p>No package (to my knowledge) includes the calculation of transmission-line and radiation (common-mode) currents as a post-core facility. Therefore, if we wish to separate the two current components of parallel wires--whether as part of the antenna or as part of a modeled transmission line--we shall have to set up a spreadsheet or similar calculating convenience. The technique that we shall use derives from the account of "The Hairpin Monopole" in Kuecken's classic <i>Antennas and Transmission Lines</i>, pp. 224 ff. We shall have to modify the procedure to coincide with the way in which we set up the parallel wires in a model.</p>
+  <center>
+    <img src="amod123-2.gif" width="391" height="267" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the two possibilities. On the left we have the procedure that I have arbitrarily called parallel segmentation. In this case, we start each of the parallel wires at some coordinate and move both wires in steps, either down-up or left-right. The alternative modeling convention, on the right in the figure, we can call serial segmentation. In this case, we tend to create wires "around the horn," so that end 2 of each wire in the model coincides with end 1 of the succeeding wire.</p>
+  <p>If we model a simple structure, say a folded monopole over perfect ground, we may view the relative current magnitudes, as shown in <b>Fig. 3</b>. Viewing current magnitude alone will yield no differences in the portrait under each of the modeling alternatives. The only significant difference between the current tables for the alternative modeling conventions would appear in column that lists the current phase angle.</p>
+  <center>
+    <img src="amod123-3.gif" width="250" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To determine which of the following procedures that we should use, we must rely on the list of wires in the model. <b>Fig. 4</b> shows the alternative wire tables that we obtain by each method, using our simple folded monopole over perfect ground. The tables come from EZNEC software.</p>
+  <center>
+    <img src="amod123-4.gif" width="690" height="410" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the following notes, I shall present the requirements for setting up a calculation aid in rather more detail than required by engineers. However, many newer models, including radio amateurs, are keenly interested in radiation and common-mode currents. Hence, a little extra guidance is in order.</p>
+  <p><i>The Calculations for Parallel Segmentation</i></p>
+  <p>When we use a parallel-segmentation structure for parallel wires within an antenna element or a modeled transmission line, we begin with the basic relationship of the currents on the two wires (A and B) at any facing point along the parallel line.</p>
+  <center>
+    <img src="amod123-e1.gif" width="166" height="23">
+  </center>
+  <p>With the lines segmented in parallel, the current on line A is the sum of the radiation and the transmission-line currents. The current on line B is the difference of the two currents, with the transmission-line current subtracted from the radiation current. (When we use series segmentation, these basic conditions will change, as will everything past this starting point.) Using this starting point, we can derive simple equations for I<sub>R</sub> and I<sub>T</sub>.</p>
+  <center>
+    <img src="amod123-e2.gif" width="178" height="42">
+  </center>
+  <p>These equations are deceptively simple, since they do not take into account that the currents we encounter on each wire at facing points have a magnitude and a phase angle. Many current tables made available to the software user will provide only the current magnitude and phase. The NEC and MININEC output tables provide the current information in this form and as a pair of real and imaginary components. We shall need the components in further steps. If the available current table does not provide them, we can easily derive the values.</p>
+  <center>
+    <img src="amod123-e3.gif" width="253" height="26">
+  </center>
+  <p>Suppose that we have a current magnitude of 1.0 at 30 degrees. Then the real component will be 0.866 and the imaginary component will be 0.5. (We shall assume that the units of measure derive from whatever source your software provides.)</p>
+  <p>We are looking for the magnitude and phase angle of the radiation current and of the transmission current. Once we have found the components of the original values on wires A and B, we can combine them and derive a current magnitude.</p>
+  <center>
+    <img src="amod123-e4.gif" width="311" height="48">
+  </center>
+  <p>Since I<sub>R</sub> involves the addition of components, we add the real and then the imaginary component values and then obtain the magnitude by taking the square root of the sum of the squares, finally dividing by 2 to obtain the final value. Obtaining I<sub>T</sub> involves taking differences, so the equation appears in the following form.</p>
+  <center>
+    <img src="amod123-e5.gif" width="315" height="50">
+  </center>
+  <p>If we wish to know the phase angle of the currents that we just calculated, we use the following equations.</p>
+  <center>
+    <img src="amod123-e6.gif" width="222" height="48">
+  </center>
+  <center>
+    <img src="amod123-e7.gif" width="220" height="50">
+  </center>
+  <p>Many spreadsheets only perform trig calculations using radians. Therefore, when obtaining the real and imaginary components of the initial current magnitude and phase, you may have to convert the phase into radians before taking a sine or cosine value. Likewise, the final two equations may return their results in radians, and you may have to convert into degrees (unless you habitually work with radians).</p>
+  <p>Before we examine what we obtain for our efforts in setting up a calculation aid, let's set out the calculations for the alternative modeling convention.</p>
+  <p><i>The Calculations for Series Segmentation</i></p>
+  <p>When we model parallel wires serially, our first caution will be to count segments carefully so that we specify exactly facing segments for Wire A and Wire B at any calculation point. If the segments do not exactly align, the calculations will be worthless.</p>
+  <p>When we model parallel wires in a serial fashion, the basic terms of the current on the two wires change. The change results from the changes in the phase angle of the currents on one of the two wires.</p>
+  <center>
+    <img src="amod123-e8.gif" width="173" height="25">
+  </center>
+  <p>Under these conditions, the derived values for I<sub>T</sub> and I<sub>R</sub> will also change. Note that which current sums the wire currents and which current takes their difference have reversed relative to parallel segmentation.</p>
+  <center>
+    <img src="amod123-e9.gif" width="183" height="45">
+  </center>
+  <p>Once we have gone this far, the remainder of the calculation-aid set-up is similar to the procedures for parallel segmentation. Obtaining real and imaginary components for the current magnitudes and phase angles in Wires A and B is identical. In the calculation of I<sub>R</sub> and I<sub>T</sub>, we simply reverse the equations shown. The same cautions about spreadsheet conventions apply to serial segmentation.</p>
+  <p><b>A Few Worked Examples</b></p>
+  <p>We may look at a few examples of the analysis in action both to test one model set-up against the other and to see if the results make good sense.</p>
+  <p><i>The Folded Monopole</i></p>
+  <p>In <b>Fig. 3</b> and <b>Fig. 4</b>, we saw the outlines of a folded monopole for 3.5 MHz. The model uses perfect ground for simplicity--a real ground would have required a radial system. Our interest in the model lies in the currents along the two wires. From the relative current magnitude graph, we can see that the current level does not go to zero at the tip of the antenna, a phenomenon that we would expect of a single-wire monopole.</p>
+  <center>
+    <img src="amod123-t1.gif" width="577" height="353" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 1</b> provides the results of a spreadsheet calculating aid. The two parts of the table show the results for both parallel and series segmentation conventions. In both cases, the reported current values at 10-segment intervals along Wire 1 of the pair (ignoring the short end wire) are the same. In the column labeled Wire 2, we find virtually identical reports of current magnitude. However, the phase angles of these currents are very different, in fact, 180 degrees different. The phase angle difference forces the change in the basic conditions and progression of calculations.</p>
+  <p>When we use the correct progression of calculations for the model set-up, we obtain virtually identical values for both the radiation and the transmission line currents. We may note in passing that the transmission-line current phase angles are about 90 degrees out of phase with the radiation currents. However, the phase values may change from + to - and back again depending upon the exact relationship between the currents on facing positions on the monopole. Folded dipole transmission-line currents will exhibit similar shifts.</p>
+  <p>The folded monopole was resonant at the length shown in the wire table. In the radiation current magnitude columns, we note a very low value that is consistent with the fact that the sampling point is not precisely at the tip of the antenna, but inboard by virtually 6". To see if the radiation currents coincided with those we might expect from a single-wire monopole, I constructed two single-wire monopoles. One used the same length as the folded monopole and increased the diameter (to 2.7") to achieve resonance. The second used the same wire diameter as each wire in the folded monopole and increased the length to achieve resonance. <b>Table 2</b> shows the radiating currents of all three models. Of course, for the single-wire monopoles, the radiating current level is the NEC report of the current on the prescribed segment.</p>
+  <center>
+    <img src="amod123-t2.gif" width="641" height="209" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The current magnitudes show a very close correspondence among the three vertical antennas. From the mid-point toward the element end, the folded monopole current phase falls between the values for the two single-wire models. Below that level, the phase angle of the folded monopole is shifted slightly more positive by the fact that at the first segment, the currents on the two wires are not precisely equal. Nevertheless, the sorting of radiation from transmission-line currents produces a radiation-current pattern that would be virtually indistinguishable from the current pattern for a comparable single-wire monopole.</p>
+  <p><i>A Center-Fed 1/2-Wavelength Antenna with a 1/2-Wavelength Parallel Feedline</i></p>
+  <p>The folded monopole example tends to confirm the adequacy of the analysis that sorts radiation from transmission-line currents for the case of a folded antenna element. However, it does not speak to the question of parallel feedline radiation. We may legitimately wonder if the same analysis is adequate to this task.</p>
+  <p>To test this question, we may begin with a center-fed half wavelength antenna constructed from AWG #12 copper wire. Rather than place the feedpoint on the center segment, we may also construct from the same wire a parallel feedline. For this and following examples, the test frequency is 28.5 MHz to minimize the model size. The feedline for the first sample model in this series is just long enough (209.1") to achieve resonance (77.7 - J0.1 Ohms). The feedline proceeds away from this free-space antenna at right angles, as shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod123-5.gif" width="322" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The current magnitude curves show that the current peaks on the feedline are at least as high as the peak current on the antenna element. However, we learned early in our experience with practical antennas that the set-up for the model minimizes radiation currents. Hence, we would anticipate that the calculations will place virtually all of this current in the transmission-line current columns.</p>
+  <center>
+    <img src="amod123-t3.gif" width="577" height="289" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 3</b> shows spot checks of the currents along each wire using both parallel and series model set-ups. The wire-2 values have the same magnitude for both set-ups, but the current phase values differ by 180 degrees. Because the radiation currents are so low, we find variability between the values produced by the two set-ups. However, the highest current value is less than 1% of the feedpoint current (1.0), rendering the calculated differences insignificant at a practical level. As we anticipated, we find much higher values in the transmission-line current column, and the two set-ups show a close fit in phase angle values.</p>
+  <p>The bottom line of this initial exercise is that a center-fed wire antenna with a parallel transmission line at right angles to the antenna element wire exhibits virtually no radiation current. Were it not for the role this model plays as a comparator for succeeding examples, the exercise would be superfluous.</p>
+  <p><i>An Off-Center-Fed 1/2-Wavelength Antenna with a 1/2-Wavelength Parallel Feedline</i></p>
+  <p>If we move the wire's feedpoint away from center, the two wires of the transmission line will show a differential in current magnitude not only at the junction with the antenna wire, but also long the entire length of the feedline. The sample model moves the feedpoint 30" toward one end of the wire and adjusts the segmentation of the antenna element wires accordingly. However, I left the length of the feedline at 209.1", a length of antenna and feedline that yields a somewhat non-resonant feedpoint impedance (113.7 - j20.0 Ohms). <b>Fig. 6</b> shows the general layout of the antenna as well as the relative current magnitude values along both the antenna and the feedline.</p>
+  <center>
+    <img src="amod123-6.gif" width="322" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From just the looks of this situation, we would expect that the radiation current levels on the transmission line will not be as insignificant as in the case of the center-fed antenna. <b>Table 4</b> shows the results obtained for the OCF antenna feedline using both model set-ups and the same checkpoints along the feedline that we used in the preceding example.</p>
+  <center>
+    <img src="amod123-t4.gif" width="577" height="289" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Wire 2 of the data from the NEC report shows the same close coincidence of magnitude values and the same 180-degree shift in phase angle for the two model set-ups that we have seen in all of the models so far explored. The transmission-line currents are not very distant in value from those we found on the centered feedline. The key change occurs in the radiation current column. Because the values are no longer trivially small, we find a very close coincidence of values between the two model set-ups. As we expected, the radiation current magnitudes values are much higher, amounting at their peak to about 27% of the peak current value at the center of the antenna element.</p>
+  <p>In practical terms, we might be hard-pressed to detect a difference in the radiation pattern between the center-fed and the OCF antennas at any moderate height (perhaps less than 1 wavelength but greater than 1/2 wavelength) above ground. Peak radiation current occurs about halfway up the feedline toward the antenna element and is considerably weaker than the antenna current peak value. Nevertheless, the radiation currents do exist and would be measurable.</p>
+  <p><i>An End-Fed 1/2-Wavelength Antenna with a 1/2-Wavelength Parallel Feedline</i></p>
+  <p>Let's move the transmission line to the end of the 1/2 wavelength wire element. Our next model in fact leaves one segment on one side of the line to reflect the usual bits of wire that terminate the open side of an end-fed antenna. The remainder of the element connects to the other side of the transmission line. The line length is unchanged at 209.1". The outline and current magnitudes appear in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod123-7.gif" width="322" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One of the lines appears to have a higher current peak than the other, although the graphic does not show us the current phase. Hence, we cannot know from the sketch whether the peaks or their differential mean anything yet for radiation currents. The peak current in the transmission line does seem to exceed the peak current on the antenna wire. That phenomenon results from the very high source impedance of the model: 2410 - j4020 Ohms. To obtain a look at the radiation and transmission-line components of the currents shown in <b>Fig. 7</b>, we must subject the NEC current reports to the sorting process. <b>Table 5</b> provides the data for both forms of model set-up.</p>
+  <center>
+    <img src="amod123-t5.gif" width="577" height="289" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The division of current between radiation and transmission-line components (with a 1/2 wavelength transmission line) may seem surprising. The transmission-line component rises to a very high level (given the source current of 1.0). In fact, the transmission line current peak (from the sample) is over 5 times the value of the peak radiation current level. In turn, the radiation current peak on the transmission line is only about half the value of the peak current that appears along the antenna element. The relative values of peak current between the transmission line and the antenna have steadily risen as we moved the transmission-line position from the antenna wire center toward the end. However, within the scope of the basic antenna parameters used to create the models, the feedline radiation has not challenged the dominant role of the antenna wire in setting the radiation pattern for the system. Moreover, had we used only the unsorted or composite current reports for the end-fed antenna, we might well have reached an unwarranted conclusion about feedline radiation.</p>
+  <p><i>A Center-Fed 1/2-Wavelength Antenna with a Tilted 1/2-Wavelength Parallel Feedline</i></p>
+  <p>All of the examples using the 209.1" feedline position the feedline at 90 degrees to the axis of the antenna wire. As a result, they show essentially the radiation current levels on the feedline as they result from the natural balance or imbalance of currents at the junction of the feedline with the antenna wire. Common practice is to extend the feedline at right angles to the antenna element for the greatest distance possible to avoid currents that might be induced in the feedline by coupling to the antenna fields.</p>
+  <p>The analysis that separates the radiation from the transmission-line currents is also applicable to examining the situation in which we bring the feedline away at an angle other than 90 degrees. For a sample, let's begin with a center-fed wire. Then we may bring the feedline from the junction to a point directly under one leg of the antenna element. In fact, I terminated the feedline at the point directly under one end of the center-fed wire. The vertical distance between the wire and the source end of the feedline is about 184.5", resulting in a total line length that is almost exactly the same as for the original center-fed model--a little over 209". The result was a feedpoint impedance not very different from the original model: 73.1 + j0.4 Ohms for the tilted line model and 77.7 - J0.1 Ohms for the original model. <b>Fig., 8</b> shows the basic outline of the tilted-feedline model.</p>
+  <center>
+    <img src="amod123-8.gif" width="322" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The sketch can mislead by virtue of the perspective, which I selected to show the current magnitude curves. The total antenna wire length is the same (within a few inches) of the transmission-line length. The feedline is about 28 degrees off vertical. The tilt is not radical, but clearly noticeable. Our next question is whether the tilt makes a difference in the radiation currents on the feedline. <b>Table 6</b> compares the currents for the original center-fed wire and the new version with a tilted feedline. Both tables use the series segmentation set-up.</p>
+  <center>
+    <img src="amod123-t6.gif" width="577" height="305" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We find very little difference between the two models in the transmission-line current columns. In the radiation current magnitude column, we find a significant difference. Radiation currents have increased by nearly a ten-fold average. The intrinsic current level is certainly not sufficient to alter that antenna radiation pattern. However, if we call the radiation current by their other name, common-mode currents, we may or may not have a cause for concern. At the equipment end of the feedline, the level of RF current necessary to create interference with sensitive solid-state circuitry is not very high at all. It is not at all clear from the sample model that we have surpassed the required threshold, which will vary with the power actually applied to the antenna-and-feedline system. The sample does nevertheless confirm that feedline routing can play a role in the level of radiation current on the feedline.</p>
+  <p><b>Conclusion</b></p>
+  <p>These brief notes have tried to show that an analysis of radiation or common-mode currents is possible for parallel two-wire transmission lines and that such an analysis as potential utility. The analysis makes use of current data from NEC models, but processes the data externally to NEC. NEC and MININEC are not ends in themselves, but a source of data that has extended utility once we know how to use the data.</p>
+  <p>The sample models are simplified, since the goal was to show the technique of analysis, not to produce definitive results. To analyze an actual situation, the models would undergo many changes that only begin with replicating the actual antenna and feedline. The model would route the feedline exactly as it occurs, and would add a real ground to the model.</p>
+  <p>Not everything that we may learn from NEC and MININEC models appears in the NEC output report data. The data may be a resource for numerous rounds of further analysis. We have only examined one such effort here.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <center>
+    &nbsp;
+  </center>
+</body>
+</html>

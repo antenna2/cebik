@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modeling By Equation</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>30. Modeling By Equation<br>
+    D. Scratch Pads and Coordinates</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p>In this small series of columns devoted to modeling by equation, we have looked at the very basics and then moved on to topics that may help us refine our techniques. The object has been to make maximum use of the facilities offered to us by any program containing a model-by-equation option, even though we have had to confine ourselves to a single program in order to sensibly link the various moves we have made.</p>
+  <p>So far, we have explored the need to develop modeling conventions, even within the use of equations to define variables, so that the task of modeling remains orderly and unconfused. We have also examined a few more complex models in order to reach decisions about what part of the work best appears on the equations pages of the spreadsheet and what of the work best appears on the wire pages.</p>
+  <p>In our exploration of modeling by equations, the examples we have so far used have all focused on the geometry of the antenna as either a function of wavelength or as a function of a physical structure. There are further options that lead us to use some other facilities within a modeling-by-equation system. In this column, we shall focus on two diverse examples that are especially suited to exploit these facilities. As in previous notes, we shall use the equations spreadsheet within NEC-Win Plus for our examples. But in this episode, we shall examine the utility of having a "scratch pad" at our disposal within the equations pages.</p>
+  <p>A scratch pad is simply an area on the spread sheet in which we may store data and equations. The data and equations will be those which are necessary in the process of deriving the values for the variables that will appear on the wire coordinate page. However, the data and equations in question do not directly define these variables. In simple models, we may not need the scratch pad, but as models become more complex--either in structure or in the mathematics used to define the structure--reserving variables for use on the wires page and placing supplementary data and calculations on the scratch pad can be very useful. (There is a technique within our sample program for getting around the limited number of allowed variable, but it will not be needed for our sample models.)</p>
+  <p><b>Another Look at the Quad Loop</b></p>
+  <p>Let's return to the quad loop with which we began, as shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod30-1.gif" width="349" height="337" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We have thought of the quad loop in terms of letting the values of A be constants or simple functions of wavelength. However, we can also look at the dimensions as a function of wire diameter. If we give the wire diameter as a fraction of a wavelength, then the resonant circumference for any frequency, also in wavelengths, can be approximated by the following equation:</p>
+  <center>
+    <img src="amod30e1.gif" width="494" height="50">
+  </center>
+  <p>QL<sub>wl</sub> is the circumference/perimeter of the quad loop in wavelengths and d<sub>wl</sub> is the wire diameter as a fraction of a wavelength. The log is to the base 10. (The spreadsheet in NEC-Win Plus knows the difference between LOG, also known as the "common" logarithm, and LN, known as the "natural" logarithm. In contrast, GW Basic, still a useful programming language for simple utility programs, knows only natural logs, and the user must program in a conversion factor to derive common logs.). A restriction upon this approximation equation is that it applies with under 2% error for wire sizes from 10<sup>-5</sup> to 10<sup>-2</sup> wavelengths in diameter. Although the equation appears to be quite adequate for wires that are thinner than the lower defined limit, using the equation on fatter wires will rapidly yield inaccurate results. Most physically constructed quad loops will wires falling within the equation limits.</p>
+  <p>Since the equations page already provides the wavelength in the selected units (W), implementing the required equations becomes very straightforward. The first step is to set a variable to the wire size. (Wire size here refers to wire diameter. Although NEC calculates using the wire radius, most NEC programs permit the user to input a wire diameter, since that value is normally better known. Conversion to the radius becomes an internal function of the user-to-core interface programming.) Since the wire size ultimately must be in the same units as we use for the wire-end coordinates, here is a handy conversion chart for common AWG wire sizes, given in inches, feet, and mm.</p>
+  <pre>AWG Size          Dia. Inches             Dia. Feet                        Dia. mm
+18                .0403                   .00336                        1.0236
+16                .0508                   .00423                        1.2903
+14                .0641                   .00534                        1.6281
+12                .0808                   .00673                        2.0523
+10                .1019                   .00849                        2.5883</pre>
+  <p>We can enter the desired wire size directly, or we might use up a bit of scratch pad or equation variable space by entering the diameter in a common unit (such as inches) and then converting it to the value in the desired units (in this example, feet). Suppose we enter .0641 as our wire diameter and let it equal A. Then B might equal this value divided by 12 to obtain a value in feet, the chosen unit of measure for the model. Finally C might equal B divided by W (the wavelength). I have taken this route only because we have plenty of pre-defined variables at our disposal for this small problem.</p>
+  <center>
+    <img src="amod30-2.gif" width="639" height="744" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can now let D be the perimeter/circumference as defined in <b>Equation 1</b> above, where d<sub>wl</sub> takes the value of variable C, as we have just derived it. In this example, we have used #12 AWG wire with a diameter of 0.0808" as the wire size. Note that in the upper portion of <b>Fig. 2</b>, the entry for the variable D follows <b>Equation 1</b> exactly, although the notations differ.</p>
+  <p>However, for developmental purposes we may wish to follow a different procedure in setting up the equation for D. In the lower portion of <b>Fig. 2</b>, we can see that the equation for D refers to D2, D3, and D4. These are values entered into column D, in the "scratch pad" area of the equations page. The entries in column E identify the values placed in column D. The equation for the variable D uses the active values in rows 2-4 of column D at the designated places.</p>
+  <p>An advantage of using the scratch pad is that the modeler can make adjustments to the numerical values in the equation for variable D without having to rewrite the equation. In fact, adjustments were made in the development of the algorithm in question. The initial value in D2 was 1.0416 and the value in D4 was 0.0131. Further adjustments, including varying the exponent, to bring the curve further into alignment with NEC calculations for resonant quad loops would be a routine matter.</p>
+  <center>
+    <img src="amod30-3.gif" width="633" height="283" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can convert the value of variable D (initially calculated in wavelengths) to a value in the selected units of measure by letting E equal D times W, the length of a wave in those units of measure. <b>Fig. 3</b> shows the numerical values that result for a frequency of 28.5 MHz.</p>
+  <p>The only additional step we need to take is to set up the coordinates. We have some choices here, one of which is to pre-convert the total perimeter length into +/- values for the 4 wires in the single square loop. So we can let G equal E divided by 8. (Note that, in the NEC-Win Plus spreadsheet used for our examples, F and W are preset variables for frequency and wavelength, respectively. Hence, our own list of variables will jump from E to G.) <b>Fig. 4</b> shows the wires page that corresponds to the prescribed variables we have just described.</p>
+  <center>
+    <img src="amod30-4.gif" width="634" height="284" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From this set of variables entered on the wires page, we get the numerical values shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod30-5.gif" width="633" height="282" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Even on the wires page, we have options. The definition of variable G was unnecessary, although for many purposes it is convenient. We might have done our division by 8 on the wires page itself, thus saving the use of one variable. In the present simple case, we have plenty of variables to use, but in more complex cases. we might wish to use the least number possible to ensure that all entries needing a variable have one. <b>Fig. 6</b> shows our revised wires page variable entries, along with the dimension entries to verify that we achieve the same results as we obtained with our previous procedure.</p>
+  <center>
+    <img src="amod30-6.gif" width="635" height="566" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Learning to use all of the facilities at our disposal in the most efficient and effective manner takes some time, and this simple example only scratches the surface of the scratch pad.</p>
+  <p><b>The Moxon Rectangle</b></p>
+  <p>The Moxon Rectangle is a 2-element parasitic array with the ends of the elements folded to point toward each other. The mutual coupling of the elements and the coupling between the tips of the tails yields a nearly cardioidal pattern with a very high front-to-back ratio. <b>Fig. 7</b> shows the general outline of the Moxon Rectangle, with identifications for all of the key dimensions.</p>
+  <center>
+    <img src="amod30-7.gif" width="400" height="301" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The critical dimension is the gap between the tips of the tails (dimension C). The other dimensions then determine the resonant frequency of the array (close to 50 Ohms) and the frequency of maximum front-to-back ratio. I once optimized a series of models using #14 copper wire for all of the HF bands from 40 meters to 10 meters. Barbara Craig, KC8KJA, performed a series of regressions on this data to develop a sequence of equations defining Moxon Rectangle dimensions for #14 bare copper wire, with results that are usable even at 2 meters.</p>
+  <p>The following GW Basic utility program provides a listing of the equations that resulted from the regression analysis. Lines 40-80 supply the mathematics, using the design frequency that the user enters in line 20 and the constants defined in line 30.</p>
+  <pre>10  PRINT "Program to calculate the dimensions of"
+12  PRINT "a #14 AWG Bare Wire Moxon Rectangle"
+14  PRINT "Analysis by Barbara Craig, KC8KJA"
+16  PRINT "Output dimensions in Feet (See Fig. 7)
+20  INPUT "Enter frequency in MHz:";F
+30  A0=6.19653:B0=1.00058:A1=6.126836:B1=.99437:A2=6.19966:B2=1.00033:GA=.72
+40  A=GA*((EXP(A2)/F)^(1/B2))
+50  B=.5*((EXP(A1)/F)^(1/B1))-(.5*A)
+60  D=((1-GA)/2)*((EXP(A2)/F)^(1/B2))
+70  E=((EXP(A0))/F)^(1/B0)-A
+80  C=E-(B+D)
+90  PRINT "A = ";A
+100 PRINT "B = ";B
+110 PRINT "C = ";C
+120 PRINT "D = ";D
+130 PRINT "E = ";E
+140 END</pre>
+  <center>
+    <img src="amod30-8.gif" width="638" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows one way in which we can enter the equations into the equations page of NEC-Win Plus. The spreadsheet mathematical forms here follow the Basic forms exactly. As the representative equation (for variable A, which corresponds to dimension A in <b>Fig. 7</b>) shows, we can enter the set of constants that emerged from the exercise in regressions directly into the equations. On the scratch pad, we have entered solely for reference the values of gamma and of alpha0-2 and beta0-2. However, the variable equations themselves contain all of the requisite information for dimension calculation. Variables A-E correspond to the dimensions in <b>Fig. 7</b>. (Although Basic requires rigorous serial calculation, which places the derivation of variable and dimension C last, the spreadsheet permits the user to list the variables in almost any desired order.)</p>
+  <p>The equations apply only to antennas using #14 bare copper wire. The actual relationships among the dimensions is somewhat complex, since a fatter wire will require a wider gap. The resultant increase in dimension E will change the feedpoint impedance, as will the fatter wire itself. Elongating the array will restore the near-50-Ohm feedpoint impedance, but there will be adjustments to the overall length of both the driver and reflector elements to place the maximum front-to-back ratio at the design frequency. Hence, the relationships among the element dimensions will shift as we move to #10 wire or to aluminum tubing in the 0.5" to 1" range.</p>
+  <center>
+    <img src="amod30-9.gif" width="637" height="458" border="2" vspace="5" hspace="9">
+  </center>
+  <p>With the prospect that regression analysis would produce differing constants for other wire diameters, a more useful way of entering the equations appears in <b>Fig. 9</b>. Here, the values in column D represent active values that we draw into the variable equations by means of column and row references. The sample equation for dimension A illustrates the method and may be compared directly with the sample equation in <b>Fig. 8</b>. D2, D7, and D8 replace the constants in the earlier version of the equation. Column E now holds reference data to identify each of the values in column D.</p>
+  <center>
+    <img src="amod30-10.gif" width="633" height="283" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let us suppose that we have a new set of values for gamma and for A0-2 and B0-2 for some new wire size. We need not create an entirely new model. One option would be to replace the values in column D with the new values and to save the model under a new name. Another option would be to place the new values in column F and then to use further spreadsheet capabilities to let the equations page select the appropriate column of values, depending upon the wire size, which we might enter as a variable. Such possibilities go beyond the scope of these introductory exercises. However, if modeling by equation becomes a routine task, then exploring the full limits of the spreadsheet's language becomes an important part of the learning curve.</p>
+  <p><b>Fig. 10</b> shows the set of values that emerge from either method of entering the equations. Variable G is useful for this and other sample models, because it gives us the option of setting the design frequency either to the current frequency of the model or to some specific frequency. The latter type of frequency assignment is useful when we wish to run a frequency sweep with the design frequency at neither end of the frequency range that we sweep.</p>
+  <center>
+    <img src="amod30-11.gif" width="635" height="566" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 11</b> displays the two forms of the wires page for this example. Note that it is necessary to decide several matters regarding the axes for the model. In this case, the X-axis uses +/- A values, requiring us to use half of the value of A. The Y-axis provides the front-to-back dimensions, with the reflector set a Y=0. All other values are positive. Only the tip of the driver tail requires a "complex" formulation, and dimension C is not referenced at all on the wires page (despite its importance to the antenna design). You may wish to reference the side-to-side dimensions to the Y-axis and the front-to-back dimensions to the X-axis. To capture a vertically oriented Moxon, the side-to-side dimensions would be referenced to the Z-axis, with the front-to-back dimensions referenced either to X or Y. To place the antenna at some specific height above ground would require the use of one more variable for the antenna height. In this case, the wires page variable entries would become a mixed function of the new height variable and the variable A, using techniques noted in previous episodes.</p>
+  <p><b>Conclusion</b></p>
+  <p>Together, the quad and Moxon examples illustrate one of the many uses of the scratch pad facility. Not only is it a place to enter reference data, it also serves as an active data pad that the variable equations can routinely reference. The scratch pad data need not be just a series of constants, but may also consist of equations. Indeed, any equation that is not used on the wires page may best be placed on the scratch pad. In addition, we may also use the scratch pad area for identifying notes and labels to ensure that the data we place there today can be interpreted months later. As an exercise to ensure mastery of these matters, you may wish to go through all of the examples in these 4 episodes, transferring to the scratch pad all data and equations that are not directly needed to specify a variable used on the wires pages.</p>
+  <p>We could carry on this series of columns on modeling by equation almost indefinitely. However, I hope the selection of examples used in this and the preceding columns provides enough background and ideas to permit you to develop your own best methods of using this versatile adjunct to creating effective models. Although these notes have focused exclusively on elements that we may model through the use of equations, we must also remember that none of the requirements and limitations of NEC are set aside in the process. Segmentation, source placement, load placement and type, convergence testing, and GAT testing all remain important concerns to the modeler, no matter how simple or complex the equations of the model.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

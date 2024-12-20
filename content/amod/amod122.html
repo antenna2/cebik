@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reciprocity: Home on the Range</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>122. Reciprocity: Home on the Range</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>The ARRL Antenna Book</i> (20th Ed., p. 2-1) contains a beginner's discursive explanation of reciprocity. "In the same fashion that a loudspeaker can act as a microphone, a radio antenna also follows the principle of reciprocity. In other words, an antenna can transmit as well as receive signals." This brief extract follows an explanation of an antenna as a "special transducer" capable of converting RF current into propagating electromagnetic waves and converting intercepted waves into electrical current. The context is the very beginning of a chapter called "Antenna Fundamentals." Hence, we should not expect mathematical sophistication.</p>
+  <p>More mathematically inclined readers may wish to consult various college-level antenna texts. I keep a small number on my shelf as references, for example, Stutzman and Thiele, <i>Antenna Theory and Design</i> (2nd Ed., pp. 404-409), and Balanis, <i>Antenna Theory: Analysis and Design</i> (2nd Ed., pp. 127-132). I have listed the most relevant pages of each text for a reason. Balanis discusses reciprocity early in the text's development, but Stutzman and Thiele defer the treatment until late in the text. We shall have occasion to note the Stutzman and Thiele placement later. Both treatments share a common kernel, the development of antenna reciprocity from the Lorentz reciprocity theorem, which itself derives from Maxwell's equations. (Those comfortable with calculus may wish to compare the Stutzman and Thiele equation 9-36 with Balanis' equation 3-66.)</p>
+  <p>A better-known text among amateur radio operators is Kraus, <i>Antennas</i> (2nd Ed., pp. 410-413). One interesting aspect of the Kraus treatment is that he uses a different starting point for his development of reciprocity. He begins with the Rayleigh-Helmholtz reciprocity theorem as generalized in the 1920s by J. R. Carson. (Rayleigh's initial context of sound is not unrelated to the ARRL basic analogy between antennas and loudspeakers.) Without ado, Kraus expresses the theorem in the following terms: "If an emf is applied to the terminals of an antenna A and the current measured at the terminals of another antenna B, then an equal current (in both amplitude and phase) will be obtained at the terminals of antenna A if the same emf is applied to the terminals of antenna B." (p.411) <b>Fig. 1</b> provides a graphic representation of the terms of the theorem.</p>
+  <center>
+    <img src="amod122-1.gif" width="300" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Kraus goes on to note some of the limiting conditions in which the theorem applies. Of course, the frequency of the applied emf (or voltage) must by the same, and the media must be "linear, passive and also isotropic." For our purposes in evaluating whether NEC honors reciprocity, the following note is critical: "An important consequence of this theorem is the fact that under these conditions the transmitting and receiving patterns of an antenna are the same."</p>
+  <p>Kraus' statement gave us something that we could test and demonstrate within NEC, as we did in episodes 88 and 121 of this series. By using plane wave excitation (EX1) and checking the current magnitude at the wire segment that would serve as the source in a transmitted pattern, we were able to develop a receiving pattern. When we normalize both the transmit and the receive patterns, they formed a virtually perfect overlay. However, the demonstration required us to use portions of the NEC command set that are not generally available in entry-level software, such as basic EZNEC and NEC-Win Plus. These programs generally require us to use a voltage source (or an indirect current source) and they yield transmit patterns, that is, far-field data.</p>
+  <p>The question for this episode is whether we can achieve the same goal of demonstrating reciprocity within NEC using only the tools generally available in entry-level software. With a little ingenuity, we can arrive at comparable results. In the process, we may also come to appreciate better the terms of reciprocity within NEC calculations.</p>
+  <p><b>Home on the Range with Dipoles in Free Space</b></p>
+  <p>We may model the Carson version of the reciprocity theorem simply by using two antennas and separating them by a considerable distance. Our basic models will use a number of simplifying conditions to prevent potential confusions introduced by intervening variables. For example, we shall use lossless or perfect wire in the models. Our first examples will use a free-space environment so that ground reflections and losses do not play a role in the development of data. Because the frequency is convenient for later purposes, we shall set the test antennas at 146 MHz, although any frequency will do as well. The initial two test antennas will be resonant (technically, near-resonant) dipoles. Each dipole is 38.3" long with a 0.1875" diameter. So long as the distance between the dipoles places them in the far field of each other, it would be adequate. Arbitrarily, I selected a distance of 1 mile (5280', 63360", 1609.344 m, 783.7366 wavelengths). Distance will affect the numbers that we gather, but not the principles involved. <b>Fig. 2</b> shows the general outline of the modeling set-up.</p>
+  <center>
+    <img src="amod122-2.gif" width="494" height="167" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following model in ASCII format shows the basic set-up. The dimensions are in meters.</p>
+  <pre>
+CM dpl-dpl 1 mile fs
+CE
+GW 1,21,0.,-.48641,0.,0.,.48641,0.,.0023813
+GW 2,21,1609.344,-.48641,0.,1609.344,.48641,0.,.0023813
+GE 0
+FR 0,1,0,0,146.
+GN -1
+EX 0,1,11,0,200,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <p>For reference only, <b>Fig. 3</b> shows the dipole pattern. The analysis panel provides the transmit performance data with one exception. The source impedance is 71.941 + j0.515 Ohms. Both antennas shown in <b>Fig. 2</b> will be identical dipoles. As the pattern suggests, the NEC runs occurred on NSI software, specifically GNEC and NEC-4. However, for this and all following steps, any version of NEC will do.</p>
+  <center>
+    <img src="amod122-3.gif" width="625" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The transmit pattern is only background information for our real goal, the reading of the reported current on the center segment of the un-excited dipole. In terms of the model shown, we shall be interested in GW 2, segment 11. The NEC output report provides a table of current values for each segment within a model (unless the user selects a specific command to suppress printing them). We shall be using data for which most NEC implementations do not provide graphing capabilities, so we may expect to use alternative means to present the information.</p>
+  <p><i>Special Note about EZNEC</i>: NEC makes use of input and output voltage and current peak values. EZNEC uses RMS values for input and output voltages and currents. If we assign a specific numeric voltage value to an EZNEC source, we shall receive a certain numeric value for any segment current in its current table. These numeric values will coincide with those that NEC produces in other software if we remember that EZNEC up-converts to peak value at the start of the core run and then down-converts back to RMS in its output files.</p>
+  <p>We are now prepared to look at some interesting cases involving reciprocity.</p>
+  <p><i>Assessing the Receiving Pattern Shape</i></p>
+  <p>In our initial notes on reciprocity, we noted that Stutzman and Thiele defer their account until late in the text, specifically in a chapter devoted to antenna testing and measurement. If reciprocity is correct, then we may test an antenna on a proper range using any of the 4 systems shown in <b>Fig. 4</b>. The top two versions of the test are complex and inconvenient. However, a version of the system at the upper left is commonly used with fixed broadcast towers by taking periodic field-strength readings at ground level and specified distances from the installation. The lower two versions of the test are more common for range tests used by manufacturers.</p>
+  <center>
+    <img src="amod122-4.gif" width="528" height="367" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We may evaluate the pattern of the dipoles in the model shown earlier by rotating either the excited or the un-excited antenna in useful increments. In fact, we may do both in succession and compare results. We might use 10-degree increments and confine the range of rotation to 90 degrees, since we expect two orders of symmetry in the pattern. A range would likely rotate one of the antennas through a complete cycle and perhaps trace the pattern continuously rather than using our stepped procedure.</p>
+  <p>Since the two antennas are 1 mile apart in the model, I have arbitrarily raised the excitation voltage to 200 V pk, or a power level of 278 watts. (We shall shortly examine the question of the source voltage.) For pattern evaluation, we need not concern ourselves with the fact that the receiving antenna does not have a load that represents the feedpoint impedance. Instead, we shall concern ourselves with accurately rotating each antenna (in turn) in 10-degree increments and recording the magnitude and phase of the current on the center segment of the receiving antenna. <b>Table 1</b> records the results of our rotational tests. NEC, of course, reports using engineering notation to maximize the number of significant digits in the smallest possible printing space. Indeed, an 8-unit printing space for any report value is standard in NEC tables.</p>
+  <center>
+    <img src="amod122-t1.gif" width="357" height="289" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As the table shows, it does not matter whether we rotate the transmitting dipole or the receiving dipole, since we obtain identical results in both cases. (The deep null at 90 degrees is the only place where we find a minuscule difference in the calculated phase angle of the current.) The values appear plausible as reflections of the transmit pattern for the dipole. Since appearances may sometimes deceive, we should likely see if we can confirm the actual pattern shape. The pattern in <b>Fig. 3</b> is a normalized pattern given in decibels. It has a convenient checkpoint in the pattern analysis information: at 40 degrees, the pattern should show a deficit of 3.13 dB relative to maximum gain.</p>
+  <p>At this point, we may introduce the only significant external calculation that we need to make throughout these proceedings. We may convert ratios of current into gain values in dB by reference to the following common equation"</p>
+  <center>
+    <img src="amod122-e1.gif" width="219" height="54">
+  </center>
+  <p>If we let the current at 0 degrees be I1 and the current at 40 degrees be I2, we obtain a gain differential of 3.1297 dB. Since the half-power points coincide between the transmit radiation pattern and the receive patterns using either method of rotation, we can satisfy ourselves that the dipole patterns are the same in both modes of use. If we still have doubts, we may trace the normalized gain of the transmit radiation pattern at 10-degree increments and perform the same calculation at every one of them.</p>
+  <p><i>Transmit Voltage and Receive Current</i></p>
+  <p>Newer modelers are very often relatively new students to antennas. Therefore, it may be useful to employ the double-dipole range model in a second way. Let's allow the two dipoles to face each other, that is, be broadside to broadside. In this test or demonstration, we shall be paying close attention to the terms in which Carson expresses reciprocity: "If an emf is applied to the terminals of an antenna A and the current measured at the terminals of another antenna B, then an equal current (in both amplitude and phase) will be obtained at the terminals of antenna A if the same emf is applied to the terminals of antenna B."</p>
+  <p>A common misunderstanding of antennas is that the current at the receiving antenna will be proportional to the power applied to the transmit antenna, assuming that we have an unchanging set of antennas in an equally unchanging environment. However, as noted in the reciprocity theorem, the received current, as sampled at the erstwhile feedpoint of the receiving antenna, will be proportional to the feedpoint voltage at the transmitting antenna. Therefore, according to the theorem (and, of course, a good bit of other basic antenna theory), if we halve the transmitting antenna voltage, we should also halve the receiving current.</p>
+  <p>We may measure (or model) the current in two ways. One way is to continue to use no load at the feedpoint segment of the receiving dipole. The other method is to use a matched load on the feedpoint segment. From our transmitting model, we know that the feedpoint impedance is 72.941 + j0.515 Ohms. We may introduce this load to the receiving dipole model by adding one line to the model itself. The LD 4 complex load command provides all that we need.</p>
+  <pre>
+CM dpl-dpl 1 mile fs with receiving antenna load
+CE
+GW 1,21,0.,-.48641,0.,0.,.48641,0.,.0023813
+GW 2,21,1609.344,-.48641,0.,1609.344,.48641,0.,.0023813
+GE 0
+LD 4,2,11,11,71.941,.515
+FR 0,1,0,0,146.
+GN -1
+EX 0,1,11,0,200,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <p>Let's use source (EX 0) peak voltages of 200, 100, and 50 volts to see what we obtain at the receiving antenna under both conditions. The NEC output file provides the current values as two sets: one pair of values providing real and imaginary numbers, the other pair of values listing the magnitude and phase angle. <b>Table 2</b> shows what the model reports.</p>
+  <center>
+    <img src="amod122-t2.gif" width="465" height="257" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In my table transcriptions, I have also recorded the NEC report of the antenna input power. For each halving of the source voltage, the resulting power is 1/4 the previous value. In contrast, the receiving current progressions are exactly in step with the applied transmitting voltage. Halving the voltage value produces half the peak current in each of the report columns. Of course, in the model set-up, proportional changes of the real and imaginary components of the current result in the same phase angle throughout.</p>
+  <p>In a number of e-mails that I have received regarding test-range models, the writer will inquire whether the receive antenna requires a load. The two sections of the table suggest one sort of answer. Installing a perfect load on the receiving antenna, that is, a load the matches the impedance of the antenna at that segment, results in current values that are exactly 1/2 the values recorded without the load. In this case, we obtained the load value by examining a transmitting version of the model and noting the source impedance. In some cases, one may wish to use a standard load, regardless of the feedpoint impedance. 50 Ohms is a common value. Unless the antenna happens to have a feedpoint impedance of 50 Ohms, expect a different set of current values.</p>
+  <p><b>Home on the Range with Monopoles over Perfect Ground</b></p>
+  <p>We may replicate the model set-up using monopoles over perfect ground instead of dipoles in free space. Since perfect ground pattern calculations use standard image techniques, we do not create any intervening variables to disturb the basic NEC processes. In fact, we may set up a resonant monopole using the same materials (19.15" of 3/16" diameter lossless wire) that we used for the dipoles. The following lines record a reference monopole in .NEC format.</p>
+  <pre>
+CM monopole perfect ground
+CE
+GW 1,21,0.,0.,0.,0.,0.,.48641,.0023813
+GE 1
+FR 0,1,0,0,146.
+GN 1
+EX 0 1 1 0 200.00000  0.00000
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+EN
+</pre>
+  <p><b>Fig. 5</b> shows the standard theta radiation pattern, while the side-bar provides most of the reference data that we may need. We may bypass an analysis of the received pattern shape by noting its near identity to one-half of a free-space dipole pattern. If you compare <b>Fig. 5</b> to <b>Fig. 3</b>, you will find that the half power point is 40 degrees away from the angle of maximum gain in both cases. The reported impedance for the monopole is 36.146 + j0.833 Ohms. The value is very close to but not exactly half the dipole value. The dipole feedpoint occurs at the exact center of the antenna. The corresponding point on the monopole would be where the wire intersects ground level (Z=0). Since that position is not available, the monopole's feedpoint is on the closest segment (of the 21 segments on the wire) to ground, which places it very slightly off the virtual center point.</p>
+  <center>
+    <img src="amod122-5.gif" width="625" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p><i>Transmit Voltage and Receive Current</i></p>
+  <p>Although we have introduced a perfect ground and shrunk the antennas into monopoles, we may otherwise use the same basic "range" model used for the dipoles. <b>Fig. 6</b> outlines its basic dimensions. Since a monopole's phi pattern will be circular, we may ignore the pattern analysis step that we used with the dipole and turn directly to an examination of transmitted voltages and received currents.</p>
+  <center>
+    <img src="amod122-6.gif" width="494" height="167" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The test uses the same procedures invoked earlier. We shall begin with no load on the receive monopole feedpoint and later add a matched load of 36.146 + j0.833 Ohms. Within each data set, we shall begin with a source voltage of 200 volts peak and reduce it to 100 and then to 50 volts. <b>Table 3</b> supplies the data from the NEC output report current tables.</p>
+  <center>
+    <img src="amod122-t3.gif" width="465" height="257" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Based upon our dipole tests, the monopole data meets our emerging expectations. Halving the transmit antenna source voltage halves the receive antenna's feedpoint current. Because we are using only a finite number of decimal places in the calculation steps, we notice a very tiny numerical difference between corresponding steps in the I-imaginary column, just enough to change the phase angle by 0.001 degree.</p>
+  <p><i>Dipole vs. Monopole Gain</i></p>
+  <p>If we refer to the standard radiation patterns, we note that the monopole maximum gain is 3 dB greater than the maximum gain of the dipole in free space due to the addition of ground reflections as simulated by image calculation techniques. We may fairly ask if we can find the same gain in the receiving current data.</p>
+  <p>The answer is affirmative if we do not leap directly into comparing the two receiving antennas in terms of the reported currents converted into dB values. Each current report occurs with reference to a particular feedpoint impedance. Therefore, we should first convert corresponding dipole and monopole current readings into power levels and then use the power version of the gain equation. Let's use the current magnitude values for a 200-volt source and a matched load in each case. The quick hand-calculator steps would have the following appearance.</p>
+  <blockquote>
+    <pre>
+P1 = I^2 R = (9.1530e-4)^2 * 36.146 = 3.0282e-5
+P2 = I^2 R = (4.6095e-4)^2 * 71.941 = 1.5286e-5
+Gain = 10 log(P1/P2) = 10 log(1.9811) = 2.969 dB
+</pre>
+  </blockquote>
+  <p>The monopole over perfect ground (ignoring the slight difference in the current phase angles) has a 3-dB gain over the free-space dipole.</p>
+  <p><b>More Complex Patterns</b></p>
+  <p>In the preceding episode of this series, we compared the transmit and receive patterns of a 6-element Yagi using a standard transmit format (EX 0 and RP 0 commands) followed by a normalized receive pattern created by using an EX 1 and a PT 3 command. The final step in our range-test exercise will be to see whether we can replicate the results using transmit and receive patterns that substitute for the plane-wave excitation.</p>
+  <p>The first step is to re-create the 6-element Yagi used in the preceding episode.</p>
+  <pre>
+CM 6-el 2M Yagi
+CE
+GW 1,21,-.6885686,.514604,0.,-.6885686,-.514604,0.,.0023813
+GW 2,21,-.4312666,.5075174,0.,-.4312666,-.5075174,0.,.0023813
+GW 3,21,-.3247898,.4746752,0.,-.3247898,-.4746752,0.,.0023813
+GW 4,21,-.0300482,.461137,0.,-.0300482,-.461137,0.,.0023813
+GW 5,21,.2583942,.461137,0.,.2583942,-.461137,0.,.0023813
+GW 6,21,.6885684,.443992,0.,.6885684,-.443992,0.,.0023813
+GE 0
+FR 0,1,0,0,146.
+GN -1
+EX 0,2,11,0,1,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <p><b>Fig. 7</b> shows the Yagi pattern using the normal EX 0 and RP 0 combination of commands. The gain is 10.29 dBi. The Yagi provides us with more than one check point for verifying that the receive pattern is the same as the transmit pattern without resorting to developing an external polar plot. The 180-degree front-to-back ratio is 35.98 dB. Not shown in the analysis is the worst-case front-to-back ratio (which may also be called the front-to-sidelobe ratio). The reported value is 24.28 dB. Finally, we have the half-power or 3-dB point at 27 degrees from the main forward lobe heading. For reference, the feedpoint or source impedance is 50.00 + j9.53 Ohms.</p>
+  <center>
+    <img src="amod122-7.gif" width="625" height="380" border="2" vspace="5" hspace="9">
+  </center>
+  <p><i>Assessing the Receiving Pattern Shape</i></p>
+  <p>To evaluate the receiving pattern shape, we shall create a free-space range set-up identical to the one that we used for the dipole. The Yagi and the other range antenna (a dipole) will be 1 mile apart. We shall rotate the Yagi by adding a convenient GM command to the .NEC-format input or model file. However, entry-level software provides external convenient rotating means. The following model is one of two that we shall use.</p>
+  <pre>
+CM 6-el 2M Yagi and dipole
+CE
+GW 1,21,-.6885686,.514604,0.,-.6885686,-.514604,0.,.0023813
+GW 2,21,-.4312666,.5075174,0.,-.4312666,-.5075174,0.,.0023813
+GW 3,21,-.3247898,.4746752,0.,-.3247898,-.4746752,0.,.0023813
+GW 4,21,-.0300482,.461137,0.,-.0300482,-.461137,0.,.0023813
+GW 5,21,.2583942,.461137,0.,.2583942,-.461137,0.,.0023813
+GW 6,21,.6885684,.443992,0.,.6885684,-.443992,0.,.0023813
+GM 0 0 0 0 00 0 0 0 1 1 6 21
+GW 7,21,1609.344,-.48641,0.,1609.344,.48641,0.,.0023813
+GE 0
+FR 0,1,0,0,146.
+LD 4 7 11 11 71.941 0.515
+GN -1
+EX 0 2 11 0 200.00000  0.00000
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <p>The dipole is GW 7. The GM line above it rotates the Yagi by changing the 00 entry to a number of degrees. We shall use 10-degree increments. However, since the Yagi pattern is symmetrical along only 1 axis, we shall work from 0 to 180 degrees. As we did in the case of the dipole, we shall use a 200 volt (peak) source voltage.</p>
+  <p>The EX 0 command shows that the source is on wire 2 of the Yagi. Note that the LD 4 command places a matched load on the dipole, where we derive the load value from the source impedance of the dipole in a transmit set-up (71.94 + j0.52 Ohms). We read the current from the segment specified by the load. The alternative situation is to place the source on the dipole (wire 7, segment 11), and move the load to the Yagi (wire 2, segment 11). When we move the load, we also change its value to the Yagi matched value of 50.00 + j9.53 Ohms.</p>
+  <center>
+    <img src="amod122-t4.gif" width="401" height="465" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 4</b> records the data from the two runs. In both cases, we rotate the Yagi. However, the left data columns record the current on the dipole feedpoint when the Yagi transmits. The right data columns record the current at the Yagi feedpoint when the dipole transmits. <b>Fig. 8</b> shows the general scheme of what the pattern assessment demonstrates.</p>
+  <center>
+    <img src="amod122-8.gif" width="580" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first notable fact about the demonstration data is the virtual identity of the received current values using the same source excitation voltage, regardless of which antenna transmits and which receives. We may also note that the current at 180 degrees is slightly higher than the current at 170 degrees, which corresponds to a slight rearward increase in transmit gain at 180 degrees for the Yagi when modeled alone.</p>
+  <p>However, to confirm that the pattern in the receive mode on the range test coincides with the standard transmit pattern of <b>Fig. 7</b>, we need further check points. We may apply the same sort of gain calculations that we used with the dipole, but more points of reference on the pattern. For example, we may compare the maximum current at zero degrees with the current at 180 degrees to see if the value coincides with the front-to-back ratio. As well, we may perform the same calculation with respect to the front-to-sidelobe (or worst-case front-to-back ratio). In this case, the heading of the standard value is 126 degrees, so we may use the closest recorded heading, 130 degrees. Finally, as we did for the dipole, we may bracket the half-power points using the values at 20 and 30 degrees for the 27-degree heading of the half-power point. Moreover, we may use either set of currents--or both for the sake of demonstration. <b>Table 5</b> shows the results of the calculations.</p>
+  <center>
+    <img src="amod122-t5.gif" width="257" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The result show that the range set-up not only confirms that NEC honors reciprocity, but as well, that range testing is in principle a reliable way to determine that shape and relative strength of an antenna pattern. Of course, range testing was in use long before NEC was born, but we have nearly a generation of antenna modelers who may never have seen an antenna test range in operation. Hence, the NEC demonstration provides a means for a modeler to teach himself or herself what range testing involves--minus certain intervening variables, of course.</p>
+  <p><i>Yagi Forward Gain</i></p>
+  <p>All that we lack to complete the data--at least as far as this simplified demonstration goes--is the forward gain of the Yagi. We have already compared the gain of a dipole in free space to a monopole over ground. We may apply the same procedures to comparing a free-space dipole to a Yagi when both are in free space. <b>Fig. 9</b> shows the model set-ups.</p>
+  <center>
+    <img src="amod122-9.gif" width="520" height="325" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We already have the necessary data for both the dipole and the Yagi when both test set-ups use the same excitation voltage. Since the antennas have different impedances, we cannot simply compare current data. However, by using the current and impedance information together, we can obtain appropriate power values and then use the dB-conversion equation to obtain the gain of the Yagi over the dipole. The following calculation uses data for a 200-volt source.</p>
+  <blockquote>
+    <pre>
+P1 = I^2 R = (1.3928e-3)^2 * 50.003 = 9.7000e-5
+P2 = I^2 R = (4.6163e-4)^2 * 71.941 = 1.5331e-5
+Gain = 10 log(P1/P2) = 10 log(6.3272) = 8.012 dB
+</pre>
+  </blockquote>
+  <p>These calculations are slightly simplified in view of the relatively small phase angles involved. However, the Yagi shows a gain of about 8.0 dBd(r), that is, 8.0 dB over a dipole under identical range conditions.</p>
+  <p><b>Conclusion</b></p>
+  <p>These small and simple demonstrations illustrate several facets of modeling of which the beginning modeler may not be aware. First, they show that one may model reciprocity without requiring plane-wave excitation and receive patterns. The methods used here make use only of the facilities available on the most basic entry-level software.</p>
+  <p>Second, if we approach antennas--as so many amateur radio operators do--without a thorough grounding in antenna basics, we may use NEC software to teach ourselves various fundamental principles. In this instance, we have explored the terms of the reciprocity theorem at a practical level. (College texts can provide additional grounding at a level that is even more fundamental.)</p>
+  <p>Third, we may also look at modeling as an analog to range testing when we correctly set up a model. Moreover, we may expand the range-testing set-up to examine the effects of structures on antenna patterns, correlating the currents in such an intervening structure to the modifications it may make in a radiation pattern without the structure.</p>
+  <p>Our little exercise that began in seeming pursuit of reciprocity has had much to teach us about antennas and antenna modeling that extends far beyond reciprocity itself.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

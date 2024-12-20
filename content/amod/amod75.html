@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NEC: Power Efficiency vs. Radiation Efficiency</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>75. NEC: Power Efficiency vs. Radiation Efficiency</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>There seems to be a semi-pervasive mystery about what NEC may report by way of "efficiency" with respect to an antenna under test. So let's examine what the NEC output report may tell us in this regard. We shall use a series of simple examples to illustrate the information.</p>
+  <p><b>Power and Radiation Efficiency Reports and Calculations</b></p>
+  <p>First, every NEC output report provides a Power Budget report. The general form of the budget looks something like the following (without regard to the specific model that generated the numbers involved.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                           INPUT POWER   = 6.8603E-02 WATTS
+                                           RADIATED POWER= 5.6868E-02 WATTS
+                                           WIRE LOSS     = 1.1735E-02 WATTS
+                                           EFFICIENCY    =  82.89 PERCENT
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The input power is a calculation based upon the source level (normally, voltage magnitude at 0 degrees phase angle) and the calculated source impedance. The radiated power is the input power minus the sum of all losses. Wire losses include losses due to the material conductivity (LD5) assigned to the model's wires as well as losses associated with lumped loads (LD0 - LD4). A category of loss not present in the given model are the "NETWORK LOSSES," that is, losses associated with network (NT) and transmission line (TL) commands. In all cases, losses are calculated relative to the resistive portion of any impedances (or, for networks, the conductive portion of any admittances). The example allows a simple subtraction of the loss from the input power to arrive at the radiated power.</p>
+  <p>Power efficiency (as we shall call it here) is simply (Radiated Power / Input Power) * 100, and is given as a percentage.</p>
+  <p>Numerous modelers are also interest in another figure, a radiation efficiency. This value would give a measure of some sort for the effectiveness of the antenna as a radiator within the actual operating environment. Hence, if there are ground losses associated with the antenna, radiation efficiency (again, as we shall call it) would take them into account. A number of experimenters try many techniques to arrive at this value, ignoring the fact that NEC will yield such a value with the correct output call.</p>
+  <p>Of course, the NEC report will be limited in the same way that any other output data are limited. NEC will use level ground, and the only objects within the field of the antenna will be those modeled by the program user. On the other hand, these limitations may also become an advantage, since one may compare antenna radiation efficiencies under conditions in which all "other" things are equal.</p>
+  <p>The required call is an RP0 (far-field) request for the same sort of pattern that we need for an Average Gain Test. We set the XNDA entry to either 1001 (if we wish the pattern data to appear in the output report) or 1002 (if we are interested only in the required information for calculating the radiation efficiency). There are two cases of note: free space (no ground) and all other cases having a ground that may range from perfect to very lossy (using either the refection coefficient or Sommerfeld ground systems). We set up the RP0 request to fairly sample the sphere or hemisphere at reliably constant intervals in degrees. So the two possible lines will look something like the following ones:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Free Space @ 5-degree Intervals                   RP 0 37 73 1002 -90 0 5 5
+Over any ground @ 5-degree intervals              RP 0 19 73 1002 -90 0 5 5
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In both cases, we have suppressed the printing (to file) of the radiation pattern. However, one may use this data for generating a surface or 3-D pattern for the antenna model in question. The angles follow the phi and theta conventions, which may differ from azimuth/elevation starting points that may be built into an implementation of NEC.</p>
+  <p>The 5-degree interval may not always be sufficient to track precisely the pattern undulations of a given far-field pattern. In such cases, one may reduce the interval for both phi and theta to 2 degrees or even 1 degree. The number of steps for theta (37 for free space) and phi (73 for free space) will increase accordingly, reaching 181 and 361, respectively, for 1 degree intervals. However, it will be rare that we need a value for radiation efficiency that approaches that level of precision.</p>
+  <p>As noted, we must calculate the value of radiation efficiency. We based what amounts to a super-simple calculation on the data the emerges when we set the final digit of XNDA to 1 or 2, both of which request "gain averaging." The raw data line has the following appearance at the end of the RP0 request portion of the NEC output report.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+   AVERAGE POWER GAIN= 4.99152E-01       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>First, examine the solid angle data. For free space, the value within (--) will be 4. If that is the case, the radiation efficiency will be the value of the average power gain * 100 and will be a percentage. In this case, which applies to the case of a hemisphere created over any ground type, the value in (--) is 2. For all such cases, the radiation efficiency is the (average power gain / 2) * 100 %. Since the reported power gain is 0.4992, the radiation efficiency is 24.96% (using at least 1, if not 2, too many decimal places for most purposes).</p>
+  <p>There are some short-cuts to arrive at the desired average power gain for patterns of known symmetries. However, on modern computers, using the RP0 calls shown will not create delays for most model runs.</p>
+  <p><b>Some Case Studies</b></p>
+  <p>When we wish to give weight to a set of examples, we re-name them "case studies." Let's look at a few and see what we get for our efforts by way of reports. We shall begin with a vertical monopole with 4 radials, all of AWG #12 wire. We shall set the base of the monopole and its radials at 5' above ground level. The set-up has the outline shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod75-1.gif" width="480" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Initially, we shall use perfect or lossless wire, no loads, and a perfect ground to run out test. The model appears in the following lines.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM radiation efficiency test vertical/4 radials
+CM full length
+CM perfect conductor
+CM perfect ground
+CM no loads
+CE
+GW 1 21 0 0 13.7 0 0 5 0.0033695
+GW 2 21 0 0 5 8.7 0 5 0.0033695
+GW 3 21 0 0 5 0 8.7 5 0.0033695
+GW 4 21 0 0 5 -8.7 0 5 0.0033695
+GW 5 21 0 0 5 0 -8.7 5 0.0033695
+GS 0 0 .3048
+GE 1 -1 0
+GN 1
+EX 0 1 21 0 1 0
+FR 0 1 0 0 28.5 1
+RP 0 19 73 1002 -90 0 5 5
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The relevant power and average gain report data follows.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 1.7441E-02 WATTS
+                                           RADIATED POWER= 1.7441E-02 WATTS
+                                           WIRE LOSS     = 0.0000E+00 WATTS
+                                           EFFICIENCY    = 100.00 PERCENT
+
+   AVERAGE POWER GAIN= 1.94882E+00       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Using our handy calculation method, we obtain a radiation efficiency of 97.45%. One would think that we should obtain 100%, since there are no losses anywhere in the model. However, we did not sample the hemisphere at close intervals. The perfect-ground pattern for the monopole appears in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod75-2.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note the lobe structure near the zenith angle. It varies rapidly--more rapidly than our 5-degree interval can precisely track. The two small peaks (actually, circles of peak value on a true hemispherical display) occur between our 5-degree sampling intervals. So our rule of thumb must be this: the more irregular the pattern shape, the smaller the required interval between sampling steps.</p>
+  <p>Now let's add wire loss to the model by inserting an LD5 line into the model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+LD 5 0 0 0 5.8e7 0
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Now our report takes the following appearance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 1.7119E-02 WATTS
+                                           RADIATED POWER= 1.6890E-02 WATTS
+                                           WIRE LOSS     = 2.2951E-04 WATTS
+                                           EFFICIENCY    =  98.66 PERCENT
+
+   AVERAGE POWER GAIN= 1.92198E+00       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power efficiency is 98.66%, due to the small losses of copper for the antenna elements. Our radiation efficiency is 96.10%, again off the mark by virtue of the sampling interval.</p>
+  <p>It is now time to revise the GN (ground specification) entry to place the antenna over a real ground. We shall use the standard default values for average ground (conductivity = 0.005 S/m, permittivity = 13). (Some programs call these values "good" ground.) The required revised GN line appears below.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+GN 2 0 0 0 13 .005
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>After running NEC (-4 for these examples), the resulting report appears.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 1.8126E-02 WATTS
+                                           RADIATED POWER= 1.7858E-02 WATTS
+                                           WIRE LOSS     = 2.6748E-04 WATTS
+                                           EFFICIENCY    =  98.52 PERCENT
+
+   AVERAGE POWER GAIN= 5.72269E-01       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power efficiency changed slightly as a function of the fact that the source impedance upon which the power calculations are based also changed with the revision to the ground beneath the antenna. The average power gain over average ground is 0.5723, for a radiation efficiency of 28.62%. (Given the number of small influences on the values that result from calculations, it is usually most profitable to take radiation efficiencies as whole numbers, even though this exercise shows them to 2 decimal places.)</p>
+  <p>Now let's change the antenna. I shall arbitrarily alter the length of the monopole to 5' (at 28.5 MHz), but retain all other properties. Eventually, I want to check out the radiation efficiencies of two ways of loading the antenna inductively back to near resonance. The two ways appear in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod75-3.gif" width="480" height="360" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Before we add either a mid-element or base loading inductor, let's run our revised model that has no loading at all. The model has this structure:</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM radiation efficiency test vertical/4 radials
+CM short length
+CM copper conductor
+CM SN-Ave ground
+CM no loads
+CE
+GW 1 21 0 0 10 0 0 5 0.0033695
+GW 2 21 0 0 5 8.7 0 5 0.0033695
+GW 3 21 0 0 5 0 8.7 5 0.0033695
+GW 4 21 0 0 5 -8.7 0 5 0.0033695
+GW 5 21 0 0 5 0 -8.7 5 0.0033695
+GS 0 0 .3048
+GE 1 -1 0
+GN 2 0 0 0 13 .005
+LD 5 0 0 0 5.8e7 0
+EX 0 1 21 0 1 0
+FR 0 1 0 0 28.5 1
+RP 0 19 73 1002 -90 0 5 5
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>When we run NEC, we obtain this report.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 3.0774E-05 WATTS
+                                           RADIATED POWER= 2.9852E-05 WATTS
+                                           WIRE LOSS     = 9.2238E-07 WATTS
+                                           EFFICIENCY    =  97.00 PERCENT
+
+   AVERAGE POWER GAIN= 5.79608E-01       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>For a copper wire short monopole with full-length radials over average ground, our power efficiency has dropped by merely 1.5%. Since the average power gain is 0.5796, the radiation efficiency has actually increased (allowing for sampling interval error) to 28.98%. (Actually, the difference is not supportable without a much tighter sampling interval.) If you revise this model and the full-length monopole that preceded it, you will discover that the gain difference is also not too significant (0.72 dBi at 20 degrees elevation for the full-length monopole, 0.69 dBi at 21 degrees for the short model).</p>
+  <p>Next, let's add a mid-element loading coil to bring the short monopole to near resonance. The required new LD4 line shows an R-X load of 1.89 + j 568 Ohms. In this and the next example, I shall use inductive reactances with a Q of 300.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+LD 4 1 11 11 1.89 568
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>By adding the loading coil, we obtain near resonance, but show the following power and radiation efficiencies.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 3.8337E-02 WATTS
+                                           RADIATED POWER= 3.2516E-02 WATTS
+                                           WIRE LOSS     = 5.8202E-03 WATTS
+                                           EFFICIENCY    =  84.82 PERCENT
+
+   AVERAGE POWER GAIN= 4.99152E-01       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Wire loss now includes not only the copper material losses, but also the mid-element loading coil losses. Our power efficiency is 84.82%. The average power gain is 0.4992, for a radiation efficiency of 24.96%. The loading coil has cost us only 4% in radiation efficiency, but about 2/3-dB in gain. The antenna shows a gain of -0.04 dBi at 21 degrees elevation.</p>
+  <p>There is a wide-spread mythology that mid-element loading improves antenna performance properties by noticeable amounts over a base loading coil. There is an improvement in feedpoint impedance (in these examples, from 7 Ohms to about 13 Ohms), but the jury is out on performance until we look at the models. First, let's replace the mid-element LD4 line with an alternative base-loading line.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+LD 4 1 21 21 1.06 318.05
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The required inductive reactance to bring the initial short monopole to resonance is j 318.05 Ohms. The corresponding series resistance for a Q of 300 is 1.06 Ohms. With all other factors unchanged, we obtain the following efficiency reports.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 6.8603E-02 WATTS
+                                           RADIATED POWER= 5.6868E-02 WATTS
+                                           WIRE LOSS     = 1.1735E-02 WATTS
+                                           EFFICIENCY    =  82.89 PERCENT
+
+   AVERAGE POWER GAIN= 4.95310E-01       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power efficiency has dropped 2 percentage points. However, the radiation efficiency has dropped only 0.2 percentage points to 24.77% (based on an average power gain of 0.4953). As well, the gain dropped only from -0.04 dBi to -0.06 dBi at 20 degrees elevation. What most folks overlook in the comparison of base loading and mid-element loading is that a mid-element loading coil must be considerably larger than a base loading coil, and for the same value of Q, that means an increase in the series resistance as well. Hence, except for the differential in feedpoint impedance--which can be useful in itself--the performance difference falls in the range of the operationally unnoticeable.</p>
+  <p>We have noted that there is no great correlation over small ranges of change between directional gain and radiation efficiency. Here, directional gain applies at least in the theta plane for our omni-directional monopole. The following table compares reported gain and radiation efficiencies of the base- loaded monopole as we change the soil type beneath it.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Soil          Cond.          Perm.         Far-Field      Ave. Pwr      Rad. Eff.
+Type          S/m                          Gain dBi       Gain          %
+Very Good     0.0303         20            +0.04          0.4766        23.83
+Average       0.005          13            -0.06          0.4953        24.77
+Poor          0.002          13            +0.13          0.5209        26.05
+Very Poor     0.001           5            -0.42          0.4931        24.66
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>There are mathematical accounts for the changes shown in the table, but the values defy glib or simplistic generalizations.</p>
+  <p>To avoid any mis-impression that the determination of radiation efficiency involves only vertical antennas, let's set up a horizontal dipole at 1 wavelength above ground, as shown in <b>Fig. 4</b>. We shall use AWG #12 copper wire for the antenna and select a near-resonant length.</p>
+  <center>
+    <img src="amod75-4.gif" width="564" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Before we establish the antenna over ground, we shall first check it in free space. The free-space model has this appearance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Copper #12 Dipole
+CM Free Space
+CE
+GW 1 41 0 -100 420 0 100 420 0.0404331
+GS 0 0 .02540
+GE 0
+EX 0 1 21 0 1 0
+LD 5 1 1 41 5.8001E7
+FR 0 1 0 0 28.5 1
+RP 0 37 73 1002 0 0 5 5
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Note that we employ the RP0 call for a complete sphere of samples to arrive at the average power gain.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 6.9136E-03 WATTS
+                                           RADIATED POWER= 6.8595E-03 WATTS
+                                           WIRE LOSS     = 5.4029E-05 WATTS
+                                           EFFICIENCY    =  99.22 PERCENT
+
+   AVERAGE POWER GAIN= 9.92175E-01       SOLID ANGLE USED IN AVERAGING=( 4.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power efficiency is 99.22%, allowing for the loss involved in using copper wire. The average power gain is 0.9922. Since we used a complete sphere, the radiation efficiency is 99.22%. We show no variance between power and radiation efficiencies, because the free-space pattern of a dipole is so regular.</p>
+  <p>Next, let's place the dipole 35' (1 wavelength at 28.5 MHz) above average ground. Our model changes in several respects.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM Copper #12 Dipole
+CM Average Ground
+CE
+GW 1 41 0 -100 420 0 100 420 0.0404331
+GS 0 0 .02540
+GE 1 -1 0
+GN 2 0 0 0 13 .005
+EX 0 1 21 0 1 0
+LD 5 1 1 41 5.8001E7
+FR 0 1 0 0 28.5 1
+RP 0 19 73 1002 -90 0 5 5
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Besides changes in the GN entry, we also have a different RP0 call, since we shall now work with a hemisphere of samples. Here is the report that we obtain.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                        - - - POWER BUDGET - - -
+
+                                           INPUT POWER   = 7.0811E-03 WATTS
+                                           RADIATED POWER= 7.0243E-03 WATTS
+                                           WIRE LOSS     = 5.6826E-05 WATTS
+                                           EFFICIENCY    =  99.20 PERCENT
+
+   AVERAGE POWER GAIN= 1.47681E+00       SOLID ANGLE USED IN AVERAGING=( 2.0000)*PI STERADIANS.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The power budget remains essentially unchanged, despite the slight change in the source impedance that yields slightly different input and radiated power values. However, our average power gain is 1.4768, for a radiation efficiency of 73.84%. Unlike the vertical monopole, the horizontal dipole shows much more regular changes of radiation efficiency with changes of soil type, ranging from 80.01% over very good soil to 65.93% over very poor soil.</p>
+  <p><b>Conclusion</b></p>
+  <p>NEC will indeed yield a value for radiation efficiency, if we set up the proper RP0 call and select a sampling interval adequate to the level of precision that we may require from the report and subsequent calculation. The values produced may be surprising to some modelers, because for many types of analysis and design tasks, we are normally unconcerned over radiation efficiency. However, in the design of vertical monopoles and arrays, as well as in the design of "mini- antennas," radiation efficiency may be a more important concept.</p>
+  <p>Depending upon the antenna design, there may be slight differences in the reports yielded by NEC-2 and NEC-4. All of the examples used here used NEC-4. The procedures remain the same in both programs, and the NEC models used here will run in NEC-2, but slight mathematical differences in the outputs may occur. So far, I have encountered none that reach the level of being significant relative to other data we may derive from our models.</p>
+  <p>Correlating radiation efficiency values to directional gain reports, soil type, and other data derived from models is neither simple nor automatic. Hence, the interpretation of relatively small changes in radiation efficiency (in contrast to very large changes) is the responsibility of the investigator and should rest upon appropriate considerations in addition to the data reports that emerge from the models.</p>
+  <p>At most, these notes show you how to get a radiation efficiency report. They do not show you what to do with it.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

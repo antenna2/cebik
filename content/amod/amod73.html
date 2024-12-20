@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Source-to-Feedline Matching Techniques</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>73. Source-to-Feedline Matching Techniques</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>With most antenna designs that we model, the source segment is as far as we need to model to fairly represent the characteristics of the antenna. If the source impedance does not match the characteristic impedance of a proposed feedline, we leave the matching network for calculation external to the actual modeling process. In most cases, the addition of the matching network has no affect upon the properties of the antenna itself as a radiating system.</p>
+  <p>There are simple matching systems that we can incorporate into the antenna model. However, more complex matching networks may lie beyond the modeler's experience or the facilities built into entry-level implementations of NEC-2. Some of these programs do not make available the NT or network facility. As well, the NT facility calls for values of shunt admittance (conductance plus or minus susceptance), and calculating these values calls for a bit of external effort relative to one's initial modeling experience with series impedance (resistance plus or minus reactance) loads. Finally, the shunt admittance values that we may insert into an NT command are fixed and do not change with frequency.</p>
+  <p>For this reason, modelers are sometimes interested in seeing if there is a way to create matching networks at the ostensible antenna source using LD load values that we may insert as series (or parallel) R-L-C values. These values are frequency nimble, changing their reactance with frequency changes assigned to the model.</p>
+  <p>In fact, there is a fairly straightforward technique for accommodating standard matching networks to the ostensible antenna source. (I used the qualifier "ostensible" because in the process of adding these networks, we shall change the location of the source segment.) To arrive at the general network solution, we shall have to review a few modeling fundamentals relative to sources, transmission lines, and loads.</p>
+  <p><b>A Few Source-Load-Transmission-Line Basics</b></p>
+  <p><b>Fig. 1</b> shows the standard diagram that describes the relationship among sources (EX0), lumped loads (LD0 through LD4), and transmission lines (TL). EX0 is a voltage source and here covers the implementation of current sources in programs like EZNEC and NEC-Win Plus. LD4 loads are impedance specifications in terms of resistance and reactance. LD0 through LD3 are lumped R-L-C loads in series or parallel form.</p>
+  <center>
+    <img src="amod73-1.gif" width="362" height="195" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We are working with EX, LD, and TL commands that we assign to the same segment. The key relationships to note in <b>Fig. 1</b> are these. First, an LD load is always in series with both a source and a transmission line assigned to the segment. This applies no matter how short the segment or where we may locate it. (I sometimes receive questions as to why a load assigned to the terminating wire of a TL transmission line does not significantly affect any antenna parameter, including the source impedance value. If we created a stub with a terminating wire, any load we assign to the terminating wire falls outside the region that we might represent as the portion of the wire between the transmission line wires. The only way to place a load between the wires is to create a transmission line from parallel (GW) wires and place the load on the physical wire (GW) that connects the two wires at their termination.)</p>
+  <p>Second, a voltage source (EX0) always is in series with the segment to which we assign it. In essence, it creates a mathematical gap in the segment and places the assigned source voltage and the resultant current in series with the segment wire. (Hence, any assigned lumped load falls outside the "gap.") So the source will be in series with any load.</p>
+  <p>Third, a TL transmission line is also in series with the segment to which we assign it, and it will be in series with a load and in parallel with a source placed on the same segment. All TL transmission lines are non-radiating structures, that is, they are not represented by geometry commands that add to the radiating structure of the model. As well, such lines are lossless. The fact that a TL is in parallel with a source and in series with a load opens the way to both potentials and to limitations.</p>
+  <p><b>The Simplest Matching Situation</b></p>
+  <p>The simplest case of matching that faces a modeler is bringing a non-resonant source impedance, that is, one containing reactance, to a resonant condition. If we make a center-fed doublet (actually, a redundant expression) that is too long or to short for some designated frequency of operation, the source impedance will appear as a resistance plus or minus a reactance. We may bring the doublet to resonance by inserting on the source segment a load with a reactance that is equal in magnitude but opposite in type to the reactance reported for the source.</p>
+  <p>We sometimes forget what we are doing relative to the model, because the technique is so simple and because we tend to express what we are doing in physical terms, such as "adding a loading coil." However, the coil has an inductance which we may convert at the operating frequency to a reactance. NEC gives us the option of inserting either an LD0 series R-L-C load in which we specify the inductance or an LD4 load in which we specify the reactance. LD0 (and their counterpart parallel LD1) loads have the advantage of changing reactance with frequency and so give more accurate results for the progression of source impedance values across a frequency sweep.</p>
+  <center>
+    <img src="amod73-2.gif" width="362" height="211" border="2" vspace="5" hspace="9">
+  </center>
+  <p>It is significant to understand that <b>Fig. 2</b> is an appropriate reformulation of <b>Fig. 1</b>. For inductive loads added to the source segment, the source and any TL that we may add are mathematically at the center of whatever physical structure we may use to implement them in a real antenna. Therefore, we may assume that the source is at the middle turn of a loading coil. Likewise, we may physically implement each half of the loading inductance with a shorted transmission line stub and each side of the physical feedpoint. We call such implementations of center loading "linear loads," and they are subject to fields of the antenna itself that may slightly disrupt the equal magnitude but opposite polarity currents we assume for transmission lines. Hence, it is normally most accurate to model linear loads using physical wires rather than the TL facility, which cannot show the influences of the radiated fields.</p>
+  <p>If our doublet is too long, it shows an inductive reactance at the feedpoint. In a model, we may add a capacitive reactance or a capacitor value in an LD load on the source segment to bring the doublet to resonance, that is, to a source impedance that is solely resistive. Our physical implementation of the load in most wire antennas would involving placing capacitance at the feedpoint assembly, between the antenna wire ends at the feedpoint gap and the transmission line ends. Since we are dealing with a series reactance situation, we may wish to use equal value capacitors, one for each side of the feedpoint gap. Each capacitor will need to provide half of the series reactance, which means choosing capacitors with twice the capacitance of the value specified in a single load assigned to the model source segment.</p>
+  <p><b>The Beta or Hairpin Match</b></p>
+  <p>A common system of matching a low (20-30-Ohm) Yagi feedpoint impedance to a 50-Ohm main feedline involves the use of a beta or hairpin match. A beta match is not only a simple matching system, it is also easily modeled. See <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod73-3.gif" width="365" height="252" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In most cases, we set the length of the driver element--the element that we model with a source--slightly short of resonance. Hence, the source impedance prior to matching will show a resistance plus a degree of capacitive reactance. Note that the source impedance specification is in the form of a series circuit value of R - jX. In effect, the reactance is the equivalent of a component in series with resistive component of the impedance.</p>
+  <p>From the perspective of the feedline, we are trying to match the higher feedline characteristic impedance to a low resistive impedance at the antenna. An L-network that will achieve this goal consists of a shunt or parallel inductive reactance on the higher-impedance side and a series capacitive reactance on the low impedance side. We already have the series capacitive reactance built into the feedpoint segment. All that we need to do is to add the appropriate inductive reactance across the feedpoint.</p>
+  <p>In modeling terms, this means placing an inductive reactance across the source gap. Of course, we cannot directly achieve this with an LD load, since it will always be in series with the source. (If we are willing to highly segment the antenna structure, we can create a wire bridge across the source segment/wire, and insert the required inductive reactance or an inductor having that reactance at the design frequency on the bridge wire. If the segment lengths are very short relative to a wavelength, the bridge wire construct will not materially affect the array performance. The need for high segmentation arises not only because we must keep the bridge-wire construct very small, but as well because the segments adjacent to the source segment need to be the same length as the source segment for highest NEC report accuracy.)</p>
+  <p>The beta inductive reactance can be either in the form of a coil or a shorted transmission line stub, so long as each has the correct value of inductive reactance. In fact, the hairpin match received its name from the shape of a shorted transmission line stub using parallel transmission line. Since a TL line is in parallel with the source, we may model a beta match using a shorted TL stub placed on the source segment. All that we need to do is to calculate the required stub length. (Depending upon the implementation of NEC-2, the program may create a "hidden" stub terminating wire or it may require that the user create his own terminating wire and values of admittance for a short circuit. A TL is actually a form of NT or network set up to simulate transmission lines.)</p>
+  <p>We often forget that the terms of a down-converting L-network are reversible. We may use a series inductive reactance in combination with a parallel or shunt capacitive reactance to achieve the very same goal. I have used this technique to match phased arrays showing series inductive reactance but a low resistive component at the feedpoint to common coaxial cable. In this case, the physical implementation was a capacitor across the feedpoint terminals, but the model used an open TL stub with a length to yield the same capacitive reactance.</p>
+  <p><b>Equivalent Single-Ended and Balanced Networks</b></p>
+  <p>We have worked our way through simple and specialized matching situations toward a more general solution to the feedline matching and modeling problem. Many of the networks that we physically implement are unbalanced or single-ended. In fact, their names are derived from unbalanced forms of the network: the L, the PI, and the Tee, to name the most common ones. (Of course, we may create more complex combinations of these networks, such as the PI-L, once common in vacuum tube power amplifiers. However, we must remember that the PI and the Tee are simply L-networks back-to-back.)</p>
+  <center>
+    <img src="amod73-4.gif" width="547" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As noted in <b>Fig. 4</b> for the PI and the Tee unbalanced networks, every single-ended network has a balanced equivalent. We calculate the values using the single-ended equations, which appear in a myriad of utility programs to save us the hand-calculator work. Then, we simply divide the reactances for the series elements in half, place one portion in each of the two lines of the balanced system.</p>
+  <p>Converting networks into balanced forms relieves us of a major limitation relative to NEC and single-ended networks. An unbalanced network presumes a virtually lossless ground buss to terminate components, as well as a source and a load (the old antenna feedpoint) that also run between the "hot" line and ground. NEC has a limitation in this regard. Simply bringing a wire to Z=0, except for a perfect ground, will not achieve a virtually lossless interconnection with other wires brought to Z=0 unless they all terminate at the same point. Two wires connected to a real ground (Sommerfeld or reflection coefficient) at any distance will always show a resistance between the two Z=0 points. In most instances, this limitation precludes modeling a single-ended network in NEC.</p>
+  <p>A balanced network is independent of any ground connection. We can implement Ls, PIs, and Tees in balanced form without regard to ground and arrive a relatively accurate modeled results. All that we need to do is to figure out how to attach our network to the antenna's former feedpoint. After all, we have a single segment with the former source point at its center, but two terminals of a 4- terminal network.</p>
+  <p><b>The TL Connection</b></p>
+  <p>The creation of a network using LD0, LD1, or LD4 loads for the reactive components requires that we construct a grid of wires matching the network needs. <b>Fig. 5</b> shows such a network for a balanced PI network. For the moment, let's concentrate on the wire grid in the lower portion of the graphic.</p>
+  <center>
+    <img src="amod73-5.gif" width="436" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Because the network terminating components of the balanced PI are shunt reactances, each end of the grid shows a bridge section of only wires connected on one end to a cross wire to which the TL is joined and at the other network end to a bridge wire to which we assign the source. Had we used a balanced Tee network, the "empty legs" of the parallel parts of the wire grid would hold LD loads, and we would need one less crossing section for shunt or parallel components. An L-network would also be smaller, since we would need only a single pair of series components across from each other and a single shunt component.</p>
+  <p>The point is to make the wire-grid no large than it has to be to hold the components and to establish the parallel connection to the grid of both the source (on one end) and the TL (on the other). As well, make the grid as small as possible. By using extremely thin lossless wire for the grid, we can shorten the length of the individual grid wires to the limits of NEC--about .001 wavelength. Each wire in the grid--contrary to the graphic--whether crossing or parallel--should be exactly the same length.</p>
+  <p>Now we are ready to examine the upper portion of the graphic. We want the physical structure of the grid to be as far distant as feasible from the antenna wires in the model. The goal is minimal influence on the network grid by the antenna's radiation. However, we want to have the grid as electrically close as is feasible to the former source segment. The TL facility allows us to achieve this goal. We may place the grid wires anywhere we wish in terms of the Cartesian coordinates that specify the physical structure. However, the electrical length of the transmission line depends upon the entry that we make for it, regards of the location of the terminals of the line.</p>
+  <p>The TL acts like a source in that it creates a series connection to a wire segment. Hence, we may specify only one segment for each end of the TL line (or any other NT command). We may set the wire-grid end a few or many wavelengths from the antenna wire. We specify the electrical length of the TL to something very short--perhaps an inch or less in the upper HF range.</p>
+  <p>The best characteristic impedance (Zo) to use for the TL is the feedpoint impedance (resistive component) of the antenna prior to adding the TL and the wire grid. Almost any Zo will do, since the impedance transformation for the line length will normally not by significant. However, the higher the reactive component of the impedance, the shorter we need to make the line and the more critical the value of Zo.</p>
+  <p>Once we have set up the antenna structure, the TL, and the wire grid for the intended network, all that we need to do is to calculate the network values or to obtain them by trial and error.</p>
+  <p><b>Does This System Really Work?</b></p>
+  <p>Let's set up a model and see if this system of feedpoint matching in models really works. Our worked example will consist of a near-resonant folded dipole made from lossless AWG #18 wire with a spacing of 3" between wires on a frequency of 28.5 MHz. For the folded dipole in question, in free space, with a total length of 196", the reported source impedance is 286.7 + j 0.6 Ohms.</p>
+  <p>What I wish to obtain is a match to 50-Ohm feedline. So I shall implement a balanced L-network in the model. Calculations show the required antenna-side shunt capacitor to be 42.4 pF (-j 131.7 Ohms) and the required pair of series inductors to be 0.304 uH (+j 54.4 Ohms). Now we can create the total model, with the wire grid about 1000" or more in any direction from the model. I chose "up." The result resembles <b>Fig. 6</b>, although the folded dipole and the network grid are not in scale, since I combined two separate views to make this one.</p>
+  <center>
+    <img src="amod73-6.gif" width="480" height="313" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The red circle represents the source location, while the red squares indicate the load locations. The wires in this grid are 1" long, or about 0.0012 wavelength at 28.5 MHz. They also use lossless AWG #18 wire (0.0403" diameter). The 290-Ohm transmission line is 0.1" long electrically, despite the 1000" separation of the network from the antenna wires. The following table shows the EZNEC model description for anyone wishing to replicate the exercise.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      EZNEC/4 ver. A4.0
+
+Folded Dipole with Matching Network
+
+         --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 28.5 MHz                              Wire Loss: Zero
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1          W4E2      -98,      0,      0      W2E1       98,      0,      0       #18   99
+2          W1E2       98,      0,      0      W3E1       98,      0,      3       #18   1
+3          W2E2       98,      0,      3      W4E1      -98,      0,      3       #18   99
+4          W3E2      -98,      0,      3      W1E1      -98,      0,      0       #18   1
+5          W7E2        0,   -0.5,   1000      W6E1        0,    0.5,   1000       #18   1
+6          W5E2        0,    0.5,   1000      W8E2        1,    0.5,   1000       #18   1
+7          W8E1        1,   -0.5,   1000      W5E1        0,   -0.5,   1000       #18   1
+8          W9E2        1,   -0.5,   1000     W10E1        1,    0.5,   1000       #18   1
+9         W11E1        2,   -0.5,   1000      W7E1        1,   -0.5,   1000       #18   1
+10         W6E2        1,    0.5,   1000     W11E2        2,    0.5,   1000       #18   1
+11         W9E1        2,   -0.5,   1000     W10E2        2,    0.5,   1000       #18   1
+
+Total Segments: 207
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       11       50.00      50.00    1        1           0         I
+
+          -------------- LOADS (RLC Type) --------------
+
+Load     Specified Pos.     Actual Pos.         R          L          C        Type
+       Wire #  % From E1  % From E1  Seg      (ohms)      (uH)       (pF)
+1       9        50.00      50.00    1        Short      0.27       Short      Ser
+2       10       50.00      50.00    1        Short      0.27       Short      Ser
+3       8        50.00      50.00    1        Short      Short      42.2       Ser
+
+                -------- TRANSMISSION LINES ---------
+
+No.    End 1 Specified Pos End 1 Act  End 2 Specified Pos End 2 Act  Length      Z0       VF  Rev/Norm
+       Wire #    % From E1 % From E1  Wire #    % From E1 % From E1  (in)        (ohms)
+1      1           50.00     50.00    5           50.00     50.00    0.1          290     1      N
+
+Ground type is Free Space
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Note that the values of inductance and capacitance do not precisely coincide with the calculated values. We shall examine the variables in the system in a moment. However, with the values shown, the reported source impedance is 49.5 + j 0.1 Ohms.</p>
+  <p>The system does work--but within limits. Here are some of those limits based on the fact that the wires in the grid will interact with each other.</p>
+  <p>1. Wire size will make a difference to the results, although the affect tends to be small compared to some other affects. #12 wire yielded an impedance of 49.1 - j 0.9 Ohms, while #22 gave 49.6 + j 1.0 Ohms.</p>
+  <p>2. The TL Zo for the very short (0.1") line can vary considerably without significant change in the new source impedance value. Values between 250 and 300 Ohms occasioned no change in the reported impedance within the decimal limits shown here. As well, extending the line length from 0.1" to 1.0" also produced no source impedance change.</p>
+  <p>3. Grid wire length makes a large difference to the adjusted network values to achieve a near-50-Ohm source impedance. Doubling the wire length in both directions to 2" required 0.24-uH coils and a 40.9-pF capacitor. A second doubling to 4" wires required 0.155-uH coils and a 39.8-pF capacitor. The progression is clear, and the smallest feasible wire grid yields results closest to calculated values.</p>
+  <p>4. The wire grid presses NEC limits. Hence, it is essential to obtain an Average Gain Test value and to correct the reported system gain accordingly. The free-space folded dipole reported a gain of 2.14 dBi and an AGT of 1.0. The version with the matching network yielded a gain of 2.26 dBi, but with an AGT value of 1.029. Correcting the gain requires a 0.12-dB subtraction, for a net gain of 2.14 dBi. With the calculated values of matching network components, the reported impedance was 49.3 + j 12.7 Ohms. The resistive component corrected (AGT * reported value) is 50.7 Ohms, although the reported reactance is not accounted for by any known corrective measures.</p>
+  <p>Note that the LD values make no assumption about coil Q, although this factor may be important in some (but not necessarily all) models. I purposely used lossless wire and components to be able to compare the results with standard L-network computations. In general, the series inductance is more sensitive to change than the shunt capacitor (or, properly speaking, their respective reactance values).</p>
+  <p>Nevertheless, since component measuring techniques rarely surpass +/-5% for gear outside of precision laboratories, the modeled values are certainly within the limits of what is measurable by most experimenters. With due modeling of known cases, one can calibrate a given wire grid structure at a design frequency to know in advance the modeling offset.</p>
+  <p>The benefit of this technique, of course, is that it permits the use of R-L-C loads and hence returns relatively accurate results as one checks the performance across a frequency span. The limitation of the technique is that the requirements for maximum load accuracy are at odds with the limits of NEC itself for a perfect AGT value. Longer wire grid wires reduces the AGT variation, but creates sufficient wire interaction to throw off the network values by much more significant amounts.</p>
+  <p><b>In the End. . .</b></p>
+  <p>There likely is no perfect or limitless method for replicating networks used to match a given antenna feedpoint impedance to a given feedline characteristic impedance. However, this one comes as close as I have so far been able to develop for using standard series R-L-C loads that are frequency nimble in a way that closely approximates calculated values for such networks. Used within its limits, it may be of service in a variety of applications.</p>
+  <p>The remote wire-grid technique is, of course, adaptable to many configurations, even to adding a component in parallel to a series component and source situation. Not all configurations will require a full grid of the sort used with L-circuits and PI-networks. However, the same generals rules of formation and the same limitations should be observed for all such structures.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

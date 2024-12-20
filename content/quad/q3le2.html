@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, HF Lower, HF Upper, VHF / UHF">
+  <title>Automating the Design of 3-Element Monoband Quad Beams Part 2</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Automating the Design of 3-Element Monoband Quad Beams<br>
+    Part 2: A High-Gain Model</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the first part of this small study on automating the design of 3-element quad beams, we explored a wide-band version of the array--at least, as wide-band a version as we could obtain while still developing reasonably good gain. The results yielded a quite feasible set of potential designs. As with any quad design, the fatter the element used, the better the performance.</p>
+  <p>Dan Handelsman, N2DT, reviewed an early draft of the initial program and design. He pointed out an alternative design that achieved significantly higher gain, had good front-to-back figures, and had a relatively low feedpoint impedance suitable for a direct 50-Ohm match. The sacrifice in operating bandwidth--as defined by the &gt;20 dB front-to-back ratio rather than the 2:1 VSWR ratio--was still far less than with some other high gain designs.</p>
+  <center>
+    <img src="q3le2-1.gif" width="440" height="437" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The high-gain 3-element quad has a quite different profile than the wide-band model, as revealed in <b>Fig. 1</b>. Although the overall boom-length is similar--about 0.4 wl--the high-gain design spaces the driver considerably farther from the reflector and closer to the director. Ordinarily, in Yagi design, increasing the driver-reflector spacing increases the feedpoint impedance. However, in the case of these quad designs, the feedpoint impedance decreases from the wide-band design values.</p>
+  <center>
+    <img src="q3le2-2.gif" width="647" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The high-gain design has a number of other interesting properties. For example, the gain curve is roughly centered in the passband. <b>Fig. 2</b> shows the gain curves for the design using three wires sizes: 0.0001 wl, 0.001 wl, and 0.01 wl. For the 2 thinner wire sizes, the gain peaks on the design frequency. The fattest wire size shows a peak just above the design frequency (28.5 MHz in this case), as well as a much smaller increase in gain relative to the next smaller wire size. There appears to be a limit in this design to the gain increase with increasing wire size, possibly connected with a maximum degree of inter-element coupling.</p>
+  <p>As well, the front-to-back ratio peaks are not variable from one wire size to the next. Instead, the front-to-back ratio remains constant within +/-0.5 dB of 30 dB throughout the series of optimized models.</p>
+  <p><b>Automated Design</b></p>
+  <p>Nonetheless, the high-gain design is amenable to automated design predicated on the entry of the design frequency and the wire size. The performance varies with the common logarithm of the wire size as measured in fractions of a wavelength. By applying regression analysis to optimized models at various wire sizes, it is possible to develop algorithms that produce working designs for any HF or VHF frequency within close tolerances.</p>
+  <p>The following GW Basic utility program encapsulates the design data. As always, LOG in GW Basic means a natural logarithm and requires a correction factor to yield a common log. If the program is entered in another medium that treats LOG as a common logarithm, the conversion factor can be omitted.</p>
+  <p>The program deletes on piece of data useful to the wide-band design: the rate of change of gain per 1% of frequency change. Since the gain peaks at the design frequency rather than outside the passband of the antenna for an amateur band, the rate-of-change figure loses its meaningfulness.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10 CLS:PRINT "Program to calculate the dimensions of a resonant square 3-element quad beam."
+20 PRINT "All equations calibrated to NEC antenna modeling software for wire diameters"
+30 PRINT "     from 3.16E-5 to 1E-2 wavelengths within about 0.5% from 3.5 - 250 MHz."
+40 PRINT "Alternate Design",,,"L. B. Cebik, W4RNL"
+50 INPUT "Enter Desired Frequency in MHz:";F
+60 PRINT "Select Units for Wire Diameter in 1. Inches, 2. Millimeters, 3. Wavelengths"
+70 INPUT "Choose 1. or 2. or 3.";U
+80 IF U&gt;3 THEN 60
+90 INPUT "Enter Wire Diameter in your Selected Units";WD
+100 IF U=1 THEN WLI=11802.71/F:D=WD/WLI
+110 IF U=2 THEN WLI=299792.5/F:D=WD/WLI
+120 IF U=3 THEN D=WD
+130 PRINT "Wire Diameter in Wavelengths:";D
+140 L=.4342945*LOG(D*10^5):LL=L^2:LM=LL*.0128:LN=LM+1.0413:D1=.4342945*LOG(D)
+150 IF D1&lt;-4.5 then 160 else 170
+160 PRINT "Wire diameter less than 3E-5 wavelengths:  results uncertain."
+170 IF D1&gt;-2 THEN 180 ELSE 190
+180 PRINT "Wire diameter greater than 1E-2 wavelengths:  results uncertain."
+190 AD=.000266666667#:BD=.00506666667#:CD=.03633333333#:DD=.1221904762#:ED=1.183285714#
+200 DE=(AD*(D1^4))+(BD*(D1^3))+(CD*(D1^2))+(DD*D1)+ED
+210 AR=.0037333333333#:BR=.05362962963#:CR=.29275555556#:DR=.7424529101#:ER=1.814412698#
+220 RE=(AR*(D1^4))+(BR*(D1^3))+(CR*(D1^2))+(DR*D1)+ER
+230 AI=-.00266666667#:BI=-.033244444444#:CI=-.1550666667#:DI=-.3222793651#:EI=.7283809524#
+240 IR=(AI*(D1^4))+(BI*(D1^3))+(CI*(D1^2))+(DI*D1)+EI
+250 AS=.00033333333#:BS=.004837037037#:CS=.02552777778#:DS=.05643756614#:ES=.2191230159#
+260 SP=(AS*(D1^4))+(BS*(D1^3))+(CS*(D1^2))+(DS*D1)+ES
+270 AP=-.002333333333#:BP=-.03128148148#:CP=-.15586111111#:DP=-.3417669312#:EP=-.05499206349#
+280 IP=(AP*(D1^4))+(BP*(D1^3))+(CP*(D1^2))+(DP*D1)+EP
+290 AZ=4.4029#:BZ=53.43954444#:CZ=239.2408583#:DZ=462.3614437#:EZ=373.3035655#
+300 ZR=(AZ*(D1^4))+(BZ*(D1^3))+(CZ*(D1^2))+(DZ*D1)+EZ
+310 AG=-.15#:BG=-1.768518519#:CG=-7.763055556#:DG=-14.78592593#:EG=-.609722222#
+320 GN=(AG*(D1^4))+(BG*(D1^3))+(CG*(D1^2))+(DG*D1)+EG
+330 AW=.16666666667#:BW=2.265925926#:CW=11.706111111#:DW=27.93058201#:EW=28.88753968#
+340 SW=(AW*(D1^4))+(BW*(D1^3))+(CW*(D1^2))+(DW*D1)+EW
+350 AF=.11933333333#:BF=1.671777778#:CF=8.9885#:DF=22.45931746#:EF=23.68797619#
+360 FB=(AF*(D1^4))+(BF*(D1^3))+(CF*(D1^2))+(DF*D1)+EF
+370 WL=299.7925/F:PRINT "Wavelength in Meters =";WL;"    ";
+380 WF=983.5592/F:PRINT "Wavelength in Feet =";WF
+390 PRINT "Quad Dimensions in Wavelengths, Feet, and Meters:"
+400 PRINT "Driver Side =";(DE/4);" WL or";(DE/4)*WF;"Feet or";(DE/4)*WL;"Meters"
+410 PRINT "Driver Circumference =";DE;" WL or";DE*WF;"Feet or";DE*WL;"Meters"
+420 PRINT "Reflector Side =";(RE/4);" WL or";(RE/4)*WF;"Feet or";(RE/4)*WL;"Meters"
+430 PRINT "Reflector Circumference =";RE;" WL or";RE*WF;"Feet or";RE*WL;"Meters"
+440 PRINT "Reflector-Driver Space =";SP;" WL or";SP*WF;"Feet or";SP*WL;"Meters"
+450 PRINT "Director Side =";(IR/4);" WL or";(IR/4)*WF;"Feet or";(IR/4)*WL;"Meters"
+460 PRINT "Director Circumference =";IR;" WL or";IR*WF;"Feet or";IR*WL;"Meters"
+470 PRINT "Director-Driver Space =";IP;" WL or";IP*WF;"Feet or";IP*WL;"Meters"
+480 PRINT "Approx. Feedpoint Impedance =";ZR;"Ohms   ";
+490 PRINT "Free-Space Gain =";GN;"dBi"
+500 PRINT "Approximate 2:1 VSWR Bandwidth =";SW;"% of Design Frequency"
+510 PRINT "Approximate &gt;20 dB F-B Ratio Bandwidth =";FB;"% of Design Frequency"
+520 INPUT "Another Value = 1, Stop = 2: ";P
+530 IF P=1 THEN 10 ELSE 540
+540 END
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>My preference for setting up utilities in GW Basic rests on the transparency of the programming language. The program structure and the equations used to produce the output values are completely transparent for easy transport to any desired medium. Most spreadsheets use straightforward embellishments of Basic.</p>
+  <p><b>Some Graphic Results</b></p>
+  <p>The program outputs can be graphically presented to show the general trends of the high-gain design dimensions. <b>Fig. 3</b> shows the loop circumference dimensions as a function of a wavelength for wires sizes that are also functions of a wavelength. The reflector and driver curves are familiar to those who have looked at the wide-band design. Although the exact values differ, the growing loop size as wire diameter increases is a familiar feature. The director loop circumference, however, is another matter. It changes very little across the span of wire diameters, with down-turns at both ends of the scale. In fact, as the wire size decreases to the thinnest region, the wide-band and the high-gain design begin to resemble each other, since the gain peak comes closer to the design frequency for each version.</p>
+  <center>
+    <img src="q3le2-3.gif" width="646" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The element spacing required for optimized high-gain design follows rules that differ from those applicable to the wide-band design. The reflector-to-driver spacing decreases with increasing wire size--exactly the opposite of the case with the wide-band design. In contrast, the driver-to-director spacing shows a curve similar to the director loop circumference graph, with down-turns at both ends of the wire-size scale. Likewise, the range of variation is very small with the high-gain design. In contrast, the wide-band model showed a significant reduction of required spacing between the driver and director as the wire size increased. The high-gain curves appear in <b>Fig. 4</b>.</p>
+  <center>
+    <img src="q3le2-4.gif" width="645" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Some Performance Comparisons</b></p>
+  <p>Dimensions are not the only parameters that lend themselves to graphical comparisons. As well, we can look at some of the performance predictions for both the wide-band and the high-gain versions of the antenna. Most significant among these parameters are gain, the 2:1 SWR bandwidth, and the &gt;20 dB front-to-back bandwidth.</p>
+  <center>
+    <img src="q3le2-5.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the comparative gains for the two designs. Once we move above the thinnest wires, the high-gain version of the antenna shows an average gain advantage of about 0.5 dB over the wide-band version. In fact, the azimuth patterns of the two designs are quire similar, as shown in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="q3le2-6.gif" width="640" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The free space azimuth patterns are predicated on 0.5" diameter copper elements with a design frequency of 28.5 MHz. Because of the rear side lobes are so similar, the differential in front-to-back ratios will not be operationally significant. How significant the gain differential will be must be a user measure based on an assessment of all of the critical parameters.</p>
+  <center>
+    <img src="q3le2-7.gif" width="645" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows the comparative values of 2:1 SWR bandwidths, as a percentage of the operating frequency. The graph shows an advantage of better than 1.5:1 for the wide-band version of the antenna. However, whether that degree of increase is necessary depends upon the bandwidth required for a given antenna design. For reference, the following table shows the percentage band width of each of the amateur bands from 80 through 2 meters. All frequencies are in MHz.</p>
+  <pre>Band        Limits                  Center            Bandwidth as a % of
+                                    Frequency         the Center Frequency
+80            3.5   -   4.0           3.75                  13.33%
+40            7.0   -   7.3           7.15                   4.20%
+30           10.1   -  10.15         10.125                  0.49%
+20           14.0   -  14.35         14.175                  2.47%
+17           18.068 -  18.168        18.118                  0.55%
+15           21.0   -  21.45         21.225                  2.12%
+12           24.89  -  24.99         24.94                   0.40%
+10-1 MHz     28.0   -  29.0          28.5                    3.51%
+10-full band 28.0   -  29.7          28.85                   5.89%
+ 6           50.0   -  54.0          52                      7.69%
+ 2          144     - 148           146                      2.74%</pre>
+  <p>With respect to the SWR bandwidth, any wire size that is 0.0003 wl will cover any of the wider HF ham bands (excluding 80 meters). For equivalent coverage with the high-gain version, a wire size equal or greater than about 0.004 wl is necessary.</p>
+  <p>For reference in using both <b>Fig. 7</b> and the tables of ham-band bandwidths, the following wire-size table is repeated from the 2-element quad mini-series. The numbers in () represent the nearest common AWG wire gauge.</p>
+  <pre>Dia. in WL                          Physical diameter in inches
+                  3.5 MHz           14 MHz            30 MHz            144 MHz
+0.0000316         0.1066 (10)       0.0267 (24)       0.0124 (29)       0.0026 (40)
+0.0001            0.3372            0.0843 (12)       0.0393 (18)       0.0082 (32)
+0.000316          1.0664            0.2666 (2)        0.1244 (8)        0.0259 (22)
+0.001             3.372             0.841             0.3934            0.0820 (12)
+0.00316           10.664            2.666             1.244             0.2592 (2)
+0.01              33.722            8.431             3.934             0.8964</pre>
+  <p>Obviously, the thinnest wires are impractical at VHF, and the fattest wires are equally unusable at the lowest HF frequencies. Nonetheless, in the middle region of the table, it may be possible to simulate fatter wires by the use of multiple strands of #14 AWG or similar. The technique would be identical to the exercise noted in Part 1 of this 3- element quad exploration.</p>
+  <center>
+    <img src="q3le2-8.gif" width="648" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>More critical to many operations than the SWR bandwidth is the &gt;20 dB operating bandwidth. <b>Fig. 8</b> shows the differences for the two designs. Once one passes the 0.001 wl wire size, the average advantage for the wide-band design is about 20-23%. Full coverage of the first MHz of 10 meters would require a wire size of about 2.5" for the wide-band design, while the high-gain will not quite cover this passband with a diameter (or its equivalent in multiple wires) of over 4". Nonetheless, half-inch wire (or tubing) may suffice for nearly full band coverage of 2-meters using the high-gain design. Moreover, not every 3-element quad application needs to cover the entirety of any of the wider HF ham bands.</p>
+  <center>
+    <img src="q3le2-9.gif" width="646" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>One significant difference in the designs is related to the feedpoint impedance, as shown in <b>Fig. 9</b>. The wide-band design resonant feedpoint impedance varies by under 10 Ohms across the entire span of wire sizes. However, the high-gain design shows an increasing feedpoint impedance as wire size decreases, from a low of about 48 Ohms with 0.01 wl wire to a high of nearly 73 Ohms for the thinnest wire. As the wire reaches the thinnest values in the progression, the curve is ever more steep. As noted earlier, with the thinnest wire size, the 3-element quad performance values become quite similar for the two designs. The thicker the wire of the high-gain design, the easier it becomes to directly match a 50-Ohm feedline.</p>
+  <p><b>Some Practical Design Examples</b></p>
+  <p>To get a better sense of how the two design differ, let's compare some designs between the wide-band and the high-gain designs.</p>
+  <pre>1.  20 meters, #14 wire, design frequency: 14.175 MHz
+Wire Diameter:                      0.0641" or 7.70E-5 wl
+                              Wide-Band                     High-Gain
+Reflector Circumference:      73.09'                        72.86'
+Driver Circumference:         70.06'                        70.71'
+Director Circumference:       65.31'                        68.04'
+Refl-Driver Spacing:          10.69'                        12.33'
+Driver-Dir Spacing:           21.58'                        15.46'
+Total Boom Length:            32.27'                        27.79'
+Feedpoint Impedance:          79.5 Ohms                     60.6 Ohms
+Free-Space Gain:              8.47 dBi                      9.00 dBi
+SWR Bandwidth:                3.10% or 0.439 MHz            2.07% or 0.293 MHz
+&gt;20 dB F-B Bandwidth:         1.18% or 0.167 MHz            1.12% or 0.159 MHz
+Rate of Gain Change:          0.22 dB/1% of design frequency-------
+
+2.  10 meters, #12 wire, design frequency: 28.5 MHz
+Wire Diameter:                      0.0808" or 1.95E-4 wl
+                              Wide-Band                     High-Gain
+Reflector Circumference:      36.64'                        36.52'
+Driver Circumference:         34.95'                        35.26'
+Director Circumference:       32.43'                        33.89'
+Refl-Driver Spacing:           5.49'                         6.12'
+Driver-Dir Spacing:           10.30'                         7.70'
+Total Boom Length:            15.79'                        13.82'
+Feedpoint Impedance:          77.2 Ohms                     56.1 Ohms
+Free-Space Gain:              8.74 dBi                       9.29 dBi
+SWR Bandwidth:                3.34% or 0.952 MHz            2.26% or 0.644 MHz
+&gt;20 dB F-B Bandwidth:         1.41% or 0.402 MHz            1.32% or 0.376 MHz
+Rate of Gain Change:          0.21 dB/1% of design frequency-------
+
+3.  10 meters, 0.5" wire, design frequency: 28.5 MHz
+Wire Diameter:                      0.5" or 1.21E-3 wl
+                              Wide-Band                     High-Gain
+Reflector Circumference:      37.42'                        37.23'
+Driver Circumference:         35.22'                        35.53'
+Director Circumference:       32.39'                        33.86'
+Refl-Driver Spacing:           5.66'                         6.07'
+Driver-Dir Spacing:            9.57'                         7.70'
+Total Boom Length:            15.23'                        13.77'
+Feedpoint Impedance:          72.3 Ohms                     52.7 Ohms
+Free-Space Gain:              9.00 dBi                      9.50 dBi
+SWR Bandwidth:                4.42% or 1.20 MHz             2.84% or 0.809 MHz
+&gt;20 dB F-B Bandwidth:         2.11% or 0.601 MHz            1.80% or 0.513 MHz
+Rate of Gain Change:          0.10 dB/1% of design frequency-------
+
+4.  6 meters, 0.25" wire, design frequency: 51 MHz
+Wire Diameter:                      0.25" or 1.08E-3 wl
+                              Wide-Band                     High-Gain
+Reflector Circumference:      20.87'                        20.78'
+Driver Circumference:         19.67'                        19.84'
+Director Circumference:       18.10'                        18.92'
+Refl-Driver Spacing:           3.16'                         3.39'
+Driver-Dir Spacing:            5.37'                         4.30'
+Total Boom Length:             8.53'                         7.69'
+Feedpoint Impedance:          72.4 Ohms                     53.0 Ohms
+Free-Space Gain:              8.99 dBi                      9.49 dBi
+SWR Bandwidth:                4.14% or 2.11 MHz             2.80% or 1.43 MHz
+&gt;20 dB F-B Bandwidth:         2.05% or 1.05 MHz             1.76% or 0.90 MHz
+Rate of Gain Change:          0.11 dB/1% of design frequency-------
+
+5.  2 meters, 0.1" wire, design frequency: 146 MHz
+Wire Diameter:                      0.1" or 1.24E-3 wl
+                              Wide-Band                     High-Gain
+Reflector Circumference:       7.31'                         7.27'
+Driver Circumference:          6.88'                         6.94'
+Director Circumference:        6.32'                         6.61'
+Refl-Driver Spacing:           1.11'                         1.18'
+Driver-Dir Spacing:            1.87'                         1.50'
+Total Boom Length:             2.98'                         2.68'
+Feedpoint Impedance:          72.2 Ohms                     52.5 Ohms
+Free-Space Gain:              9.00 dBi                      9.50 dBi
+SWR Bandwidth:                4.24% or 6.19 MHz             2.85% or 4.16 MHz
+&gt;20 dB F-B Bandwidth:         2.19% or 3.20 MHz             1.81% or 2.64 MHz
+Rate of Gain Change:          0.10 dB/1% of design frequency-------</pre>
+  <p>Anyone who looked at Part 1 of this exercise will recognize the sample 3-element quads, since I used the same frequencies and wire sizes for the high-gain models in the right-hand column. In each case the dimensional differences are significant. However, for most folks, the gain and the operating bandwidth comparisons will be more interesting. In each case, the high-gain design shows its higher gain. Likewise, the wide-band design shows the wider SWR and front-to-back bandwidths. Selection of a final design requires that the end-user measure all of the operating potentials against a set of operating needs.</p>
+  <p>The following links will take you to a download page where you may download the program as a. <a href="../download/q3lehg.nwp" download="q3lehg.nwp"><b>a NEC-Win Plus model file</b></a>, b. <a href="../download/q3la.bas" download="q3la.bas"><b>a GW Basic program</b></a>, or c. <a href="../download/3elhgqd.vbs" download="3elhgqd.vbs"><b>a VB script</b></a> generously made available by Randy Frum, AC4FD. Randy notes that the script will run natively on Windows ME and Windows 2000 and above and will run on other Windows operating systems (95, 98 and NT) if the Windows Scripting Host is installed (normally installed with IE 5 and above). Simply run the script from the "Run" command on your main screen. An on-line <a href="https://web.archive.org/web/20060909221156/http://www-mae.engr.ucf.edu/~ssd/ham/quadcalc.html" target="_blank"><b>Java script calculator</b></a> (web.archive.org). is available courtesy of the work of Steven Dick.</p>
+  <p><b>Conclusion</b></p>
+  <p>We have surveyed and automated the design of two significantly different 3-element quad beams. Even so, we have not exhausted the possibilities for the antenna type. One may design for even higher gain values, although the operating bandwidth and the feedpoint impedance will continue to decrease. Similarly, one may design for even wider operating bandwidths, but at a cost to array gain. If one pursues this latter course, eventually, the array gain will decrease to the level of a Yagi with a similar bandwidth and element diameter. In that case, the advantages of moving to a quad design would disappear, and the added complexities of quad construction would no longer warrant the effort. Once more, the precise point at which the transition occurs must be determined by the end-user.</p>
+  <p>Nonetheless, these exercises are useful in many ways. Besides the obvious benefit of yielding relatively optimized designs for any HF/VHF frequency and wire size, the programs provide an easy means of designing quads for comparative purposes. The evaluation of antennas at a practical level is very often a matter of comparing available designs. Yagi comparators are easy to find. Up to now, an adequate sampling of comparable quad designs has been hard to find. These utility programs considerably ease the process of uncovering 3-element quad designs and their capabilities.</p>
+  <p>One final caution: the designs are monoband quads throughout. One cannot simply plug them into a multi-band array and expect each quad to perform as specified here. In multi-band quad arrays, virtually all elements are significantly active, adding to or subtracting from the performance of the focal set of elements for any band. Therefore, creating an effective multi-band quad array requires considerably more adjustment than a mere field tweak on the monoband designs.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-01-2001, 11-14-2002. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for January, 2001. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="quadlist.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40">Go to Quad List</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

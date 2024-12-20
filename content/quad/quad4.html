@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, HF Upper">
+  <title>Quad Models Part 4 Multi-Band 2-Element Quad Beams</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/quad.gif" align="left" width="91" height="91" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Some Model Quads:<br>
+    4. Multi-Band 2-Element Quad Beams</h1>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>One of the advantages of the full-size quad is that one can nest the beam within or around others to form a multi-band HF beam of very respectable performance. The total real estate involved is no larger than that required by the largest beam of the group--normally a 20 meter array for upper HF applications.</p>
+  <p>It is possible to model (or design) 5-band quads with about 400 total segments. In past years, the run time for such a model on a PC would have been fairly taxing, especially for frequency sweeps on each of the bands covered by the antenna. Computer speed has sliced the time to the barely noticeable. The major time is now spent on constructing the model.</p>
+  <p>My own collection of 2-element 5-band models is somewhat limited, containing just four different types (and a host of variations on them). However, each may be worth a separate look, since each has some distinctive features.</p>
+  <h3>A Spider Quad with 0.125 wl Element Spacing</h3>Although the term "spider" is sometimes used to label any hub device that holds the supports for quad elements, its best use is to label those 8- legged hubs that hold all of the supports for a multi-band 2-element beam. One feature of quads constructed by this method is that the element spacing between the driver and the reflector is constant in terms of wavelengths. Whether this is an advantage, we shall see along the way.
+  <p>The first model originated as simply a study item, designed to look at the question of whether multi-band quads should be fed in common or with separate lines for each driver and with the unused driver loops closed. Throughout these notes, I have chosen the latter option for clarity within the models.</p>
+  <p>The study began with separate 2-element quad models for each of the 5 upper HF amateur bands. To refresh our memories, I shall import a small table from the first episode. L means side length, and C means loop circumference.</p>
+  <pre>Frequency Spacing   L Driver  C Driver  L Refl.   C Refl.   Segment
+ MHz       feet      feet      feet      feet      feet      per side
+28.5       4.31      8.66     34.64      9.16     36.64        7
+24.94      4.93      9.91     39.62     10.47     41.86        9
+21.22      5.79     11.64     46.56     12.26     49.04       11
+18.12      6.79     13.62     54.48     14.35     57.40       13
+14.17      8.68     17.42     69.68     18.30     73.20       15</pre>
+  <p>When combined, the required dimensional changes to achieve resonance and peak front-to-back performance at the design frequency for each band show up in the following table for the 5-band quad array.</p>
+  <pre>Frequency Spacing   L Driver  C Driver  L Refl.   C Refl.   Segment
+ MHz       feet      feet      feet      feet      feet      per side
+28.5       4.31      8.64     34.56      9.20     36.80        7
+24.94      4.93      9.90     39.60     10.20     40.80        9
+21.22      5.79     11.63     46.52     12.06     48.24       11
+18.12      6.79     13.66     54.64     14.06     56.24       13
+14.17      8.68     17.50     70.00     18.06     72.24       15</pre>
+  <p>The reason for using the indicated number of segments per side in the independent quads should be clear. In the combined quad, the segmentation was selected to have--to the degree feasible--identical segment lengths throughout and segment junctions that aligned from one loop to the next.</p>
+  <center>
+    <img src="quad-38.gif" width="400" height="459" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The element spacing of this first model is 0.125 wl, resulting in the proportions shown in <b>Fig. 38</b>. Each loop is full size, with no loading. As with the monoband models, the design called for resonance at each band center and to the degree possible the peak front-to-back ratio at the same frequency.</p>
+  <p>In case anyone would like to replicate the 5-band model, an EZNEC description follows. It is feasible to extract the description as an ASCII document and to modify it to fit the formats required by other programs that use input files in ASCII format. Although many format changes are required, number-entry typing errors are eliminated by this procedure.</p>
+  <pre>5-band quad:  1/8 wl sp                      Frequency = 28.5  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : ft)  Conn.--- End 2 (x,y,z : ft)  Dia(in) Segs
+
+1   W4E2  -4.320,  2.155, -4.320  W2E1   4.320,  2.155, -4.320    # 14    7
+2   W1E2   4.320,  2.155, -4.320  W3E1   4.320,  2.155,  4.320    # 14    7
+3   W2E2   4.320,  2.155,  4.320  W4E1  -4.320,  2.155,  4.320    # 14    7
+4   W3E2  -4.320,  2.155,  4.320  W1E1  -4.320,  2.155, -4.320    # 14    7
+5   W8E2  -4.600, -2.155, -4.600  W6E1   4.600, -2.155, -4.600    # 14    7
+6   W5E2   4.600, -2.155, -4.600  W7E1   4.600, -2.155,  4.600    # 14    7
+7   W6E2   4.600, -2.155,  4.600  W8E1  -4.600, -2.155,  4.600    # 14    7
+8   W7E2  -4.600, -2.155,  4.600  W5E1  -4.600, -2.155, -4.600    # 14    7
+9  W12E2  -5.815,  2.897, -5.815 W10E1   5.815,  2.897, -5.815    # 14   11
+10  W9E2   5.815,  2.897, -5.815 W11E1   5.815,  2.897,  5.815    # 14   11
+11 W10E2   5.815,  2.897,  5.815 W12E1  -5.815,  2.897,  5.815    # 14   11
+12 W11E2  -5.815,  2.897,  5.815  W9E1  -5.815,  2.897, -5.815    # 14   11
+13 W16E2  -6.030, -2.897, -6.030 W14E1   6.030, -2.897, -6.030    # 14   11
+14 W13E2   6.030, -2.897, -6.030 W15E1   6.030, -2.897,  6.030    # 14   11
+15 W14E2   6.030, -2.897,  6.030 W16E1  -6.030, -2.897,  6.030    # 14   11
+16 W15E2  -6.030, -2.897,  6.030 W13E1  -6.030, -2.897, -6.030    # 14   11
+17 W20E2  -8.750,  4.334, -8.750 W18E1   8.750,  4.334, -8.750    # 14   15
+18 W17E2   8.750,  4.334, -8.750 W19E1   8.750,  4.334,  8.750    # 14   15
+19 W18E2   8.750,  4.334,  8.750 W20E1  -8.750,  4.334,  8.750    # 14   15
+20 W19E2  -8.750,  4.334,  8.750 W17E1  -8.750,  4.334, -8.750    # 14   15
+21 W24E2  -9.030, -4.334, -9.030 W22E1   9.030, -4.334, -9.030    # 14   15
+22 W21E2   9.030, -4.334, -9.030 W23E1   9.030, -4.334,  9.030    # 14   15
+23 W22E2   9.030, -4.334,  9.030 W24E1  -9.030, -4.334,  9.030    # 14   15
+24 W23E2  -9.030, -4.334,  9.030 W21E1  -9.030, -4.334, -9.030    # 14   15
+25 W28E2  -4.950,  2.465, -4.950 W26E1   4.950,  2.465, -4.950    # 14    9
+26 W25E2   4.950,  2.465, -4.950 W27E1   4.950,  2.465,  4.950    # 14    9
+27 W26E2   4.950,  2.465,  4.950 W28E1  -4.950,  2.465,  4.950    # 14    9
+28 W27E2  -4.950,  2.465,  4.950 W25E1  -4.950,  2.465, -4.950    # 14    9
+29 W32E2  -5.100, -2.465, -5.100 W30E1   5.100, -2.465, -5.100    # 14    9
+30 W29E2   5.100, -2.465, -5.100 W31E1   5.100, -2.465,  5.100    # 14    9
+31 W30E2   5.100, -2.465,  5.100 W32E1  -5.100, -2.465,  5.100    # 14    9
+32 W31E2  -5.100, -2.465,  5.100 W29E1  -5.100, -2.465, -5.100    # 14    9
+33 W36E2  -6.830,  3.393, -6.830 W34E1   6.830,  3.393, -6.830    # 14   13
+34 W33E2   6.830,  3.393, -6.830 W35E1   6.830,  3.393,  6.830    # 14   13
+35 W34E2   6.830,  3.393,  6.830 W36E1  -6.830,  3.393,  6.830    # 14   13
+36 W35E2  -6.830,  3.393,  6.830 W33E1  -6.830,  3.393, -6.830    # 14   13
+37 W40E2  -7.030, -3.393, -7.030 W38E1   7.030, -3.393, -7.030    # 14   13
+38 W37E2   7.030, -3.393, -7.030 W39E1   7.030, -3.393,  7.030    # 14   13
+39 W38E2   7.030, -3.393,  7.030 W40E1  -7.030, -3.393,  7.030    # 14   13
+40 W39E2  -7.030, -3.393,  7.030 W37E1  -7.030, -3.393, -7.030    # 14   13
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           4     1 / 50.00   (  1 / 50.00)      1.000       0.000       V</pre>
+  <p>All models continue to be in free space. This particular model grew in stages, going from a monoband antenna to a tribander to a full 5-band model. Hence, the wires must be grouped in series of 8 each, with the bands in order being 10, 15, 20, 12, and 17. For each band, change the source to the center of the following wires for each band: 20 = wire 17; 17 = wire 33; 15 = wire 9; 12 = wire 25; and 10 = wire 1.</p>
+  <p>Since 12 and 17 are such narrow bands, graphing performance on them is a fruitless exercise in drawing straight lines across the page. The wider bands (10, 15, and 20) were graphed by running frequency sweeps that divided each band into 10 equal parts (resulting in 11 values). Hence, the graphs record steps from the bottom of the band. Each 20-meter step is 0.035 MHz; each 15-meter step is 0.045 MHz; and each 10-meter step is 0.1 MHz.</p>
+  <center>
+    <img src="quad-39.gif" width="644" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain curves in <b>Fig. 39</b> show an interesting trend. Although the 10- meter band is wider than the other as a percentage of the center frequency, the gain holds up better on that band than on the lower bands. Indeed, the gain is higher than for the lower bands--higher even than the monoband version of the 10-meter quad.</p>
+  <p>For reference, here is a table of key performance figures for the independent quad beams at the center frequency for each band.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+28.5            7.16           23.6                102 - j 1
+24.95           7.11           23.9                105 + j 1
+21.22           7.18           23.2                 99 + j 2
+18.12           7.14           23.7                101 - j 1
+14.17           7.15           23.2                 99 + j 0</pre>
+  <p>For contrast, here is the performance of the combined beam at each band center.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+28.5            7.48           20.3                 40 - j 0
+24.95           7.16           24.7                 42 + j 0
+21.22           7.23           28.9                 53 + j 0
+18.12           7.32           25.8                 61 - j 0
+14.17           7.23           32.4                 84 - j 0</pre>
+  <center>
+    <img src="quad-40.gif" width="647" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As <b>Fig. 40</b> suggests, the front-to-back ratio is subject to very steep peaks on all but 10 meters. however, the band edge values resemble those of the monoband close-spaced quad beams--fairly low compared to mid-band values.</p>
+  <p>The source impedance values shown in the table are at considerable variance from those of the monoband quad beams, indicating a significant amount of interaction among elements. Those who are interested in the interactions will wish to examine the current tables for the supposedly inactive elements in the quad.</p>
+  <center>
+    <img src="quad-41.gif" width="647" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 41</b> shows the 75-Ohm SWR values for the 3 wide bands. Although this particular 5-band quad might well have been referenced to 50-Ohms, all of the others we shall examine more aptly use a 75-Ohm standard. Hence, the graph was made consistent with the others.</p>
+  <p>In fact, only the 10-meter curve is not movable to fit a 2:1 SWR bandwidth standard. Both the 15-meter and the 20-meter drivers can be adjusted to move their SWR curves. Note the leveling off of the 20-meter SWR above the band center, but also compare that phenomenon with the gain fall-ff at the upper end of the band.</p>
+  <p>Although the constant spacing of the elements in terms of wavelengths seems to be an advantage in the abstract, that appearance fails to reckon with the complex interactions of the elements. The source impedance climbs from the innermost quad to the outermost, which can make matching a complex affair.</p>
+  <p>Moreover, the operating bandwidth of the close-spaced quad is somewhat narrow, suggesting that a wider spacing may be advantageous. So we may turn from this study model to something a little more versatile.</p>
+  <h3>A Spider Quad with 0.174 wl Element Spacing and Capacitive Reflector Loading</h3>One direction for overcoming some of the limitation of the close-spaced spider is to increase the spacing. One useful study model in my collection uses an element spacing pf 0.174 wl, which is 6' at 10 meters (28.5 MHz).
+  <center>
+    <img src="quad-42.gif" width="400" height="451" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 42</b> Shows the general configuration of the model. The inward slope of the elements toward the boom is more extreme than in the close-spaced model. The squares on the reflector elements (all except 10 meters) represent a second attempt to add flexibility: loading capacitors. The reflectors for 20 through 12 meters are made longer than normal and electrically shortened with capacitors. As we noted with monoband beams, this practice permits more precise setting of the front-to-back ratio without altering the reflector loop lengths, and it adds a small degree of widening to the operating bandwidth. Because the 10-meter and 12-meter reflectors are so closely spaced to begin with, enlarging the 10-meter reflector was deemed impractical.</p>
+  <p>The following table lists the dimensions of note to the model, along with the value of the capacitor used. No losses are charged to the capacitor. In the model, it is important to use a Type 0 load that calls for an actual value of capacitance so that frequency sweeps will accurately portray the behavior of the antenna across the pass band. Since the reactance of the capacitor will change as the frequency changes, the use of a type 4 complex impedance (series resistance and reactance) load will not reflect the capacitor's actual effects. In the table, the segments/side column has been omitted, since all the quad models in this collection use the same segmentation scheme as the first one.</p>
+  <pre>Frequency Spacing   L Driver  C Driver  L Refl.   C Refl.   Reflector
+ MHz       feet      feet      feet      feet      feet      cap. pF
+28.5       6.00      8.63     34.54      9.40     37.60        ---
+24.94      6.86      9.88     39.52     10.56     42.23         80
+21.22      8.06     11.72     46.86     12.39     49.56        125
+18.12      9.44     13.77     55.08     14.48     57.92        135
+14.17     12.07     17.67     70.66     18.48     73.90        225</pre>
+  <p>In replicating and improving this model, if changes are made to any of the loading capacitors, it is important to check the effects of the change on other bands. The most notable interaction is between 10 and 12 meters, since the loops are so close in length. However, 10 pF change in the 12- meter loading capacitor created operationally insignificant but numerically noticeable changes in the reported values for every other band.</p>
+  <p>For anyone wishing to replicate this particular model, here is the EZNEC model description.</p>
+  <pre>5-band quad: .174wl sp                       Frequency = 28.5  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : in)  Conn.--- End 2 (x,y,z : in)  Dia(in) Segs
+
+1   W4E2 -51.800, 36.000,-51.800  W2E1  51.800, 36.000,-51.800    # 14    7
+2   W1E2  51.800, 36.000,-51.800  W3E1  51.800, 36.000, 51.800    # 14    7
+3   W2E2  51.800, 36.000, 51.800  W4E1 -51.800, 36.000, 51.800    # 14    7
+4   W3E2 -51.800, 36.000, 51.800  W1E1 -51.800, 36.000,-51.800    # 14    7
+5   W8E2 -56.400,-36.000,-56.400  W6E1  56.400,-36.000,-56.400    # 14    7
+6   W5E2  56.400,-36.000,-56.400  W7E1  56.400,-36.000, 56.400    # 14    7
+7   W6E2  56.400,-36.000, 56.400  W8E1 -56.400,-36.000, 56.400    # 14    7
+8   W7E2 -56.400,-36.000, 56.400  W5E1 -56.400,-36.000,-56.400    # 14    7
+9  W12E2 -59.300, 41.138,-59.300 W10E1  59.300, 41.138,-59.300    # 14    9
+10  W9E2  59.300, 41.138,-59.300 W11E1  59.300, 41.138, 59.300    # 14    9
+11 W10E2  59.300, 41.138, 59.300 W12E1 -59.300, 41.138, 59.300    # 14    9
+12 W11E2 -59.300, 41.138, 59.300  W9E1 -59.300, 41.138,-59.300    # 14    9
+13 W16E2 -63.350,-41.138,-63.350 W14E1  63.350,-41.138,-63.350    # 14    9
+14 W13E2  63.350,-41.138,-63.350 W15E1  63.350,-41.138, 63.350    # 14    9
+15 W14E2  63.350,-41.138, 63.350 W16E1 -63.350,-41.138, 63.350    # 14    9
+16 W15E2 -63.350,-41.138, 63.350 W13E1 -63.350,-41.138,-63.350    # 14    9
+17 W20E2 -70.300, 48.350,-70.300 W18E1  70.300, 48.350,-70.300    # 14   11
+18 W17E2  70.300, 48.350,-70.300 W19E1  70.300, 48.350, 70.300    # 14   11
+19 W18E2  70.300, 48.350, 70.300 W20E1 -70.300, 48.350, 70.300    # 14   11
+20 W19E2 -70.300, 48.350, 70.300 W17E1 -70.300, 48.350,-70.300    # 14   11
+21 W24E2 -74.350,-48.350,-74.350 W22E1  74.350,-48.350,-74.350    # 14   11
+22 W21E2  74.350,-48.350,-74.350 W23E1  74.350,-48.350, 74.350    # 14   11
+23 W22E2  74.350,-48.350, 74.350 W24E1 -74.350,-48.350, 74.350    # 14   11
+24 W23E2 -74.350,-48.350, 74.350 W21E1 -74.350,-48.350,-74.350    # 14   11
+25 W28E2 -82.650, 56.623,-82.650 W26E1  82.650, 56.623,-82.650    # 14   13
+26 W25E2  82.650, 56.623,-82.650 W27E1  82.650, 56.623, 82.650    # 14   13
+27 W26E2  82.650, 56.623, 82.650 W28E1 -82.650, 56.623, 82.650    # 14   13
+28 W27E2 -82.650, 56.623, 82.650 W25E1 -82.650, 56.623,-82.650    # 14   13
+29 W32E2 -86.900,-56.623,-86.900 W30E1  86.900,-56.623,-86.900    # 14   13
+30 W29E2  86.900,-56.623,-86.900 W31E1  86.900,-56.623, 86.900    # 14   13
+31 W30E2  86.900,-56.623, 86.900 W32E1 -86.900,-56.623, 86.900    # 14   13
+32 W31E2 -86.900,-56.623, 86.900 W29E1 -86.900,-56.623,-86.900    # 14   13
+33 W36E2 -106.00, 72.408,-106.00 W34E1 106.000, 72.408,-106.00    # 14   15
+34 W33E2 106.000, 72.408,-106.00 W35E1 106.000, 72.408,106.000    # 14   15
+35 W34E2 106.000, 72.408,106.000 W36E1 -106.00, 72.408,106.000    # 14   15
+36 W35E2 -106.00, 72.408,106.000 W33E1 -106.00, 72.408,-106.00    # 14   15
+37 W40E2 -110.85,-72.408,-110.85 W38E1 110.850,-72.408,-110.85    # 14   15
+38 W37E2 110.850,-72.408,-110.85 W39E1 110.850,-72.408,110.850    # 14   15
+39 W38E2 110.850,-72.408,110.850 W40E1 -110.85,-72.408,110.850    # 14   15
+40 W39E2 -110.85,-72.408,110.850 W37E1 -110.85,-72.408,-110.85    # 14   15
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           4     1 / 50.00   (  1 / 50.00)      1.000       0.000       V
+
+              --------------- LOADS ---------------
+
+Load      Wire      Wire #/Pct From End 1       Laplace Coefficients
+          Seg.     Actual      (Specified)
+
+1           5    13 / 50.00   ( 13 / 50.00)   Coefficients listed below
+2           6    21 / 50.00   ( 21 / 50.00)   Coefficients listed below
+3           7    29 / 50.00   ( 29 / 50.00)   Coefficients listed below
+4           8    37 / 50.00   ( 37 / 50.00)   Coefficients listed below
+
+Load  1  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   8.000E-11   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Load  2  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   1.250E-10   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Load  3  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   1.351E-10   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Load  4  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   2.246E-10   0.000E+00   0.000E+00   0.000E+00   0.000E+00</pre>
+  <p>The dimensions of this model are listed in inches. The band-by-band source positions are as follows: 10 = wire 1; 12 = wire 9; 15 = wire 17; 17 = wire 25; and 20 = wire 33. Loads are listed by reference to Laplace transform notation, but the capacitor values can be read directly from the s^1 denominator position.</p>
+  <p>For reference, here are the performance potential reports for the band centers from 10 to 20 meters.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+28.5            7.15           32.4                 58 + j 16
+24.95           7.05           31.0                 70 + j  3
+21.22           7.07           29.1                 80 + j 20
+18.12           7.08           25.8                 94 + j  8
+14.17           7.11           23.8                118 - j  3</pre>
+  <p>The resonant points for 10 and 15 meters were intentionally lowered, resulting in the inductively reactive source impedances for those bands at the specified frequencies. More notable is the fact that widening the spider did not overcome the tendency of this design to show an increasing source impedance magnitude as we move from the inner loops to the outer ones. This phenomena alone suggests that matching a spider to a given feedline will present some problems.</p>
+  <center>
+    <img src="quad-43.gif" width="646" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain curves in <b>Fig. 43</b> show a good correlation to those for the narrow-spaced version of the 5-band quad. The gain curve for 10 meters is overall lower because the design effort aimed to raise the front-to-back ratio. However, gain change across 10 meters is virtually identical to that of the narrower quad. The 20-meter curve is slightly steeper for this model relative to the previous one.</p>
+  <center>
+    <img src="quad-44.gif" width="647" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Whereas the previous model showed high peak values of front-to-back ratio on 15 and 20, with 10 meters showing a relatively smooth curve, the front- to-back ratio curves in <b>Fig. 45</b> show just the opposite. 10-meter front-to- back ratios are very good across the band. 15 and 20 show only mild peaks, but with overall performance significantly less than on 10. The performance on 20 at the low end of the band is improved, although the high-end figure is almost identical for the two models. Except on 10 meters (and the narrow WARC bands), attaining a 20 dB front-to-back ratio across the band with the spider design will be difficult.</p>
+  <center>
+    <img src="quad-45.gif" width="644" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wider spacing of the present spider design significantly improves the 75-Ohm SWR operating bandwidth, despite the variability of source impedances from band-to-band. As shown in <b>Fig. 45</b>, all bands except 10 meters come in at under 2:1 SWR across the bands, and the 10-meter curve yields about 750 kHz of under 2:1 SWR operation.</p>
+  <p>Wider spacing, then, does provide superior performance over narrow spacing in spider designs. Part of the reason for the improvements involves complex interactions among the elements. The theoretically inactive elements are in practice quite active--at least to the degree necessary to shape the performance curves for the 5-band quad. Removing the loops for 12 and 17 meters would require a complete refiguring of the multi-band quad for effective 3-band operation. Some of loop size changes are small but necessary, suggesting that the multi-band quad is not the broad-banded insensitive beast that its early reputation made it out to be.</p>
+  <h3>A "Flat-Loop' Quad with 8' Element Spacing and Capacitive Reflector Loading</h3>In the April, 1992, edition of <i>QST</i> (p. 52), KC6T published a quad design that used flat plane loops spaced 8' apart. The 5-band design employed capacitor loading of the reflector. In addition, the designer used gamma matches on the drivers.
+  <p>In my own model of this antenna, some modifications have been made for modeling convenience. The driven elements were resonated at band centers. The reflector loads were optimized for the free space model. The differences between my values and the values used in the two practical versions described in the article reaffirm the importance of determining the actual value of loading required through field adjustment. The 10-meter reflector is not loaded. <b>Fig. 46</b> shows the general outline of the resultant model.</p>
+  <center>
+    <img src="quad-46.gif" width="295" height="453" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The dimensions for the model follow in tabular form. Note especially the spacing in wavelengths for each band. The 10- and 12-meter loops are farther apart than those in the models explored so far, while 20-meter elements are closer than those in the narrow spider model we first examined.</p>
+  <pre>Frequency Spacing   L Driver  C Driver  L Refl.   C Refl.   Reflector
+ MHz       wl        feet      feet      feet      feet      cap. pF
+28.5      0.232      8.63     34.54      9.40     37.60        ---
+24.94     0.202      9.88     39.52     10.56     42.23         58
+21.22     0.173     11.72     46.86     12.39     49.56         68
+18.12     0.147     13.77     55.08     14.48     57.92         76
+14.17     0.115     17.67     70.66     18.48     73.90         94</pre>
+  <p>Here is the corresponding EZNEC model description of the KC6T quad.</p>
+  <pre>2el quad KC6T QST 4-92, p 52                    Frequency = 28.5  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : ft)  Conn.--- End 2 (x,y,z : ft)  Dia(in) Segs
+
+1   W4E2  -4.292,  0.000, -4.292  W2E1   4.292,  0.000, -4.292    # 14    7
+2   W1E2   4.292,  0.000, -4.292  W3E1   4.292,  0.000,  4.292    # 14    7
+3   W2E2   4.292,  0.000,  4.292  W4E1  -4.292,  0.000,  4.292    # 14    7
+4   W3E2  -4.292,  0.000,  4.292  W1E1  -4.292,  0.000, -4.292    # 14    7
+5   W8E2  -4.950,  0.000, -4.950  W6E1   4.950,  0.000, -4.950    # 14    9
+6   W5E2   4.950,  0.000, -4.950  W7E1   4.950,  0.000,  4.950    # 14    9
+7   W6E2   4.950,  0.000,  4.950  W8E1  -4.950,  0.000,  4.950    # 14    9
+8   W7E2  -4.950,  0.000,  4.950  W5E1  -4.950,  0.000, -4.950    # 14    9
+9  W12E2  -5.825,  0.000, -5.825 W10E1   5.825,  0.000, -5.825    # 14   11
+10  W9E2   5.825,  0.000, -5.825 W11E1   5.825,  0.000,  5.825    # 14   11
+11 W10E2   5.825,  0.000,  5.825 W12E1  -5.825,  0.000,  5.825    # 14   11
+12 W11E2  -5.825,  0.000,  5.825  W9E1  -5.825,  0.000, -5.825    # 14   11
+13 W16E2  -6.842,  0.000, -6.842 W14E1   6.842,  0.000, -6.842    # 14   13
+14 W13E2   6.842,  0.000, -6.842 W15E1   6.842,  0.000,  6.842    # 14   13
+15 W14E2   6.842,  0.000,  6.842 W16E1  -6.842,  0.000,  6.842    # 14   13
+16 W15E2  -6.842,  0.000,  6.842 W13E1  -6.842,  0.000, -6.842    # 14   13
+17 W20E2  -8.733,  0.000, -8.733 W18E1   8.733,  0.000, -8.733    # 14   15
+18 W17E2   8.733,  0.000, -8.733 W19E1   8.733,  0.000,  8.733    # 14   15
+19 W18E2   8.733,  0.000,  8.733 W20E1  -8.733,  0.000,  8.733    # 14   15
+20 W19E2  -8.733,  0.000,  8.733 W17E1  -8.733,  0.000, -8.733    # 14   15
+21 W24E2  -4.675, -8.000, -4.675 W22E1   4.675, -8.000, -4.675    # 14    7
+22 W21E2   4.675, -8.000, -4.675 W23E1   4.675, -8.000,  4.675    # 14    7
+23 W22E2   4.675, -8.000,  4.675 W24E1  -4.675, -8.000,  4.675    # 14    7
+24 W23E2  -4.675, -8.000,  4.675 W21E1  -4.675, -8.000, -4.675    # 14    7
+25 W28E2  -5.358, -8.000, -5.358 W26E1   5.358, -8.000, -5.358    # 14    9
+26 W25E2   5.358, -8.000, -5.358 W27E1   5.358, -8.000,  5.358    # 14    9
+27 W26E2   5.358, -8.000,  5.358 W28E1  -5.358, -8.000,  5.358    # 14    9
+28 W27E2  -5.358, -8.000,  5.358 W25E1  -5.358, -8.000, -5.358    # 14    9
+29 W32E2  -6.300, -8.000, -6.300 W30E1   6.300, -8.000, -6.300    # 14   11
+30 W29E2   6.300, -8.000, -6.300 W31E1   6.300, -8.000,  6.300    # 14   11
+31 W30E2   6.300, -8.000,  6.300 W32E1  -6.300, -8.000,  6.300    # 14   11
+32 W31E2  -6.300, -8.000,  6.300 W29E1  -6.300, -8.000, -6.300    # 14   11
+33 W36E2  -7.350, -8.000, -7.350 W34E1   7.350, -8.000, -7.350    # 14   13
+34 W33E2   7.350, -8.000, -7.350 W35E1   7.350, -8.000,  7.350    # 14   13
+35 W34E2   7.350, -8.000,  7.350 W36E1  -7.350, -8.000,  7.350    # 14   13
+36 W35E2  -7.350, -8.000,  7.350 W33E1  -7.350, -8.000, -7.350    # 14   13
+37 W40E2  -9.400, -8.000, -9.400 W38E1   9.400, -8.000, -9.400    # 14   15
+38 W37E2   9.400, -8.000, -9.400 W39E1   9.400, -8.000,  9.400    # 14   15
+39 W38E2   9.400, -8.000,  9.400 W40E1  -9.400, -8.000,  9.400    # 14   15
+40 W39E2  -9.400, -8.000,  9.400 W37E1  -9.400, -8.000, -9.400    # 14   15
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           4     1 / 50.00   (  1 / 50.00)      1.000       0.000       V
+
+              --------------- LOADS ---------------
+
+Load      Wire      Wire #/Pct From End 1       Laplace Coefficients
+          Seg.     Actual      (Specified)
+
+1           5    25 / 50.00   ( 25 / 50.00)   Coefficients listed below
+2           6    29 / 50.00   ( 29 / 50.00)   Coefficients listed below
+3           7    33 / 50.00   ( 33 / 50.00)   Coefficients listed below
+4           8    37 / 50.00   ( 37 / 50.00)   Coefficients listed below
+
+Load  1  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   5.800E-11   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Load  2  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   6.810E-11   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Load  3  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   7.640E-11   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Load  4  s^0         s^1         s^2         s^3         s^4         s^5
+Num   1.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Den   0.000E+00   9.360E-11   0.000E+00   0.000E+00   0.000E+00   0.000E+00</pre>
+  <p>This model gives dimensions in feet, but the order of loops differs. All of the driver loops are listed, followed by all of the reflectors, each in ascending wavelength order from 10 to 20 meters. Hence the source wires are as follows: 10 = wire 1; 12 = wire 5; 15 = wire 9; 17 = wire 13; and 20 = wire 17. Anyone who believes that I should set myself a more consistent set of modeling conventions for 5-band quads would be entirely in the right.</p>
+  <p>The following band-center performance potential reports will serve as a reference for the graphs to follow.</p>
+  <pre>Frequency      Free Space     Front-to-Back       Feedpoint Impedance
+ MHz           Gain dBi       Ratio dB            R +/- jX Ohms
+28.5            7.46           22.8                 75 - j 0
+24.95           7.20           30.6                 77 + j 0
+21.22           7.28           34.4                 70 + j 2
+18.12           7.30           31.7                 70 + j 2
+14.17           7.21           24.0                 77 + j 2</pre>
+  <p>The first thing to notice is that this model sustains the higher gain values of the narrow spider with the higher front-to-back ratios (except for 10 meters) of the wide spider. The second and very important thing to notice is the source impedances for all five bands. The band-center 75-Ohm SWR for all bands is insignificant.</p>
+  <center>
+    <img src="quad-47.gif" width="645" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain curves (<b>Fig. 47</b>) for the KC6T design show an overlap at the lower end of the bands. The overlap results from an increase in gain for the lower two bands. The 10-meter gain variance across the band is the lowest of the three designs we have examined. The gain drop-off for any band is equal to or less than the best figures for any of the designs. Nonetheless, the drop-off does run from 1 to 1.2 dB for 15 and 10 meters. I have not yet found a design that does not have this type of curve without setting the gain around 6.5 dBi in the first place.</p>
+  <p>Interestingly, the 10-meter portion of the antenna, when extracted from the overall 5-band environment, is not capable of the gain it shows within the larger set of loops. A free space gain of about 6.5 dBi, with a front-to- back ratio approaching 20 dB is the best I have been able to model from that part of the antenna. Moreover, the independent resonant impedance is over 170 Ohms--a far cry from the 75-Ohm impedance 10 meters shows in the 5-band model. Just how the other loops contribute to the 10-meter gain and source impedance remains to be calculated.</p>
+  <center>
+    <img src="quad-48.gif" width="647" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As presently structured, the front-to-back performance of the model is somewhat deficient and requires further work. See <b>Fig. 48</b>. It is uncertain whether significant improvements can be made. 10-meter performance begins at about 15 dB and peaks at over 50 dB. 15-meter performance peaks near 35 dB, but decreases to about 15 dB at the band edges in a well balanced curve. 20-meter performance is poorest of all, with the low edge of the band below the 10 dB mark. However, the close spacing of the 20-meter elements at under 1/8 wl may prevent significant improvements. Perhaps only the addition of a 30-meter set of elements to this model will allow some improvement to the 20-meter front-to-back curve.</p>
+  <center>
+    <img src="quad-49.gif" width="646" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 75-Ohm SWR curves for the 3 wide bands, shown in <b>Fig. 49</b>, suggest that the antenna has good potential for direct matching to 75-Ohm feedline. The resonant point on 20 meters needs to be moved much lower in the band--with consequent adjustments to every other loop. 10 meters provides nearly 800 kHz of 2:1 SWR bandwidth, even before line losses are used to obscure the remaining mismatch at the antenna terminals.</p>
+  <p>With the increasing use of CATV low-loss hardline for fixed position runs between the antenna location and the shack entry, using a 75-Ohm feed system with an antenna of this design seems quite feasible. Driver switching can be accomplished with either solid or foam core 75-Ohm cable at the antenna end of the line. A single 75:50 Ohm transformer or unun can be used at the operating position to effect a match with equipment inputs and outputs. Alternatively, for use with a low-loss 50-Ohm main feedline, a single wide-band matching device might be located in the remote switch box, with all switching done at 75 Ohms.</p>
+  <p>Although 8-legged spiders and similar designs that keep quad elements spaced the same amount in terms of wavelength have become very popular, modeling exercises may breed a new respect for older fixed spacing designs. The KC6T design forms a very good starting point for improvements--and is a good design to model in its own right.</p>
+  <h3>The Square and Its Feedpoint</h3>EI7BA has built a quad somewhat similar to the wide-spaced spider we have examined. However, he has altered the feedpoint for mechanical reasons.
+  <center>
+    <img src="quad-50.gif" width="519" height="298" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For a square quad, the normal feedpoint, especially with spider construction, leaves a long run of unsupported feedline from the hub to the center of the element, as suggested in <b>Fig. 50</b>. If we have a multi-band quad, then we might have 5 line lengths, the net weight of which begs for a sky-hook.</p>
+  <p>EI7BA runs his feedlines to the corner(s) of the quad square. One might use the same corner for all or distribute the weight each side of center. The question then arises as to the effect the change of feed position might have upon the antenna pattern.</p>
+  <center>
+    <img src="quad-51.gif" width="640" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 51</b> shows the band-center pattern of the EI7BA quad on 15 meters using the normal centered feedpoint. Performance at this frequency is good with respect both to gain and front-to-back performance. As the figure shows, the vertically polarized component of the total far field is very small--at least 40 dB down from the horizontal and total fields, which are indistinguishable in the pattern graphic.</p>
+  <center>
+    <img src="quad-52.gif" width="640" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Moving the feedpoint to one corner has some interesting effects, which are displayed in<b>fig. 52</b>. First, the vertically and horizontally polarized components of the field have equal forward gain values. Together, they yield a total field that is only down by 0.1 dB relative to the center-feed result. The total field has a wider beam width and extends beyond the 90-degree points we often use to define front-to-side ratio. The normal feed system produces front-to-side values greater than 35 dB down, whereas the front-to-side ratio for the corner feed is about 13 dB.</p>
+  <p>When we set aside simple habits of expectation, it is not at all clear that one can say that one pattern is superior to the other without introducing a good bit of information about the operating goals and style of the individual user. One can develop equal numbers of scenarios favoring each total field pattern. Whether the corner feed offers any advantages or disadvantages relative to propagation, modeling itself cannot say.</p>
+  <p>The repositioning of the feedpoint to the corner does tend to raise the source impedance of the antenna by a small amount. In one example, the change was from 75 Ohms to about 85 Ohms. Such changes will have to be factored into the design itself by anyone using this alternative feed system.</p>
+  <h3>When Is Enough Enough?</h3>
+  <p>Hopefully, the models made available here will provide a sufficient start to anyone interested in exploring multi-band 2-element quads. However, lest one think of these notes as in any way definitive, here is a list of some questions not tackled.</p>
+  <ul>
+    <li>1. Does the diamond shape have any electrical effect (in contrast to obvious mechanical effects) upon a multi-band quad? Models of monoband quads suggest a negative answer, but I have not run any models to verify this suggestion.</li>
+    <li>2. What is the optimal spacing for either spider or flat plane quads? The models noted here are only samples, not exhaustive investigations. Hence, there are possibilities yet to be tapped.</li>
+    <li>3. What is the effect of using much fatter wire in the multi-band quad? Using #10 aluminum wire or other candidates for the loops has not been explored here. Some loop size changes are inevitable, but the interactions and their consequences for performance and feedpoint impedance figures remains to be figured.</li>
+    <li>4. What effect will using metal or partially metal support arms have on quad performance? Metal arms or arm segments were not a part of these models.</li>
+    <li>5. What is the effect of using a common feed point for all of the drivers in a 5-band quad? The models used here restricted themselves to feeding one driver at a time, with the unused drivers having closed loops. The common-feed question requires separate exploration.</li>
+    <li>6. How will antenna height above ground affect quad performance, especially the source impedance. All of the models we have looked at have been free space versions to make the performance figures comparable. Although quads have a reputation of relative immunity to surrounding objects, every proposed quad should be modeled at its height of intended use.</li>
+    <li>7. Can 5-band 3- and 4-element multi-band quads be modeled? In principle, the answer is a deceptively easy "yes." However, each 5-band element adds 20 wires to the model or about 200 segments. Since run times grow exponentially rather than linearly, the resultant models may require modeler patience. (The present generation of PCs has plenty of resources, so that is not a limitation.) Some programs with 500 segment limitations may not be able to handle models of large quads adequately, and reducing the segmentation per loop side in order to fit the model to the program runs the danger of producing inaccurate results.</li>
+  </ul>
+  <p>These are not all of the questions that remain unanswered, but they are enough to remove any sense of definitiveness to these casual notes. My intent has been simply to make available some of the models in my collection to those interested in quad modeling--and to show some of the performance potential and limitations of each of the designs considered.</p>
+  <p>So we have only scratched the surface of the quad question cluster. Nonetheless, I hope my modeling experiences may be useful to those just starting to model their first quad.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><i>Updated 2-20-99. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="quad5.html"><img src="../images/fwdrd.gif" width="40" height="40"> <b>Go to Monoband Quads of More Than 2 Elements</b></a></p>
+  <p><a href="quad.html"><img src="../images/rtnhome.gif" width="40" height="40"> <b>Return to Quad Model Index</b></a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Return to Amateur Radio Page</b></a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a></p><br>
+</body>
+</html>

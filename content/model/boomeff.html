@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Boom Effects, VHF / UHF, Yagi">
+  <title>Boom Effects with Short 3-Element 146-MHz Yagis</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="middle" width="125" height="62" border="2" vspace="5" hspace="10"> Notes on Boom Effects with Short 3-Element 146-MHz Yagis <img src="../images/w4rnlwwr.gif" align="middle" width="99" height="83" border="2" vspace="5" hspace="10"></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>There is a long-standing question concerning the effects of directly connecting Yagi elements to a boom vs. having them well insulated and isolated from the boom. The empirical evidence shows that the boom connection requires an adjustment to element lengths relative to the use of insulated elements (or a non-conductive boom). However, at least two questions remain. 1. Can NEC show the difference? 2. What are the currents along the boom relative to those on the active elements?</p>
+  <p>As a preliminary investigation, I used 2 of a series of 3-element optimized utility Yagis and remodeled them to show element-to-boom connections. NEC (-2/-4) is limited in its ability to model such situations, since it develops errors if there are angular junctions of dissimilar-diameter materials. However, since I had optimized the designs for a number of element diameters, I selected the models using 0.5"-diameter elements. This selection permitted the use of a 0.5"-diameter boom for the NEC-4 modeling tests.</p>
+  <p>Each modeling test proceeded in 4 steps:</p>
+  <p>1. The initial model using no boom</p>
+  <p>2. Pre-boom model adjustments: The adjustments included a. moving the driver 1" above the plane of the antenna to maintain its insulation from the boom, b. dividing the elements into wires joining along the array centerline, and finally c. optimizing the segmentation at a value of about 0.85 segments per inch of wire element.</p>
+  <p>3. Adding a boom extending from the reflector junction to the director junction, using the same segmentation as in step 2.</p>
+  <p>4. Adding 1.7" extensions from the reflector back and from the director forward, with 2 segments each.</p>
+  <p>The following notes provide the modeling data for the tests.</p>
+  <p><b>1. 23FB-50: A 2-meter, 3-element Yagi optimized for maximum front-to-back ratio at 146 MHz</b></p>
+  <p><i>Step 1</i>. The following dimensions apply to the initial (no-boom) model of the max FB design. Element lengths are in half-length units to simplify replication of the model. All element diameter values will be 0.5" (radius = 0.25"). Each element used 31 segments. The material is aluminum. The environment is free-space.</p>
+  <pre>Element           Length            Distance from Reflector
+Reflector         +/- 20.06"        -----
+Driver            +/- 18.16"        13.39"
+Director          +/- 17.21"        25.10"  (11.71" from driver)</pre>
+  <p>Performance report:</p>
+  <pre>                  144 MHz           146 MHz           148 MHz
+Gain              7.66 dBi          7.81              8.02
+Front-back        23.34 dB          56.80             22.82
+Source Z          65.90 + j 8.24    50.17 - j 0.60    33.41 - j 1.76
+50-Ohm SWR        1.364             1.012             1.500</pre>
+  <p>The reverse curve of source reactance stems from the use of a beta match consisting of a transmission-line stub across the source after shortening the driver to show the requisite capacitive reactance.</p>
+  <p><i>Step 2</i>. The model was revised to use 2 wires for the reflector and director elements, with 17 segments per half reflector and 15 segments per half director. The driver was elevated 1" with 31 segments. The following performance figures resulted from the revisions.</p>
+  <p>Performance report:</p>
+  <pre>                  144 MHz           146 MHz           148 MHz
+Gain              7.65 dBi          7.79              8.00
+Front-back        23.57 dB          56.50             22.57
+Source Z          65.56 + j 8.24    49.86 - j 0.46    33.21 - j 1.52
+50-Ohm SWR        1.358             1.010             1.508</pre>
+  <p>I consider the performance differences between the initial and the Step-2 model insignificant, but the latter forms the baseline for the following steps.</p>
+  <p><i>Step 3</i>. The model added a 0.5"-diameter aluminum boom from the reflector to the director, using 21 segments. The resulting performance report was identical to that shown for Step 2, with no changes even in the last decimal place.</p>
+  <p>The currents are interesting. The driver was given a current source of relative magnitude 1.0 and phase angle 0 degrees. Because the source has a transmission line stub across it to effect a match to a 50-Ohm feedline, the driver current value will be other than 1.0 at 0 degrees, as shown in the following short table of values for 146 MHz. The element currents are identical to those that appear for Step 2.</p>
+  <p>Relative current magnitude and phase at 146 MHz at element centers and boom junctions:</p>
+  <pre>Reflector:        4.17E-1//172.31 deg     Boom junction:    6.5E-7//105.83 deg
+Driver:           1.37E+0//42.48
+Director:         9.25E-1//-93.54         Boom junction:    4.6E-7//-54.68</pre>
+  <p><i>Step 4</i>. The Step-3 model added 1.7"-long 0.5"-diameter boom extensions to simulate construction realities, but permit the use of 2 segments, each the same length as others in the model. The performance report did not change. However, the boom-to-element junction current changed somewhat.</p>
+  <p>Relative current magnitude and phase at 146 MHz at element centers and boom junctions:</p>
+  <pre>Reflector:        4.17E-1//172.31 deg     Boom junction:    4.97E-7//96.27 deg
+Driver:           1.37E+0//42.48
+Director:         9.25E-1//-93.54         Boom junction:    6.6E-7//-69.82</pre>
+  <p>Nowhere along the booms in Steps 3 and 4 did the relative current magnitude exceed 6.6E-7, about 6 orders of magnitude below the current peaks recorded on the parasitic elements.</p>
+  <p><b>2. 23WB-50: A 2-meter, 3-element Yagi for wide-band operation from 144-148 MHz</b></p>
+  <p><i>Step 1</i>. The following dimensions apply to the initial (no-boom) model of the wide-band design. Element lengths are in half-length units to simplify replication of the model. All element diameter values will be 0.5" (radius = 0.25"). Each element used 31 segments. The material is aluminum. The environment is free-space.</p>
+  <pre>Element           Length            Distance from Reflector
+Reflector         +/- 20.46"        -----
+Driver            +/- 19.15"        18.10"
+Director          +/- 16.80"        28.60"  (10.50" from driver)</pre>
+  <p>Performance report:</p>
+  <pre>                  144 MHz           146 MHz           148 MHz
+Gain              7.04 dBi          7.14              7.30
+Front-back        19.78 dB          23.20             26.42
+Source Z          52.58 - j 7.78    49.95 - j 0.76    46.30 + j 7.58
+50-Ohm SWR        1.173             1.015             1.191</pre>
+  <p>The driver source impedance shows a normal curve because the antenna was designed for direct feed by a 50-Ohm coaxial cable.</p>
+  <p><i>Step 2</i>. The model was revised to use 2 wires for the reflector and director elements, with 17 segments per half reflector and 14 segments per half director. The driver was elevated 1" with 33 segments. The following performance figures resulted from the revisions.</p>
+  <p>Performance report:</p>
+  <pre>                  144 MHz           146 MHz           148 MHz
+Gain              7.04 dBi          7.14              7.30
+Front-back        19.85 dB          23.26             26.33
+Source Z          52.56 - j 7.68    49.94 - j 0.61    46.31 + j 7.78
+50-Ohm SWR        1.171             1.012             1.196</pre>
+  <p>I consider the performance differences between the initial and the Step-2 model insignificant, but the latter forms the baseline for the following steps.</p>
+  <p><i>Step 3</i>. The model added a 0.5"-diameter aluminum boom from the reflector to the director, using 21 segments. The resulting performance report was again identical to that shown for Step 2, with no changes even in the last decimal place.</p>
+  <p>The currents reflect the situation with the first Yagi design. The driver was given a current source of relative magnitude 1.0 and phase angle 0 degrees, as shown in the following short table of values for 146 MHz. The element currents are identical to those that appear for Step 2.</p>
+  <p>Relative current magnitude and phase at 146 MHz at element centers and boom junctions:</p>
+  <pre>Reflector:        2.72E-1//98.38 deg      Boom junction:    2.1E-7//50.20 deg
+Driver:           1.00E+0//0.0
+Director:         7.24E-1//-132.3         Boom junction:    7.1E-7//120.46</pre>
+  <p><i>Step 4</i>. The Step-3 model added 1.7"-long 0.5"-diameter boom extensions to simulate construction realities, but permit the use of 2 segments, each the same length as others in the model. The performance report did not change. However, the boom-to-element junction current changed somewhat.</p>
+  <p>Relative current magnitude and phase at 146 MHz at element centers and boom junctions:</p>
+  <pre>Reflector:        2.72E-1//98.38 deg      Boom junction:    4.0E-7//62.84 deg
+Driver:           1.00E+0//0.0
+Director:         7.24E-1//-132.3         Boom junction:    5.0E-7//122.32</pre>
+  <p>Nowhere along the booms in Steps 3 and 4 did the relative current magnitude exceed 7.1E-7, about 6 orders of magnitude below the current peaks recorded on the parasitic elements. However, we may note that the boom-to-director current phase differs on the wide-band model relative to the max F-B model. It does not reflect the phase angle of the director (a negative value on the max F-B design), but has a high positive value in a progression running from the reflector forward.</p>
+  <p><i>Special note</i>: On the wide-band design, I pressed the segmentation limit by increasing the number of segments uniformly by a factor of about 1.5. Hence, the reflector halves used 25 segments, the director halves used 21, while the driver used 49. The main boom used 37 segments, with the end extensions using 3 each. In the pre-boom adjusted model (Step 2), the results varied by no more than a digit or two in the last decimal column, relative to the model with conservative segmentation. The highly segmented version of the design achieved an AGT of 1.000, although pressing further to double the original segmentation yielded core and program based warnings.</p>
+  <p>The pre-boom (Step 2) model and the boom + extensions (Step 4) model of the highly segmented design produced identical performance reports to the last decimal place. The following table of current reports reflects that fact that the element and boom junction currents are closer to the actual junction than in the conservatively segmented model.</p>
+  <p>Relative current magnitude and phase at 146 MHz at element centers and boom junctions:</p>
+  <pre>Reflector:        2.73E-1//98.10 deg      Boom junction:    1.4E-6//-132.1 deg
+Driver:           1.00E+0//0.0
+Director:         7.23E-1//-132.4         Boom junction:    1.1E-6//50.75</pre>
+  <p>The table appears anomalous, because the current phases for the boom junctions appears to be reversed from what one might expect. However, in the region of the boom below the driver--with its current at 1.0 and 0.0 degrees--the boom current is about 1.1E-7 at 180 degrees.</p>
+  <p>The current magnitudes reported for the boom junctions--actually the segment centers for the segment forming the junction--is nearly an order of magnitude higher than for the conservatively segmented model.</p>
+  <p>The next step was to question whether the exact centering of the boom--and its identify in diameter to the elements--might be a reason for the identity of results between the boomless and boomed models. So I moved the boom to a position 0.51" below the parasitic elements. This situation provided a clearance of 0.01" (0.00012 wavelength) between the boom and element surfaces. The performance reports remained unchanged.</p>
+  <p>I then transported this model with higher segmentation density to MININEC, and included a pre-boom adjusted model for comparison. The implementation of MININEC was Antenna Model. It is necessary to specify the implementation of MININEC, since the core is quite variably modified by each available implementation. Antenna Model has passed numerous benchmark tests involving areas where raw MININEC shows deficiencies. It has passed more tests than any other implementation.</p>
+  <p>The MININEC version of the model differs from the NEC version only by having 48 segments on the driver in order to place the source at the exact center on a pulse (segment junction).</p>
+  <p>Performance report--both pre-boom and full boom + extension models:</p>
+  <pre>                  144 MHz           146 MHz           148 MHz
+Gain              6.97 dBi          7.04              7.20
+Front-back        19.06 dB          22.11             25.35
+Source Z          53.94 - j 9.05    51.76 - j 2.11    48.49 + j 6.13
+50-Ohm SWR        1.209             1.055             1.137</pre>
+  <p>Since MININEC does not suffer the NEC weakness with angular junctions with dissimilar diameter wires, I increased the boom diameter to 1", reducing the segmentation in the extension to avoid segment-length/diameter warnings. Increasing the boom diameter created no change in the performance reports</p>
+  <p>The current at element junctions with the boom in MININEC is the current in the junction itself, since MININEC places pulses of current maximums at segment ends. For the 0.5" and the 1" booms, the current reports are as follows:</p>
+  <p>Relative current magnitude and phase at 146 MHz at element centers and boom junctions:</p>
+  <pre>0.5" boom:
+Reflector:        2.81E-1//97.11 deg      Boom junction:    5.2E-6//10.88 deg
+Driver:           1.00E+0//0.0
+Director:         7.08E-1//-131.2         Boom junction:    5.0E-6//167.0
+
+
+1.0" boom:
+Reflector:        2.81E-1//97.11 deg      Boom junction:    5.7E-6//8.94 deg
+Driver:           1.00E+0//0.0
+Director:         7.08E-1//-131.2         Boom junction:    6.3E-6//166.3</pre>
+  <p>As expected, the element center current magnitude and phase do not change as we change to boom diameter. However, the boom currents do change slightly. Nevertheless, the boom current magnitudes are generally in accord with NEC results for the more highly segmented model, although the phase angles do not coincide.</p>
+  <p><b>3. Ruminations on the results</b></p>
+  <p>1. The models were all given an average gain test (AGT) and returned values of 1.000, an unusually perfect score that likely resulted from the careful segmentation of the elements and boom parts. Hence, within the terms internal to NEC-4 and a highly corrected version of MININEC, the models are fully adequate, with no detectable defects.</p>
+  <p>2. The segment lengths are 1.17" (with very small variations from one model wire to another). The NEC current report for each segment is centered within the middle 1/3 of the segment. Junction surface penetration along a segment length is 0.25" maximum or about 21% into the segment length. This value is well short of the penetration needed to disturb segment currents during calculation, as evidenced by the AGT values. The segment lengths are restricted to the lengths shown to ensure a segment-length-to-radius ratio of over 4:1 (actual, about 4.7:1) in order to preserve model adequacy as registered in the AGT score. MININEC models are not limited by exactly the same set of phenomena, but the segment length should be at least 1.25 times the wire diameter for maximum reliability. The more highly segmented versions of the models press both NEC and MININEC to the limit of reliable performance with respect to element-length/element-diameter, but both programs return results considered reliable.</p>
+  <p>3. Nothing in the model itself exceeds any limitations of the programs, and there is a variance between modeled results and building experience for element-to-boom connections. Hence, one must look elsewhere for the reason why there is no difference in performance reports with or without a conductive boom connected between the parasitic elements. In the NEC-2 Manual, we find the following:</p>
+  <p>"In the thin-wire kernel, the current on the surface of a segment is reduced to a filament of current on the segment axis. In the extended thin-wire kernel, a current uniformly distributed around the surface is assumed. . . In either of these approximations [used in the kernel of the electric field integral equations], only currents in the axial direction on a segment are considered, and there is no allowance for variation of the current around the wire circumference." (pp. 3-4)</p>
+  <p>The axial current (along the element axis) does not yield a detectable interaction with the conductive boom. The only unaccounted current remaining as the source of that interaction is the current around the circumference of the wire, which is caused to vary by the presence of the boom from the level normally accompanying an element not connected to a conductive boom. IF this inference is correct, then several likely facts follow:</p>
+  <p>a. The region of interaction in terms of the total length of the boom is likely to be quite small, since the axial and the circumferential currents are inter-related and controlled largely by the axial currents, which are controlled, in turn, by the driver (or in larger arrays, the adjacent elements). If the current on the boom (except at the junction) were large, then current division would occur, and the general operation of a parasitic array would be thrown off by an amount that simple element-length adjustments could not overcome. In a 3-element Yagi, the source impedance due to significant current division (even of a 10:1 element-to-boom current division ratio) would not return to normal with an element-length adjustment. However, empirical evidence from building and testing Yagis suggests that element length adjustments are satisfactory to compensate for direct element-boom connections.</p>
+  <p>b. The most likely effect of circumferential current interaction with the boom would be to enlarge the current region at the point and very near to the connection, thus creating the effect of a stepped-diameter element. The requisite adjusted element length would be longer than for an independent element. Hence, it is likely that the technique of empirically deriving larger-diameter element insert corrections for boom-to-element assemblies and connections is a generally correct one.</p>
+  <p>c. An alternative interpretation based upon axial current occurs in the Guy Fletcher, "Effects of Boom and Element Diameters on Yagi Element Lengths at 144, 432, and 1296 MHz," <i>QEX</i> (Jan/Feb, 2001, pp. 16-22. In this account, as interpreted by the journal editor, the axial currents set up around the element circumferential magnetic field lines that intercept the boom. Although the mechanisms are speculative, the results "can be represented as a pure negative reactance, the value of which depends also to a lesser extent on the element diameter. [The effect is to require an] increase in [element] length to compensate for this reactance" (p. 20). Nevertheless, if the speculative mechanism is an accurate account and in fact controlled by axial currents, then it should produce results within NEC and/or MININEC. However, as the modeling evidence shows, no such effects appear. Although field influence is undoubtedly involved--especially in cases where the boom and elements are close but not touching--it seems more likely to be a function of circumferential currents, since NEC already accounts for variations in axial current. See also the work of Lief Asbrink, SM5BSZ, much of which is at the commercial web site, <a href="https://web.archive.org/web/20030330235241/http://www.antennspecialisten.com/" target="_blank">www.antennspecialisten.com</a> (web.archive.org).</p>
+  <p>d. Until or unless NEC or MININEC adopts algorithms for integral equations that include circumferential currents as well as axial currents, there will be no straightforward way of actually calculating directly the exact boom-to-element interaction. Hence, these notes are speculative and deserve discarding to the degree that the process of elimination and the subsequent inferences can be shown to be faulty.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 10-22-2003. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#boom-effects'>Boom Effects</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

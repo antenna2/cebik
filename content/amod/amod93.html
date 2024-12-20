@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Convergence Revisited</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>93. Convergence Revisited</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In the very first column in this series, we examined the convergence test of model adequacy. The convergence test actually emerged from the development of MININEC, in contrast to NEC. However, the test generally carries over to NEC (-2 or -4) as one of two necessary but not sufficient conditions of model adequacy. The other test, of course, is the Average Gain Test (AGT), which has become a special function in some implementations of NEC, for example, in EZNEC, NEC2GO, and the NEC-Win/GNEC series of programs from Nittany Scientific. We examined the AGT test in three past columns, #20, #55, and #71.</p>
+  <p>Under limited conditions, the AGT allows the user to correct the reported gain for a model, and under even more restricted conditions, to correct the reported source resistance. The correctives are most accurate when the AGT value is not far off an ideal value (1.00 for free space and 2.00 over a perfect ground) and when the source impedance has a relatively low reactive component. In contrast, the convergence test gives the modeler information on the best level of segmentation to use in order to obtain the most accurate results.</p>
+  <p>In passing, I have had occasion to note that the convergence test works somewhat differently when using a NEC core than when using a MININEC core. This statement is not always true--at least not always true within the limits of the levels of segmentation that a modeler is likely to be willing to use. This seemingly small nuance suggests that we might spend a little time with a set of examples to illustrate what the qualification means in practical terms.</p>
+  <p><b>A Pair of Test Yagi Models</b></p>
+  <p>Let's explore two distinctly different Yagi models. The first will be an OWA 6-element Yagi, shown in the right in <b>Fig. 1</b>. OWA Yagis are optimized for wide-band performance with usable performance and impedance properties that extend for about a 7% bandwidth. Another type of Yagi is the narrow-band NBS design, sketched in outline on the left in <b>Fig. 1</b>. Jim Breakall used a similar design when he wrote "A Validative Comparison of NEC and MININEC Using NBS Experimental Yagi Antenna Results" for <i>The Applied Computational Electromagnetic Society Journal</i>, November, 1986. So it is fitting to resurrect this antenna--even with some modifications--in this re-visit of the convergence test.</p>
+  <center>
+    <img src="amod93-1.gif" width="380" height="354" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For this test, I modeled both antennas at 299.7925 MHz, where 1 meter = 1 wavelength. The two antennas perform in significantly different ways. The shorter OWA Yagi has slightly lower gain, as one might expect from the boom-length reference. It uses a master and slave driver set (the fed driver and director 1) to increase the operating bandwidth. In conjunction with the second and third directors, the array has its maximum gain, maximum front-to-back ratio, and its SWR passband center all on or veryv close to the same frequency. <b>Fig, 2</b>, at the top, shows a 3-D pattern on the test frequency.</p>
+  <center>
+    <img src="amod93-2.gif" width="695" height="770" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The NBS Yagi uses fewer elements on a longer boom to achieve its higher forward gain. In addition, it uses equal spacing between the successive elements. As a result, its pattern (<b>Fig 2</b>, bottom), is less "well-behaved" than the OWA pattern. The array has a significant rear main lobe. (In this contest, "significant" means only highly noticeable. Whether the rear lobe is significant to any particular potential use of the array requires the introduction of task criteria outside the scope of this exercise.) In addition, the NBS Yagi shows very significant radiation in the region around 90 degrees to the line along the main forward and rearward lobes. The magnitude of this band of radiation would not show up in a 2-diemensional E-plane pattern, since the dimples in the 3-D pattern are very deep. In an E-plane pattern, they would show up as very deep nulls with seemingly small secondary lobes both forward and aft of the null headings. However, the 3-D pattern shows to what degree the nulls are operationally illusory, since at all other headings that form the band around the pattern, the radiation is significant. In contrast, the OWA pattern shows no secondary forward lobes and only the standard H-plane pattern broadening at right angles to the plane of the elements.</p>
+  <p>The two modeled antennas have other differences, as well. The OWA Yagi is designed to directly match a 50-Ohm feedline. However, the NBS antenna displays a low impedance. For this exercise, I shortened the driver from its NBS-specified 0.5 wavelength size. At the NBS length, the feedpoint impedance is highly inductively reactive. Shortening the driver does not significantly change other performance values, but it does allow one to derive a meaningful SWR curve referenced to the resonant feedpoint impedance: 17 Ohms. <b>Fig. 3</b> overlays the 50-Ohm OWA SWR curve and the 17-Ohm NBS curve for comparison, using NEC-4 models of each. X-axis frequency increments are 2.5 MHz.</p>
+  <center>
+    <img src="amod93-3.gif" width="572" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The OWA 2:1 SWR curves extends from just above 285 MHz to just above 306 MHz, for a 21-MHz passband: just about the advertised 7%, using the design frequency as the divisor. In contrast, the NBS Yagi has a 2:1 SWR curve that extends from about 293 MHz to 302 MHz, for a 6-MHz or 2% passband. In both cases, and typical of Yagi design, the SWR rises more rapidly above the design frequency than below it.</p>
+  <p>We may note as well that the NBS design requires considerably fatter elements to achieve its narrow operating bandwidth than the OWA needs for its wider passband. The OWA elements are 2.5-mm in diameter, while the NBS elements are 8.5 mm, a 3.4:1 ratio. It is possible to widen the OWA passband even further by optimizing the design for fatter elements, although a wider passband is unnecessary for our purposes here.</p>
+  <p>The data on these two interesting Yagi designs is useful as background, but the information seems distant from the subject of model convergence. That impression is not a true one. We shall have occasion to call attention to the antenna differences as we gradually get a better handle on convergence as applied to both NEC and MININEC.</p>
+  <p><b>The OWA Yagi and Convergence</b></p>
+  <p>To permit you to replicate the OWA Yagi and the convergence exercise for which it is one test subject, the following table provides the relevant dimensions. Element lengths appear in two forms: as half lengths for modeling +/- to one of the axes and as full lengths for reference. All dimensions are in meters except for the diameter and radius, which are in mm. The models using these dimensions prescribe perfect or lossless wire and are in free space.</p>
+  <pre>
+              Dimensions of the 6-Element OWA Yagi for 299.7925 MHz
+
+Element        Half-Length     Full Length    Space from Reflector     Diameter/Radius
+Reflector      0.250           0.500          ----                     2.5/1.25
+Driver         0.247           0.494          0.125                    2.5/1.25
+Director 1     0.231           0.462          0.177                    2.5/1.25
+Director 2     0.225           0.450          0.321                    2.5/1.25
+Director 3     0.225           0.450          0.461                    2.5/1.25
+Director 4     0.216           0.432          0.671                    2.5/1.25
+</pre>
+  <p>The OWA Yagi does not show its lowest SWR value at the design frequency. The lowest value occurs close to the point where the SWR rises rapidly. Hence, design-frequency impedances values always show a small inductive reactance. Nevertheless, I designed the original model using 15 segments per element in NEC and 14 segments per element in MININEC. The different algorithms used by the two types of cores have different requirements for calculating currents and hence for source placement. NEC uses the center of each segment as its foundation. To place a source at a segment center and have it also be centered on the element requires an odd number of element segments. In contrast, MININEC calculates from pulses, which generally occur on segment junctions. To place a source on a pulse requires that we use an even number of segments on the element. Since all of the elements in the model have similar lengths, we adhere to the same number of segments per element throughout the model.</p>
+  <p>To observe the numerical trends in convergence within the broadband OWA model, I stepped each core through 7 levels of segmentation. I began the NEC models at 11 segments with increments of 4 segments per element and stopped at 35 segments. The MININEC version of the same model used the same increment, but ran from 10 through 34 segments per element.</p>
+  <p>For the test, I used NEC-4D (double-precision) as found in version 4 of EZNEC. Actually, the use of a single or double precision core makes no differences to the progression. The practical performance of the antenna changes in no significant way through the progression. However, we shall be interested in the numerical trends. The reason that I mention the core and the program used for the runs is that the exact numbers you obtain depend in part on the FORTRAN compiler used with the core for running it on a standard PC. Hence you may find that your own NEC core (-2 or -4, single or double precision) may give a slightly different result. Nevertheless, the trends should remain true.</p>
+  <p>Since the test frequency is at the border between VHF and UHF, I selected Antenna Model (AM) for the MININEC runs. Only the MININEC frequency offset is at stake in these models, since they have no odd geometries to challenge other MININEC limitations. Therefore, your should obtain the same results using any version of MININEC that has been adequately corrected for the frequency offset that emerges as we increase the design frequency of a model. AM also calculates the AGT value, which will be useful in the comparisons.</p>
+  <p>The table of results for NEC-4D and for corrected MININEC appear below. They contain the usual information on free-space gain in dBi, the 180-degree front-to-back ratio in dB, and the reported source impedance in terms of resistance and reactance in Ohms. In addition, the tables provide some supplementary information, namely, the AGT score, along with the length of an average segment and the ratio of this length to the element radius. We shall have occasion to explore all of these data along the way.</p>
+  <pre>
+OWA Yagi Convergence Tests:  NEC-4D Results
+
+# Segments    Gain     Front-to-Back    Source Impedance     AGT     Ave. Seg.   Seg. Len. to
+per element   dBi      Ratio dB         R +/- jX Ohms                Length      Radius Ratio
+11            10.26    32.17            51.83 + j9.43        0.992   0.0422      33.8:1
+15            10.28    32.33            51.83 + j9.01        0.996   0.0311      24.8:1
+19            10.29    32.24            51.93 + j8.65        0.998   0.0245      19.6:1
+23            10.29    32.08            52.02 + j8.37        0.998   0.0202      16.2:1
+27            10.29    31.91            52.10 + j8.14        0.999   0.0172      13.8:1
+31            10.29    31.77            52.16 + j7.95        0.999   0.0150      12.0:1
+35            10.29    31.64            52.21 + j7.79        0.999   0.0133      10.6:1
+
+OWA Yagi Convergence Tests:  MININEC (AM) Results
+
+# Segments    Gain     Front-to-Back    Source Impedance     AGT     Ave. Seg.   Seg. Len. to
+per element   dBi      Ratio dB         R +/- jX Ohms                Length      Radius Ratio
+10            10.27    32.12            49.86 + j9.51        1.0005  0.0465      37.2:1
+14            10.28    32.22            51.05 + j9.01        0.9998  0.0332      26.6:1
+18            10.28    32.24            51.60 + j8.69        0.9996  0.0258      20.7:1
+22            10.28    32.19            51.91 + j8.44        0.9995  0.0211      16.9:1
+26            10.28    32.13            52.10 + j8.26        0.9994  0.0179      14.3:1
+30            10.28    32.06            52.22 + j8.10        0.9994  0.0155      12.4:1
+34            10.28    31.99            52.31 + j7.98        0.9994  0.0137      10.9:1
+</pre>
+  <p>Perhaps the most notable feature of the NEC-4 and MININEC tables is how little they differ from each other. The gain value quickly levels off (by 19 segments per elements), while the front-to-back ratio shows a very slow descent as we increase the segment density. The source resistance climbs slowly, while the reactance decreases slowly. Any slowing of the rate of change from one segmentation level to the next is largely a function of the fact that as we increase the density in increments of 4 segments per element, each step in the progression is a smaller percentage of increase over the preceding step.</p>
+  <p>In a very real and practical sense, the models are fully converged by no later than 14/15 segments per element. In terms of a numerical progression, neither core shows full convergence, that is, no change from one step to the next. These results are quite unsurprising in view of the fact that the smallest ratio of segment length to wire radius is over 10:1. The models in no way stress or stretch the thin-wire algorithms at the hearts of the cores. Perhaps the only anomalous data between the two tables occurs in the AGT column. The MININEC values decrease with increasing segmentation, while the NEC values increase as the segmentation rises in density. However, the amount of change is truly insignificant. My only point in noting the reverse trends is to show that the AGT value need not parallel the convergence progression.</p>
+  <p>The goal of the OWA example is to show that there are cases in which the two different cores--NEC and MININEC-- will show very close, if not coincident, convergence tracks. Two properties of the OWA having an impact on this parallelism are the broadband characteristics of the OWA and the use of relatively thin elements. The NBS Yagi differs from the OWA in both categories.</p>
+  <p><b>The NBS Yagi and Convergence</b></p>
+  <p>The NBS Yagi is a narrow-bandwidth array that uses relatively fat elements: 8.5 mm in diameter. The elements are about 3.4 times larger in diameter than the ones used in the OWA array. The parasitic beam itself is a highly usable design. With adjustment of the driver length, a gamma or beta match will allow the use of a 50-Ohm coaxial cable as the feedline. More specifically, the following table lists the dimensions of the NBS array, using the same conventions as for the OWA Yagi. Element lengths appear in two forms: as half lengths for modeling +/- to one of the axes and as full lengths for reference. All dimensions are in meters except for the diameter and radius, which are in mm. The models using these dimensions specify perfect or lossless wire and are in free space.</p>
+  <pre>
+              Dimensions of the 5-Element NBS Yagi for 299.7925 MHz
+
+Element        Half-Length     Full Length    Space from Reflector     Diameter/Radius
+Reflector      0.241           0.482          ----                     8.5/4.25
+Driver         0.2225*         0.445*         0.200                    8.5/4.25
+Director 1     0.214           0.428          0.400                    8.5/4.25
+Director 2     0.212           0.424          0.600                    8.5/4.25
+Director 3     0.214           0.428          0.800                    8.5/4.25
+
+*The driver lengths shown is for the NEC-4 model.  The driver of the MININEC model has
+a half length of 0.223 (full length 0.446) m to achieve resonance on the test frequency.
+Resonance for this exercise means a reactance of under +/-j1 Ohm at the test frequency.
+</pre>
+  <p>The NBS Yagis longer boom yields almost a full dB of gain over the OWA Yagi, with 1 less element. The cost for this added gain is less control over the source impedance and a significantly narrower bandwidth. These attributes do not count for or against the NBS Yagi without review in the presence of the criteria of intended use.</p>
+  <p>I ran the NEC-4 and MININEC models through the same exercise that I used on the OWA Yagi. The NEC-4 models increased the segmentation density from 11 to 35 segments per element in 4-segment increments. The MININEC model used the same increment in moving from 10 to 34 segments per elements. The following table records the results.</p>
+  <pre>
+NBS Yagi Convergence Tests:  NEC-4D Results
+
+# Segments    Gain     Front-to-Back    Source Impedance     AGT     Ave. Seg.   Seg. Len. to
+per element   dBi      Ratio dB         R +/- jX Ohms                Length      Radius Ratio
+11            11.20    13.72            17.10 - j1.15        0.997   0.0401       9.4:1
+15            11.22    13.28            17.02 + j0.33        0.998   0.0294       6.9:1
+19            11.22    13.10            17.00 + j0.96        0.999   0.0232       5.5:1
+23            11.22    13.06            17.01 + j1.08        1.000   0.0192       4.5:1
+27            11.22    13.10            17.03 + j0.94        1.000   0.0163       3.8:1
+31            11.22    13.18            17.06 + j0.64        1.000   0.0142       3.4:1
+35            11.22    13.29            17.08 + j0.28        1.000   0.0129       2.9:1
+
+NBS Yagi Convergence Tests:  MININEC (AM) Results
+
+# Segments    Gain     Front-to-Back    Source Impedance     AGT     Ave. Seg.   Seg. Len. to
+per element   dBi      Ratio dB         R +/- jX Ohms                Length      Radius Ratio
+10            11.14    14.58            17.51 - j2.28        0.9980  0.0441      10.4:1
+14            11.17    14.09            17.52 - j0.84        0.9982  0.0315       7.4:1
+18            11.18    13.83            17.53 - j0.04        0.9984  0.0245       5.8:1
+22            11.18    13.70            17.55 + j0.40        0.9985  0.0201       4.7:1
+26            11.19    13.64            17.58 + j0.60        0.9987  0.0167       4.0:1
+30            11.19    13.63            17.61 + j0.68        0.9988  0.0147       3.5:1
+34            11.19    13.63            17.64 + j0.68        0.9988  0.0130       3.1:1
+</pre>
+  <p>There is more divergence between the NEC-4 and MININEC trends with respect to the NBS Yagi than with respect to the OWA Yagi. However, the AGT values track each other very well relative to the two cores. As noted, the segment-length-to-radius ratio is much lower for the NBS model, and the antenna is narrow banded with regard to both performance and source impedance. The narrow-band characteristic of this antenna largely accounts for intrinsic differences in the gain and front-to-back readings, which are numerical (but not practically) more distant that the comparable OWA value pairs. It is likely a combination of the two characteristics that accounts for the half-Ohm difference in the source resistance.</p>
+  <p>The characteristics are precisely what we need to show a convergence phenomenon in NEC, one that occurs often--but not so often as not to be disconcerting to someone who encounters it. The MININEC results are almost perfectly in accord with those for the thin-element wide-band Yagi. Like the preceding example, the MININEC model is practically converged at the 14 or 18 segment per element level. For the most finicky numerical analysis, we find virtually complete convergence between the 30 and 34 segment per element levels, with identical values of gain, front-to-back ratio, source reactance, and AGT. (However, the preceding example taught us that the AGT and convergence progressions need not coincide, so we may view the last element of convergence as accidental.) The source resistance difference between the two steps is 0.03 Ohm.</p>
+  <p>The NEC-4 model is somewhat different. Convergence does not occur at the highest levels of segmentation. Rather, it occurs in the region between 19 and 27 segments per element. For almost all data, the increments of change from step-to-step within the region are equal to or smaller than the incremental steps outside the region. In addition, we find that many of the progressions of values actually change direction. The fact that NEC models often converge at a segmentation level below the maximum possible level (without violating the minimum segment-length-to-radius ratio) appears to be unique to NEC models--at least in the range of models that I have so far encountered. Normally, it will show up only at levels of segmentation density far beyond what may be practical for a given model and beyond what is necessary for results that meet every canon of practical need. But it remains a notable difference from the manner in which convergence tends to work with MININEC models.</p>
+  <p><b>Conclusion</b></p>
+  <p>The sample models that we have used in this exercise are the best of all possible models and the worst or all possible models. They are the best because they have allowed us to see some of the major factors that contribute to the differences in convergence testing in MININEC and in NEC models. At the same time, they are the worst of models because--for all practical and almost all theoretical purposes--we would never reach the level of segmentation density that shows a full converged NEC model of the NBS Yagi, let along full convergence of the MININEC version of the NBS model.</p>
+  <p>Putting those concerns aside, there are differences in the manner in which NEC models converge relative to the way in which MININEC models converge. Although the matter may fall among the minor details of the differences between the two types of cores, the more that we understand these minor differences, the better use we may make of each of them.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, LPDA, Broadcast">
+  <title>LPDAs for the 400-800-MHz Television Range Part 2: A Practical Antenna</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>LPDAs for the 400-800-MHz Television Range<br>
+    Part 2: A Practical Antenna</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In Part 1, we examined a nearly ideal log periodic dipole array (LPDA) for the 400-800-MHz range, which is anticipated by some to be the main home of high definition television in densely populated areas of the US. The antenna showed over 18 dBi of gain with better than 30 dB front-to-back ratio and a beamwidth under 45 degrees throughout its frequency range in either vertical or horizontal orientation, when modeled 20' over real ground. With a Tau of 0.97 and a Sigma of 0.18, the antenna approaches the theoretical limit of the performance of which an LPDA is capable with 0.125" diameter aluminum elements.</p>
+  <p>Unfortunately, the antenna has a set of significant disadvantages for residential use, even though it is likely a good research antenna. The 40 elements and the 10.6' boom place the antenna beyond the feasibility limit in terms of being a consumer product.</p>
+  <p>The question is whether we can design an antenna capable of 7-8 dBi free-space gain that is small enough to constitute a candidate for commercial use--or home fabrication. Small LPDAs abound, but most suffer from too small an element population and either have consequential wide variations in performance within the operating passband or suffer performance degradation at the edges of the passband. One requirement for our antenna that differs from spot use--that is, use on a single frequency at any given moment--is the need to have roughly equal performance on two separated channels of operation at any given time.</p>
+  <p>An antenna meeting these--and other--needs for the 400-800-MHz frequency range is indeed possible. If it were not, this series would have ended with Part 1.</p>
+  <p><b>A Practical LPDA for 400-400 MHz</b></p>
+  <p>In designing a smaller LPDA, we shall use some of the same design criteria that we employed on the ideal version.</p>
+  <p>1. We shall choose a relatively high value for Tau: 0.95. By doing so, we obtain good performance at the low end of the operating spectrum and therefore do not have to make allowances for performance tail-off. The standard 2% extra for the longest element will suffice with a low-frequency design specification of 400 MHz.</p>
+  <p>2. We shall set the upper frequency limit at 1000 or 1.25 times the highest operating frequency. This assignment will guarantee that the inherent design calculation allowance of 1.3 times the upper operating frequency will result in a 1.6 upper limit multiplier. This maneuver will result in sustained performance near the 800-MHz end of the operating passband without significant truncation effects.</p>
+  <p>3. We shall choose an intermediate value for Sigma, one which constrains the overall length of the array while permitting high performance. Since the specifications of a relatively confined boom length and maximum performance are at odds, a compromise value for Sigma is required. 0.056 results in acceptable performance and size.</p>
+  <p>The sum of these design parameters results in an LPDA with the general outline shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="48lppr-1.gif" width="384" height="283" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although there are 24 elements in the array--a number that many designers would shy away from--we shall accept the number and comment on construction challenges and opportunities at the end of these notes. For modeling purposes, the elements are all 0.125" in diameter and assigned the conductivity of aluminum.</p>
+  <p>The resulting model appears below in EZNEC format. Remember that the element lengths listed in the Y-column are in fact half-lengths.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+400-800 MHz T95 S056                    Frequency = 400  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+1            0.000, -7.528,  0.000         0.000,  7.528,  0.000 1.25E-01  29
+2            1.686, -7.151,  0.000         1.686,  7.151,  0.000 1.25E-01  27
+3            3.288, -6.794,  0.000         3.288,  6.794,  0.000 1.25E-01  27
+4            4.810, -6.454,  0.000         4.810,  6.454,  0.000 1.25E-01  25
+5            6.256, -6.131,  0.000         6.256,  6.131,  0.000 1.25E-01  23
+6            7.629, -5.825,  0.000         7.629,  5.825,  0.000 1.25E-01  23
+7            8.934, -5.533,  0.000         8.934,  5.533,  0.000 1.25E-01  21
+8           10.173, -5.257,  0.000        10.173,  5.257,  0.000 1.25E-01  21
+9           11.351, -4.994,  0.000        11.351,  4.994,  0.000 1.25E-01  19
+10          12.469, -4.744,  0.000        12.469,  4.744,  0.000 1.25E-01  19
+11          13.532, -4.507,  0.000        13.532,  4.507,  0.000 1.25E-01  17
+12          14.542, -4.282,  0.000        14.542,  4.282,  0.000 1.25E-01  17
+13          15.501, -4.068,  0.000        15.501,  4.068,  0.000 1.25E-01  15
+14          16.412, -3.864,  0.000        16.412,  3.864,  0.000 1.25E-01  15
+15          17.277, -3.671,  0.000        17.277,  3.671,  0.000 1.25E-01  15
+16          18.100, -3.487,  0.000        18.100,  3.487,  0.000 1.25E-01  13
+17          18.881, -3.313,  0.000        18.881,  3.313,  0.000 1.25E-01  13
+18          19.623, -3.147,  0.000        19.623,  3.147,  0.000 1.25E-01  13
+19          20.328, -2.990,  0.000        20.328,  2.990,  0.000 1.25E-01  11
+20          20.998, -2.841,  0.000        20.998,  2.841,  0.000 1.25E-01  11
+21          21.634, -2.699,  0.000        21.634,  2.699,  0.000 1.25E-01  11
+22          22.239, -2.564,  0.000        22.239,  2.564,  0.000 1.25E-01   9
+23          22.813, -2.435,  0.000        22.813,  2.435,  0.000 1.25E-01   9
+24          23.358, -2.314,  0.000        23.358,  2.314,  0.000 1.25E-01   9
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : mm)  Conn. --- End 2 (x,y,z : mm)   Dia(mm) Segs
+1            0.000,-191.20,  0.000         0.000,191.201,  0.000 3.18E+00  29
+2           42.829,-181.64,  0.000        42.829,181.641,  0.000 3.18E+00  27
+3           83.517,-172.56,  0.000        83.517,172.559,  0.000 3.18E+00  27
+4          122.170,-163.93,  0.000       122.170,163.931,  0.000 3.18E+00  25
+5          158.890,-155.73,  0.000       158.890,155.734,  0.000 3.18E+00  23
+6          193.775,-147.95,  0.000       193.775,147.948,  0.000 3.18E+00  23
+7          226.915,-140.55,  0.000       226.915,140.550,  0.000 3.18E+00  21
+8          258.398,-133.52,  0.000       258.398,133.523,  0.000 3.18E+00  21
+9          288.308,-126.85,  0.000       288.308,126.847,  0.000 3.18E+00  19
+10         316.721,-120.50,  0.000       316.721,120.504,  0.000 3.18E+00  19
+11         343.714,-114.48,  0.000       343.714,114.479,  0.000 3.18E+00  17
+12         369.357,-108.76,  0.000       369.357,108.755,  0.000 3.18E+00  17
+13         393.719,-103.32,  0.000       393.719,103.317,  0.000 3.18E+00  15
+14         416.862,-98.152,  0.000       416.862, 98.152,  0.000 3.18E+00  15
+15         438.848,-93.244,  0.000       438.848, 93.244,  0.000 3.18E+00  15
+16         459.734,-88.582,  0.000       459.734, 88.582,  0.000 3.18E+00  13
+17         479.577,-84.153,  0.000       479.577, 84.153,  0.000 3.18E+00  13
+18         498.427,-79.945,  0.000       498.427, 79.945,  0.000 3.18E+00  13
+19         516.334,-75.948,  0.000       516.334, 75.948,  0.000 3.18E+00  11
+20         533.347,-72.150,  0.000       533.347, 72.150,  0.000 3.18E+00  11
+21         549.508,-68.543,  0.000       549.508, 68.543,  0.000 3.18E+00  11
+22         564.862,-65.116,  0.000       564.862, 65.116,  0.000 3.18E+00   9
+23         579.448,-61.860,  0.000       579.448, 61.860,  0.000 3.18E+00   9
+24         593.305,-58.767,  0.000       593.305, 58.767,  0.000 3.18E+00   9
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           5    24 / 50.00   ( 24 / 50.00)      0.707       0.000       V
+
+                -------- TRANSMISSION LINES ---------
+Line  Wire #/% From End 1   Wire #/% From End 1    Length       Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)                Ohms Fact Norm
+1      1/50.0  (  1/50.0)    2/50.0  (  2/50.0)  Actual dist  100.0  1.00  R
+2      2/50.0  (  2/50.0)    3/50.0  (  3/50.0)  Actual dist  100.0  1.00  R
+3      3/50.0  (  3/50.0)    4/50.0  (  4/50.0)  Actual dist  100.0  1.00  R
+4      4/50.0  (  4/50.0)    5/50.0  (  5/50.0)  Actual dist  100.0  1.00  R
+5      5/50.0  (  5/50.0)    6/50.0  (  6/50.0)  Actual dist  100.0  1.00  R
+6      6/50.0  (  6/50.0)    7/50.0  (  7/50.0)  Actual dist  100.0  1.00  R
+7      7/50.0  (  7/50.0)    8/50.0  (  8/50.0)  Actual dist  100.0  1.00  R
+8      8/50.0  (  8/50.0)    9/50.0  (  9/50.0)  Actual dist  100.0  1.00  R
+9      9/50.0  (  9/50.0)   10/50.0  ( 10/50.0)  Actual dist  100.0  1.00  R
+10    10/50.0  ( 10/50.0)   11/50.0  ( 11/50.0)  Actual dist  100.0  1.00  R
+11    11/50.0  ( 11/50.0)   12/50.0  ( 12/50.0)  Actual dist  100.0  1.00  R
+12    12/50.0  ( 12/50.0)   13/50.0  ( 13/50.0)  Actual dist  100.0  1.00  R
+13    13/50.0  ( 13/50.0)   14/50.0  ( 14/50.0)  Actual dist  100.0  1.00  R
+14    14/50.0  ( 14/50.0)   15/50.0  ( 15/50.0)  Actual dist  100.0  1.00  R
+15    15/50.0  ( 15/50.0)   16/50.0  ( 16/50.0)  Actual dist  100.0  1.00  R
+16    16/50.0  ( 16/50.0)   17/50.0  ( 17/50.0)  Actual dist  100.0  1.00  R
+17    17/50.0  ( 17/50.0)   18/50.0  ( 18/50.0)  Actual dist  100.0  1.00  R
+18    18/50.0  ( 18/50.0)   19/50.0  ( 19/50.0)  Actual dist  100.0  1.00  R
+19    19/50.0  ( 19/50.0)   20/50.0  ( 20/50.0)  Actual dist  100.0  1.00  R
+20    20/50.0  ( 20/50.0)   21/50.0  ( 21/50.0)  Actual dist  100.0  1.00  R
+21    21/50.0  ( 21/50.0)   22/50.0  ( 22/50.0)  Actual dist  100.0  1.00  R
+22    22/50.0  ( 22/50.0)   23/50.0  ( 23/50.0)  Actual dist  100.0  1.00  R
+23    23/50.0  ( 23/50.0)   24/50.0  ( 24/50.0)  Actual dist  100.0  1.00  R
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The wire table appears twice, the first time in English units (inches), the second time in metric units (millimeters). The source, transmission line (phase line), and ground data are identical for both versions. Our initial look at the model's potential performance will be via the free-space E-plane, which is a horizontal orientation within modeling software.</p>
+  <p>The array forms a triangle that is a little over 15" at the base (along the longest element) with a boom just under 24" long. The array size is certainly more manageable that the 10.6' long boom of the ideal array.</p>
+  <p>As we did for the ideal LPDA, let's begin with a simple survey of representative free-space azimuth pattern for the smaller LPDA. See <b>Fig. 2</b>.</p>
+  <center>
+    <img src="48lppr-2.gif" width="650" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The free-space gain of the array varies by under 0.7 dB across the passband, with a front-to-back ratio that is consistently better than 25 dB. The average gain is above 8.5 dBi, sufficient for the application for which the antenna is designed. Although the rear lobes do expand as the frequency increases, the worst-case front-to-back ratio remains at 25 dB or more. Because the array has lower gain than the ideal array (about 4.5 dB less), the resulting -3 dB beamwidth is greater by about 15 degrees at an average value of 60 degrees. The sum of the potential performance characteristics suggests that we might well take a closer look at the antenna by sweeping its operating range.</p>
+  <p>As we did for the ideal range, we shall sweep in 50 MHz intervals from 350 through 1000 MHz. By exceeding the edges of the operating range, we get some insight into the sensitivity of the design to tiny variations that always occur when translating a modeled design into a physical antenna. The region below the lowest operating frequency shows large changes; hence, we may use a smaller region to sample. In contrast, in the frequency range above the highest used frequency, changes occur more slowly. Thus, we shall look at a full 200 MHz beyond the 800-MHz upper operating limit.</p>
+  <center>
+    <img src="48lppr-3.gif" width="645" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> provides gain and front-to-back data for the array. Within the operating region, the gain exceeds 8.4 dBi at every frequency checked. Had we not specified a higher-than-standard upper frequency limit, the portions of the gain curve that are under 8 dBi would have appeared within the operating range of the antenna. Although not so radical, the front-to-back ratio curve would have equally suffered without the high frequency design limit.</p>
+  <p>At the low end of the scale, we find that both gain and front-to-back ratio tail off rapidly below 400 MHz. Since the descent in values is nearly linear, the design has a 25 MHz "buffer" of usable performance below 400 MHz.</p>
+  <center>
+    <img src="48lppr-4.gif" width="646" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 4</b>, we find the excursions of the feedpoint resistance and reactance across sweep range from 350 to 1000 MHz. The resistance shows a very small range of variation centered around 50 Ohms within the 400-800-MHz operating range. However, for this design, the feedpoint resistance drops to a low value both above and below the main operating passband. Note that it returns to a more desirable value at 1000 MHz: such phenomena reinforce the need to take readings at rather small frequency intervals to determine the potential for undesired values.</p>
+  <p>The reactance curve within the operating passband shows only one excursion into the inductive region, with all other readings being capacitive. However, with values so close to zero, some inductively reactive readings may occur between the sweep points. Outside the working passband, the reactance follows the typical pattern of becoming very inductive below the lower limit and very capacitive above the upper limit.</p>
+  <center>
+    <img src="48lppr-5.gif" width="647" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> presents both 50-Ohm and 75-Ohm SWR curves. From 400 to 900 MHz, the curve is essentially flat. With a lower Tau and Sigma than used in the ideal array, the feedpoint impedance is not as close to the value of the phase line characteristic impedance. In the ideal array, a 100-Ohm phase line yielded a curve whose median impedance value was close to 75 Ohms. In this smaller LPDA, the median value is close to 50 Ohms for the same 100-Ohm phase line.</p>
+  <p>The excursions in resistance and reactance in <b>Fig. 4</b> easily prepare us for the very high SWR values at 350 MHz. At the upper end, the low SWR at 1000 MHz is still another reminder to use a small enough sweep interval to detect undesired values, in this case at 950 MHz. Otherwise, we might harbor an illusion of using the region above 800 MHz as added operating territory.</p>
+  <p>As with the ideal array, some of the peaks and valleys in the operating performance curves will change frequency somewhat if we taper the effective diameter of the elements, reducing their diameter in the most forward area of the LPDA. This region also has the shortest and most tightly packed set of elements. The most forward element is a scant half inch forward of the next element.</p>
+  <p><b>The Practical LPDA over Real Ground</b></p>
+  <p>As we did with the 40-element LPDA, we set the smaller array at a height of 20' (240" or 6.1 m) above real ground to sample the performance under more realistic conditions. Of course, modeling software presumes level ground with no buildings, trees, towers, or other structures unless we create wire-grid models of them.</p>
+  <center>
+    <img src="48lppr-6.gif" width="650" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows the azimuth patterns of the array oriented horizontally. The azimuth pattern shapes are almost identical to the free-space E-plane patterns used in the basic description of the antenna. The far-field elevation angle ranges from 1.7 degrees at 400 MHz to 0.9 degrees at 800 MHz. At the given height, the gain varies by only about 0.6 dB across the operating spectrum, with a consistent front-to-back ratio of well over 25 dB. The average gain is about 15.8 dBi, or a little more than 4 dB less than the gain of the 10'-long array. However the gain should easily meet--with surplus--the requirements that we set forth for the project.</p>
+  <p>The average 60-degree -3 dB beamwidth is about 15 degrees wider than the corresponding beamwidth for the ideal array. The wider beamwidth of the smaller array eases the task of aiming the antenna, but may show a slight increase in ghosting potential.</p>
+  <center>
+    <img src="48lppr-7.gif" width="650" height="570" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> presents the same data collection with the array set to a vertical orientation. The average gain is about 0.5 dB less than when the beam is set horizontally, but with a very small gain change across the operating passband. The gain deficit relative to the ideal array is the same as for the comparison of the two arrays when horizontal: a little over 4 dB.</p>
+  <p>The array beamwidth when vertically oriented averages about 87 degrees. This value is almost double the beamwidth of the ideal array when set vertically. As well it is more than 15 degrees wider than the small array in the horizontal position. It is a fact of life with arrays composed of parallel linear elements that the increase in beamwidth as we reduce the overall gain of the system will have different rates for horizontal and vertical orientations. The vertical position will show a higher rate of beamwidth increase for an given reduction in system gain than will the horizontal orientation.</p>
+  <p><b>Construction Challenges</b></p>
+  <p>If we accept that the LPDA design, as modeled here, is adequate to the performance needs of urban and suburban high definition television (and similar working situations), then the remaining questions are practical. Is it feasible to build such an array for potential residential use?</p>
+  <p>The most common LPDA construction in the UHF region tends to use a pair of U-channels as the booms. The facing solid surfaces form the phasing line. Half-elements press fit into alternating upper and lower channel holes. An example of this construction style appeared in "An LPDA for 2 Meters Plus," <i>QST</i> (Oct., 2001), pp. 42-46. The arrangement was beefed up for mid-VHF use.</p>
+  <p>Even with a total boom length of about 24", the construction style would be expensive in a 24-element array. However, with sufficient materials engineering at the front end, simpler alternatives are possible. <b>Fig. 8</b> shows the general features of one possibility.</p>
+  <center>
+    <img src="48lppr-8.gif" width="390" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first step is to find the etched-copper strip equivalent for the elements in the modeled design. NEC and MININEC models, of course, are restricted to round-wire elements. In the process of conversion to the flat strips of copper on a suitable substrate, one might well undertake the task of finding the optimal diameter for each element in the array.</p>
+  <p>The array lends itself to construction by joining two identical half arrays, thus reducing fabrication complexities at one point in the production process. Each half LPDA consists of alternating upper-side and lower-side half elements, with one of the etched strips used as the phase line. If we flip one section, it would join with the other to form a complete array. Of course, the fabrication effort that we saved earlier, we now expend in joining the two sections and soldering the loose element ends to the phase line strips.</p>
+  <p>The phase line calls for some comment. If we simply etch a line on a solid substrate, we must be careful to determine if the consequent velocity factor of the resulting phase line will disturb the performance curves significantly. It will certainly affect the characteristic impedance of a line of a set width when compared to the same line with only air between the strips. (Most handbooks for radio amateurs, for example, omit the dielectric constant from equations for calculating the impedance of transmission lines from the physical element diameters and spacing, since air is presumed to be the dielectric for home-built lines.) <b>Fig. 8</b> shows one possible solution. Most of the region below the line is cut away, allowing a higher velocity factor and a dielectric constant closer to air for the phase line. Periodic projections in between elements provide some mechanical linkage between the two halves of the array.</p>
+  <p>The substrate itself requires investigation prior to commitment to manufacture. G-10 glass board material is one of the standard substrates for etched circuit production. However, such boards may prove too heavy for the application if the array requires significant spacing between the phase line strips. Light-weight substrates, including some with ribbed hollow cores may be possible.</p>
+  <p>Of course, we use modern glues or epoxies to join the substrate halves permanently. As well, we weather-protect the entire assembly. In addition, we add a cable connector at the front point and devise a suitable support system.</p>
+  <p>Creating a simple and relatively inexpensive array of adequate performance thus involves a few R&amp;D challenges. It is likely that much of this work already exists in scattered form. Nevertheless, once the design translation into an etched-board form is complete, then the 24-element array becomes no more complex than an array with half the number of elements and one-fourth the performance potential. The result is a durable, light-weight antenna with a very broad operating passband and considerable performance.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-10-03. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>(Mar., 2003). Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#broadcast'>Broadcast</a>, <a href='../topics.html#lpda'>LPDA</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

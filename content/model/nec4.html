@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Modeling, Stepped Diameter">
+  <title>NEC-4 vs. NEC-2 Stepped-Diameter Correction and Auto-Segmentation</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <img src="../images/antbott.gif" align="left" width="150" height="77"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">
+  <center>
+    <h1>NEC-4 vs. NEC-2 With Stepped-Diameter Correction<br>
+    and Auto-Segmentation</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>NEC-4 is supposed to overcome several limitations of NEC-2, notable among which is the ability to handle with computational accuracy stepped-diameter elements. Implementations of NEC-2, such as EZNEC, employ a correction factor, substituting a single wire for the linear stepped-diameter group, the single wire diameter being calculated according to a formula. In the case of EZNEC, the technique follows that of Leeson.</p>
+  <p>One might be tempted to simply transfer a NEC-2 model--designed for use with a stepped-diameter correction equivalency--directly to NEC-4 in order to check the accuracy of the equivalency output. However, NEC-4 is subject to its own limitations, and model adjustment is necessary.</p>
+  <p>Initial comparative tests of models, performed on EZNEC Pro for ease of comparing NEC-2 corrected, NEC-2 uncorrected, and NEC-4 models, have turned up a number of interesting factors involved in transferring models. Tests were performed on Yagi antenna models developed by K6STI and presented on disk with the <i>ARRL Antenna Compendium</i>, Volume 4. One notable feature of K6STI's models is the use of short, fat element-center sections to account for mounting plates and other boom-related phenomena. This factor alone presents all versions of NEC with a challenge insofar as the diameter jump is great between the center and the immediately adjacent segments.</p>
+  <p>To facilitate examination of the variances among models, I have set forth notes on the tables that immediate follow. The tables show gain, front-to- back ratio, and feedpoint impedance of models using various segmentations. "Auto S Min" = auto-segmentation, using recommended absolute minimal numbers of segments. "Auto S Con"" = auto-segmentation using recommended conservative minimal numbers of segments. The following entries represent manual segmentation designed to equalized segment lengths and, to the degree possible within the limits of the structure, to align the segments for greatest accuracy.</p>
+  <p>Following each set of notes and tables are sample models used in this study, given in the form of NEC decks, with all units in meters.</p>
+  <center>
+    <h4>1. 240-20</h4>
+  </center>The first model is a 2-element 40-meter Yagi for 7.1 MHz. The K6STI segmentation and antenna performance date are shown for reference. The entry called "Space" represents the distance rear to front of the elements. In this case, the reflector and driven element are separate by 234." All dimensions are in inches. K6STI's rearward performance figure is not directly comparable to front-to-back ratio, since it is actually a front- to-rear ratio that averages rear quadrant performance. For a 2-element Yagi, this figure will normally exceed a direct front-to-back ratio.
+  <p><b>Notes:</b></p>
+  <p>1. Because the centermost element section is very short, neither mode of auto-segmentation is adequate to produce a center segment anywhere close to the length of the adjacent segments. NEC-4 is sensitive to this factor, especially where there is considerable current on the unequal adjoining segments. When the center segment is very short (even though passing NEC-4 criteria checks), the gain is generally too optimistic. The last entry, which purposely makes the center segment significantly longer than adjacent segments, typically yields a pessimistic gain.</p>
+  <p>2. The 58 segment manually segmented model approaches adequacy, as verified by the 116 segment model, which again was manually segmented to equalize segment length and alignment. The two models may be considered as having achieved convergence. What these models have in common is equalized segment lengths and segment alignment within structural limits, NEC-4 modeling factors that cannot be overstressed.</p>
+  <p>3. NEC-2 models that do not employ a stepped-diameter correction are wholly inadequate to this task. Since convergence is not possible, model accuracy is in no way self-identifying.</p>
+  <p>4. NEC-2 models employing stepped-diameter correction appear closest to NEC-4 converged models when using the minimum number of segments consistent with NEC conservative guidelines for element length and length-to-diameter ratio. Note that the NEC-2 corrected model that is auto-segmented by conservative standards most closely coincides with the values accepted above as reasonable for NEC-4.</p>
+  <p>5. To check the sensitivity of NEC-4 and NEC-2 corrected to the large jump in element diameter close to the high current section of the antenna, an alternate model was constructed. The only change was to reduce the center section diameter from 4.7" to 2.5." Since this antenna now differs from the K6STI model, output figure comparisons must be confined within the model group. Once more, NEC-4 shows its sensitivity to segment length equalization at the center of the elements. Auto-segmentation is inadequate to achieve segment equalization for this particular model. However, NEC-2 with a stepped-diameter correction produces a model that coincides with the converged NEC-4 model only with manual segmentation to equalize segment lengths. This raises the question of whether the note in item 4 above is a rule or an accident. If an accident, then confidence in models using a stepped-diameter correction is compromised, even if the results are not as far afield as the results from NEC-2 when no stepped-diameter correction is used.</p>
+  <pre>K6STI Model 240-20:  2-element Yagi; 7.1 MHz
+
+Element tapered dimensions from center outward in inches:
+El.       Space     4.7"      2.25"     2"   1"   .75" 0.5"      Total
+Refl        0        12       108       120   66   66   85         457"
+D.E.      234        12       108       120   66   66   25.5       397.5"
+
+K6STI Reference (YO)     6.12      11.08     34.0  - 34.5
+
+NEC-4          Segs      Gain dBi  F-B dB    Feed Z R +/- jX
+Auto S Min      22       7.37      10.60     29.68 - 22.26
+Auto S Con      32       6.75      10.54     34.32 - 25.31
+20A-1 ctr       58       6.23      10.44     38.92 - 27.05
+20B-2 ctr      116       6.23      10.30     39.42 - 24.52
+20B-1 ctr      114       5.86      10.30     42.88 - 26.88
+
+NEC-2 with stepped-diameter correction
+Auto S Min      22       6.69      10.75     33.14 - 30.60
+Auto S Con      32       6.21      10.68     37.03 - 33.82
+20A-1 ctr       58       5.85      10.66     40.31 - 36.78
+20B-2 ctr      116       7.13      10.45     34.48 +  4.097
+20B-1 ctr      114       5.58      10.62     43.02 - 38.43
+
+NEC-2 without stepped-diameter correction
+Auto S Min      22       7.32       9.43     31.97 -  9.381
+Auto S Con      32       6.80       9.15     36.38 -  8.086
+20A-1 ctr       58       6.35       8.67     41.02 -  3.797
+20B-2 ctr      116       6.47       8.20     40.59 +  1.733
+20B-1 ctr      114       6.04       8.21     44.81 +  1.611
+
+Revised Taper:  First Segment 2.5"
+
+NEC-4          Segs      Gain dBi  F-B dB    Feed Z R +/- jX
+Auto S Min      22
+Auto S Con      32       6.33      10.38     38.00 - 25.30
+20A-1 ctr       58       5.89      10.27     42.30 - 26.35
+20B-2 ctr      116       5.84      10.12     43.34 - 24.09
+20B-1 ctr      114       5.55      10.12     46.21 - 25.79
+
+NEC-2 with stepped-diameter correction
+Auto S Min      22
+Auto S Con      32       6.14      10.46     38.21 - 30.29
+20A-1 ctr       58       5.78      10.44     41.59 - 32.95
+20B-2 ctr      116       6.04      10.25     44.48 +  5.403
+20B-1 ctr      114       5.51      10.40     44.37 - 34.37
+
+NEC-2 without stepped-diameter correction
+Auto S Min      22
+Auto S Con      32       6.01       9.02     43.58 -  8.877
+20A-1 ctr       58       5.52       8.56     49.62 -  3.890
+20B-2 ctr      116       5.43       8.12     51.51 +  2.456
+20B-1 ctr      114       5.14       8.12     55.08 +  2.538
+</pre>
+  <pre>CM 2el Yagi 240-20:  32 segments
+CM Auto-segmented
+CE
+GW 1,2,-11.607,0.,0.,-9.4488,0.,0.,.00635
+GW 2,1,-9.4488,0.,0.,-7.7724,0.,0.,.00953
+GW 3,1,-7.7724,0.,0.,-6.096,0.,0.,.0127
+GW 4,2,-6.096,0.,0.,-3.048,0.,0.,.0254
+GW 5,2,-3.048,0.,0.,-.3048,0.,0.,.0286
+GW 6,1,-.3048,0.,0.,.3048,0.,0.,.0597
+GW 7,2,.3048,0.,0.,3.048,0.,0.,.0286
+GW 8,2,3.048,0.,0.,6.096,0.,0.,.0254
+GW 9,1,6.096,0.,0.,7.7724,0.,0.,.0127
+GW 10,1,7.7724,0.,0.,9.4488,0.,0.,.00953
+GW 11,2,9.4488,0.,0.,11.6078,0.,0.,.00635
+GW 12,1,-10.096,5.9436,0.,-9.4488,5.9436,0.,.00635
+GW 13,1,-9.4488,5.9436,0.,-7.7724,5.9436,0.,.00953
+GW 14,1,-7.7724,5.9436,0.,-6.096,5.9436,0.,.0127
+GW 15,2,-6.096,5.9436,0.,-3.048,5.9436,0.,.0254
+GW 16,2,-3.048,5.9436,0.,-.3048,5.9436,0.,.0286
+GW 17,1,-.3048,5.9436,0.,.3048,5.9436,0.,.0597
+GW 18,2,.3048,5.9436,0.,3.048,5.9436,0.,.0286
+GW 19,2,3.048,5.9436,0.,6.096,5.9436,0.,.0254
+GW 20,1,6.096,5.9436,0.,7.7724,5.9436,0.,.0127
+GW 21,1,7.7724,5.9436,0.,9.4488,5.9436,0.,.00953
+GW 22,1,9.4488,5.9436,0.,10.0965,5.9436,0.,.00635
+GE 0
+LD 5,1,0,0,2.5E+07,1.
+LD 5,2,0,0,2.5E+07,1.
+LD 5,3,0,0,2.5E+07,1.
+LD 5,4,0,0,2.5E+07,1.
+LD 5,5,0,0,2.5E+07,1.
+LD 5,6,0,0,2.5E+07,1.
+LD 5,7,0,0,2.5E+07,1.
+LD 5,8,0,0,2.5E+07,1.
+LD 5,9,0,0,2.5E+07,1.
+LD 5,10,0,0,2.5E+07,1.
+LD 5,11,0,0,2.5E+07,1.
+LD 5,12,0,0,2.5E+07,1.
+LD 5,13,0,0,2.5E+07,1.
+LD 5,14,0,0,2.5E+07,1.
+LD 5,15,0,0,2.5E+07,1.
+LD 5,16,0,0,2.5E+07,1.
+LD 5,17,0,0,2.5E+07,1.
+LD 5,18,0,0,2.5E+07,1.
+LD 5,19,0,0,2.5E+07,1.
+LD 5,20,0,0,2.5E+07,1.
+LD 5,21,0,0,2.5E+07,1.
+LD 5,22,0,0,2.5E+07,1.
+FR 0,1,0,0,7.1
+GN -1
+EX 0,17,1,0,1.414214,-1.883E-7
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <pre>CM 2el Yagi 240-20:  116 segments
+CM Manually segmented for equal lengths
+CE
+GW 1,6,-11.607,0.,0.,-9.4488,0.,0.,.00635
+GW 2,4,-9.4488,0.,0.,-7.7724,0.,0.,.00953
+GW 3,4,-7.7724,0.,0.,-6.096,0.,0.,.0127
+GW 4,8,-6.096,0.,0.,-3.048,0.,0.,.0254
+GW 5,8,-3.048,0.,0.,-.3048,0.,0.,.0286
+GW 6,2,-.3048,0.,0.,.3048,0.,0.,.0597
+GW 7,8,.3048,0.,0.,3.048,0.,0.,.0286
+GW 8,8,3.048,0.,0.,6.096,0.,0.,.0254
+GW 9,4,6.096,0.,0.,7.7724,0.,0.,.0127
+GW 10,4,7.7724,0.,0.,9.4488,0.,0.,.00953
+GW 11,6,9.4488,0.,0.,11.6078,0.,0.,.00635
+GW 12,2,-10.096,5.9436,0.,-9.4488,5.9436,0.,.00635
+GW 13,4,-9.4488,5.9436,0.,-7.7724,5.9436,0.,.00953
+GW 14,4,-7.7724,5.9436,0.,-6.096,5.9436,0.,.0127
+GW 15,8,-6.096,5.9436,0.,-3.048,5.9436,0.,.0254
+GW 16,8,-3.048,5.9436,0.,-.3048,5.9436,0.,.0286
+GW 17,2,-.3048,5.9436,0.,.3048,5.9436,0.,.0597
+GW 18,8,.3048,5.9436,0.,3.048,5.9436,0.,.0286
+GW 19,8,3.048,5.9436,0.,6.096,5.9436,0.,.0254
+GW 20,4,6.096,5.9436,0.,7.7724,5.9436,0.,.0127
+GW 21,4,7.7724,5.9436,0.,9.4488,5.9436,0.,.00953
+GW 22,2,9.4488,5.9436,0.,10.0965,5.9436,0.,.00635
+GE 0
+LD 5,1,0,0,2.5E+07,1.
+LD 5,2,0,0,2.5E+07,1.
+LD 5,3,0,0,2.5E+07,1.
+LD 5,4,0,0,2.5E+07,1.
+LD 5,5,0,0,2.5E+07,1.
+LD 5,6,0,0,2.5E+07,1.
+LD 5,7,0,0,2.5E+07,1.
+LD 5,8,0,0,2.5E+07,1.
+LD 5,9,0,0,2.5E+07,1.
+LD 5,10,0,0,2.5E+07,1.
+LD 5,11,0,0,2.5E+07,1.
+LD 5,12,0,0,2.5E+07,1.
+LD 5,13,0,0,2.5E+07,1.
+LD 5,14,0,0,2.5E+07,1.
+LD 5,15,0,0,2.5E+07,1.
+LD 5,16,0,0,2.5E+07,1.
+LD 5,17,0,0,2.5E+07,1.
+LD 5,18,0,0,2.5E+07,1.
+LD 5,19,0,0,2.5E+07,1.
+LD 5,20,0,0,2.5E+07,1.
+LD 5,21,0,0,2.5E+07,1.
+LD 5,22,0,0,2.5E+07,1.
+FR 0,1,0,0,7.1
+GN -1
+EX 0,17,2,0,.707107,-9.416E-8
+EX 0,17,1,0,.707107,-9.416E-8
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <center>
+    <h4>2. 310-08</h4>
+  </center>The second example is a 3-element Yagi designed for 28.4 MHz. For the most part, front-to-back ratios can be ignored, since they reflect only the depth of the pucker in the rear lobe(s) and do not give a clear picture of the rearward radiation. Indeed, no single number can do this job. The clearest non-graphical portrait of rearward radiation comes from a combination of the front-to-back ratio, the front-to-rear average ratio, and the "worst case" rearward ratio. This example is most notable for its exceptionally short element center section (4"). The alternative model simply eliminates this section and continues the 0.75" tubing across the center. Boom lengths total 90" with the element spacing shown.
+  <p><b>Notes:</b></p>
+  <p>1. As noted for the 2-element, 40-meter Yagi, NEC-2 without a stepped- diameter correction overestimates gain in both the original and the alternate model. However, in accord with generally received wisdom, the alternate model is closest to converged models with somewhat minimal segmentation. However, there is no convergence to self-identify the most reliable result.</p>
+  <p>2. For the original design, NEC-4 models only approach convergence at 283 segments. Even that large model suffers from the large center-section to adjacent-section diameter jump insofar as the center section is longer than desired. However, breaking it into 2 segments exceeds the recommended diameter-to-length ratio.</p>
+  <p>3. For the alternate model, NEC-4 results converge reasonably between the conservative auto-segmentation version and the manually segmented and equalized version. The 48" center section of each element provides a foundation for more reliable outputs with a far smaller model than needed for the original design.</p>
+  <p>4. With this antenna design, NEC-2 results for stepped-diameter correction tend to approach NEC-4 convergence within the range of the smallest reliable NEC-4 model. However, even stepped-diameter correction results tend to progress through the NEC-4 convergence point, indicating an absence of a reliable convergence region and hence lesser confidence in the chosen model size without a cross-reference to NEC-4.</p>
+  <pre>K6STI Model 310-08:  3-element Yagi; 28.4 MHz
+
+Element tapered dimensions from center outward in inches:
+El.       Space     2.5"      .75"      .625"     .5"       Total
+Refl        0         2        22        18       66.75       108.75"
+D.E.       36         2        22        18       57.625       99.625"
+Dir        90         2        22        18       53.125       95.125
+
+K6STI Reference (YO)     7.21      22.91     25.1 - 24.4
+
+NEC-4          Segs      Gain dBi  F-B dB    Feed Z R +/- jX
+Auto S Min      27       10.15     38.92     12.93 - 14.32
+Auto S Con      42        9.34     25.28     15.72 - 16.78
+08A-1 ctr       73        8.88     36.54     17.32 - 17.86
+08B-1 ctr      143        8.14     35.63     20.33 - 20.41
+08C-1 ctr      213        7.68     35.21     22.57 - 22.45
+08D-1 ctr      283        7.32     35.22     24.50 - 24.49
+
+NEC-2 with stepped-diameter correction
+Auto S Min      27        8.33     31.30     20.19 - 21.84
+Auto S Con      42        7.80     37.49     23.12 - 24.08
+08A-1 ctr       73        7.52     42.85     24.55 - 24.94
+08B-1 ctr      143        7.11     50.08     26.87 - 26.84
+08C-1 ctr      213        6.92     55.47     28.02 - 27.82
+08D-1 ctr      283        6.81     59.46     28.76 - 28.43
+
+NEC-2 without stepped-diameter correction
+Auto S Min      27       11 22     28.91      9.46 -  8.74
+Auto S Con      42       10.81     24.99     10.34 -  8.81
+08A-1 ctr       73       10.68     21.84     10.18 -  7.63
+08B-1 ctr      143       10.59     19.39      9.91 -  6.25
+08C-1 ctr      213       10.61     18.26      9.57 -  5.34
+08D-1 ctr      283       10.65     17.57      9.30 -  4.70
+
+NEC-4
+Auto S Min      21        6.96     37.69     27.29 - 27.44
+Auto S Con      35        7.26     37.34     25.16 - 24.73
+081X eq         68        7.30     33.06     24.69 - 23.23
+
+NEC-2 with stepped-diameter correction
+Auto S Min      21        6.88     48.93     28.25 - 27.66
+Auto S Con      35        7.17     41.08     26.23 - 25.04
+081X eq         68        7.32     41.99     26.56 - 13.47
+
+NEC-2 without stepped-diameter correction
+Auto S Min      21        7.08     29.59     25.35 - 22.42
+Auto S Con      35        7.42     25.38     22.85 - 18.83
+081X eq         68        7.51     21.93     21.42 - 15.35
+</pre>
+  <pre>CM 3el Yagi 310-08  42 segments
+CM Conservative autosegmentation
+CE
+GW 1,5,-2.7622,0.,0.,-1.0668,0.,0.,.00635
+GW 2,1,-1.0668,0.,0.,-.6096,0.,0.,.00794
+GW 3,2,-.6096,0.,0.,-.0508,0.,0.,.00953
+GW 4,1,-.0508,0.,0.,.0508,0.,0.,.0318
+GW 5,2,.0508,0.,0.,.6096,0.,0.,.00953
+GW 6,1,.6096,0.,0.,1.0668,0.,0.,.00794
+GW 7,4,1.0668,0.,0.,2.76225,0.,0.,.00635
+GW 8,3,-2.5304,.9144,0.,-1.0668,.9144,0.,.00635
+GW 9,1,-1.0668,.9144,0.,-.6096,.9144,0.,.00794
+GW 10,2,-.6096,.9144,0.,-.0508,.9144,0.,.00953
+GW 11,1,-.0508,.9144,0.,.0508,.9144,0.,.0318
+GW 12,2,.0508,.9144,0.,.6096,.9144,0.,.00953
+GW 13,1,.6096,.9144,0.,1.0668,.9144,0.,.00794
+GW 14,3,1.0668,.9144,0.,2.53047,.9144,0.,.00635
+GW 15,3,-2.4161,2.286,0.,-1.0668,2.286,0.,.00635
+GW 16,1,-1.0668,2.286,0.,-.6096,2.286,0.,.00794
+GW 17,2,-.6096,2.286,0.,-.0508,2.286,0.,.00953
+GW 18,1,-.0508,2.286,0.,.0508,2.286,0.,.0318
+GW 19,2,.0508,2.286,0.,.6096,2.286,0.,.00953
+GW 20,1,.6096,2.286,0.,1.0668,2.286,0.,.00794
+GW 21,3,1.0668,2.286,0.,2.41617,2.286,0.,.00635
+GE 0
+LD 5,1,0,0,2.5E+07,1.
+LD 5,2,0,0,2.5E+07,1.
+LD 5,3,0,0,2.5E+07,1.
+LD 5,4,0,0,2.5E+07,1.
+LD 5,5,0,0,2.5E+07,1.
+LD 5,6,0,0,2.5E+07,1.
+LD 5,7,0,0,2.5E+07,1.
+LD 5,8,0,0,2.5E+07,1.
+LD 5,9,0,0,2.5E+07,1.
+LD 5,10,0,0,2.5E+07,1.
+LD 5,11,0,0,2.5E+07,1.
+LD 5,12,0,0,2.5E+07,1.
+LD 5,13,0,0,2.5E+07,1.
+LD 5,14,0,0,2.5E+07,1.
+LD 5,15,0,0,2.5E+07,1.
+LD 5,16,0,0,2.5E+07,1.
+LD 5,17,0,0,2.5E+07,1.
+LD 5,18,0,0,2.5E+07,1.
+LD 5,19,0,0,2.5E+07,1.
+LD 5,20,0,0,2.5E+07,1.
+LD 5,21,0,0,2.5E+07,1.
+FR 0,1,0,0,28.4
+GN -1
+EX 0,11,1,0,1.414214,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN
+</pre>
+  <pre>CM 3el Yagi 310-081X  68 segment alternate
+CM Manually segmented for equalized segments
+CE
+GW 1,7,-2.7622,0.,0.,-1.0668,0.,0.,.00635
+GW 2,2,-1.0668,0.,0.,-.6096,0.,0.,.00794
+GW 3,6,-.6096,0.,0.,.6096,0.,0.,.00953
+GW 4,2,.6096,0.,0.,1.0668,0.,0.,.00794
+GW 5,7,1.0668,0.,0.,2.76225,0.,0.,.00635
+GW 6,6,-2.5304,.9144,0.,-1.0668,.9144,0.,.00635
+GW 7,2,-1.0668,.9144,0.,-.6096,.9144,0.,.00794
+GW 8,6,-.6096,.9144,0.,.6096,.9144,0.,.00953
+GW 9,2,.6096,.9144,0.,1.0668,.9144,0.,.00794
+GW 10,6,1.0668,.9144,0.,2.53047,.9144,0.,.00635
+GW 11,6,-2.4161,2.286,0.,-1.0668,2.286,0.,.00635
+GW 12,2,-1.0668,2.286,0.,-.6096,2.286,0.,.00794
+GW 13,6,-.6096,2.286,0.,.6096,2.286,0.,.00953
+GW 14,2,.6096,2.286,0.,1.0668,2.286,0.,.00794
+GW 15,6,1.0668,2.286,0.,2.41617,2.286,0.,.00635
+GE 0
+LD 5,1,0,0,2.5E+07,1.
+LD 5,2,0,0,2.5E+07,1.
+LD 5,3,0,0,2.5E+07,1.
+LD 5,4,0,0,2.5E+07,1.
+LD 5,5,0,0,2.5E+07,1.
+LD 5,6,0,0,2.5E+07,1.
+LD 5,7,0,0,2.5E+07,1.
+LD 5,8,0,0,2.5E+07,1.
+LD 5,9,0,0,2.5E+07,1.
+LD 5,10,0,0,2.5E+07,1.
+LD 5,11,0,0,2.5E+07,1.
+LD 5,12,0,0,2.5E+07,1.
+LD 5,13,0,0,2.5E+07,1.
+LD 5,14,0,0,2.5E+07,1.
+LD 5,15,0,0,2.5E+07,1.
+FR 0,1,0,0,28.4
+GN -1
+EX 0,8,4,0,.707107,0.
+EX 0,8,3,0,.707107,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN</pre>
+  <center>
+    <h4>3. 320-16</h4>
+  </center>The third example is a 3-element Yagi designed for 14.175 MHz. Cautions similar to those given for the 10-meter beam apply to the front-to-back ratios. Also, like the 10-meter design, this example has a short element center section (8"). Because the properties of this antenna design when modeled replicate so closely those of the 10-meter model, no alternate version is shown.
+  <p><b>Notes:</b></p>
+  <p>1. NEC-2 without a stepped correction factor displaces the beam relative to frequency and overestimates gain while underestimating front-to-back ratio and feedpoint impedance. Because the number of steps per half- element is 50% greater than the steps used for the 10-meter beam, the offset is even worse.</p>
+  <p>2. The center element diameter is about 3 times the adjacent section diameter. However, the number of diameter steps is large. These factors combine to set a practical limit to achieving convergence in NEC-4. Although the final doubling of segments between 16B and 16C shows an approach to convergence, the model has grown to 442 segments. The reasonableness of convergence and use of the output numbers at this level will depend upon the purposes of the modeling.</p>
+  <p>3. As with the 10-meter model, the NEC-2 with stepped-diameter correction numbers approach those of a converged NEC-4 model somewhere between the conservative auto-segmented version and the smallest manually segmented and equalized version. However, again, this point is not self-identifying within NEC-2, since the model continues to vary in value with changes in the number of segments. Notable in this progression is a clear indication that too many segments defeats the stepped-diameter correction and produces results little better than NEC-2 without the stepped-diameter correction.</p>
+  <pre>K6STI Model 320-16:  3-element Yagi; 14.175 MHz
+
+Element tapered dimensions from center outward in inches:
+El.  Space     3.75 1.25 1.0  .875 .75  .625"     .5"       Total
+Refl    0        4   44   24   20   42   20       69.625    223.625"
+D.E.   80        4   44   24   20   42   20       51.25     205.25"
+Dir   186        4   44   24   20   42   20       46.625    196.625"
+
+K6STI Reference (YO)     7.25      23.32     26.7 - 25.3
+
+NEC-4          Segs      Gain dBi  F-B dB    Feed Z R +/- jX
+Auto S Min      39        9.84     33.04     14.66 - 15.32
+Auto S Con      57        9.08     33.24     17.44 - 17.73
+16A-1 ctr      112        8.40     31.39     20.08 - 19.58
+16B-1 ctr      221        7.83     29.04     22.54 - 21.02
+16C-2 ctr      442        7.74     27.80     22.74 - 20.73
+
+NEC-2 with stepped-diameter correction
+Auto S Min      39        8.25     36.90     22.16 - 22.75
+Auto S Con      57        7.77     48.71     24.77 - 24.48
+16A-1 ctr      112        7.35     45.51     27.19 - 26.40
+16B-1 ctr      221        7.02     41.97     29.17 - 28.02
+16C-2 ctr      442       10.23     43.00     16.05 +  4.83
+
+NEC-2 without stepped diamter correction
+Auto S Min      39       10 87     19.04      9.37 -  5.82
+Auto S Con      57       10.48     16.74      9.69 -  4.33
+16A-1 ctr      112       10.30     13.80      8.97 -  0.60
+16B-1 ctr      221       10.28     11.40      7.89 +  3.67
+16C-2 ctr      442       10.94      9.31      5.85 +  7.02</pre>
+  <pre>CM 3el Yagi 320-16 57 segments
+CM Conservative autosegmentation
+CE
+GW 1,2,-5.68,0.,0.,-3.9116,0.,0.,.00635
+GW 2,1,-3.9116,0.,0.,-3.4036,0.,0.,.00794
+GW 3,2,-3.4036,0.,0.,-2.3368,0.,0.,.00953
+GW 4,1,-2.3368,0.,0.,-1.8288,0.,0.,.0111
+GW 5,1,-1.8288,0.,0.,-1.2192,0.,0.,.0127
+GW 6,2,-1.2192,0.,0.,-.1016,0.,0.,.0159
+GW 7,1,-.1016,0.,0.,.1016,0.,0.,.0476
+GW 8,2,.1016,0.,0.,1.2192,0.,0.,.0159
+GW 9,1,1.2192,0.,0.,1.8288,0.,0.,.0127
+GW 10,1,1.8288,0.,0.,2.3368,0.,0.,.0111
+GW 11,2,2.3368,0.,0.,3.4036,0.,0.,.00953
+GW 12,1,3.4036,0.,0.,3.9116,0.,0.,.00794
+GW 13,2,3.9116,0.,0.,5.68008,0.,0.,.00635
+GW 14,2,-5.2133,2.032,0.,-3.9116,2.032,0.,.00635
+GW 15,1,-3.9116,2.032,0.,-3.4036,2.032,0.,.00794
+GW 16,2,-3.4036,2.032,0.,-2.3368,2.032,0.,.00953
+GW 17,1,-2.3368,2.032,0.,-1.8288,2.032,0.,.0111
+GW 18,1,-1.8288,2.032,0.,-1.2192,2.032,0.,.0127
+GW 19,2,-1.2192,2.032,0.,-.1016,2.032,0.,.0159
+GW 20,1,-.1016,2.032,0.,.1016,2.032,0.,.0476
+GW 21,2,.1016,2.032,0.,1.2192,2.032,0.,.0159
+GW 22,1,1.2192,2.032,0.,1.8288,2.032,0.,.0127
+GW 23,1,1.8288,2.032,0.,2.3368,2.032,0.,.0111
+GW 24,2,2.3368,2.032,0.,3.4036,2.032,0.,.00953
+GW 25,1,3.4036,2.032,0.,3.9116,2.032,0.,.00794
+GW 26,2,3.9116,2.032,0.,5.21335,2.032,0.,.00635
+GW 27,2,-4.9942,4.7244,0.,-3.9116,4.7244,0.,.00635
+GW 28,1,-3.9116,4.7244,0.,-3.4036,4.7244,0.,.00794
+GW 29,2,-3.4036,4.7244,0.,-2.3368,4.7244,0.,.00953
+GW 30,1,-2.3368,4.7244,0.,-1.8288,4.7244,0.,.0111
+GW 31,1,-1.8288,4.7244,0.,-1.2192,4.7244,0.,.0127
+GW 32,2,-1.2192,4.7244,0.,-.1016,4.7244,0.,.0159
+GW 33,1,-.1016,4.7244,0.,.1016,4.7244,0.,.0476
+GW 34,2,.1016,4.7244,0.,1.2192,4.7244,0.,.0159
+GW 35,1,1.2192,4.7244,0.,1.8288,4.7244,0.,.0127
+GW 36,1,1.8288,4.7244,0.,2.3368,4.7244,0.,.0111
+GW 37,2,2.3368,4.7244,0.,3.4036,4.7244,0.,.00953
+GW 38,1,3.4036,4.7244,0.,3.9116,4.7244,0.,.00794
+GW 39,2,3.9116,4.7244,0.,4.99428,4.7244,0.,.00635
+GE 0
+LD 5,1,0,0,2.5E+07,1.
+LD 5,2,0,0,2.5E+07,1.
+LD 5,3,0,0,2.5E+07,1.
+LD 5,4,0,0,2.5E+07,1.
+LD 5,5,0,0,2.5E+07,1.
+LD 5,6,0,0,2.5E+07,1.
+LD 5,7,0,0,2.5E+07,1.
+LD 5,8,0,0,2.5E+07,1.
+LD 5,9,0,0,2.5E+07,1.
+LD 5,10,0,0,2.5E+07,1.
+LD 5,11,0,0,2.5E+07,1.
+LD 5,12,0,0,2.5E+07,1.
+LD 5,13,0,0,2.5E+07,1.
+LD 5,14,0,0,2.5E+07,1.
+LD 5,15,0,0,2.5E+07,1.
+LD 5,16,0,0,2.5E+07,1.
+LD 5,17,0,0,2.5E+07,1.
+LD 5,18,0,0,2.5E+07,1.
+LD 5,19,0,0,2.5E+07,1.
+LD 5,20,0,0,2.5E+07,1.
+LD 5,21,0,0,2.5E+07,1.
+LD 5,22,0,0,2.5E+07,1.
+LD 5,23,0,0,2.5E+07,1.
+LD 5,24,0,0,2.5E+07,1.
+LD 5,25,0,0,2.5E+07,1.
+LD 5,26,0,0,2.5E+07,1.
+LD 5,27,0,0,2.5E+07,1.
+LD 5,28,0,0,2.5E+07,1.
+LD 5,29,0,0,2.5E+07,1.
+LD 5,30,0,0,2.5E+07,1.
+LD 5,31,0,0,2.5E+07,1.
+LD 5,32,0,0,2.5E+07,1.
+LD 5,33,0,0,2.5E+07,1.
+LD 5,34,0,0,2.5E+07,1.
+LD 5,35,0,0,2.5E+07,1.
+LD 5,36,0,0,2.5E+07,1.
+LD 5,37,0,0,2.5E+07,1.
+LD 5,38,0,0,2.5E+07,1.
+LD 5,39,0,0,2.5E+07,1.
+FR 0,1,0,0,14.175
+GN -1
+EX 0,20,1,0,1.414214,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN</pre>
+  <pre>CM 3el Yagi 320-16 442 segments
+CM Manually segmented and equalized
+CE
+GW 1,20,-5.68,0.,0.,-3.9116,0.,0.,.00635
+GW 2,8,-3.9116,0.,0.,-3.4036,0.,0.,.00794
+GW 3,12,-3.4036,0.,0.,-2.3368,0.,0.,.00953
+GW 4,8,-2.3368,0.,0.,-1.8288,0.,0.,.0111
+GW 5,8,-1.8288,0.,0.,-1.2192,0.,0.,.0127
+GW 6,16,-1.2192,0.,0.,-.1016,0.,0.,.0159
+GW 7,2,-.1016,0.,0.,.1016,0.,0.,.0476
+GW 8,16,.1016,0.,0.,1.2192,0.,0.,.0159
+GW 9,8,1.2192,0.,0.,1.8288,0.,0.,.0127
+GW 10,8,1.8288,0.,0.,2.3368,0.,0.,.0111
+GW 11,16,2.3368,0.,0.,3.4036,0.,0.,.00953
+GW 12,8,3.4036,0.,0.,3.9116,0.,0.,.00794
+GW 13,20,3.9116,0.,0.,5.68008,0.,0.,.00635
+GW 14,16,-5.2133,2.032,0.,-3.9116,2.032,0.,.00635
+GW 15,8,-3.9116,2.032,0.,-3.4036,2.032,0.,.00794
+GW 16,16,-3.4036,2.032,0.,-2.3368,2.032,0.,.00953
+GW 17,8,-2.3368,2.032,0.,-1.8288,2.032,0.,.0111
+GW 18,8,-1.8288,2.032,0.,-1.2192,2.032,0.,.0127
+GW 19,16,-1.2192,2.032,0.,-.1016,2.032,0.,.0159
+GW 20,2,-.1016,2.032,0.,.1016,2.032,0.,.0476
+GW 21,16,.1016,2.032,0.,1.2192,2.032,0.,.0159
+GW 22,8,1.2192,2.032,0.,1.8288,2.032,0.,.0127
+GW 23,8,1.8288,2.032,0.,2.3368,2.032,0.,.0111
+GW 24,16,2.3368,2.032,0.,3.4036,2.032,0.,.00953
+GW 25,8,3.4036,2.032,0.,3.9116,2.032,0.,.00794
+GW 26,16,3.9116,2.032,0.,5.21335,2.032,0.,.00635
+GW 27,16,-4.9942,4.7244,0.,-3.9116,4.7244,0.,.00635
+GW 28,8,-3.9116,4.7244,0.,-3.4036,4.7244,0.,.00794
+GW 29,16,-3.4036,4.7244,0.,-2.3368,4.7244,0.,.00953
+GW 30,8,-2.3368,4.7244,0.,-1.8288,4.7244,0.,.0111
+GW 31,8,-1.8288,4.7244,0.,-1.2192,4.7244,0.,.0127
+GW 32,16,-1.2192,4.7244,0.,-.1016,4.7244,0.,.0159
+GW 33,2,-.1016,4.7244,0.,.1016,4.7244,0.,.0476
+GW 34,16,.1016,4.7244,0.,1.2192,4.7244,0.,.0159
+GW 35,8,1.2192,4.7244,0.,1.8288,4.7244,0.,.0127
+GW 36,8,1.8288,4.7244,0.,2.3368,4.7244,0.,.0111
+GW 37,16,2.3368,4.7244,0.,3.4036,4.7244,0.,.00953
+GW 38,8,3.4036,4.7244,0.,3.9116,4.7244,0.,.00794
+GW 39,16,3.9116,4.7244,0.,4.99428,4.7244,0.,.00635
+GE 0
+LD 5,1,0,0,2.5E+07,1.
+LD 5,2,0,0,2.5E+07,1.
+LD 5,3,0,0,2.5E+07,1.
+LD 5,4,0,0,2.5E+07,1.
+LD 5,5,0,0,2.5E+07,1.
+LD 5,6,0,0,2.5E+07,1.
+LD 5,7,0,0,2.5E+07,1.
+LD 5,8,0,0,2.5E+07,1.
+LD 5,9,0,0,2.5E+07,1.
+LD 5,10,0,0,2.5E+07,1.
+LD 5,11,0,0,2.5E+07,1.
+LD 5,12,0,0,2.5E+07,1.
+LD 5,13,0,0,2.5E+07,1.
+LD 5,14,0,0,2.5E+07,1.
+LD 5,15,0,0,2.5E+07,1.
+LD 5,16,0,0,2.5E+07,1.
+LD 5,17,0,0,2.5E+07,1.
+LD 5,18,0,0,2.5E+07,1.
+LD 5,19,0,0,2.5E+07,1.
+LD 5,20,0,0,2.5E+07,1.
+LD 5,21,0,0,2.5E+07,1.
+LD 5,22,0,0,2.5E+07,1.
+LD 5,23,0,0,2.5E+07,1.
+LD 5,24,0,0,2.5E+07,1.
+LD 5,25,0,0,2.5E+07,1.
+LD 5,26,0,0,2.5E+07,1.
+LD 5,27,0,0,2.5E+07,1.
+LD 5,28,0,0,2.5E+07,1.
+LD 5,29,0,0,2.5E+07,1.
+LD 5,30,0,0,2.5E+07,1.
+LD 5,31,0,0,2.5E+07,1.
+LD 5,32,0,0,2.5E+07,1.
+LD 5,33,0,0,2.5E+07,1.
+LD 5,34,0,0,2.5E+07,1.
+LD 5,35,0,0,2.5E+07,1.
+LD 5,36,0,0,2.5E+07,1.
+LD 5,37,0,0,2.5E+07,1.
+LD 5,38,0,0,2.5E+07,1.
+LD 5,39,0,0,2.5E+07,1.
+FR 0,1,0,0,14.175
+GN -1
+EX 0,20,2,0,.707107,0.
+EX 0,20,1,0,.707107,0.
+RP 0,1,361,1000,90.,0.,0.,1.,0.
+EN</pre>
+  <center>
+    <h4>Conclusions:</h4>
+  </center>
+  <p>1. NEC-4 has limits in dealing with stepped-diameter elements, especially under the following circumstances:<br></p>
+  <ul>
+    <li>a. Where the step in diameters between adjacent elements is large, and<br></li>
+    <li>b. Where the large step occurs in the region of maximum element current.<br></li>
+  </ul>Achieving convergence under these circumstances may require quite large models relative to the number of antenna elements involved. These models grow larger for every diameter step involved in the structure of the element.
+  <p>2. Inadequate segmentation in stepped-diameter elements in NEC-4 may result in unrealistically high values for forward gain and low values for feedpoint impedance. Adequacy of segmentation includes the following:<br></p>
+  <ul>
+    <li>a. Number of segments,<br></li>
+    <li>b. Equalization of segment lengths within the element structural limits, and<br></li>
+    <li>c. Alignment of segments among the elements.</li>
+  </ul>
+  <p>3. NEC-2 with stepped-diameter corrections can yield reasonable figures on antenna performance. However, the best segmentation to achieve those results is not self-identifying within NEC-2 due to the absence of a convergence trend. In general, the best modeling region for achieving reasonable results from NEC-2 with stepped-diameter corrections involves the following constraints:<br></p>
+  <ul>
+    <li>a. Use the fewest segments possible within the limits of conservative NEC guidelines; and<br></li>
+    <li>b. Adjust segment lengths and alignment for equalization for the major element section lengths, but not for very short lengths.<br></li>
+  </ul>The result will be a model somewhat larger in segment numbers than the conservative minimum, but smaller than a converged NEC-4 model.
+  <p>4. NEC-2 without a stepped-diameter correction is highly unreliable. The larger the diameter jump between adjacent section of the element, the more unreliable the output figures. With small increments of diameter change and long constant-diameter sections, the results may be tentatively usable if the total number of segments is small. However, precision antenna analysis is not possible.</p>
+  <p>Given the trends in the values of forward gain and front-to-back ratio (or front-to-rear calculations) for the test Yagis with stepped-diameter elements, it is entirely possible to generate misleading models in either NEC-2 or NEC-4. Good practice calls for extreme care in developing models and in reporting results. Not only should one present modeling results, but as well one should reveal all the relevant details of the model used to generate them. Likewise, those with modeling programs should check reported figures for themselves.</p>
+  <p>Indeed, modeling is not in itself the solution to resolving issues of reported antenna performance figures. Without adequate descriptions of the models used (and the good engineering reasons for using those models), the output of NEC programs can be as misleading as any other antenna performance report. Properly used within their limitations and fairly reported, NEC models can be a source of important and useful information not otherwise easily obtained.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 4-6-97. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#modeling'>Modeling</a>, <a href='../topics.html#stepped-diameter'>Stepped Diameter</a></p><br>
+</body>
+</html>

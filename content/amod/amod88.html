@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EX and PT</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>88. EX and PT</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Most newer NEC antenna modelers and even experienced antenna designers have little occasion to use any other form of excitation than EX 0, the voltage source. Some software packages simulate a current source by placing--either overtly or covertly--a voltage source and a network (NT) between the actual excitation segment and the segment that the modeler wishes to call the source. Other packages allow split sources by exciting two adjacent segments in series and calculating the resulting source impedance for the user.</p>
+  <p>A typical model in .NEC format would look like the following simple 6-element Yagi in free-space. (The LD5 line assigns the aluminum material loss to the entire set of model segments. The last entry in the line is a permeability value of 1, indicating that this model is set up in NEC-4.) The dimensions are in meters.</p>
+  <pre>CM 6-el 2M Yagi
+CE
+GW 1 21 -.514604 0. 0. .514604 0. 0. .0024
+GW 2 21 -.5075174 .257302 0. .5075174 .257302 0. .0024
+GW 3 21 -.4746752 .3637788 0. .4746752 .3637788 0. .0024
+GW 4 21 -.461137 .6585204 0. .461137 .6585204 0. .0024
+GW 5 21 -.461137 .9469628 0. .461137 .9469628 0. .0024
+GW 6 21 -.443992 1.377137 0. .443992 1.377137 0. .0024
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+FR 0 1 0 0 146. 0
+GN -1
+EX 0 2 11 0 1 0.
+RP 0 1 361 1000 90. 0. 1.00000 1.00000 0.
+EN</pre>
+  <p>From a model such as this one, perhaps the most used output is the E-plane pattern, in this case, a Phi or Azimuth pattern, according to the names assigned by the software. <b>Fig. 1</b> shows a sample for the present model, along with the data for the pattern. Not shown is the other most desired piece of information, the source impedance: 50.0 + j9.5 Ohms at 146 MHz for this model.</p>
+  <center>
+    <img src="amod88-1.gif" width="650" height="420" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Plane-Wave Excitation</b></p>
+  <p>There are occasions when a modeler may seek other information from the model, information that may emerge from the use of plane wave excitation. The EX command has three significant options for the modeler:</p>
+  <blockquote>
+    <p>EX 1: incident plane wave, linear polarization</p>
+    <p>EX 2: incident plane wave, right hand (thumb along the incident vector) elliptic polarization</p>
+    <p>EX 3: incident plane wave, left hand (thumb along the incident vector) elliptic polarization</p>
+  </blockquote>
+  <p>Both of the elliptical polarization options are useful when simulating signal sources from helical and similar antennas. Linear polarization simulates line-of-sight signal sources. These notes do not pretend to provide a compendium of uses for the various signal sources. Instead, they are designed to introduce the rudiments of using incident plane-wave sources, as well as a few tips on making incident plane-wave models do what the modeler wants them to do in terms of data output.</p>
+  <p>For anyone not acquainted with incident plane-wave excitation, the first item to understand is that these sources do not excite a specific wire segment on the model. Instead, they simulate an external signal source that excites the entire antenna structure. The entry-line structure for them has a number of interesting properties that differ from the line structure of a simple voltage source.</p>
+  <pre>
+Com  I1   I2     I3     I4   F1        F2        F3         F4    F5   F6    F7
+ID   Type # Thta # Phi  Not  Th angle  Ph angle  Eta        Theta Phi  Axis  El. field
+          angles angles used to vector to vector pol. angle step  step ratio V/m
+EX   1    1      8      0    90        0         90         0     45   0     0
+</pre>
+  <p>The sample entry is for a linear plane wave. Hence, F6 is 0 by non-relevance. F7 also has a 0, but that value indicates a default value of 1 V/m. In some problems designed to ferret out coupling potentials among wires, you may use a specific value that closely approximates the value from the source signal at the structure being examined in model form.</p>
+  <p>Most of the remaining entries define incident plane waves as a calculation loop within NEC (with some properties resembling the loop operation of frequency sweeps using the FR command). In the sample, for the sake of clarity, there is only one theta angle: 90 degrees. This angle is parallel to the plane of the antenna elements. The sample specifies 8 phi-angle (azimuth-angle) steps at 45-degree increments, thus providing samples evenly spaced in the element plane.</p>
+  <p>The F3 entry, called Eta, under linear polarization is easy to memorize. With a value of 0, the polarization is in the +/-Z direction--vertically polarized for antennas over ground. If F3 is 90, the polarization is in the X-Y plane--horizontally polarized for antennas over ground. The sample in free space uses horizontal polarization for simplicity, but there is no restriction against checking results when cross-polarized or with the polarization set to intermediate angles. When using EX 2 or EX 3, elliptical polarization, the entry changes its meaning and defines the major ellipse axis. (Remember that true circular polarization is simply a special case of elliptical polarization having equal axes.)</p>
+  <blockquote>
+    <p>[<b>Special Note for NEC-2 Users</b>: The structure of the NEC-2 plane-wave excitation entry is slightly different than the NEC 4 entry. It has the following structure:</p>
+    <pre>
+Com  I1   I2     I3     I4   F1        F2        F3         F4    F5   F6
+ID   Type # Thta # Phi  Not  Th angle  Ph angle  Eta        Theta Phi  Axis
+          angles angles used to vector to vector pol. angle step  step ratio
+EX   1    1      8      0    90        0         90         0     45   0
+</pre>
+    <p>Note that the NEC-2 version lacks the F7 floating point entry for the electrical field strength, and the default value of 1 V/m always applies. Only 1 incident plane wave is allowed at a time (that is, before a succeeding execution step). If excitation types are mixed before a succeeding execution step, then the program will use only the last excitation type encountered.]</p>
+  </blockquote>
+  <p>Let's replace the lines of our original model from EX onward with the following (NEC-4) lines</p>
+  <pre>EX 1 1 8 0 90 0 90 0 45 0 0
+RP 0 1 361 0000 90. 0. 1.00000 1.00000 0.
+EN</pre>
+  <p>The EX entry is the one used in the sample. The RP 0 request calls for far field patterns, and the EX 1 loop will produce 8 of them, each one with a plane wave source spaced 45 degrees from the preceding one. Although unnecessary for linear polarization, the RP 0 request varies the XNDA entry. In the original model, the request used 1000 for XNDA, indicating that the output report would be printed in terms of the vertical, horizontal, and total gain. The replacement entry beginning with 0 prints the output in terms of major-axis, minor axis, and total gain. This option is significant for elliptical plane waves. For a total-gain-only output desire, the initial digit is not important, but it can become important as one explores the components of the total gain report value.</p>
+  <p><b>Receive Patterns</b></p>
+  <p>Plane-wave excitation is particularly important to the modeling of structures that do not themselves have an energy source, but which receive radiation from external sources. In some cases, they may re-radiate the energy, such as the case of a cell phone tower that is the right size and too close to a broadcasting tower. At a minimum, such a tower may change the pattern of the broadcast signal from its original shape that was certified to the licensing agency. In other cases, we may be interested in the scattering radiation from an object--a boat, aircraft, or other vehicle, for instance--illuminated by a radar or other signal. The number of potentially interesting and important cases that call for plane-wave excitation is as unending as the growing list of our concerns for the effects of radiation on animal, vegetable, and mineral objects around us.</p>
+  <p>Under these conditions, we are interested in structures as receiving devices, meaning recipients of energy. For our sample, we shall use the 6-element Yagi antenna as a receiving antenna. The question that next arises is how to derive useful data from the structure. For that purpose, NEC has an interesting command: PT. The PT command has a number of options.</p>
+  <p>PT -2: All current printed. This also occurs if PT is omitted altogether.</p>
+  <p>PT -1: Suppress printing of all wire-segment currents.</p>
+  <p>PT 0: Current printed for specified segments only.</p>
+  <p>PT 1: Currents printed in a format designed for a receiving pattern.</p>
+  <p>PT 2: Currents printed in a format designed for a receiving pattern, plus a normalized value for the last segment's current.</p>
+  <p>PT 3: Only the normalized current is printed.</p>
+  <p>The PT -1 option is useful when we only need 1 set of current data, but modeling circumstances would normally yield multiple sets of current tables. For example, a frequency sweep for which we need a collection of both theta and phi patterns would require a repetition of the FR command above each RP 0 request. Hence, the FR loop would repeat and normally yield two sets of the current data. Inserting a PT -1 command after the second FR command will suppress the printing of the second set of current data. PT 0 is useful in large models to isolate the current data on specific portions of a model.</p>
+  <p>However, our present interest lies in the PT entries followed by positive integers. The general format is as follows.</p>
+  <pre>
+Com  I1    I2     I3       I4
+ID   Type  Tag #  1st Seg  Last Seg
+PT   2     2      1        11
+</pre>
+  <p>The I2 through I4 entries are necessary only for PT 0 through PT 3. In this instance, the sample request asks both for the data on Tag 2, Segments 1 - 11, and for the normalized value of the data on segment 11. To make sense of this entry, refer to the initial model. Tag 2 represents the Yagi driver, and segment 11 is the segment connected to the feedline--a source segment in the transmitting mode and the focal segment in the receiving mode.</p>
+  <p>A single value of normalized current level would not be of much use. In fact, a very normal use of the PT 1 through PT 3 commands is in conjunction with an EX 1 command. Let's combine these lines into a different set of concluding lines for our initial model.</p>
+  <pre>PT 2 2 1 11
+EX 1 1 37 0 90 0 90 0 10 0 0
+XQ
+EN</pre>
+  <p>The EX 1 line specifies a loop of 37 excitations, each 10 degrees apart on the phi coordinates, and all at a theta angle of 90 degrees throughout. We might have selected any portion of the coordinate system sphere by specifying both phi and theta increments and steps. In that case, theta changes would occur before phi changes. However, for illustrative simplicity, theta remains constant in this introduction. Note that without a self-executing command to follow the EX 1 line, we need to insert XQ to execute the calculation of the specified currents.</p>
+  <p>The output file for the PT 2 request has two parts. The first is a list of all currents on the specified segments in terms of relative magnitude and phase angle, given the excitation level of 1 V/m. A PT 1 entry using the same form would produce this first data set. The data table has the following appearance--carried only through the first two excitation coordinates.</p>
+  <pre>
+                         - - - RECEIVING PATTERN PARAMETERS - - -
+                                   ETA=  90.00 DEGREES
+                                      TYPE -LINEAR
+                                   AXIAL RATIO= 0.000
+
+           THETA      PHI          -  CURRENT  -         SEG
+           (DEG)     (DEG)       MAGNITUDE    PHASE      NO.
+
+            90.00      0.00     1.3360E-26     14.58       22
+            90.00      0.00     3.2918E-26     15.61       23
+            90.00      0.00     4.9538E-26     16.58       24
+            90.00      0.00     6.4222E-26     17.45       25
+            90.00      0.00     7.6951E-26     18.24       26
+            90.00      0.00     8.7620E-26     18.95       27
+            90.00      0.00     9.6115E-26     19.61       28
+            90.00      0.00     1.0234E-25     20.21       29
+            90.00      0.00     1.0625E-25     20.75       30
+            90.00      0.00     1.0782E-25     21.25       31
+            90.00      0.00     1.0708E-25     21.70       32
+            90.00     10.00     6.9810E-05   -125.22       22
+            90.00     10.00     1.7385E-04   -122.98       23
+            90.00     10.00     2.6449E-04   -120.90       24
+            90.00     10.00     3.4657E-04   -119.02       25
+            90.00     10.00     4.1959E-04   -117.32       26
+            90.00     10.00     4.8257E-04   -115.76       27
+            90.00     10.00     5.3448E-04   -114.32       28
+            90.00     10.00     5.7442E-04   -112.97       29
+            90.00     10.00     6.0169E-04   -111.71       30
+            90.00     10.00     6.1584E-04   -110.51       31
+            90.00     10.00     6.1671E-04   -109.36       32
+</pre>
+  <p>We can plot the data for any of the selected segments around the complete phi circle. In fact, we used 37 steps in the model in order to be able to have a graph that started and finished at the same level. If we plot the data for Segment 32 (the absolute segment number for segment 11 on tag 2), we obtain the traces in <b>Fig. 2</b>. The magnitude and the phase angle have separate plots, since plotting them with a single Y-axis would have given us a virtually flat line for the small changes in magnitude.</p>
+  <center>
+    <img src="amod88-2.gif" width="592" height="650" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graph for phase, of course, does not give us the perfect match between 0 degrees and 360 degrees. The result stems from two facts. First, the 0/360-degree point is in a region where the phase angle is changing very rapidly. So too is the magnitude, but it is in both cases too close to zero to show any variation between the graph-line ends. Second, NEC is subject to a number of occurrences of rounding in the course of its calculations. Hence, what it calls 360 degrees may be fractionally off. In most cases, this variation makes no difference, even visually, to a result. However, in this case, the combination of circumstances yields a visually divergent set of graph-line ends. The reported data for the two points is as follows.</p>
+  <pre>Angle     Magnitude     Phase Angle
+0 deg.    1.34E-26       14.58 deg
+360       8.39E-14      158.30</pre>
+  <p>With a initial electrical field magnitude of 1 V/m, values below 1E-10 are subject to seemingly wide variations in magnitude and phase angle. However, the actual voltage levels are too low to be significant, whichever level and angle one selects.</p>
+  <p>The second set of data produced by the PT 2 entry (and the only data produced by a PT 3 entry) includes the normalized values for Tag 2, Segment 11, or absolute segment 32. There will be 37 entries on this list.</p>
+  <pre>
+                        - - - NORMALIZED RECEIVING PATTERN - - -
+                            NORMALIZATION FACTOR= 2.6983E-02
+                                   ETA=  90.00 DEGREES
+                                      TYPE -LINEAR
+                                   AXIAL RATIO= 0.000
+                                   SEGMENT NO.=   32
+
+                     THETA      PHI         -  PATTERN  -
+                     (DEG)     (DEG)        DB        MAGNITUDE
+
+                      90.00      0.00    -999.99     3.9686E-24
+                      90.00     10.00     -32.82     2.2856E-02
+                      90.00     20.00     -26.60     4.6774E-02
+                      90.00     30.00     -18.80     1.1475E-01
+                      90.00     40.00     -12.15     2.4691E-01
+                      90.00     50.00      -7.32     4.3037E-01
+                      90.00     60.00      -3.94     6.3530E-01
+                      90.00     70.00      -1.70     8.2236E-01
+                      90.00     80.00      -0.42     9.5310E-01
+                      90.00     90.00       0.00     1.0000E+00
+                      90.00    100.00      -0.42     9.5310E-01
+                      90.00    110.00      -1.70     8.2236E-01
+                      90.00    120.00      -3.94     6.3530E-01
+                      90.00    130.00      -7.32     4.3037E-01
+                      90.00    140.00     -12.15     2.4691E-01
+                      90.00    150.00     -18.80     1.1475E-01
+                      90.00    160.00     -26.60     4.6774E-02
+                      90.00    170.00     -32.82     2.2856E-02
+                      90.00    180.00    -236.16     1.5553E-12
+                      90.00    190.00     -31.35     2.7077E-02
+                      90.00    200.00     -26.29     4.8478E-02
+                      90.00    210.00     -24.51     5.9467E-02
+                      90.00    220.00     -24.35     6.0584E-02
+                      90.00    230.00     -25.47     5.3265E-02
+                      90.00    240.00     -28.13     3.9206E-02
+                      90.00    250.00     -32.55     2.3572E-02
+                      90.00    260.00     -35.65     1.6502E-02
+                      90.00    270.00     -35.30     1.7187E-02
+                      90.00    280.00     -35.65     1.6502E-02
+                      90.00    290.00     -32.55     2.3572E-02
+                      90.00    300.00     -28.13     3.9206E-02
+                      90.00    310.00     -25.47     5.3265E-02
+                      90.00    320.00     -24.35     6.0584E-02
+                      90.00    330.00     -24.51     5.9467E-02
+                      90.00    340.00     -26.29     4.8478E-02
+                      90.00    350.00     -31.35     2.7077E-02
+                      90.00    360.00    -230.14     3.1105E-12
+</pre>
+  <p>As we did for the raw magnitude information, we can plot the normalized data as well. As a first move, let's look at a plot of the feedline segment relative magnitude of current normalized to a maximum value of 1.0. <b>Fig. 3</b> shows us the plot.</p>
+  <center>
+    <img src="amod88-3.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The resulting graph is virtually identical to the upper portion of <b>Fig. 2</b>, with the exception that the new graph fills the space from bottom to top. This type of graphical and tabular information may be very useful in some cases, but it seems to lack much informative power for our simple example.</p>
+  <p>Therefore, let's give our illustrative model a question for which the data may be able to yield an answer. Does the pattern shape change between transmit and receive, or is the basic antenna essentially reciprocal, that is, does it have the same pattern regardless of whether it is transmitting or receiving? Note that this question excludes any factors applying to propagation phenomena between transmitting and receiving antennas.</p>
+  <p>First, we need to convert the polar plot of <b>Fig. 1</b> into a rectangular plot--only because my software presently only has rectangular plot facilities for receive patterns. The data on such a plot will still be in dB. In fact, let's set the plot limits (Y-axis) at +10 dB and -40 dB to allow the overall pattern variations show themselves with some clarity. The maximum gain of the Yagi is 10.23 dBi, so the peak value will not over-extend the top line by any significant amount.</p>
+  <p>Second, let's plot the normalized receiving data over a similar 50-dB span: from 0 dB down to -50 dB. While we set this up, let's also note that the normalized receiving plot data uses a 10-degree increment, while the radiation plot uses a 1-degree increment. The difference is due to further limitations of the rectangular plot facility in the software that I used.</p>
+  <center>
+    <img src="amod88-4.gif" width="592" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the two plots, and their agreement is clearly evident within the limits of the different increments used in this simple demonstration. There is no evidence that the transmitting and receiving plots are any different. Of course, one might expand at least the tabular receiving results to a full 360 degrees using 1-degree increments and then compare that table with the values in the transmit version radiation table. That, as they say in all of those math texts, is an exercise I am content to leave to the reader.</p>
+  <p><b>Combining Modeling Goals in a Single Model</b></p>
+  <p>In this exercise, we have looked at two different types of projects involving linear incident plane-wave excitation. The first involved generating patterns--which tend to be of little use here, but in some cases might be useful as re-transmission or scattering patterns--and the second developed tabular data and rectangular plots of received patterns. Each called for a different increment in the phi circle. For patterns, we do not need either the full current set or the restricted set called out by the PT 2 command. For the receive rectangular plots, we need only the current data shown.</p>
+  <p>The easiest way to achieve these ends is to separate them within the model with the XQ command for the currents and a new EX 1 line before the RP 0 command.</p>
+  <pre>CM 6-el 2M Yagi
+CE
+GW 1 21 -.514604 0. 0. .514604 0. 0. .0024
+GW 2 21 -.5075174 .257302 0. .5075174 .257302 0. .0024
+GW 3 21 -.4746752 .3637788 0. .4746752 .3637788 0. .0024
+GW 4 21 -.461137 .6585204 0. .461137 .6585204 0. .0024
+GW 5 21 -.461137 .9469628 0. .461137 .9469628 0. .0024
+GW 6 21 -.443992 1.377137 0. .443992 1.377137 0. .0024
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+FR 0 1 0 0 146. 0
+GN -1
+PT 2 2 1 11
+EX 1 1 37 0 90 0 90 0 10 0 0
+XQ
+EX 1 1 8 0 90 0 90 0 45 0 0
+PT -1
+RP 0 1 361 0000 90. 0. 1.00000 1.00000 0.
+EN</pre>
+  <p>The techniques shown in the sample model are also useful in other models, even when we wish to use the same EX 1 line but for both theta and phi patterns. We would lose all but the last of the second set of patterns if we do not repeat the EX 1 line, and we can omit the repetitious data with the PT -1 command.</p>
+  <p>If we want to frequency sweep both sets of results, we must also include a second FR line, and both should reflect the desired sweep. The following lines that revise the end of the model illustrate the principle with a 2-step sweep. Had we omitted the second FR entry, we would obtain far-field plots only for 147 MHz, the last frequency in the FR loop.</p>
+  <pre>
+FR 0 2 0 0 146. 1
+GN -1
+PT 2 2 1 11
+EX 1 1 37 0 90 0 90 0 10 0 0
+XQ
+FR 0 2 0 0 146. 1
+EX 1 1 8 0 90 0 90 0 45 0 0
+PT -1
+RP 0 1 361 0000 90. 0. 1.00000 1.00000 0.
+EN
+</pre>
+  <p>These notes are not designed to be comprehensive in the treatment of either the EX command or the PT command. However, they do illustrate how the two work together to yield receive data and patterns. That is enough to get you started. Undoubtedly task specifications will let you modify the elements of this simple example so that you can obtain the desired results for most modeling efforts that require plane wave excitation and/or receive patterns.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Back on the Ground</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>120. Back on the Ground</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Our modeling notes have been looking up for many episodes. Perhaps it is time to look down for a change. In column 11, we looked at the basics of using the ground-entry commands, mostly as implemented in entry-level software. However, the goal was to create some realistic expectations of the models that we make when the ground is involved. In episode 34, we looked at the GN and GD commands to see both the opportunities and the limitations of giving a NEC model a second medium. One limitation of the second medium was the need to place it either at the same level or below the inner ground medium. A second limitation was the restriction to specifying either a perfect circle (relative to the coordinate system origin) or a straight line at some distance along the X-axis and extending indefinitely parallel to the +/-Y-axis for the boundary between ground media. Hence, NEC cannot directly replicate most rooftop or mountainside antenna locations.</p>
+  <p>NEC offers us 4 basic ground selection options. Of course, there is free space, which eliminates the ground altogether from field calculations. Next, we may select a perfect ground, which engineers like to call by one or two abbreviations (to prove to one another that they have read the text and know how to talk "engineer-eze"). The NEC method of handling a perfect ground is to use image calculations that are almost as fast as free-space calculations. We may also select between two "real" ground calculation systems. The Reflection Coefficient Approximation (RCA or "fast") system uses a simplified set of calculations that we once widely used to speed NEC calculations on slow computers. The alternate selection is the Sommerfeld-Norton (SN) or "high accuracy" system that evaluates integrals developed and modified by the individuals after whom the method is named. The process is slower, and in the earlier days of NEC, modelers often saved the results for re-use to conserve computation time. The modern generation of desktop and laptop computers is fast enough to make the RCA method unnecessary, and one NEC implementation had dropped it as an option. Another implementation has by-passed the search for a usable SN result file and now calculates the SN ground anew for each model run. Users cannot tell the difference in run time.</p>
+  <p>The RCA ground calculation system or method has a second cause of relative demise. Below about 0.2 wavelength, the results are no longer reliable. For horizontal wires, the RCA system shares this problem with the ground calculation system in MININEC, but shows variance curves (relative to SN calculations) that differ from the MININEC ground. The RCA method does have a provision that allows an approximation for a system of buried radials without having to model the radials, but it is not especially accurate. Likewise, the MININEC ground allows a vertical monopole to reach ground without introducing errors (by always presenting the source impedance over perfect ground), but it also shows significant deviations from models that create buried radials (in NEC-4) using the SN method for ground calculations. In "olden times" when computers worked at the speed of ox-carts, even a modest radial field might require the completion of a few chores or a lunch break during the core run. However, the current "interstate" speeds of computers allow very rapid calculation of large radial fields for multiple monopoles using the SN calculation methods that yield the highest accuracy available to modelers.</p>
+  <p><b>What is NEC Doing When It Calculates Ground Influences?</b></p>
+  <p>Whenever we invoke a non-free-space environment, NEC establishes a ground in the X-Y plane at Z=0. The program employs a flat earth, in contrast to the shallow curve of the real earth's surface. The ground surface at Z=0 is not an absolute limit on all NEC calculation functions. For example, if we invoke a second ground medium, we may place it below (but not above) Z=0 by specifying an increment in meters below the inner medium. A sample GN command with a circular boundary might look like the following entry (without the extra spaces used to separate entries).</p>
+  <pre>
+GN    2     0           0  0        13    .005        81    5           10.7        10.7
+Card  Gnd   Nr of       Zeros       D.C.  Cond.       D.C.  Cond.       Boundary    Neg.
+Type  Type  Radials                 [Inner Med.]      [Outer Med.]      Radius      Outer
+                                                                                    Height
+</pre>
+  <p>This card specifies two media, an inner and an outer, with the inner medium having average soil values and the outer one having salt water values. The boundary radius tells us how far (in meters) from the coordinate system origin that the outer medium begins. Note that boundaries are always specified in terms of distance from the 0, 0, 0 point of the coordinate system, not necessarily from the antenna. Since we can alter the coordinates of the antenna's elements, we can place it anywhere in the inner medium region.</p>
+  <p>The final number (again in meters, even if user interface entry is in other units) represents the distance by which the outer medium surface is below the inner medium surface. A commercial program might call for a negative number as an input to remind the user that the outer medium can never be higher than the inner medium. However, the NEC card requires that this value of lower ground be entered in the command as a positive distance downward. 10.7 meters is about 1 wavelength at the 28 MHz test frequency for the model we are using.</p>
+  <p>We may also specify the second medium using the GD command in order to free the GN command for alternative uses. For further details on entering GN and GD commands, see episode 34 of this series. The setting of a second medium affects only the calculations for the radiated field. It does not affect the calculation of near fields or currents, even if the antenna geometry extends into the outer medium. As well, the second medium specification has no effect on the ground-wave calculations, which require an infinite flat ground and the primary ground parameters (conductivity and relative permittivity).</p>
+  <p>The second facet of calculations that involve the region below Z=0, even when an SN ground has been specified, involves buried wires. A wire that penetrates the surface must have at least a segment junction at Z=0. NEC-4 will calculate the currents in buried wires, with suitable modifications of the segment lengths for these calculations based upon the medium specified for the primary ground parameters. Therefore, in the NEC output report, expect to see a difference in the segment information between the initial geometry portion of the report and the current calculation section.</p>
+  <p>Many modelers observe a difference in the take-off (TO) angle (or theta/elevation angle of maximum field strength) when changing the ground parameters. The explanation for this phenomenon is straightforward, if we examine <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod120-1.gif" width="386" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we take any antenna, its radiation will initially consist of direct rays in all elevation directions from the structure. Rays that intercept the earth's flat surface will divide into two components. One component will be a portion of the energy reflected upward. The second portion will be energy dissipated within the earth's surface. The figure only points to the division of energy and not to the complex manner in which energy penetrates the surface before being reflected (or refracted) upward.</p>
+  <p>The elevation or theta angle of maximum field strength results from the combination of direct and reflected rays, taking due note of their strength and their relative phases. However, differing ground parameters yield not only differing level of energy loss, but as well, differing depths of penetration, resulting in differences in the reflected rays that parallel the direct rays in phase. The result is a different TO angle.</p>
+  <p>Within the range of normal values for conductivity and permittivity, lower values of either or both terms normally results in higher TO angle. However, it is possible to specify values of conductivity and permittivity so low that the earth beneath the antenna becomes nearly RF transparent. Let's consider three (for the moment) arbitrary soil qualities called "average," "very poor," and "terrible." If we model a 40-meter 1/4 wavelength monopole with 16 radials buried about 0.1 m below ground, the three soil qualities listed produce the results shown in <b>Table A</b>. The TO Angle column lists the theta angle followed by the elevation angle.</p>
+  <pre>
+Table A.  NEC-4 modeling reports for a 40-meter monopole and 16 buried radials with three soil qualities
+
+Quality Name   Conductivity    Permittivity    Maximum Gain    TO Angle
+               S/m                             dBi             degrees
+Average        0.005           13              -0.73           63/27
+Very Poor      0.001           5               -1.31           60/30
+"Terrible"     0.0001          1.2             -0.49           63/27
+</pre>
+  <p>The hypothetical soil labeled "terrible" uses a conductivity value that appears within the original charts from which we draw the more usual soil types. However, the permittivity is approaching the absolute limit of 1 (relative to free space) and is a value not found for any existing soil. Nevertheless, as we enter these values into NEC, we obtain a slight rise in gain and a drop in the TO angle toward the horizon. Both values run counter to anticipated curves for a soil that is approaching the status of a reasonably good insulator. <b>Fig. 2</b> overlays the modeled elevation patterns of the antenna under the three soil conditions.</p>
+  <center>
+    <img src="amod120-2.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We enter values of conductivity and permittivity, but for many modelers, these values are strictly conventions. We tend to encounter conductivity in the arena of antenna materials. The basic term, <i>sigma</i>, describes conventional current due to electron motion. Tabular values of permittivity, <i>epsilon</i>, are actually the relative permittivity, <i>epsilon<sub>r</sub></i>, which is the dielectric constant that we associate with materials used between capacitor plate. At root, the term represents displacement current. Relative permittivity derives from the absolute permittivity (<i>epsilon</i>) divided by the permittivity of free space (<i>epsilon<sub>0</sub></i>), or<br></p>
+  <center>
+    <img src="amod120-e1.gif" width="132" height="42">
+  </center>Since absolute permittivity is also in pF/m, relative permittivity has no units.
+  <p>We enter separate values for conductivity and permittivity because we can measure each independently and because one may vary while the other remains constant. See "Practical RF Soil Testing" by Eric von Valtier, K8LV, in <i>QEX</i> for July/August, 2006, pp. 46-49, for a good summary of basic soil terms and concepts, as well as a technique for measurement.</p>
+  <p>For use in SN calculations, NEC employs one of two formulations of complex permittivity (<i>epsilon<sub>g</sub></i>), according to how the modeler enters the value of <i>sigma</i>. If the entry is positive, as is normally the case, then</p>
+  <center>
+    <img src="amod120-e2.gif" width="86" height="40">
+  </center><i>Omega</i> is the familiar <i>2 Pi f</i> function. If the user enters <i>sigma</i> as a negative number, then
+  <center>
+    <img src="amod120-e3.gif" width="77" height="27">
+  </center>without regard for frequency. Since most users derive values from tables, the normal form is usually the form of choice.
+  <p><b>Expanding Our Appreciation of Soils</b></p>
+  <p>The most common table of soil values from which modelers draw values is actually very old. <b>Table 1</b> represents an adaptation of values found in <i>The ARRL Antenna Book</i>, 20th Edition (p. 3-13), which are themselves an adaptation of the table presented by Terman in <i>Radio Engineer's Handbook</i> (p. 709), taken from "Standards of Good Engineering Practice Concerning Standard Broadcast Stations," <i>Federal Register</i> (July 8, 1939), p. 2862. Terman's value for the conductivity of the worst soil listed is an order of magnitude lower than the value shown here. Sharp eyes will immediately spot the categories of average and very poor soil, although there is no such thing as "terrible" soil in the listing. The list shown is from <i>Intermediate Antenna Modeling: A Hands-On Tutorial</i> which can be found on the <a href="../bookant.html">Books Page</a>. I have put this table and the next one in the form of graphics so that--if you do not have some other convenient reference--you may download and print these tables on 1 or 2 sheets.</p>
+  <center>
+    <img src="amod120-t1.gif" width="680" height="750" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the absence of a need for a soil quality applicable to a particular location, most modelers opt to place antennas above average soil. Alternatively, they may select a range of soils over which to run a model, ranging from very good down to very poor. <i>The ARRL Antenna Book</i> does allow the modeler to regionalize--but not to localize--soil conductivity through the U. S. map that it presents in Fig. 19 on page 3-14 of the 20th edition. True localization would require measurements, such as those described by K8LV.</p>
+  <p>Between 1939 and the present day, numerous measurements of soil conditions have occurred--where soil also covers various waters and ices. In addition to the standard soil qualities of the early list, NSI software also offers users options appearing in <b>Table 2</b>, a second listing from the tutorial book. The list comes from many sources.</p>
+  <p>The lists in the two tables differ somewhat in the extremes of non-water values. The traditional list shows a maximum conductivity (in very good soil) that is about 3 times higher than the highest land conductivity in the newer list. The highest values of relative permittivity also differ (20 vs. 30), but above about 20, higher permittivity values tend to show no significant performance increases. Note that the entry a "City industrial area" uses the same conductivity value as our contrived terrible soil, lower than the lowest conductivity in the traditional list by a factor of 10. Both lists show a minimum permittivity value of 3, which is considerably higher than the arbitrary value assigned to terrible soil.</p>
+  <center>
+    <img src="amod120-t2.gif" width="680" height="650" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Perhaps the greatest contribution of the expanded table is the detailed listing of water and ice values. However, for any critical modeling, the modeler himself remains responsible for the figures entered. In all cases, any account that makes use of the model should not only present the values of conductivity and permittivity used with the model, but should also provide a good reason for using them. I have seen a few cases in which antennas have claimed some advantage over other designs, where the advantage rested mostly on an unproclaimed use of better soil conditions.</p>
+  <p>In any writing that makes use of antenna models over soil, there are two errors to avoid. One is suddenly to change the soil quality while still making non-soil-related comparisons. The second is inadvertently to reverse the conductivity and permittivity entries for an intended level of soil quality. <b>Table B</b> shows what happens to our 40-meter monopole with 16 buried radials over average ground with correct and with reversed entries.</p>
+  <pre>
+Table B.  NEC-4 modeling reports for a 40-meter monopole and 16 buried radials over average ground
+
+Entry          Conductivity    Permittivity    Maximum Gain    TO Angle
+               S/m                             dBi             degrees
+Correct        0.005           13              -0.73           63/27
+Reversed       13              0.005            4.79           82/08
+</pre>
+  <p>However implausible the error sounds, it is far more common than most people wish to believe, according to models that I have reviewed over the years. (I withhold the modeler names to protect the embarrassed.)</p>
+  <center>
+    <img src="amod120-3.gif" width="426" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig 3</b> shows the radical difference in patterns. Note that a 40-meter monopole over perfect ground would show a maximum gain of about 5.2 dBi, with maximum gain along the horizon. The unreal value of conductivity (2.5 times the value of salt water) tends to override the very low value of permittivity. The value that we plugged in is in fact lower than the minimum relative value (1), but the program dutifully calculated a set of results.</p>
+  <p><b>Conclusion</b></p>
+  <p>These notes will supplement previous episodes concerning NEC's ground entry system for real ground values of conductivity and permittivity. However, the potpourri of ideas by no means counts as completing the story of ground as it applies to antennas. Researchers continue to search for calculation methods even more accurate than the SN system, which has proven quite trustworthy for a large class of cases. As well, experimenters continue to refine methods of measuring both conductivity and permittivity to allow more antenna users to obtain truly local information. (Of course, we must use an extended sense of what is truly local, since we are interested not only in the ground immediately beneath an antenna, but as well for a considerable number of wavelengths away in the region in which ground reflections occur in the formation of the far field.)</p>
+  <p>We have not mentioned MININEC extensively in these notes, since the standard MININEC ground calculation system uses a truncated method that is generally inaccurate for antennas having any horizontal component that is less than 0.2 wavelength above ground. However, one implementation of MININEC, Antenna Model, has grafted the SN calculation system onto the MININEC core, with very good results down to virtually the same limits that the system has with NEC. However, the MININEC core does not permit buried wires. Hence, monopoles with radial systems must lie totally above ground.</p>
+  <p>Those who wish to look more deeply into the SN ground calculation methods may consult the NEC-2 and NEC-4 manuals. The lists of references in those volumes will lead to seminal books and papers at least through the appearance of the programs.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

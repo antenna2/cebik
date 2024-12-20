@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flipping Among NEC Programs</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>52. Flipping Among NEC Programs</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>As the use of antenna modeling software becomes more and more common, it is becoming less unusual to find modelers who possess more than one program. Some earlier DOS-based programs have been supplanted by Windows programs, not always from the same source. For example, the highly respected AO for MININEC 3.13 was a DOS program that is no longer sold (although still widely used). In its place have emerged, in Windows garb, NEC4WIN and MMANA from Canada and Japan, respectively.</p>
+  <p>Among NEC users, the most common programs we encounter are EZNEC 3.0 for Windows from W7EL and NEC-Win Plus (one of a collection of programs from Nittany Scientific, with the others being NEC-Win Pro and GNEC for NEC-2 and NEC-4, respectively). In the following notes, we shall confine ourselves to NEC programs, since our topic will be flipping from one program to another: how to do it and what to watch out for. Most of the MININEC programs use file formats that are not directly convertible from one program to the other. However, NEC4WIN can handle some NEC files, while ELNEC MININEC files can be directly read by EZNEC. Nonetheless, we shall have our hands full just converting from one NEC program to another.</p>
+  <p>The basic file format for the NEC core (-2 or -4) has the extension .NEC. It is an ASCII file, a sample of which appears in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod52-1.gif" width="483" height="328" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The file is a simple ASCII file that one can produce on almost any simple text editor. To a large degree--but not completely--NEC-2 and NEC-4 files are interchangeable. NEC-4 introduces some new input potentials and revises a few ways of handling some program control cards. However, mainline work involving the sorts of things new users are likely to do rarely involve the differences between core potentials. Hence, moving files from one core to the other is 90% flawless.</p>
+  <p>However, EZNEC and NEC-Win Plus each use proprietary file formats. The .EZ model file is in a format specifically developed by W7EL to fit the needs of his programming of the interface between the model specification and the core. The .NWP file format is based on a spreadsheet input system that allows the program to have some special functions. Bridging the gap requires reversion to a .NEC file.</p>
+  <p>NEC-Win Plus permits saving any model in .NEC format. Some things saved in the .NWP files, such as model-by-equation spreadsheet entries, cannot appear in the .NEC file. The .NEC file is always the file of a specific model with a certain wire table having numeric entries, along with program control cards that reflect these values.</p>
+  <p>Standard EZNEC 3.0 does not have a provision to import files in .NEC format, nor a provision to save files in this format. However, the Pro version of the program has both potentials. Whether or not one needs the NEC-4 core, if one reaches the point of investing in multiple programs, upgrading to the Pro version of EZNEC may make sense.</p>
+  <p><b>The Utility of Multiple Programs</b></p>
+  <p>Why bother going from one program to the other? For one reason, the tabular and graphical outputs of the two programs have different styles. We might well find one style more suited to certain data collections or presentations than the other, even if we had done the initial work on the other program. For example, EZNEC presents data on current magnitudes and phase angles in tables that subdivide the model elements into wires and segments within those wires. For some purposes, this format may be clearer than the NEC-Win tables that use absolute segment numbers. As well, EZNEC presents current data using RMS values, while NEC-Win adheres to the NEC core use of peak values. Often, we find presentation needs that arise only after we have done some modeling work, and Murphy's Law dictates that we shall have done the initial modeling and data collection in the program that does not meet current presentation needs.</p>
+  <center>
+    <img src="amod52-2.gif" width="416" height="635" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="amod52-3.gif" width="715" height="691" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> and <b>Fig. 3</b> present partial current data for the model shown in <b>Fig. 1</b> in EZNEC and NEC-Win format, respectively. The numbers are the same, since the EZNEC source used 1 volt RMS, while the NEC-Win source used 1 volt peak. Hence, the respective RMS and peak values of output data will have the same numerical values.</p>
+  <center>
+    &lt;<img src="amod52-4.gif" width="681" height="247" border="2" vspace="5" hspace="9">&gt;
+  </center>
+  <p>There are also reasons of convenience for switching programs. Consider <b>Fig. 4</b>, the wire table from an EZNEC model of a 6-element 2-meter Yagi. My goal was to examine the patterns of this antenna at a height of 20' over real ground with the antenna horizontally oriented and with the antenna vertically oriented. Making the adjustments to the model, initially horizontal, for real ground analysis requires only that I change the antenna height and set up the ground. However, changing the orientation from horizontal to vertical requires a large number of individual wire coordinate value changes in the Y and Z columns at both ends of each wire.</p>
+  <center>
+    <img src="amod52-5.gif" width="426" height="336" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows a simpler solution. I saved the free-space horizontal model as a .NEC file and then opened it in NEC-Win Plus. It is immaterial that EZNEC saves files in .NEC format only in meters. Everything will return to inches when we are done. The key is the simple rotation along an axis permitted by NEC-Win Plus. The figure shows the effect on one of the elements of the rotation, although all elements will follow suit, since all were blocked together for the operation.</p>
+  <center>
+    <img src="amod52-6.gif" width="681" height="247" border="2" vspace="5" hspace="9">
+  </center>
+  <p>After the operation, I again saved the file in .NEC format from within NEC-Win Plus and reopened it in EZNEC. I then changed the unit of measure back to inches to arrive at the wire table shown in <b>Fig. 6</b>. I then used the same set-up steps to place the boom of the antenna 20' above real ground.</p>
+  <p>Not only did I save time, but as well, I saved all of those errors resulting from misplacing and transposing numbers. While the time saving for this model was not great, it mounts up when changing orientations with UHF Yagis up to 43 elements total.</p>
+  <p>Another instance in which switching from one program to another makes good sense is in data collections that can be done more readily on one program than the other. For example, EZNEC permits only one RP0 request, that is a single polar pattern request. Suppose we have created a model in EZNEC and wish now to gather free-space data for both azimuth and elevation patterns (in free-space, E-plane and H-plane patterns) over a frequency sweep of considerable proportions. since NEC-Win permits the user to specify multiple pattern requests, transporting the model to this program makes sense. As well, the data set is saved in a durable file, so that the output file for a single frequency sweep run can be recalled later for further examination. Such potentials exist for any .NEC file, whether using NEC-Win Plus, Pro, or GNEC.</p>
+  <p>Going the other way, I sometimes have occasion to need to exactly frequency scale a model. If the model has not been set up in NEC-Win Plus using the model by equation facility, then scaling becomes a manual operation. However, by saving the file in .NEC format and opening it in EZNEC Pro, I can use the automated frequency scaling option in that program. Saving again in .NEC format permits a return to NEC-Win for subsequent operations. A 3-element array is no problem for manual re-scaling. However, suppose we wished to scale a 25-element Yagi originally designed for 432 MHz into a version centered on 224 MHz. The benefits of having both programs available becomes evident.</p>
+  <p>These applications for program "flipping" only sample the potential available. However, they will suffice to illustrate the benefits and the process.</p>
+  <p><b>Observing Program Limitations</b></p>
+  <p>As important as knowing some of the applications for flipping from one program to another is observing and expecting the limitations of moving a model from one program to the other. The programs each have limitations in accepting a .NEC file from the other source.</p>
+  <p>When opening a .NEC file within EZNEC Pro, the file undergoes a conversion into the standard EZNEC format. Some of the unique characteristics of that format and the program structure require the conversion process to set aside some lines and even to reject a file. For example, it is possible to create and save an .NEC file that lacks an EX line, that is a specification of source conditions. EZNEC will reject such files as incomplete. A basically complete file will require a set of wire geometry lines (GW), a source (EX), a frequency (FR), and a pattern request (RP).</p>
+  <center>
+    <img src="amod52-7.gif" width="381" height="288" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> summarizes for a particular model most of the cases in which EZNEC either ignores or modifies a line to meet its structural needs. Although it is possible to directly create an LD5 line--the line that specifies the material conductivity of a wire--that covers all wires in a model, NEC-Win wire-creation facilities assign conductivity values to each line individually. The user can therefore have difference values of conductivity for each wire in the model. In contrast, EZNEC allows only one loss value for all wires. Therefore, it ignores LD5 entries. Following the conversion process, the user must re-enter the desired material loading value into a special sub-screen in the program.</p>
+  <p>Since frequency sweeping is a special function within EZNEC, single frequency core runs are the norm. If the conversion process encounters a sweep step value in the FR entry, it will omit it from the resulting EZNEC file. If the .NEC file has multiple frequency entries, as is common when NEC-Win models request multiple radiation patterns, only one of those frequency steps--modified if necessary to register only the start frequency--will remain in the EZNEC file. The user must set up a frequency sweep from a special screen within EZNEC.</p>
+  <p>EZNEC also provides for only one radiation pattern request at a time. Therefore, the program retains only the first request labeled RP and does not accept further such requests. Another small change involves the wire diameter. The original file may specify the wire as an AWG gauge from a special table. However, the .NEC file will register that wire size as a numerical wire radius, and that value will appear as a wire numerical wire diameter within the EZNEC wire table. If the user desires to use the EZNEC AWG entry, he or she must do a single or wire-group modification in the wire table.</p>
+  <p>The upshot is simply this: when opening a .NEC format model within EZNEC Pro, the automatic conversion process does not accomplish every necessary model set-up step. The user must survey the main screen and verify that all model values are the ones desired.</p>
+  <p>As we earlier noted, saving a model from within EZNEC Pro in .NEC format also has a limitation. All wire dimensions of the saved file will be in meters, the basic unit used by the core for all calculations. NEC-Win will open the files and show metric values.</p>
+  <p>The conductivity-resistivity values used for the two programs are not everywhere identical. Therefore, a NEC-Win Plus wire screen will normally show a numerical conductivity value. If the users prefers to specify a value from the program list, he or she must change the individual entries or perform a master block change. If one uses a .NEC file exported from EZNEC from DOS versions of the program, the user should also check the establish the desired type of R-L-C load, since the earlier versions of EZNEC may convert all such loads to R+/-jX loads in the .NEC file.</p>
+  <p>Because EZNEC permits only a single pattern request at a time, the .NEC file opened within NEC-Win Plus will show only that single pattern. However, the user should also determine that the pattern meets the NEC-Win pattern request requirements so that the user can request an "Analysis" to determine the maximum gain, front-to-back ratio, and beamwidth data.</p>
+  <center>
+    <img src="amod52-8.gif" width="431" height="457" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows a failed pattern, and provides a reminder of the correct minimum requirements to be able to obtain a pattern analysis. Azimuth patterns must run between 0 and 359 degrees, while elevation patterns must run between 0 and 180 degrees.</p>
+  <center>
+    <img src="amod52-9.gif" width="640" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, since the NEC-Win user may desire multiple patterns, there is a tendency to simply request the missing pattern, as shown in <b>Fig. 9</b>. The added pattern is the elevation pattern, using the default values offered by the program. However, the user will be disappointed in two respects by the resulting elevation pattern. First, it will be at right angles to the axis of the forward lobe. The user must examine the model to determine the orientation of the antenna before accepting or modifying the pattern values. In this case, the requested azimuth angle for the pattern should be along the 90-270-degree line.</p>
+  <p>Second, the requested pattern will produce only half a free-space elevation of H-plane pattern. The default value for elevation patterns is a 180-degree sweep to cover all cases over real ground. The range for the elevation pattern requires an increase to 360 degrees for a full free-space pattern. In a similar way, the default elevation angle for azimuth patterns is 1 degree elevation to ensure that the polar plot will yield a pattern over ground. For free-space patterns, this angle should be set at zero degrees.</p>
+  <p>As we have noted, standard EZNEC operation is for a single frequency. This situation will be reflected in the .NEC file exported for use with NEC-Win programs. If a frequency sweep is needed, then the user must modify the frequency input data.</p>
+  <p>Throughout these notes on flipping from one program to another, we have not mentioned something so obvious that--without mention--it may go unnoticed. File keeping is as important to regular program flipping as any other facet of the process. Suppose that I begin with a file called QUAD.EZ. If I create a QUAD.NEC version of the file and open it in NEC-Win Plus, I shall likely save a file called QUAD.NWP. However, if I wish to transport the file with some modifications back to EZNEC, saving the file as QUAD.NEC will result in a different model than the earlier one.</p>
+  <p>Therefore, it is useful to develop some regular scheme for naming the transport .NEC files. A simple way is to designate files saved in .NEC format from EZNEC as QUAD-E.NEC and files saved from NEC-Win Plus in .NEC format as QUAD-P.NEC. This practice honors the tradition of the 8+3 filename. However, current versions of Windows allow for very extended filenames. Therefore, some users have adopted the "complete description" theory of filenames, for example, 2-EL-QUAD-EZ-VER.NEC or 2-EL-QUAD-NWP-VER.NEC, or something similar.</p>
+  <p><b>Adjunct Program and Their Exports</b></p>
+  <p>Adjunct programs to assist in developing NEC models are on the rise. Perhaps the most common one in the U.S. is NEC-Win Synth, a program that allows the user to synthesize complex shapes into wire-grid models. The program is primarily designed to meld with NEC-Win Plus. However, one may do a number of things with the synthesized wire table: save it an import it as a NEC-file into NEC-Win Pro/GNEC or EZNEC Pro, or export it as a wire table in a format acceptable for importation by all versions of EZNEC within the Wire Table.</p>
+  <p>However, Synth produces incomplete files, lacking a source (EX) and other data necessary to make a complete model file. Although a program like GNEC will open the file, the user cannot run it until he or she has made the proper additions. Since the file is incomplete, the EZNEC Pro .NEC input conversion system will reject the file. However, the system will accept the file once it is complete as a model.</p>
+  <p>Saving the file as a wire table for use with the EZNEC wire table import feature also requires care. <b>Fig. 10</b> shows a Synth product absorbed into NEC-Win Plus. Note that the wire diameter is in feet, the chosen unit of measure. The diameter corresponds to a value just below 1.2".</p>
+  <center>
+    <img src="amod52-10.gif" width="640" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Had we exported the same table to EZNEC for importing within the wire table, we would obtain the partial wire table shown in <b>Fig. 11</b>. Note that all of the numerical values are the same as we found in the NEC-Win Plus table. However, EZNEC always uses inches for wire diameters whatever the selected English unit of measure and always uses millimeters for the wire diameter whatever the selected metric unit of measure.</p>
+  <center>
+    <img src="amod52-11.gif" width="681" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Therefore, when importing a Synth wire table into EZNEC as a wire table function, the user must be prepared to change the wire diameter(s). The exceptions, of course, are when the Synth unit of measure is either inches or millimeters.</p>
+  <p>This situation is only a sample of the care we must use in moving from one program to another. Not all conversions or importations will work perfectly, nor should we expect them to do so. Importations and conversions are largely a user convenience, and some supplemental effort by the modeler is to be expected. At a minimum, the modeler should always carefully read the imported material to ensure that everything is correct relative to the model design.</p>
+  <p><b>NEC and MININEC Files</b></p>
+  <p>Back in <b>Fig. 1</b>, we looked at a standard-form .NEC file. For the most part, .NEC files are the common thread among almost all implementations of NEC cores. The model files are similar to, but not identical with, MININEC model files. Some MININEC program implementations have limited ability to accept and convert .NEC files to their own formats. However, MININEC model files are not especially interchangeable from one implementation of the public domain core to another--even though most use an ASCII input file (with ELNEC being an exception).</p>
+  <center>
+    <img src="amod52-12.gif" width="570" height="477" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 12</b> shows a typical NEC4WIN model file. The programmer has structured the wire table so that its parts correspond to those of a .NEC file. However, there are numerous functions that NEC handles with program control cards that MININEC handles with verbal entries.</p>
+  <center>
+    <img src="amod52-13.gif" width="618" height="467" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The MMANA model file, a sample of which appears in <b>Fig. 13</b>, uses a different order for the entries, with only the wire table showing a good correlation to the NEC4WIN file. The MMANA file contains a pattern request, but the NEC4WIN model file does not. This is only one of many major differences between the two implementations of MININEC.</p>
+  <center>
+    <img src="amod52-14.gif" width="323" height="302" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Classic AO (6.5, for the sample shown in <b>Fig. 14</b>) uses still another format, one permitting the introduction of variables and their definitions. The file may be viewed as perhaps the most compact format of all ASCII MININEC files.</p>
+  <p>With a suitable text editor and a template by which to move items around, it is possible to convert most MININEC files from one program to another without re-entering everything from scratch.</p>
+  <p>In the end, familiarizing ourselves with more than one program can accrue some benefits in terms of moving a model to the program that will best accomplish a particular task. However, when flipping from one program to another, we must always be aware of all the pitfalls to avoid. If we make the necessary adjustments in advance of running the transported model, we can usually save ourselves considerable time and energy. However, if we must always back track to pick up pieces that we forgot to adjust, we may end spending more time in flipping than in patiently working through a modeling exercise wholly within one program.</p>
+  <p>Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

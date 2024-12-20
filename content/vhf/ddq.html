@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Quad">
+  <title>Modeling the Double-Diamond for UHF</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Modeling the Double-Diamond for UHF</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The double-diamond quad has become a "hot" antenna in Europe. Introduced in Germany some years ago, the antenna has "taken off" and become somewhat a darling among home-brew antenna fans, especially on 432 MHz, where the usual double-diamond array can cover all of the band.</p>
+  <p>Two recent articles in <i>antenneX</i> have featured the double twin quad in various arrays, along with certain circumspectly veiled claims for its gain. As well one of the articles noted that I would try to model the antenna, so I guess I had better do some work. But first, we need to straighten out a few misimpressions.</p>
+  <p>1. According to one article, by using phasing, one seemingly gets a directional 9-dbi gain. Adding a reflector nets you another 4 dB. The problem in this line of thinking is the belief--common even in commercially made quads--that if you have a collection of techniques at hand to improve antenna performance, what you get is the sum of all of the theoretically possible improvements. Unfortunately, this simply does not happen. If a technique provides gain by suppressing rear quadrant radiation, then another technique that also suppresses rear quadrant radiation will have little or no work to do. Indeed, the combination of techniques may in fact spoil things. The only way to proceed is the following: remain silent about the theoretic gains, model the antenna as a design aid, build a prototype, and then range test it. Then you will know what the sum of the techniques yields. In most antennas, the total performance will normally be less than the sum of techniques used to produce it.</p>
+  <p>2. The double-diamond quad is not at all new in the world of antennas. Perhaps its application to UHF is relatively recent, but not the double quad. In fact, the double quad, fed across the junction of side points, is simply a variant on the double-loop SCVs used in the MF and lower HF range to obtain gain over single loop versions of the same antennas. Hence, we have the double-delta--a lower gain, but much more practical version of the double-diamond where wire height is a major challenge to 80 and 160 meter operators. Likewise, we have the rectangle and its double, sometimes (mis-)called the "double magnetic slot" and heavily studied by David Jefferies and Dan Handelsman. The open loop versions of the SCVs originated in reverse order: the bobtail curtain preceded the half square. But both belong to the 1 wavelength club. See <b>Fig. 1</b> for some old and common SCV "doubles."</p>
+  <center>
+    <img src="ddq-1.gif" width="635" height="396" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Here is why double-diamonds belong to the SCV family: all of the SCVs, when fed for dominantly vertically polarized radiation, consist--in single loop form--of two 1/4 wavelength verticals connected by horizontal phasing lines that are roughly 1/2 wavelength long. A closed loop suffers a small gain deficit resulting from the necessity of placing the vertical wires closer together than 1/2 wavelength. As Dan Handelsman has shown, we can endure a great deal of vertical shortening in the interests of wider spacing before the vertical elements become too short to radiate well. In fact, Kent Svensson, SM4CAN, in his 1988 booklet on Bobtails, empirically derived the need to shorten the verticals and extend the spacing even beyond a pure half wavelength between elements to achieve maximum gain from the array.</p>
+  <p>3. The double-quad is not the first use of SCV techniques on the VHF and UHF bands. Quads have been common. A few years ago, I had occasion to design and build some half-square and bobtail curtain parasitic arrays for 2-meters. What is original about the double-quad is just that--the use of the double quad in diamond form as a bi-directional broadside array at UHF. We should not diminish the achievement or insight involved, but we should also expect the antenna to behave like it should, given its SCV electrical heritage.</p>
+  <p>Work on VHF applications of the double-quad goes back at least to 1983 with the publication in the SAIEE journal of "A Broadband High-Gain Antenna for VHF-UHF," by Michael Stringfellow, then ZS6BUF, now AA7CT.</p>
+  <p>In fact, we shall look at the double-diamond quad in a few different configurations, and then re-introduce a long lost technique that offers even more potential with a bit less critical construction.</p>
+  <p><b>Evolving the Double Diamond Quad on 432 MHz</b></p>
+  <p>For some of the notes that follow, I shall use metric notations, and for some I shall use English units. I should apologize--or at least convert everything to one system. However, the exercise in units conversion will likely do everyone some good in refreshing those conversion constants that keep slipping from memory.</p>
+  <p>At the outset, let's note that this is a modeling exercise designed to establish some basic operating principles for the antennas. Since all of the models will be perfect, with no lumps, leads, or other disturbances, they are limited in their guidance for construction or prototypes. However, the trends will play true, and in those trends lies our keenest interest. Nevertheless, we shall keep our eyes open for limitations of the modeling systems used.</p>
+  <p>The evolution that we shall track goes from the simple vertical dipole to the single side-fed diamond loop, to the full double-diamond quad, as shown in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="ddq-2.gif" width="496" height="308" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The beginning of the double-diamond quad loop abides in the simple vertical dipole. A 4-mm diameter aluminum vertical dipole for 432 MHz in free space will show a gain of about 2.1 dBi and a resonant feedpoint impedance of about 72.5 Ohms. These values are the touchstone for all further work, and the circular H-plane pattern of <b>Fig. 3</b> serves only as a reminder.</p>
+  <center>
+    <img src="ddq-3.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Now let's build in modeling form a single diamond loop and feed it on the side to obtain dominantly vertically polarized radiation. The model has the following form:</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                        A Side-Fed Single Diamond Loop
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : mm)  Conn. --- End 2 (x,y,z : mm)   Dia(mm) Segs
+1     W3E1   0.000,-318.07,  0.000  W2E1   0.000,-159.03,111.478 4.00E+00  15
+2     W1E2   0.000,-159.03,111.478  W5E2   0.000,  0.000,  4.000 4.00E+00  15
+3     W1E1   0.000,-318.07,  0.000  W4E1   0.000,-159.03,-111.48 4.00E+00  15
+4     W3E2   0.000,-159.03,-111.48  W5E1   0.000,  0.000, -4.000 4.00E+00  15
+5     W4E2   0.000,  0.000, -4.000  W2E2   0.000,  0.000,  4.000 4.00E+00   1
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     5 / 50.00   (  5 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Many antenna workers are familiar with the E-plane pattern of the single loop, which resembles the E-plane pattern of a dipole, but without the ultimate front-to-side ratio of a dipole in free space. However, the H-plane pattern of the side-fed 1 wavelength loop is less familiar. As <b>Fig. 4</b> shows, it is an oval.</p>
+  <center>
+    <img src="ddq-4.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Once we look back to the dipole's H-plane pattern, the oval becomes quite logical. The free-space gain of the single resonant side-fed diamond loop, again using 4-mm diameter material at 432 MHz, is about 4.1 dBi according to NEC-2 and about 3.7 dBi according to NEC-4, with a half-power beamwidth of about 105 degrees. The feedpoint impedance is 80-85 Ohms. Using the more conservative and more accurate NEC-4 value, a (vertically polarized) quad loop has only about 1.6 dB more gain than the vertical dipole.</p>
+  <p>We must note that as one reaches the UHF range, NEC-2 and NEC-4 begin to diverge in their results. For antennas with only linear elements, the divergence is often minuscule, especially for simple antennas, such as a 3- to 4-element Yagi. However, as the antenna geometry grows more complex, the divergence becomes significant, as in the case of a quad loop, with its enclosed form and 4 90-degree corners. The greater the number of elements and the more complex the geometry, the greater the divergence between the older core and NEC-4.1.</p>
+  <p>The models in this sequence were developed to a great extent using the variables-and-equations features of NEC-Win Plus. However, all have been cross checked on GNEC and EZNEC-4. The improved algorithms of the NEC-4.1 core have in all tests performed by the software developers proven more accurate than then those of NEC-2. However, I make no presumption that they are perfect. That is why we are looking at trends rather than placing our bets solely on individual performance numbers.</p>
+  <center>
+    <img src="ddq-5.gif" width="583" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows that the single diamond loop is--using a 4-mm diameter--a potentially wide-band antenna. The SWR curve is partly a function of the large element diameter when measured as a fraction of a wavelength.</p>
+  <p>Now we are ready to grow into the double-diamond quad array. However, before we jump into making two diamonds with identical vertical and horizontal corner-to-corner measurements per loop, let's pause for a practicality. We want a 50-Ohm feedpoint, if for no other reason than tradition. (Of course, cable makers will happily have you pay full price for 50-Ohm hardline rather than have you scrounge up usable sections of 75-Ohm hardline from the cable-TV company left-overs.)</p>
+  <p>A square-loop version of the double-diamond will have an impedance in the 80-Ohm range when resonant. To lower that impedance to 50 Ohms requires that we squish the squares so that the horizontal dimension of each loop is longer than the vertical dimension by roughly a 1.43:1 ratio. However, this should be no problem, because as N2DT has shown for the rectangle and SM4CAN has shown for the bobtail, squishing in this direction yields a bit of extra gain in addition to setting the resonant feedpoint impedance at a lower value.</p>
+  <p>As the following table of model dimensions shows, we feed the diamond pair with a short wire across the gap that we purposely make for just that function.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            A Double-Diamond (Twin-Quad) Antenna with 4-mm Elements
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : mm)  Conn. --- End 2 (x,y,z : mm)   Dia(mm) Segs
+1     W5E1   0.000,-318.07,  0.000  W2E1   0.000,-159.03,111.478 4.00E+00  15
+2     W1E2   0.000,-159.03,111.478  W3E1   0.000,  0.000,  4.000 4.00E+00  15
+3     W9E2   0.000,  0.000,  4.000  W4E1   0.000,159.033,111.478 4.00E+00  15
+4     W3E2   0.000,159.033,111.478  W8E2   0.000,318.066,  0.000 4.00E+00  15
+5     W1E1   0.000,-318.07,  0.000  W6E1   0.000,-159.03,-111.48 4.00E+00  15
+6     W5E2   0.000,-159.03,-111.48  W7E1   0.000,  0.000, -4.000 4.00E+00  15
+7     W9E1   0.000,  0.000, -4.000  W8E1   0.000,159.033,-111.48 4.00E+00  15
+8     W7E2   0.000,159.033,-111.48  W4E2   0.000,318.066,  0.000 4.00E+00  15
+9     W6E2   0.000,  0.000, -4.000  W2E2   0.000,  0.000,  4.000 4.00E+00   1
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     9 / 50.00   (  9 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The H-plane pattern of the double-diamond is an extension of the single-loop pattern, as shown in <b>Fig. 6</b>. The front-to-side ratio increases, the beamwidth decreases, and the maximum gain increases.</p>
+  <center>
+    <img src="ddq-6.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The impedance of the double-diamond is a function of the length-to-height ratio of each loop. As noted, a ratio of about 1.43:1 is close to optimal for 4-mm elements. At 432 MHz, the impedance of the basic model is just over 50 Ohm resistive with negligible reactance. However, if we increase the diameter of the element material, the ratio changes. Because a closed loop increases in circumference with increases in element diameter, the dimensions will both increase, as shown by the following dimensional table for 6.35-mm (1/4") diameter elements.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+           A Double-Diamond (Twin-Quad) Antenna with 0.25" Elements
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : mm)  Conn. --- End 2 (x,y,z : mm)   Dia(mm) Segs
+1     W5E1   0.000,-322.89,  0.000  W2E1   0.000,-161.45,114.924 6.35E+00  15
+2     W1E2   0.000,-161.45,114.924  W3E1   0.000,  0.000,  4.000 6.35E+00  15
+3     W9E2   0.000,  0.000,  4.000  W4E1   0.000,161.445,114.924 6.35E+00  15
+4     W3E2   0.000,161.445,114.924  W8E2   0.000,322.890,  0.000 6.35E+00  15
+5     W1E1   0.000,-322.89,  0.000  W6E1   0.000,-161.45,-114.92 6.35E+00  15
+6     W5E2   0.000,-161.45,-114.92  W7E1   0.000,  0.000, -4.000 6.35E+00  15
+7     W9E1   0.000,  0.000, -4.000  W8E1   0.000,161.445,-114.92 6.35E+00  15
+8     W7E2   0.000,161.445,-114.92  W4E2   0.000,322.890,  0.000 6.35E+00  15
+9     W6E2   0.000,  0.000, -4.000  W2E2   0.000,  0.000,  4.000 6.35E+00   1
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     9 / 50.00   (  9 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>However, the ratio of length to height of each loop has decreased to about 1.40:1 to achieve a 50-Ohm resistive resonant impedance. From this point forward, we shall use our 1/4" (6.35-mm) elements for further models. The 420-450-MHz 50-Ohm SWR plot in <b>Fig. 7</b> shows that the double-diamond is--like the single side-fed loop--a wide-band antenna.</p>
+  <center>
+    <img src="ddq-7.gif" width="583" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Over the entire 420-450-MHz band, the performance of the double-diamond remains quite stable, with only about a 0.2 dB change in maximum free-space gain from one end of the band to the other. The following table also shows that the half-power beamwidth is also quite stable, varying only about 2-3 degrees across the band.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  Double-Diamond (0.25" Elements) Performance
+NEC-2
+Freq.       Gain        Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         degrees     R+/-jX Ohms       SWR
+420         6.22        56.0        44.1-j19.0        1.52
+430         6.29        56.0        48.3-j 6.6        1.15
+440         6.36        54.0        53.1+j 1.1        1.14
+450         6.44        54.0        58.7+j18.9        1.47
+NEC-4
+Freq.       Gain        Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         degrees     R+/-jX Ohms       SWR
+420         5.41        55.0        52.7-j25.9        1.65
+430         5.48        54.0        57.5-j10.9        1.28
+440         5.55        53.0        63.1+j 4.3        1.28
+450         5.63        52.0        69.7+j19.9        1.60
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Even though the specific values between the NEC-2 and NEC-4 models are not coincident, the trends displayed by the figures do coincide. The free-space gain of the double-diamond is about 5.5 dBi. This is a net gain of 1.8 dBi for the doubling of the loops. Note that when we went from a dipole to a single loop, we acquire 1.5 dB of added gain, short of the 2.1 dB theoretically possible. Likewise, when we doubled the loops, we fell considerable short of the 3-dB advantage that theory might tell us is possible. When using real materials, such as aluminum, and shapes that are optimized for some parameter other than gain (in this case, feedpoint impedance), we rarely come close to theoretical maximums.</p>
+  <p>Nonetheless, the potential performance of the double-diamond is similar to that of a bobtail curtain or a double rectangle. As such, especially for a vertically polarized antenna from which we desire something narrower than the beamwidth provided by the Yagi laid on edge, the SCV class of double loops offers significant performance. 5.5 dBi free-space gain with a 54-degree beamwidth provides not only a directional pattern, but as well freedom from some ghosting effects that infect vertically oriented small Yagis with beamwidths in excess of 80 or 90 degrees.</p>
+  <p><b>Double-Diamond Quad Arrays</b></p>
+  <p>The potential use of the double diamond quad in arrays is as unlimited as the use of linear elements. Therefore, we shall look at only a couple of variations: the 2-element parasitic double-diamond quad beam and the use of a double-diamond with a flat reflector.</p>
+  <center>
+    <img src="ddq-8.gif" width="419" height="211" border="2" vspace="5" hspace="9">
+  </center>
+  <p>From the 1/4" material, I modeled a 2-element parasitic array consisting of a driver and a reflector, as outlined in <b>Fig. 8</b>. Like standard quads, the reflector of a double-diamond quad must be further to the rear of a driven element than for a Yagi with linear elements. The final spacing was about 0.22 wavelength.</p>
+  <p>There was also a limiting factor with respect to the elements. Using the Belgian array as a guide, I placed imaginary supports between the two elements at the horizontal limits of the antenna elements. This decision dictated that the two elements have the same horizontal dimension and differ only in the maximum height of the two loops. As well, the array is designed for a direct 50-Ohm feed, which further restricts the range of heights and the ratios of length-to-height. The maximum element lengths horizontally are 0.51 wavelength. The driver height is about 0.228 wavelength, while the maximum reflector height is 0.27 wavelength. These dimensions presume a 5/8" (about 8 mm) gap between the joined loops for the coax feedpoint. The following dimensional model table shows the final model developed for this exercise.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  A 2-Element Parasitic Double-Diamond Array
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : mm)  Conn. --- End 2 (x,y,z : mm)   Dia(mm) Segs
+1     W5E1 351.492,153.347,  0.000  W2E1 175.746,153.347, 78.397 6.35E+00  15
+2     W1E2 175.746,153.347, 78.397  W3E1   0.000,153.347,  4.000 6.35E+00  15
+3     W9E2   0.000,153.347,  4.000  W4E1 -175.75,153.347, 78.397 6.35E+00  15
+4     W3E2 -175.75,153.347, 78.397  W8E2 -351.49,153.347,  0.000 6.35E+00  15
+5     W1E1 351.492,153.347,  0.000  W6E1 175.746,153.347,-78.397 6.35E+00  15
+6     W5E2 175.746,153.347,-78.397  W7E1   0.000,153.347, -4.000 6.35E+00  15
+7     W9E1   0.000,153.347, -4.000  W8E1 -175.75,153.347,-78.397 6.35E+00  15
+8     W7E2 -175.75,153.347,-78.397  W4E2 -351.49,153.347,  0.000 6.35E+00  15
+9     W6E2   0.000,153.347, -4.000  W2E2   0.000,153.347,  4.000 6.35E+00   1
+10   W14E1 351.492,  0.000,  0.000 W11E1 175.746,  0.000, 93.042 6.35E+00  15
+11   W10E2 175.746,  0.000, 93.042 W12E1   0.000,  0.000,  4.000 6.35E+00  15
+12   W18E2   0.000,  0.000,  4.000 W13E1 -175.75,  0.000, 93.042 6.35E+00  15
+13   W12E2 -175.75,  0.000, 93.042 W17E2 -351.49,  0.000,  0.000 6.35E+00  15
+14   W10E1 351.492,  0.000,  0.000 W15E1 175.746,  0.000,-93.042 6.35E+00  15
+15   W14E2 175.746,  0.000,-93.042 W16E1   0.000,  0.000, -4.000 6.35E+00  15
+16   W18E1   0.000,  0.000, -4.000 W17E1 -175.75,  0.000,-93.042 6.35E+00  15
+17   W16E2 -175.75,  0.000,-93.042 W13E2 -351.49,  0.000,  0.000 6.35E+00  15
+18   W15E2   0.000,  0.000, -4.000 W11E2   0.000,  0.000,  4.000 6.35E+00   1
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     9 / 50.00   (  9 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>At 432 MHz, the array shows a free-space gain of 8.7 dBi, a gain of 3.2 dB over the bi-directional double-diamond alone (NEC-4 results). The front-to-back ratio is below 20 dB at mid-band but approaches 20 dB at 440 MHz. <b>Fig. 9</b> shows the mid-band H-plane pattern (the modeling azimuth pattern) for the array.</p>
+  <center>
+    <img src="ddq-9.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following table of values taken across the full 420-450 MHz band shows that the performance peaks at mid-band and falls off toward the band edges. Maximum gain occurs about 5 MHz below the maximum front-to-back frequency, a common phenomenon with any 2-element quad array. The performance curve is not unlike that of a 4-element Yagi designed to cover the entire 420-450 MHz band.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  Double-Diamond Parasitic Array Performance
+NEC-2
+Freq.       Gain        Front-Back  Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          degrees     R+/-jX Ohms       SWR
+420         9.70         9.33       48.0        33.8-j11.4        1.61
+430         9.61        16.91       50.0        49.7-j 8.0        1.17
+440         9.24        18.08       50.0        53.8-j10.8        1.25
+450         8.81        11.99       48.0        50.7-j 7.0        1.15
+NEC-4
+Freq.       Gain        Front-Back  Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          degrees     R+/-jX Ohms       SWR
+420         8.75         8.05       47.5        37.4-j19.0        1.68
+430         8.77        14.70       47.2        58.2-j10.6        1.28
+440         8.44        19.88       47.8        67.0-j14.3        1.47
+450         8.01        13.17       47.7        64.0-j11.8        1.38
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="ddq-10.gif" width="583" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 10</b> provides the 50-Ohm SWR curve for the array. SWR reaches about 1.7:1 at the low end of the band, but from 425 MHz upward, it levels off in the 1.28:1 to 1.50:1 range. Like most quad beams, the SWR operating curve is much flatter than the performance (gain and front-to-back ratio) curves.</p>
+  <p>For a wider and more stable set of performance curves, the double diamond benefits from the use of a simple flat reflector. <b>Fig. 11</b> shows the general scheme, using a modeled wire grid screen behind a single double-diamond array.</p>
+  <center>
+    <img src="ddq-11.gif" width="336" height="442" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The double diamond does not benefit from a corner array, because each virtual vertical element is a different distance from the reflector. However, we shall return the corner reflectors before we complete these preliminary notes. With simple dipole feed systems, flat and corner arrays can use a system of bars for simplified modeling. Extensive modeling tests have shown that an adequate system of bars and a wire-grid screen yield results too close to each other to make a difference. However, with a double-diamond, one MUST use a screen for adequate results, even if the result for a modest wire grid is over 1100 segments. The reason that we require a wire-grid screen relates to the shape of the double- diamond elements. Whether square or diamond, a side-fed quad element has small but significant radiation in the E-plane. With only vertical bars as the elements of a flat or corner reflector, the gain and impedance do not change relative to a full screen of the same outer dimensions. However, the front-to-back ratio will report as much as 8 dB lower than with a full screen.</p>
+  <p>Switching to inches as our unit of measure, the optimum distance between the double diamond and a flat screen reflector proved to be about 4 inches. This distance permitted revision of the double-diamond dimensions to achieve a 50-Ohm impedance.</p>
+  <p>The gain performance of a double-diamond with a flat reflector is dependent upon the overall dimensions of the reflector screen. The following table provides an indication of the degree to which gain will vary with screen size.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      432-MHz Performance of a Double-Diamond Quad with a Flat Reflector
+
+Screen width      Free-Space  Front-Back  Beamwidth   Feed Impedance    SWR
+vs. height (")    Gain dBi    Ratio dB    degrees     R +/- jX Ohms
+
+44 by 32          10.70       28.0        50.1        55.9 + j 2.0      1.13
+32 by 24          10.10       29.5        52.8        55.8 + j 2.1      1.13
+24 by 20           9.65       29.5        54.0        56.6 - j 5.3      1.17
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The front-to-back ratio and the impedance undergo only small changes relative to the high correlation between gain and screen area.</p>
+  <p>The following table of dimensions includes a small adjustment to the double-diamond horizontal and vertical dimensions to make the SWR curve favor the upper end of the band, where a vertically polarized antenna is most likely to be used. This particular model used the 4-mm (0.1575") double-diamond. The screen wires are omitted after the first few, since no one (except the modeler) needs to read another thousand lines of antenna model wires. The screen is composed of wires spaced 1" apart using 0.1" diameter wire.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+             A Double-Diamond Driver With a Flat-Screen Reflector
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+1     W5E1 -11.000,  4.000,  0.000  W2E1  -5.500,  4.000,  4.300 1.57E-01  15
+2     W1E2  -5.500,  4.000,  4.300  W3E1   0.000,  4.000,  0.157 1.57E-01  15
+3     W9E2   0.000,  4.000,  0.157  W4E1   5.500,  4.000,  4.300 1.57E-01  15
+4     W3E2   5.500,  4.000,  4.300  W8E2  11.000,  4.000,  0.000 1.57E-01  15
+5     W1E1 -11.000,  4.000,  0.000  W6E1  -5.500,  4.000, -4.300 1.57E-01  15
+6     W5E2  -5.500,  4.000, -4.300  W7E1   0.000,  4.000, -0.157 1.57E-01  15
+7     W9E1   0.000,  4.000, -0.157  W8E1   5.500,  4.000, -4.300 1.57E-01  15
+8     W7E2   5.500,  4.000, -4.300  W4E2  11.000,  4.000,  0.000 1.57E-01  15
+9     W6E2   0.000,  4.000, -0.157  W2E2   0.000,  4.000,  0.157 1.57E-01   1
+10   514E1 -12.000,  0.000,-10.000 W11E1 -11.000,  0.000,-10.000 1.00E-01   1
+11   534E1 -11.000,  0.000,-10.000 W12E1 -10.000,  0.000,-10.000 1.00E-01   1
+12   554E1 -10.000,  0.000,-10.000 W13E1  -9.000,  0.000,-10.000 1.00E-01   1
+13   574E1  -9.000,  0.000,-10.000 W14E1  -8.000,  0.000,-10.000 1.00E-01   1
+14   594E1  -8.000,  0.000,-10.000 W15E1  -7.000,  0.000,-10.000 1.00E-01   1
+. . .
+1011 441E2  12.000,  0.000,  7.000 W1012  12.000,  0.000,  8.000 1.00E-01   1
+1012 465E2  12.000,  0.000,  8.000 W1013  12.000,  0.000,  9.000 1.00E-01   1
+1013 489E2  12.000,  0.000,  9.000 513E2  12.000,  0.000, 10.000 1.00E-01   1
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     9 / 50.00   (  9 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The pattern for the antenna does not change significantly from one end of the band to the other. The H-plane pattern in <b>Fig. 12</b> is typical for every frequency across the band. In fact, there is under a 0.2 dB change in gain across the band.</p>
+  <center>
+    <img src="ddq-12.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following table of modeled values shows the flatness of performance of the array when used with the smallest of the screen sizes.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+             Double-Diamond With Small Flat Reflector Performance
+
+Freq.       Gain        Front-Back  Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          degrees     R+/-jX Ohms       SWR
+420         9.58        28.90       54.8        47.0-j33.2        1.96
+430         9.64        29.38       54.2        52.3-j16.1        1.37
+440         9.70        29.66       53.6        58.4+j 0.9        1.17
+450         9.72        29.72       53.2        65.4+j17.7        1.50
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="ddq-13.gif" width="583" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The resulting SWR curve in <b>Fig. 13</b> shows excellent coverage of the band, especially the upper end. By judiciously altering the dimensions of the single double-diamond, one can adjust the resonant position and hence the shape of the SWR curve to favor any part of the band.</p>
+  <p>To test the note at the beginning of this collection to the effect that techniques do not necessarily add up when chasing gain with an array, I modeled the parasitic double-diamond array in front of the same small (24" by 20") flat reflector. The array yielded 8.9-dBi gain with a 16.9 dB front-to-back ratio with the double-diamond reflector 4" ahead of the flat reflector, no better than the performance of the parasitic array without the screen reflector. Decreasing the distance from the flat reflector slowly increased gain, but at the cost of the front-to-back ratio. Increasing the spacing of the two reflectors raised the front-to-back ratio to over 24 dB at a distance of 12". However, the gain fell to below 8.6 dB. The doubling of reflectors does not necessarily improve performance. The fact that the feedpoint impedance did not significantly change during this exercise suggests that the closely coupled parasitic double-diamond reflector remained the dominant influence on the pattern shape of the array.</p>
+  <p>Equally, a phased array will also fail to benefit from the flat reflector if it already has significant gain and front-to-back ratio. Indeed, direct phasing and parasitic phasing are simply electrical and geometric means to the same end: the establishment of the proper relative current magnitude and phase on the two elements to increase forward gain and to decrease rearward gain.</p>
+  <p><b>A Neglected Alternative</b></p>
+  <p>The outcome of the modeling exercise with respect to the double-diamond quad loop is twofold. First, in carefully constructed models, the antenna behaves just as one might expect a double loop element to behave. Second, among directional array possibilities, the use of a single double diamond loop ahead of a flat reflector of significant size is perhaps the most efficient route to a broadband array with good gain, excellent front-to-back ratio, narrow beamwidth, and a very wide SWR curve. Indeed, a flat reflector provides (among alternatives checked) the widest and most stable set of performance characteristics.</p>
+  <p>Nonetheless, there is no magic in the double-diamond loop array. It does not provide the most gain that we may obtain from an array of its size (assuming a flat reflector). Nor is it the simplest to construct, given the many bending angles required to fabricate the double-diamond shape with the proper length to height ratio. By comparison, trimming a fat dipole (say, about 0.5" in diameter) is far simpler.</p>
+  <p>Enter the corner array, outlined with a bar reflector in <b>Fig. 14</b>.</p>
+  <center>
+    <img src="ddq-14.gif" width="318" height="423" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Like the double diamond arrays, the corner array shows a gain that is (almost) directly proportional to the size of the reflector. (The performance shows periodic variations as one systematically increases the reflector size.) A reflector with an aperture width of 44" and a height of 32" (the same as the largest flat reflector) has the potential for a free-space gain of about 11.25 dBi, with a 26.9 dB front-to-back ratio and a 51.5-Ohm feedpoint impedance. If we reduce the aperture to 32" with a 24" height and a 16" depth, we obtain performance very similar to that of the smallest flat-screen reflector with the double diamond: 9.74 dBi gain, 36.9 dB front-to-back ratio, and a 50.3-Ohm impedance at 432-MHz. The table below gives the various dimensions for the single dipole and the bar reflectors in this smaller array.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  A Small Corner Reflector and Dipole Driver
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+1            0.000,  8.500, -5.500         0.000,  8.500,  5.500 5.00E-01  11
+2            0.000,  0.000,-12.000         0.000,  0.000, 12.000 3.75E-01  25
+3            2.000,  2.000,-12.000         2.000,  2.000, 12.000 3.75E-01  25
+4            4.000,  4.000,-12.000         4.000,  4.000, 12.000 3.75E-01  25
+5            6.000,  6.000,-12.000         6.000,  6.000, 12.000 3.75E-01  25
+6            8.000,  8.000,-12.000         8.000,  8.000, 12.000 3.75E-01  25
+7           10.000, 10.000,-12.000        10.000, 10.000, 12.000 3.75E-01  25
+8           12.000, 12.000,-12.000        12.000, 12.000, 12.000 3.75E-01  25
+9           14.000, 14.000,-12.000        14.000, 14.000, 12.000 3.75E-01  25
+10          16.000, 16.000,-12.000        16.000, 16.000, 12.000 3.75E-01  25
+11          -2.000,  2.000,-12.000        -2.000,  2.000, 12.000 3.75E-01  25
+12          -4.000,  4.000,-12.000        -4.000,  4.000, 12.000 3.75E-01  25
+13          -6.000,  6.000,-12.000        -6.000,  6.000, 12.000 3.75E-01  25
+14          -8.000,  8.000,-12.000        -8.000,  8.000, 12.000 3.75E-01  25
+15         -10.000, 10.000,-12.000       -10.000, 10.000, 12.000 3.75E-01  25
+16         -12.000, 12.000,-12.000       -12.000, 12.000, 12.000 3.75E-01  25
+17         -14.000, 14.000,-12.000       -14.000, 14.000, 12.000 3.75E-01  25
+18         -16.000, 16.000,-12.000       -16.000, 16.000, 12.000 3.75E-01  25
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           6     1 / 50.00   (  1 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The high front-to-back ratio promises interesting H-plane patterns, and <b>Fig. 15</b> confirms the promise.</p>
+  <center>
+    <img src="ddq-15.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Like the double-diamond, the corner reflector array offers full coverage of the band, as evidenced by the curve in <b>Fig. 16</b>.</p>
+  <center>
+    <img src="ddq-16.gif" width="583" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Equally, like the double-diamond array, the performance characteristics promise to be very consistent across the entire 420-450-MHz spectrum. The follow tables provides samples.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                      Small Corner Reflector Performance
+
+Freq.       Gain        Front-Back  Beamwidth   Feed Impedance    50-Ohm
+MHz         dBi         dB          degrees     R+/-jX Ohms       SWR
+420         9.63        35.61       60.0        41.8-j14.9        1.45
+430         9.72        35.90       59.0        48.8-j 1.8        1.05
+440         9.81        36.38       58.0        56.6+j11.1        1.27
+450         9.90        37.05       57.1        65.4+j23.7        1.63
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Essentially, then, the corner reflector offers similar performance with slightly more screening material and much less complexity in the driven element. By using a considerably larger corner screen, we can obtain a lot more gain and even greater bandwidth. With the dipole moved to a position yielding about a 100-Ohm impedance, and using the largest of the screen noted, we can obtain usable performance with a 2:1 100-Ohm SWR for almost the entire range from 400 to 500 MHz. With a bow-tie-shaped driver, we can spread the usable bandwidth still wider, all with excellent gain and superlative front-to-back characteristics.</p>
+  <p><b>Conclusion</b></p>
+  <p>Even though this preliminary investigation is only a modeling study, it may have yielded some useful results. Some of those results had to do with the cautions necessary when modeling and the limitations of the available modeling programs. However, in the main, the trends do indicate something useful about the double-diamond or twin-quad loop antenna in the UHF region.</p>
+  <p>The double-diamond twin-quad array has excellent potential as a UHF wide-band array with reasonably good characteristics when used with a flat screen reflector. However, it is far from the ultimate in gain, in front-to-back, in SWR bandwidth, or performance bandwidth. The venerable corner reflector provides strong competition with a much simpler driver assembly, although a bit larger reflector assembly.</p>
+  <p>We must always make sure that we do not over-estimate a "hot" antenna design, merely because it is in fashion. The double-diamond does well enough without exaggeration of its properties. We may be able to squeeze a bit more out of the double-diamond in some array configuration or another, but I doubt that it will be much more.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 12-1-2001, 11-12-2002. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for December, 2001. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

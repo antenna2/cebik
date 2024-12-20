@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AM BC Modeling with NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>AM BC Modeling with NEC<br>
+    1. Basic Considerations</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>Over the past few years, the National Association of Broadcasters (NAB) has been studying the possibility of using antenna modeling software for some of its submission to the Federal Communication Commission (FCC). The details of these discussions properly belong to the broadcasters, the consulting engineers, and the representatives of the Commission. These notes do not in any way constitute a commentary on the overall merits of the proposals.
+  <p>Instead, these notes have a much smaller mission. The program used by many consulting broadcast engineers is a proprietary version of MININEC. To the date of writing--likely long ago in terms of the time of publication--the use of NEC cores (either -2 or -4) has not received full attention. One seeming drawback to the use of NEC has been the absence of a ground calculating system equivalent to the MININEC ground calculating system. The latter system allows effective modeling--within limits--for ground-mounted monopoles without the need for modeling a full set of buried radials. A second limitation perceived to surround NEC is the absence of RMS inputs and outputs. A third note often made is that NEC typically calculates azimuth angles in terms of phi- or counter-clockwise-conventions rather than in terms of the compass rose azimuth headings that correspond to typical maps used in FCC submissions. The list goes on, but is perhaps not very convincing, since most of the items require relatively simple pre-core and post-core calculations.</p>
+  <p>These notes will address some of the fundamental modeling steps needed to obtain from NEC (either -2 or -4) essentially the same outputs that might be obtained with any other modeling program. My object lies only in the steps required to obtain the outputs and their correlation with appropriate MININEC outputs. Where correlations are required, I shall use Antenna Model, a highly corrected version of MININEC 3.13--indeed so much corrected that its results are comparable to NEC-4 results well into the UHF region. However, like all forms of MININEC, Antenna Model has no limitations with respect to junctions of wires have different diameters. For such instances, NEC has well-proven work-arounds.</p>
+  <p>These notes will use standard ASCII input files for NEC. GNEC by NSI is handy in this regard, since it makes both the NEC-2 and NEC-4 cores available to explore differences (things have changed since writing this. Be aware that NSI software is incompatible with Windows OSes beyond Win2K and <i>may</i> run/have issues with XP and not known to run on Vista at all - no upgrades in sight at this time). As well, the program makes use of peak values of voltage and current and so will alert us to when we need to make certain external calculations. Some implementations of NEC, such as EZNEC, already employ RMS values of voltage and current as user inputs and as tabular outputs. Such implementations save the routine calculation steps. However, by using the more rudimentary I/O facilities, we may better understand what the core does and what we must do in conjunction with the NEC cores.</p>
+  <p><b>Setting Up the Most Basic Model</b></p>
+  <p>The models used in preparing these notes all use 1 MHz as the working frequency. As well, the material used will be lossless or perfect wire. Initially, we shall use perfect ground, although we shall examine other options along the way to master their use. The models will also use only single monopoles to make clear the NEC-modeling steps that we must take.</p>
+  <p>The first step is to model a monopole with a uniform diameter or radius over perfect ground. Consulting engineers have recommended that we may substitute for the typical triangular and square towers found in the industry a single wire with certain dimensions. We shall begin with a triangular tower having a face width of 2' (24").</p>
+  <pre>
+Recommended Substitute Single-Wire Dimensions for Multi-Face Towers
+Tower Type      Diameter                  Radius
+Triangular      D = 0.74 * Face Width     R = 0.37 * Face Width
+Square          D = 1.12 * Face Width     R = 0.56 * Face Width
+
+Note:  D and R are in the same units as the Face Width
+</pre>
+  <p>Perhaps the simplest model that we might construct in NEC has the following input file.</p>
+  <pre>
+CM resonant monopole, perfect ground
+CE
+GW 1 41 0 0 234 0 0 0 0.74
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 1.0
+NT 30901 1 1 41 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 1 361 1000 90 0 1 1
+EN
+</pre>
+  <p>The model requests a simple far-field radiation pattern (RP0) that is an azimuth pattern at zero degrees elevation (90 degrees theta), which is allowable with a perfect ground. The first wire entry (GW1) lists the wire, specified in terms of feet. The last entry in the GW line is the radius, which meets the recommended calculation. The 234' vertical dimension is just long enough to achieve resonance with perfect ground at the design frequency.</p>
+  <p>The model has an additional feature. It employs the standard NEC method of implementing a current source at the lowest of the 41 segments in the monopole, the one that makes contact with ground. The technique requires a remote substitute source wire, specified in GNEC as tag 30901 to keep it invisible in the antenna viewing system. In fact, if the user constructs the current source within NEC-Win Plus, the wire will remain invisible to the user, as it does in the EZNEC implementation of current sources. The wire's remoteness and small size prevent the substitute source wire from having any impact whatsoever on the current and radiation calculations for the monopole itself. The method also requires the setting of a network (NT command) between the remote wire and the monopole base segment. Since the NT "connection" has no physical or geometric dimension in the model, the remote wire is wholly acceptable. The NT command creates a 90-degree phase shift in the applied voltage and results in a current of the same magnitude appearing at the monopole base segment. For the first model, the source command (EX) specifies the remote wire as the source location and advances the phase of the applied voltage by 90 degrees. Hence, the last 2 entries in the EX line are the reverse of what we would find in a standard voltage-source situation. The real voltage is 0.0 and the imaginary voltage is 1.0. In standard versions of NEC, these are peak values.</p>
+  <p>Our first concern is the reported source impedance of the monopole. The following GNEC tabular output gives us the NEC-4 report.</p>
+  <pre>
+Input Impedance and VSWR
+
+Frequency      Tag  Seg. Real(Z)   Imag(Z)   Mag(Z)    Phase(Z)
+-----------------------------------------------------------------
+1.000000        1    41  36.020    0.307     36.021    0.488
+</pre>
+  <p>If we construct the identical 234', 1.48' diameter, 41-segment perfect-ground model in MININEC, we shall find one major difference. The source location will be exactly at the junction of the lowest segment and ground. MININEC places sources and loads at pulses, which occur at segment junctions or on the last segment of a modeled wire. In contrast, NEC places sources, loads, transmission lines, and networks on a segment, conveniently but somewhat misleadingly said to be at the center of the segment. The MININEC current pulse extends from the center of a segment to the center of the adjacent segment. The NEC current extends from one segment junction to the next. (However, for the purpose of wire intersection, we may usually take the current to be most sensitive to impinging influences within the center third of a segment. Hence, intersecting wires should have radii that avoid penetration into this region.)</p>
+  <p>Despite the differences in the source position, the MININEC model yields a source impedance of 35.96 - 0.10 Ohms. The difference between this value and the NEC-4 value is less than the differences we are likely to see within one program moved between computers with different CPU architectures. One reason for the close correlation between source impedance values is the use of adequate segmentation in the NEC model. For a NEC model to most closely approximate the impedance at the junction with ground, the segments should be as numerous as the wire radius allows. The segments in the NEC model are about 5.7' long, which yields a segment-length-to-radius ratio of about 7.7:1.</p>
+  <p>The second concern is the current magnitude and phase on the monopole's lowest segment--its feedpoint. In the listed model, this is segment 41. NEC reports the following conditions.</p>
+  <pre>
+FREQUENCY     SEG.  TAG    COORD. OF SEG. CENTER     SEG.             - - - CURRENT (AMPS) - - -
+  (MHz)       NO.   NO.     X        Y        Z      LENGTH      REAL         IMAG.        MAG.        PHASE
+
+1.000000        41    1   0.0000   0.0000   0.0029  0.00580    1.0000E+00  -7.5894E-19   1.0000E+00    0.000
+</pre>
+  <p>In conjunction with the current value, we also need to examine the power budget.</p>
+  <pre>
+ - - - POWER BUDGET - - -
+
+INPUT POWER    = 1.8010E+01 WATTS
+RADIATED POWER = 1.8010E+01 WATTS
+WIRE LOSS      = 0.0000E+00 WATTS
+EFFICIENCY     = 100.00 PERCENT
+</pre>
+  <p>With a current magnitude of 1.0 (phase angle 0.0 degrees), the power supplied to the antenna (with 100% efficiency in this simplified case) is 18.01 Watts. However, most modelers would be interested in the current with some prescribed power level at the antenna source. Let's suppose that the power level is 1000 Watts. The ratio between the desired power level and the reported power level is 55.52. To adjust the source current, we need to take the square root of this ratio, or 7.45. The new value for the source current is simply the initial value times this value, an easy calculation, since the initial value was 1.0. Therefore, we may modify the starting model to arrive at the next one.</p>
+  <pre>
+CM resonant monopole, perfect ground
+CM adjusted source current for 1000 watts power
+CE
+GW 1 41 0 0 234 0 0 0 0.74
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 7.4515
+NT 30901 1 1 41 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 1 361 1000 90 0 1 1
+EN
+</pre>
+  <p>The only change occurs in the EX line, where we replace the imaginary current value for this current-source model. The power budget reflects the change.</p>
+  <pre>
+- - - POWER BUDGET - - -
+
+INPUT POWER    = 1.0000E+03 WATTS
+RADIATED POWER = 1.0000E+03 WATTS
+WIRE LOSS      = 0.0000E+00 WATTS
+EFFICIENCY     = 100.00 PERCENT
+</pre>
+  <p>The power level is now 1000 watts, and the corresponding current on segment 41 appears in the current table.</p>
+  <pre>
+FREQUENCY     SEG.  TAG    COORD. OF SEG. CENTER     SEG.             - - - CURRENT (AMPS) - - -
+  (MHz)       NO.   NO.     X        Y        Z      LENGTH      REAL         IMAG.        MAG.        PHASE
+
+1.000000        41    1   0.0000   0.0000   0.0029  0.00580    7.4515E+00  -3.4694E-18   7.4515E+00    0.000
+</pre>
+  <p>The reported current is 7.4515 Amps, as we would expect, except that this is a peak value for the current. To arrive at an RMS value, we must divide the reported value by the square root of 2 (or multiply by 0.7071). We thus obtain an RMS feedpoint-segment current of 5.269 Amps. From the current and the source impedance, we can easily calculate the source voltage at 189.8 Volts (RMS) at 0.48 degrees phase angle. (EZNEC allows a user-selected power level among its options and provides both input and output values in RMS, thus saving the need for these hand calculations, even though the arithmetic is very simple.)</p>
+  <p><b>Field Strength</b></p>
+  <p>Using NEC for single-monopole analysis normally does not require much attention to the circular azimuth pattern or even the double-hump elevation pattern. Interest in those patterns becomes more intense with the use of multiple towers with phased feed systems. That exercise lies in our future, but at the moment, we shall remain with our single tower at 234' and a design frequency of 1 MHz.</p>
+  <p>The central interest becomes the electrical field-strength initially over perfect ground. To obtain the field strength output, we need add only 1 line to our model (retaining the adjustment to the EX line that set the power level). The revised model below has a familiar look.</p>
+  <pre>
+CM resonant monopole, perfect ground
+CM field-strength
+CE
+GW 1 41 0 0 234 0 0 0 0.74
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 7.4515
+NT 30901 1 1 41 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 1 361 1000 90 0 1 1
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>I have left the RP0 line in the model to allow comparison with the less-used RP1 output line. For a single frequency, both lines will yield outputs with only one FR line. However, if using a frequency sweep, repeat the FR line before the second radiation pattern request or the second RP line will show an output only for the highest frequency in the sweep loop.</p>
+  <p>The RP1 request changes some of the meanings of entries relative to the more regularly used RP0 command. The last entry specifies a distance in meters from the coordinate system in the X-Y plane and presumably from the antenna. The number in the last entry is 1 mile, expressed, as all control command distances and dimensions must be specified, in meters. The theta (or elevation) angle changes meaning and becomes the height of the observation, again in meters. We may get a better sense of the entries by viewing the GNEC help screen for RP1 commands in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod131-1.gif" border="2" height="515" hspace="9" vspace="5" width="593">
+  </center>
+  <p>The command entries allow us to specify a start and a stop height, along with the number of steps. The program will perform the division to arrive at the value for the increment between steps. For the basic sample, I have set the height at 0 meters above Z=0, which is the value used automatically by MININEC post-core calculations of field-strength. Unlike a MININEC calculation, NEC calculates both surface and space waves to wind up with a field-strength calculation, although the two will be coincident over perfect ground. Note finally the simplification of the ground-wave request to a single azimuth bearing. We might select periodic azimuth positions for a phased array with directional properties, where the positions correspond to bearings on which we would take physical measurements.</p>
+  <pre>
+                        - - - RADIATED FIELDS NEAR GROUND - - -
+
+   - - - LOCATION - - -          - - E(THETA) - -        - - E(PHI) - -        - - E(RADIAL) - -
+  RHO      PHI         Z            MAG      PHASE         MAG      PHASE         MAG      PHASE
+METERS   DEGREES    METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES
+
+1609.34     0.00       0.00     2.7520E-01   134.12    4.6094E-22  -108.70    0.0000E+00     0.00
+</pre>
+  <p>The field strength calculations are part of the final section of the NEC output report. From the entries for E(theta) and E(phi), we can recognize the vertical component of the field by its much higher value--as we would expect from a vertical monopole. In fact, as values drop below E-9 to E-10, the numerical value becomes unreliable. For example, had we used an azimuth specification of 0 to 360 degrees, the E(phi) values for zero and for 360 degrees might have differed, except for one property: both would be too small to be significant.</p>
+  <p>The E(theta) value is the field strength, but like all NEC output reports for voltage or current, the value is in peak Volts/meter. Applying the 0.7071 correction, we obtain 0.1956 V/m or (more commonly) 195.6 mV/m.</p>
+  <p>Suppose that we wish to obtain an approximation of the field strength over a soil quality other than perfect. For this task, we must revise the ground parameters in the model. Since we do not wish to model the buried radials, we must invoke the reflection coefficient approximation (RCA) system for ground calculations. The steps that we would take vary between NEC-2 and NEC-4. Let's begin with the NEC-4 procedure.</p>
+  <pre>
+CM resonant monopole, RCA ave ground
+CM NEC-4 procedures
+CE
+GW 1 41 0 0 234 0 0 0 0.74
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 0 120 0 0 13.0000 0.0050 75 .0025
+EX 0 30901 1 0 0.0 7.4507
+NT 30901 1 1 41 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 1 361 1000 90 0 1 1
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>In NEC-4, we alter the type of ground that we wish and enter further data into the command. <b>Fig. 2</b> can help us sort out the line entries.</p>
+  <center>
+    <img src="amod131-2.gif" border="2" height="363" hspace="9" vspace="5" width="505">
+  </center>
+  <p>The upper portion of the help screen shows us the selection of the ground calculating system and the ground quality (average: conductivity = 0.005 S/m, permittivity = 13). The lower portion of the screen shows a special feature available with the RCA system, namely, the ability to specify the number of radials, their length, and the wire radius (the latter two in meters). A standard AM BC radial field uses 120 radials about 1/4 wavelength long. I have arbitrarily selected a wire radius of 2.5-mm (about 0.2" diameter) for each radial. The RCA calculating system is not as accurate as the Sommerfeld-Norton (SN) system with a set of buried radials, but the model size and run time is much smaller with the RCA specification.</p>
+  <p>With the RCA ground system and no radial system specification, the feedpoint impedance of the monopole will differ from the value with a perfect ground. As we add radials, the source impedance levels off at the same value that we obtain for a perfect ground, as the extract from the model output file shows.</p>
+  <pre>
+Input Impedance and VSWR
+
+Frequency      Tag  Seg. Real(Z)   Imag(Z)   Mag(Z)    Phase(Z)
+------------------------------------------------------------------
+1.000000        1    41  36.020    0.307     36.021    0.488
+</pre>
+  <p>The RCA radial system affects only the region beneath the antenna, but not the region beyond. Since our field-strength distance is 1 mile from the antenna, we obtain a different value than we obtained over perfect ground.</p>
+  <pre>
+                        - - - RADIATED FIELDS NEAR GROUND - - -
+
+   - - - LOCATION - - -          - - E(THETA) - -        - - E(PHI) - -        - - E(RADIAL) - -
+  RHO      PHI         Z            MAG      PHASE         MAG      PHASE         MAG      PHASE
+METERS   DEGREES    METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES
+
+1609.34     0.00       0.00     2.3839E-01    91.89    6.8932E-20   -28.12    2.4734E-02   -47.39
+</pre>
+  <p>Once again, the E(theta) reading is in peak V/m. After translation, we arrive at 168.5 mV/m at a phase angle of 91.89 degrees.</p>
+  <p>In NEC-2, we must revise the set-up procedure to obtain a field-strength report. The GN command has the same appearance as it did in the NEC-4 model. So too does the RP1 line. However, the RP0 command has suddenly turned into an RP4 command, as shown in the NEC-2 model below.</p>
+  <pre>
+CM resonant monopole, RCA ave ground
+CM NEC-2 model file
+CE
+GW 1 41 0 0 234 0 0 0 0.74
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 0 120 0 0 13.0000 0.0050 75 .0025
+EX 0 30901 1 0 0.0 7.4507
+NT 30901 1 1 41 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 4 181 1 0000 -90 90 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>NEC-2 sorted among the various output options by assigning each one a different integer. The use of a radial field without a second medium happens to be option 4. Moreover, NEC-2 does not accept theta angles of 90 degrees (elevation angles of 0 degrees) over any real ground. Therefore, for utility, I changes the pattern request to a theta (elevation) pattern, as shown in <b>Fig. 3</b>. The help screen determines the RP option number from its entries and automatically translates the line into an RP4 request.</p>
+  <center>
+    <img src="amod131-3.gif" border="2" height="515" hspace="9" vspace="5" width="593">
+  </center>
+  <p>We could have reverted to (or added) an elevation (theta) pattern request anywhere along this progression. At this stage, the elevation patterns is useful as a reminder that the far-field is negligible at an elevation angle of zero degrees, as shown in <b>Fig. 4</b>. Note the decrease in far-field gain from the perfect-ground value of about 5.2 dBi.</p>
+  <center>
+    <img src="amod131-4.gif" border="2" height="468" hspace="9" vspace="5" width="625">
+  </center>
+  <p>The NEC-2 field-strength table is very close to being identical to the NEC-4 version.</p>
+  <pre>
+                        - - - RADIATED FIELDS NEAR GROUND - - -
+
+   - - - LOCATION - - -          - - E(THETA) - -        - - E(PHI) - -        - - E(RADIAL) - -
+  RHO      PHI         Z            MAG      PHASE         MAG      PHASE         MAG      PHASE
+METERS   DEGREES    METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES
+
+1609.34     0.00       0.00     2.3753E-01    91.89    6.1979E-20   -78.41    2.4653E-02   -46.89
+</pre>
+  <p>Translated to RMS terms, the E(theta) field strength is 167.9 mV/m at 91.89 degrees. The phase angle is the same, but the estimated field strength is about a half-milliVolt less. Part of the reason for the different derives from the NEC-2 source impedance report:</p>
+  <pre>
+Input Impedance and VSWR
+
+Frequency      Tag  Seg. Real(Z)   Imag(Z)   Mag(Z)    Phase(Z)
+-----------------------------------------------------------------
+1.000000        1    41  36.028    0.339     36.029    0.538
+</pre>
+  <p>Of course, the differences between the NEC-2 and NEC-4 outputs are less than significant and possibly even less than insignificant.</p>
+  <p><b>Conclusion--So Far</b></p>
+  <p>Thus far, we have employed the standard recommended single-wire substitutions for a multi-face tower to arrive at some of the most used data in modeling AM BC towers. For clarity, we have used a resonant length for the tower model, which does not correspond to what the FCC considers to be a 90-degree tower. The simple monopole set up has allowed us to use both a perfect ground and an RCA ground with a radial screen to produce the data from the model. To this point, NEC has shown the ability to calculate as well as MININEC.</p>
+  <p>Still, we have just begun the journey into tower modeling. Suppose, for instance, that we wish to model the tower as a three-legged affair. The question for modelers who wish to be as economical as possible with their segments is whether we really need all that angular and cross bracing. NEC has both some promises and some pitfalls. In addition, we might ask whether the correlation between NEC and MININEC holds up for towers of other heights with significant reactance at the source segment. One might receive the impression that we are not close to the end of our journey.</p>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" height="40" width="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

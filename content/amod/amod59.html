@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MININEC and NEC: A Design Case Study</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>59. MININEC and NEC: A Design Case Study</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In past columns, I have occasion to suggest that, within the limitations of wire antenna modeling as a whole, one should select the program best suited to a design or analysis task. Of course, the generic choices are NEC (-2 or -4) on the one hand, and MININEC on the other. The choice of programs rests on working to the strengths of a core and away from its weaknesses.</p>
+  <p>NEC, of course, has the Sommerfeld-Norton ground, and wherever wires with a horizontal far field component must reach below the 0.2 wavelength level, NEC is the obvious selection. The MININEC ground system inflates gain values below the 0.2 wavelength level and only calculates the source impedance based on a perfect ground. Likewise, NEC is the obvious choice for antenna structures involving coaxial or other low-impedance transmission lines. The TL facility creates non-radiating (non-wire geometry) lines that do not add to the segment burden of the model. MININEC lacks this feature.</p>
+  <p>NEC-4 improves upon NEC-2 in several ways. First, it can better handle linear elements with stepped diameter schedules than can NEC-2. However, both tend to have access to the Leeson substitute constant diameter element correction feature that has proven very accurate. Still, that feature applies only to linear elements that (when horizontal) meet certain standards with respect to load and transmission-line placement.</p>
+  <p>NEC-4 also permits wires underground and is the current default standard for the simulation of buried ground radial system. NEC-4 is also more accurate at mid-VHF frequencies and upward. As well, NEC-4 has improved surface patch facilities and the ability to handle wire permeability, as well as conductivity. The core also accepts insulated sheath and upper medium inputs for greater flexibility in modeling.</p>
+  <p>In contrast, MININEC 3.13 (the public domain version) has lost many of its limitations through creative programming. While NEC-2 cores and NEC- 4 cores tend all to yield very similar results within their types, MININEC cores tend to vary in results, depending upon the correctives introduced by the programmer. At present, Antenna Model by Teri Software yields results that most closely correlate with those of NEC-4 over a range of models falling well within the capabilities of both types of programs. See column 51 of this series for a detailed comparison of MININEC programs in current use by many modelers.</p>
+  <p>Virtually all Windows implementations of MININEC have lost the DOS-based limitation of 256 segments (or double that number for programs implementing symmetry). As well, MININEC needs no correction factor for stepped-diameter elements. Indeed, the Leeson corrections were initially calibrated against MININEC modeling results. MININEC does require correction factors for very closely spaced elements, for frequencies above about 30 MHz, and for wires forming tight angles. Not all implementations are equally successful in providing such correctives.</p>
+  <p>Angular junctions of wires of different diameter form a limitation on NEC that is worse in NEC-2 than in NEC-4. See column #56 in this series for some test cases. I want to return to this type of model to present a design case study. It will reveal some temptations to think that a model is OK, when it may not be. It will also show some ways to tell the difference. Those ways may not all be inherent in the modeling process when we examine that process in isolation.</p>
+  <p><b>A "Large" Triangle Omni-Directional Antenna for 2 Meters</b></p>
+  <p>The search for a horizontally polarized omni-directional antenna has persisted over many years. The triangle came into being in the 1950s and has recently been re-developed by Par Electronics for VHF and UHF use. These triangles are of the "small" variety, and a sample version is included in the AO software package by K6STI. "Small" means that the total circumference is under 0.6 wavelengths, with a feedpoint impedance in the 8-12 Ohm range, with an inductive reactance running from 70 to 170 Ohms, depending upon the exact design. The loop is interrupted and has a gap opposite the feedpoint of about an inch.</p>
+  <p>There is also a larger version of the triangle, with a circumference of about 0.75 wavelength. It uses a larger gap--something in the 3-4" range. The benefits of the larger interrupted loop include a feedpoint resistance close to 50 Ohms, but still offset by an inductive reactance in the 350-Ohm range. The disadvantage of the larger loop is about a 0.1 dB gain deficit relative to the small loop, although one would not likely notice that deficit in operation. Both types of triangles tend to surpass the more traditional turnstiled dipole array by about a dB in gain and by achieving a much more circular pattern. Unlike a turnstile, the pattern of which quickly devolves into a distinct oval even when only a small amount off the design frequency, the triangle tends to preserve its nearly perfect omni-directional pattern over it operating bandwidth.</p>
+  <p>The design issue facing the triangle builder is supporting the antenna. Ordinarily, one would support the structure at the feedpoint, using a large diameter element for the main arms and thinner material for the legs that extend to the gap. The basic mechanical structure results in a design model that requires two angular junctions of wires having dissimilar diameters. <b>Fig. 1</b> provides the key dimensional elements of the antenna.</p>
+  <center>
+    <img src="amod59-1.gif" width="429" height="333" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The overall arm length (dimension A) for the design exercise uses 0.625" (5/8") diameter aluminum. At element diameters used, there is no performance difference among any of the alloys of aluminum. The legs will use 0.1875" (3/16") diameter rods. The model requires us to calculate on the basis of dimension B, but it is simple to move between the arm length (dimension C) and the required coordinates indicated by dimension B.</p>
+  <p>The key is to find a set of dimension, including the gap between leg tips, that yields an omni-directional pattern. Only with a tightly designed combination of arm length, leg length, and gap will the array yield a circular polar plot. This requires a balance between the radiation from the arms and the legs. Since the current and the consequential field strength are not constant along the element, a simple symmetrical arrangements, such as an equilateral triangle, will not achieve the goal. The best way to determine the exact element dimensions is by trial-and-error modeling. (Remember that we also must adjust the gap along the way to achieve a 50-Ohm resistance at the feedpoint.)</p>
+  <center>
+    <img src="amod59-2.gif" width="574" height="399" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The MININEC model of the antenna appears in <b>Fig. 2</b>. The white crosses represent pulses or segment junctions. The arm wire of the model uses and even number of segments to ensure that the source is placed at the exact center of the wire. A fuller description of the model, in AM format, appears at the end of the column.</p>
+  <center>
+    <img src="amod59-3.gif" width="479" height="397" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The NEC model is shown in <b>Fig. 3</b>. EZNEC Pro/4 is the software I used for this exercise, although any version of NEC-4 would do as well. The models are not distinguishable from the graphic views provided by the software. However, what is apparent is that when a user moves from one software package to another, he or she must become familiar with the graphic conventions used in the current software. The EZNEC antenna view is shifted laterally by 180 degrees relative to the Antenna Model view. With the axes showing, the shift is not problematical.</p>
+  <p>The key differences between the models surround the dimension required to obtain as close to a perfectly circular pattern as possible. The MININEC model in AM results in the following values--referenced to <b>Fig. 1</b>. Recall that the arms (A) use 5/8" diameter tubing and the legs (C) use 3/16" rod.</p>
+  <pre>Dimension        Length in Inches
+  A                22.8
+  B                16.2
+  C                18.9
+ Gap                3.2</pre>
+  <p>Using these dimensions, the AM model yields a feedpoint impedance of 49.5 + j357.3 Ohms. Eliminating the reactance for a 50-Ohm feedline is an exercise beyond the scope of this modeling study.</p>
+  <center>
+    <img src="amod59-4.gif" width="645" height="631" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows in polar form the free-space E-plane pattern of the resulting antenna. Maximum gain occurs approximately at a 90-degree angle to the line running from the feedpoint through the center of the gap. The antenna feedpoint is to the left, with the gap to the right, with the arms pointing straight up and down relative to the figure plane.</p>
+  <p>The maximum free-space gain is 0.72 dBi, with about a 0.2 dB maximum variation in gain around the circle. The gain to the antenna "rear," that is, behind the feedpoint, is slightly higher than the gain in the direction of the gap, although the difference is about 0.1 dB. The rectangular plot on <b>Fig. 5</b> provides a slightly greater resolution of the pattern variations.</p>
+  <center>
+    <img src="amod59-5.gif" width="606" height="496" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The pattern centerline from the feedpoint to and through the gap is centered on the X-axis. Note that as we move in either direction away from this center line by about 20 degrees, we reach a double "null" in the pattern at about 0.2 dB down from the maximum or 0-dB line. (The nulls would be more exacting with higher resolution, but -10 dB is the highest resolution permitted by the program.) The double null means that the actual maximum-gain points are not at precise right angles, but further back in the vicinity of 100 degrees off the center line. As a consequence, the radiation in the direction of the feedpoint is only about 0.1 dB down from the maximum gain.</p>
+  <p>The NEC-4 model of the same antenna, optimized as closely as possible to a perfectly circular E-plane pattern, results in the following dimensions.</p>
+  <pre>Dimension        Length in Inches
+  A                23.6
+  B                15.75
+  C                18.75
+ Gap                3.2</pre>
+  <p>The feedpoint impedance reported by NEC-4 is 53.2 + j 390.4 Ohms.</p>
+  <center>
+    <img src="amod59-6.gif" width="615" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The free-space E-plane pattern derived from EZNEC appears in <b>Fig. 6</b>. I have moved data into the polar plot field for easier reference. The data includes in tabular form much of the information that we gleaned from the AM rectangular plot. The maximum reported gain is 0.76 dBi, and the two maximum gain points lie on bearings further to the rear of the antenna, given an orientation identical to the one used with the AM model. Hence, the 0.26-dBi gain deficit in the direction of the gap is halved in the direction of the feedpoint.</p>
+  <p>There are two indicators that tell use something about which of the two models is the more accurate. First, NEC-4 improves upon the performance of NEC-2 with respect to angular junctions of wires having different diameters. The NEC-2 report on the model using NEC-4 dimensions shows a maximum gain of 0.72 dBi and a minimum gain of 0.32 dBi, a variation of 0.4 dB. Second, the reported feedpoint impedance is 57.1 + j 411.7 Ohms. If we are aware in advance of the deficit in accuracy of NEC-2 relative to NEC-4 under the modeling parameters used in this structure, and if we know as well that NEC-4 advances accuracy without attaining full precision, then we have an indication of potential problems with the NEC-4 dimensions.</p>
+  <p>The average gain test (AGT), which is available in all three programs used in this case study, provides a means of turning suspicions into a measure of model adequacy. A perfect model would yield an AGT value of 1.0 with the model in free space and using zero-loss wires. The NEC-2 model returns a value of 0.947, while the NEC-4 model shows a value of 0.977. The AM MININEC model returns a value of 0.9955.</p>
+  <p>Some charts of AGT values suggest that the range from 0.95 through 1.05 represents very adequate and accurate models, remembering that the AGT is a necessary but not a sufficient condition of model adequacy. (None of the factors that tends to produce models with high AGT values but known inadequacies occur with these models. Many of the model types that show good AGT results but remain inadequate models involve parallel wire structures with essentially self-canceling radiation or inequalities of current on each side of the source position.)</p>
+  <p>In essence, the a priori charts recording model quality by reference to AGT values would show that both the AM and NEC-4 models are fully accurate, despite the differences in their dimensions. For some purposes, the charts might be adequate, but in this instance, the precision that we have imposed on the modeling task requires that we use a higher standard. For example, using a contrast between a perfect 1.0 AGT value and a 0.95 values yields more than a 0.22 difference in the gain report, which is as great or greater than the gain variations we have discussed relative to pattern perfection.</p>
+  <p>The acid test for the models involves a different exercise, suggested by the fact that the dimensions for the triangle indicated by each program are different. Let's apply these dimensions across programs.</p>
+  <center>
+    <img src="amod59-7.gif" width="601" height="498" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> shows both the polar and the rectangular E-plane plots for the free-space model using the dimensions developed in the NEC-4 portion of the exercise. The maximum gain of 0.74 dBi is accompanied by an increase in imperfection in the plot that now is approaches 0.3 dB. As well, the maximum and minimum gain positions have now reversed, with minimum gain at right angles to the line running from the feedpoint through the triangle's gap. The reported feedpoint impedance is 50.9 + j 355.2 Ohms. Although the resistive portion of the impedance is only about 2 Ohms different from the NEC-4 report, the inductive reactance shows a 10% difference from the NEC-4 figure.</p>
+  <center>
+    <img src="amod59-8.gif" width="611" height="522" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For the sake of contrast, the NEC-4 report on the dimensions developed via MININEC appears in <b>Fig. 8</b>. The maximum reported gain is 0.98 dBi and occurs at right angles to the line from the feedpoint through the gap. Minimum gain occurs along the feedpoint-gap line and is least in the direction of the gap. The maximum variation in gain is over 0.5 dB. The reported feedpoint impedance is 51.2 + j 389.1 Ohms. Once more, the resistive component difference is about 2 Ohms. but the difference in reactance approaches 10%. However, the differences are less than those we encountered when running the NEC-4 dimensions on MININEC.</p>
+  <p>It is interesting to note that the NEC-4 model using MININEC dimension shows a greater pattern difference but a smaller feedpoint impedance difference than the MININEC model using NEC-4 dimensions. Of greater significance for the modeler are the indications offered by the dimensional changes. If the arms are too long relative to the legs, the pattern distorts along the line from feedpoint to the gap. If the legs are too long relative to the arms, the pattern distorts at roughly right angles to the line.</p>
+  <center>
+    <img src="amod59-9.gif" width="640" height="396" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although it may be a bit gratuitous, <b>Fig. 9</b> shows a 3-dimensional pattern for the triangle when we place it 1 wavelength above real ground, the height that generally corresponds to a mobile installation. Relative to a turnstiled-dipole array, the triangle exhibits higher gain within the lower elevation lobe. This gain is largely the result of a reduction in the gain of the higher-angle lobe. A stack of 2 such triangles with 1/2- wavelength spacing and fed in phase is capable of about 2.4 dB further gain with the lower one at 1 wavelength above ground.</p>
+  <p><b>What, If Anything, Does the Case Study Show?</b></p>
+  <p>The importance of the differences between using NEC-4 and corrected- MININEC for the design of the triangle may vary from insignificance to high import. The weight of the differences depends upon two major factors: the operational parameters assigned to the design effort and the degree to which manufacture can replicate the model.</p>
+  <p>If variations of as much as 1 dB in the omni-directional pattern are acceptable, then the differences in the design results make little or no difference. Either program's dimensions will yield a pattern within the assigned specification limit.</p>
+  <p>However, if the design specifications call for the least possible variation in the pattern gain, then the higher AGT score of the MININEC model (when derived from an adequately corrected version of MININEC 3.13) yields higher confidence in the dimensions produced by that model. Note, however, that the adequacy of the version of MININEC used must be established in advance.</p>
+  <p>A very tight design specification is only relevant where the construction of the actual antenna is capable of replicating the modeled conditions very closely. Every model is subject to differentials between model and reality that result from a manufacturing process and a modeling process that can only approximate each other. The differentials become an ever- growing burden as we model in the VHF and UHF range. Nuts and bolts that make no difference to the HF performance of an array become more appreciable factors at much higher frequencies.</p>
+  <p>For a home-brew or garage type assembly, it is likely that the differences between models make no difference at all. For a precision shop with the goal of producing many such antennas with repeatable performance from unit-to-unit, beginning with the most reliable design may be more crucial.</p>
+  <p>There are several factors that the models do not show. For example, the models do not show any projections of either the arms or the legs beyond the corresponding portion of the element at the corners. Such projections would be almost inevitable for most proto-types, although one might eliminate them in final production models. Moreover, the models do not show the effects of splitting the feedpoint region of the arms and adding a feedline connector (as well as adding any type of matching components). The fatter the conductor, the greater the capacitance at the feedpoint split. Hence, its dimensions may affect the remnant inductive reactance. As well, feedline connectors and the leads from the connector to the element will also have an affect on the impedance.</p>
+  <p>The final factor in the mix involves the ability to test the pattern precisely. The average backyard builder is unlikely to have more than a receiver with an S-meter as a guide to the omni-directionality of the pattern. Chamber tests used by engineering and manufacturing firms are much more likely to uncover small variations in the pattern's circularity.</p>
+  <p>For the backyard builder and casual user, then, there is likely to be no discernable difference between antennas built up from each of the models. For the precision shop, the corrected-MININEC model is more likely to yield the better results. What is clear, however, even for the casual modeler and builder, is that the use of NEC-2 is more likely to result in an antenna that falls far short of the desired results. Its ability to handle angular junctions of wires having different diameters falls far short of NEC-4, which the AGT values suggest is still shy of corrected MININEC.</p>
+  <p>One last question might arise here: why is the differential between MININEC and NEC models so much less dramatic than the types of case examined in column #56 of this series? The answer is straightforward. The greater the differential of wire diameters at the junction, the greater the error level in NEC. The differential between wires in this design exercise is 2:1. In column #56, the differential was 6.2:1. In that exercise, it was clear that the NEC models were seriously deficient. In this exercise, we have been working with borderline differences the weight of which depends upon factors external to the modeling process itself. Clear deficiencies show themselves vividly once we know what to look for. However, the borderline cases are less self-evident. It is important to understand the borderline cases and what is involved in their evaluation. That has been part of the design case study.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+=================================================================================================
+                                 ANTENNA MODEL
+                   Copyright (C) 1992-2002 Teri Software Co.
+                   05-04-2002                        3:39 PM
+
+                            Antenna File: il6fs.def
+
+                  2-meter interrupted loop hor. pol. antenna
+
+                                  Free Space
+
+               Lowest Frequency of Operation: 144.0000 megahertz
+               Center Frequency of Operation: 144.5000 megahertz
+              Highest Frequency of Operation: 145.0000 megahertz
+
+             Dimensions below are in inches unless otherwise noted
+
+Wire Statements
+
+                  End Coordinates, Wire #1             Wire
+               X             Y             Z         Diameter      Segments     Material
+
+  End 1:   0.000000     -11.40000      0.000000      0.625000         16        6063-T832
+  End 2:   0.000000      11.40000      0.000000                                 Alloy
+
+                  End Coordinates, Wire #2             Wire
+               X             Y             Z         Diameter      Segments     Material
+
+  End 1:   16.20000     -1.600000      0.000000      0.187500          8        6063-T832
+  End 2:   0.000000     -11.40000      0.000000                                 Alloy
+
+                  End Coordinates, Wire #3             Wire
+               X             Y             Z         Diameter      Segments     Material
+
+  End 1:   0.000000      11.40000      0.000000      0.187500          8        6063-T832
+  End 2:   16.20000      1.600000      0.000000                                 Alloy
+
+  Approximate near-field/far-field boundary is 3.55210 meters or 1.71211 wavelengths
+
+Source Statements
+     Source #1
+                 Pulse               Voltage             Phase
+                  No.                (Volts)             (Deg)
+
+                    8                1.00000            0.00000
+
+=================================================================================================
+EZNEC/4 ver. 3.0
+
+2-m large triangle 144.5 MHz                                               5/4/02     3:44:58 PM
+
+                       --------------- ANTENNA DESCRIPTION ---------------
+
+Frequency = 144.5 MHz
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1          W3E2        0,  -11.8,      0      W2E1        0,   11.8,      0     0.625   17
+2          W1E2        0,   11.8,      0              15.75,    1.6,      0    0.1875    8
+3                  15.75,   -1.6,      0      W1E1        0,  -11.8,      0    0.1875    8
+
+Total Segments: 57
+
+                             -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       1        50.00      50.00    12       1           0         I
+
+                        -------------- LOADS (RLC Type) --------------
+
+Load     Specified Pos.     Actual Pos.         R          L          C       R Freq    Type
+       Wire #  % From E1  % From E1  Seg      (ohms)      (uH)       (pF)      (MHz)
+1       1        50.00      50.00    12       Short      Short      2.82415    0        Ser
+
+No transmission lines specified
+
+Ground type is Free Space
+=================================================================================================</pre>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

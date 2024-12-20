@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A Clean Sweep</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>33. A Clean Sweep</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>It would not by uncommon to find an antenna advertisement of the following sort: 2-element antenna--peak gain 6.8 dBi free space, peak front-to-back ratio &gt;32 dB, SWR &gt;1.1:1 at design frequency. Such notices are common and have carried over into casual modeling practices. We design an antenna for a single frequency, even if we intend to use across a span of frequencies, for example, one of the amateur bands. So perhaps a short exercise in the utility of performing frequency sweeps might not be out of place.</p>
+  <p>NEC cores (both -2 and -4) are set up for frequency sweeping, although the core set-up and common commercial program set-ups will look different. The basic FR (frequency) input line or "card" looks something like this:</p>
+  <pre>   FR         0         5         0     0     24.90     0.05
+     Type of Stepping  No. of FQs            Start FQ  Increment</pre>
+  <p>The Type of Stepping can be zero for normal linear stepping. If the entry is a "1", then the stepping is multiplicative. The next entry lists the number of frequency steps in the sweep. Either a 1 or a 0 in the entry gives a single frequency output. Following two inactive "zero" entries, we come to the sweep start frequency in MHz. The final entry is the increment between steps.</p>
+  <p>In the example, the model would have produced output data for 24.90, 24.95, 25.00, 25.05, and 25.10 MHz.</p>
+  <p>The most commonly used NEC-2 programs, NEC-Win Plus (NW+) and EZNEC for Windows (EZW) use the same variant input system for performing a frequency sweep.</p>
+  <center>
+    <img src="amod33-1.gif" width="200" height="105" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the NW+ upper left corner frequency entry portion of the main screen. Instead of inputting a start frequency, the number of steps, and the increments, we put in start and stop frequencies as well as the increment. If the increment or "Step Size" creates a frequency value higher than the "end" frequency, the nearest lower frequency in the sequence is the upper limit for the sweep. The program translates the user input into the data needed for the FR card.</p>
+  <center>
+    <img src="amod33-2.gif" width="623" height="360" border="2" vspace="5" hspace="9">
+  </center>
+  <p>EZW's window is more complex, but the frequency selection process is identical to that of NW+, as shown in the left portion of <b>Fig. 2</b>. (The remainder of the frequency sweep box represents a difference in software design philosophies of the two packages. NW+ produces output data for every frequency of a sweep from 1 to n steps. The user can then print or save the data he may need. EZW normally operates in a single frequency mode, with a frequency sweep called up as a special function. Hence, sweep output data is selected by the user and placed into special files. Both systems work equally well in yielding sweep data.)</p>
+  <p>Frequency sweeps yield data at regular frequency intervals. Very often, it is useful to transfer this data to a spreadsheet with graphing capabilities, since the data of interest can exceed the internal graphing capabilities of NEC programs. I routinely transfer the entire data set to a spreadsheet such as EXCEL, Quattro Pro, or Lotus. (The graphs in this column are from Quattro Pro, although almost all spreadsheets have quite adequate graphing capabilities.)</p>
+  <p><b>Sweeps and "Mini-Sweeps"</b></p>
+  <p>Usual practice tends to call for the use of frequency increments that end in zero or five. For most of the wider HF amateur bands, the start frequency is usually an integer, which makes the practice seem natural.</p>
+  <p>Consider a 40-meter 3-element quad array. We might generate a frequency sweep to determine the antenna's potential across the band from 7.0 to 7.3 MHz in 0.05 MHz increments. If we combine gain and front-to-back curves, the results might look something like <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod33-3.gif" width="644" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There is useful data in this graph. Note the smooth gain curve. The absence of corner squaring suggests that it is an adequate representation of the gain across the band, ranging from 7.5 dBi free space gain at the low end of the band to a little over 8.0 dBi at the upper band edge, with a peak at mid-band. Curve smoothness suggests that interpolated values will be close to those we might find in a model output file for any intermediate frequency along the way.</p>
+  <p>The front-to-back curve presents an interpretive problem. Many quad designs, but certainly not all of them, show a very sharp and narrow-band front-to-back peak. The graphed values for 7.1 and 7.15 MHz suggest that there might be a peak somewhere between them. The only way to know for certain is to run a "mini-sweep" between 7.1 and 7.15 MHz, perhaps in 0.005 MHz increments.</p>
+  <center>
+    <img src="amod33-4.gif" width="644" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the results of such a sweep in graphical form. The gain values show steps, since the output data was limited to 2 decimal places and the overall change across the new set of frequency limits is very small. The potential front-to-back value peak turned out to be only a small rise in value, approaching 16.8 dB at 7.13 MHz. Other designs have shown equally narrow peaks well over 20 dB. The mini-sweep was the only way to ascertain the nature of this design's front-to-back behavior at its peak.</p>
+  <p>In general, whenever the data leaves potentially significant operating parameters ambiguous or vague, performing supplementary frequency sweeps over narrower frequency ranges is the easiest means of clarification. The ambiguities may not occur solely between graphed points of a sweep. Sometimes initial sweep data will raise questions regarding performance at the edges of the passband, calling for supplemental sweeps--or sometimes, simply for wider sweeps than are indicated by the intended limits of operation.</p>
+  <center>
+    <img src="amod33-5.gif" width="646" height="501" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the 50-Ohm VSWR sweep of the subject quad model. I insert it here for two reasons. First, it completes the data set most commonly developed by a frequency sweep. However, on occasion, the modeler may find it useful to record (and graph) both the resistive and reactive components of the source impedance. The rates of change of resistance and reactance are often good indicators of the potential of a design for wide-band operation or for the addition of compensatory components to achieve a given source impedance. For example, in some lower HF wire antennas, the resistive component changes very little, while the reactance changes rapidly and almost linearly with frequency. By making such an antenna inductively reactive throughout its range, one may add a series variable capacitor to compensate for the inductive reactance of the antenna, thus achieving a relatively constant resistive impedance that matches a feedline of choice. Second, the SWR sweep in the present case is unambiguous in its indication of the narrow-band operation of the modeled antenna.</p>
+  <p><b>Comparing Antennas via Sweeps</b></p>
+  <p>Frequency sweeps are often very useful in comparing "competing" antenna designs for a given purpose. To illustrate the technique, I shall use a model of a hexbeam and a model of a Moxon rectangle. Neither model is a representation of a commercial antenna. Thus, no conclusions about the inherent potential or limitations of any such design can be drawn from the illustration. Both antenna types are generally interesting because they are compact and employ semi-closed geometries involving coupling between element ends as well as between parallel portions of the elements. The hexbeam looks like two "W" elements with the open ends facing each other. The rectangle is--well, rectangular. Both are 2-element arrays employing a driver and a reflector.</p>
+  <p>Performing a frequency sweep of two antennas requires that we take account of normal sweep matters. We should use the same start and stop frequencies, as well as the same frequency increment throughout. Moreover, we should use enough frequency steps to obtain a relatively unambiguous picture of the antenna performance across the passband of interest. Let's use the range of 14.0 to 14.35 MHz as our passband, with an increment of 0.035 MHz. This increment provides 10 steps--or 11 total checkpoints--of operation.</p>
+  <p>In addition, the modeler should note any other relevant factors that may affect the interpretation of the comparative output. For example, the hexbeam model in question has a design frequency of 14.10 MHz, while the Moxon was designed for a 14.15 MHz design center. The hexbeam is normally constructed from wire, so #12 AWG wire composes the elements. In contrast, a 20-meter Moxon can be easily fabricated from aluminum tubing, so its model employs 1" diameter elements.</p>
+  <center>
+    <img src="amod33-6.gif" width="646" height="524" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows the comparative free-space gain curves for the two models. Although the hexbeam has a higher gain at the low end of the passband, the rate of decrease in gain is much higher than that of the Moxon. Hence, the Moxon shows a 1 dB gain advantage at the upper end of the band.</p>
+  <p>Notice the flattening of the curve of the hexbeam as it reaches the lowest frequency of the sweep. One might raise a question of whether the hexbeam reaches peak gain close to or far from the low end of the band. Hence, supplementary sweeps might be useful over the range from 13.5 to 14 MHz to answer this question.</p>
+  <center>
+    <img src="amod33-7.gif" width="646" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 7</b> we find the 180-degree front-to-back curves for the two antennas over the prescribed range of frequencies. Both antennas exhibit the sharp front-to-back peak that marks semi-closed geometries (among others). Whether the absolute peak is higher than the graphed peaks makes less differences to the comparison of designs than the front-to-back ratio as one approaches the passband edges. A difference of 10 dB makes more difference here than at a frequency where the differential is between 30 and 40 dB.</p>
+  <center>
+    <img src="amod33-8.gif" width="646" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 50-Ohm SWR curves for the two models under comparison appears in <b>Fig. 8</b>. Here we can most clearly see the attempt to design one antenna for 14.1 MHz and the other for 14.15 MHz. Although one design shows much steeper curves than the other, both exhibit the properties of closed and semi-closed geometries wherein the curves are noticeably steeper below the design frequency than above it. As well, the fact that one model uses thin (#12 AWG) wire and the other employs 1" tubing also is evidenced in the differences between the curves.</p>
+  <p>The exercise has so far been geared toward a comparison of two designs, as if one had only a choice between the two. Of course, one may enter into the graphs as many designs as one likes, taking into account other properties of the antennas that do not show up in performance figures. For example, the total area (or volume) of an antenna may play a role in determining whether a design is a candidate at all. Additionally, one may place variants of the two designs into the picture in order to optimize each. None of these decisions will make any sense without first having a set of design specifications in hand to define what better and worse may mean.</p>
+  <p>The one major exception to the need for a set of design criteria has also shown up in our small foray into comparative frequency sweeping. In the process of looking at the differences between the models, we also noted a number of family resemblances borne by all members of the close and semi-closed group of 2-element antennas. For some modelers, these characteristics may be common expectations; for others, they may amount to discoveries about the class of antennas involved. Modeling is not solely for design and analysis--it can also be for learning about antennas.</p>
+  <p><b>Antennas on Different Bands</b></p>
+  <p>Suppose we frequency scale the Moxon rectangle from 20 to 10 meters. We shall approximately halve the element lengths. As well, for proper scaling, we shall halve the element diameter down to 0.5". Now let's define 10-meter coverage as extending from 28 to 29 MHz. Let's use a design center frequency on 10 of 28.5 MHz.</p>
+  <p>In recording a comparative frequency scan, we should do two things. First, we shall set up the 10-meter scan in the same number of steps as the 20-meter scan. The 10-step, 11-checkpoint scan is convenient on 10 meters where the increment become 0.1 MHz.</p>
+  <p>Second, when we graph the results, we should use some sort of common scale. In this case, the checkpoints are each 10% of the total frequency span. Therefore, a percentage scale becomes very useful.</p>
+  <center>
+    <img src="amod33-9.gif" width="645" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> shows the gain curves for the two antennas. Initially, we might think that the two scales should overlap or at least closely parallel each other. However, the size of the passbands differs, not only in total width, but as well as a percentage of the center frequency. The 20-meter amateur band is about 2.47% of its center frequency, while the first MHz of the 10-meter band is 3.51% of the center frequency--a 42% difference. Consequently, over the defined passbands, the gain on 10 meters will show a larger total variation than on 20 meters. In fact, designs that are adequate for 20-meter coverage may require significant alteration is they are scaled and adjusted to cover 28-29 MHz.</p>
+  <center>
+    <img src="amod33-10.gif" width="645" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The front-to-back sweeps for the 20-meter and 10-meter Moxons appear in <b>Fig. 10</b>. These curves tell us a great deal about both the performance of the antenna in question and about the design parameters for each model. For example, the 20-meter version used a design frequency of 14.15 MHz, about 42% up from the lower end of the band. Setting the design frequency lower than mid-band takes into account the fact that for this design, the curves are steeper below the design frequency than above it. Displacing the design frequency permits the designer to achieve roughly equal front-to-back ratios at each band edge. In contrast, the 10-meter design was set for 28.5 MHz for 28-29 MHz coverage. As a result, the low-end front-to-back ratio is somewhat lower than the high-end value.</p>
+  <p>As well, we can clearly see the consequence of operating the antenna over a frequency range that is a larger percentage of the design frequency, as it is on 10 meters. The average band-edge deficit in front-to-back ratio on the wider band is about 3 dB. Whether this amount is operationally significant is a design-evaluation decision that would require a set of project goals against which to measure the modeled values.</p>
+  <center>
+    <img src="amod33-11.gif" width="647" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 11</b>, we have the 50-Ohm SWR curves for the two antennas. Once more the relative displacement of the design frequency on the lower band shows up as a much more "centered" SWR curve than the one for the upper band. On 10 meters, the use of the exact passband center as the design frequency results in higher SWR values at the low end of the band. (Remember that the antenna used as an example here is designed for a direct connection to a 50-Ohm feedline, so adjustment of the curve via a matching network is not part of the project.) Besides the offset of the two SWR curves, we can see further evidence of the consequences of using the design over a frequency span that is a higher percentage of the design frequency.</p>
+  <p><b>Linear vs. Multiplicative Steps</b></p>
+  <p>We have looked at only some of the applications of frequency sweeps. Since a frequency sweep yields a NEC core run that produces all of the output data, we also have access to these data, ordinarily in tabular form. Among the most significant data that we might examine are the current magnitudes and phases, perhaps on the parasitic elements of a Yagi. These values may go a long way toward explaining the behavior of an array across an intended operational passband. Additionally, the change of source resistance and reactance across a passband is also valuable information to extract from a frequency sweep. Such data are useful in comparing two designs as well as in designing feedpoint matching systems.</p>
+  <p>Most of the work we wish to do with frequency sweeps can be done using linear frequency steps. Therefore, basic NEC-2 programs may limit the user to this option. However, the basic NEC core input system permits another type of sweep. Let's re-examine the frequency input card once more.</p>
+  <pre>   FR         1         13        0     0     14.00     1.00206
+     Type of Stepping  No. of FQs            Start FQ  Increment</pre>
+  <p>We have modified the FR entry relative to the entries used throughout the exercise so far by changing the "Type of Stepping" value from 0 to 1. A zero indicates linear stepping, but a 1 activates multiplicative stepping. The start frequency is 14.0 MHz in the example. We can calculate the increment via the following equation</p>
+  <center>
+    <img src="amod33e1.gif" width="172" height="114">
+  </center>
+  <p>where M.F. is the multiplying factor, N is the number of frequency steps, f<sub>HI</sub> is the highest frequency of the sweep, and f<sub>LO</sub> is the lowest frequency (the "start" frequency). In the example, the 12th root of the ratio of 14.35 to 14 is about 1.0020598.</p>
+  <p>For most common purposes, we mentally extrapolate from linear sweeps those performance factors that are functions of a percentage of design frequency rather than strict linear frequency functions. However, on some occasions, it may be useful to view NEC output data more directly in these terms. In such cases--assuming one's program permits the use of multiplicative frequency sweeps--the use of this alternative input may prove beneficial.</p>
+  <p>In this small foray into sweeping frequencies with antenna modeling programs, we have certainly not covered all of the potential uses. However, I hope that there is enough here to either get you started on the road toward making good use of the facility.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

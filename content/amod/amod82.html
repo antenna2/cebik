@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Nature and Adequacy of NEC Correctives</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>82. The Nature and Adequacy of NEC Correctives</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>NEC has a number of correctives for special situations. The most notable of these situations involves the ratio of segment length to wire radius. In NEC-2, whenever the radius is greater than about 1/4 the segment length, the NEC-2 manual recommends the use of the EK command, which invokes the extended thin-wire kernel. We examined that feature of NEC-2 in the last episode. We also noted that NEC-4 revised the algorithms for determining the currents on wire segments so as to do away with the need for the EK command.</p>
+  <p>The most noted external corrective for NEC-2 involves the inherent weakness of the program for dealing with elements having a tapered diameter, as illustrated in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod82-1.gif" width="475" height="230" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The most commonly used corrective system was developed by Leeson and involves the use of substitute uniform-diameter elements. The substitute elements involve a reasonably complex procedure that begins with the detection of the element ends and hence the determination of the range of wires over which the corrective will be applied. The wires must be linear and symmetrical about a center coordinate. The exception is a monopole wire in contact with the ground with its source (if any) on the segment adjacent to the ground. The wire with two ends must place any sources or loads on the center segment. Moreover, the corrective is valid for only a restricted frequency range, usually prescribed as being within about 15% of the element being 1/2 wavelength. Most programs (such as EZNEC and NEC-Win Plus) simply refuse to invoke the correctives if the element does not meet any one of the limiting criteria. Although the standard case for the application of Leeson correctives is the downward taper of element diameter, as portrayed in <b>Fig. 1</b>, the correctives will also work with bi-conical antennas composed of stepped diameter elements.</p>
+  <p>The adequacy of the Leeson correctives is dependent upon a number of factors. One of those factors is the uniformity of segment length along the substitute element. If we model a physical element exactly, we often find a mixture of long, short--and sometimes very short--sections of element for the various element diameters. There is a tendency among modelers to under-segment the longer wires in the element relative to the shorter wires. Consider the situation in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod82-2.gif" width="556" height="291" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In this example, the short center section uses a single segment, followed in the next wire by longer segments, etc. The application of the Leeson correctives normally pre-calculates a total element length for the substitute element, using the calculated uniform diameter that achieves an element having the same electrical characteristics as the original tapered-diameter element. Then the program will calculate the length of wires that substitute for each of the original wires. The program will normally use for each new wire the same number of segments as specified for the tapered diameter wire. The resulting element will be as uniform or non-uniform in segment length as the originally specified element.</p>
+  <p>The new algorithms of NEC-4 ostensibly did away with the need for using the Leeson corrections. For many cases, NEC-4 produces virtually identical results as does NEC-2 with the Leeson correctives invoked. However, NEC-4's new algorithms are not without limits. If the rate of diameter change is too great or if the overall decrease in diameter is too large along the overall length of the element, NEC-4 will tend to over estimate the gain of the element and underestimate the source impedance, if that element is driven.</p>
+  <p>We may illustrate the situation for virtually all of the limitations by running a pair of contrasting elements through all of the available options. We shall begin with a "low-taper" element that I extracted from a multi-element Yagi design for 20 meters. I isolated the driven element of the array, but made no attempt to resonate it in isolation, relative to its resonant length within the array. Hence, the element will show some feedpoint reactance.</p>
+  <p>The following EZNEC description of the element shows the free-space environment used for the comparisons. However, it was necessary to run the element in a variety of programs, including NEC-Win Pro, GNEC, and EZNEC, in order to cover all of the possibilities.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+lo-taper element                                          Frequency = 14.175 MHz
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                -205.95,   79.8,      0      W2E1     -156,   79.8,      0     0.625   4
+2          W1E2     -156,   79.8,      0      W3E1     -120,   79.8,      0      0.75   3
+3          W2E2     -120,   79.8,      0      W4E1      -72,   79.8,      0     0.875   4
+4          W3E2      -72,   79.8,      0      W5E1       72,   79.8,      0         1   13
+5          W4E2       72,   79.8,      0      W6E1      120,   79.8,      0     0.875   4
+6          W5E2      120,   79.8,      0      W7E1      156,   79.8,      0      0.75   3
+7          W6E2      156,   79.8,      0             205.95,   79.8,      0     0.625   4
+
+Total Segments: 35
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       4        50.00      50.00    7        1           0         I
+
+Ground type is Free Space
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The segmentation along the element is relatively uniform. For wires 1-4, the segment lengths are 12.49", 12", 12", and 11.07". As well, the long center section of the element with 13 uniform length segments ensures that the segments adjacent to the source segment are the same length as the source segment. The diameter steps are a uniform 0.125" drop per step.</p>
+  <p>Now let's run this element through all of the available combinations of corrected and uncorrected situations that we can generate with the NEC-2 and NEC-4 cores. Our results should resemble those in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                           Low-Taper Element Free-Space Gain and Source Impedance
+
+Core and Condition                                        Gain (dBi)           Impedance (R+/-jX Ohms)
+
+NEC-2
+1.  No internal or external correctives                   2.20                 76.49 + j 19.23
+2.  EK command invoked                                    2.20                 76.78 + j 19.21
+3.  Leeson correctives invoked                            2.14                 74.68 + j 11.85
+4.  Resubstitution of a single wire with the Leeson
+       diameter, length, and total number of segments     2.14                 74.69 + j 11.94
+
+NEC-4
+1.  No internal or external correctives                   2.17                 76.14 + j 12.84
+2.  Resubstitution of a single wire with the Leeson
+       diameter, length, and total number of segments     2.14                 74.69 + j 11.94
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In NEC-4 programs that permit the use of Leeson corrections (such as EZNEC Pro/4), there is rarely any difference between corrected NEC-2 and corrected NEC-4. The Leeson corrections apply only to modeling situations in which there is no inherent difference in the performance of the two cores.</p>
+  <p>Given the relatively gentle taper of the element, even the NEC-2 results are not dramatically off the mark. However, note that the "raw" NEC-4 results are only about halfway home in the estimation of gain, although they are quite close in the estimation of the source impedance. Of course, the standard for these remarks is the Leeson correction result, which is presumed accurate here and has tested accurate in innumerable physical antenna designs.</p>
+  <p>For our second example, let's use a much more highly tapered element, extracted from another multi-element array. The element model employs a short, fat center section simulating the boom-to-element assembly. Our concern in this exercise is not the adequacy of that technique, but its consequences for the element model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+hi-taper element                                          Frequency = 14.175 MHz
+Wire Loss: Aluminum (6061-T6) -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+No.            End 1     Coord. (in)              End 2     Coord. (in)       Dia (in)  Segs
+          Conn.      X       Y       Z       Conn.      X       Y       Z
+1                 -203.5,     72,      0      W2E1     -138,     72,      0       0.5   8
+2          W1E2     -138,     72,      0      W3E1      -96,     72,      0     0.625   6
+3          W2E2      -96,     72,      0      W4E1      -48,     72,      0      0.75   6
+4          W3E2      -48,     72,      0      W5E1       -4,     72,      0     0.875   5
+5          W4E2       -4,     72,      0      W6E1        4,     72,      0     3.419   1
+6          W5E2        4,     72,      0      W7E1       48,     72,      0     0.875   5
+7          W6E2       48,     72,      0      W8E1       96,     72,      0      0.75   6
+8          W7E2       96,     72,      0      W9E1      138,     72,      0     0.625   6
+9          W8E2      138,     72,      0              203.5,     72,      0       0.5   8
+
+Total Segments: 51
+
+              -------------- SOURCES --------------
+
+No.      Specified Pos.     Actual Pos.      Amplitude    Phase    Type
+       Wire #  % From E1  % From E1  Seg       (V/A)     (deg.)
+1       5        50.00      50.00    1        1           0         V
+
+Ground type is Free Space
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Ideally, the segment lengths adjoining the source segment (Wire 5) should be the same length as the source segment. However, the segment lengths for wires 1 through 5 read as follows: 8.19", 7", 8", 8.8", 8". Achieving the desired result would require additional segments on an already large model (when we add all of the other elements of the original array). We are blocked from further segmenting the short, fat source wire, because the segment-length-to-radius ratio is already 4.68:1. Adding a segment each to wires 4 and 6 would have resulted in a segment length as much below the segment length on Wire 5 as the present segmentation places the length above that of the center segment in the element.</p>
+  <p>Let's see what happens to the results for this model when we run it through the same set of core runs that we used for the low-taper element.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                           High-Taper Element Free-Space Gain and Source Impedance
+
+Core and Condition                                        Gain (dBi)           Impedance (R+/-jX Ohms)
+
+NEC-2
+1.  No internal or external correctives                   4.30                 45.33 + j  2.51
+2.  EK command invoked                                    4.37                 44.56 + j  2.48
+3.  Leeson correctives invoked                            2.16                 68.88 - j 11.44
+4.  Resubstitution of a single wire with the Leeson
+       diameter, length, and total number of segments     2.12                 69.59 - j 11.52
+
+NEC-4
+1.  No internal or external correctives                   3.06                 59.14 - j  6.17
+2.  With the VC command invoked                           2.95                 60.57 - j  6.26
+3.  Resubstitution of a single wire with the Leeson
+       diameter, length, and total number of segments     2.12                 69.58 - j 11.53
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The wholesale inability of raw NEC-2 to handle the highly tapered element is evident. I invoked the EK command in the NEC-2 sequence of results simply to demonstrate that the EK command is not a substitute for the Leeson corrections. If we skip to the NEC-4 results, we find that the very high taper and other limitations of the element model also yield results that are well off the mark set by invoking the Leeson corrections. Once more, the gain report is about halfway between the NEC-2 report and the Leeson report. However, the source impedance report is about 2/3 the way home--a function of the fact that one figure is recorded in dB while the other uses a non-logarithmic adjustment. Raw NEC-4 shows an average gain test value of 1.235 for the element. The adjusted gain would be 2.14 dBi, much closer to the Leeson value.</p>
+  <p>Unlike the low-taper element case, the high-taper element does show a difference between the results for the modeled element and for a one-wire substitute element with the same length, diameter, and total number of segments as the programmed set of wires. The difference is not great, since some pains were taken to equalize segment lengths as best one could within the original model. Less careful segmentation--as is commonly used in casual modeling of large arrays with tapered diameter elements--would have yielded a higher disparity between the programmed Leeson element and the 1-wire equivalent element.</p>
+  <p>Because the highly tapered element has a short, fat center section with a segment-length-to-radius ratio of only 4.68:1, I added an entry to the NEC-4 list. One run of the model invokes a new command in NEC-4 labeled VC, for voltage cap. For the element that we have been testing, the invocation of the new command produces noticeable but not very large differences relative to raw NEC-4.</p>
+  <p>NEC-4 introduces wire-end caps as a standard part of the overall calculations. At a voltage source segment or at segments with impedance loads, NEC-4 makes it optional for the user to introduce segment end caps "to reduce the excitation of the inside of the wire at these points." <b>Fig. 3</b> shows the general situation at a voltage source.</p>
+  <center>
+    <img src="amod82-3.gif" width="555" height="341" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The sketch is adapted from Part II (page 29) of the NEC-4 manual and does not show all mathematical detail. Its purpose is to acquaint you with the general situation at the voltage source with respect to the caps forming the inside ends of the wire segments on either side of the source segment. See the NEC-4 manual for full mathematical details.</p>
+  <p>To employ these end caps, we need only place a simple program control card in the deck:</p>
+  <pre>VC</pre>
+  <p>The end caps become important for small segment-length-to-radius values. As the ratio goes below 2:1 and continues to shrink, the imaginary part of the current and the real part of the charge will go into oscillation without the use of end caps. Because a source that is near to the end of a wire may show an error in the source voltage, the end caps have been made optional by introducing them via the VC command.</p>
+  <p>For the average user of NEC, the question that is often preliminary to matters of mathematical refinement is at what point the use of the VC command will begin to show differences from the same model without using the VC command. To provide a sample answer, we may return to the simple dipole that we have used in other episodes. The NEC input file for this dipole is quite simple.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CM NEC-WIN Example
+CM Simple dipole antenna in Free Space
+CM Optimized for resonance at 300 MHz
+CE
+GW 1 9 0 -.2418 0 0 .2418 0 .0001
+GS 0 0 1
+GE 0 -1 0
+VC
+EX 0 1 5 0 1 0
+FR 0 1 0 0 300 1
+RP 0 181 1 1000 -90 0 1 1
+RP 0 1 360 1000 90 0 1 1
+EN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The 9-segment free-space dipole is initially resonant at 300 MHz. Let's catalog the gain and source impedance reports as we enlarge the radius of the antenna without altering any other factors. The only difference between the non-VC and VC models is the absence of the VC line in the former.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                    Gain and Source Impedance of a Dipole With and Without the VC Command
+
+Wire Radius   Segment-Length-to-           Without VC                          With VC
+(meters)      Radius Ratio          Gain (dBi)    Source Z              Gain (dBi)    Source Z
+0.0001        537:1                 2.12          72.08 - j 0.00        2.12          72.08- j 0.00
+0.001         53.7:1                2.13          75.63 + j16.51        2.13          75.63 + j16.52
+0.01          5.37:1                2.18          91.47 + j32.38        2.15          91.57 + j33.10
+0.0134        4:1                   2.20          95.68 + j30.11        2.15          95.71 + j31.69
+0.0179        3:1                   2.22          99.78 + j23.97        2.14          99.71 + j27.48
+0.0269        2:1                   2.26          102.41 + j5.13        2.10          103.60 + j15.82
+0.0537        1:1                   2.38          51.89 - j46.29        1.93          99.00 - j17.25
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>As the ratio reaches the 4-6:1 level, we can clearly see an effect upon the gain report with and without the use of the VC command. Without the VC command, the gain report increases steadily. In contrast, with the VC command invoked, the gain reaches a peak value and then descends. Except for the 1:1 segment-length-to-radius ratio value, there is little difference in the source impedance reports. However, for the very small ratio, the source impedance difference is considerable. The non-VC report represents a precipitous drop in resistance and a rapid shift in the reactance. With the VC command invoked, the resistance remains in the general range of the preceding reports, with a milder shift in reactance.</p>
+  <p>The test dipole used only 9 segments, a segmentation density one might consider below true convergence. So we may reset the dipole example for a segment-length-to-radius ratio of 1.5:1. We may sample a number of different levels of segmentation by simply altering the radius so that it is always 2/3 the segment length. The results of this exploration form an interesting table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                          Constant Dipole Length and Segment-Length-to-Radius Ratio
+
+No.    Segment       Radius                Without VC                          With VC
+Segs   Length (m)    (m)            Gain (dBi)    Source Z              Gain (dBi)    Source Z
+
+ 9     0.0537        0.0358         2.30           95.83 - j 17.52      2.05          104.00 + j  3.81
+15     0.0322        0.0215         2.20          129.68 - j 34.52      2.09          141.40 - j  8.96
+25     0.0193        0.0129         2.13          182.40 - j118.85      2.09          224.11 - j 92.56
+41     0.0118        0.0079         2.11          215.06 - j258.65      2.09          292.31 - j262.77
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>With the VC command invoked, the gain stabilizes very rapidly with the increase in the number of segments and a constant segment-length-to-radius ratio. Without the VC command in use, the gain descends with increasing numbers of segments toward the "with-VC" value. The source impedance values follow the same general trends, but show noticeably different values are each level.</p>
+  <p>At the same time as the results appear to be converging, the average gain test (AGT) values also approach closer to 1.000. However, with the lowest segmentation level and no VC command, the AGT value is 1.0148. With the AGT command in use, the corresponding AGT value is 0.9591. The two sets of AGT values approach 1.000 from opposite directions, and the use of the VC command results in a slightly poorer AGT value than without the command in use. A similar pattern holds for the first sample that we took. Without the VC command in use, we obtained a gain report of 2.38 dBi with a source impedance of about 52 - j46 Ohms. With the VC in use, the gain report was 1.93 dBi with an impedance of 99 - j17 Ohms. Although the VC report appeared more closely tied to the preceding ratios of segment length to radius, the non-VC AGT value was 1.0315, while the VC value was 0.9330, about twice as distant from the ideal value.</p>
+  <p>The VC command, then, yields results that are not self-interpreting or wholly consistent with other markers that one normally uses to develop a sense of model adequacy. In general, then, the VC source wire-end cap command should only be used where there are experimental results with which to correlate the results. The NEC-4 manual notes that the "voltage-source end caps have been made optional until their effect is better understood."</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

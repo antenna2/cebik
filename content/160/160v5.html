@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="MF, Vertical">
+  <title>Modeling 160-Meter Vertical Arrays Part 5: The Use of Multiple Ground Qualities in Lieu of Radials</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/hat.gif" align="left" width="72" height="84" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Modeling 160-Meter Vertical Arrays<br>
+    Part 5: The Use of Multiple Ground Qualities in Lieu of Radials</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>The final technique for simplifying the modeling of radials caught me by surprise. It consists of using the facility in NEC that allows 2 ground qualities--a set radius for an inner set of values, and from that point onward, some other values. The reasoning goes that a set of radials in effect improves the ground quality. Therefore, setting the inner radius to the length of the radial system at a high conductivity value, with a lesser value from that point outward, would largely replicate the effect of a radial system without requiring the modeling of radials.</p>
+  <p>Since the practice has some currency in various quarters, it deserves an examination, even if we know in advance that the interaction of buried radial systems is quite different from a simple soil quality improvement. We need to see to what degree the modeling technique yields something useful, even by way of indicators of antenna performance. To this end, let's go back to the very beginning of our work in this series and take a further look at the classic 1/4 wavelength monopole.</p>
+  <h3>The 1/4 Wavelength Monopole Over Various Modeled Ground Systems</h3>We have come a long distance from our starting point of looking at 1/4 wavelength monopoles both over radials systems and directly connected to ground with no radials in the model. We have been using the categories of soil quality in <b>Table 1</b> as our bench marks along the way, having established the relative fairness of the spread of values in Part 2.
+  <pre>Table 1.  Soil types used in the study
+
+Soil Type              Conductivity                 Permittivity
+                       Siemans/meter                dielectric constant
+Very Poor              0.001                         5
+Poor                   0.002                        13
+Good (Average)         0.005                        13
+Very Good              0.0303                       20</pre>
+  <pre>Table 2.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25 wavelength) radials, 2 mm
+diameter, tapered segmentation: 0.001 to 0.04 wavelength per wire; radials 0.001 wavelength
+below ground; NEC-4.
+
+Soil Type              Gain          TO Angle               Source Impedance
+                       dBi           degrees                R +/- J X Ohms
+
+4-radials:  32 wires; 62 segments
+Very Poor              -4.37         27                     87.04 + j 25.31
+Poor                   -2.49         25                     72.45 + j 19.47
+Good                   -0.71         23                     60.96 + j 20.42
+Very Good               2.10         17                     47.34 + j 14.52
+
+8-radials:  56 wires; 110 segments
+Very Poor              -3.11         28                     65.90 + j 18.09
+Poor                   -1.51         25                     58.63 + j 15.18
+Good                   -0.04         23                     52.43 + j 15.94
+Very Good               2.60         17                     44.34 + j 12.60
+
+16-radials:  104 wires; 206 segments
+Very Poor              -1.61         28                     52.71 + j 12.43
+Poor                   -0.16         25                     49.71 + j 12.18
+Good                    0.86         23                     46.79 + j 12.83
+Very Good               2.79         16                     42.20 + j 11.18
+
+32-radials:  200 wires; 398 segments
+Very Poor              -1.32         27                     44.89 + j  7.54
+Poor                    0.17         25                     43.44 + j  9.55
+Good                    1.12         22                     42.67 + j 10.46
+Very Good               2.94         17                     40.48 + j 10.03
+
+64-radials:  392 wires; 782 segments
+Very Poor              -1.19         27                     40.68 + j  4.11
+Poor                    0.32         25                     39.43 + j  7.08
+Good                    1.26         22                     39.73 + j  8.50
+Very Good               3.05         17                     39.06 + j  9.07
+
+128-radials:  776 wires; 1550 segments
+Very Poor              -1.12         28                     38.60 + j  2.18
+Poor                    0.17         25                     37.32 + j  5.29
+Good                    1.03         23                     37.91 + j  6.99
+Very Good               2.87         17                     37.94 + j  8.27</pre>
+  <p><b>Table 2</b> reviews the modeled values in NEC-4 of a 25-mm diameter monopole over various size radial systems and soil qualities, when the 2-mm diameter radials are buried 0.001 Wavelength below ground (about 6.5" at 1.83 MHz, our test frequency). To consolidate the numbers in a different way, <b>Fig. 1</b> graphs the gain in dBi of the monopoles, with each line representing a different soil quality and the individual lines tracing the numbers of radials from 4 to 128. The largest differentials appear in the region from 4 to 16 radials and over the poorest soils. We should not neglect the actual numbers for the gain values.</p>
+  <center>
+    <img src="1605-1.gif" width="647" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    1. Gain values for a 1/4 Wavelength monopole over various size buried radial systems and different soil qualities.
+  </center>
+  <p><b>Fig. 2</b> provides comparable curves for the source resistance calculated by NEC-4 for each of the cases graphed for gain in <b>Fig. 1</b>. As we would expect, the highest values of source resistance and the greatest rates of change occur when the radials are few and the soil is less than of Good quality.</p>
+  <center>
+    <img src="1605-2.gif" width="646" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    2. Source resistance values for a 1/4 Wavelength monopole over various size buried radial systems and different soil qualities.
+  </center>
+  <p>We have also looked at the type of model that uses no radials, but connects the 1/4 Wavelength monopole directly to ground. In earlier examinations, we looked only at the use of the MININEC ground. In <b>Table 3</b> are values for direct connection to both the MININEC and the Sommerfeld-Norton ground in NEC-4. (The values for a NEC-2 ground may differ, since there is a distinct difference in the treatment of wire approaching and touching ground in the two system. NEC-2 does not permit buried wires, although NEC-4 handles buried wires routinely so long as certain modeling conventions are met.) <b>Fig. 3</b> graphs the pair of gain curves that result from one soil quality to the next. The NEC-4 S-N curve roughly tracks the values from the 4-radial portion of <b>Table 2</b>. However, the MININEC curve reaches values not achieved by even the 64- and 128-radial portions of <b>Table 2</b>.</p>
+  <pre>Table 3.  Direct Connection Values:  40-m vertical monopole, 25 mm diameter, direct
+connection to ground (no radials), fed at the lowest segment; NEC-4.
+
+
+Soil Type              Gain          TO Angle               Source Impedance
+                       dBi           degrees                R +/- J X Ohms
+A.  MININEC ground
+Perfect                                                     37.08 + j  6.12
+Very Poor              -1.00         27
+Poor                    0.31         25
+Good                    1.41         23
+Very Good               3.16         17
+
+B.  Sommerfeld-Norton ground
+Very Poor              -2.26         27                     49.32 + j  8.11
+Poor                   -0.89         25                     48.78 + j 10.52
+Good                    0.31         22                     47.65 + j 11.48
+Very Good               2.48         17                     43.36 + j 10.21</pre>
+  <center>
+    <img src="1605-3.gif" width="651" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    3. Gain values for a 1/4 Wavelength monopole over MININEC and S-N grounds without modeled radials.
+  </center>
+  <p>The technique that we shall try to compare to these modeled results appears in <b>Fig. 4</b>. We set the monopole touching ground. Beneath the antenna and for a radius of 1/4 Wavelength (40.96 m), we set the soil quality to some higher value. In these tests, we shall use a conductivity of about 0.03 S/m, corresponding to Very Good soil. From that radius outward, we shall use Very Poor soil for the contrast.</p>
+  <center>
+    <img src="1605-4.gif" width="490" height="251" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    4. Sketch of a monopole over a dual ground-quality system as a substitute for radials.
+  </center>
+  <p>Theoretically, NEC calculates the source impedance and currents from the inner radius soil quality, and would do so even had we specified the dividing boundary radius as zero. The far field is calculated using the second or outer ground quality. For the sake of this test, I used EZNEC Pro, which permitted runs using either NEC-2 or NEC-4 and gave access to the MININEC ground as well as to the standard NEC grounds (the high accuracy Sommerfeld-Norton ground calculation system and the "fast" or reflection coefficient calculation system). The results appear in <b>Table 4</b>.</p>
+  <pre>Table 4.  Direct Connection Values:  40-m vertical monopole, 25 mm diameter, direct
+connection to ground (no radials), fed at the lowest segment; dual ground:  inner to 40.96 m
+Very Good, outer Very Poor.
+
+Ground System          Gain          TO Angle               Source Impedance
+                       dBi           degrees                R +/- J X Ohms
+A.  MININEC Ground
+NEC-4                   3.16         27                     37.08 + j  6.12
+NEC-2                   1.89         29                     37.08 + j  6.12
+
+B.  "Fast" NEC Ground
+NEC-4                   2.12         29                     35.14 + j  5.37
+NEC-2                  -5.07         29                     179.5 - j 163.0
+
+C.  Sommmerfeld-Norton NEC Ground
+NEC-4                   1.21         29                     43.36 + j 10.21
+NEC-2                   0.04         29                     56.79 + j  9.58</pre>The values shown for the NEC-2 ground calculation systems are in the table largely for reference. They are not considered usable by most modeling software experts. Tradition has used the MININEC ground as a basis for simplified modeling. However, the gain figures for both cores using a MININEC ground exceed the highest value of far-field gain found in <b>Table 2</b> for all but Very Good Soil. Note that the far-field gain is supposed to be a function of the outer soil quality, which was set at Very Poor. As well, the dual ground quality system of modeling does nothing to correct the fact that MININEC ground forces the source impedance to be calculated over perfect ground. At best, the Sommerfeld-Norton ground using NEC-4 yields values of gain and source impedance similar to those for Good soil and 32 buried radials (from <b>Table 2</b>). However, there is a significant difference in the calculated take-off angle for the two models.
+  <p>With respect to the simple 1/4 Wavelength monopole, at least, there is nothing in the data calculations to suggest that a dual ground system in any way provides usable data as a substitute for a buried radial system of any size. Since the closest correlation appeared in a NEC-4 S-N run, which presumes that one has NEC-4 at hand, one might as well model the buried radials in the first place.</p>
+  <h3>A 2-Element Sloping-Parasitic Vertical Array Test</h3>To determine whether the results for a 1/4 Wavelength monopole, as interpreted, represent a case of excessive finickiness, I went back to a model first examined in Part 3 of this series: a 2-element vertical array in which the reflector is a sloping guy wire. The outline of the array appears in <b>Fig. 5</b>. Both the 25-mm diameter driven element and the 2-mm diameter reflector guy are connected to ground--or to a radial system.
+  <center>
+    <img src="1605-5.gif" width="450" height="341" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    5. Sketch of the 2-element sloping-reflector array used as a test model.
+  </center>
+  <p>Because we wish to discover if there is a usable correlation between a dual ground quality system and a buried radial system, I extended the analysis of the array over buried radials. The 1/4 Wavelength length radial systems for the individual elements intersect--how many times being dependent on the number of radials in each system. I used 4, 8, 16, and 32 radials per element, and the resulting radial systems are sketched in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="1605-6.gif" width="600" height="500" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    6. Sketches of the 4 levels of intersecting buried radial systems surveyed with the 2-element sloping-reflector array.
+  </center>
+  <p>The results of the model runs appear in <b>Table 5</b>, which provides values for each of our soil qualities for each level of radial system. <b>Fig. 7</b> provides curves for the gain values, where each line represents a different size radial system. The curves are unexceptional. We should note that the gain barely reaches 5.3 dBi with 32 radials per element over Very Good soil.</p>
+  <pre>Table 5.  2-element parasitic array:  driver = 40-m vertical monopole, 25 mm diameter;
+reflector = sloping 2-mm guy, 40.4 m long; intersecting 40.96-m (0.25 wavelength) radial
+system, 2 mm diameter, 0.001 wavelength below ground, uniform segmentation; NEC-4.
+
+Soil Type              Gain          TO Angle       Front-to Back         Source Impedance
+                       dBi           degrees        Ratio dB              R +/- J X Ohms
+
+4 Radials per element
+Very Poor              -3.03         28              5.89                 102.8 + j 53.58
+Poor                   -1.17         26              6.14                 86.89 + j 44.75
+Good                    0.88         23              7.04                 75.31 + j 47.33
+Very Good               4.03         17              8.84                 62.11 + j 46.58
+
+8 Radials per element
+Very Poor              -1.20         29              7.58                 82.12 + j 50.16
+Poor                    0.29         26              7.96                 73.99 + j 45.63
+Good                    1.94         23              8.62                 68.17 + j 47.52
+Very Good               4.54         17              9.73                 59.75 + j 47.78
+
+16 Radials per element
+Very Poor               0.25         29              9.40                 67.75 + j 49.90
+Poor                    1.49         26              9.54                 65.74 + j 48.23
+Good                    2.77         23              9.96                 63.06 + j 48.75
+Very Good               4.95         18             10.54                 57.70 + j 48.95
+
+32 Radials per element
+Very Poor               1.18         29             10.43                 60.03 + j 48.96
+Poor                    2.34         27             10.61                 59.34 + j 49.10
+Good                    3.40         23             11.04                 58.66 + j 49.77
+Very Good               5.29         17             11.26                 55.72 + j 50.06</pre>
+  <center>
+    <img src="1605-7.gif" width="649" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    7. Gain values for the 2-element sloping-reflector array over various size buried radial systems and different soil qualities.
+  </center>
+  <p><b>Fig. 8</b> graphs in a similar way the modeled front-to-back ratios achieved by the array variations. The 4-radial-per-element system benefits most from soil quality improvements. However, even over Very Good soil, the model does not achieve an 11.3 dB front-to-back ratio.</p>
+  <center>
+    <img src="1605-8.gif" width="648" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    8. Front-to-back ratio values for the 2-element sloping-reflector array over various size buried radial systems and different soil qualities.
+  </center>
+  <p>If we use a direct connection to ground and no radials, the calculated numbers derived from NEC diverge from those yielded by the buried radial systems. <b>Table 6</b> gives the modeling results of placing the two elements alone over the range of available grounds, including the MININEC ground, the "fast" NEC ground, and the S-N ground. Once more, the latter two are for reference and the general advice not to use these grounds for such purposes remains applicable.</p>
+  <center>
+    <img src="1605-9.gif" width="647" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    9. Gain values for the 2-element sloping-reflector array over MININEC, "fast, and S-N grounds without modeled radials.
+  </center>
+  <p><b>Fig. 9</b> graphs the gain values for the three sets of NEC-4 runs. Interestingly, the reflection coefficient ground in NEC-4 correlates very well to the MININEC ground. The S-N ground, when used in NEC-4 provides values that coincide roughly with a 12-radial-per- element system, if one can interpolate fairly from the data in <b>Table 5</b>.</p>
+  <center>
+    <img src="1605-10.gif" width="648" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    10. Front-to-back ratio values for the 2-element sloping-reflector array over MININEC, "fast, and S-N grounds without modeled radials.
+  </center>
+  <p>The correspondence in gain figures between the MININEC ground and the "fast" ground in NEC-4 disappears if we move to the front-to-back column. See <b>Fig. 10</b>. Although the "fast" ground curve is roughly congruent with the MININEC curve, the "fast" ground values are 5 dB lower. The S-N ground curve is much shallower, but the values are high, even when compared to the front-to-back values for the 32-radial-per-element buried radial system model.</p>
+  <pre>Table 6.  2-element parasitic array:  driver = 40-m vertical monopole, 25 mm diameter;
+reflector = sloping 2-mm guy, 40.4 m long; direct connection to ground (no radials); NEC-4.
+
+Soil Type              Gain          TO Angle       Front-to Back         Source Impedance
+                       dBi           degrees        Ratio dB              R +/- J X Ohms
+
+A.  MININEC ground
+Very Poor               2.00         30             11.36                 40.19 + j 53.02*
+Poor                    3.34         26             14.25                 *MININEC
+Impedance
+Good                    4.62         24             17.11                 is over perfect
+Very Good               6.36         18             19.50                 ground.
+
+B.  "Fast" NEC Ground
+Very Poor               2.27         28              6.37                 50.40 + j 29.73
+Poor                    3.50         26              8.63                 50.14 + j 36.48
+Good                    4.67         23             10.82                 51.25 + j 42.49
+Very Good               6.35         18             14.66                 46.64 + j 49.99
+
+C.  Sommmerfeld-Norton NEC Ground
+Very Poor              -0.63         29             10.31                 69.16 + j 38.46
+Poor                    0.85         26             10.78                 65.61 + j 42.24
+Good                    2.35         23             11.81                 62.44 + j 45.83
+Very Good               4.82         18             13.44                 53.33 + j 48.39
+
+Note:  Use of NEC-2 and the S-N ground will yield reports that differ considerably from the
+values produced by NEC-4.  The following listing is simply to display the differential:
+
+D.  Sommmerfeld-Norton NEC Ground--NEC-2
+Very Poor              -11.0         28              0.58                 342.3 - j 169.9
+Poor                   -7.06         26              1.46                 180.3 - j 77.60
+Good                   -3.60         23              3.55                 122.5 + j  4.20
+Very Good               2.94         18             10.16                 61.57 + j 38.79</pre>
+  <p><b>Table 6</b> provides S-N ground data for NEC-2, the version used by most hams. Once more, there is a very large difference in the values reported from yielded by NEC-4 under identical modeling parameter conditions. The values would hardly be useful as anything but artifacts. However, the remaining numbers in <b>Table 6</b> have equally misleading data values and should also be set aside if one is modeling a buried radial system attached to the array in question.</p>
+  <p>The final step in our test is whether using a dual soil-quality system fairs any better than the simple MININEC ground. To examine this question, I altered the model to include Very Good ground under the antenna and Very Poor ground at a distance. Since the model involves radial systems that intersect, with about 1/8 Wavelength between element bases, I chose a radius of 3/8 Wavelength for the inner ground quality (61.43 m at 1.83 MHz). The results of the modeling appear in <b>Table 7</b>.</p>
+  <pre>Table 7.  2-element parasitic array:  driver = 40-m vertical monopole, 25 mm diameter;
+reflector = sloping 2-mm guy, 40.4 m long; direct connection to ground (no radials), fed at the
+lowest segment; dual ground:  inner to 61.43 m (3/8 Wavelength from array center line) Very Good,
+outer Very Poor.
+
+Ground System          Gain          TO Angle       Front-to Back         Source Impedance
+                       dBi           degrees        Ratio dB              R +/- J X Ohms
+
+A.  MININEC Ground
+NEC-4                   6.36         18             19.50                 40.19 + j 53.02
+NEC-2                   6.82         11             18.58                 40.21 + j 53.02
+
+B.  "Fast" NEC Ground
+NEC-4                   6.03         25             14.43                 46.64 + j 49.99
+NEC-2                         No usable values
+
+C.  Sommmerfeld-Norton NEC Ground
+NEC-4                   4.45         25             14.04                 53.33 + j 48.39
+NEC-2                   3.51         11              9.58                 61.57 + j 38.79</pre>Using the normal MININEC ground for the exercise produced excessively high values of gain and front-to-back ratio relative to the buried-radial models--in both NEC-4 and NEC-2. As well, NEC-2 depressed the TO angle by 7 degrees relative to any other report. Although the "fast" and S-N numbers are provided, once more they are no more than reference reports. The end result, however, is that the dual-ground system provides no usable data or even indicators of data for the array in question.
+  <h3>Conclusion</h3>
+  <p>As expected, the dual-ground modeling technique can be as misleading as any other substitute for a direct and detailed model of a buried radial system. The calculations for the way in which radials intersect with a given soil quality when buried is quite different from the calculations for the soil alone. As a result, a radial system is not equivalent with respect to antenna performance to a simple improvement of the soil quality.</p>
+  <p>Thinking of a radial system as an improvement in soil quality may have some utility when the concern is the overall RF ground for a station and its antenna(s). However, that mode of thought can be highly misleading when it comes to calculations that yield potential antenna performance figures. We have looked in review at the results for the standard techniques of simplifying models by placing them without radials over a MININEC ground, and the result is simply that both systems of simplification are equally but separately misleading. The only type of modeling that seems adequate to a buried radial system is a buried radial model. Any suggested simplification would require that we first test the simplified model against a full model with all buried radials modeled. If a reliable correlation appears--and it might, as illustrated in Part 4--then we can use the simplification. However, once we have the full model, the rationale for simplifying seems largely to disappear.</p>
+  <p>As one step in the direction of developing more adequate models of vertical antennas and arrays for 160 meters (or any other band, for that matter), this series has tried to set forth some basics of the varied results that different kinds of models produce, as well as to give some perspective on the divergence in reports yielded by the range of ground qualities that we can model. If any theme emerges from these notes, it should be this: to the degree possible, let us model accurately and without shortcut every possible aspect of a 160-meter vertical antenna or array and begin from the ground up.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 09-25-01. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> The National Contest Journal <i>(Sep/Oct, 2001), pp. 4-9. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="160v.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Series Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Yagi, HF Upper">
+  <title>Director/Driven Element 2-Element Yagis for 12 and 17 Meters</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="25"><img src="../images/yagicad.gif" align="right" width="125" height="62" border="2" vspace="5" hspace="25">Director/Driven Element 2-Element Yagis<br>
+    Some Ideas for 12 and 17 Meters</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  I have in other notes made mention of the Director/Driven Element configuration of the 2-element Yagi. When pressed to maximum gain, these antennas are capable of over 7 dBi free space gain, about a dB higher than the conventional Reflector/Driven Element configuration tuned for maximum front-to-back ratio. However, these antennas have a low feedpoint impedance and fairly narrow band widths.
+  <p>Jerry Haigwood, W5JH, reminded me that with a beta match, the low impedance can be overcome, and on the WARC bands, narrow bandwidth is not a real concern. Jerry is exactly correct, and his comments and other good ideas raised some interesting design possibilities.</p>
+  <p>Jerry prefers spacing his director about 0.08 wl from the driven element. The range from 0.07 to 0.09 wl is a good choice. Even though one might get a bit more gain from the antenna, the 1/12th wl spacing holds the feedpoint impedance of a D/DE Yagi set for a good front-to-back ratio at about 20 ohms, which is quite workable.</p>
+  <center>
+    <img src="bb1.gif" width="592" height="288" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Figure 1</b> shows the construction of a reasonable D/DE Yagi. The 1" elements of this 10-meter model are feasible hardware store material, but the model is designed less to build than to set the properties of the genre of beam. With wider spacing, the antenna gain drops off, although the feedpoint impedance goes up. Closer spacing raises gain for a while, but continuously drops the feedpoint impedance. The model antenna, set for 28.5 MHz, has a feedpoint impedance of 20.5 - j23.5 ohms, just about right for a hairpin or inductor beta match of very conventional design.</p>
+  <p>Incidentally, <a href="../radio.html#HAMCALC">HAMCALC</a> has a very nice program for calculating beta matches, including the hairpin. The equivalent inductance is also given, which permits you to use another program on HAMCALC to create a coil instead. See the basic "Radio" page for the address of VE3ERP, the master of this suite of GW BASIC utility programs.</p>
+  <p>With only slight readjustments, the basic 2-element D/DE Yagi can be swept through a variety of radiation patterns. Three of them are illustrated in <b>Figure 2</b>. The Maximum Front-to-Back settings will yield a modest gain (about 6.5 dBi free space) and a very good (greater than 20 dB) front-to-back ratio with a feedpoint impedance of about 20 ohms. At the other extreme, maximum gain provides over 7 dBi gain but under 10 dB front-to-back and a feedpoint impedance of about 10 ohms. There is a midpoint setting shown in the patterns, where the gain is intermediate, the front-to-back is respectable, and the feedpoint Z is about 15 ohms.</p>
+  <center>
+    <img src="bb2.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>These setting are not so very far apart, and a frequency difference of about 1.5% will sweep you through them. A little further, and you will experience pattern reversal. On 10 meters, this is under 400 kHz. So unless your needs are very frequency specific, the D/DE Yagi may not be a good design choice.</p>
+  <p>However, on the WARC bands, no such problems occur. On 12 and 17 meters, the available bandwidth is about 1/2 of 1% of the frequency, and the D/DE design can easily cover this spread with stable characteristics.</p>
+  <h3>Back-to-Back 12-17-Meter Yagis</h3>
+  <p>One of the chief attractions of the D/DE design is the short boom length required for the antenna. For example, 0.07 wl is only 3.8' at 17 meters (with elements between 26 and 28') and 2.75' at 12 meters (with elements between 18 and 20'). Modeling suggests that individual antennas for these two bands show very little interaction when placed back-to-back and separated by about a foot or more. Hence, an 8' boom would hold back-to- back individual antennas.</p>
+  <p>Individual antennas, however, require separate feedlines or a switching system. We can make life even simpler and cut the feedline needs down to 1 feedline. By placing the driven elements close together, we can use open-sleeve coupling. This involves connecting the feedline permanently to the 17 meter driven element and letting it excite the 12-meter element when fed with 12 meter energy. The required spacing is just about 4" which requires that we retune the 12 meter elements for this configuration. Once done, however, the two beams do their jobs with few signs of other interactions. Moreover, the two antennas require only a 7' boom.</p>
+  <p>To test this idea, I created models of a double D/DE Yagi using open sleeve coupling and placed back-to-back. I used an aggressive stepped diameter tubing schedule to keep the antenna array as light as possible. Figure 3 shows a sketch of the overall dimensions of the antenna.</p>
+  <center>
+    <img src="bb3.gif" width="602" height="339" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since the tubing schedule would not show well in the sketch, here is the antenna description file with a detailed list of lengths and diameters of aluminum tubing.</p>
+  <pre>              --------------- WIRES ---------------
+
+Wire Conn.--- End 1 (x,y,z : ft)  Conn. -- End 2 (x,y,z : ft)  Dia(in)
+
+12-meter director
+1           -9.570,  3.080,  0.000  W2E1  -6.500,  3.080,  0.000 3.75E-01
+2     W1E2  -6.500,  3.080,  0.000  W3E1  -2.500,  3.080,  0.000 5.00E-01
+3     W2E2  -2.500,  3.080,  0.000  W4E1  -1.000,  3.080,  0.000 6.25E-01
+4     W3E2  -1.000,  3.080,  0.000  W5E1   1.000,  3.080,  0.000 7.50E-01
+5     W4E2   1.000,  3.080,  0.000  W6E1   2.500,  3.080,  0.000 6.25E-01
+6     W5E2   2.500,  3.080,  0.000  W7E1   6.500,  3.080,  0.000 5.00E-01
+7     W6E2   6.500,  3.080,  0.000         9.570,  3.080,  0.000 3.75E-01
+12-meter driven element
+8          -10.120,  0.330,  0.000  W9E1  -6.500,  0.330,  0.000 3.75E-01
+9     W8E2  -6.500,  0.330,  0.000 W10E1  -2.500,  0.330,  0.000 5.00E-01
+10    W9E2  -2.500,  0.330,  0.000 W11E1  -1.000,  0.330,  0.000 6.25E-01
+11   W10E2  -1.000,  0.330,  0.000 W12E1   1.000,  0.330,  0.000 7.50E-01
+12   W11E2   1.000,  0.330,  0.000 W13E1   2.500,  0.330,  0.000 6.25E-01
+13   W12E2   2.500,  0.330,  0.000 W14E1   6.500,  0.330,  0.000 5.00E-01
+14   W13E2   6.500,  0.330,  0.000        10.120,  0.330,  0.000 3.75E-01
+17-meter director
+15         -13.000, -3.785,  0.000 W16E1  -9.000, -3.785,  0.000 5.00E-01
+16   W15E2  -9.000, -3.785,  0.000 W17E1  -3.500, -3.785,  0.000 6.25E-01
+17   W16E2  -3.500, -3.785,  0.000 W18E1  -1.500, -3.785,  0.000 7.50E-01
+18   W17E2  -1.500, -3.785,  0.000 W19E1   1.500, -3.785,  0.000 8.75E-01
+19   W18E2   1.500, -3.785,  0.000 W20E1   3.500, -3.785,  0.000 7.50E-01
+20   W19E2   3.500, -3.785,  0.000 W21E1   9.000, -3.785,  0.000 6.25E-01
+21   W20E2   9.000, -3.785,  0.000        13.000, -3.785,  0.000 5.00E-01
+17-meter driven element
+22         -13.850,  0.000,  0.000 W23E1  -9.000,  0.000,  0.000 5.00E-01
+23   W22E2  -9.000,  0.000,  0.000 W24E1  -3.500,  0.000,  0.000 6.25E-01
+24   W23E2  -3.500,  0.000,  0.000 W25E1  -1.500,  0.000,  0.000 7.50E-01
+25   W24E2  -1.500,  0.000,  0.000 W26E1   1.500,  0.000,  0.000 8.75E-01
+26   W25E2   1.500,  0.000,  0.000 W27E1   3.500,  0.000,  0.000 7.50E-01
+27   W26E2   3.500,  0.000,  0.000 W28E1   9.000,  0.000,  0.000 6.25E-01
+28   W27E2   9.000,  0.000,  0.000        13.850,  0.000,  0.000 5.00E-01</pre>
+  <p>The feedpoint is on wire #25, the center of the 17-meter driven element. Do not expect the model to be exact on the spacing for the open sleeve coupling distance. Rather, experiment and measure the impedance on both bands as you work.</p>
+  <p>The center of gravity should be just on the 17-meter side of the 17-meter driven element, minimizing the need for coax to run along the boom. Almost any boom in the 1.25" range should do, even a length of the lighter TV mast (which is too light for mast use), as long as it is weather protected so that it does not rust out in a year. Even hardware store aluminum with a wall thickness of 0.055" should handle the job, although inserts at the element clamping points should be used to prevent tube crush. Alternatively, you can use short sections of the next tubing size up as strengtheners at the element clamping points. The model is designed for elements insulated from the boom, so if you use direct clamping to the boom, expect to adjust element lengths a bit.</p>
+  <p>The feedpoint impedance is just about 21 ohms resonant for both frequency ranges. This permits the use of a broad-band balun to feed the antenna and effect an impedance transformation to the 50-ohm coax line. Alternatively, the antenna lengths can be reset to show capacitive reactance. A Beta match usually is effective not only at the frequency for which it is designed, but as well at higher frequencies, and with a little juggling of dimensions, a 2-band match should be obtained.</p>
+  <center>
+    <img src="bb4.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Figure 4</b> shows the patterns of the two antennas in one back-to-back pattern at free space. At 70' up, the gain is in the neighborhood of 12 dBi, a little under 5 dB better than a dipole, and with a strong front-to-back ratio.</p>
+  <p>The back-to-back open-sleeve D/DE Yagis are not world beaters, but they are a. inexpensive to build, and b. lots better than some of the antennas being pressed into service for these bands. The entire antenna, boom and all, should weight in at less than 20 pounds, making it a good candidate for stacking on top of an existing antenna.</p>
+  <p>If you separate the two antennas, you will have to adjust the dimensions--especially of the 12-meter model--for independent use. Likewise, if you use different materials or a different schedule of diameter steps, you will also have to adjust the dimensions to restore the pattern and the feedpoint impedance. But that comes with the territory of antenna experimenting and home-brewing.</p>
+  <h3>12-17-Meter 2-Element Yagis Facing the Same Way</h3>
+  <p>Is it feasible to place the two antennas in the same plane using the open-sleeve coupling system for a single feed line? The answer is yes and no. Yes, it is possible to develop a set of dimensions that will produce good performance at a desirable feed impedance for one frequency within the upper band. (The lower band is not affected.) However, both elements for the upper band are inside the elements for the lower band, producing a "cage" effect. The chief problem created is an extreme narrow bandwidth for desirable characteristics. In terms of this design, when the beams face in opposite directions, they show an operating bandwidth for under 2:1 SWR in excess of the 100 kHz width of the bands. When caged (or facing in the same direction), the operating bandwidth of the upper band beam is far less than the width of the band. For building and tuning, this also means that hitting the precisely needed dimensions is very tricky--and the settings are very susceptible to the need for change with changes of antenna height below about 1.5 wl. Hence, my recommendation is for opposing directions or for combinations of beam types, where the upper band antenna is "uncaged." (Yes, I know, I watch too many wildlife documentaries and it is affecting my choice of terminology.)</p>
+  <p>There is an alternative that achieves the uncaging. It has the disadvantages, relative to the Janus-faced design above, of requiring a longer boom (10') and sacrificing a good bit of 17-meter front-to-back ratio. On the other hand, the beams face the same direction and require a single directly-matched 50-Ohm feed to cover both bands.</p>
+  <p>The design is a DE-Reflector for 17 and a DE-Director for 12. By keeping the elements for each band together, they remain uncaged. In addition, there is a slight forward stagger effect so that the beams have marginally higher values than when they are independent. With the spacing used, the feedpoint impedance on both bands is close to 50 Ohms. The outline dimensions are shown in <b>Figure 5</b>.</p>
+  <center>
+    <img src="bb5.gif" width="558" height="310" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The same caution about spacing of the open-sleeve coupled driven elements applies to both designs: the builder will have to adjust both length and spacing of the 12-meter slaved driver, since the modeling program is close to its limits for handling closely spaced elements of different lengths. However, the model should be quite close.</p>
+  <p>In addition, the antenna was designed with a tapering schedule in place. Here is the detailed wire table.</p>
+  <pre>              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+12-meter Director
+1           -9.500,  3.130,  0.000  W2E1  -6.500,  3.130,  0.000 3.75E-01   5
+2     W1E2  -6.500,  3.130,  0.000  W3E1  -2.500,  3.130,  0.000 5.00E-01   5
+3     W2E2  -2.500,  3.130,  0.000  W4E1  -1.000,  3.130,  0.000 6.25E-01   2
+4     W3E2  -1.000,  3.130,  0.000  W5E1   1.000,  3.130,  0.000 7.50E-01   3
+5     W4E2   1.000,  3.130,  0.000  W6E1   2.500,  3.130,  0.000 6.25E-01   2
+6     W5E2   2.500,  3.130,  0.000  W7E1   6.500,  3.130,  0.000 5.00E-01   5
+7     W6E2   6.500,  3.130,  0.000         9.500,  3.130,  0.000 3.75E-01   5
+12-meter Driver
+8          -10.070,  0.380,  0.000  W9E1  -6.500,  0.380,  0.000 3.75E-01   5
+9     W8E2  -6.500,  0.380,  0.000 W10E1  -2.500,  0.380,  0.000 5.00E-01   5
+10    W9E2  -2.500,  0.380,  0.000 W11E1  -1.000,  0.380,  0.000 6.25E-01   2
+11   W10E2  -1.000,  0.380,  0.000 W12E1   1.000,  0.380,  0.000 7.50E-01   3
+12   W11E2   1.000,  0.380,  0.000 W13E1   2.500,  0.380,  0.000 6.25E-01   2
+13   W12E2   2.500,  0.380,  0.000 W14E1   6.500,  0.380,  0.000 5.00E-01   5
+14   W13E2   6.500,  0.380,  0.000        10.070,  0.380,  0.000 3.75E-01   5
+17-meter Driver
+15         -13.100,  0.000,  0.000 W16E1  -9.500,  0.000,  0.000 3.75E-01   4
+16   W15E2  -9.500,  0.000,  0.000 W17E1  -6.750,  0.000,  0.000 5.00E-01   4
+17   W16E2  -6.750,  0.000,  0.000 W18E1  -4.000,  0.000,  0.000 6.25E-01   4
+18   W17E2  -4.000,  0.000,  0.000 W19E1   4.000,  0.000,  0.000 7.50E-01  11
+19   W18E2   4.000,  0.000,  0.000 W20E1   6.750,  0.000,  0.000 6.25E-01   4
+20   W19E2   6.750,  0.000,  0.000 W21E1   9.500,  0.000,  0.000 5.00E-01   4
+21   W20E2   9.500,  0.000,  0.000        13.100,  0.000,  0.000 3.75E-01   4
+17-meter Reflector
+22         -14.100, -6.800,  0.000 W23E1  -9.500, -6.800,  0.000 3.75E-01   4
+23   W22E2  -9.500, -6.800,  0.000 W24E1  -6.750, -6.800,  0.000 5.00E-01   4
+24   W23E2  -6.750, -6.800,  0.000 W25E1  -4.000, -6.800,  0.000 6.25E-01   4
+25   W24E2  -4.000, -6.800,  0.000 W26E1   4.000, -6.800,  0.000 7.50E-01  11
+26   W25E2   4.000, -6.800,  0.000 W27E1   6.750, -6.800,  0.000 6.25E-01   4
+27   W26E2   6.750, -6.800,  0.000 W28E1   9.500, -6.800,  0.000 5.00E-01   4
+28   W27E2   9.500, -6.800,  0.000        14.100, -6.800,  0.000 3.75E-01   4</pre>
+  <p>As always, since the taper schedule affects performance, you will have to adjust dimensions to suit the materials you have on hand. Four light-weight elements on a 10' boom should not stress an extended mast used to stack this simple beam above a heavy-weight tri-bander.</p>
+  <p>As <b>Figure 6</b> shows, the gain of the two beams is about the same--between 6.3 and 6.4 dBi in free space. However, the 17-meter front-to-back ratio is reduced considerably. However, until the WARC bands become seriously over-crowded, this may not be a major problem.</p>
+  <center>
+    <img src="bb6.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <h3>Back-to-Back with a 30-Meter Dipole Between</h3>A couple of requests came in for an odd combo: a 30-m dipole wit the back to back 17-12 Yagi combo. This combo would fit on an 8' boom, with the big dipole (48.6') centered at the mast--but perhaps due to the greater weight of the 17-meter Yagi and the longer boom to that side, offset so that the dipole did not sit right on the mast. Such an antenna is possible, and the sketch shows its outline (<b>Figure 7</b>)
+  <center>
+    <img src="bb7.gif" width="617" height="201" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The dipole is now the fed element, with both Yagi drivers open-sleeve coupled. The frequency ratio for the 17-meter driver (10.125:18.118) is low enough to make it easy to preserve the full performance of the 2-element DE-Dir beam (6.5 dBi/28 dB F-B) with a 53-Ohm feedpoint impedance. The frequency ratio for the 12-meter driver (10.125:24.95) is large enough to adversely affect performance to a small degree (6.3 dBi/20 dB F-B) with a 47-Ohm feedpoint impedance. The dipole pattern is slightly flattened as the Yagis stretch it in the planar directions--the amount is about 0.2 dB. The dipole impedance in free space showed about 78 Ohms. In all cases, the impedance figures are good enough for standard coax feed systems.</p>
+  <p>Here is the modeled wire table for the 3-band antenna. Unfortunately, I lack ftp capabilities and cannot provide a downloadable .NEC or .EZ file.</p>
+  <pre>              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+12-m director
+1           -9.600,  3.340,  0.000  W2E1  -6.500,  3.340,  0.000 3.75E-01   5
+2     W1E2  -6.500,  3.340,  0.000  W3E1  -2.500,  3.340,  0.000 5.00E-01   5
+3     W2E2  -2.500,  3.340,  0.000  W4E1  -1.000,  3.340,  0.000 6.25E-01   2
+4     W3E2  -1.000,  3.340,  0.000  W5E1   1.000,  3.340,  0.000 7.50E-01   3
+5     W4E2   1.000,  3.340,  0.000  W6E1   2.500,  3.340,  0.000 6.25E-01   2
+6     W5E2   2.500,  3.340,  0.000  W7E1   6.500,  3.340,  0.000 5.00E-01   5
+7     W6E2   6.500,  3.340,  0.000         9.600,  3.340,  0.000 3.75E-01   5
+12-m driver
+8          -10.050,  0.600,  0.000  W9E1  -6.500,  0.600,  0.000 3.75E-01   5
+9     W8E2  -6.500,  0.600,  0.000 W10E1  -2.500,  0.600,  0.000 5.00E-01   5
+10    W9E2  -2.500,  0.600,  0.000 W11E1  -1.000,  0.600,  0.000 6.25E-01   2
+11   W10E2  -1.000,  0.600,  0.000 W12E1   1.000,  0.600,  0.000 7.50E-01   3
+12   W11E2   1.000,  0.600,  0.000 W13E1   2.500,  0.600,  0.000 6.25E-01   2
+13   W12E2   2.500,  0.600,  0.000 W14E1   6.500,  0.600,  0.000 5.00E-01   5
+14   W13E2   6.500,  0.600,  0.000        10.050,  0.600,  0.000 3.75E-01   5
+17-m driver
+15         -13.780, -0.620,  0.000 W16E1  -9.000, -0.620,  0.000 5.00E-01   6
+16   W15E2  -9.000, -0.620,  0.000 W17E1  -3.500, -0.620,  0.000 6.25E-01   6
+17   W16E2  -3.500, -0.620,  0.000 W18E1  -1.500, -0.620,  0.000 7.50E-01   3
+18   W17E2  -1.500, -0.620,  0.000 W19E1   1.500, -0.620,  0.000 8.75E-01   5
+19   W18E2   1.500, -0.620,  0.000 W20E1   3.500, -0.620,  0.000 7.50E-01   3
+20   W19E2   3.500, -0.620,  0.000 W21E1   9.000, -0.620,  0.000 6.25E-01   6
+21   W20E2   9.000, -0.620,  0.000        13.780, -0.620,  0.000 5.00E-01   6
+17-m director
+22         -13.050, -4.480,  0.000 W23E1  -9.000, -4.480,  0.000 5.00E-01   6
+23   W22E2  -9.000, -4.480,  0.000 W24E1  -3.500, -4.480,  0.000 6.25E-01   6
+24   W23E2  -3.500, -4.480,  0.000 W25E1  -1.500, -4.480,  0.000 7.50E-01   3
+25   W24E2  -1.500, -4.480,  0.000 W26E1   1.500, -4.480,  0.000 8.75E-01   5
+26   W25E2   1.500, -4.480,  0.000 W27E1   3.500, -4.480,  0.000 7.50E-01   3
+27   W26E2   3.500, -4.480,  0.000 W28E1   9.000, -4.480,  0.000 6.25E-01   6
+28   W27E2   9.000, -4.480,  0.000        13.050, -4.480,  0.000 5.00E-01   6
+30-m dipole
+29         -24.300,  0.000,  0.000 W30E1 -17.500,  0.000,  0.000 5.00E-01   5
+30   W29E2 -17.500,  0.000,  0.000 W31E1 -12.650,  0.000,  0.000 6.25E-01   5
+31   W30E2 -12.650,  0.000,  0.000 W32E1  -7.150,  0.000,  0.000 7.50E-01   5
+32   W31E2  -7.150,  0.000,  0.000 W33E1  -5.150,  0.000,  0.000 8.75E-01   2
+33   W32E2  -5.150,  0.000,  0.000 W34E1  -2.000,  0.000,  0.000 1.00E+00   3
+34   W33E2  -2.000,  0.000,  0.000 W35E1   2.000,  0.000,  0.000 1.12E+00   3
+35   W34E2   2.000,  0.000,  0.000 W36E1   5.150,  0.000,  0.000 1.00E+00   3
+36   W35E2   5.150,  0.000,  0.000 W37E1   7.150,  0.000,  0.000 8.75E-01   2
+37   W36E2   7.150,  0.000,  0.000 W38E1  12.650,  0.000,  0.000 7.50E-01   5
+38   W37E2  12.650,  0.000,  0.000 W39E1  17.500,  0.000,  0.000 6.25E-01   5
+39   W38E2  17.500,  0.000,  0.000        24.300,  0.000,  0.000 5.00E-01   5</pre>
+  <p>As with the other designs, you will have to experiment for other taper schedules to the elements. Likewise, the exact lengths and spacing of the drivers from the dipole will also be am tter of experimentation.</p>
+  <p>If you shorten the dipole by any other means than a capacity hat on each end, the performance of the Yagis will be thrown off due to the altered current levels along parts of the dipole providing the drive for the coupled Yagi drivers. Even mid-element loads throw everything off. Capacity hats do preserve the current levels along the shortened dipole at the same magnitude as with a full size dipole; however, the hats will necessarily by large enough to possible couple to the Yagi driver ends.</p>
+  <p>No doubt further modeling time could yield improved performance from the 12-m Yagi, with many iterations of element length, spacing, and spacing from the dipole changes. But the figures shown here should suffice as a starting point for individual experimentation.</p>
+  <h3>A Forward-Facing 17-12 Combo with Higher Gain on 12</h3>It is possible to obtain greater gain on 12 meters with a forward-facing combination of a Driver-Reflector Yagi for 17 and a driver-director Yagi for 12, using the same forward-stagger and open-sleeve principles of the earlier 4-element (2 per band) we looked at earlier. The way to more gain is to add another director for 12 meters. The general outline looks like <b>Figure 8</b>.
+  <center>
+    <img src="bb8.gif" width="484" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we compare this 5-element Yagi to the forward-facing 4-element version earlier, we shall see several differences. First, the reflector spacing has been increased. The chief result of this move is to increase the resistive component of the feedpoint impedance. The essential performance on 17 is not changed. You can feel free to use any spacing from the close spacing of the 4-element version to the wide spacing of this version.</p>
+  <p>Second, adding a second director changes the director dimensions and lengthens the boom considerable--a total of 17' for the entire array. However, besides obtaining better gain on 12, the array is less sensitive to minor changes of length of the 2 directors. What you might change slightly by a small alteration of one element's length can be restored by slightly altering the length of the other director.</p>
+  <p>The NEC-4 modeled performance of this array is given in the following table:</p>
+  <pre>Freq           Gain FS        F-B       R +/- jX       SWR
+18.068         6.30           11.89     62.1 - j 4.7   1.26
+18.118         6.25           11.92     64.2 - j 3.1   1.29
+18.168         6.20           11.91     66.3 - j 1.6   1.32
+
+24.89          7.16           13.75     57.1 + j 6.9   1.20
+24.94          7.21           13.82     54.9 + j 8.9   1.22
+24.95          7.26           13.87     52.8 + j11.1   1.25</pre>
+  <p>It is possible to optimize this design further. The 17-meter section can be set closer to 50 Ohms, although significant increases in gain and front-to-back ratio are not possible with only 2 elements. The gain and front-to-back ratio on 12 can also be altered, but improving one results in decreases to the other. This version has opted for gain and only a modest front-to-back ratio. Comparative patterns for the 2 bands appear in <b>Figure 9</b>.</p>
+  <center>
+    <img src="bb9.gif" width="640" height="370" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As always, models of open sleeve coupling are approximate only. Therefore, expect to play a bit with the length of the 12-meter slaved driver and its spacing from the 17-meter fed driver to achieve the desired 12-meter feedpoint impedance. Such adjustments have little or no effect on the 17-meter feedpoint impedance or other operating parameters on that band. Also, if you select a different tapering schedule for your elements, do two things. 1. Check out the potential durability of the element, using a program like YagiStress or use a model of element taper that has a proven record. 2. Adjust the element lengths to suit the Leeson corrected substitute uniform diameter elements that are equivalent to the ones shown here. This latter task can be handled with one of the antenna modeling programs. The details of the model on which this note is based appear in the following EZNEC antenna description.</p>
+  <pre>              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+17-Meter Reflector
+1          -14.100,  0.000,  0.000  W2E1 -12.250,  0.000,  0.000 5.00E-01   2
+2     W1E2 -12.250,  0.000,  0.000  W3E1  -9.500,  0.000,  0.000 6.25E-01   3
+3     W2E2  -9.500,  0.000,  0.000  W4E1  -6.750,  0.000,  0.000 7.50E-01   3
+4     W3E2  -6.750,  0.000,  0.000  W5E1  -4.000,  0.000,  0.000 8.75E-01   3
+5     W4E2  -4.000,  0.000,  0.000  W6E1   4.000,  0.000,  0.000 1.00E+00   9
+6     W5E2   4.000,  0.000,  0.000  W7E1   6.750,  0.000,  0.000 8.75E-01   3
+7     W6E2   6.750,  0.000,  0.000  W8E1   9.500,  0.000,  0.000 7.50E-01   3
+8     W7E2   9.500,  0.000,  0.000  W9E1  12.250,  0.000,  0.000 6.25E-01   3
+9     W8E2  12.250,  0.000,  0.000        14.100,  0.000,  0.000 5.00E-01   2
+17-Meter Fed Driver
+10         -13.167,  9.158,  0.000 W11E1 -11.250,  9.158,  0.000 5.00E-01   2
+11   W10E2 -11.250,  9.158,  0.000 W12E1  -8.500,  9.158,  0.000 6.25E-01   3
+12   W11E2  -8.500,  9.158,  0.000 W13E1  -5.750,  9.158,  0.000 7.50E-01   3
+13   W12E2  -5.750,  9.158,  0.000 W14E1  -4.000,  9.158,  0.000 8.75E-01   3
+14   W13E2  -4.000,  9.158,  0.000 W15E1   4.000,  9.158,  0.000 1.00E+00   9
+15   W14E2   4.000,  9.158,  0.000 W16E1   5.750,  9.158,  0.000 8.75E-01   3
+16   W15E2   5.750,  9.158,  0.000 W17E1   8.500,  9.158,  0.000 7.50E-01   3
+17   W16E2   8.500,  9.158,  0.000 W18E1  11.250,  9.158,  0.000 6.25E-01   3
+18   W17E2  11.250,  9.158,  0.000        13.167,  9.158,  0.000 5.00E-01   2
+12-meter "Slave" Driver
+19          -9.833,  9.575,  0.000 W20E1  -6.250,  9.575,  0.000 3.75E-01   4
+20   W19E2  -6.250,  9.575,  0.000 W21E1  -2.500,  9.575,  0.000 5.00E-01   4
+21   W20E2  -2.500,  9.575,  0.000 W22E1  -0.500,  9.575,  0.000 6.25E-01   3
+22   W21E2  -0.500,  9.575,  0.000 W23E1   0.500,  9.575,  0.000 7.50E-01   1
+23   W22E2   0.500,  9.575,  0.000 W24E1   2.500,  9.575,  0.000 6.25E-01   3
+24   W23E2   2.500,  9.575,  0.000 W25E1   6.250,  9.575,  0.000 5.00E-01   4
+25   W24E2   6.250,  9.575,  0.000         9.833,  9.575,  0.000 3.75E-01   4
+12-Meter Director 1
+26          -9.500, 10.683,  0.000 W27E1  -6.250, 10.683,  0.000 3.75E-01   4
+27   W26E2  -6.250, 10.683,  0.000 W28E1  -2.500, 10.683,  0.000 5.00E-01   4
+28   W27E2  -2.500, 10.683,  0.000 W29E1  -0.500, 10.683,  0.000 6.25E-01   3
+29   W28E2  -0.500, 10.683,  0.000 W30E1   0.500, 10.683,  0.000 7.50E-01   1
+30   W29E2   0.500, 10.683,  0.000 W31E1   2.500, 10.683,  0.000 6.25E-01   3
+31   W30E2   2.500, 10.683,  0.000 W32E1   6.250, 10.683,  0.000 5.00E-01   4
+32   W31E2   6.250, 10.683,  0.000         9.500, 10.683,  0.000 3.75E-01   4
+12-Meter Director 2
+33          -8.833, 16.967,  0.000 W34E1  -6.250, 16.967,  0.000 3.75E-01   4
+34   W33E2  -6.250, 16.967,  0.000 W35E1  -2.500, 16.967,  0.000 5.00E-01   4
+35   W34E2  -2.500, 16.967,  0.000 W36E1  -0.500, 16.967,  0.000 6.25E-01   3
+36   W35E2  -0.500, 16.967,  0.000 W37E1   0.500, 16.967,  0.000 7.50E-01   1
+37   W36E2   0.500, 16.967,  0.000 W38E1   2.500, 16.967,  0.000 6.25E-01   3
+38   W37E2   2.500, 16.967,  0.000 W39E1   6.250, 16.967,  0.000 5.00E-01   4
+39   W38E2   6.250, 16.967,  0.000         8.833, 16.967,  0.000 3.75E-01   4</pre>
+  <p>The element taper used here is an adaptation of a commercial design for other bands. 6061-T6 tubing or its equivalent is available from numerous sources. This beam is far from optimized to its maximum possible performance. However, it may provide a further alternative for experimentation. Since numerous commercial beams use booms in the vicinity of 18', a design such as this makes a possible conversion project once you spring for the very long boom tri-bander to use on 20-15-10 meters</p>
+  <h3>The End Result is This . . .</h3>
+  <p>As W5JH reminded me, the D/DE 2-element Yagi has a natural home on the WARC bands, especially 12 and 17. Matching is straight forward, and performance will be stable across these narrow bands. 0.07 to 0.09 wl makes a good element spacing for a 20-ohm feedpoint impedance, an easy beta match. Combining DE-Dir and DE-Ref designs is certainly feasible and can effect simplicities of matching and use. Combining back-to-back Yagis with a 30-meter dipole is also possible.</p>
+  <p>Whether you go 2-faced or long-boomed, these designs and innumerable possible variations on them should serve many needs on 12 and 17. Moreover, as this little exercise has shown, the possibilities for experimentation are endless.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <br>
+  <p><i>Updated 7-25-99. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radials: Segmentation and Convergence</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>38. Radials: Segmentation and Convergence</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Working with radial systems for vertical monopoles and arrays often puts modelers off, since the radials occupy far more wires and segments than the antenna elements themselves. Hence, there is a tendency to be satisfied with results of models that use directly grounded 1/4 wavelength monopoles without a radial system. As well, modelers rarely place radial systems beneath 1/2 wavelength antennas and arrays, especially if the elements make no connection to the ground.</p>
+  <p>In the preceding column, I noted some of the potential inaccuracies that may arise from using a simple MININEC ground with no radial system. The source impedance is calculated for a perfect ground only and hence does not show the range of variation that may be occasioned by placing the antenna system over different soil qualities. Comparisons between an array and a standard antenna, such as a 1/4 wavelength monopole yield different differentials when using the MININEC ground and when using a radial system. Moreover, if the array employs any element, driven or parasitic, with a horizontal component to its radiation field and if the element has any part less than 0.2 wavelengths above ground, the use of the MININEC ground is subject to the known errors of that system for wires close to the ground.</p>
+  <p>Consequently, modelers who are serious about working with vertical antennas and arrays need to increase their familiarity with modeling radial systems using NEC and the attached Sommerfeld-Norton (S-N) ground calculation system. For NEC-2, which does not permit wires either on or below ground level, the radial system should be no closer to ground than about 0.001 wavelength. The use of very thin wires and length tapering is reported to permit placement of the radials even closer to the ground, but for most general modeling purposes, the 0.001 wavelength limit, rounded to a convenient number, should provide a self-consistent foundation for comparing arrays to some standard vertical antenna placed on the same radial system.</p>
+  <p><b>How Many Radials?</b></p>
+  <center>
+    <img src="amod38-1.gif" width="425" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The rule of thumb governing the proximity of the radials to the ground in NEC-2 is not the only limitation the modeler should observe. Consider the radial systems in <b>Fig. 1</b>. The upper system uses 32 radials, each with 20 segments per radial. (The choice of 20 will become apparent later on; for now, it represents a relatively high segmentation density.) NEC-2 warns against using more than 30 wires at a single junction. As the angle between wires becomes smaller, the wire segments at the junction interpenetrate. At a certain angle that varies according to the wire diameter, the central portions of the segments will interpenetrate to a degree that introduces errors into the calculations. The NEC core does not specifically check for this limitation, as it does for wire intersections that occur at mid-segment points. Hence, it will not block the completion of the calculation.</p>
+  <p>For radial systems, a 32-radial model does not press the limit significantly. However, we might check the results of using a 64-radial system, shown on the lower part of <b>Fig. 1</b>. As well, we might check both in both NEC-2 and NEC-4 to see if there is any difference of note. In both cases, we shall place a 40-meter copper vertical wire that is 0.25 m in diameter and also using 20 segments over a field of radials, each of which is copper and 2 mm in diameter. (2-mm wire falls between AWG #14 and AWG #12.) The frequency will be 1.83 MHz. The radial system is 0.164 m off the ground (0.001 wavelength). Beneath the radial system is "average ground" (conductivity: 0.005 S/m; dielectric constant: 13) in the S-N calculation system.</p>
+  <pre>Core        No. of            Gain        TO Angle          Source Impedance
+            Radials           dBi         degrees           R +/- jX Ohms
+NEC-2       32                1.02        22                39.3 + j 7.2
+NEC-4       32                1.02        22                39.3 + j 7.7
+NEC-2       64                1.01        22                38.8 + j 6.6
+NEC-4       64                0.98        22                39.1 + j 7.0</pre>
+  <p>The 32-radial systems shows excellent agreement between the two cores. However, as we double the radials, the results from the two cores begin to diverge. Normally, we would expect any gain difference between the cores to give the advantage to the system with the higher number of radials. However, we obtain precisely the opposite results, although hardly to an operationally significant point. The source impedance in both cases decreases, as we might expect of a radial system with lower losses. However, the amount of decrease differs between the two cores.</p>
+  <p>For general purposes, then, 32 radials is a useful level. The model employed in the example required 33 wires and 660 segments. The 64-radial system required 65 wires and 1365 segments. Since run-time for a model increase with the number of segments and also with the number of wires, the smaller system is preferable for the additional reason of human impatience.</p>
+  <center>
+    <img src="amod38-2.gif" width="388" height="382" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There are applications that call for exacting replication of radial systems that have more than 32 radials. <b>Fig. 2</b> shows one scheme that can be used (and expanded as needed) for adding more radials without increasing the junction count. Although many versions are possible, the one in the figure uses a set of 16 inner radial wires, each of which connects to a set of outer radial wires. Creating such a system can be a tedious labor.</p>
+  <p>Simple radial sets can be created by automated radial makers that come with commercial implementations of NEC or by separate equation sets. To create the complex pattern shown in <b>Fig. 2</b>, we can make use of such facilities. First create a 16-radial set at the inner radius, ordinarily a set of 1-segment wires having the same length as the segments lengths in the outer wires. For the 20 segment wires of Fig. 1, a 5% of total length would suffice.</p>
+  <p>Next, create a 64 (or whatever number is desired) using the outer radius for the wires. Then for each group of 4 outer wires, move their inner ends to the correct outer end of one of the set of 16. The result will be the configuration in Fig. 2 with the minimal amount of independent calculation. Do not try to run the model until all of the outer radial wires are correctly placed at their inner ends. NEC will block the run with a message indicating mid-segment wire intersections.</p>
+  <p><b>Convergence</b></p>
+  <center>
+    <img src="amod38-3.gif" width="425" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Complex geometries do not answer to the minimum segmentation rules for linear elements. And a radial system with a vertical antenna at right angles to the radials represents a complex geometry. Therefore, it is wise to perform a convergence test on radial systems with their antennas attached. <b>Fig. 3</b> shows two versions of the same antenna, one using a low segment density, the other a much higher level of segmentation. The question facing the modeler is at what level of segmentation he or she should declare convergence.</p>
+  <p>Let's take the model that we used above. The antenna is a 40-meter long element, 0.25 m in diameter for 1.83 MHz. We shall use 32 radials of 2-mm diameter. Everything is copper. Once more, the radial system is 0.164 m or 0.001 wavelength off the ground for the benefit of NEC-2 restrictions. Hence, the tower top is at 40.164 m. Now let's uniformly segment each wire in steps of 5 from 5 segments per wire to 30 segments per wire. Each antenna model will be over average ground in the S-N system.</p>
+  <p>The results of the convergence test are as follows. The TO angle is omitted, since it is 22 degrees for all cases.</p>
+  <pre>Segments/   Segment length    Total       Gain        Source Impedance
+Wire        wavelengths       Segments    dBi         R +/- jX Ohms
+ 5          0.0050            165         1.28        37.2 + j 9.4
+10          0.0250            330         1.14        38.2 + j 8.5
+15          0.0167            495         1.07        38.8 + j 8.0
+20          0.0125            660         1.03        39.2 + j 7.7
+25          0.0100            825         1.00        39.5 + j 7.6
+30          0.0083            990         0.99        39.6 + j 7.5</pre>
+  <p>Now comes the moment of decision--declaring the level of segmentation at which we arrive at convergence. In one sense, we have not arrived. since the progression of decreasing gain and source reactance, with an increasing source resistance, has not terminated. Ideally, we achieve convergence when the values noted simply vary around a central value with only small changes per increment of increased segmentation.</p>
+  <p>Obviously, holding out for the ideal can drive a modeler crazy. In practical terms, we achieve convergence when the differences between levels of segmentation make no operational difference relative to a real antenna whose properties we might measure after building. In these terms, 10 to 15 segments per wire would certainly suffice. More stringently, but still within the realm of realistic modeling, we can apply this standard: The differential between a given level of segmentation and the next lower level is not significantly larger than the difference between the given level and the next higher level. The 20-segment-per-wire level appears to meet this requirement easily.</p>
+  <p>In the end, however, it is up to the individual modeler to determine--relative to the overall task of which the model is a part--what is a suitable level of segmentation, that is, when convergence is obtained. Although I have shown the total number of segments in the 33-wire models used for the example, this factor should not be among the decision makers for any significant project. In all cases, where the information may be of use to those who might try to replicate the model, the segmentation data should be included in the model description.</p>
+  <center>
+    <img src="amod38-4.gif" width="421" height="332" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There is a tendency for newer modelers to assume that, because a radial system is largely self-cancelling with respect to its radiation field, it is satisfactory to use fewer segment in radials than in the main radiator(s). The situation is illustrated in <b>Fig. 4</b>. Therefore, let's take our model and run it through some cases where there is a differential. Once more, the TO angle is a constant 22 degrees for all cases.</p>
+  <pre>Segments/   Segments/         Total       Gain        Source Impedance
+Radial      Radiator          Segments    dBi         R +/- jX Ohms
+ 5          10                170         1.23        37.4 + j 8.7
+ 5          20                180         1.35        36.4 + j 9.5
+10          20                340         1.14        38.3 + j 8.7
+15          20                500         1.06        38.9 + j 8.1</pre>
+  <p>Notice that we do not approach the values of gain and source impedance that attach to the earlier table until we hit the 15-20 case. There is a reason for the variance. The segment lengths on either side of a source segment in NEC should be equal in order to obtain the greatest accuracy. Since the vertical is fed on its lowest segment, only the 15-20 case begins to approximate this condition. For this reason, the 5-20 case shows a higher deviance from the cases in the preceding table than does the 5-10 case, where we have a closer fit between the source segment and the innermost radial segments.</p>
+  <p>The upshot is that, for most purposes, equal segmentation lengths for both radials and radiators is the most accurate route to follow.</p>
+  <p><b>Length Tapering</b></p>
+  <center>
+    <img src="amod38-5.gif" width="522" height="216" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 32-radial system using 20 segments per 1/4 wavelength wire remains a large model with respect to some low-end NEC modeling implementations. It requires 660 segments, which can overrun a 500-segment limitation. Although upgrading software to a professional package is wise for serious modeling, there is a technique that the modeler can use to reduce the number of segments in the model without sacrificing accuracy. It is called length tapering and is illustrated in <b>Fig. 5</b>.</p>
+  <p>The practice of tapering the length of segments progressively arose from necessity with the use of MININEC and its initial restriction to a maximum of 256 segments for the entire model. To handle angular junctions, the modeler had to either use very many segments or resort to length tapering. Because NEC cores are segment-limited only by the user's setting of a variable, length tapering is not widely used in NEC-2 or NEC-4 models. However, the technique remains a valid option for the modeler.</p>
+  <p>The principle of length tapering involves setting a lower and upper length limit. One commercial program uses a default lower limit of 0.0025 wavelength and an upper limit of 0.04 wavelength. The user can alter these values to suit a particular set of needs. However, for our example, let's use these values on each wire of the basic monopole model we have been using. We need to taper only the inner junction ends of each wire (although the user has the option to taper either or both ends). In the process of creating tapered-length elements, the program will replace each individual wire with a set of wires meeting the requirements. If we do this for the 32-radial monopole, we obtain a model using 165 wires and 330 segments--well within the program limitation of 500 segments per model. However, here are the results we obtain from the length-tapered model.</p>
+  <pre>Total       Total             Gain        Source Impedance
+Wires       Segments          dBi         R +/- jX Ohms
+165         330               1.39        35.9 + j 5.6</pre>
+  <p>The surprisingly high gain stems from an error we made in constructing the model. The tapered segment length increases when using a default system in a 2:1 ratio. Although the initial radial segments are the same length as the source segment, the segment on the monopole adjacent to the source segment is twice as long as the source segment. Let's go back and try again, using a bit of the data we obtained from our first try.</p>
+  <p>This time, we shall create a new wire that is .0025 wavelength long and running from 0.164 m to 0.574 m in the Z axis. Now we shall finish the vertical portion of the antenna with a second wire from the top of the first to the upper limit of the vertical. When we length taper the model, we shall skip the new wire. In this way, the first segment above the new wire will be the same length, as will be the inner wires of the radials.</p>
+  <p>Because length-tapering may be unfamiliar to some readers, here is the model description in EZNEC format.</p>
+  <pre>160-meter vertical w/radials:  length tapered         Frequency = 1.83  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : m )  Conn. --- End 2 (x,y,z : m )   Dia(mm) Segs
+1            0.000,  0.000, 40.164  W2E1   0.000,  0.000,  6.717 2.50E+02   6
+2     W1E2   0.000,  0.000,  6.717  W3E1   0.000,  0.000,  3.440 2.50E+02   1
+3     W2E2   0.000,  0.000,  3.440  W4E1   0.000,  0.000,  1.802 2.50E+02   1
+4     W3E2   0.000,  0.000,  1.802  W5E1   0.000,  0.000,  0.983 2.50E+02   1
+5     W4E2   0.000,  0.000,  0.983  W6E1   0.000,  0.000,  0.574 2.50E+02   1
+6     W5E2   0.000,  0.000,  0.574  W7E1   0.000,  0.000,  0.164 2.50E+02   1
+7    W12E1   0.000,  0.000,  0.164  W8E1   0.410,  0.000,  0.164 2.00E+00   1
+8     W7E2   0.410,  0.000,  0.164  W9E1   1.229,  0.000,  0.164 2.00E+00   1
+9     W8E2   1.229,  0.000,  0.164 W10E1   2.867,  0.000,  0.164 2.00E+00   1
+10    W9E2   2.867,  0.000,  0.164 W11E1   6.143,  0.000,  0.164 2.00E+00   1
+11   W10E2   6.143,  0.000,  0.164        40.966,  0.000,  0.164 2.00E+00   6
+12   W17E1   0.000,  0.000,  0.164 W13E1   0.402,  0.080,  0.164 2.00E+00   1
+13   W12E2   0.402,  0.080,  0.164 W14E1   1.205,  0.240,  0.164 2.00E+00   1
+14   W13E2   1.205,  0.240,  0.164 W15E1   2.812,  0.559,  0.164 2.00E+00   1
+15   W14E2   2.812,  0.559,  0.164 W16E1   6.025,  1.198,  0.164 2.00E+00   1
+16   W15E2   6.025,  1.198,  0.164        40.179,  7.992,  0.164 2.00E+00   6
+17   W22E1   0.000,  0.000,  0.164 W18E1   0.378,  0.157,  0.164 2.00E+00   1
+18   W17E2   0.378,  0.157,  0.164 W19E1   1.135,  0.470,  0.164 2.00E+00   1
+19   W18E2   1.135,  0.470,  0.164 W20E1   2.649,  1.097,  0.164 2.00E+00   1
+20   W19E2   2.649,  1.097,  0.164 W21E1   5.676,  2.351,  0.164 2.00E+00   1
+21   W20E2   5.676,  2.351,  0.164        37.848, 15.677,  0.164 2.00E+00   6
+22   W27E1   0.000,  0.000,  0.164 W23E1   0.341,  0.228,  0.164 2.00E+00   1
+23   W22E2   0.341,  0.228,  0.164 W24E1   1.022,  0.683,  0.164 2.00E+00   1
+24   W23E2   1.022,  0.683,  0.164 W25E1   2.384,  1.593,  0.164 2.00E+00   1
+25   W24E2   2.384,  1.593,  0.164 W26E1   5.108,  3.413,  0.164 2.00E+00   1
+
+(Many radials omitted to compress the model description.)
+
+141  140E2   2.351, -5.676,  0.164        15.677,-37.848,  0.164 2.00E+00   6
+142  147E1   0.000,  0.000,  0.164 143E1   0.228, -0.341,  0.164 2.00E+00   1
+143  142E2   0.228, -0.341,  0.164 144E1   0.683, -1.022,  0.164 2.00E+00   1
+144  143E2   0.683, -1.022,  0.164 145E1   1.593, -2.384,  0.164 2.00E+00   1
+145  144E2   1.593, -2.384,  0.164 146E1   3.413, -5.108,  0.164 2.00E+00   1
+146  145E2   3.413, -5.108,  0.164        22.760,-34.062,  0.164 2.00E+00   6
+147  152E1   0.000,  0.000,  0.164 148E1   0.290, -0.290,  0.164 2.00E+00   1
+148  147E2   0.290, -0.290,  0.164 149E1   0.869, -0.869,  0.164 2.00E+00   1
+149  148E2   0.869, -0.869,  0.164 150E1   2.027, -2.027,  0.164 2.00E+00   1
+150  149E2   2.027, -2.027,  0.164 151E1   4.344, -4.344,  0.164 2.00E+00   1
+151  150E2   4.344, -4.344,  0.164        28.968,-28.968,  0.164 2.00E+00   6
+152  157E1   0.000,  0.000,  0.164 153E1   0.341, -0.228,  0.164 2.00E+00   1
+153  152E2   0.341, -0.228,  0.164 154E1   1.022, -0.683,  0.164 2.00E+00   1
+154  153E2   1.022, -0.683,  0.164 155E1   2.384, -1.593,  0.164 2.00E+00   1
+155  154E2   2.384, -1.593,  0.164 156E1   5.108, -3.413,  0.164 2.00E+00   1
+156  155E2   5.108, -3.413,  0.164        34.062,-22.760,  0.164 2.00E+00   6
+157  162E1   0.000,  0.000,  0.164 158E1   0.378, -0.157,  0.164 2.00E+00   1
+158  157E2   0.378, -0.157,  0.164 159E1   1.135, -0.470,  0.164 2.00E+00   1
+159  158E2   1.135, -0.470,  0.164 160E1   2.649, -1.097,  0.164 2.00E+00   1
+160  159E2   2.649, -1.097,  0.164 161E1   5.676, -2.351,  0.164 2.00E+00   1
+161  160E2   5.676, -2.351,  0.164        37.848,-15.677,  0.164 2.00E+00   6
+162   W6E2   0.000,  0.000,  0.164 163E1   0.402, -0.080,  0.164 2.00E+00   1
+163  162E2   0.402, -0.080,  0.164 164E1   1.205, -0.240,  0.164 2.00E+00   1
+164  163E2   1.205, -0.240,  0.164 165E1   2.812, -0.559,  0.164 2.00E+00   1
+165  164E2   2.812, -0.559,  0.164 166E1   6.025, -1.198,  0.164 2.00E+00   1
+166  165E2   6.025, -1.198,  0.164        40.179, -7.992,  0.164 2.00E+00   6
+
+              -------------- SOURCES --------------
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1           1     6 / 50.00   (  6 /100.00)      1.000       0.000       I
+
+Ground type is Real, high-accuracy analysis
+Conductivity = .005 S/m    Diel. Const. = 13</pre>
+  <center>
+    <img src="amod38-6.gif" width="425" height="670" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> is a view of the length-tapered model above. Since the model begins with the upper end of the vertical element, the new wire is Wire 6, as also indicated by the source entry. The radials were developed by first creating and tapering one radial. Then the radial maker was applied to the substitute wire group to yield the remaining 31. The new model returns the following reports.</p>
+  <pre>Total       Total             Gain        Source Impedance
+Wires       Segments          dBi         R +/- jX Ohms
+Correctly length-tapered model
+166         331               0.93        39.9 + j 6.2
+20-segment per wire model
+33          660               1.03        39.2 + j 7.7
+10-segment per wire model
+33          330               1.14        38.2 + j 8.5</pre>
+  <p>The reports from the length-tapered segment model better approaches the reports for the 20-segment/wire model than does the reported data for the 330-segment (10 segments per wire) model. Moreover, the length-tapered model produces a gain figure in the direction that the progression toward convergence was taking when terminated at 30 segments per wire. Hence, it is in general a better model-type to use than simply reducing the segmentation density to a level deemed to be within program limitations.</p>
+  <p>These notes cover only a few of the elements of adequate radial system modeling. The escape from large models that we effected by length tapering each long wire may be adequate for simple vertical monopole systems. However, there are many larger radial systems used by multi-element vertical arrays. We shall not evade large models with them, although we shall take a look at their construction next time.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

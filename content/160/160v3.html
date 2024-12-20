@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="MF, Vertical">
+  <title>Modeling 160-Meter Vertical Arrays Part 3: Complex Radial Systems</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/hat.gif" align="left" width="72" height="84" border="2" vspace="5" hspace="9"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Modeling 160-Meter Vertical Arrays<br>
+    Part 3: Complex Radial Systems and<br>
+    Limitations of the MININEC (No-Radial) Ground</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>In our examination of 160-meter vertical antenna modeling, we have noted that it is advisable to model full ground radial systems in lieu of using short-cut methods. As well, models of</p>
+  <p>buried radial systems appear to replicate best actual buried radial systems. We also examined the effects of soil conductivity and permittivity on model predictions, and established that--within limits--the now-traditional soil types that range from Very Poor to Very Good provide a reasonable sampling of modeled vertical antenna behavior.</p>
+  <p>These results strongly suggest that anyone who wishes seriously to model 160-meter vertical antennas or arrays should develop some modeling techniques that allow the efficient development of radial systems. In this episode, we shall look at a few of these techniques. In addition, we shall also examine some further reasons for using them.</p>
+  <h3>Complex Radial System Construction</h3>With simple radial systems consisting of a single set of radials--however many may be required--the "radial-maker" facilities within commercial implementations of NEC provide the most rapid construction. We simply specify the radial parameters and how many we need, and the automated software does the rest. The actual mathematics of radials is fairly simple, but becomes tedious when done with a calculator. With a specimen radial of a certain length, we can obtain the angle for each succeeding radial by dividing the total number need into 360 degrees. If we set the first radial along the X-axis, then the angle and a little sine and cosine work will net us the X and Y coordinates of each radial. We need only calculate for the first 90 degrees of the circle, since the remaining radials will have the same absolute numerical values, with only sign changes to place the new radial in the proper quadrant.
+  <p>Length-tapering the radial elements (and the vertical element as well) proves useful, especially for buried radial systems. In such cases, we need at least a 1-segment wire from the surface (Z=0) to the buried radials. Since the source will be placed as low as possible on the main element above ground and since it is most accurate to have the segments on either side of the source the same length as the source segment, the segments near the junction of the element and radials often require very short lengths. With uniform segmentation, the models become exceptionally large if the radial system is larger than about 16 radials. By tapering the segment lengths toward the junction area to the shortest necessary length, we can reduce the size of the model and speed run times.</p>
+  <p>The technique in its simplest form--with a single set of 1-segment wires handling the source and radial junction region, as shown in Part 1 of this series--limits the main element diameter that we may model accurately. Using a 0.001 wavelength minimum segment length, which is about 0.164 m or 6.5" at 1.83 MHz, element diameters may be limited to something below this figure. Although linear elements may use segment length-to-diameter ratios as low as 1:1, more complex geometries may dictate a larger ratio, sometimes as high as 4:1. For any given case, convergence testing and the average gain test are both applicable to evaluating the adequacy of a model.</p>
+  <p>For fatter main elements or for radials buried at a shallow depth, we may wish to resort to a different technique of modeling radials. See <b>Fig. 1</b>. In this sketch, we have shallow radials and a "fat" main element. Let's suppose that the diameter is about 0.125 m and that we wish to maintain a 4:1 length-to-diameter ratio for each segment. The shortest segment length we can use is 0.5 m. Suppose also that the radials are at some shallow depth under the surface, perhaps 0.05 m. This figure is only 0.0003 wavelength. Using the simple technique of buried radial construction would involve us in modeling conflicts.</p>
+  <center>
+    <img src="1603-1.gif" width="688" height="435" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 1. Modeling tapered-length elements and radials for shallow radial systems or for large-diameter elements.
+  </center>
+  <p>However, we may slope our radials from the main element to the surface and then to the buried level portion of the radial. If the base of the main element is 0.05 m above ground, then two 1-segment wires per radial will satisfy NEC-4 requirements for the radial start. We may then length-taper the remaining portion of each radial. As well, we can set the length of the source region of the main element as a 1-segment wire that is 0.5 m long. Then the main element may be length-tapered above that point. In both cases, a minimum segment length of 0.5 m will satisfy the need for equal segment lengths on each side of the source segment.</p>
+  <center>
+    <img src="1603-2.gif" width="647" height="453" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 2. Simplified sketch of the junction between two intersecting radial systems.
+  </center>
+  <p>If we become serious about modeling 160-meter verticals, then we shall be placing each 1/4 wavelength monopole element on a radial system. For many designs, we may end up with overlapping radial systems. <b>Fig. 2</b> shows a 2-system example, simplified to 16 radials for clarity. Note that three of the radials overlap in this case. To prevent the calculating core from rejecting the model because wires intersect at "mid-segment" points, we can resort to several strategies. Displacing one radial system vertically is one possibility, although it leads to potential models that do not reflect the actual system design. Most overlapping radial systems end up with junctions of the radials that would otherwise overlap. The modeler should thus shorten the radials so that they form a junction along the line labels "radial junction line" in the sketch. The junction points may be connected with an actual modeled wire or left open, according the actual physical radial system being modeled.</p>
+  <center>
+    <img src="1603-3.gif" width="623" height="423" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 3. Simplified sketch of the junction between three intersecting radial systems.
+  </center>
+  <p>In some cases, we may have more than 2 intersecting radial systems. <b>Fig. 3</b> shows three systems, more closely spaced than the pair in <b>Fig. 2</b>. The more closely spaced the main elements in an array, the more intersecting radials we shall encounter. Perhaps the most complex system of which I am aware is a 5 element array, with 4 radial systems forming a square around the central system.</p>
+  <center>
+    <img src="1603-4.gif" width="553" height="418" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 4. Calculating the revised coordinates for intersecting radials.
+  </center>
+  <p>Recalculating the coordinates of radial ends so that the radial intersections are correctly placed and segmented is a straight forward process. <b>Fig. 4</b> can provide some guidance. Let the "main" radial system be centered at X=0 and Y=0. If we know the radial junction line coordinate for at least one axis, we can take the ratio of that coordinate relative to the coordinate of the full length radial. Since we are working with congruent triangles for each radial, the new coordinate in the other axis will be reduced by the same ratio. As well, in a uniformly segmented radial, the ratio will also determine the new level of segmentation for the shortened radial. The new coordinate and segmentation data will equally apply to the radial that intersects the one just calculated.</p>
+  <p>Although the work is a bit tedious, it is necessary to construct reasonably correct models of intersecting radial systems. For large systems, one might transfer the work to a utility program or a spreadsheet.</p>
+  <h3>Why Not Simplify?</h3>The detail work required to set up complex radial systems often leads modelers to accept short-cut methods that yield smaller, simpler models. The standard technique is to use a MININEC ground with no radials, with the attendant assumption that the results approximate those which one might obtain with a full radial system. I suspect that we had better test the assumption.
+  <center>
+    <img src="1603-5.gif" width="458" height="391" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 5. Using tilting 1/4 wavelength monopoles to test the limits of the MININEC no-radial ground system.
+  </center>
+  <p><b>Fig. 5</b> represents our initial test case. Let's set up a vertical over ground. We shall run the vertical over the standard 4 ground qualities (Very Poor, Poor, Good, and Very Good) using 3 systems. First is the MININEC ground with the vertical connected at its lower end directly to the surface--with no radials. The second system is a 32-radial array that is 0.001 wavelength above the ground. The third is a 32-radial array buried 0.001 wavelength below the surface. The choice of 32 radials stems from our observation in Part 1 that with this size radial system, we obtain the closest correlation among modeled results in NEC-4. Radials and the main element will be length- tapered for model economy. As always, the radial systems are set within the Sommerfeld-Norton ground calculation system.</p>
+  <p>Subsequently, we shall perform the same set of modeling runs with the main element tilted from vertical by 30 degrees, 45 degrees, and 60 degrees, as indicated in <b>Fig. 5</b>. If the simplified MININEC no-radial ground system is an adequate approximation of a 32-radial system, then the level of correlation that occurs with the main element exactly vertical should hold up for the tilt-tests.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 1.  40-m vertical monopole, 25 mm diameter; 40.96-m (0.25
+wavelength) radials, 2 mm diameter, tapered segmentation: 0.001
+to 0.04 wavelength per wire (where used); NEC-4.
+
+Soil Type      Gain           TO Angle       Source Impedance
+               dBi            degrees        R +/- J X Ohms
+
+A.  Antenna Vertical
+
+MININEC (no-radial) ground
+Very Poor      -1.00          27             37.08 + j  6.12*
+Poor            0.31          25             *MININEC Impedance
+Good            1.41          23             is over perfect
+Very Good       3.16          17             ground.
+
+32 Radials, 0.001 wavelength above ground
+Very Poor      -1.29          27             35.09 - j  3.55
+Poor            0.09          25             35.69 - j  1.05
+Good            1.04          22             37.24 + j  0.48
+Very Good       2.92          16             37.83 + j  2.46
+
+32 Radials, 0.001 wavelength below ground
+Very Poor      -1.61          27             44.89 + j  7.54
+Poor           -0.16          25             43.44 + j  9.55
+Good            0.86          22             42.67 + j 10.46
+Very Good       2.79          17             40.48 + j 10.03
+
+B.  Antenna Tilted 30 Degrees
+
+MININEC (no-radial) ground
+Very Poor       0.74          32             29.19 - j  0.42*
+Poor            1.37          29             *MININEC Impedance
+Good            1.97          25             is over perfect
+Very Good       3.13          18             ground.
+
+32 Radials, 0.001 wavelength above ground
+Very Poor      -0.23          31             26.46 - j  7.68
+Poor            0.79          27             26.64 - j  5.59
+Good            1.51          24             27.62 - j  4.19
+Very Good       3.10          18             27.95 - j  2.30
+
+32 Radials, 0.001 wavelength below ground
+Very Poor      -1.74          31             46.21 - j  1.30
+Poor           -0.26          28             40.20 + j  2.82
+Good            0.67          24             37.53 + j  5.67
+Very Good       2.48          18             33.65 + j  5.50
+
+C.  Antenna Tilted 45 Degrees
+
+MININEC (no-radial) ground
+Very Poor       1.77          36             20.36 - j 10.10*
+Poor            2.01          32             *MININEC Impedance
+Good            2.30          27             is over perfect
+Very Good       3.06          19             ground.
+
+32 Radials, 0.001 wavelength above ground
+Very Poor      -0.07          35             19.55 - j 14.31
+Poor            0.81          31             19.35 - j 12.65
+Good            1.45          26             19.77 - j 11.44
+Very Good       2.94          19             19.63 - j 10.39
+
+32 Radials, 0.001 wavelength below ground
+Very Poor      -2.05          35             39.46 - j  7.78
+Poor           -0.60          31             32.61 - j  3.80
+Good            0.32          26             29.35 - j  0.97
+Very Good       2.12          19             25.01 - j  1.96
+
+D.  Antenna Tilted 60 Degrees
+
+MININEC (no-radial) ground
+Very Poor       3.32          44             10.58 - j 25.59*
+Poor            3.05          37             *MININEC Impedance
+Good            2.93          31             is over perfect
+Very Good       3.07          21             ground.
+
+32 Radials, 0.001 wavelength above ground
+Very Poor      -0.08          38             11.33 - j 24.68
+Poor            0.74          34             10.77 - j 23.70
+Good            1.34          28             10.78 - j 22.95
+Very Good       2.70          21             10.48 - j 22.34
+
+32 Radials, 0.001 wavelength below ground
+Very Poor      -2.99          42             31.17 - j 16.75
+Poor           -1.51          35             23.80 - j 13.34
+Good           -0.55          30             20.15 - j 10.89
+Very Good       1.26          21             15.69 - j 13.14
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The results of the runs appear in <b>Table 1</b>. In portion A, the results are the same as those presented in Part 1 of this series. Perhaps the only serious departure from a reasonably close correlation of results lies in the source impedance values for the buried radial system.</p>
+  <center>
+    <img src="1603-6.gif" width="648" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 6. Gain reports over various ground qualities for a monopole tilted 30 degrees from vertical.
+  </center>
+  <p><b>Fig. 6</b> summarizes the gain data from portion B of the table. The gain data divergence for Very Poor soil has grown from 0.61 dB for the vertical main element to 2.48 dB for the element with a 30&deg; tilt, with lesser divergence as the soil quality improves. The MININEC ground shows a single impedance value, since it is calculated over perfect ground, while the above-ground radial system shows a tight set of values in the same region. However, the source impedance values for the buried-radial system show a wider spread and coincides with the spread of gain values.</p>
+  <center>
+    <img src="1603-7.gif" width="647" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 7. Gain reports over various ground qualities for a monopole tilted 45 degrees from vertical.
+  </center>
+  <p>The trends noted with respect to the 30-degree tilt model continue through the 45-degree and 60-degree models. Gain values data is summarized in <b>Fig. 7</b> and <b>Fig. 8</b> for these two cases. By the time we reach a 60-degree tilt, over Very Poor soil, the MININEC ground system shows a 3 dB advantage over the above-ground radial system, which in turn shows another 3 dB gain over the buried radial system.</p>
+  <center>
+    <img src="1603-8.gif" width="649" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 8. Gain reports over various ground qualities for a monopole tilted 60 degrees from vertical.
+  </center>
+  <p>The failure of the MININEC ground to track with the buried radial system stems from the known limitations of the MININEC ground calculation system. Any wire with a horizontal far-field component will display inaccurate results below about 0.2 wavelength from the surface. The error grows greater as we we place the wire closer to the surface. The inaccuracies show up not only in driven elements, but in any array in which one or more parasitic elements fall into the error-prone region of the MININEC ground system. Those inaccuracies affect elements with even the slightest tilt.</p>
+  <p>The "intermediate" level results obtained for the above- ground radial system are also suggestive. The departure of these results from the buried-radial system speak to the limitations of an above-ground radial system as an approximation of a buried radial system. Even in the case of the 32-radial system, the one showing the closest correlation between above-ground and buried radial systems for vertical elements, the divergence of results for tilted main elements suggest that the only good model of a buried-radial system is a buried-radial system model. Unfortunately, these results have economic consequences: since NEC-4 is the main vehicle for method-of-moments modeling of buried radial systems, serious modelers must obtain a license and then either develop their own interfaces or purchase one of the commercial implementations of the NEC-4 core. Outside the U.S., serious modelers may also encounter restrictions in licensure.</p>
+  <h3>A 2-Element Parasitic Vertical Array</h3>Lest the exercise using a tilted vertical be viewed as a Don Quixote sort of quest, let's look at an old standard sort of array using a single sloping parasitic element. We shall take a 25-mm diameter main element, 40 m long, as our driver. The choice of diameters permits us to use a simplified connection for the above-ground and buried radial systems. The parasitic reflector is a 2-mm diameter guy wire that meets the ground or the radial system and which terminates at the position specified in <b>Fig. 9</b>.
+  <center>
+    <img src="1603-9.gif" width="459" height="367" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 9. Outline of a 2-element parasitic vertical array using a sloping guy wire as the reflector.
+  </center>
+  <p>For our test runs, we shall use a MININEC ground with no radials, as is so often done in models of this and very closely similar arrays. We shall also run the model over above-ground and buried radial systems. The radial systems will be intersecting 32-radial arrays, with the line of intersection 13.5 m from each element. As always, we shall run the model over sample ground qualities ranging from Very Poor to Very Good.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Table 2.  2-element parasitic array:  driver = 40-m vertical
+monopole, 25 mm diameter; reflector = sloping 2-mm guy, 40.5 m
+long; intersecting 32 40.96-m (0.25 wavelength) radial system, 2
+mm diameter, tapered segmentation: 0.001 to 0.04 wavelength per
+wire (where used); NEC-4.
+
+Soil Type      Gain           TO Angle  Front-to Back       Source Impedance
+               dBi            degrees   Ratio dB            R +/- J X Ohms
+
+MININEC (no-radial) ground
+Very Poor       2.00          30        11.36               40.19 + j 53.02*
+Poor            3.34          26        14.25               *MININEC Impedance
+Good            4.62          24        17.11               is over perfect
+Very Good       6.36          18        19.50
+ground.
+
+32 Radials, 0.001 wavelength above ground
+Very Poor       0.96          30        11.45               65.61 + j 43.13
+Poor            2.23          27        11.56               65.99 + j 46.27
+Good            3.29          24        11.89               65.76 + j 47.90
+Very Good       5.13          17        12.86               59.82 + j 52.06
+
+32 Radials, 0.001 wavelength below ground
+Very Poor       0.97          29        10.79               61.71 + j 41.67
+Poor            2.36          27        10.80               58.24 + j 44.17
+Good            3.51          23        11.16               56.80 + j 46.49
+Very Good       5.50          18        11.36               52.90 + j 47.48
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="1603-10.gif" width="648" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 10. Gain reports for the 2-element array using MININEC and radial-system models.
+  </center>
+  <p><b>Table 2</b> summarizes the results of these runs. <b>Fig. 10</b> summarizes the gain data. For this system, in which the parasitic element forms an angle of about 34 degrees to the plane of the driver, both radial system gain reports are consistent for all of the soil types. However, the MININEC ground system reports gains that are about 1 dB higher for all soil types.</p>
+  <center>
+    <img src="1603-11.gif" width="644" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 11. Front-to-back ratio reports for the 2-element array using MININEC and radial-system models.
+  </center>
+  <p><b>Fig. 11</b> reveals an even greater weakness of the MININEC no- radial system for this type of array. The front-to-back figures for the two radial systems do not perfectly coincide, but are reasonably close for operational purposes. In contrast, the MININEC no-radial system shows a nearly linear increase in the front-to-back ratio as we move from one soil quality to the next better soil quality. Over Good soil (conductivity = 0.005, dielectric constant = 13), there is a full 5 dB over-estimation of the front-to-back ratio relative to either radial system.</p>
+  <center>
+    <img src="1603-12.gif" width="650" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 12. Source resistance reports for the 2-element array using MININEC and radial-system models.
+  </center>
+  <p>Similar divergences between the MININEC no-radial system of modeling vertical arrays and the two radial systems show up in the figures calculated for the source impedance. The reactances do not vary significantly among the models. However, as shown in <b>Fig. 12</b>, the source resistance values do vary considerably. The MININEC no-radial system calculates a single value over perfect ground--a value that fails to come close to the values calculated by either radial system. Interestingly, the buried-radial system shows a steadier decline in source resistance as we change soil types than does the above-ground system--another suggestion that neither one is a fully adequate approximation of the other.</p>
+  <center>
+    <img src="1603-13.gif" width="640" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    Fig. 13. Comparative elevation patterns for the 2-element array using the MININEC no-radial ground and using a 32-radial buried radial system.
+  </center>
+  <p>The different analyses of the array appear striking in elevation plots. <b>Fig. 13</b> overlays the MININEC pattern and the buried-radial pattern for Good soil. The differences are self-explanatory.</p>
+  <p>For practical modeling of vertical arrays, then, the MININEC no-radial system has serious shortcomings in approximating models of radial systems. Its use in serious modeling work is likely unjustified, given the availability of NEC facilities for modeling radial systems of any necessary size. Likewise, above- ground radial systems fail to track adequately with buried-radial systems so that the use of one as an approximation for the other becomes suspect without the modeler laying out situation-specific ground work to justify their use. Since that groundwork would necessarily involve the use of buried radials, one might as well model buried radials with buried radials.</p>
+  <p>I am well aware that 2 examples do not alone make a general case, let alone a trend. so in the final episode of this series, we shall examine a potpourri of antennas and some further antenna modeling issues related to 160-meter verticals.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 03-10-01. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> The National Contest Journal <i>(May/Jun., 2001), pp. 3-8. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="160v4.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 4</a></p>
+  <p><a href="160v.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Series Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#mf'>MF</a>, <a href='../topics.html#vertical'>Vertical</a></p><br>
+</body>
+</html>

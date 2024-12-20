@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, HF Lower">
+  <title>80-Meter Wire LPDAs</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>80-Meter Wire LPDAs</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>For many years, the <i>ARRL Antenna Book</i> has contained an LPDA for 80 meters that uses 4 elements and is arranged as both a forward-sloping Vee and an inverted Vee, with its ends close to the ground. It was carefully designed from basic LPDA design equations with a Tau of 0.845 and a Sigma of 0.06, resulting in a #14 copper wire array close to 50' from front to rear (ignoring the forward Vee extension).</p>
+  <p>Unfortunately, this array has a number of properties that reduce its potential performance:</p>
+  <ul>
+    <li>1. The elements are Vee'd forward, reducing gain and decreasing the front-to-side ratio.</li>
+    <li>2. The elements are modified inverted Vees, again reducing gain and decreasing the front-to-side ratio.</li>
+    <li>3. The array uses thin wire, reducing gain relative to elements of an optimal diameter.</li>
+    <li>4. The combination of Tau (0.845) and Sigma (0.06) alone yield a maximum free-space gain potential to well under 6 dBi.</li>
+  </ul>
+  <p>The combination of performance-degrading factors in this array strongly suggest that a redesign is in order. In these notes, I shall explore more adequate arrays for 80 meters. However, each will presume standard linear elements at right angles to the main array axis. In the course of these notes, we shall look at the question of optimal element size and how to simulate it with a wire array. We shall also examine some limits (and the reasons for those limits) of improving thin wire lower HF arrays with simulated fatter elements.</p>
+  <p><b>An Improved 6-Element Wire LPDA for 80 Meters</b></p>
+  <center>
+    <img src="80w-1.gif" width="310" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the outline of an LPDA using 6 elements, with a Tau of 0.8918 and a Sigma of 0.0702. The Tau and Sigma values are the initial values of the design. However, the element lengths have been optimized for the best performance across the 80-meter band (3.5-4.0 MHz) using standard circularized-Tau techniques. The final design--which might still be improved further with judicious experimentation--retains the original spacing, but 4 of the 6 elements have modified lengths.</p>
+  <p>Key to array performance is the element diameter, specified in the original design as 2". The elements are modeled as copper, although there is less than 0.02 dB difference between copper and aluminum when the elements are as fat as specified here.</p>
+  <p>The following table provides the wire specifications in the form of a NEC wire table. The phase line has a characteristic impedance of 100 Ohms.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3-4.5 MHz t=.89 s=.07                  Frequency = 4  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+
+1            0.000,-76.000,  0.000         0.000, 76.000,  0.000 2.00E+00  91
+2           21.346,-67.800,  0.000        21.346, 67.800,  0.000 2.00E+00  81
+3           40.382,-60.500,  0.000        40.382, 60.500,  0.000 2.00E+00  73
+4           57.358,-55.500,  0.000        57.358, 55.500,  0.000 2.00E+00  65
+5           72.498,-51.000,  0.000        72.498, 51.000,  0.000 2.00E+00  59
+6           86.000,-47.500,  0.000        86.000, 47.500,  0.000 2.00E+00  53
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1          27     6 / 50.00   (  6 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The performance of this array is quite good for an 86' long LPDA on 80 meters, with an average free-space gain of about 6.9 dBi across the band. Whether the performance can be maintained in practice depends, of course, on the ability of the builder to raise the antenna to a height where horizontally polarized antennas perform well over desired propagation paths. The front-to-back ratio is above 20 dB across the band.</p>
+  <p>The use of 2" diameter elements on 80 meters is exceptionally rare, given the need for elements that are at their longest 152'. As an experiment, I took the same array and tested it in model form using #12 AWG wire (0.0808" diameter). Interestingly, the average free-space gain dropped to about 5.9 dBi with an average front-to-back ratio of about 13.5 dB. The loss of a full dB of gain in the move from 2" to 0.0808" element diameters seemed less than desirable.</p>
+  <p>Therefore, I reconstructed the elements from 2 parallel wires in accord with the sketch in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="80w-2.gif" width="533" height="303" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The principle, as I have elsewhere noted, consists in taking a representative element in the array and finding its self-resonant frequency. Then, I constructed a model of a two-wire element of the same length and varied the spacing between the wires until it was resonant at the same frequency. In the present exercise, a spacing of between 10 and 12 inches proved to be close to precise, with a remnant reactance of under 10 Ohms at the widest spacing used.</p>
+  <p>For modeling simplicity, I used the 12" spacing, which translates into 1 foot (or a shortest segment length of 0.5'). See <b>Fig. 3</b>.</p>
+  <center>
+    <img src="80w-3.gif" width="632" height="168" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> shows the element model. The center portion is (for this model) 1.5' long and consists of 3 segments to ensure that the source segment is equal in length to the segments adjacent to it. The single wire is also necessary within the LPDA array, since the phase-line must meet a single wire segment at each element in the array. On each side of center, single segment wires, each 0.5' long, connect the center wire to the parallel wires that constitute the bulk of the elements. These wires, which have the same number of segments to sustain parallel segment junctions throughout, are connected together at the outer ends with 2-segment wires. The 11-wire element constitutes a reasonably fair model of the 2-wire element.</p>
+  <p>The attention to segment lengths at the center-most part of the element allowed me to reduce the number of segments in the long wires. Ideally, the segment length should be 0.5' throughout the model, which would have resulted in about 150 segments per long wire in the longest element. However, reducing the number to about 50 yielded a change of reactance in the test element of under 5 Ohms. So reduced segmentation--but still with parallel segment junctions--was used in the final array model. For reference, the following partial table shows just 2 elements of the modified array.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+80, t=.89 s=.07                              Frequency = 3.5  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+
+1     W2E1   0.000,-76.000, -0.500  W3E1   0.000,-76.000,  0.500    # 12    2
+2     W1E1   0.000,-76.000, -0.500  W4E1   0.000, -0.750, -0.500    # 12   51
+3     W1E2   0.000,-76.000,  0.500  W5E1   0.000, -0.750,  0.500    # 12   51
+4     W2E2   0.000, -0.750, -0.500  W5E2   0.000, -0.750,  0.000    # 12    1
+5     W3E2   0.000, -0.750,  0.500  W6E1   0.000, -0.750,  0.000    # 12    1
+6     W4E2   0.000, -0.750,  0.000  W7E1   0.000,  0.750,  0.000    # 12    3
+7     W8E1   0.000,  0.750,  0.000  W9E1   0.000,  0.750, -0.500    # 12    1
+8     W6E2   0.000,  0.750,  0.000 W10E1   0.000,  0.750,  0.500    # 12    1
+9     W7E2   0.000,  0.750, -0.500 W11E1   0.000, 76.000, -0.500    # 12   51
+10    W8E2   0.000,  0.750,  0.500 W11E2   0.000, 76.000,  0.500    # 12   51
+11    W9E2   0.000, 76.000, -0.500 W10E2   0.000, 76.000,  0.500    # 12    2
+12   W13E1  21.346,-67.800, -0.500 W14E1  21.346,-67.800,  0.500    # 12    2
+13   W12E1  21.346,-67.800, -0.500 W15E1  21.346, -0.750, -0.500    # 12   46
+14   W12E2  21.346,-67.800,  0.500 W16E1  21.346, -0.750,  0.500    # 12   46
+15   W13E2  21.346, -0.750, -0.500 W16E2  21.346, -0.750,  0.000    # 12    1
+16   W14E2  21.346, -0.750,  0.500 W17E1  21.346, -0.750,  0.000    # 12    1
+17   W15E2  21.346, -0.750,  0.000 W18E1  21.346,  0.750,  0.000    # 12    3
+18   W19E1  21.346,  0.750,  0.000 W20E1  21.346,  0.750, -0.500    # 12    1
+19   W17E2  21.346,  0.750,  0.000 W21E1  21.346,  0.750,  0.500    # 12    1
+20   W18E2  21.346,  0.750, -0.500 W22E1  21.346, 67.800, -0.500    # 12   46
+21   W19E2  21.346,  0.750,  0.500 W22E2  21.346, 67.800,  0.500    # 12   46
+22   W20E2  21.346, 67.800, -0.500 W21E2  21.346, 67.800,  0.500    # 12    2
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The use of the twin-wire (#12 AWG) elements restored much of the performance to the array--on average about 80% of the performance lost in going from a 2" element to a #12 single wire element. The average free-space gain rose to over 6.6 dBi, with an average front-to-back ratio of over 20 dB.</p>
+  <p>However, a better measure of appreciating how well the double-wire elements simulate the tubular elements can be gleaned from some graphs.</p>
+  <center>
+    <img src="80w-4.gif" width="644" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the free-space gain across 80 meters a 0.05 MHz intervals. Not only is the double-wire curve much higher on average than the single wire curve; as well, it parallels the 2" element curve very closely. The single-wire curve peaks at a quite different frequency from the peak for the upper two curves.</p>
+  <center>
+    <img src="80w-5.gif" width="644" height="529" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 5</b>, for the front-to-back ratio, we find a similar pattern, with the 2" element and the double-wire curves not only higher, but also more parallel than the curves for the single thin-wire version of the antenna.</p>
+  <center>
+    <img src="80w-6.gif" width="585" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Perhaps the least significant set of differences can be found in the 50-Ohm VSWR curve for the three versions of the array shown in <b>Fig. 6</b>. All would be acceptable 80-meter SWR curves. I shall note in passing that these curves are easy to obtain with experimental modeling shifts in the phase-line characteristic impedance. However, the original design equations called for a phase-line impedance of closer to 200 Ohms, with the illusion of needing a matching device for a coaxial feedline for the array.</p>
+  <p>The ability of a simple 2-wire element to restore most of the performance to the array arises from the fact that an LPDA--like any multi-element array--derives its performance not only from driving the elements, but as well from the mutual coupling between elements. The simulated fat elements, composed of wide-spaced wires, indeed has close to the same mutual coupling between array elements as the fat-wire model.</p>
+  <p>What differs between the 2-wire model and the fatter single-element version is the overall efficiency of the antenna. With 2" elements, the array is about 99.7% efficient, with losses due to material resistance that are a small fraction of 1%. The single #12 wire version is about 95.9% efficient, with over 4% material losses. The double-wire version reaches an efficiency of about 97.1%, which is only about a third of the way above the efficiency of the single-wire version toward the fat-element version. In short, the double-wire version of the antenna cannot restore all of the performance of the fat-wire version because it cannot decrease wire losses to the level of a single fat element. However, it can restore a large portion of the mutual coupling lost by using a single then wire for each element.</p>
+  <p>The process of restoring performance has a limit, and another LPDA design can illustrate this limit.</p>
+  <p><b>A 14-Element Wire LPDA for 80 Meters</b></p>
+  <p>By judiciously changing the values of Tau and Sigma, it is possible to arrive at an LPDA design with even better performance than we have so far attained. <b>Fig. 7</b> shows the outline of a 14-element 88.5' long array, again, initially using 2" elements.</p>
+  <center>
+    <img src="80w-7.gif" width="310" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The new array uses a Tau of 0.96 and a Sigma of 0.03 to pack the large number of elements into the prescribed space. Again, the phase-line characteristic impedance is 100 Ohms to arrive at a 50-Ohm feedpoint impedance. The following table shows the dimensions.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+80m t=.96 s=.03                              Frequency = 4  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+
+1            0.000,-72.500,  0.000         0.000, 72.500,  0.000 2.00E+00  25
+2            8.603,-69.000,  0.000         8.603, 69.000,  0.000 2.00E+00  25
+3           16.862,-66.071,  0.000        16.862, 66.071,  0.000 2.00E+00  23
+4           24.790,-63.428,  0.000        24.790, 63.428,  0.000 2.00E+00  23
+5           32.402,-60.891,  0.000        32.402, 60.891,  0.000 2.00E+00  21
+6           39.709,-58.455,  0.000        39.709, 58.455,  0.000 2.00E+00  21
+7           46.723,-56.117,  0.000        46.723, 56.117,  0.000 2.00E+00  19
+8           53.457,-53.872,  0.000        53.457, 53.872,  0.000 2.00E+00  19
+9           59.922,-51.717,  0.000        59.922, 51.717,  0.000 2.00E+00  19
+10          66.128,-49.649,  0.000        66.128, 49.649,  0.000 2.00E+00  17
+11          72.086,-47.663,  0.000        72.086, 47.663,  0.000 2.00E+00  17
+12          77.805,-46.000,  0.000        77.805, 46.000,  0.000 2.00E+00  17
+13          83.296,-45.000,  0.000        83.296, 45.000,  0.000 2.00E+00  15
+14          88.567,-43.500,  0.000        88.567, 43.500,  0.000 2.00E+00  15
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           8    14 / 50.00   ( 14 / 50.00)      0.707       0.000       V
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Like the smaller array, this design employs a measure of circularized Tau to obtain better performance than provided by the initial design taken from LPDA equations. The rear-most 2 and the forward-most 3 elements have been modified, and further refinement may be possible.</p>
+  <p>With 2" elements, the array has an average free-space gain across 80 meters of nearly 7.6 dBi, with an average front-to-back ratio of about 20 dB. A single #12 wire version of the antenna achieves an average free-space gain of about 6.75 dBi, about 0.8 dB lower than the fat-element version. Interestingly, the single-wire version of the antenna has an average front-to-back ratio of about 25 dB, about 5 dB higher than that of the fat-element version.</p>
+  <p>The same techniques used with the smaller array were applied to the 14-element LPDA to produce a double wire version. The resulting array model had over 2300 segments, even using the reduced levels of segmentation in the long parallel sections of each double-wire element. The resulting array showed an average free-space gain of about 7.1 dBi, less than half way toward the fat-element version from the single-wire model. The average front-to-back ratio was about 21 dB, close to the value of the fat-element version.</p>
+  <center>
+    <img src="80w-8.gif" width="646" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the gain curves for the three models. The double-wire and fat-wire versions are very synchronous, while the single-wire model curve shows divergent frequencies for its peaks and valleys.</p>
+  <center>
+    <img src="80w-9.gif" width="646" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 9</b>, we see much the same results. The fat-wire and double-wire curves are closely matched, while the single-wire takes a direction of its own--and at a higher average level of front-to-back ratio.</p>
+  <center>
+    <img src="80w-10.gif" width="585" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In keeping with the front-to-back curves, <b>Fig. 10</b> shows 50-Ohm VSWR curves that are very similar for the fat-wire and double wire models. In contrast, although still a very flat curve, the single-wire SWR curve shows a progression of its own.</p>
+  <p>Initially, one might have expected a relatively uniform performance upgrade relative to that shown for the 6-element LPDA. However, 2 factors count against that expectation.</p>
+  <p>First, the efficiency of the larger array is inherently lower than that of the small LPDA. The fat-element version has an efficiency of about 99.2%, against a single #12 wire version efficiency of 88.5%. Doubling the wires for each element only raises the efficiency to 90.8%, a gain of 2.3% but still 8.4% shy of the fat wire model. From an efficiency perspective alone, the ability of the double-wire version to restore most of the performance of the fat-wire version is limited.</p>
+  <p>However, we should have also noted the fact that the LPDA front-to-back ratio decreased as we moved from the thin-wire to the fat-wire model. This fact suggests that the most closely spaced elements of the 14-element array are already over-coupled when using fat elements. Gain increases with wire size are largely functions of increased efficiency rather than superior mutual coupling between elements. The following table provides the key performance reports of NEC for the same 14-element array using a variety of element diameters ranging from the single-wire #12 AWG version up to and including the 2: element version. The progression may prove interesting for data taken at 3.75 Hz.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+El. Dia.    Gain        F-B Ratio         Feed Impedance          50-Ohm
+ inches     dBi         dB                R+/-jX Ohms             VSWR
+0.0808      6.80        26.25             62.9 - j 4.4            1.28
+0.25        7.24        23.57             60.2 - j 6.9            1.25
+0.5         7.37        21.91             55.0 - j 9.2            1.22
+1.0         7.45        20.65             46.8 + j 8.2            1.20
+1.5         7.48        20.03             42.3 - j 4.9            1.22
+2.0         7.50        19.68             40.1 - j 1.5            1.25
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The largest increment of gain occurs with the first move that increases the element diameter by a factor of 3. As well, the front-to-back ratio also shows its steepest decrease. Above that level, performance stabilizes within a quite narrow range.</p>
+  <p>The result for this particular model is a set of alternative building strategies. One might go to the trouble of constructing 14 sets of double-wire elements. However, one can get as much performance improvement of the single-thin-wire model by simply using 0.25" wire, either copper or aluminum--the latter being lighter.</p>
+  <p><b>An Alternative Method of Modeling 2-Wire LPDA Elements</b></p>
+  <p>The method used in these notes to model the 2-wire substitute elements for an LPDA results in a very large model. The model of the 14-element array used 154 wires and 2334 segments. Even the smaller 6-element LPDA required 66 wires and 1010 segments for the 2-wire substitute.</p>
+  <p>There is a technique that results in smaller models with respect to the number of wires and segments, although the number of TL-transmission lines does increase. An increase in TL entries does not materially increase the run time of a model. Nor does it press any program limitations for the number of allowable segments. Consequently, the alternative method does have some advantages for the LPDA modeler. Therefore, consider <b>Fig. 11</b>.</p>
+  <center>
+    <img src="80w-11.gif" width="614" height="286" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The sketch shows the modeling structure--reduced to the forward 2 elements of a full array. The sketch presumes that the modeler creates a single 4-wire loop for each element, proceeding in a counter-clockwise direction as he adds wires to make the loop. With only 4 wires, the modeler has already saved 7 wires per element in the process. Moreover, each wire can use longer segment lengths, thus reducing the number of segments per element by as much as half to two-thirds.</p>
+  <p>The presumption that the element loop was created by going "around the horn" with wires creates an interesting situation with respect to the TL (transmission line) entries for the phase line. With a single wire assembly per element (or the single-wire central sections to the earlier technique for creating double-wire elements), each TL entry would be set to "Reverse" rather than to "Normal" in order to simulate the phase reversal between elements. In the new technique, using the presumed method of forming elements, we want to have both wires of each element connected in parallel, with a phase reversal between elements.</p>
+  <p>To achieve this goal, we must remember that our method of forming elements has reversed the direction of current. Therefore, to simulate a direct parallel connection between the two closely spaced wires, we must use a reverse connection of the tiny TL line between them. We can make the line that creates the parallel connection as short as we wish, since the line is mathematical only--and the physical distance between wires makes no difference. A TL entry for a length as short is 0.001 foot (since the model is in feet) will do fine.</p>
+  <p>Between elements, we wish to have a phase reversal. However, the current directions of the two wires we connect are already opposite in phase. Therefore, we use a "Normal" TL line entry for the "actual" distance between wires. The following extracts from an LPDA model using this technique will demonstrate the process further.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3-4.5 MHz t=.89 s=.07                         Frequency = 4  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+
+1     W4E2   0.000,-72.500,  0.000  W2E1   0.000, 72.500,  0.000    # 12   57
+2     W1E2   0.000, 72.500,  0.000  W3E1   0.000, 72.500,  1.000    # 12    1
+3     W2E2   0.000, 72.500,  1.000  W4E1   0.000,-72.500,  1.000    # 12   57
+4     W3E2   0.000,-72.500,  1.000  W1E1   0.000,-72.500,  0.000    # 12    1
+5     W8E2   8.603,-69.000,  0.000  W6E1   8.603, 69.000,  0.000    # 12   53
+6     W5E2   8.603, 69.000,  0.000  W7E1   8.603, 69.000,  1.000    # 12    1
+7     W6E2   8.603, 69.000,  1.000  W8E1   8.603,-69.000,  1.000    # 12   53
+8     W7E2   8.603,-69.000,  1.000  W5E1   8.603,-69.000,  0.000    # 12    1
+9    W12E2  16.862,-66.071,  0.000 W10E1  16.862, 66.071,  0.000    # 12   51
+10    W9E2  16.862, 66.071,  0.000 W11E1  16.862, 66.071,  1.000    # 12    1
+11   W10E2  16.862, 66.071,  1.000 W12E1  16.862,-66.071,  1.000    # 12   51
+12   W11E2  16.862,-66.071,  1.000  W9E1  16.862,-66.071,  0.000    # 12    1
+. . .
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1          17    55 / 50.00   ( 55 / 50.00)      0.707       0.000       V
+
+No loads specified
+
+                -------- TRANSMISSION LINES ---------
+
+Line  Wire #/% From End 1   Wire #/% From End 1    Length       Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)                Ohms Fact Norm
+
+1      1/50.0  (  1/50.0)    3/50.0  (  3/50.0)    0.001 ft   100.0  1.00  R
+2      3/50.0  (  3/50.0)    5/50.0  (  5/50.0)  Actual dist  100.0  1.00  N
+3      5/50.0  (  5/50.0)    7/50.0  (  7/50.0)    0.001 ft   100.0  1.00  R
+4      7/50.0  (  7/50.0)    9/50.0  (  9/50.0)  Actual dist  100.0  1.00  N
+5      9/50.0  (  9/50.0)   11/50.0  ( 11/50.0)    0.001 ft   100.0  1.00  R
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The "wires" portion of the table shows the rear 3 elements of an LPDA composed of 2-wire elements. The 4 "Transmission Line" entries show the portions of the phase line connecting these elements. TLs 1, 3, and 5 are clearly the connections within each element, while lines 2 and 4 interconnect elements.</p>
+  <p>Some modelers run all long wires either left-to-right or right-to-left. Had we used this convention, the short TL within an element would require a "Normal" connection and the inter-element phase lines would require a "Reverse" connection. Either system will yield accurate results in terms of antenna performance, but mixed systems will result in bewildering outputs.</p>
+  <p>The alternative modeling system for LPDA double-wire elements may in fact produce more accurate results. At least the results are a bit more coincident with those for the single fat elements that the double-wire versions replace. The following short tables summarize for each of the two different LPDA designs the key parameters for 3.5, 3.75, and 4 MHz.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6-element LPDA Model Performance
+Frequency     Gain     Front-to     Feedpoint Impedance     50-Ohm
+   MHz        dBi      Back Ratio     R +/- jX Ohms          VSWR
+2" Elements
+  3.5         7.04      23.91         59.9 - j 16.5          1.418
+  3.75        6.78      22.51         52.8 + j 11.1          1.248
+  4.0         6.78      27.13         92.2 + j 10.3          1.875
+Double-Wire Model: Initial Method
+  3.5         6.83      23.84         58.3 - j 13.3          1.336
+  3.75        6.49      19.99         55.8 + j 14.6          1.346
+  4.0         6.59      26.65         90.8 + j  4.6          1.822
+Double-Wire Model: Revised Method
+  3.5         6.87      23.18         60.4 - j 15.5          1.402
+  3.75        6.58      20.82         54.7 + j 12.6          1.291
+  4.0         6.57      25.46         90.8 + j 12.4          1.864
+
+14-element LPDA Model Performance
+Frequency     Gain     Front-to     Feedpoint Impedance     50-Ohm
+   MHz        dBi      Back Ratio     R +/- jX Ohms          VSWR
+2" Elements
+  3.5         7.67      18.84         61.5 + j  3.1          1.239
+  3.75        7.50      19.68         40.1 - j  1.5          1.250
+  4.0         7.49      21.52         58.4 - j  5.3          1.202
+Double-Wire Model: Initial Method
+  3.5         7.21      22.11         60.3 - j  3.8          1.220
+  3.75        7.06      20.54         44.3 + j  5.2          1.178
+  4.0         7.03      20.64         50.3 - j 15.2          1.352
+Double-Wire Model: Revised Method
+  3.5         7.27      20.33         60.7 + j  2.7          1.221
+  3.75        7.10      20.02         42.9 - j  0.0          1.165
+  4.0         7.10      21.33         58.7 - j  9.0          1.259
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Operationally, the differences between the two double-wire substitutes for 2" tubular elements are insignificant. However, in terms of finding the most adequate model of the 2-wire substitute, both alternatively modeled 2-wire arrays show a slightly greater coincidence with the fat-wire model in terms of the parallel of changes of values. Note, for example, the dip in the gain curve of the original substitute element model, compared to the way in which the new model changes values. As well, the impedance values--in terms both of values and of the type of reactance--of the new method more closely match those of the basic model. In short, the alternate method of modeling double-wire LPDAs may result in both smaller and slightly more accurate models.</p>
+  <p><b>Alternative Designs</b></p>
+  <p>Between 6 and 14 elements, there is a great design space for the individual who wishes to eventually build an LPDA for 80 meters. To save some initial effort in evaluating what different designs might do within the space allocated for the array, I have calculated and then modified for relatively (but not perfectly) optimized performance a collection of LPDA designs ranging from 6 to 14 elements. All except the 14-element version are limited to 86' in length, with the longest one being about 88.5' in total length. All use 100-Ohm phase lines. Other values can be used but would require an impedance matching network or device at the array feedpoint. As well, higher phase line values may slightly alter the performance curves--in places showing slight gain reductions.</p>
+  <p>As we have seen from the graphs presented earlier, every LPDA exhibits peaks and valleys of gain, front-to-back ratio, feedpoint impedance, and SWR. However, for initial evaluations, we can use average values, since the gain changes are under 0.3 dB in the worst case. Only the longest LPDA in the collection shows front- to-back values under 20 dB. The average value of the 50-Ohm SWR is a reasonably good indicator of the impedance swing range. The "Model" label indicates the approximate values of Tau and Sigma. All models use 2" copper elements, and further on, we shall note the potential of these models for conversion to double- wire substitutes.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Average Performance Values of 80-Meter LPDAs
+Model       Gain        F-B         SWR
+8907-6      6.86        24.33       1.517
+9205-8      7.10        26.74       1.420
+9404-10     7.18        25.91       1.378
+9503-12     7.26        25.40       1.186
+9603-14     7.55        19.95       1.230
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>As we would expect, the gain increases steadily as we increase the number of elements. However, the front-to-back ratio peaks with the 8-element design. This peak is a rough indication that, with respect to the front-to-back ratio, optimal inter-element coupling occurs with the spacings of this array. We may also note that the average SWR decreases steadily until at the 1.25:1 region, differences no longer make a difference. As well, impedance swings decrease in step with the average SWR.</p>
+  <p>Selecting an array to replicate is always a composite judgment based on many factors. The more elements, the higher the gain, but not necessarily a higher the front-to-back ratio. If we translate the designs into double wire elements, then we must also consider the fact that as we increase the number of elements, the lower the return rate to full 2"-element performance due to a decreasing efficiency (added material losses) as we add more double-wire elements.</p>
+  <p>In broadest terms, perhaps the 8- and 10-element arrays show the most promise. They provide a useful increment of gain above the 6-element LPDA and provide peak front-to-back performance. Using double-wire elements will allow the wire array to more closely approximate the performance of the fat-element model with these smaller arrays than with the longest versions in the set. The prospective builder can interpolate from the 6-element and the 14-element figures the likely performance figures for double-wire versions of these intermediate arrays. The overall array weight of the 8- and 10-element LPDAs is also likely to be more manageable than the weight of larger models.</p>
+  <p>For reference, the following wire-tables of the models will provide enough guidance to replicate as models or in wire any of the designs discussed.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8907-6 elements
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in)
+
+1            0.000,-76.000,  0.000         0.000, 76.000,  0.000 2.00E+00
+2           21.346,-67.800,  0.000        21.346, 67.800,  0.000 2.00E+00
+3           40.382,-60.500,  0.000        40.382, 60.500,  0.000 2.00E+00
+4           57.358,-55.500,  0.000        57.358, 55.500,  0.000 2.00E+00
+5           72.498,-51.000,  0.000        72.498, 51.000,  0.000 2.00E+00
+6           86.000,-47.500,  0.000        86.000, 47.500,  0.000 2.00E+00
+
+9205-8 elements
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in)
+
+1            0.000,-75.500,  0.000         0.000, 75.500,  0.000 2.00E+00
+2           15.494,-69.500,  0.000        15.494, 69.500,  0.000 2.00E+00
+3           29.771,-64.563,  0.000        29.771, 64.563,  0.000 2.00E+00
+4           42.928,-60.000,  0.000        42.928, 60.000,  0.000 2.00E+00
+5           55.050,-55.500,  0.000        55.050, 55.500,  0.000 2.00E+00
+6           66.221,-51.500,  0.000        66.221, 51.500,  0.000 2.00E+00
+7           76.515,-48.000,  0.000        76.515, 48.000,  0.000 2.00E+00
+8           86.000,-44.500,  0.000        86.000, 44.500,  0.000 2.00E+00
+
+9404-10 elements
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in)
+
+1            0.000,-75.500,  0.000         0.000, 75.500,  0.000 2.00E+00
+2           12.160,-71.000,  0.000        12.160, 71.000,  0.000 2.00E+00
+3           23.570,-66.953,  0.000        23.570, 66.953,  0.000 2.00E+00
+4           34.277,-62.826,  0.000        34.277, 62.826,  0.000 2.00E+00
+5           44.324,-58.700,  0.000        44.324, 58.700,  0.000 2.00E+00
+6           53.752,-55.800,  0.000        53.752, 55.800,  0.000 2.00E+00
+7           62.599,-53.000,  0.000        62.599, 53.000,  0.000 2.00E+00
+8           70.900,-49.500,  0.000        70.900, 49.500,  0.000 2.00E+00
+9           78.690,-47.500,  0.000        78.690, 47.500,  0.000 2.00E+00
+10          86.000,-45.000,  0.000        86.000, 45.000,  0.000 2.00E+00
+
+9503-12 elements
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in)
+
+1            0.000,-75.500,  0.000         0.000, 75.500,  0.000 2.00E+00
+2           10.006,-71.800,  0.000        10.006, 71.800,  0.000 2.00E+00
+3           19.504,-68.519,  0.000        19.504, 68.519,  0.000 2.00E+00
+4           28.521,-65.044,  0.000        28.521, 65.044,  0.000 2.00E+00
+5           37.081,-61.746,  0.000        37.081, 61.746,  0.000 2.00E+00
+6           45.206,-58.614,  0.000        45.206, 58.614,  0.000 2.00E+00
+7           52.919,-55.641,  0.000        52.919, 55.641,  0.000 2.00E+00
+8           60.241,-53.000,  0.000        60.241, 53.000,  0.000 2.00E+00
+9           67.192,-52.000,  0.000        67.192, 52.000,  0.000 2.00E+00
+10          73.790,-48.500,  0.000        73.790, 48.500,  0.000 2.00E+00
+11          80.054,-46.500,  0.000        80.054, 46.500,  0.000 2.00E+00
+12          86.000,-44.500,  0.000        86.000, 44.500,  0.000 2.00E+00
+
+
+9603-14 elements
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in)
+
+1            0.000,-72.500,  0.000         0.000, 72.500,  0.000 2.00E+00
+2            8.603,-69.000,  0.000         8.603, 69.000,  0.000 2.00E+00
+3           16.862,-66.071,  0.000        16.862, 66.071,  0.000 2.00E+00
+4           24.790,-63.428,  0.000        24.790, 63.428,  0.000 2.00E+00
+5           32.402,-60.891,  0.000        32.402, 60.891,  0.000 2.00E+00
+6           39.709,-58.455,  0.000        39.709, 58.455,  0.000 2.00E+00
+7           46.723,-56.117,  0.000        46.723, 56.117,  0.000 2.00E+00
+8           53.457,-53.872,  0.000        53.457, 53.872,  0.000 2.00E+00
+9           59.922,-51.717,  0.000        59.922, 51.717,  0.000 2.00E+00
+10          66.128,-49.649,  0.000        66.128, 49.649,  0.000 2.00E+00
+11          72.086,-47.663,  0.000        72.086, 47.663,  0.000 2.00E+00
+12          77.805,-46.000,  0.000        77.805, 46.000,  0.000 2.00E+00
+13          83.296,-45.000,  0.000        83.296, 45.000,  0.000 2.00E+00
+14          88.567,-43.500,  0.000        88.567, 43.500,  0.000 2.00E+00
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p><b>Conclusion</b></p>
+  <p>80-meter wire LPDAs can be effective horizontally polarized antennas for the entire band if they are better designed than past versions. Minimally, I would recommend the 6-element 86' long model as an array whose effort at construction and mounting would be rewarded by decent performance. The double-wire version is apt for fixed installations, while--for certain builders with abilities matching the mass--the use of large tubular elements might well permit rotation of the antenna.</p>
+  <p>Further increments of performance will require larger arrays, such as the 14-element 88' LPDA noted in the design exercise. However, because the elements have already reached the limits of their inter-element coupling, the double-wire version may be more work than is worth the effort. The use of a larger wire size--0.25" or greater--may be the best way to improve performance above the level one can obtain from a single #12 wire.</p>
+  <p>Along the way, we have seen that the double-wire simulation of fat elements has a limit. The more elements to the array, the less the double-wire element can effectively restore performance lost when using single thin wires. Mutual coupling varies with several variables, including element spacing, element diameter, and frequency. The peaks and valleys evident in both gain and front-to-back curves for LPDAs arise largely because the mutual coupling among the most active elements does vary with frequency--variations which also yield changes in the current magnitude on each element in the array. The peaks and valleys in the performance curves are not coincident for both gain and the front-to-back ratio, suggesting that the optimal mutual coupling conditions for one parameter are not necessarily optimum for the other. However, since many elements are simultaneously active to a significant, if not controlling, degree, exacting formulations of the relationships lie beyond the realm of modeling. Nevertheless, in revealing the coincidence and displacement of curves as we vary the element diameter of the elements, modeling can show the effects of changes in coupling among elements.</p>
+  <p>The upshot of these exercises is this: it pays to explore a given design in many different kinds of models before deciding on the best method of construction.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 04-01-2002. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for March, 2002. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#lpda'>LPDA</a></p><br>
+</body>
+</html>

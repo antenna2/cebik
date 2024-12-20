@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GM: Coordinate Transformation</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>61. GM: Coordinate Transformation</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Most NEC-2 readers of this series employ entry level programs, such as EZNEC or NEC-Win Plus. These programs limit the wire inputs available to the user to GW (Wire Geometry), GS (Scale Structure Dimensions), and GE (End Geometry Inputs) for the geometry portion of the model. Moreover, to one degree or another, these lines are invisible, as the user focuses on a wire table, supplemented by a "unit of measure" input. The end result, however, is a standard NEC input file (or its equivalent).</p>
+  <p>Consider a dipole made from AWG #14 (0.0641" diameter) wire set up as a model using +/-7.96' as the length. We shall arbitrarily use 21 segments for the wire and place the voltage source on segment 11 of our one wire. For those who have not read the NEC manual itself, wire numbers are called "tags." The tag number is a convenience, since the program itself will calculate according to absolute segment numbers. Hence, the first segment of wire or tag 3 would have an absolute segment number of 22.</p>
+  <center>
+    <img src="amod61-1.gif" width="532" height="321" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the NEC input file for our dipole, taken from NEC-Win Pro. The GW input line specified the coordinates of the wire and the radius in the same unit as the unit of length. Hence, out #14 wire have a radius of 2.67E-3 feet. The GS input provides the scaling factor to translate these values into meters, the basic unit used by NEC. Any input line beyond the GS card that scales for a coordinate, length, or radius dimension must be specified in meters. The GE card ends the geometry section of our simply model.</p>
+  <p>The geometry information from the input file appears in the NEC output file (extension .NOU in NEC-Win Pro). The following lines are extracted from the output file as a point of reference for what is to come.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+  1    0.00000   -7.96000   30.00000     0.00000    7.96000   30.00000    0.00267     21        1    21       1
+      STRUCTURE SCALED BY FACTOR   0.30480
+
+   GROUND PLANE SPECIFIED.
+
+   TOTAL SEGMENTS USED=   21     NO. SEG. IN A SYMMETRIC CELL=   21     SYMMETRY FLAG=  0
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.00000   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0    1    2      1
+     2    0.00000   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081     1    2    3      1
+     3    0.00000   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081     2    3    4      1
+     4    0.00000   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081     3    4    5      1
+     5    0.00000   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081     4    5    6      1
+     6    0.00000   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081     5    6    7      1
+     7    0.00000   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081     6    7    8      1
+     8    0.00000   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081     7    8    9      1
+     9    0.00000   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081     8    9   10      1
+    10    0.00000   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081     9   10   11      1
+    11    0.00000    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    10   11   12      1
+    12    0.00000    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    11   12   13      1
+    13    0.00000    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    12   13   14      1
+    14    0.00000    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    13   14   15      1
+    15    0.00000    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    14   15   16      1
+    16    0.00000    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    15   16   17      1
+    17    0.00000    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    16   17   18      1
+    18    0.00000    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    17   18   19      1
+    19    0.00000    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    18   19   20      1
+    20    0.00000    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    19   20   21      1
+    21    0.00000    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    20   21    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The structure specification serves as a check on the entries in the input file. The segmentation data provides a listing of the wire segments created by this structure. Although we tend normally to overlook these basic features of the NEC output file, we shall have occasion to make significant use of them before we complete our work.</p>
+  <p>As a further reference, the model--set over average S-N ground--yields a source impedance of 77.4 + j 0.4 Ohms.</p>
+  <p>We have in past columns looked at some supplementary geometry input cards, most notably, the GC input that allows tapering the segment lengths or the radius of the wire. See column #54. These cards are normally available only on more advanced programs, such as NEC-Win Pro (NEC-2) or GNEC (NEC-4). In this episode, we shall examine the basics of using the GM input, labeled in the NEC Manual as "Coordinate Transformation." We shall confine ourselves to NEC-2 because the NEC-4 input equivalent has a few differences relative to its NEC-2 predecessor. The differences result from the fact that NEC-2 restricted itself to 7 floating decimal entry places, while NEC-4 observes no such limit. With 10 floating decimal entry positions in the GM line, it is able to allow the user some finer divisions of the GM work. However, if we become clear on some basic ways in which we can use the NEC-2 entry, we can easily master the NEC-4 counterpart.</p>
+  <p>The GM line is subdivided as follows:</p>
+  <pre>GM  ITG1  NRPT  ROX  ROY  ROZ  XS  YS  ZS  IMOV
+    I1    I2    F1   F2   F3   F4  F5  F6  F7</pre>
+  <p>I1 and I2 are integer entries, and the series, F1 through F7 are floating decimal entries. Not all floating decimal entries necessarily function as the decimal values of one or another parameter. As we shall see, the F7 entry will use the decimal to separate two integers as a means of expanding the number of entries allowed by the line.</p>
+  <p>The meanings of the entries follow from the general functional definition of the GM entry: to translate or rotate a structure with respect to the coordinate system or to generate new structures translated or rotated from the original. In other words, we may set up a structure in very simplified terms relative to the coordinate system and then follow one of two main options. 1. We may move the structure from its starting points to another set of coordinates based either on rotating the structure around one or more of the axes or upon incrementing all X or all Y, or all Z values by a specified amount. 2. We may create a structure identical to the original, but displaced along one or more axes or rotated (or both), leaving the original in its specified position. Of course, with multiple GM cards, we may do both.</p>
+  <p>Within this context, the entries take on the following meanings:</p>
+  <p><b>ITG1</b>: This entry specifies the tag (wire) number increment to be applied either to the present structure or to the created structure. If we leave everything else in the line at zero, we simply increase the tag numbers by the indicated amount.</p>
+  <p><b>NRPT</b>: The second integer entry specifies the number of new structures to be generated. If NRPT is zero, then any other instructions apply to the original structure. Since the instructions will either rotate or displace the structure, nothing will remain in its original place. If NRPT is 1 or higher, then the instructions apply to the new structure, and the original structure remains in its original place.</p>
+  <p><b>ROX, ROY, ROZ</b>: These floating decimal entries specify the angle in degrees through which the structure (new or original, depending on the value of NRPT) will be rotated around the indicated axis. A positive value causes a right-hand rotation. Since rotation is around a specified axis, a set of values displaced from a centered position across a given axis will rotate around the axis, not around the center of the structure.</p>
+  <p><b>XS, YS, ZS</b>: These entries specify the amount be which the structure is translated or moved along or parallel to a given axis with respect to the coordinate system.</p>
+  <p>Note: The order of operation always begins with rotation in the order X, Y, and Z, followed by translation in the order X, Y, and Z. If you wish to move a structure before rotating it, use two GM entries.</p>
+  <p><b>IMOV</b>: IMOV uses the decimal point to separate two separate integer fields: IMOV1 and IMOV2. IMOV1 indicates the first tag/wire number to which the instructions apply. IMOV2 indicates the ending tag/wire.</p>
+  <p>Note: I am indebted to Arie Voors for calling my attention to the fact that early versions of the NEC-2 core used ITS for F7, with a seemingly different procedure. Hence, if using a public domain core of unknown vintage, check the applicable edition of the NEC-2 manual for applicable instructions.</p>
+  <p>NEC-4 introduces a refinement to this system of specifying the start and stop tag numbers for the geometry rotation and translation maneuvers within the GM input. Floating decimal entry places 7 through 10 are used to specify individually the start tag and segment numbers and the stop tag and segment numbers.</p>
+  <p>Once we grow familiar with the GM card capabilities, using it gradually becomes second nature. A couple of simple transformations may help us move from just reading the manual to actually using the input line.</p>
+  <p><b>GM-1: A Simple Rotation and Translation</b></p>
+  <p>Suppose that we wish to perform two operations on our original dipole. First, we want to rotate the dipole so that it extends along the X-axis rather than as at present along the Y-axis. This maneuver requires a 90-degree rotation around the Z-axis, since the antenna is centered at 0, 0, 0 on the coordinate system.</p>
+  <p>Second, suppose that we wish to change the antenna height by 10'. This move requires a translation of +10 feet along the Z-axis.</p>
+  <p>Before we make a move to create a GM line, we should ask whether the order of operations will make a difference to the outcome. Without our center dipole, we determine that the order of operations will not affect the outcome. Therefore, we may use a single GM card. It will have the general appearance of the following line:</p>
+  <pre>GM   0     0     0    0    90   0   0  10   0
+GM  ITG1  NRPT  ROX  ROY  ROZ  XS  YS  ZS  IMOV
+    I1    I2    F1   F2   F3   F4  F5  F6  F7</pre>
+  <p>I have adjusted the entry spacing so that I can repeat the identification of the entries below the actual GM line that we would type to show clearly that we are rotating around the Z-axis (ROZ) and translating along the Z-axis (ZS). The combination of the integer entries and IMOV specify that the operations will not create a new structure, but will involve the entirety of the existing structure.</p>
+  <center>
+    <img src="amod61-2.gif" width="602" height="468" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Some implementations of NEC-2 offer line-aides, that is, windows that permit the user to enter data without concern for the spacing and separation of the entries in the final line. <b>Fig. 2</b> shows the NEC-Win Pro GM window, with our data entered. When we OK the window, it creates the desired line in our model, which appears in its entirety in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod61-3.gif" width="506" height="336" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that the only difference between this model and the one we used earlier is the insertion of the GM line. since the GM line appears before the GS (scaling) line, we enter the desired translation moves in the same units as we used for the GW or wire line. In this case, we are using feet. (Getting used to the requisite scaling factors shown in the GS line provides the necessary data to determine what the unit of measure is in the GW line, since the scaling factor will always be the value necessary to translate the GW units into meters.)</p>
+  <p>To see what actually happened to our model, we must refer to the NEC output file. The following extracts give us the information, especially when we compare this data to the data for the original model.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+  1    0.00000   -7.96000   30.00000     0.00000    7.96000   30.00000    0.00267     21        1    21       1
+      THE STRUCTURE HAS BEEN MOVED, MOVE DATA CARD IS -
+        0    0   0.00000   0.00000  90.00000   0.00000   0.00000  10.00000   0.00000
+       GM command acting on tag #'s            0 through            0
+  inclusive.
+      STRUCTURE SCALED BY FACTOR   0.30480
+
+   GROUND PLANE SPECIFIED.
+
+   WHERE WIRE ENDS TOUCH GROUND, CURRENT WILL BE INTERPOLATED TO IMAGE
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    2.31067    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     0    1    2      1
+     2    2.07961    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     1    2    3      1
+     3    1.84854    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     2    3    4      1
+     4    1.61747    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     3    4    5      1
+     5    1.38640    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     4    5    6      1
+     6    1.15534    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     5    6    7      1
+     7    0.92427    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     6    7    8      1
+     8    0.69320    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     7    8    9      1
+     9    0.46213    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     8    9   10      1
+    10    0.23107    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081     9   10   11      1
+    11    0.00000    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    10   11   12      1
+    12   -0.23107    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    11   12   13      1
+    13   -0.46213    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    12   13   14      1
+    14   -0.69320    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    13   14   15      1
+    15   -0.92427    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    14   15   16      1
+    16   -1.15534    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    15   16   17      1
+    17   -1.38640    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    16   17   18      1
+    18   -1.61747    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    17   18   19      1
+    19   -1.84854    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    18   19   20      1
+    20   -2.07961    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    19   20   21      1
+    21   -2.31067    0.00000   12.19200    0.23107    0.00000-180.00000   0.00081    20   21    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>There are a few items in the extract worth noting. First, the input structure specifications simply note the presence and parameters of the GM input but do not alter the original line in this section of the report. Instead, the transformations appear in the segmentation data that follows.</p>
+  <p>Second, we note that the values that formerly were in the Y-column of the original model are now in the X-column. However, note that the segment-1 value is positive, whereas it had been negative in the initial model. Had we needed to specify a negative value for segment-1, then we would have entered -90 under ROZ. The difference makes no difference for this simple file. However, with more complex structures, it might make a difference. Hence, growing accustomed to the conventions governing the rotation entries and their consequences is important.</p>
+  <p>Third, our original model showed Z-values of 9.144 (meters). The new Z-value is 12.192 m or 3.048 meters higher than the original model, that is, 10'. The segmentation data this provides confirmation that our GM entry has indeed done what we intended to request.</p>
+  <p>For reference, the output report returns a source impedance of 72.9 + j 9.1 Ohms. This value is sensible in light of the 1/3 wavelength by which we increased the antenna height above average ground.</p>
+  <p>Translating a structure has many rationales. With the GM line, we may revise the height of the antenna with a single numerical revision. Although this does not represent much of a saving for our simple dipole, it certainly might shorten the work of evaluating a 5-band 4-element quad (80 wires) at a series of heights above ground. Similarly, the rotation might not seem significant for the dipole. However, suppose that we had a stack of two Yagis and wished to evaluate the influence of one upon the other at different and divergent angles of orientation. We can use the GM line to rotate one of the Yagis by any angle whatsoever--and change that angle by simply altering one entry within the line. We may also rotate an antenna along its bore sight (assuming that it is centered on an axis) in order to evaluate the antenna's performance over ground when both horizontally and vertically polarized. If we have an array of 4 long-boom Yagis for weak-signal use, we may alter the spacing among them to obtain the best results using GM entries. As well, we can change from a flat square to a diamond arrangement by rotating the arrays about a common center line. These are but a few of the potential applications for rotating and translating part or all of a wire structure using the GM entry.</p>
+  <p><b>GM-2: A Simple Replication Example</b></p>
+  <p>We may also use the GM entry to replicate wire structures without further GW lines in the input model. Let's try a simple case: we shall replicate our dipole 3 more times at 16' intervals from the original model. We might do such things to create phased arrays or for any number of other reasons.</p>
+  <center>
+    <img src="amod61-4.gif" width="602" height="468" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the help screen. We have chosen to create 3 new complete structures and to translate each of them by an interval of 16 (feet) along the X-axis. When we OK this screen, we obtain the input model shown in <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod61-5.gif" width="506" height="336" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The only difference between this model file and the one for the original dipole is the GM line. In this case, we are leaving the original structure intact and creating 3 additional structures, each one a dipole having the same dimensions and wire radius. A view of the total wire structure appears in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="amod61-6.gif" width="652" height="328" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we look at the NEC output file, we obtain the following extract of data.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+  1    0.00000   -7.96000   30.00000     0.00000    7.96000   30.00000    0.00267     21        1    21       1
+      THE STRUCTURE HAS BEEN MOVED, MOVE DATA CARD IS -
+        0    3   0.00000   0.00000   0.00000  16.00000   0.00000   0.00000   0.00000
+       GM command acting on tag #'s            0 through            0
+  inclusive.
+      STRUCTURE SCALED BY FACTOR   0.30480
+
+   GROUND PLANE SPECIFIED.
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.00000   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0    1    2      1
+     2    0.00000   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081     1    2    3      1
+     3    0.00000   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081     2    3    4      1
+     4    0.00000   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081     3    4    5      1
+     5    0.00000   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081     4    5    6      1
+     6    0.00000   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081     5    6    7      1
+     7    0.00000   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081     6    7    8      1
+     8    0.00000   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081     7    8    9      1
+     9    0.00000   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081     8    9   10      1
+    10    0.00000   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081     9   10   11      1
+    11    0.00000    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    10   11   12      1
+    12    0.00000    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    11   12   13      1
+    13    0.00000    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    12   13   14      1
+    14    0.00000    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    13   14   15      1
+    15    0.00000    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    14   15   16      1
+    16    0.00000    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    15   16   17      1
+    17    0.00000    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    16   17   18      1
+    18    0.00000    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    17   18   19      1
+    19    0.00000    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    18   19   20      1
+    20    0.00000    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    19   20   21      1
+    21    0.00000    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    20   21    0      1
+    22    4.87680   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0   22   23      1
+    23    4.87680   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    22   23   24      1
+    24    4.87680   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    23   24   25      1
+    25    4.87680   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    24   25   26      1
+    26    4.87680   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    25   26   27      1
+    27    4.87680   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    26   27   28      1
+    28    4.87680   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    27   28   29      1
+    29    4.87680   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    28   29   30      1
+    30    4.87680   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    29   30   31      1
+    31    4.87680   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    30   31   32      1
+    32    4.87680    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    31   32   33      1
+    33    4.87680    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    32   33   34      1
+    34    4.87680    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    33   34   35      1
+    35    4.87680    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    34   35   36      1
+    36    4.87680    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    35   36   37      1
+    37    4.87680    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    36   37   38      1
+    38    4.87680    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    37   38   39      1
+    39    4.87680    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    38   39   40      1
+    40    4.87680    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    39   40   41      1
+    41    4.87680    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    40   41   42      1
+    42    4.87680    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    41   42    0      1
+    43    9.75360   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0   43   44      1
+    44    9.75360   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    43   44   45      1
+    45    9.75360   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    44   45   46      1
+    46    9.75360   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    45   46   47      1
+    47    9.75360   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    46   47   48      1
+    48    9.75360   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    47   48   49      1
+    49    9.75360   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    48   49   50      1
+    50    9.75360   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    49   50   51      1
+    51    9.75360   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    50   51   52      1
+    52    9.75360   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    51   52   53      1
+    53    9.75360    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    52   53   54      1
+    54    9.75360    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    53   54   55      1
+    55    9.75360    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    54   55   56      1
+    56    9.75360    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    55   56   57      1
+    57    9.75360    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    56   57   58      1
+    58    9.75360    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    57   58   59      1
+    59    9.75360    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    58   59   60      1
+    60    9.75360    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    59   60   61      1
+    61    9.75360    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    60   61   62      1
+    62    9.75360    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    61   62   63      1
+    63    9.75360    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    62   63    0      1
+    64   14.63040   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0   64   65      1
+    65   14.63040   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    64   65   66      1
+    66   14.63040   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    65   66   67      1
+    67   14.63040   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    66   67   68      1
+    68   14.63040   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    67   68   69      1
+    69   14.63040   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    68   69   70      1
+    70   14.63040   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    69   70   71      1
+    71   14.63040   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    70   71   72      1
+    72   14.63040   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    71   72   73      1
+    73   14.63040   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    72   73   74      1
+    74   14.63040    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    73   74   75      1
+    75   14.63040    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    74   75   76      1
+    76   14.63040    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    75   76   77      1
+    77   14.63040    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    76   77   78      1
+    78   14.63040    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    77   78   79      1
+    79   14.63040    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    78   79   80      1
+    80   14.63040    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    79   80   81      1
+    81   14.63040    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    80   81   82      1
+    82   14.63040    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    81   82   83      1
+    83   14.63040    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    82   83   84      1
+    84   14.63040    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    83   84    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We easily note that the structure replicates itself along the Y-axis, but at 4.8768 m (16') intervals along the X-axis. If we run this model, we obtain a source impedance of 89.7 - j 11.1 Ohms.</p>
+  <p>We have possibly forgotten something, especially if we intended to make the total structure into a phased array of 4 dipoles fed in phase. Our model in <b>Fig. 5</b> showed a single source (EX line). The GM entry replicates only the wire structure. It does NOT replicate any sources or loads applied to that structure. Let's correct part of that situation, as shown in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod61-7.gif" width="506" height="408" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The model now contains 4 sources or EX entries, each a voltage source having the same magnitude and phase angle. We may use the antenna view function to check on the placement of the sources, as shown in <b>Fig. 8</b>.</p>
+  <center>
+    <img src="amod61-8.gif" width="655" height="253" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that we did not revise the LD line. Therefore, only the original structure is copper and has that less-than-perfect conductivity. The new wires have perfect conductivity. Therefore, when we run this model, we should not expect perfect symmetry among the source values. Indeed, we obtain the following values for sources 1-4:</p>
+  <ul>
+    <li>1. 69.7 - 33.9 Ohms</li>
+    <li>2. 50.7 - 49.8 Ohms</li>
+    <li>3. 50.4 - 50.0 Ohms</li>
+    <li>4. 69.0 - 34.1 Ohms</li>
+  </ul>
+  <p>The model has another peculiarity. We did not increment the tag number for each new structure. Therefore, the segmentation data shows a "1" for the tag number throughout. This result has several implications.</p>
+  <p>First, there is a difference between a tag number and a wire number. The two are the same only when, after all operations in the geometry section, there is a different tag number for each length of wire having open ends of junctions with other wires in the model. Many geometry input cards use a single tag number for a collection of wires that, if we had entered each one separately, they would have had different tag numbers. The GC, GH, and GA inputs are typical. The equation of tag and wire numbers applies only if all wires are GW entries.</p>
+  <p>Second, we might have specified copper conductivity for all wires by a simple revision of the LD5 entry. Instead of ending the load at segment 21 (in Fig. 7), we could have specified segment 84.</p>
+  <p>The loading specification just noted would not work had we replicated the dipole with an increment in the tag number. See <b>Fig. 9</b>.</p>
+  <center>
+    <img src="amod61-9.gif" width="602" height="468" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The help screen in <b>Fig. 9</b> is identical to the one in <b>Fig. 4</b> with one exception. Note that the Tag Number Increment is now 1 (rather than zero). The result of this change appears in the GM line in the model shown in <b>Fig. 10</b>.</p>
+  <center>
+    <img src="amod61-10.gif" width="506" height="408" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For simplicity, I have left the LD5 entry as it was. Thus the only change required in addition to the GM line is a re-specification of the positions of the sources in the EX entries. Each one now specifies the same segment number, but for different wire/tag numbers. The antenna view would be identical to the one shown in <b>Fig. 8</b>, which serves as a quick check in advance of running the model. Once we do run the model, we come up with the following data extract.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+  1    0.00000   -7.96000   30.00000     0.00000    7.96000   30.00000    0.00267     21        1    21       1
+      THE STRUCTURE HAS BEEN MOVED, MOVE DATA CARD IS -
+        0    3   0.00000   0.00000   0.00000  16.00000   0.00000   0.00000   0.00000
+       GM command acting on tag #'s            0 through            0
+  inclusive.
+      STRUCTURE SCALED BY FACTOR   0.30480
+
+   GROUND PLANE SPECIFIED.
+
+                                 - - - - SEGMENTATION DATA - - - -
+
+                                        COORDINATES IN METERS
+
+                         I+ AND I- INDICATE THE SEGMENTS BEFORE AND AFTER I
+
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1    0.00000   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0    1    2      1
+     2    0.00000   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081     1    2    3      1
+     3    0.00000   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081     2    3    4      1
+     4    0.00000   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081     3    4    5      1
+     5    0.00000   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081     4    5    6      1
+     6    0.00000   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081     5    6    7      1
+     7    0.00000   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081     6    7    8      1
+     8    0.00000   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081     7    8    9      1
+     9    0.00000   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081     8    9   10      1
+    10    0.00000   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081     9   10   11      1
+    11    0.00000    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    10   11   12      1
+    12    0.00000    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    11   12   13      1
+    13    0.00000    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    12   13   14      1
+    14    0.00000    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    13   14   15      1
+    15    0.00000    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    14   15   16      1
+    16    0.00000    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    15   16   17      1
+    17    0.00000    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    16   17   18      1
+    18    0.00000    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    17   18   19      1
+    19    0.00000    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    18   19   20      1
+    20    0.00000    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    19   20   21      1
+    21    0.00000    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    20   21    0      1
+    22    4.87680   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0   22   23      1
+    23    4.87680   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    22   23   24      1
+    24    4.87680   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    23   24   25      1
+    25    4.87680   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    24   25   26      1
+    26    4.87680   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    25   26   27      1
+    27    4.87680   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    26   27   28      1
+    28    4.87680   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    27   28   29      1
+    29    4.87680   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    28   29   30      1
+    30    4.87680   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    29   30   31      1
+    31    4.87680   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    30   31   32      1
+    32    4.87680    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    31   32   33      1
+    33    4.87680    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    32   33   34      1
+    34    4.87680    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    33   34   35      1
+    35    4.87680    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    34   35   36      1
+    36    4.87680    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    35   36   37      1
+    37    4.87680    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    36   37   38      1
+    38    4.87680    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    37   38   39      1
+    39    4.87680    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    38   39   40      1
+    40    4.87680    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    39   40   41      1
+    41    4.87680    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    40   41   42      1
+    42    4.87680    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    41   42    0      1
+    43    9.75360   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0   43   44      1
+    44    9.75360   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    43   44   45      1
+    45    9.75360   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    44   45   46      1
+    46    9.75360   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    45   46   47      1
+    47    9.75360   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    46   47   48      1
+    48    9.75360   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    47   48   49      1
+    49    9.75360   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    48   49   50      1
+    50    9.75360   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    49   50   51      1
+    51    9.75360   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    50   51   52      1
+    52    9.75360   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    51   52   53      1
+    53    9.75360    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    52   53   54      1
+    54    9.75360    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    53   54   55      1
+    55    9.75360    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    54   55   56      1
+    56    9.75360    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    55   56   57      1
+    57    9.75360    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    56   57   58      1
+    58    9.75360    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    57   58   59      1
+    59    9.75360    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    58   59   60      1
+    60    9.75360    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    59   60   61      1
+    61    9.75360    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    60   61   62      1
+    62    9.75360    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    61   62   63      1
+    63    9.75360    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    62   63    0      1
+    64   14.63040   -2.31067    9.14400    0.23107    0.00000  90.00000   0.00081     0   64   65      1
+    65   14.63040   -2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    64   65   66      1
+    66   14.63040   -1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    65   66   67      1
+    67   14.63040   -1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    66   67   68      1
+    68   14.63040   -1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    67   68   69      1
+    69   14.63040   -1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    68   69   70      1
+    70   14.63040   -0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    69   70   71      1
+    71   14.63040   -0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    70   71   72      1
+    72   14.63040   -0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    71   72   73      1
+    73   14.63040   -0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    72   73   74      1
+    74   14.63040    0.00000    9.14400    0.23107    0.00000  90.00000   0.00081    73   74   75      1
+    75   14.63040    0.23107    9.14400    0.23107    0.00000  90.00000   0.00081    74   75   76      1
+    76   14.63040    0.46213    9.14400    0.23107    0.00000  90.00000   0.00081    75   76   77      1
+    77   14.63040    0.69320    9.14400    0.23107    0.00000  90.00000   0.00081    76   77   78      1
+    78   14.63040    0.92427    9.14400    0.23107    0.00000  90.00000   0.00081    77   78   79      1
+    79   14.63040    1.15534    9.14400    0.23107    0.00000  90.00000   0.00081    78   79   80      1
+    80   14.63040    1.38640    9.14400    0.23107    0.00000  90.00000   0.00081    79   80   81      1
+    81   14.63040    1.61747    9.14400    0.23107    0.00000  90.00000   0.00081    80   81   82      1
+    82   14.63040    1.84854    9.14400    0.23107    0.00000  90.00000   0.00081    81   82   83      1
+    83   14.63040    2.07961    9.14400    0.23107    0.00000  90.00000   0.00081    82   83   84      1
+    84   14.63040    2.31067    9.14400    0.23107    0.00000  90.00000   0.00081    83   84    0      1
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The tag numbers increment according to the GM-line instruction. Otherwise, the structure and segmentation data is identical to the preceding model. So, too, is the source data for sources 1 through 4. Incrementing the tag number is useful, but not always necessary to obtain correct results from the model using a GM entry.</p>
+  <p>These simple models function only to acquaint the new modeler with the facilities of the GM entry. Many more applications are possible. We can create a cube with a single wire and then a least-necessary number of GM lines. What we can do to a cube, we can also do to virtually any geometric shape that we simulate with straight lines.</p>
+  <p>The exercise has also aimed at revealing a few cautions about the use of the GM facility, especially with respect to control inputs, such as EX and LD, that we may have to replicate along with the geometry structure.</p>
+  <p>In the final analysis, how useful the GM entry is may depend upon the imagination of the modeler. However, we should remember that each wire created by a GM entry is in fact a wire that participates in the matrix calculations. We may save a considerable amount of modeling time with the GM card, but we do not effect a savings in the calculation time.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

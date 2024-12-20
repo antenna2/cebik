@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Some Basics of the NT Command</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>95. Some Basics of the NT Command</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The NT command allows you to implement 2-port networks in a model using non-radiating methods, much like the TL command. In fact, the TL command is a specialized implementation of more general networks. However, use of the TL command presumes a basic mastery of handling short circuit admittance matrix parameters. As a result, the command has little general use among the total body of those using NEC. Short circuit admittance matrix parameters and their calculation from more conventional antenna parameters is a subject well beyond the scope of this series. However, there are a number of applications of NT networks that admit of some approximations and hence some short cuts in the calculation procedure. They will suffice to allow us to illustrate the fundamental uses of the command, as well as its entry structure.</p>
+  <p>The NT command will let you perform easily some difficult modeling tasks, such as placing a loading element in parallel with a source or creating a parallel connection between segments on different wires within a model. It also allows you to incorporate extremely complex networks into a model so long as you can reduce them to the short circuit admittance parameters required by a 2-port network. In virtually all cases, the command is less troublesome than calculating the values to fit its entry positions. The problem facing the modeler who has not previously used networks is less a matter of understanding the command entries than it is in knowing what entries to make in the floating decimal positions.</p>
+  <p>The command structure itself is very straightforward. As the sample line below shows, the integer entries specify the specific tag and segment numbers between which we connect the network. In some cases, one of the tags will be a remote wire, and occasionally, it will serve as a "place-holder" to terminate the network. However, there are many applications in which both wires will be active parts of the structure geometry.</p>
+  <pre>
+CMD     I1      I2      I3      I4      F1      F2      F3      F4      F5      F6
+        TAG1    SEG1    TAG2    SEG2    Y11R    Y11I    Y12R    Y12I    Y22R    Y22I
+NT      2       1       1       6       5.8e-5  -7.3e-3 -5.8e-5 1.7e-2  5.8e-5  -4.8e-3
+</pre>
+  <p>The floating decimal entries call for port values according to the standard 2-port labeling. See <b>Fig. 1</b>.</p>
+  <center>
+    <img src="amod95-1.gif" width="550" height="175" border="2" vspace="5" hspace="9">
+  </center>
+  <p>End 1 corresponds to tag 1-seg1, and end 2 to tag 2-seg2. Since the entries that go into the network are usually non-symmetrical, it is important to keep the ends straight. In the sample to the right, we wish the Y element to be in parallel with the assigned tag and segment. Therefore, we must assign its value to the Y11 real and imaginary component positions in the command and be certain the I1 and I2 specify the segment to which the Y element is parallel.</p>
+  <p>Y11 is the short circuit input admittance, expressed in terms of real and imaginary components. In other contexts, we might call the real component the conductance (G) and the imaginary component susceptance (B). Both use Siemens or mhos as the unit of measure, and they are the inverse of resistance and reactance, respectively. Hence, admittance (Y), also measured in mhos is the reciprocal of impedance (Z). Y22 is the output short circuit reverse-transfer admittance, as indicated by the arrow in the sketch. Since each port has balanced currents, the net current transferred between port 1 and 2 is zero. Hence, Y12 does not represent a physical connection between ports. Rather, it is the short circuit transfer admittance. Since the matrix is symmetric, it is unnecessary to specify Y21, since the forward transfer admittance and the reverse transfer admittance are equal. Y12 and Y22 are also specified in terms of real and imaginary components.</p>
+  <p>Besides being specific to an assigned frequency, multiple NT entries must be grouped together. You may intermix them with TL commands, but the group must have no other commands separating the members of the group. Intervening commands other than NT or TL will result in the next TL or NT entry destroying previous NT and TL commands. If your NEC core does not employ auto dimensioning, you must set the parameter MAXNET high enough to include the total number of NT and TL commands to be used in the model. For most models, this setting is trivial. However, there may be a large number of driven elements in an array, each with a current source. Since each current source invokes a network, some assemblies may require a very high number of NT commands.</p>
+  <p>In an earlier episode, we examined a technique for creating parallel sources, but requiring only 1 source assignment. By using a very short transmission line, we effected a virtual short circuit between the specified segments, but with the connections in parallel with the source. The technique proves useful when close space wires might yield inaccuracies if drawn to a single source wire due to very small angles between wires at the junctions. See <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod95-2.gif" width="658" height="227" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The following lines show the excitation and transmission line commands for the parallel-wire dipole.</p>
+  <pre>
+CM Parallel-Wire Dipole
+CE TL method
+GW 1 79 0 -.47 .006 0 .47 .006 .0005
+GW 2 79 0 -.47 -.006 0 .47 -.006 .0005
+GW 3 1 0 -.47 -.006 0 -.47 .006 .0005
+GW 4 1 0 .47 -.006 0 .47 .006 .0005
+GE
+FR 0 1 0 0 150 1
+EX 0 2 40 00 1 0
+TL 1 40 2 40 140 .001
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The reported source impedance of the dipole is 71.427 - j1.873 Ohms. For comparative purposes, the impedance report has far more decimal places than practical applications would require. Now let's suppose that we would like to create the virtual short circuit between wires using the NT command. Like TLs, NTs are in parallel with sources and in series with loads on the same segment.</p>
+  <center>
+    <img src="amod95-3.gif" width="786" height="364" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> compares the entry assist screens for the required TL and NT entries. The TL entry uses a very short length: 1 mm. By using an electrical length entry as short as 1e-10, the impedance specification would have become wholly arbitrary. Now examine the right side of the figure and the following model.</p>
+  <pre>
+CM Parallel-Wire Dipole
+CE NT method
+GW 1 79 0 -.47 .006 0 .47 .006 .0005
+GW 2 79 0 -.47 -.006 0 .47 -.006 .0005
+GW 3 1 0 -.47 -.006 0 -.47 .006 .0005
+GW 4 1 0 .47 -.006 0 .47 .006 .0005
+GE
+FR 0 1 0 0 150 1
+EX 0 2 40 00 1 0
+NT 1 40 2 40 1e10 -1e10 -1e10 1e10 1e10 -1e10
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN
+</pre>
+  <p>Creating a virtual short circuit with an NT command is seemingly complex, but once you have the formula, you may copy it as many times as you need it. In fact, there is a pattern to the entries. Let us set the conductance of the connecting wire (G) to 1e10 and the susceptance (B) to the same value. To create a short circuit with these initial values, we need to set the admittance matrix of the NT command as follows.</p>
+  <pre>
+Parameter       Real                    Imaginary
+Y11             +G      1e10            -B      -1e10
+Y12             -G      -1e10           +B      1e10
+Y22             +G      1e10            -B      -1e10
+</pre>
+  <p>We shall later see that this entry set views the short circuit as a special form of a PI network translated into admittance matrix entries. For the moment, we may simply memorize the form--of course, after running the model and confirming that it yields the correct source impedance: 71.430 - j1.868 O. Both the TL and NT versions of the parallel-wire dipole return free-space gain values of 2.13 dBi. You may also wish to examine the currents on various corresponding segments of the model to establish their virtual identity.</p>
+  <p>A second relatively simple use of the NT command that we have already encountered appears in an earlier episode: the current source. Examine the following model, a basic dipole with a current source.</p>
+  <pre>
+CM dipole with current source
+CE 0 deg at antenna source
+GW 1 11 0 -.2375 0 0 .2375 0 .001
+GW 2 1 9999 -.005 9999 9999 .005 9999 .001
+GE
+FR 0 1 0 0 299.7925 1
+EX 0 2 1 00 0.00000 1.00000
+NT 2 1 1 6 0 0 0 1 0 0
+XQ
+EN
+</pre>
+  <p>In this case, we create the required dipole (GW1) and add a second remote 1-segment wire (GW2) located too far away from the key element to have any affect on the pattern data. The remote wire is very short, very thin, and never given a material load. Next, we place a network (NT) between the dipole source segment and the remote wire, using the standard set-up of the NT command for a current source. Using the NT assistance screen in the software, as shown on the left in <b>Fig. 4</b>, will ease the burden of remembering which entry point receives the value of 1 for the Y12 imaginary position. Finally, we add an EX0 command, placing the source on the remote wire and phase shifting the value by 90&deg;.</p>
+  <center>
+    <img src="amod95-4.gif" width="905" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>By entering a Y12-imaginary value of 1.0 mho in the network, we obtain a 90&deg; phase shift in the current at the element relative to the phase of the voltage at the source on the other side of the network. As well, whatever value the source shows as its voltage will appear at the other side of the network on the element as the current value. The technique of "forcing" current values is widely used in phased array design, but here, it functions to provide a current source with a known value at the true feedpoint of the antenna. One very significant use of current sources is to allow rectangular plots of the element currents reference to a standard value, such as 1.0. The right side of <b>Fig. 4</b> shows such a plot for the dipole.</p>
+  <p>For easy extraction of the required data that applies to the antenna feedpoint (in contrast to the model source on the remote wire), we must learn how to "read" the data. The first key output report entry is the antenna input parameters, shown below for our current-source dipole.</p>
+  <pre>
+- - - ANTENNA INPUT PARAMETERS - - -
+
+TAG   SEG.    VOLTAGE (VOLTS)          CURRENT (AMPS)         IMPEDANCE (OHMS)         ADMITTANCE (MHOS)       POWER
+NO.   NO.    REAL        IMAG.        REAL        IMAG.       REAL        IMAG.        REAL        IMAG.      (WATTS)
+  2    12  0.00000E+00 1.00000E+00 -1.16117E-01 7.17602E+01 1.39353E-02 -2.25490E-05 7.17602E+01 1.16117E-01 3.58801E+01
+</pre>
+  <p>1. The phase-shifted voltage value--1.0 v imaginary--is the real current level at the element feedpoint. You may verify this from the current table for segment 6.</p>
+  <pre>
+SEG.  TAG           - - - CURRENT (AMPS) - - -
+NO.   NO.      REAL        IMAG.       MAG.        PHASE
+ 6    1      1.0000E+00 -2.2205E-16  1.0000E+00    0.000
+</pre>
+  <p>2. The impedance at the element feedpoint appears as an admittance (and its inverse as an impedance). If you create a standard dipole model using a voltage source, its impedance with a voltage source is 71.76 + j 0.12 Ohms, the value that now appears under the admittance entry.</p>
+  <p>3. The power report is accurate for the current-source model. Hence, by the technique of power adjustment shown in earlier episodes, we would adjust the imaginary voltage value as the square root of the ratio of new power to old to arrive at the correct source for the desired power level. A value of 5.279 volts imaginary will yield a 1000-watt power level.</p>
+  <p>The NT command also offers use the potential for having one more alternative way to perform a specific task. Consider the following model, a simple 3-element Yagi designed for 14.175 MHz and using 1" (0.025 m) aluminum elements.</p>
+  <pre>
+CM 3-el Yagi with beta match
+CM Pre-match version
+CE
+GW 1 101 -5.292 0 0 5.292 0 0 0.0125
+GW 2 50 -4.947 3.024 0 -0.049 3.024 0 0.0125
+GW 3 1 -0.049 3.024 0 0.049 3.024 0 0.0125
+GW 4 50 0.049 3.024 0 4.947 3.024 0 0.0125
+GW 5 101 -4.786 6.049 0 4.786 6.049 0 0.0125
+GS 0 0 1
+GE 0
+EX 0 3 1 0 1 0
+LD 5 0 0 0 2.5E7
+FR 0 1 0 0 14.175 1
+RP 0 1 360 1000 90 0 1 1
+EN
+</pre>
+  <p>The elements employ a high segmentation density, with the driver element (GW2 - GW4) subdivided. The left side of <b>Fig. 5</b> shows the evolution of the element, along with the first alternative that we shall use in our quest to match the antenna to a 50-Ohm feedline. However, run this pre-match version of the antenna to obtain its "natural" source impedance: 23.42 - j24.59 Ohms. The reported antenna gain is 7.84 dBi with an AGT value of 0.99977, indicating a very adequate model and accurate output reports (as always, within the limits of the AGT test).</p>
+  <center>
+    <img src="amod95-5.gif" width="1000" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our matching goal has several options, but we shall choose to add a beta match. The beta match is a version of an L-network with down conversion from the source (50 Ohms) to the load. This system requires a series impedance element on the load side of the network, already in place in the form of the capacitive reactance of the source. The other element of the network consists of a shunt reactance of the opposite type (relative to the series reactance) on the source side of the network. To achieve this goal, we need to be able to place a load in parallel with the source. However, LD loads appear in series with the source and thus are not applicable.</p>
+  <p>One tactic that we can use is to create a physical structure to give a parallel position for the load. The last part of the sketch in <b>Fig. 5</b> shows a way to accomplish this feat. By using 1-segment wires around the 1-segment source wire, we create a box. Since the wires are short, they contribute very little to the radiation pattern. However, they provide a place for the desired shunt reactance. Examine the additional wires for the box in the following model. Note that they place the box at right angles to the plane of the antenna, although an in-line orientation would work as well. The new wires appear between the original driver entry and the director, which is now GW8. As well, the final end of the driver (GW7) follows the box structure. Excitation remains on GW3.</p>
+  <pre>
+CM 3-el Yagi with beta match
+CM vertical placement
+CE
+GW 1 101 -5.292 0 0 5.292 0 0 0.0125
+GW 2 50 -4.947 3.024 0 -0.049 3.024 0 0.0125
+GW 3 1 -0.049 3.024 0 0.049 3.024 0 0.0125
+GW 4 1 -0.049 3.024 0 -0.049 3.024 0.098 0.0125
+GW 5 1 -0.049 3.024 0.098 0.049 3.024 0.098 0.0125
+GW 6 1 0.049 3.024 0.098 0.049 3.024 0 0.0125
+GW 7 50 0.049 3.024 0 4.947 3.024 0 0.0125
+GW 8 101 -4.786 6.049 0 4.786 6.049 0 0.0125
+GS 0 0 1
+GE 0
+EX 0 3 1 0 1 0
+LD 4 5 1 1 0.2345 46.9
+LD 5 0 0 0 2.5E7
+FR 0 1 0 0 14.175 1
+RP 0 1 360 1000 90 0 1 1
+EN
+</pre>
+  <p>The required value for the shunt element derives from standard L-network equations:</p>
+  <center>
+    <img src="amod95e1.gif" width="323" height="63">
+  </center>
+  <p>The term "delta" is the loaded Q of the network and derives from the high and low resistance values at the circuit terminals. The required series reactance is delta times the low resistance and appears in series with it. The shunt or parallel reactance is of the opposite type from the series reactance and is the high resistance divided by delta. There are numerous utility programs available for calculating the required values. By using the natural source resistance and the feedline characteristic impedance to determine delta, we discover that the existing series capacitive reactance is almost precisely what the equations calculate. Hence, we need only calculate a corresponding shunt or parallel reactance: 46.9 Ohms inductive. Based on experience, we may assign the shunt element a Q of about 200. The final values appear in the LD4 entry for the model.</p>
+  <p>We might run the model to obtain its performance values: 7.86 dBi gain, 57.58 + j1.51 Ohms impedance, 1.008 AGT, 0.036 AGT-dBi, and an adjusted gain of 7.82 dBi. The AGT value shows that the wire box has a small affect on model adequacy, and the adjusted gain value suggests that the box also has a small affect on performance of the driver. The fact that we did not arrive at precisely 50 Ohms impedance is a measure of how far off from ideal the series reactance is, as well as the affects of the wire box. Perhaps one of the chief advantages of this system of adding a parallel load is that it allows the simulation of inductors (in contrast to beta hairpin assemblies). By converting the load to a type 0 using the same series resistance, but an inductance of 0.527 &micro;H, the model becomes perfectly frequency nimble, with accurate output values for frequency sweeps across the operating passband.</p>
+  <p>Although subsequent alternative shunt loads will not require the driver scheme used for the box version, we shall retain it so that the core model remains constant in all of our trials. In the following model, we see a version of the antenna using a technique that we met in previous episodes when exploring the use of transmission lines. This model employs a standard shorted transmission line stub calculated to provide the required reactance. Then, we trimmed the stub to a length that yielded the most satisfactory source impedance.</p>
+  <pre>
+CM 3-el Yagi with beta match
+CM TL 600-Ohm stub
+CE
+GW 1 101 -5.292 0 0 5.292 0 0 0.0125
+GW 2 50 -4.947 3.024 0 -0.049 3.024 0 0.0125
+GW 3 1 -0.049 3.024 0 0.049 3.024 0 0.0125
+GW 4 50 0.049 3.024 0 4.947 3.024 0 0.0125
+GW 5 101 -4.786 6.049 0 4.786 6.049 0 0.0125
+GW 6 1 1.001 1.001 1.001 1 1 1 0.000322
+GS 0 0 1
+GE 0
+EX 0 3 1 0 1 0
+LD 5 0 0 0 2.5E7
+TL 3 1 6 1 600 0.262584 0 0 1e10 1e10
+FR 0 1 0 0 14.175 1
+RP 0 1 360 1000 90 0 1 1
+EN
+</pre>
+  <p>GW6 provides the remote termination wire for the shorted stub. The TL command specifies a 600-Ohm line with a length of 0.263 m, simulating an open or ladder line stub assembly. Run the model to obtain its output reports: 7.84 dBi gain, 49.23 - j0.005 Ohms impedance, 0.999 AGT. The near-ideal value of AGT requires no gain report adjustment, and the gain value coincides with the report from the pre-matched model. Although the TL line cannot show losses within it, they should be negligible. Like the use of an LD0 load in the box model, this version of the beta-matched Yagi is also frequency nimble.</p>
+  <center>
+    <img src="amod95-6.gif" width="946" height="364" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> shows the assist screen for the TL stub in the model that we just examined. However, it is not the only way in which we might use the TL command to effect a parallel load on the Yagi source segment. The right side of the figure shows an alternative set of entries. Examine the next model. You will note that the geometry remains unchanged from the previous model. However, the TL line reflects the values shown in the figure.</p>
+  <pre>
+CM 3-el Yagi:  14.175 MHz
+CM TL + shunt admittance beta match
+CE
+GW 1 101 -5.292 0 0 5.292 0 0 0.0125
+GW 2 50 -4.947 3.024 0 -0.049 3.024 0 0.0125
+GW 3 1 -0.049 3.024 0 0.049 3.024 0 0.0125
+GW 4 50 0.049 3.024 0 4.947 3.024 0 0.0125
+GW 5 101 -4.786 6.049 0 4.786 6.049 0 0.0125
+GW 6 1 2000 2000 2000 2000.001 2000.001 2000.001 0.000814
+GS 0 0 1
+GE 0
+EX 0 3 1 0 1 0
+LD 5 0 0 0 2.5E7
+TL 3 1 6 1 50 0.01 0 0 0.0001066 -0.0213214
+FR 0 1 0 0 14.175 1
+RP 0 1 360 1000 90 0 1 1
+EN
+</pre>
+  <p>As a special form of a network, the TL command allows the use of shunt admittance values at either end of the line for various simulation purposes. In this case, instead of using a stub, we specify a very short line length. The line is so short that no significant transformation of voltage, current, or impedance can occur. On the "far" end of the line, we insert the shunt admittance equivalents of the series values of resistance and reactance that we need for the match. The real component of an admittance (Y) is conductance (G), and the imaginary component is susceptance (B). Since the conversion requires converting a series impedance into a shunt or parallel admittance, we may use these equations:</p>
+  <center>
+    <img src="amod95e2.gif" width="260" height="47">
+  </center>
+  <p>The subscripts "S" and "P" indicate series and parallel values, respectively. Using the original values of the required impedance for a coil with a Q of 200, we convert 0.2345 + j49.6 Ohms to 1.066E-4 - j2.132E-2 mhos. These values go on end 2 of the line.</p>
+  <p>If you run the model, you will obtain the following reports: 7.82 dBi gain, 48.98 - j0.32 Ohms impedance, 0.999 AGT. The resistive component of the impedance is slightly low because we did not adjust the coil reactance for a closer approach to 50 Ohms before converting the reactance to a susceptance. The limitation of this method of creating a beta match is that it is frequency specific and does not yield highly accurate values in a frequency sweep.</p>
+  <p>We are not quite done with our beta matched Yagi. We have painlessly slipped into the realm of admittances, and so we might as well create the parallel matching element using the NT command. Examine the following model and its NT command that replaces the TL commands.</p>
+  <pre>
+CM 3-el Yagi:  14.175 MHz
+CM NT + shunt admittance values
+CE
+GW 1 101 -5.292 0 0 5.292 0 0 0.0125
+GW 2 50 -4.947 3.024 0 -0.049 3.024 0 0.0125
+GW 3 1 -0.049 3.024 0 0.049 3.024 0 0.0125
+GW 4 50 0.049 3.024 0 4.947 3.024 0 0.0125
+GW 5 101 -4.786 6.049 0 4.786 6.049 0 0.0125
+GW 6 1 2000 2000 2000 2000.001 2000.001 2000.001 0.000814
+GS 0 0 1
+GE 0
+EX 0 3 1 0 1 0
+LD 5 0 0 0 2.5E7
+NT 3 1 6 1 0.0001066 -0.0213214 0 0 1e10 1e10
+FR 0 1 0 0 14.175 1
+RP 0 1 360 1000 90 0 1 1
+EN
+</pre>
+  <p>To place a load in parallel with a source on a specific segment, we may use the system shown in model and in <b>Fig. 7</b>. We place the shunt admittance values on the end of the network connected to the target segment. These are the Y11 values, which are identical to those used for the short-TL version of the model. Y12 remains blank, as indicated by the zero entries. The other end of the network requires a short circuit, normally created by the use of very high values of real and imaginary admittance for Y22. The network short circuit adds nothing to the structure geometry of a model, and so the short-circuited end of the network may connect to any wire without affecting antenna performance. Since GW6 is left over from the TL models, we used that 1-segment wire as the network terminus.</p>
+  <center>
+    <img src="amod95-7.gif" width="533" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>You may run the model for its reports: 7.82 dBi gain, 48.98 - j0.01 Ohms impedance, 0.999 AGT. The reduced reactance results from not having a 0.01-m line between the source segment and the load. Since we are using admittance values (comparable to using impedance values in an LD4 load), the model is frequency specific. Its chief advantage lies in the place it occupies in our progression of beta-matched models. Hopefully, by revealing its relationship to other techniques that we may use to achieve relatively the same goal, the function and nature of NT networks is somewhat clearer.</p>
+  <p>In this episode, we have looked at some fairly simple applications of the NT command and their relationship to alternative ways of achieving the same goals. Indeed, the more commands that we master, the more ways that we may create modifications to the geometry of a model. The flexibility lets us select the means that best suits the need.</p>
+  <p>There are further applications of the NT command that more directly involve us in the 2-port-network nature of the command. In the next episode, we shall examine how to add to our antenna models the matching networks that bring the source impedance from its natural value to that ubiquitous 50-Ohm value. Along the way, we shall also show some short cuts to the required calculations, although a hand-calculator will still be a necessary adjunct to our modeling efforts.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

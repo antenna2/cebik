@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radiation Patterns and Propagation</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>121. Radiation Patterns and Propagation</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>A number of statements that we might correctly make about the far-field radiation patterns produced by NEC tend to strike a dull chord among newer modelers--if my e-mail over the years has been any kind of indicator. Many of these statements seem to run counter to experience or reports of experience in one or more ways. Most of the answers to the quandaries lie in the realm of distinguishing antenna phenomena as NEC models than from what happens to HF signals as they propagate via the ionosphere toward and from a communications target. Therefore, I shall devote this episode to seeing the differences that are crucial to understanding NEC's reports and communications reports without conflict.</p>
+  <p>In the process of developing these notes, we shall encounter a number of highly simplified sketches--along with the usual collection of NEC-based graphics. The sketches are not designed to capture all of the nuances of propagation, but only to focus on certain features. However, ionospheric propagation is a very complex phenomenon (or collection of phenomena). Hence, for every detail that I include, I shall omit dozens of others that occur simultaneously.</p>
+  <p><i>Are antennas truly reciprocal?</i></p>
+  <p>Our first question seems to arise because when we communicate, we often find that reciprocity over a communications path seems not to apply as often as it does apply. We call stations that do not hear us, and we receive reports from third parties that another station is calling us although we cannot hear him. Even when we do manage to communicate in the HF range, the signal strengths may differ at each end of the line. As a result of these situations, one may naturally ask whether antennas are reciprocal.</p>
+  <p>Note that we are addressing this question in very broad terms. Many a theoretical debate arises from time to time as to whether antennas are "really" capable of being reciprocal. However, we shall not in these notes engage the question at such a theoretical level.</p>
+  <p>The entry-level software used by most modelers gives no clue to a proper answer to the question. Most entry-level software restricts the user to only one of the excitation possibilities, the direct voltage source (EX0) (or an indirect current source). For example, we might encounter a 6-element Yagi modeled in free space. The following lines define the model in ASCII format.</p>
+  <pre>
+CM 6-el 2M Yagi
+CE
+GW 1 21 -.514604 0. 0. .514604 0. 0. .0024
+GW 2 21 -.5075174 .257302 0. .5075174 .257302 0. .0024
+GW 3 21 -.4746752 .3637788 0. .4746752 .3637788 0. .0024
+GW 4 21 -.461137 .6585204 0. .461137 .6585204 0. .0024
+GW 5 21 -.461137 .9469628 0. .461137 .9469628 0. .0024
+GW 6 21 -.443992 1.377137 0. .443992 1.377137 0. .0024
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+FR 0 1 0 0 146. 0
+GN -1
+EX 0 2 11 0 1 0.
+RP 0 1 361 1500 90. 0. 1.00000 1.00000 0.
+EN
+</pre>The EX command line specifies that we apply a voltage source to the center segment of wire 2. In most entry-level programs, we then request a radiation pattern (RP0). Since the antenna is in free space, we request an azimuth pattern, which is technically an E-plane pattern. The result appears in <b>Fig. 1</b>. Note that the wire entries place the element spacing values in the Y columns, while the elements extend in the +X and -X directions. The conventions of the software used here (NSI's GNEC) place 0 degrees at the top of the polar plot. The pattern is a phi pattern (where a true azimuth pattern would increase the degree values clockwise). Hence, the main lobe of the antenna points to the left at 90 degrees phi.
+  <center>
+    <img src="amod121-1.gif" width="650" height="420" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The side panel in the figure provides the analytical data to accompany the normalized plot on a logarithmic scale. One reason that I selected this antenna was its free-space gain value of just over 10 dBi. For data-gathering purposes, the XNDA specification in the RP0 command is 1500. When N=5, the radiation pattern portion of the NEC output file produces an additional table. It lists for each value of phi and theta the antenna gain normalized to the peak gain of the antenna. The bearing of peak gain will read 0 dB, and all other gain values will be negative, indicating how much below the peak gain they are, as recording in dB. However, even a pattern like this one does not show why the antenna is or is not reciprocal, or even what reciprocity might mean.</p>
+  <p>An antenna is reciprocal if its receiving pattern and its transmitting pattern are the same. We ordinarily record the transmitting pattern in dBi, or dB relative to an isotropic source. Normalized, the gain appears relative to a peak value of 0 dB. The counterpart to transmitting gain would be receiving sensitivity. More advanced versions of NEC offer a number of options for deriving receiving patterns. They involve the EX1 command for linear antennas, that is, providing the antenna with external excitation in the form of linear plane waves. We systematically rotate the excitation around the antenna in a series of steps. Then we invoke the PT command to record the relative current at a selected point--our former feedpoint. <b>Fig. 2</b> shows in simplified form with only 8 positions for the EX1 command how the development of receiving patterns differs from the development of transmit patterns.</p>
+  <center>
+    <img src="amod121-2.gif" width="650" height="400" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A typical model might have the following appearance. Note that NEC has a limitation in how large a receiving matrix may be. Therefore, the data generation has two parts, one from -90 to +90 degrees, the other from 90 to 270 degrees. <b>Fig. 1</b> tells us why we selected the division of the work. Since we shall request normalized data, each section of data must contain a peak gain/current point, which occurs at 90 degrees phi. The program then normalizes the data against this value. The PT3 command allows us to capture only the normalized current in dB at a selected segment, in this case, the same segment that we formerly used as the transmit source or feedpoint.</p>
+  <pre>
+CM 6-el 2M Yagi
+CE
+GW 1 21 -.514604 0. 0. .514604 0. 0. .0024
+GW 2 21 -.5075174 .257302 0. .5075174 .257302 0. .0024
+GW 3 21 -.4746752 .3637788 0. .4746752 .3637788 0. .0024
+GW 4 21 -.461137 .6585204 0. .461137 .6585204 0. .0024
+GW 5 21 -.461137 .9469628 0. .461137 .9469628 0. .0024
+GW 6 21 -.443992 1.377137 0. .443992 1.377137 0. .0024
+GE 0
+LD 5 0 0 0 2.5E+07 1.
+PT 3 2 11 11
+EX 1 1 181 0 90 0 90 0 1 0 0
+XQ
+PT 3 2 11 11
+EX 1 1 181 0 -90 180 90 0 1 0 0
+XQ
+EN
+</pre>
+  <p>The data for both the transmitting pattern and the receiving pattern can be transferred to a spreadsheet for graphing. For both sets of data, we have 361 data points (from 0 to 360 degrees phi). <b>Table 1</b> provides a glimpse of the data from 0 to 120 degrees for the 6-element Yagi in free space at 146 MHz. Three data points call for attention: 0, 180, and 360 degrees. Each of these points represents a free-space side null. Values for these nulls have two properties that are problematical for graphing. First, they may have very large negative values. Graphing such values may result is severe compression of the upper part of the graph. Second, the values are subject to large variations with very small differences in the rounded values of numbers that go into their development. For the sake of graphing, I have set these numbers to an artificially high value of -100 dB.</p>
+  <center>
+    <img src="amod121-t1.gif" width="769" height="550" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we conjoined the two graphs--one for the transmitting pattern and one for the receiving pattern--we obtain a result like <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod121-3.gif" width="774" height="516" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Computer-generated graphs "write" the curve for one color and then overwrite it with the second color line. The result for our test case is the nearly complete disappearance of the red line beneath the green. A few red "dots" appear as verification that the line is present. However, as both the graph and the table suggest, the normalized pattern graphs are as identical as one might find in any data generation system. In short, within the limits of our ability to calculate and present the results, the patterns for transmitting gain and for receiving sensitivity are the same. From the perspective of NEC, the antenna performance is reciprocal with respect to transmitting and receiving.</p>
+  <p>For further information on the use of the EX command in conjunction with the PT command to develop receiving patterns and information, see episode 88 of this series.</p>
+  <p><i>Why do we continue to claim that a horizontal antenna performs better as we increase height? When we increase the height of an antenna from 1/2 wavelength to 1 wavelength, we find a high-angle lobe that simply wastes power.</i></p>
+  <p>The question arises from looking at independent normalized elevation patterns for the same antenna at different heights. <b>Fig. 4</b> captures the situation, so let's us see what might mislead a novice pattern reader.</p>
+  <center>
+    <img src="amod121-4.gif" width="450" height="150" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we examine the patterns without reference to the numerical data and without some important external data, we might easily reach the same conclusion that prompted the question. The elevation plot for the Yagi at a height of 1/2 wavelength seems to contain more energy, and the forward pattern forms a continuous whole. Hence, more energy seems to be concentrated at lower elevation angles. In contrast, the pattern for a height of 1 wavelength contains two lobes with a very deep null between them. The upper lobe has a center angle of about 45 degrees, well above the elevation angles at which we find skip except under the most unusual conditions. The lower lobe has a narrower vertical beamwidth than we find in the forward lobe for the pattern at a height of 1/2 wavelength. In the abstract, then, the pattern for a height of 1 wavelength appears to be distinctly inferior.</p>
+  <p>To determine if appearances are true or deceiving, we can do one of two things--or both. We can refer to the numerical data. Or, we may overlay the pattern so that their relative strengths become apparent. <b>Fig. 5</b> provides the overlaid patterns (using EZNEC software) along with some supplementary data that NEC does not and cannot calculate.</p>
+  <center>
+    <img src="amod121-5.gif" width="450" height="210" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The portion of the figure that NEC does calculate shows the relative proportions of the two patterns. If we assume that the azimuth patterns for the two heights are similar to each other (and we may always check by looking at those patterns), the energy within the cross-sections of the elevation patterns is about the same. However, most of the energy in the pattern for the lower height is directed at higher angles relative to the lower of the two lobes that form the pattern for the upper height. Below about 15 degrees elevation, the higher antenna shows a significantly stronger radiation pattern (and by virtue of our earlier discussion, a more sensitive receiving pattern).</p>
+  <p>At this point, we must combine the data from NEC with information derived from other sources. For example, extensive studies by Dean Straw, N6BV, have shown that most long-distance (DX) HF signals arrive at very low levels, as suggested in the additions to the patterns at the far right of <b>Fig. 5</b>. (The N6BV information is included with recent editions of <i>The ARRL Antenna Book</i>.) Despite the seeming waste of energy in the elevation region around 45 degrees, the higher antenna's lower lobe better intercepts the propagation angles at which much, if not most, long-distance HF energy arrives and departs. Indeed, the prime angles might even favor raising the horizontal antenna further.</p>
+  <p>We have reached a certain "interface." NEC calculations produce patterns based on a set of constant conditions in the far-field region of the antenna, that is, from several wavelengths beyond the limits of the antenna outward. However, it says nothing about what occurs to either radiated or incoming energy that is a function of variables within the far field region. Moreover, NEC says nothing about nearer influences unless we expressly model them.</p>
+  <p><i>Why can I sometimes hear a station but not be heard by them--and vice versa--at both HF and VHF frequencies?</i></p>
+  <p>At HF, the vast majority of signals that we receive (and our return transmitted signals) undergo ionospheric refraction so long as the ionosphere is sufficiently ionized to allow refraction. This simple statement involves us in the very complex field of propagation. On an average day--depending on the time of day, the month of the year, and the strength of the sun's ionizing UV radiation--we find many ionized layers. Many monthly columns exist in journals that go into various details about the actions of these layers under the many combinations of influences. We shall not try to replicate those studies here. Indeed, if you wish to predict ionospheric conditions to assist your own operation, you may find considerable benefit in obtaining one of the programs that use VOACAP or similar calculation engines to develop profiles of the most probable propagation conditions for paths that you specify.</p>
+  <p>Here, we can concentrate on the daytime F2 layer, which has perhaps the greatest influence on the path of long-distance HF signals. <b>Fig. 6</b> provides a partial answer to our question of why HF signals have different strengths in each direction. They simple take slightly different elevation paths over the distance between two stations. It is possible for the two stations to have equal strengths, to have unequal strengths, or for one to be on target while the other is wholly off target.</p>
+  <center>
+    <img src="amod121-6.gif" width="600" height="175" border="2" vspace="5" hspace="9">
+  </center>
+  <p>What the figure does not show is one of the reasons for the condition shown. The position of the sun relative to the path determines the strength of ionization all along the path. The strength of ionization influences the angle of refraction and how far through the ionized layer that energy travels before departing downward. (The strength of ionization also determines how much energy passes through the ionosphere to be lost into outer space and at what angles relative to the two stations and to the intermediate ground-reflection region. The ground reflection region near the center of the figure may also show differences in losses depending on whether the region is over dry land or salt water.)</p>
+  <p>On a "normal" morning in the U.S., one might expect to hear first stations from eastern Europe. As the morning moves onward (or as the European afternoon moves onward), the strongest stations appear to come from western European areas. Very often, however, the western European stations could hear my U.S. signals earlier in the day (from various inland locations, such as Tennessee or Nebraska), but would call in vain for a reply. Their transmitted skip was landing somewhere other than at my location. However, as the sun moved, those signal began intercepting my antenna, while the more eastern stations in Europe faded.</p>
+  <p>All of these phenomena occur beyond the limits of what NEC calculates as the antenna pattern. At best, we can arrange our models to produce patterns that are most likely to transmit and intercept signals at the most favored angles--or to understand why the limitations of our feasible installation will fall short of the ideal elevation angles. However, NEC will not take propagation effects into account.</p>
+  <p>Even at VHF and UHF, there are a myriad of influences that NEC usually does not take into account. Some of these factors we may model and some fall outside of feasible modeling. For example, the antenna support structure may affect performance, and we may (often with some difficulty) model this structure. At a slightly larger distance from the antenna, but still close by, we find a myriad of objects that we often refer to as "clutter." The ground clutter may include power line, poles, trees, buildings, and other items too varied to list. If we view these objects as significant, we may always try to model them. However, the level of conductivity and the actual structure of the most conductive parts may not be visible.</p>
+  <p>Modeling objects at a distance is standard engineering practice in some enterprises. For example, the potential of cell towers for distorting AM BC radiation patterns requires careful analysis within which modeling both the broadcast tower and the somewhat distant cell-phone tower plays a significant role.</p>
+  <p>VHF and UHF line-of-sight communications often encounters terrain and building effects at further distances than we might use for counting ground clutter. Edge diffraction that "bends" radio waves into otherwise dark areas by a wall-like or knife-edge object may not appear in both directions for an intended communications path. In fact, diffraction may also affect the elevation patterns of HF antennas. For further information on these optically-related wave phenomena, see Chapters 3 and 23 of the most recent edition of <i>The ARRL Antenna Book</i>. One passage in Chapter 3 refers to the analysis of these phenomena as a limitation of NEC's flat-ground mode of analysis. The point being made is that NEC does not model everything. In some cases, we may incorporate some distant objects within the model, but often a wire grid stand-in--with the wires assigned a general conductivity that reflects the materials of the object--fails to act like the real object within the radiation pattern field. When it comes to propagation, there is no practical way to model its effects within NEC.</p>
+  <p><i>When I communicate with stations along a coastline, I often acquire stronger signals with my antenna pointed somewhat off shore than when I align it with the station's geographic location? Is the NEC radiation pattern in error?</i></p>
+  <p>Although this question seems unrelated to the ones that we have been addressing, it is actually a variation of the earlier questions. Once more, the effect is not a part of what NEC can calculate, but is instead a function of propagation phenomena. One term that we have used is the idea of a "ray," a representation of radiated energy as a straight line. In the ionosphere, we find that the ray is refracted in some kind of arc--if the angle is not too severe and the ionization is not either too weak or too strong--so that it re-emerges on a downward slope toward a communications target. The simplified portrait of rays appears in the upper portion of <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod121-7.gif" width="500" height="330" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The lower portion of the figure is also an oversimplification, but may be good enough to get across a general idea of some importance. Rays are not like bullets, although we often portray them that way. When the energy reaches the ionosphere, it disperses. Some is lost. Some is absorbed. Some proceeds along one of several directions that would support refraction for re-entry downward. Any single component may undergo many dispersions, usually continuously along the path through the ionosphere. The result is a downward "spray" of energy. The actual signal that we receive is the statistical sum of all of the effects. If that sum is strong enough at the reception site, then we have at least half the conditions needed for successful communications. (For a broadcast station, this one-way analysis may be all that we need, since the only goal is reception.)</p>
+  <p>Dispersion effects are not only elevation phenomena. They also occur laterally, as suggested by <b>Fig. 8</b>. Once more, I have over-simplified the sketch so as not to lose the lines in a uniform gray mass. The actual dispersion effects are relatively continuous, rather then being stepped as shown in the sketch. Once more, what emerges as the downward energy will be--with respect to the target location--a statistical sum of all of the effects at work.</p>
+  <center>
+    <img src="amod121-8.gif" width="540" height="290" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Note that from a lateral perspective, the received signal may come from directions that have diverse azimuth bearings from the target location. Now let us suppose that at least some of the energy had to use two "hops" to reach the target. Reflections from dry ground tend to be lossier than reflections from salt water. Hence, we may find, at least on some occasions, that an off-shore antenna direction may produce stronger signals (in one or both directions) than a straight-line or great-circle bearing. The NEC radiation pattern would be correct in indicating the direction of the strongest signal. However, propagation effects would place the direction of the signal at a bearing that might not coincide with the actual target station location. Indeed, I am not aware that current propagation software takes this effect into account. Like NEC itself, propagation software has its calculating limitations.</p>
+  <p><b>Conclusion</b></p>
+  <p>These simple notes are no substitute for a proper study of the propagation of radio waves in any frequency region of interest. Rather, the notes have been designed to show in a somewhat rudimentary way what the NEC radiation patterns can and cannot tell us. With a flat ground and an ideal medium above ground, they give an accurate portrayal of both transmitting and receiving patterns for the class of antennas that we may model on the software.</p>
+  <p>However, those patterns cannot tell us anything about phenomena that modify the patterns once energy leaves the antenna on transmission or before it arrives at the antenna on reception. We have distinguished two general categories of modification. One set includes objects that we might attempt to include within the model, whatever the difficulty we may have in arriving at adequate models of those structures. The other set of modifying phenomena we have no hope of capturing with NEC, namely, all of the possible influences of propagation. Our survey of propagation effects is both over-simplified and incomplete. We only examined a few facets of propagation that have a relationship to questions often raised by newer modelers as they try to connect NEC radiation patterns with communications experience. Understanding propagation may be more complex than understanding antenna modeling. Hence, these notes are not suitable for conversion into sound bites that may easily mislead you when you take them out of context. Rather, the notes form a suggestion for the study of a set of phenomena that play the major role in what goes on between antennas.</p>
+  <p>The bottom line is that NEC radiation patterns give us useful information about a subject antenna. However, there is much in the use of that antenna that NEC cannot (and was never designed to) tell us.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

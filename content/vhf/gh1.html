@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Satellite, Helix">
+  <title>Axial-Mode Helical Antennas Part 1: Helix Basics</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Notes on Axial-Mode Helical Antennas in Amateur Service<br>
+    Part 1: Helix Basics, Modeling Issues, and Short Helical Antennas Over Perfect Ground</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>The axial-mode helical antenna has become a popular choice for radio amateurs engaging in satellite communications. We may construct helical antennas using straightforward methods with easily available materials. However, the individual builder faces a number of questions about helix size for a given frequency. Past literature has focused mainly on the gain that the axial-mode helix can attain for a given size. We should also examine other facets of the helix, such as the sensitivity to feedpoint impedance change with very small variations in size and the development of sidelobes with changing helix size.</p>
+  <p>In addition, the axial-mode helix generally receives attention in the context of very broadband antennas. In contrast, the amateur seeking circular polarization for satellite communications normally uses a very small bandwidth on any one of several bands, each band requiring a separate antenna. To answer the questions that face the potential amateur helix builder, we must we change our orientation to the antenna. Then we may be able to answer not only the question of how large to build the antenna, but as well whether the axial-mode helix is the right choice for a circularly polarized antenna for some specific use.</p>
+  <p>There are a number of background sources for information on axial-mode helices. The following list is a start, with most of the items having extensive bibliographies.</p>
+  <blockquote>
+    John D. Kraus, <i>Antennas</i>, 2nd Ed. (1988), pp. 300-310.
+    <p>W. L. Stutzman and G. A. Thiele, <i>Antenna Theory and Design</i>, 2nd Ed. (1998), pp. 231-239.</p>
+    <p>C. A. Balanis, <i>Antenna Theory</i>, 2nd Ed. (1997), pp. 505-512.</p>
+    <p>H. E. King and J. L. Wong, "Helical Antennas," Chapter 13 of <i>Antenna Engineering Handbook</i>, 3rd Ed., R. L. Johnson, Ed. (1993), pp. 13-1 ff.</p>
+    <p>Darrel Emerson, AA4FV, "The Gain of an Axial-Mode Helix Antenna," <i>The ARRL Antenna Compendium</i>, Vol. 4 (1995), pp. 64-68.</p>
+  </blockquote>
+  <p>The fundamental question posed by virtually all of these sources is the gain of the helix relative to its proportions over a significant bandwidth. In the notes to follow, I shall purposely restrict the number of size considerations and also reduce the bandwidth to a single frequency: 299.7925 MHz. At this frequency, 1m = 1WL. Therefore, all measurements will be in meters. The properties of any sample helix will scale to any desired frequency so long as you also scale the wire diameter.</p>
+  <p>My investigation will use NEC-4D as the chief modeling tool. For most purposes, NEC-2 will also work, although the helix formation command has a different entry system for the critical dimensions. NEC results in the past have appeared to yield lower gain reports than some indirect gain calculations based on empirical results. However, there are both modeling and theoretical calculation issues related to the interpretation of the modeling reports, and we shall examine both before we are done.</p>
+  <p><b>Some Helical Antenna Basics</b></p>
+  <p>A typical axial-mode helical antenna has the form shown in <b>Fig. 1</b>. It consists of a number of turns, usually rising from a ground plane. The graphical representation of the helix shows the modeling form that I used to generate the basic sections of these notes. The bottom end of the helix connects directly to a perfect indefinitely large ground plane. Peak forward gain occurs close to or at the vertical axis of the helix. However, as we shall see, the pattern of a helix is not always perfectly symmetrical. There are numerous construction variations. Some builders bring the bottom turn of the helix back to the center of the helix circle. Others surround the base with a cup connected to the ground plane. Of course, an actual ground plane will have a finite dimension, usually a full wavelength in diameter or along the sides of a square.</p>
+  <center>
+    <img src="gh-1.gif" width="650" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The helices with which we shall work are straight sided. King and Wong have worked with both stepped and uniformly tapering helix diameters, but most amateur builders will choose the simpler uniform structure shown in <b>Fig. 1</b>.</p>
+  <center>
+    <img src="gh-2.gif" width="539" height="296" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows the basic dimensions of a helix. S is the turn spacing or the linear length of 1 turn of the helix. R is the radius, and 2R the diameter. If we stretch a single turn flat, we obtain the right triangle shown on the right side of the figure. C indicates the circumference of the turn, while L' indicates the length of wire required to obtain a full turn. Angle alpha is the pitch of the helix. For helices having multiple turns, we shall also be interested in the total helix length.</p>
+  <p>The dimensions are all interrelated by a few trig equations. All dimensions refer to center-to-center distances relative to the wires.</p>
+  <blockquote>
+    <pre>
+R = radius of the helix, center to wire-center
+C = circumference of the helix                   C = 2 p R
+S = spacing between turns                        S = C tana
+alpha = pitch angle                              alpha = tan-1 (S/C)
+N (or n) = number of turns
+L = axial length of helix                        L = n S
+D = conductor diameter
+L' = Conductor length for a single turn          L' = SQRT(C2 + S2) = C/cos alpha = S/sin alpha
+</pre>
+  </blockquote>
+  <p>To design of an axial-mode helix, we need select only a few of these dimensions and the rest will following automatically. Perhaps the two most critical dimensions are the pitch angle and the circumference. In fact, basic helix theory tends to restrict axial-mode operation of the helix to pitch angles between 12&deg; and 14&deg;. As well, various texts restrict the circumference to ranges from either 0.8WL to 1.2WL (Kraus) or from 3/4WL to 4/3WL (Balanis). The number of turns in a helix is a builder selection, with gain (for any given pitch and circumference) rising with the number of turns. As well, selection of a wire diameter is also a builder choice. Although not mentioned in any serious way in most literature, we shall discover that the conductor size does make a difference to helix performance.</p>
+  <center>
+    <img src="gh-3.gif" width="342" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Modeling a helix in either NEC-2 or NEC-4 involves approximating a circular form with a series of straight wires. <b>Fig. 3</b> shows one limitation of this process. The straight-wire segments are inscribed within the circle defined by the specification of a radius for the helix. Hence, the sum of the wire segments will always be less than the length of the wire in an actual single turn. If we raise the number of segments sufficiently high, the error diminishes to insignificance. A level of about 20 wires per turn is large enough for virtually all applications.</p>
+  <p>The following two lines compare otherwise identical 5-turn helices with a circumference of 1.0WL and a 12&deg; pitch at the test frequency.</p>
+  <pre>
+Segmentation    Reported Gain   Impedance               Average Gain Test               Corrected Gain
+Segments/turn   dBi             R +/- jX Ohms           Value           dB              dBi
+20              8.39            225.5 - j 39.8          1.815           -0.42           8.81
+40              8.30            213.2 - j 71.2          1.762           -0.55           8.85
+</pre>
+  <p>Ultimately, the corrected gain values (reported gain - AGT in dB) coincide very well. However, given the model set-up, the impedance values (even if corrected by multiplying half the AGT value times the resistive component) will not coincide. To gather trends, but not actual values, of the terminal impedance of the helix, I placed the source on the very first segment. However, NEC places a source on the entire segment. Changing the number of segments per turn places the actual position of the source either closer to or further from the ground plane. Hence, the more segments per turn, the lower the resistive component of the source impedance.</p>
+  <p>The use of the first segment as a source position has a second effect on the model. A NEC model is most adequate when the segments on either side of the source are equal in length or when the source segment is vertically oriented to a perfect ground plane. The helix meets neither of these conditions. Hence, the average gain test (AGT) value for a helix over perfect ground is not 2.0. However, we may correct the reported gain value (in dBi) by subtracting the AGT value in dB from the reported value. The following lines compare the 5-turn 12&deg; 1.0WL helix with the source placed on segments 1, 2, and 3.</p>
+  <pre>
+Source          Reported Gain   Impedance               Average Gain Test               Corrected Gain
+Placement       dBi             R +/- jX Ohms           Value           dB              dBi
+Seg. 1          8.39            225.5 - j 39.8          1.815           -0.42           8.81
+Seg. 2          8.79            238.2 + j 44.2          1.995           -0.01           8.80
+Seg. 3          8.79            263.1 + j147.3          2.000            0.00           8.79
+</pre>
+  <p>Using the AGT value to correct the gain figure is thus a completely effective means of arriving at the modeled helix gain. However, had we used the impedances at segments 2 or 3 instead of going through the process of correcting the model for its AGT value, we would not see the impedance trends as well at the terminal end of the structure. Although the reported values will still be off the mark by a distance roughly equal to half the length of a segment, they will still be adequate to let us examine trends. Because we only need to see trends, we do not need to correct the resistive component of these values, especially since this corrective becomes less secure with high values of reactance.</p>
+  <p>NEC-4 models of helices are deceptively simple, as the following sample reveals.</p>
+  <pre>
+CM General Helix over Perfect Ground
+CE
+GH 1 100 5 1.24664 .159155 .159155 .001 .001 0
+GE 1 -1 0
+GN 1
+EX 0 1 1 0 1 0
+FR 0 1 0 0 299.7925 1
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The entire 100-segment model of the 5-turn helix is contained in the single GH entry. It specifies 100 segments in 5 turns with an overall length of 1.24664 m (WL) using a starting and ending radius of 0.159155 m (WL) with starting and ending wire radii of 0.001 m (or 1 mm). The remainder of the model specifies the test frequency (FR), the source position (EX), the perfect ground (GN), and the requests for 2 theta (elevation) patterns at 90&deg; phi (azimuth) angles from each other. The 2 patterns allow us to see the slight non-symmetry of the helix pattern over a perfect ground. (We shall examine the usual NEC-2 version of the GH command before we conclude these notes.) It is possible to create a helix using individual wires, and some programs include, either as part of the program or as an adjunct program, methods of creating helices. However, these systems will produce individual wires for each segment of the helix. Using the GH command, the NEC core calculates and produces the required segments internally. The ability to change the size of a helix with only a few keystrokes allows a larger database in a shorter time. However, before we conclude these notes, we shall change techniques, since rapid methods of helix formation also have their limitations.</p>
+  <p>There is such a thing as presenting too much data in compressed form for effective absorption. Many of the engineering charts developed for axial-mode helices suffer from this syndrome. Therefore, I shall restrict my investigation in several ways. First, I shall use (except for a single demonstration) a constant wire diameter of 2 mm (0.002WL or about 0.07874"). Second, I shall restrict the pitch angles to 14&deg; and 12&deg; (again, except for a single demonstration). These pitches represent the limits recommended for axial-mode helix operation and suffice to show trends based upon changing the pitch. Third, I shall look at helixes using 5, 10, and 15 turns only, since these represent short, medium, and long antennas. Most reference books place a lower limit of about 4 turns for axial-mode operation, so the shortest helix in our batch is close to the limit. 15 turns can result in helices up to 5WL long. Finally, we shall examine changes in performance of the prescribed helices using circumferences from 0.75WL up to 1.35WL. Extending the circumference to the Balanis 3/4WL-4/3WL limits lets us view some properties of these antennas that we might otherwise overlook. Because wire losses are so small in a helix, we shall use perfect (lossless) wire throughout. Let's begin with the smallest of our samples.</p>
+  <p><b>A 5-Turn Helix Using 2-mm Diameter Wire</b></p>
+  <p>The first test model is a 5-turn helix that uses 2-mm diameter lossless wire. The initial test used 4 separate pitches: 14&deg;, 12&deg;, 10&deg; and 8&deg;. For any small circumference, the gain increases as the pitch diminishes (and with it, the turn spacing and the total length). I wanted to uncover what the consequences might be of extending each pitch through larger circumferences. 14&deg; is the recommended maximum pitch angle. The minimum circumference in the survey is 0.75WL. The maximum circumference is generally 1.35WL, although one data table uses 1.4WL as the maximum to confirm that the gain begins to drop beyond 1.35WL.</p>
+  <p><b>Table 1</b> shows the numerical data for the 4 series of modeling runs. The table derives from a simple spreadsheet used to calculate the required dimensions for the models. "Circum" means the helix circumference, while "Radius" is self-explanatory and is calculated by the spreadsheet. My spreadsheet actually uses 16 numeric positions per calculated number, although the table shows only 8. The extra positions are more of an inconvenience to data copying than they are an aid to precision. "T-space" means the turn spacing, again, as calculated from the pitch angle and the circumference. "Length" is the total length of the antenna, in this case 5 turns times the turn spacing.</p>
+  <p>Recorded data begins with "Gain Rp," the reported gain from the initial modeling. "BW-90" is the beamwidth as viewed down the Y-axis, while "BW-0" is the beamwidth down the X-axis, where beamwidth for both is the -3dB value. "R" and "X" are the components of the source impedance in Ohms. "AGT #" is the calculated average gain test value over perfect ground, where a value of 2.0 represents a fully adequate model as measured by this test. (Note that AGT is a necessary but not a sufficient condition of model adequacy.) "AGT-dB" is the same value converted to dB to serve as a correction factor for the reported gain. When calculated over perfect ground, use half the value of the report AGT, take the log10 of that number, and multiply by 10 to arrive at the AGT-dB value. Since both values are rounded, a digit of deviance is possible. The final or "Gain-Cor" column gives the adjusted forward gain value by subtracting the AGT-dB value from the reported gain value. Since all AGT-dB values in these notes are negative, all corrected gain values will be higher than the reported values.</p>
+  <p>AGT values will vary slightly from one model in a series to the next and, as a block, from one set of runs to the next. The chief source of the low AGT value is the relationship of the source segment to the ground plane. This relationship changes slightly with every increase in circumference, since the source segment becomes slightly longer. As we change pitch to a smaller angle, the source segments again change their relationship to the ground plane. Hence, the AGT # and AGT-dB values both tend to decrease as the pitch becomes smaller.</p>
+  <center>
+    <img src="gh-t1.gif" width="750" height="990" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Scanning the tables for patterns can be somewhat daunting, so I have graphed some of the key values, beginning with the maximum forward gain--using corrected gain values. The trends would not have changed had I used the initially reported values.</p>
+  <center>
+    <img src="gh-4.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> shows the maximum forward (upward) gains for the 4 pitch angles as we increase the circumference from 0.75 to 1.35WL. (The table shows the 14&deg; 1.4WL circumference value to verify that the 1.35WL circumference value on the graph is a maximum that falls off with a larger circumference.) The trend in the gain graph suggests that we would do well with any of the 4 pitches up through a circumference of about 1.2WL. The lower the pitch, the higher the gain we obtain for any circumference below 1.2WL. It is most interesting that the gain is lowest (for the 12&deg; and 14&deg; pitch angles) where the circumference is close to 1.0WL. Note, however, that as we reduce the pitch angle, minimum gain tends to become associated with smaller circumferences. If we were to move either upward or downward from the design frequency, any circumference (and radius) of choice would change with the new frequency. Therefore, the curves represent a tracking of the gain at frequencies some distance from the design frequency. The 0.75WL and 1.35WL cut-off circumferences limit the tracking to a corresponding frequency range relative to the test frequency.</p>
+  <p>The gain curves do not tell the entire story concerning helical antennas operated in the axial mode. For example, one desirable feature of an antenna that we might wish to build is that all of the key properties should remain stable and predictable over a generous frequency span. We do not need them to be unchanging so long as we can easily predict the direction and amount of change. Small physical changes that yield large changes in a performance property tend to result in an antenna that is difficult to replicate within the tolerances of the usual home shop.</p>
+  <center>
+    <img src="gh-5.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For this reason, graphs of the resistive and reactive components of the source impedance become important. <b>Fig. 5</b> and <b>Fig. 6</b> present the data for the 4 pitches relative to the 5-turn helix. Although the precise values are subject to adjustment as terminal impedance values, the trends may show us something of the helical antenna's stability.</p>
+  <center>
+    <img src="gh-6.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Both the resistance and the reactance curves for the 10&deg; and the 8&deg; curves show significant fluctuations at virtually any circumference of helix, especially as compared to the 14&deg; and the 12&deg; curves. Even these curves have their limits. Above about a 1.2WL circumference, the high-pitch curves show very significant fluctuations. Reactance swings of 70 Ohms are common with a circumference change of as little as 0.05WL. For the 5-turn helix, 14&deg; and 12&deg; pitch helices less than 1.2WL long appear to present the most stable designs with respect to source impedance. Circumferences below about 0.8WL for 12&deg; and 14&deg; pitches also begin to show the instabilities of very large circumferences, but to a lesser degree.</p>
+  <center>
+    <img src="gh-7.gif" width="800" height="675" border="2" vspace="5" hspace="9">
+  </center>
+  <p>A second factor often overlooked in helix performance is the development of sidelobes. <b>Fig. 7</b> shows the Y-axis elevation patterns of the 5-turn helix with a 12&deg; pitch over stepped circumferences. Although the sidelobes at circumferences of 1.05WL and 1.15WL appear small, note that they are less than 10 dB below the level of the maximum forward gain. As we increase the circumference, the sidelobes become stronger, and by a circumference of 1.35WL, we have a double set, with the forward-most sidelobe only about 6 dB below the main lobe. At the low end of the circumference scale, patterns for sizes below 0.95WL tend to remain as well behaved as the first pattern in <b>Fig. 7</b>.</p>
+  <p>Another feature of the helix's sidelobe development is the fact that neither the main lobe nor the sidelobes are symmetrical with respect to the centerline. Even the 1.05WL circumference pattern shows the asymmetry. In fact, the patterns are more symmetrical as viewed along the Y-axis than along the X-axis. If you return to <b>Fig. 1</b>, you can see that the terminal end of the model is off center when viewed along the Y-axis. The result is larger secondary lobes on one side than the other side of the helix.</p>
+  <p>The sidelobe development, when added to the source impedance data, suggests that in many ways, we would derive better performance overall from a 5-turn helix with a circumference above 0.8WL and under 1.2WL. This practical restriction lowers the maximum gain that we may obtain from the antenna to under 10 dBi with a beamwidth of about 50 degrees or so.</p>
+  <p>At this point, we must wonder if the same trends hold up for 10-turn and 15-turn helices. However, before examining that data, let's examine another overlooked aspect of helix design.</p>
+  <p><b>A 5-Turn Helix Using 5-mm Diameter Wire</b></p>
+  <p>Let's increase the wire diameter from 2 mm to 5 mm. 2-mm wire is between AWG #12 and AWG #14 in diameter. 5-mm wire is about 0.1969" in diameter, a little larger than 3/16" rod. At 2.5 times the diameter of our first models, it represents a way to discover whether element diameter makes a difference to helix performance.</p>
+  <p>One limitation of the investigation is the fact that the AGT values continue to drop further below the ideal 2.0 value. Nevertheless, the data are sufficiently accurate to reveal trends as we run through 14&deg; and 12&deg; pitch 5-turn helices. <b>Table 2</b> has the complete data, but a few graphs can focus our attention on a number of key factors.</p>
+  <center>
+    <img src="gh-t2.gif" width="750" height="530" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> presents the gain data for the two subject models for the standard range of circumferences. Both curves closely parallel their counterpart curves for 2-mm wire. The tabular data for 1.4WL will confirm that the 1.35WL gain for the 14&deg; curve is a peak value.</p>
+  <center>
+    <img src="gh-8.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 9</b> and <b>Fig. 10</b> we can see the instabilities of the resistance and reactance performance for circumferences below about 0.85WL and above 1.2WL. However, should we wish to compare the curves for smaller circumferences with the corresponding 2-mm curves, we shall see similar variations (and similar stability) for the two wire sizes. (Note: differences in the Y-axis range on the graphs may leave a misimpression of the actual amount of change.) In general, then, wire size does not make a great deal of difference to the selection of a helix circumference. Indeed, the patterns for the 5-mm helices are too close to those for the 2-mm versions to need repetition.</p>
+  <center>
+    <img src="gh-9.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="gh-10.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>Wire diameter does make a difference in the forward gain of a 5-turn helix, especially over the range of circumferences that we have so far listed as stable with respect to source impedance and relatively free of sidelobe development, that is, 0.85WL up to about 1.2WL. <b>Fig. 11</b> shows gain curves for the two wire sizes using a 12&deg; pitch. Note that, besides gain, the only notable feature is the circumference associated with the minimum gain value. The movement of that gain "null" is similar to the effect of reducing the pitch angle with a constant wire size. (See <b>Fig. 4</b>.) Inter-turn coupling thus becomes a possibility for explaining the movement of the gain-null circumference size.
+  <center>
+    <img src="gh-11.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Within the "stable" range, the average gain advantage for 5-mm wire is about 0.5 dB. The largest differences occur with circumference sizes between about 0.95WL and 1.15WL. Although one may dispute just how much advantage a half dB makes operationally, the result does have a bearing on most of the methods for estimating axial-mode helical antenna gain. None of those techniques takes wire diameter into account. In applying this data to scaled versions of the helices under study, we should remember that 2 mm and 5 mm represent 0.002WL and 0.005WL wire diameters, respectively.</p>
+  <p><b>Next Time. . .</b></p>
+  <p>In this initial foray into axial-mode helical antennas for radio amateurs, we have examined helix basics, setting up NEC-4 models over a perfect ground, and the main characteristics of 5-turn helix performance. However, as we move up the amateur bands, we find longer helical antennas. Therefore, we need to look at 10-turn and 15-turn helices in the same environment. We shall see if there are any significant differences in performance beyond the anticipated gain increase and beamwidth decrease. Since a significant part of our investigation involves how to model these antennas, we shall also explore what we need to do if we only have NEC-2 with which to work.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 10-20-2005. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="gh2.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Part 2: 10- and 15-Turn Helical Antennas Over Perfect Ground and Modeling Helices in NEC-2</a></p>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#helix'>Helix</a>, <a href='../topics.html#satellite'>Satellite</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

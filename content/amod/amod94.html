@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GR: The "Generate Cylindrical Structure" Command</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>94. GR: The "Generate Cylindrical Structure" Command</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The GR command is a specialized rotational device that may use symmetry for rapid calculation of the replication of an initial structure. View the initial structure as vertical and offset from the center (X = 0, Y = 0) position. Invoking the GR command will then created rotated versions of the initial structure the number of times (NR) specified by the command with each new version rotated around the Z-axis by 360&deg;/NR. The result is a cylindrical structure with the added property of running much faster than a similar structure produced by the GM command due to the use of symmetry. All of models in this exercise are run in NEC-Win Pro, a NEC-2-based program that makes available all of the commands.</p>
+  <p>Like the GX command, GR is deceptively simple, since it employs only the first two integer positions on the command line. It does not use any of the floating decimal positions. Due to its simplicity, the command carries with it a host of restrictions, some of which have led modelers to by-pass the command in favor of others. Like GX, GR is identical in both NEC-2 and NEC-4.</p>
+  <pre>
+Cmd        I1                I2
+           Tag No.           Total No.
+           Increment         of Occurrences
+GR         1                 6
+</pre>
+  <p>Like GX, the I1 entry should specify an increment such that each new occurrence of the initial structure takes on a previously unused tag number. In some commands, such as GM, you will specify the number of new structures beyond the initial structure. However, in GR, you specify the total number of structures, including the initial structure. Now let's sample the restriction list.</p>
+  <ul>
+    <li>1. Avoid using GR when segments lie on or cross (at other than junctions) the Z-axis to prevent the occurrence of overlapping segments.</li>
+    <li>2. Avoid adding a GW entry following GR or symmetry may be defeated (or "destroyed").</li>
+    <li>3. Use a following GM command only if the number of new structures is set to zero and if the command acts only on the entire structure. Also avoid rotating the structure with GM around the X- or Y-axis when a ground is specified.</li>
+    <li>4. A following GX or GR entry will destroy the previously established symmetry.</li>
+    <li>5. Avoid non-symmetrical lumped loads. However, non-radiating networks and sources will not affect symmetry.</li>
+  </ul>
+  <p>The GR command differs from the corresponding GX command in several important ways, even though both make use of symmetry during the core run. First, GX allows symmetry in all 3 planes--X, Y, and Z--and the modeler can select from 1 to 3 planes of symmetry for any model. See column #72 of this series for the rudiments of applying the GX command. In contrast, the GR command applies symmetry around the Z axis only.</p>
+  <p>Second, the GX command applies symmetry once per option, although with multiple planes of symmetry, we may end up with up to 8 total objects. One is the original and the other 7 are replications created in a cube if we select the maximum level of symmetry available. The GR command uses symmetry rotationally relative to the original structure. Hence, in principle, there is no limit to the number of replications (one less than the total number of occurrences that we specify within the command itself). However, there are very practical limitations on the number of successful replications we may have. That number depends upon the X-Y dimensions of the original structure. Specifying too many occurrences will result in overlapping or inter-penetrating structures that yield a defective model.</p>
+  <p>Third, the reflections in the GX command are essentially linear across a specified plane of reflection. For the plane in question, we arrive at the same absolute values for the coordinates, but with the signs reversed. The GX command uses symmetry rotationally, separating each occurrence of the structure by an angular distance, but at the same distance from X=0 and Y-0 as the original structure.</p>
+  <p>We shall sample the formation of GR structures using the simplest possible structures. <b>Fig. 1</b> shows the structures that result from the sample models.</p>
+  <center>
+    <img src="amod94-1.gif" width="760" height="324" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Despite the seeming complexity of some of the structures, formation is very straightforward. To create the set of 6 vertical dipoles in the left-most portion of <b>Fig. 1</b>, we need only 2 geometry commands (plus the obligatory GE command to terminate the geometry portion of the model). <b>Fig. 2</b> shows perhaps the simplest of GR models.</p>
+  <center>
+    <img src="amod94-2.gif" width="723" height="316" border="2" vspace="5" hspace="9">
+  </center>
+  <p>GW1 sets up a vertical dipole in this free-space model. It extends equally above and below the Z = 0 level. As well, the dipole is displaced 1 m along the X-axis. However, a starting structure may begin with any values of X and Y so long as they are not both zero. Since we have only one tag number, we need increment it only by 1 in the GR line. Then we specify 6 total structures to form the cylinder at the left in <b>Fig. 1</b>.</p>
+  <pre>
+                                 - - - STRUCTURE SPECIFICATION - - -
+
+                                     COORDINATES MUST BE INPUT IN
+                                     METERS OR BE SCALED TO METERS
+                                     BEFORE STRUCTURE INPUT IS ENDED
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+     1   -1.00000    0.00000   -2.80000    -1.00000    0.00000    2.80000    0.00100     11        1    11       1
+      STRUCTURE ROTATED ABOUT Z-AXIS  6 TIMES.  LABELS INCREMENTED BY    1
+
+   TOTAL SEGMENTS USED=   66     NO. SEG. IN A SYMMETRIC CELL=   11     SYMMETRY FLAG= -1
+ STRUCTURE HAS   6 FOLD ROTATIONAL SYMMETRY
+</pre>
+  <p>The sample structure specification portion of the output file for the model shows how the core sets up the GR command. The segmentation data provides a full set of the 66 segments within the overall cylinder of wires. Note that in the original model, there is an EX0 entry for each wire. In the source impedance report, the actual value is not especially meaningful to any real antenna structure. However, observing that all the values are the same is good modeler evidence that the geometry has a correct set-up.</p>
+  <p>We may easily change the number of wires in the model by altering only the GR line of the model. Examine the GR line for the model in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod94-3.gif" width="723" height="405" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The new version of the model produces the structure in <b>Fig. 1</b> just left of center. The command automatically recalculates the proper angular displacement for the 12-wire cylinder. Note also in the model that there are now 12 EX0 entries to make this model comparable to the first one. One caution to observe when increasing the number of occurrences of the initial structure is not to add so many that the individual wires are too close together. Although not a problem with our standard 0.001-m radius wire, inaccuracies may result if the individual wire radii are too large for the spacing between them.</p>
+  <center>
+    <img src="amod94-4.gif" width="723" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Examine the model in <b>Fig. 4</b>. This model adds an allowable post-symmetry rotation and movement of the 6-wire structure in the very first model.</p>
+  <p>Since the GM entry affects the entire structure, it will run on both NEC-2 and NEC-4. The first motion entry in the command rotates the structure 30&deg;. You can see the rotation by referencing the Y-axis line in the inner right-of-center view in <b>Fig. 1</b>. Compare its orientation to the un-rotated left-most view within the figure. The second maneuver within the GM command elevates the entire cylinder 2.8-m along the Z-axis. Since neither motion disturbs the symmetry of the structure, the moves show up correctly in the segmentation data of the output report. Compare the data--especially the Z-axis values--for this model with the comparable values in the report for the first model. Here is a small sample from each model's segmentation data.</p>
+  <p>Unmoved model.</p>
+  <pre>
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   -1.00000    0.00000   -2.54545    0.50909   90.00000   0.00000   0.00100     0    1    2      1
+     2   -1.00000    0.00000   -2.03636    0.50909   90.00000   0.00000   0.00100     1    2    3      1
+     3   -1.00000    0.00000   -1.52727    0.50909   90.00000   0.00000   0.00100     2    3    4      1
+     4   -1.00000    0.00000   -1.01818    0.50909   90.00000   0.00000   0.00100     3    4    5      1
+     5   -1.00000    0.00000   -0.50909    0.50909   90.00000   0.00000   0.00100     4    5    6      1
+     6   -1.00000    0.00000    0.00000    0.50909   90.00000   0.00000   0.00100     5    6    7      1
+     7   -1.00000    0.00000    0.50909    0.50909   90.00000   0.00000   0.00100     6    7    8      1
+     8   -1.00000    0.00000    1.01818    0.50909   90.00000   0.00000   0.00100     7    8    9      1
+     9   -1.00000    0.00000    1.52727    0.50909   90.00000   0.00000   0.00100     8    9   10      1
+    10   -1.00000    0.00000    2.03636    0.50909   90.00000   0.00000   0.00100     9   10   11      1
+    11   -1.00000    0.00000    2.54545    0.50909   90.00000   0.00000   0.00100    10   11    0      1
+</pre>
+  <p>Moved model.</p>
+  <pre>
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   -0.86603   -0.50000    0.25455    0.50909   90.00000   0.00000   0.00100     0    1    2      1
+     2   -0.86603   -0.50000    0.76364    0.50909   90.00000   0.00000   0.00100     1    2    3      1
+     3   -0.86603   -0.50000    1.27273    0.50909   90.00000   0.00000   0.00100     2    3    4      1
+     4   -0.86603   -0.50000    1.78182    0.50909   90.00000   0.00000   0.00100     3    4    5      1
+     5   -0.86603   -0.50000    2.29091    0.50909   90.00000   0.00000   0.00100     4    5    6      1
+     6   -0.86603   -0.50000    2.80000    0.50909   90.00000   0.00000   0.00100     5    6    7      1
+     7   -0.86603   -0.50000    3.30909    0.50909   90.00000   0.00000   0.00100     6    7    8      1
+     8   -0.86603   -0.50000    3.81818    0.50909   90.00000   0.00000   0.00100     7    8    9      1
+     9   -0.86603   -0.50000    4.32727    0.50909   90.00000   0.00000   0.00100     8    9   10      1
+    10   -0.86603   -0.50000    4.83636    0.50909   90.00000   0.00000   0.00100     9   10   11      1
+    11   -0.86603   -0.50000    5.34545    0.50909   90.00000   0.00000   0.00100    10   11    0      1
+</pre>
+  <p>The 30-degree rotation shows up in the X and Y coordinates for the first tag. The elevation become clear from the all-positive Z values for the same tag number.</p>
+  <p>The right-most view in <b>Fig. 1</b> shows a 6-wire cylinder that is close top and bottom by circular structures. The NEC-2 model in <b>Fig. 5</b> shows how we can perform the operation. (Because the structure development involves GM commands that affect individual tags and not the entire structure, there are separate NEC-2 and NEC-4 versions of the model, due to difference in the GM command structure between the cores.)</p>
+  <center>
+    <img src="amod94-5.gif" width="723" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>After creating the initial vertical wire, we enter two separate GA commands to create 60&deg; arcs, the angular distance between the wires in the ultimate set. However, GA initially creates each arc vertically, so we must rotate each one by 90&deg;, while moving it to the proper end of the initial wire. We assign to the GA structures a number of segments so that the segment length within that structure is approximately the same as the segment length within the vertical wires but with enough segments to form an adequate arc. The result is an initial structure consisting of a vertical wire with an arced wire attached to each end. The GR command finishes the full cylinder with its closed top and bottom ends.</p>
+  <p>The following sample lines from the segmentation data show the 3 tags of the initial structure and the same data for the last replication in the overall model. To orient yourself, note the source assignments in <b>Fig. 5</b> to Tags 1 and 16 and find those tags in the partial table.</p>
+  <pre>
+  SEG.     COORDINATES OF SEG. CENTER       SEG.     ORIENTATION ANGLES    WIRE    CONNECTION DATA   TAG
+  NO.        X          Y          Z        LENGTH     ALPHA     BETA      RADIUS    I-   I    I+    NO.
+     1   -1.00000    0.00000   -2.54545    0.50909   90.00000  90.00000   0.00100   -66    1    2      1
+     2   -1.00000    0.00000   -2.03636    0.50909   90.00000   0.00000   0.00100     1    2    3      1
+     3   -1.00000    0.00000   -1.52727    0.50909   90.00000   0.00000   0.00100     2    3    4      1
+     4   -1.00000    0.00000   -1.01818    0.50909   90.00000   0.00000   0.00100     3    4    5      1
+     5   -1.00000    0.00000   -0.50909    0.50909   90.00000   0.00000   0.00100     4    5    6      1
+     6   -1.00000    0.00000    0.00000    0.50909   90.00000   0.00000   0.00100     5    6    7      1
+     7   -1.00000    0.00000    0.50909    0.50909   90.00000   0.00000   0.00100     6    7    8      1
+     8   -1.00000    0.00000    1.01818    0.50909   90.00000   0.00000   0.00100     7    8    9      1
+     9   -1.00000    0.00000    1.52727    0.50909   90.00000   0.00000   0.00100     8    9   10      1
+    10   -1.00000    0.00000    2.03636    0.50909   90.00000   0.00000   0.00100     9   10   11      1
+    11   -1.00000    0.00000    2.54545    0.50909   90.00000 -90.00000   0.00100    10   11   63      1
+    12    0.96985   -0.17101    2.80000    0.34730    0.00000-100.00000   0.00100    31   12   13      2
+    13    0.85287   -0.49240    2.80000    0.34730    0.00000-120.00000   0.00100    12   13   14      2
+    14    0.63302   -0.75441    2.80000    0.34730    0.00000-140.00000   0.00100    13   14  -45      2
+    15    0.96985   -0.17101   -2.80000    0.34730    0.00000-100.00000   0.00100    34   15   16      3
+    16    0.85287   -0.49240   -2.80000    0.34730    0.00000-120.00000   0.00100    15   16   17      3
+    17    0.63302   -0.75441   -2.80000    0.34730    0.00000-140.00000   0.00100    16   17   35      3
+---------------
+    86   -0.50000    0.86603   -2.54545    0.50909   90.00000-150.00000   0.00100   -49   86   87     16
+    87   -0.50000    0.86603   -2.03636    0.50909   90.00000   0.00000   0.00100    86   87   88     16
+    88   -0.50000    0.86603   -1.52727    0.50909   90.00000   0.00000   0.00100    87   88   89     16
+    89   -0.50000    0.86603   -1.01818    0.50909   90.00000   0.00000   0.00100    88   89   90     16
+    90   -0.50000    0.86603   -0.50909    0.50909   90.00000   0.00000   0.00100    89   90   91     16
+    91   -0.50000    0.86603    0.00000    0.50909   90.00000   0.00000   0.00100    90   91   92     16
+    92   -0.50000    0.86603    0.50909    0.50909   90.00000   0.00000   0.00100    91   92   93     16
+    93   -0.50000    0.86603    1.01818    0.50909   90.00000   0.00000   0.00100    92   93   94     16
+    94   -0.50000    0.86603    1.52727    0.50909   90.00000   0.00000   0.00100    93   94   95     16
+    95   -0.50000    0.86603    2.03636    0.50909   90.00000   0.00000   0.00100    94   95   96     16
+    96   -0.50000    0.86603    2.54545    0.50909   90.00000  30.00000   0.00100    95   96   46     16
+    97    0.33682   -0.92542    2.80000    0.34730    0.00000-160.00000   0.00100    14   97   98     17
+    98    0.00000   -0.98481    2.80000    0.34730    0.00000-180.00000   0.00100    97   98   99     17
+    99   -0.33682   -0.92542    2.80000    0.34730    0.00000 160.00000   0.00100    98   99  -28     17
+   100    0.33682   -0.92542   -2.80000    0.34730    0.00000-160.00000   0.00100    17  100  101     18
+   101    0.00000   -0.98481   -2.80000    0.34730    0.00000-180.00000   0.00100   100  101  102     18
+   102   -0.33682   -0.92542   -2.80000    0.34730    0.00000 160.00000   0.00100   101  102   18     18
+</pre>
+  <p>By locating the coordinates of each segment junction in the original wire, you may add arcs at each junction and create a cylinder that is closed at all available intermediate points. Note in the sample model that the 6 EX0 entries now use new tag numbers to reflect the 3-tag initial structure. When creating structures by symmetry, it is useful to keep track of the ways that geometry modifications will affect other parts of the total model. If a scratch pad will not suffice, you may consult the Necvu segment identification feature or the segmentation data to track these affects.</p>
+  <center>
+    <img src="amod94-6.gif" width="649" height="575" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I placed sources at the center of each wire in the structures as a convenience when checking the accuracy of each model. The result is a structure that performs similarly to a simple fat dipole, as shown by the 3-dimensional pattern in <b>Fig. 6</b>. (The red lines are a conventionalized representation of the capped cylinder oriented at corresponding angles relative to the field lines. Without the end caps, the maximum free-space gain is 2.08 to 2.10 dBi, about the same as that of a dipole. The beamwidth of the E-plane pattern is consistently about 83 degrees.</p>
+  <p>Even though these small sample models do not fairly show the core-run timesaving, the largest model (132 segments) required less than twice the time of the smallest (66 segments). Wire cylinders also offer some advantages when modeling large diameter tubular structures, since the radii of the individual wires forming them via GR may have the same size as wire attached to them (so long as those wires do not destroy the symmetry). A disadvantage is that GR-formed cylinders are not suitable for antennas such as slotted cylinders, since there is no way to remove selected wires from the finished product.</p>
+  <p>For very large models, both GX and GR (but not in the same model) can speed core runs. Although the sample models are small in order to make them clear, symmetry's true home is the model that otherwise would press the core in terms of required matrix space or the time it takes a PC to process the model.</p>
+  <p><b>A Special Note on the "Destruction" of Symmetry</b></p>
+  <p>A number of modelers have read NEC manual warnings about the conditions in which symmetry is "destroyed." Unfortunately, these warnings appear in unqualified form. As a result, some modelers do not use the GR command when another wire (GW) command must appear afterwards for fear that the structure created by the GR command simply will not appear in the model.</p>
+  <p>In fact, the structure does appear and becomes just a set of wires specified by the geometry function of the GR command. The symmetry mode of calculation, however, does not function. Hence, if we have a following GW command or another condition that defeats or destroys symmetry, we do not lose the modeled structure created by GR. We only lose the increased speed of the run that symmetry would permit.</p>
+  <p>To illustrate the correct situation, examine the model in <b>Fig. 7</b>. The model is the same as the very first model in this episode, with one addition. The initial GW command established a wire, and the GR command creates the resulting circle of 6 wires. In this model, GW 11 adds a new wire.</p>
+  <center>
+    <img src="amod94-7.gif" width="727" height="367" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To the right of the model file, I have inserted the Necvu rendering of the model that emerges from the wire specification section of the NEC output report. The 6 wires in the circle emerge from GW 1 and the GR command. To see how NEC handles this case, we may examine the first section of the NEC output report.</p>
+  <pre>
+                                - - - STRUCTURE SPECIFICATION - - -
+
+                                     COORDINATES MUST BE INPUT IN
+                                     METERS OR BE SCALED TO METERS
+                                     BEFORE STRUCTURE INPUT IS ENDED
+
+
+  WIRE                                                                               NO. OF    FIRST  LAST     TAG
+  NO.        X1         Y1         Z1          X2         Y2         Z2      RADIUS   SEG.     SEG.   SEG.     NO.
+     1   -1.00000    0.00000   -2.80000    -1.00000    0.00000    2.80000    0.00100     11        1    11       1
+      STRUCTURE ROTATED ABOUT Z-AXIS  6 TIMES.  LABELS INCREMENTED BY    1
+     2   -5.00000    0.00000   -3.00000    -5.00000    0.00000    3.00000    0.00100     10       67    76      11
+
+   TOTAL SEGMENTS USED=   76     NO. SEG. IN A SYMMETRIC CELL=   76     SYMMETRY FLAG=  0
+</pre>
+  <p>Note the very last entry that sets the symmetry flag at 0. If symmetry had been in effect, the flag would read -1. Hence, the model will run with all 7 wires in place, but will not use symmetry in the calculation process. Since GR is a highly functional geometry command, even apart from its potential to invoke symmetry, we should keep it in mind for many purposes, for example, when modeling radial systems, cylinders, and numerous other shapes.</p>
+  <p><b>Conclusion</b></p>
+  <p>Our brief foray into cylindrical rotation does not capture everything that we may do with the GR command. However, I hope that these notes make the command somewhat more accessible than it might otherwise have been.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

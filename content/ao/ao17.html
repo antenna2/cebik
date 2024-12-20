@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Matching">
+  <title>AO 17: Beam-Matching</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/qex.gif" align="left" width="150" height="83" border="2" vspace="5" hspace="25"> <img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="25"><i>Beam Matching</i></h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>Most modern HF and VHF beams present the builder with modest matching problems, relative to the antenna impedance and the impedance of the main feedline. Rarely does the impedance difference exceed an SWR of 3:1. Under these conditions, the builder has numerous options among matching systems. These notes provide a very brief overview of the main systems.</p>
+  <p><b>Series Matching</b></p>
+  <p>Series matching includes 3 systems, ranging from the most specific to the most general. All series matching systems presume that the matched element is insolated and isolated from any conductive boom.</p>
+  <p>1. <i>The 1/4 Wavelength Transmission-Line Transformer</i>: The 1/4 wavelength transmission-line transformer is perhaps the best known of the series matching systems. <b>Figure 1</b> outlines the basic application of the system.</p>
+  <center>
+    <img src="ao17-1.gif" width="550" height="225" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We may insert a 1/4 wavelength section of transmission line between a resonant antenna impedance and a feedline if the transformer section Zo is the geometric mean between the antenna and the feedline impedance. For example, if a beam has an impedance of 25 Ohms and we have a 50-Ohm feedline, then a transformer section of 35-37 Ohms will effect the required impedance transformation. We may use RG-83 or parallel sections of RG-59 to create the transformer. We may also step up or step down: the only requirement is that the transformer Zo be roughly the geometric mean of the two end values.</p>
+  <center>
+    <img src="ao17-e1.gif" width="258" height="50">
+  </center>
+  <p>If the feedpoint impedance is slightly reactive or if the available transformer line is not quite the exact geometric mean between the antenna and the cable impedance, the system will still work, although the lowest SWR may not be 1:1. Perhaps the simplest way to determine the optimal line length under these conditions is to use an antenna modeling program and experiment with line lengths, taking SWR sweeps for each trial length of line.</p>
+  <p>2. <i>The Bramham System</i>: The Bramham system of series matching tackles a special problem: matching a resonant antenna impedance to a different feedline Zo. The basic problem and solution appear in outline form in <b>Figure 2</b>. In <i>Electronic Engineering</i> for January, 1961 (pp. 42-44), B. Bramham published a paper on "A Convenient Transformer for Matching Coaxial Lines," based on work he had done for a CERN report in 1959. Bramham's solution was to develop a means for calculating equal lengths of the two lines, Z1 and Z2, which would effect the impedance transformation for a given frequency. The solution is elegantly simple.</p>
+  <center>
+    <img src="ao17-2.gif" width="450" height="220" border="2" vspace="5" hspace="9">
+  </center>
+  <p>First, let's define a special term, M:</p>
+  <center>
+    <img src="ao17-e2.gif" width="130" height="57">
+  </center>
+  <p>Z1 and Z2 are the values of the two lines to be joined in the scheme shown in <b>Figure 2</b>. The required lengths (L1 and L2) of the two is a function of M:</p>
+  <center>
+    <img src="ao17-e3.gif" width="135" height="46">
+  </center>
+  <p>L1 is the length if the matching line Z1 and L2 is the length of the matching line Z2. The lengths are in degrees relative to a 360&deg; wavelength for simple translation into electrical line lengths, which then translate into physical line lengths taking the line velocity factor into account.</p>
+  <p>3. <i>The Regier General Series-Matching Solution</i>: 3 decades ago, Regier developed a general solution for series matching any antenna impedance to a given line with a single line insertion. The details of Regier's solution can be found in the following references:</p>
+  <ul>
+    <li>"Impedance Matching with a Series Transmission Line Section," <i>Proceedings of the IEEE</i> (July, 1971), 1133-1134</li>
+    <li>"The Series-Section Transformer," <i>Electronic Engineering</i> (August, 1973), 33-34</li>
+    <li>"Series-Section Transmission-Line Impedance Matching," <i>QST</i> (July, 1978), 14-16.</li>
+  </ul>
+  <center>
+    <img src="ao17-3.gif" width="350" height="220" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The general outline of the Regier system appears in <b>Figure 3</b>. Regier's solution is best used in "normalized" form, where the ratios of one impedance to another are first reduced to single values. Otherwise, the calculation equations tend to look terribly opaque. So let's define a few quantities.</p>
+  <center>
+    <img src="ao17-e4.gif" width="224" height="54">
+  </center>
+  <p>The load impedance is specified as RL +/- jXL and Z1 is the selected impedance of the special matching section. We shall let L1 be the electrical length in degrees of the line Zo between the load and the special matching section, while L2 is the electrical length in degrees of the special matching section.</p>
+  <p>Now we can calculate the two lengths, starting with L2, since it plays a role in calculating L1.</p>
+  <center>
+    <img src="ao17-e5.gif" width="257" height="74">
+  </center>
+  <p>Although this equation looks a bit forbidding, it can be handled on a calculator or with a spreadsheet. The equation produces two good results, plus and minus. The positive result gives a shorter length for L1 and hence is preferred. If the result is an imaginary number, then the value of n must be changed. You can do this by increasing the value of Z1, the characteristic impedance of the special matching section. Remember that the series matching technique can use parallel transmission line sections as well as coaxial cables, so using a length of 300-Ohm or 450-Ohm line as the special matching section is perfectly appropriate.</p>
+  <center>
+    <img src="ao17-e6.gif" width="200" height="68">
+  </center>
+  <p>In some cases, a calculator will return a negative value for the electrical length of L1. To arrive at the correct positive value, simply add 180&deg; to the calculated result. For example, should L2 return a value of -62&deg;, the correct result will be 118&deg;.</p>
+  <p>There are limits to what combinations of Zo and Z1 we may use and still obtain a desired match. In general, the closer the values of Zo and Z1, the smaller the range of antenna impedance values that we can match.</p>
+  <p><b>The Beta or Hairpin Match</b></p>
+  <p>Essentially, the beta match is a form of L-network specifically arranged to transform a higher line Zo to a lower antenna impedance. In the process, the network usually uses a shortened element that has capacitive reactance in the feedpoint impedance as one of the reactive components in the L-network. <b>Figure 4</b> shows the general evolution of the typical beta or hairpin match. Let's begin our treatment of the L-network with the designation, delta, lower case. The designation appears in Terman's 1943 classic, <i>Radio Engineers Handbook</i> (page 213 and elsewhere), but a number of more recent publications have preferred to use terms such as "working Q," "network Q," or "loaded Q (QL) (in contrast to the "unloaded Q or QU) in preference to the older term. However, delta will do nicely for our work.</p>
+  <center>
+    <img src="ao17-4.gif" width="550" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In an L-network, we may express the relationships that define delta in two ways:</p>
+  <center>
+    <img src="ao17-e7.gif" width="218" height="56">
+  </center>
+  <p>The ratio of the input or source resistance (Rin) to the output or load resistance (Rout) defines the value of delta. I have chosen this starting point for our treatment as a tribute to George Grammer, whose classic volume <i>A course in Radio Fundamental</i> makes use of the concept (pages 69-70). The fact that this starting point simplifies the calculation of the reactance components of the network adds some substance to the reference. In fact, the calculation of the reactive components is very easy.</p>
+  <center>
+    <img src="ao17-e8.gif" width="172" height="44">
+  </center>
+  <p>For our down-converting version of the L-network, the series component is simply the product of delta and the load resistance. The parallel or shunt reactance is the ratio of the source or input resistance to delta. Both results are in Ohms, but-as noted earlier, the reactances are of opposite type. For the highest level of effectiveness for a given resistive component of feedpoint impedance, the beta match requires a certain series reactance. Other reactance values can be matched but may result in higher values of delta and hence in slightly higher losses. We obtain the optimal value of delta by adjusting the element length. The only component that we need to add to the system is the parallel or shunt element. If the element has a capacitive reactance, the shunt element must be inductive (and vice versa).</p>
+  <center>
+    <img src="ao17-5.gif" width="398" height="202" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Some folks distrust the beta match because one form of shunt inductance seems to be a short circuit across the feedpoint. <b>Figure 5</b> shows 3 typical forms of adding inductive reactance across the feedpoint terminals, which are insulated and isolated from any conductive support boom. A solenoid inductor is feasible and generally has little loss, since its reactance will normally be quite low. However, shorted transmission-line stubs may generally provide the same inductive reactance with even lower loss. The hairpin or shorted parallel transmission line section is the version that most worries new users. However, the beta match in any form is as effective as virtually any other system in effecting a low-loss match between the element and the feedline--when the element resistive component is less than the feedline Zo. In addition, one may also lengthen an element to make it inductively reactive. Then the shunt component becomes a capacitance. Both versions of the beta match have undergone extensive modeling confirmation and physical confirmation. Like the series matching systems, the beta match presumes an element that is insulated and isolated from any conductive boom.</p>
+  <p><b>The Gamma Match</b></p>
+  <p>The third major system for matching the impedance of beam driven elements to a standard feedline, such as 50-Ohm coaxial cable, is called the gamma match. H. H. Washburn, W3MTE, introduced the amateur community to the gamma match in his September, 1949, <i>QST</i> article, "The Gamma Match" (pp. 20-21, 102). D. J. Healey, W3PG, provided the first mathematical analysis of the match in "An Examination of the Gamma Match," <i>QST</i>, April, 1969 (pp.11-15, 57). Healy's treatment, however, required the use of nomographs and a Smith chart.</p>
+  <p>Since these seminal articles, several alternative analyses have appeared in amateur journals. H. F. Tolles, W7ITB, presented a purely mathematical analysis in "How to Design Gamma Matching Networks" in <i>Ham Radio</i> for May, 1973 (pp. 46-55). Because the Tolles equations proved tedious to many gamma designers, R. A. Nelson, WB0IKN, set them into a Basic program in "Basic Gamma Matching," <i>Ham Radio</i>, January, 1985 (pp. 29-33). ARRL converted Nelson's Apple-Basic program into a version suitable for IBM computers, and a listing appears in <i>The ARRL Antenna Book</i>, 16th Ed. (p. 26-20). In 2000, Dave Leeson, W6NL, corrected portions of the program so that it is perhaps the most accurate of the available means to calculate gamma matches. This program is also available within the HamCalc collection of Basic utilities edited by George Murphy, VE3ERP.</p>
+  <p>Since the work of Tolles and Nelson, two alternative mathematical analyses have appeared. Ron Barker, G4JNH, presented "A New Look at the Gamma Match" in <i>QEX</i>, May/June, 1999 (pp. 23-31). Barker changes some of the fundamental assumptions about the key factors in a gamma match to arrive at his results. Unfortunately, his work is less amenable to easy placement in a Basic utility or a spreadsheet, since the calculations require the solution to simultaneous equations. In contrast, R. Wheeler, G3MGW, returned to the Healey analysis and converted the graphical techniques back into mathematical methods that allow a straightforward spreadsheet set of calculations. Wheeler's 2-part "Re-Examination of the Gamma Match" appeared in <i>RADCOM</i> (September, 2004, pp. 35-37, and October, 2004, pp. 54-56, with reprints appearing in <i>antenneX</i> for October and November, 2006. Both of these later analyses rely on something that was unavailable to earlier gamma calculations. In most cases, the determination of the initial or pre-match driver feedpoint impedance rested on assumption, guesswork, or rudimentary measurement. Measurement became difficult if the builder connected the driver to the boom and did not allow for a feedpoint gap, even if it would later be closed. Both Barker and Wheeler require the use of antenna modeling software to determine the pre-match driver impedance.</p>
+  <center>
+    <img src="ao17-6.gif" width="490" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gamma match differs from the previous matching systems in that the calculations are not precise. Rather, they produce starter values that will require careful field adjustment (the gentler sounding term for trial and error). <b>Figure 6</b> shows some of the reasons why the calculations are less than fully precise. The gamma system begins with a larger number of variables, some of which are the physical dimensions of the assembly components. We need to know or decide upon the main element diameter, the gamma rod diameter, and the center-to-center spacing between these two parts. Calculations usually proceed (although there have been variations) by treating the gamma assembly as a section of parallel transmission line, shorted at the far end. The end result is a change in the position of the antenna feedpoint relative to the element without the gamma assembly. Most calculation systems do not take into account the far-end shorting bar structure or the structure that supports the feedline connector.</p>
+  <p>Practical gamma matches also include a number of variations on the ideal situation used in calculations. The rod may extend beyond the shorting bar. The required series capacitor may not be at the feedpoint, but be somewhere along the gamma rod. The change of placement alters the structure relative to the ideal form used for calculations, but not so much as to prevent you from devising a highly successful match. <b>Figure 7</b> provides a photo of a practical gamma match that uses a tubular capacitor within the central part of the rod. The gamma system is the only matching system in this group that permits a direct connection of the main element center to the boom. However, we cannot easily obtain the initial feedpoint impedance when we connect the element to the boom, and the boom will have an affect upon the feedpoint impedance.</p>
+  <center>
+    <img src="ao17-7.jpg" width="600" height="436" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The two major calculation systems have different sources but similar starting points. Both begin by calculating the characteristic impedance of the presumed parallel transmission line formed by the main element and the gamma rod or tube. The next step is to calculate the impedance step-up created by treating the gamma section as a short folded dipole or monopole. The following steps involve calculating the impedance of the gamma section at the outer end. The impedance at the feedpoint then becomes a parallel combination of the transformed end impedance and the stepped feedpoint impedance. The Healey-Wheeler requires the user to insert trial values of the gamma rod length until the resulting resistive component at the new feedpoint matches the target line Zo. The Tolles-Nelson-Leeson system calculates the gamma rod length.</p>
+  <p>The two systems do not produce identical results. As well, the results differ from the results of antenna modeling. Because NEC cannot effectively handle the gamma match, only a highly corrected version of MININEC (such as Antenna Model) is adequate to the modeling task. However, even MININEC cannot show the required variations that emerge from connecting the element to a central boom. Since gamma matches receive only spot checks rather than systematic comparison of calculations and/or models with physical antennas, all three methods are tentative guides, useful for beginning the process of designing a gamma match, but always needing extensive field adjustment.</p>
+  <p>I have omitted the detailed equations used in the progression of gamma calculations because they are too numerous for our short space. For a more systematic look at the two major gamma calculation schemes, see "Notes on the Gamma Match," (parts 1 and 2), <i>antenneX</i>, September and October, 2006. The notes also include an extensive but inexhaustive set of comparisons with MININEC models of the gamma match.</p>
+  <p>In many ways, the gamma match is far more flexible than the series or beta matching systems. It works for elements connected to a conductive boom or for isolated driven elements. Within limits, it can handle impedance both higher and lower than the cable impedance. Nevertheless, the system always requires field adjustment (otherwise known as trial and error), since the calculations are only approximations.</p>
+  <p><b>Conclusion</b></p>
+  <p>We have surveyed a number of options open to the modern beam builder for matching the impedance values at driven elements to the feedline and equipment. Series and beta calculations are both precise, under the condition that we know the actual velocity factor of the lines used in the matching efforts. However, both series and beta matching systems require that we use insulated driven elements relative to any conductive boom that may support the elements. (Of course, the parasitic element center points may be grounded to the boom.) An additional restriction on the beta match is that the driver impedance must be below the line impedance. The Bramham system requires a resonant feedpoint impedance that matches one of the two line lengths used.</p>
+  <p>The gamma match system allows (but does not require) the builder to use what we once called "plumber's delight" construction methods with all elements connected to the boom. It matches a wide range of impedances. However, the main calculation systems for the gamma match achieve only working approximations that require field adjustment.</p>
+  <p>Many other matching methods exist. We may conduct beam matching at the shack-end of the line. As well, we may install more complex networks at the antenna feedpoint, so long as the assembly will support them easily. Match-line and stub methods also exist. These alternatives plus the ones that we have discussed still only list some, but certainly not all, of our options.</p>
+  <p>For a spreadsheet program (in either Quattro-Pro or Excel format) that includes the matching calculations, see <a href="../trans/ant-match.html">Antenna Matching</a>. There are separate pages for the Healey-Wheeler and the Tolles-Nelson-Leeson systems. In addition, the sheet contains a page for the match-line and stub system, which is useful for antennas such as the extended double Zepp. The sheets serve only to increase your options for easy calculation of the matching systems, since utility programs are also available from other sources.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><i>Updated 03-05-2008. &COPY; L. B. Cebik, W4RNL. This item first appeared in</i> QEX<i>, Mar/Apr, 2008, pp. 58-61. Reproduced with permission. Copyright ARRL (2008), all rights reserved. This material originally appeared in</i> QEX: Forum for Communications Experimenters <i>(<a href="https://www.arrl.org/qex" target="_blank">www.arrl.org/qex</a>).</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="ao.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Return to series index page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#matching'>Matching</a></p><br>
+</body>
+</html>

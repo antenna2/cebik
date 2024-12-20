@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Yagi">
+  <title>Long-Boom Yagi Sidelobe Suppression</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10"> Long-Boom Yagi Sidelobe Suppression<br>
+    or<br>
+    The Silence of the Lambda</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>At one time, not very long ago, gain alone was the name of the game in long-boom Yagi design from 2-meters upward. I still encounter individuals who care nothing about the front-to-back ratio, let alone other unproductive lobes produced by high-gain Yagis. However, as we learn more about the utility of having a truly quiet beam in all but the forward direction within operations calling for weak-signal reception, all of those other lobes have garnered attention once more.</p>
+  <p>The question for the Yagi designer is deceptively simple: how can we suppress or radically attenuate all of the lobes in the antenna pattern for a long-boom Yagi except the one forward lobe? In the following notes, I shall review the general state of the art, beginning with DL6WU designs, and progressively examine some potential improvements that we can make. In the process, we shall gradually change our orientation toward long-boom Yagis from a 2-D E-plane or azimuth perspective to a 3- dimensional view that will also look at the H-plane and at elevation patterns over ground.</p>
+  <p>The reported results of this exercise will not result in beams that are necessarily practical, for this is but a work in progress. The results will try to show what improvements are possible, even if--for the moment--the improved arrays are not especially suited for amateur construction. As well, in the process, we shall be willing to sacrifice gain for unwanted lobe suppression. Arriving at a design with peak gain and maximum unwanted lobe suppression remains a future development. As a further note on the provisionalness of this study, I have placed all NEC-4 models of antennas in the 222-225-MHz U.S. amateur band. The urge to build for the more popular 144-MHz and 432-MHz bands will be slowed just a bit by the need to adjust everything in the antenna designs.</p>
+  <p>The unwanted lobes--which I shall call sidelobes as an encompassing term--include the main rear lobe, rear sidelobes, and forward sidelobes. In weak signal work, every one of them is capable of adding noise to the signal, so my general project will be to see how many we can reduce and by what amount. At this stage of investigation, I shall not presume that any particular level is good enough. Rather, I shall strive to reduce all of them by as much as I can.</p>
+  <h4>Getting Oriented</h4>Let's review some radiation pattern basics in order to orient ourselves to the graphical and tabular methods of data presentation to follow. <b>Fig. 1</b> provides us with a 3-dimensional radiation pattern presentation for a 12-element DL6WU Yagi design at 223.5 MHz. A representation of the antenna also appears in the pattern just to set its position relative to the lobes.
+  <center>
+    <img src="sl-1.gif" width="473" height="395" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For a free-space radiation pattern, conventional NEC modeling axes X and Y define the E-plane (parallel to the plane of the elements), while axes X and Z define the H-plane (at right angles to the plane of the elements). Immediately apparent is the fact that the element ends provide some suppression of the minor lobes and the -3 dB beamwidth of the main forward lobe. Hence, the largely neglected H-plane will be of as much concern to us in the suppression of sidelobes as the E-plane.</p>
+  <center>
+    <img src="sl-2.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We can capture most of the salient lobe features of a pattern more clearly by examining 2- dimensional polar plots of the e-plane and H-plane patterns, as illustrated in <b>Fig. 2</b>. Immediately apparent is the wider beamwidth and stronger minor lobes of the H-plane pattern.</p>
+  <pre>            Abbreviations Used in Data Tables and Their Meanings
+Table                   Meaning
+Abbreviation            See Fig. 2
+Gain              The maximum free-space gain in dBi of the main forward lobe.
+180FB             The 180-degree front-to-back ratio in dB of the array.
+HWCFB             The worst-case front-to-back ratio in dB in the horizontal or E-plane.
+VWCFB             The worst-case front-to-back ratio in dB in the vertical or H-plane.
+HSL               The ratio in dB of the main forward lobe to horizontal or E-plane strongest forward
+                  side lobe, where a forward sidelobe is within 90 degrees of the main forward lobe.
+VSL               The ratio in dB of the main forward lobe to vertical or H-plane strongest forward
+                  side lobe, where a forward sidelobe is within 90 degrees of the main forward lobe.
+HBW               The -3 dB beamwidth in degrees in the horizontal or E-plane.
+VBW               The -3 dB beamwidth in degrees in the vertical or H-plane.
+Z                 The feedpoint impedance in Ohms of the array in terms of resistance and
+                  reactance.
+SWR               The 50-Ohm SWR of the array
+
+Table 1.  A list of abbreviations used in subsequent tables of array data.</pre>
+  <p>The patterns in <b>Fig. 2</b> also serve another purpose. In our explorations of various antenna design, we shall present tabular data for each model. Each column heading will use an abbreviated entry. We may track those abbreviations by reference to the patterns in <b>Fig. 2</b> and <b>Table 1</b>.</p>
+  <p>The list of abbreviations makes an implicit distinction between forward and rear minor lobes. Forward sidelobes include those within 90 degrees of the bearing of the main forward lobe, while rearward sidelobes include those more than 90 degrees away from the bearing of the main forward lobe. There will many instances where the distinction might be blurred. In the lower portion of <b>Fig. 2</b>, we find a lobe on the H-plane pattern that is almost at right angles to the lain forward lobe heading. Such lobes are normally not the strongest in either the forward or the rearward pairs of quadrants. Hence, we may be somewhat arbitrary in our classification of them, using the 90-degree mark as a guide.</p>
+  <p>When we place an array over real ground, the azimuth pattern for a horizontally oriented array varies little from the free-space E-plane pattern, even though there will be a "take-ff" or elevation angle of maximum radiation. However, the elevation pattern of the array over ground shows significant variations from the free-space H-plane pattern due to ground reflection effects. Often, we do not attend closely enough to the relationship between the free-space H-plane pattern and its counterpart over-ground elevation pattern.</p>
+  <center>
+    <img src="sl-3.gif" width="530" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> overlays half the E-plane pattern over the corresponding elevation pattern when the antenna is modeled at a height of 5 wavelengths (about 22' at 223.5 MHz). The pattern uses a step of 0.1 degrees between registration points to ensure capture of all of the lobes created by ground reflection effects. Overlaid on the real-ground pattern is half the free-space H-plane pattern.</p>
+  <p>The correspondence between the lobes of the two patterns becomes immediately apparent. As we change the antenna height, the thinner real-ground lobes will change position slightly, with a consequent change in their peak values. Nonetheless, they will generally fit within the free-space pattern section. The one exception is the fairly strong (-20 dB) lobe at right angles to the main forward lobe of the E-plane pattern. In the real-ground elevation pattern, this lobe normally shows additional suppression due to ground reflection effects. In the pattern shown, it is more than 30 dB down, that is, suppressed an additional 10 dB relative to the free-space pattern.</p>
+  <p>With this much preparation, we may begin our stroll through a series of arrays that show some progressive improvements in the suppression of all lobes except the main forward lobe.</p>
+  <h4>The State of the Art or the Run of the Mill?</h4>
+  <center>
+    <img src="sl-4.gif" width="443" height="189" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We should begin with a standard design on which to predicate all further work. I have selected a variation of a classic DL6WU design. <b>Fig. 4</b> shows the edge and face profiles of the array. The dimensions appear in <b>Table 2</b>.</p>
+  <pre>                       12-Element DL6WU Yagi Dimensions
+
+Element     Element Length          Cumulative Spacing      Individual Spacing
+            Inches      WL          Inches      WL          Inches      WL
+Reflector   25.398      0.480       -----       -----       -----       -----
+Driver      24.606      0.466       10.350      0.196       10.350      0.196
+Dir 1       22.490      0.426       14.227      0.269        3.877      0.073
+Dir 2       22.310      0.422       23.548      0.446        9.321      0.177
+Dir 3       22.042      0.418       34.673      0.657       11.125      0.211
+Dir 4       21.790      0.412       47.603      0.901       12.430      0.244
+Dir 5       21.564      0.408       62.099      1.176       14.496      0.275
+Dir 6       21.356      0.404       77.616      1.470       15.517      0.294
+Dir 7       21.192      0.402       93.917      1.778       16.301      0.308
+Dir 8       21.042      0.398       111.00      2.102       17.083      0.324
+Dir 9       21.090      0.396       128.85      2.440       17.851      0.338
+Dir 10      20.790      0.394       147.48      2.793       18.627      0.353
+
+Table 2.  Dimensions in inches and wavelengths of a DL6WU 12-element Yagi.  Dimensions in
+wavelengths are for 223.5 MHz.  Elements are 0.25" diameter aluminum.</pre>
+  <p>Perhaps the last iteration of DL6WU designs appears in the RSGB book, <i>The VHF/UHF DX Book</i>, edited by Ian White, G3SEK. Chapter 7, by Guenter Hoch, DL6WU, provides guidelines for building beams of his design, beginning with a reflector-driver spacing of 0.200 wavelength and a driver-director1 spacing of 0.075 wavelength. The reason for the variance is two-fold. First, the design frequency for the array is 228.078 MHz. Second, a DL6WU array is inherently a very wide-band affair, and one may choose according to need any operating region within the overall passband. For further details on the wide-band facets of the DL6WU design, see <a href="wu.html">"Appreciating DL6WU Wide-Band Long-Boom Yagi Design: Some Preliminary Notes."</a></p>
+  <center>
+    <img src="sl-5.gif" width="583" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> provides both wide-band and narrow-band SWR curves for the array as designed for the 222-225-MHz band. The 50-Ohm SWR is only 1.12:1 and 1.16:1 at the narrow-band edges. The wide- band curve shows a very interesting property: the existence of three SWR dips across the 25-MHz range between 2:1 SWR points. The SWR passband is over 10% of the median operating frequency of 227.5 MHz, close to the array design frequency. The deepest dip in SWR is in the narrow band chosen for this study, because the driver length was selected to minimize the 50-Ohm SWR. Similar adjustment of the driver in other parts of the operating passband would alter the depth of individual dips, although the 3 dips would remain.</p>
+  <center>
+    <img src="sl-6.gif" width="723" height="544" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The modeled gain and 180-degree front-to-back values for the array vary continuously across the operating passband. As shown in <b>Fig. 6</b>, the free-space gain rises continuously to a frequency of 234 MHz and then begins to fall more rapidly than it rose. The 180-degree front-to-back ratio has two major peaks, one between 222 and 223 MHz, the other between 235 and 236 MHz. Because the front-to-back ratio is an indicator of a major sidelobe of concern, the operating region of the array was placed in the frequency region where it is highest, even though the forward gain is a half-dB below its peak value.</p>
+  <center>
+    <img src="sl-7.gif" width="722" height="543" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In every wide-band Yagi, the current magnitude on Director 1, relative to the current magnitude on the driver, exceeds 1.0 for some portion of the operating passband. When this occurs, the first director is operating also as a secondary or slaved driver. In the case of the DL6WU design, the relative current magnitude exceeds 1.0 in two frequency regions, as shown in <b>Fig. 7</b>. Combined with the relative current magnitude curve is the SWR across the operating passband. Careful examination of the graph shows that at those points just after the relative current of director 1 exceeds 1.0, the SWR reaches a maximum (228 and 236 MHz). Likewise, when the relative current falls below 1.0, the array shows an SWR minimum (232 MHz).</p>
+  <p>The properties graphed for the 12-element DL6WU design on a 2.8 wavelength boom apply only to the specified 0.25" aluminum element diameter. Larger diameter elements may achieve higher gain levels overall, but will shift the operating curves as well. Within the 222-225-MHz amateur band, the detailed operating characteristics for the selected version appear in <b>Table 3</b>.</p>
+  <pre>                  Operating Data for the 12-Element DL6WU Yagi
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    13.88  24.09   20.16  18.34   17.99  13.13  38.0   41.8  47.5-j 4.9 1.12
+223.5  14.12  22.95   21.73  19.54   18.14  13.38  37.2   40.8  52.0-j 0.6 1.04
+225    14.32  20.05   20.05  20.05   18.21  13.54  36.4   39.8  57.8+j 1.7 1.16
+
+Table 3.  Gain, sidelobe, and impedance data for the 12-element DL6WU Yagi from 222 to 225 MHz.</pre>
+  <p>In the analysis of sidelobe performance, the key figures are the worst-case front-to-back ratios and the forward sidelobe ratios. DL6WU has noted that his designs are generally capable of 16-18 dB forward E-plane or horizontal sidelobe values, and the tables confirms this estimate. However, note that the H- plane forward sidelobe value is considerably worse, only a little over 13 dB down from the main forward lobe. For the rearward quadrants, the beam shows sidelobe performance to be better than 20 dB down in the E-plane and better than 18 dB down in the H-plane, reflecting the selection of the operating region within the frequency range at which the array displays better rearward performance.</p>
+  <p>You may correlate the tabulated values for 223.5 MHz with the patterns in <b>Fig. 2</b> with respect to both the E-plane and the H-plane. At a height of 5 wavelengths above ground, the array shows the pattern of <b>Fig. 3</b> at the mid-band frequency. The forward gain is 19.97 dBi at an elevation angle of 2.8 degrees. The worst-case sidelobe is the forward love at 48.7 degrees elevation, and its is 14.92 dB below the main forward lobe.</p>
+  <p>The DL6WU design is typical of long-boom Yagis with respect to sidelobe performance. although other designers have revised the arrangement of elements to achieve more gain (usually over a much narrower operating bandwidth, the sidelobe performance remains close to the levels in the classic DL6WU design. The question is whether we can do any better, and--if so--by what means.</p>
+  <h4>OWA Yagi Sidelobe Performance</h4>The first step in our efforts to suppress sidelobes will be focused on H-plane sidelobes. One Yagi design type has shown that inherent to the design parameters themselves is a significant reduction of E- plane sidelobes. In other words, the sidelobe reduction is not a matter of a series of ad hoc re- adjustments to a design. Instead, the reduction comes with the basic design, even though it was not initially recognized.
+  <p>The Optimized Wideband Antenna design emerged in a series of HF Yagis developed by WA3FET and NW3Z. Since these designs did not go beyond 8 elements for 10 meters, sidelobe performance never became a significant concern. Only when we extend the design principles to longer boom VHF and UHF designs does the inherent ability of the design concept to suppress E-plane sidelobes emerge.</p>
+  <center>
+    <img src="sl-8.gif" width="444" height="188" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the profile of a 12-element version of the OWA Yagi for the 222-225-MHz band using 0.125" diameter elements. <b>Table 4</b> lists the element dimensions for the model used in this study.</p>
+  <pre>                         12-Element OWA Yagi Dimensions
+
+Element     Element Length           Cumulative Spacing       Individual Spacing
+            Inches       WL          Inches      WL           Inches      WL
+Reflector   26.898       0.509       -----       -----        -----       -----
+Driver      25.977       0.492        5.782      0.109         5.782      0.109
+Dir 1       24.334       0.461        8.859      0.168         3.077      0.059
+Dir 2       23.891       0.452       16.691      0.316         7.832      0.148
+Dir 3       23.937       0.453       26.781      0.507        10.090      0.191
+Dir 4       23.815       0.451       40.368      0.764        13.587      0.257
+Dir 5       23.150       0.438       56.880      1.077        16.512      0.313
+Dir 6       22.558       0.427       76.288      1.445        19.408      0.368
+Dir 7       22.097       0.418       96.413      1.826        20.125      0.381
+Dir 8       21.637       0.410       117.33      2.222        20.917      0.396
+Dir 9       21.177       0.401       138.11      2.615        20.780      0.393
+Dir 10      20.519       0.389       156.52      2.964        18.410      0.349
+
+Table 4.  Dimensions in inches and wavelengths of an OWA 12-element Yagi.  Dimensions in wavelengths
+are for 223.5 MHz.  Elements are 0.125" diameter aluminum.</pre>
+  <p>The table will reveal something of the OWA design principles that distinguish it from ordinary wide- band designs. First, the reflector-to-driver and driver-to-director1 spacings are considerably smaller than in standard wide-band designs. The total spacing for these elements is less than 0.17 wavelength, compared to the 0.27 wavelength required by the DL6WU design. Second, directors 2 and 3 are almost the same length in this design. To achieve even wider bandwidth, these elements are often exactly the same length.</p>
+  <p>In the DL6WU design, the first director served as both a secondary driver and as a gain enhancing director. In the OWA, the first director serves more completely as a secondary driver, with the next 2 directors serving the purpose of isolating the first director and setting the passband. In many designs, OWA builders fit an additional director within the same overall boom length to achieve maximum bandwidth and to restore full theoretically possible gain levels without requiring the first director to function significantly in the increase of gain. The present design sacrifices some bandwidth in using 12 elements within a boom length only marginally longer than the DL6WU design.</p>
+  <center>
+    <img src="sl-9.gif" width="583" height="385" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> shows both wide-band and narrow-band SWR curves. The very low values of SWR within the 222-225-MHz band explain why the present design does not need to tap the full bandwidth capabilities of the OWA design concept. The wide sweep for 50-Ohm SWR reveals the degree to which the bandwidth has been contracted. With directors 2 and 3 the same length, even without an added director, the SWR curve around 217 MHz would show a distinct but broad second dip near the 1.1:1 level, with a slower increase in SWR as the frequency decreased. A fuller study of OWA design concepts and potentials is in preparation, but for the moment, we are interested in sidelobe suppression. <b>Table 5</b> shows the results of turning to the OWA design.</p>
+  <pre>                   Operating Data for the 12-Element OWA Yagi
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    14.34  24.65   24.53  22.61   27.85  18.12  36.8   40.4  47.5+j 6.1 1.14
+223.5  14.36  24.59   24.12  22.58   26.57  17.40  36.2   39.6  48.9+j 3.3 1.07
+225    14.24  23.08   23.08  21.72   24.97  16.40  35.4   38.8  43.6-j 4.2 1.18
+
+Table 5.  Gain, sidelobe, and impedance data for the 12-element OWA Yagi from 222 to 225 MHz.</pre>
+  <center>
+    <img src="sl-10.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The improvement in E-plane sidelobe suppression is immediately apparent, with the worst-case value nearly 25 dB below the main lobe. <b>Fig. 10</b> shows--in the E-plane free-space pattern--the improvement, when we compare this figure to <b>Fig. 2</b>. Improving the E-plane sidelobe levels has a salutatory effect on the H-plane sidelobe levels, although the effect is only a 2-3 dB improvement. The OWA design principally controls the E-plane sidelobes via the lengths and spacings chosen for the elements from the reflector to the 2nd director.</p>
+  <center>
+    <img src="sl-11.gif" width="530" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When operating a Yagi over real ground, we discover that we should be concerned not only with the strength of H-plane sidelobes, but as well with their direction relative to the main lobe bearing. <b>Fig. 11</b> overlays the free-space H-plane pattern atop an elevation pattern with the Yagi at a height of 5 wavelengths above average ground. The forward and rearward elevation lobes track well with the outline of the free-space pattern. However, we may note that the sidelobes in the most vertical directions have cancelled, leaving the worst-case sidelobe better than 20 dB down from the main lobe and its secondary forward elevation lobes.</p>
+  <center>
+    <img src="sl-12.gif" width="722" height="545" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For reference, we may note an additional difference between the OWA Yagi design and other wide-band designs, such as those by DL6WU. The OWA design shows a single peak of both the gain and the 180-degree front-to-back curves, as shown in <b>Fig. 12</b>. Indeed, with the DL6WU design, the front-to- back curve multiple peaks are periodic and shift in frequency relative to the gain peak as we change the number of elements. For OWA designs of any length, we may bring the gain and front-to-back peak into much closer coincidence. However, further design work on pure OWA designs must await another occasion. We still have far to go in suppressing both E-plane and H-plane sidelobes.</p>
+  <h4>Adding Reflectors</h4>Adding a pair of reflector elements or replacing the single normal Yagi reflector with a plane of reflectors is popular among some designers. However, NEC-4 models of the resulting designs rarely shows any significant performance improvements over the traditional DL6WU and other single reflector designs. Nevertheless, it seemed appropriate to see if one might effect further sidelobe suppression on the OWA design by careful placement of additional reflectors. In the process, one should not unduly disturb other performance characteristics of the design, especially its 50-Ohm SWR curve.
+  <center>
+    <img src="sl-13.gif" width="445" height="245" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In fact, adding 2 reflectors--one above and one below the plane of other elements--did improve performance by a noticeable amount. <b>Fig. 13</b> shows the edge and face profiles of the antenna that emerge--in 14 elements. We may notice that the added reflectors are fairly widely spaced from the original reflector and to the rear of the original reflector. <b>Table 6</b> provides dimensions to show a. that the original OWA design remains intact and b. that the added reflectors are not necessarily where they appear in standard Yagi designs. Since this design exercise aims at establishing some principles of sidelobe suppression, the structural practicality of the design is still subject to future evaluation.</p>
+  <pre>             14-Element OWA Yagi (With Added Reflectors) Dimensions
+
+Element     Element Length           Cumulative Spacing       Individual Spacing
+            Inches       WL          Inches      WL           Inches      WL
+Reflector 1 30.708       0.582       -1.181      -0.22        -1.181      -0.22
+Reflector 2 30.708       0.582       -1.181      -0.22        -1.181      -0.22
+Reflector 3 26.898       0.509       -----       -----        -----       -----
+Driver      25.977       0.492        5.782      0.109         5.782      0.109
+Dir 1       24.334       0.461        8.859      0.168         3.077      0.059
+Dir 2       23.891       0.452       16.691      0.316         7.832      0.148
+Dir 3       23.937       0.453       26.781      0.507        10.090      0.191
+Dir 4       23.815       0.451       40.368      0.764        13.587      0.257
+Dir 5       23.150       0.438       56.880      1.077        16.512      0.313
+Dir 6       22.558       0.427       76.288      1.445        19.408      0.368
+Dir 7       22.097       0.418       96.413      1.826        20.125      0.381
+Dir 8       21.637       0.410       117.33      2.222        20.917      0.396
+Dir 9       21.177       0.401       138.11      2.615        20.780      0.393
+Dir 10      20.519       0.389       156.52      2.964        18.410      0.349
+
+Table 6.  Dimensions in inches and wavelengths of an OWA 14-element Yagi (with added out-of-plane
+reflectors).  Dimensions in wavelengths are for 223.5 MHz.  Elements are 0.125" diameter aluminum.  The
+reflectors are 11.811" or 0.224 wavelength above and below the plane of the remaining elements.</pre>
+  <center>
+    <img src="sl-14.gif" width="583" height="392" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The placement of the added reflectors resulted from the combined aim of retaining the OWA performance and improving the sidelobe suppression. The resulting positions over 11" out-of-plane for each reflector and nearly 2" behind the original reflector achieved the best compromise between the two goals. As well, the reflectors are nearly 4" longer than the original reflector. <b>Fig. 14</b> (for comparison with <b>Fig. 9</b>) provides both narrow-band and wide-band 50-Ohm SWR curves to confirm the retention of the OWA operating characteristics.</p>
+  <p>The added reflectors result in two improvements over the basic OWA design. First, the rearward radiation is reduced so that the 180-degree and worst-case front-to-back ratios are both better than 30 dB. Second, the H-plane sidelobes are reduced another 2 dB, averaging 19 dB below the main forward lobe. <b>Table 7</b> provides the performance data from the models.</p>
+  <pre>                   Operating Data for the 14-Element OWA Yagi
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    14.44  31.25   31.25  25.93   28.09  20.05  36.8   40.8  49.4+j 6.8 1.15
+223.5  14.46  34.71   34.16  26.19   26.64  19.20  36.2   40.0  51.2+j 3.4 1.07
+225    14.34  34.24   31.41  26.66   24.88  18.03  35.6   39.4  45.5-j 5.3 1.16
+
+Table 7.  Gain, sidelobe, and impedance data for the 14-element OWA Yagi from 222 to 225 MHz.</pre>
+  <center>
+    <img src="sl-15.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Clearly, the reflectors did not add significantly to the gain, with an average increase of 0.1 dB. However, rearward lobes are more effectively suppressed, with even the worst-case H-plane front-to-back ratio showing an added 3-4 dB improvement. <b>Fig. 15</b> shows the free-space E-plane and H-plane patterns, with <b>Fig. 16</b> comparing the free-space H-plane pattern with the elevation pattern of the antenna when we place it 5 wavelengths above average ground. The latter figure is interesting because it shows that all sidelobes outside the free-space main lobe envelope to be more than 30 dB down--except for 2 lobes in the 70-80-degree elevation range that are only about 23 dB down.</p>
+  <center>
+    <img src="sl-16.gif" width="530" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The addition of 2 reflectors has improved the sidelobe performance of the Yagi design, especially to the rear. However, we have yet to break the 20-25 dB barrier with free-space H-plane forward sidelobes. We need another strategy if we are to make further improvements.</p>
+  <h4>The Half-Wavelength Stack</h4>We often think of stacking two or more Yagis solely as a means of obtaining more gain. Therefore, we calculate the array gain and adjust the stacking distance to obtain maximum in-phase power gain. The high the gain of the individual array, the wider the stacking space. Then we go back and adjust the designs to improve the front-to-back ratio, if our stacking efforts has degraded that figure.
+  <p>We may also use stacking to control--indeed, to suppress--H-plane sidelobes. Two arrays of any sort--so long as they are each planar--tend to cancel and suppress most radiation in directions at right angles to the plane of the original arrays, if the arrays are very close to 1/2 wavelength apart. Since we are seeking a method to effect further reductions in the H-plane sidelobes, let's consider stacking two reflector-augmented OWA Yagis.</p>
+  <p>For our exploration of sidelobe suppression, I shall consider the two Yagis to form one array, regardless of the structural questions left unanswered. We shall not obtain the maximum added gain by our stacking efforts. In fact, the gain will only be about 1.3 dB better than an individual reflector- augmented OWA Yagi (15.7 vs. 14.4 free-space gain at 223.5 MHz). However, gain is not our goal.</p>
+  <center>
+    <img src="sl-17.gif" width="444" height="207" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 17</b> shows the two Yagis set into the stack. Two of the added reflectors almost touch, but their close proximity creates no problems in array performance. The main Yagi planes are about 26.4" apart.</p>
+  <pre>                   Operating Data for the 14-Element OWA Yagi
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    15.77  34.16   31.59  34.16   24.36  29.16  33.0   31.2  48.2+j 8.2 1.19
+223.5  15.69  46.28   29.85  33.84   23.21  28.19  32.8   31.0  51.5+j 3.3 1.07
+225    15.48  36.65   27.99  32.19   21.75  26.75  33.0   31.0  44.0-j 6.9 1.22
+
+Table 8.  Gain, sidelobe, and impedance data for the 2 14-element OWA Yagi stack from 222 to 225 MHz.</pre>
+  <p>We may forego the SWR graphs because the 50-Ohm curves for each Yagi are so similar to those for the independent arrays. I shall assume that the arrays are fed in accord with standard methods to obtain the perfect in-phase feed presumed by the model.</p>
+  <center>
+    <img src="sl-18.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Table 8</b> shows the improvements that we have obtained in the H-plane sidelobe values. Both the worst-case H-plane front-to-back ratio and the strongest H-plane forward sidelobe are down more than 30 dB from the main forward lobe. However, as both the table and <b>Fig. 18</b> reveal, we have lost ground with respect to the E-plane worst-case front-to-back ratio and the forward sidelobe. Indeed, the horizontal forward sidelobe has suffered most from stacking, compared to its value when a product of a single reflector-augmented OWA Yagi.</p>
+  <center>
+    <img src="sl-19.gif" width="530" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To gain some appreciation for what we have accomplished with the stack, examine <b>Fig. 19</b>. The graphic overlays the free-space H-plane pattern atop the elevation pattern of the stack, with the bottom level 5 wavelengths above average ground. Every elevation lobe that does not fall within the envelope of the main forward H-plane lobe is more than 30 dB down from maximum forward signal strength. Unfortunately, the azimuth pattern for this array over real ground is identical to the free-space pattern in <b>Fig. 18</b>. Hence, much of what we gain in the vertical sidelobe department is lost in the growth of the horizontal forward sidelobes.</p>
+  <center>
+    <img src="sl-20.gif" width="474" height="395" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To place these remarks in perspective, compare <b>Fig. 20</b> to <b>Fig. 1</b>. The 3-dimensional free-space pattern somehow seems smaller in the new figure than in the one for the DL6WU Yagi. However, maximum forward signal strength is positioned identically in both cases. The side and rear lobes are very much smaller (meaning lower in strength) for our latest design than for the one which we set forth as a standard. So, we have made progress after all.</p>
+  <p>Unless one had to reduce the sidelobes in one plane more than in the other, there is little to choose (apart from main lobe forward gain) between the single reflector-augmented OWA Yagi and the stack of 2. Given the greater ease of constructing a single such Yagi, it is likely that it represents the best that we have accomplished so far. However, we are still short of our ultimate goal of reducing all sidelobes by 30 dB relative to the main forward lobe. We are not too far way, but the question remains as to whether we can do better.</p>
+  <p>I must confess at this point that I have run out of Yagi strategies. An improved Yagi design may exist or come into being to achieve the sidelobe suppression goal, but I have not yet found it. However, I have found an interesting alternative. Since this is a design exploration only and since gain is not our goal, the alternative array design is worth investigating.</p>
+  <h4>The LPDA</h4>Although few weak-signal VHF and UHF operators even consider the log periodic dipole array (LPDA) as a candidate for service, we should not overlook this antenna type in the search for an array that will yield further reductions in sidelobe strength. It is possible to design such arrays, although they will generally require more elements for a given boom length than we are used to using. and their properties are interesting.
+  <p>As a frame of reference, the 12-element DL6WU Yagi was 148" long, while the 12-element OWA design was 156" long--with the reflector-augmented version about 2" longer still. These boom lengths will define the general range of LPDAs that we might consider for the 222-225-MHz band. As well, the DL6WU antenna had a free-space gain of about 14.1 dBi, while the OWA gain was about 14.4 dBi. We shall have occasion to return to these numbers as we explore LPDA possibilities.</p>
+  <p>The design of an LPDA for monoband service is subject to a number of considerations, the most basic of which are the selection of Tau and Sigma. Tau defines the rate of change of element length and element spacing, while Sigma defines the initial element length to initial element spacing onto which we apply the rate of change. We work from the rearmost element--about 2% longer than a dipole at the lowest defined frequency and work toward the front end of the array, which we set for a frequency from 1.3 to 1.6 times the highest frequency used. A Tau value of about 0.97 is the highest recommended value for an LPDA, and its associated ideal sigma value is about 0.18.</p>
+  <p>For monoband use, we can also add one or more parasitic elements to improve performance. A parasitic reflector behind the rear-most LPDA element sometimes helps--but not always. More universally, one or two parasitic directors ahead of the forward-most LPDA element usually improves either array gain or pattern characteristics. For more detailed information on LPDA design, see LPDA Notes Vol. 1 and LPDA Notes Vol. 2 on the <a href="../bookant.html">Books Page</a>.</p>
+  <p>For this exercise, I designed an LPDA that offered promise of gain the approached Yagi levels. LPDAs have beamwidths that are wider in both the E-plane and H-plane than most Yagis of similar boom length. Therefore, we should not expect to achieve a free-space gain over 14 dBi. However, something in the range of 13.2 to 13.4 dBi is feasible. For reasons that will become apparent, I lowered the gain for subsequent design experiments.</p>
+  <h4>The First LPDA Series</h4>The first LPDA design set is based on an 18-element basic log periodic with the specified Tau and sigma values. 18-LPDA elements require only about 127" of boom length. Therefore, I supplemented the basic LPDA with a single parasitic director at 150" and later with two directors, the furthest being at a boom length of 163". No reflector appeared to aid array performance using the 18-element basic design.
+  <center>
+    <img src="sl-21.gif" width="444" height="212" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 21</b> shows the general outline of the LPDA, which remained constant throughout the modeling trials. The single director would hold a position about halfway between the two directors of the later model. <b>Table 9</b> provides a composite set of dimensions for the three trial array designs.</p>
+  <pre>                18-Element LPDA (With Added Directors) Dimensions
+
+Element     Element Length           Cumulative Spacing       Individual Spacing
+            Inches       WL          Inches      WL           Inches      WL
+1           26.182       0.496        -----      -----         -----      -----
+2           25.398       0.481        9.425      0.178         9.425      0.178
+3           24.636       0.467       18.569      0.352         9.144      0.174
+4           23.896       0.453       27.438      0.520         8.869      0.168
+5           23.180       0.439       36.041      0.682         8.603      0.162
+6           22.484       0.426       44.385      0.840         8.344      0.158
+7           21.181       0.413       52.480      0.994         8.095      0.154
+8           21.156       0.401       60.331      1.142         7.851      0.148
+9           20.520       0.389       67.947      1.287         7.616      0.145
+10          19.905       0.377       75.334      1.427         7.387      0.140
+11          19.449       0.368       82.500      1.562         7.166      0.135
+12          19.055       0.361       89.481      1.694         6.981      0.132
+13          18.661       0.353       96.193      1.822         6.712      0.128
+14          18.268       0.346       102.73      1.945         6.537      0.123
+15          17.874       0.338       109.08      2.066         6.357      0.121
+16          17.480       0.331       115.23      2.182         6.150      0.115
+17          17.087       0.324       121.20      2.295         5.970      0.113
+18          16.693       0.316       126.99      2.405         5.790      0.110
+Single-Director model
+Dir 1       18.000       0.341       150.00      2.840        23.010      0.435
+Double-Director model
+Dir 1       16.142       0.306       145.67      2.758        18.680      0.353
+Dir 2       14.960       0.283       163.39      3.094        17.720      0.336
+
+Table 9.  Dimensions in inches and wavelengths of the set of 18-element LPDAs (with and without added
+directors).  Dimensions in wavelengths are for 223.5 MHz.  Elements are 0.125" diameter aluminum.  The
+phasing line connecting the LPDA elements has a characteristic impedance of 60 Ohms.</pre>
+  <p>The taper of the element lengths is far more severe than we find in Yagi designs. Essentially, the combination of mutual element coupling and phased feed makes the LPDA largely a director-driven array, with significant current levels on all elements forward of the one nearest resonance. Because each forward element has two power sources, the lengths do not correspond to those typical of parasitic Yagi directors.</p>
+  <pre>      <b>Table 10</b> summarizes the data for the LPDA alone, that is, for the 18-element array.
+
+                     Operating Data for the 18-Element LPDA
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    13.22  33.46   33.46  32.96   35.73  27.35  42.2   48.0  55.1-j 3.9 1.13
+223.5  13.22  34.86   34.84  32.00   33.90  25.75  42.2   48.0  55.6-j 4.0 1.14
+225    13.19  32.38   32.38  30.80   32.32  24.30  42.4   48.2  56.7-j 5.0 1.17
+
+Table 10.  Gain, sidelobe, and impedance data for the 18-element LPDA from 222 to 225 MHz.</pre>
+  <center>
+    <img src="sl-22.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We shall examine the data in tabular order. Gain, of course, is down from the Yagis by about 1 dB. The rearward lobes, as shown in both the E-plane and H-plane values, is outstanding. A glance at <b>Fig. 22</b> will confirm the performance. Indeed, one of the chief motivations for any use of an optimized LPDA is the outstanding rearward performance. The E-plane forward sidelobes are more than 30 dB down from the main forward lobe. However, the H-plane sidelobes--while superior to all of the Yagis when a stack is not used--are still less than 30 dB down from the main forward lobe.</p>
+  <p>The beamwidth of the LPDA in both planes is wider than those of the Yagis--about 6 degrees in the E-plane and 8 degrees in the H-plane. When translated into 3-dimensional terms, the added beamwidth shows clearly why the LPDA cannot match the Yagi for raw forward gain. Nevertheless, we have effected improvements in the sidelobe characteristics of the array, when compared to the Yagis. Therefore, further experimentation seems in order.</p>
+  <p>The first experiment is to add a single parasitic director, with its length and spacing determined by our ability to improve performance overall--even if the improvement is slight. <b>Table 11</b> summarizes the results.</p>
+  <pre>    Operating Data for the 18-Element LPDA With a Single Parasitic Director
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    13.38  36.75   30.07  28.71   35.63  28.72  41.6   47.0  52.9-j 4.7 1.11
+223.5  13.39  39.06   30.78  28.87   33.82  26.80  41.6   47.0  53.3-j 2.8 1.09
+225    13.38  30.78   30.46  28.16   32.57  25.46  41.6   47.2  55.9-j 2.0 1.13
+
+Table 11.  Gain, sidelobe, and impedance data for the 18-element LPDA with a single parasitic director
+from 222 to 225 MHz.</pre>
+  <p>Although we have improved the gain by nearly 0.2 dB and preserved the 180-degree front-to-back ratio, the added parasitic director has diminished the rearward H-plane lobe suppression by about 4 dB. The increased gain stems largely from the decrease in beamwidth by 1 degree in both planes. Although the H-plane rearward performance decreased, we do see a marginal increase in the suppression of H- plane forward sidelobes.</p>
+  <center>
+    <img src="sl-23.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 23</b> reveals something of the reason for decreased rearward performance: the lobes have become stronger but narrower in beamwidth. Although the patterns are for 223.5 MHz, the tables should make clear the fact that LPDA results are very closely grouped, and we can expect no changes in performance at the band edges.</p>
+  <p>The use of a single director yielded mixed results in terms of a composite evaluation of all performance categories. Hence, I undertook a second design exercise and replaced the single director with a pair of directors. Note in the dimensions table how different the lengths of these directors are relative to the single director. <b>Table 12</b> provides the resulting performance data.</p>
+  <pre>        Operating Data for the 18-Element LPDA With 2 Parasitic Directors
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    13.38  30.50   30.50  30.50   bulge  29.36  41.6   47.2  55.6-j 5.1 1.15
+223.5  13.40  34.72   30.72  34.72   34.37  27.33  41.6   47.0  54.9-j 5.3 1.15
+225    13.38  37.85   36.71  33.43   33.03  25.87  41.8   47.2  55.1-j 5.3 1.15
+
+Table 12.  Gain, sidelobe, and impedance data for the 18-element LPDA with two parasitic directors from
+222 to 225 MHz.</pre>
+  <p>The additional director does nothing to increase gain. However, it restores the H-plane rearward sidelobe suppression to above 30 dB. The H-plane forward sidelobe suppression continues to increase, but it still falls a little shy of the 30-dB goal. The entry in the E-plane forward sidelobe column labeled "bulge" indicates a slight departure from a smooth forward lobe curve, but without the distinct fall-rise-fall (or rise-fall-rise) pattern that would enable the identification of a distinct lobe. The bulge nowhere exceeds a -35 dB level.</p>
+  <center>
+    <img src="sl-24.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 24</b> shows the free-space E-plane and H-plane patterns for the dual-director LPDA. Of special note is the shrinkage of the rearward lobes into a region of very well-controlled behavior. When translated into use above ground, the LPDA shows further improvement in vertical sidelobe suppression. As shown in <b>Fig. 25</b>, only a single vertical lobe outside the main forward envelope crosses the -30 dB line--and just barely. With respect to sidelobe suppression, the dual-director LPDA provides the best performance so far achieved.</p>
+  <center>
+    <img src="sl-25.gif" width="530" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Nonetheless, as good as the dual director LPDA appears to be with respect to sidelobe suppression, it still falls short of the ultimate goal. A somewhat different design strategy appears to be in order.</p>
+  <h4>The Second LPDA Series</h4>Whether we are talking about a Yagi or an LPDA, sidelobes appear and grow as we push the array length--and hence, the forward gain--relative to the number of elements in the array and their interaction. If we are willing to settle for less gain from an array, we may be able to further suppress the sidelobes. A second LPDA design series provides a sample. It is only a sample and does not constitute a reading of the border line as to when sidelobes of any given strength appear or disappear.
+  <center>
+    <img src="sl-26.gif" width="444" height="201" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 26</b> shows the outline of a 17-element LPDA using the same values of Tau and sigma, but with a slightly lower bottom frequency: 200 vs. 230 MHz for the 18-element array. As a result, the gain in the 222-225-MHz range drops by 0.9 dB without the use of parasitic elements. The figure shows that in this particular design exercise, both a parasitic reflector and a parasitic director proved useful in restoring some of the gain (about 0.4 dB) and in shaping the remaining operating characteristics of the array.</p>
+  <p>Note that the reflector is shorter than the longest LPDA element, while the director is longer than the shortest LPDA element. The seemingly odd lengths emerge since we are tailoring the performance characteristics within a small region of the overall performance capabilities of even this narrow-band LPDA.</p>
+  <p>Later, we shall add a second director to the array. To save space, <b>Table 13</b> provides dimensions for both versions of the LPDA. As we did with the Yagis, when adding non-standard reflectors, we shall list the reflector dimension as a negative number relative to the cumulative array length. The boom length for the single director version is 145" and for the dual-director version is 164".</p>
+  <pre>           17-Element LPDA (With Added Parasitic Elements) Dimensions
+
+Element     Element Length           Cumulative Spacing       Individual Spacing
+            Inches       WL          Inches      WL           Inches      WL
+Reflector   27.000       0.511       -7.000
+1           28.056       0.531        -----      -----         -----      -----7
+2           27.212       0.515       10.100      0.191        10.100      0.191
+3           26.394       0.500       19.898      0.377         9.798      0.186
+4           25.606       0.485       29.402      0.557         9.504      0.180
+5           24.834       0.470       38.621      0.731         9.219      0.174
+6           24.086       0.456       47.563      0.901         8.942      0.170
+7           23.370       0.443       56.236      1.065         8.673      0.164
+8           22.670       0.429       64.650      1.224         8.414      0.159
+9           21.984       0.416       72.811      1.379         8.161      0.155
+10          21.322       0.404       80.728      1.529         7.917      0.150
+11          20.686       0.392       88.406      1.674         7.678      0.146
+12          20.062       0.380       95.855      1.815         7.449      0.141
+13          19.465       0.369       103.08      1.952         7.225      0.137
+14          18.882       0.358       110.09      2.085         7.010      0.133
+15          18.315       0.347       116.89      2.213         6.800      0.128
+16          17.764       0.336       123.48      2.338         6.590      0.125
+17          17.228       0.326       129.88      2.459         6.400      0.121
+Director    18.300       0.347       138.00      2.613         8.120      0.154
+Double-Director model
+Dir 2       18.000       0.341       157.00      2.973        19.000      0.360
+
+Table 13.  Dimensions in inches and wavelengths of the set of 17-element LPDAs (with added parasitic
+elements).  Dimensions in wavelengths are for 223.5 MHz.  Elements are 0.125" diameter aluminum.  The
+phasing line connecting the LPDA elements has a characteristic impedance of 60 Ohms.</pre>
+  <p>As with all LPDAs, the operating bandwidth--even for a monoband design--tends to be very wide. Hence, we may ignore 50-Ohm SWR curves. The question we may put to the version of the LPDA with a single reflector and a single director is how well the array performance with respect to potential sidelobes. Part of the answer appears in <b>Table 14</b>.</p>
+  <pre> Operating Data for the 17-Element LPDA With a Parasitic Reflector and Director
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    12.66  32.93   32.14  31.37   39.64  30.31  44.2   51.4  51.2+j 0.1 1.02
+223.5  12.71  32.13   32.13  32.17   41.54  31.91  44.2   51.2  53.7+j 1.2 1.08
+225    12.75  30.59   30.59  31.66   40.94  30.57  44.0   50.8  57.1+j 1.0 1.14
+
+Table 14.  Gain, sidelobe, and impedance data for the 17-element LPDA with a parasitic reflector and
+director from 222 to 225 MHz.</pre>
+  <center>
+    <img src="sl-27.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>All forward and rear sidelobes are down from the main forward lobe by at least 30 dB, with the forward sidelobes averaging about 40 dB down. <b>Fig. 27</b> displays these free-space figures as E-plane and H-plane patterns. The cost for obtaining this performance, of course, is the forward gain, which is about 1.7 dB below the best of the single-bay Yagis that we examined. As well, the array has 7 more elements than the 12-element Yagis explored earlier. As well, the beamwidth is significantly wider in both planes than the beamwidth of the higher-gain LPDAs, which was wider still than the beamwidth of the Yagis. Whether the added forward beamwidth holds an advantage or disadvantage for a given type of operation will be a user judgment.</p>
+  <center>
+    <img src="sl-28.gif" width="443" height="196" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We may recover the gain relative to a single bay Yagi by creating a half wavelength stack of 2 of the 17-element LPDAs. At 223.5 MHz, the two arrays will be separated by 26.4046". <b>Fig. 28</b> provides a side-view profile of the array, which now has 38 elements. When we stacked 2 OWA Yagis, we obtained improvements in the H-plane sidelobe performance, but lost performance in the E-plane sidelobes. However, since the E-plane sidelobes of the LPDA are down by 40 dB, perhaps we may escape an noticeable deterioration with respect to these sidelobes. <b>Table 15</b> tells the story.</p>
+  <pre>Operating Data for a Stack of 17-Element LPDAs With a Parasitic Reflector and Director
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    14.28  36.18   30.87  31.96   30.69  36.52  40.2   36.8  53.7+j 3.5 1.10
+223.5  14.32  32.44   31.55  32.44   bulge  bulge  40.2   36.8  58.7+j 2.9 1.18
+225    14.34  30.81   30.81  30.81   bulge  bulge  40.2   36.6  63.2-j 0.9 1.26
+
+Table 15.  Gain, sidelobe, and impedance data for a stack of 17-element LPDAs, each with a parasitic
+reflector and director from 222 to 225 MHz.</pre>
+  <center>
+    <img src="sl-29.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain improvement is clear from the table. The E-plane forward sidelobes have grown by about 9 dB relative to the forward main lobe. However, they appear as mostly "bulges, that is, indistinct aberrations in the normally smooth main forward lobe curve, rather than as distinct lobes. <b>Fig. 29</b> shows the shape of these bulges at 223.5 MHz. The E-plane bulge is wholly below -30 dB, which the H-plane bulge is below 35 dB. The stack of two LPDAs has maintained the goal of -30 dB for all sidelobes.</p>
+  <p>The E-plane beamwidth has shrunk by 2 degrees, but the H-plane beamwidth has decreased by nearly 15 degrees. Thus, stacking arrays at a half wavelength spacing represents one way of controlling the relative beamwidths for a given antenna design.</p>
+  <center>
+    <img src="sl-30.gif" width="444" height="202" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When we added a second [parasitic director to the 18-element LPDA, we gained a modest amount of gain relative to the same LPDA with a single director. We may wonder if a similar single-bay improvement is possible with the 17-element LPDA, with its reflector and single director. <b>Fig. 30</b> shows the edge and face profiles of the resulting array. All of the elements in the original augmented LPDA remain intact, and we simply place the new director at an optimal distance ahead of the existing element set. <b>Table 16</b> provides us with the resulting modeled performance figures.</p>
+  <pre>Operating Data for the 17-Element LPDA With a Parasitic Reflector and 2 Directors
+
+Freq   Gain   180FB   HWCFB  VWCFB   HSL    VSL    HBW    VBW   Z          SWR
+222    12.84  31.87   31.87  31.87   54.26  33.81  43.6   50.4  51.8-j 2.4 1.06
+223.5  12.91  32.99   32.99  32.99   bulge  35.28  43.4   50.0  52.1-j 1.2 1.05
+225    12.96  31.22   31.22  31.21   bulge  31.22  43.2   49.8  53.9+j 0.5 1.08
+
+Table 16.  Gain, sidelobe, and impedance data for the 17-element LPDA with a parasitic reflector and 2
+directors from 222 to 225 MHz.</pre>
+  <center>
+    <img src="sl-31.gif" width="500" height="600" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In fact, we gain very little--perhaps 0.2 dB gain. The sidelobe performance improves marginally, but does create a quandary. As the H-plane free-space pattern in <b>Fig. 31</b> shows, there are lobes at about -35 dB at nearly a perfect 90-degree angle relative to the main forward lobe. I have chosen to call these forward sidelobes, even though their peaks occur just rearward of the right-angle position. In all such matters, it usually pays to acknowledge such lobes, even if the terms of tabulating data would allow us to ignore them.</p>
+  <center>
+    <img src="sl-32.gif" width="530" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When we place the antenna 5 wavelengths above average ground, we acquire a bonus: the upward sidelobes diminish even more than they do in free space. <b>Fig. 32</b> illustrates the bonus. The strongest upward sidelobe not within the overlaid free-space forward and rearward main lobes is about 40 dB down from the maximum signal strength of the array. However, the main forward lobe set shows the effects of the wider beamwidth relative to Yagi performance in the strength of the upper forward lobes within the free-space envelope.</p>
+  <center>
+    <img src="sl-33.gif" width="474" height="398" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The lower gain of the second series of LPDA designs sacrifices gain for pattern purity. <b>Fig. 33</b> provides a 3-dimensional free-space plot of the final LPDA design at 223.5 MHz. A casual comparison of this pattern with those in <b>Fig. 1</b> and <b>Fig. 20</b> will show the degree to which we have been able to suppress the sidelobes that infest array designs that strive for maximum gain with the minimum number of elements for a given boom length. Every sidelobe is down by more than 30 dB relative to the maximum forward gain of the array.</p>
+  <h4>Conclusion</h4>The design exercise has explored how far we may suppress both forward and rearward sidelobes. The LPDA offers--when we do not press its gain potential too far--the cleanest pattern of all. Indeed, in the HF region, commercial SW broadcasters have used very large LPDAs covering their entire spectrum of operating frequencies because the design directs so little of the transmitted energy in any direction other than the desired one. Whether such designs are useful for VHF and UHF monoband weak-signal work is moot, since we have not explored any of the critical factors that arise when we transform a paper design into an actual antenna that we must build, tune, and support.
+  <p>Perhaps the design with the best sidelobe performance for the weight is the 12-element OWA. It barely misses the H-plane sidelobe goal, while providing excellent E-plane sidelobe performance. Its gain is competitive with the gain of DL6WU and similar wide-band Yagis of similar boom length. Moreover, with due care, we can increase the boom length and the number of elements while preserving most or all of the sidelobe suppression. The OWA sidelobe suppression occurs largely as a function of the basic cell consisting of the reflector, driver, and first three directors. Although we can easily ruin the sidelobe suppression by misplacing the forward-most director, we can as easily retain the level of sidelobe suppression by carefully sizing and placing each new set of directors. However, for each added director, we shall have to adjust the length and position of both the new director and the one immediately behind it. Hence, the task is not quite so simple as adding directors to a DL6WU design.</p>
+  <p>The question that we have not addressed in this exploration of sidelobe suppression is the dividing line between advantageous and superfluous sidelobe reduction. That issue lies beyond the realm of both antenna design and antenna modeling and may vary from one weak-signal activity to another. A further matter that we have still to explore is the effect upon sidelobes of angling arrays away from a plane parallel to the earth's surface. Of course, the fewer and smaller the sidelobes, the less we may need to worry about the effects of pointing an array into space, other than the consequences for the main forward lobe.</p>
+  <p>Indeed, there are numerous other directions to explore. If we are truly serious about achieving single lobe performance, we might try some backyard replications of quadrifilar source antennas and Aricebo-type reflectors. However, such exercises remain as future work. For now, within the realm of planar arrays composed of linear elements, we have surveyed enough territory to show that we may go much further than hitherto appreciated toward the reduction of sidelobes in long-boom amateur antennas.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 04-27-2002. &COPY; L. B. Cebik, W4RNL. First presented to the South-East VHF Society, April 27, 2002, in Oak Ridge, TN. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#vhf-uhf'>VHF / UHF</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

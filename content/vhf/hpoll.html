@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Yagi, Moxon">
+  <title>Horizontal Polling Arrays</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Horizontal Polling Arrays</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>Rotators are slow-moving devices--advisedly so, because spinning an antenna at high speed can induce large stresses, even at VHF and UHF frequencies. The chief stresses will be due to acceleration and deceleration whenever we start or stop the system. Moreover, rotators are generally not built for continuous operation. Rather, they prove to be most durable when used sporadically to move a directional antenna toward a desired communications target.</p>
+  <p>The rotator problem presents a challenge to the growth of PSK and related digital operations in the VHF region. Activity on the low end of 2-meters has increased, and ranges that are impossible for voice and improbable for standard CW are proving to be routine for PSK. Skip Teller, KH6TY, reports regular contacts in the 300-mile range on this mode using moderate power and relatively standard modest beam antennas. The difficulty is that the digital transmission may come and go faster than the operator can move a beam to detect, let alone decode, the signal.</p>
+  <p>The solution may lie in using a polling array. A polling array is simply a collection of antennas angularly spaced to cover the horizon within the beamwidth of each antenna. Each antenna's feedline terminates at a central controlling position. By digital control of various sorts, the system activates one antenna at a time in a prescribed order and at a rate much faster than a rotator can move. When the system detects a signal (either of any sort or of a prescribed sort), the system locks onto it with the antenna providing the best signal strength. From this point, the user has many design options. He can leave the lock in place and release it manually after communication. Or the system may return to scanning all antennas after a time delay. The latter system works best with reception-only systems, such as on a repeater. The former system is better for 2-way communication over a single path and on the same or closely related frequencies.</p>
+  <p>Polling arrays are in regular use in cell and similar services, where the user has two advantages. First, the antennas are small, and spacing them from a central mast by a wavelength is only a matter of inches. Second, the antennas generally use vertical polarization, and we have no element tips to interfere with each other. However, the needs at the low end of 2 meters tend to be for horizontally oriented antennas.</p>
+  <p>Because there may be a tendency to simply transfer vertical polling-array wisdom to the use of horizontal antennas, it may be useful to examine the behavior of horizontal antennas in this kind of service. I shall leave it to others to develop the control devices for scanning a polling array. We shall have quite enough work to do seeing how horizontal antennas respond to polling activities.</p>
+  <p><b>Basic Antennas and Considerations</b></p>
+  <p>Every antenna design has its own properties. The key ones for VHF PSK are gain, front-to-back ratio, and beamwidth in the horizontal plane. Since we cannot possibly cover every antenna that one might use, let's consider two divergent designs. One antenna will be a Moxon rectangle, which has modest gain, an excellent front-to-back ratio, and a fairly large beamwidth. The other antenna will be a 6-element Yagi with higher gain, a very good front-to-back ratio, and a narrower beamwidth. <b>Fig. 1</b> shows the outlines of the two antennas. Both antennas are designed for direct 50-Ohm feedpoint connections, and so we may set aside that operating parameter as a concern.</p>
+  <center>
+    <img src="hpoll-1.gif" width="360" height="230" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For uniformity, let's place each antenna--and every following polling array that we construct with them--1 wavelength above average ground. Although this height is low for the 2-meter band--our test range--performance at the antenna will not change much if we change heights upward. We may gain a clear path between line-of-sight targets with a higher antenna position, but we would not significantly change the gain or beamwidth. At the selected 1 wavelength height, the two antennas show the following performance potentials in isolation.</p>
+  <pre>
+Individual Modeled Performance Values for 2 Diverse Antenna Types in Horizontal Service
+Antenna Type        Gain dBi    Front-to-Back Ratio dB     Beamwidth degrees
+Moxon rectangle     11.32       28.16                      79.2
+6-Element Yagi      15.20       37.23                      53.0
+</pre>
+  <p>To scan the horizon, we would require fewer Moxons than we would 6-element Yagis. However, the Moxons offer about 4-dB less gain than the Yagis. Which parameter--the number of required antennas or the gain--takes precedence is among the earliest user decisions to make. In both cases, a 20-dB minimum front-to-back ratio ensures that few, if any, signals could create a false system lock at reduced strength</p>
+  <p>Ideally, we may cover the horizon with 5 Moxon rectangles. We may examine an ideal situation simply by turning the Moxon in 72-degree increments and taking a new pattern along the way. <b>Fig. 2</b> shows this idealized situation for the 2-element antenna.</p>
+  <center>
+    <img src="hpoll-2.gif" width="380" height="335" border="2" vspace="5" hspace="9">
+  </center>
+  <p>By using the antenna's beamwidth as a measure of angular separation, we may ideally enjoy full horizon coverage with a maximum of 3-dB fluctuation in signal strength (all other things being equal) with only 5 antennas. To achieve a similar result with the 6-element Yagi, we must use 7 antennas, as shown in <b>Fig. 3</b>.</p>
+  <center>
+    <img src="hpoll-3.gif" width="390" height="335" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, this initial modeling exercise has a significant limitation. It makes use in each case of a single antenna that we rotate around a common center. Hence, each pattern is identical to the adjacent pattern. Missing from the model are some crucial parts of a real polling array. A polling array will consist of several antennas arrayed round a common central support or mast. We cannot simply create a vertical stack of virtually identical antennas. Even with 1/2 wavelength spacing, the antenna will interact sharply. The centermost antennas will show feedpoint impedances seriously off the value for an isolated single antenna. To minimize interactions among antennas--or to bring them down to an acceptable level--the antenna in polling arrays normally have a certain spacing from the central mast. Hence, as shown in <b>Fig. 4</b>, we have at least two critical dimensions to consider when planning a polling array.</p>
+  <center>
+    <img src="hpoll-4.gif" width="308" height="234" border="2" vspace="5" hspace="9">
+  </center>
+  <p>How these two dimensions interact will become a major point of study. However, the very fact that the antennas must be spaced from the mast by a certain distance should remind the planner that a polling array has physical as well as electrical characteristics. Whatever the required distance from the mast to the array rear element, the Moxon rectangle only requires about 14-15 inches more of boom for support. In contrast, the 6-element Yagi requires about 5' of additional boom for support. The higher the gain of the antenna, the narrower the beamwidth, which means more antennas. As well, it means ever-longer booms to support each antenna.</p>
+  <p>One reason for specifying the distance dimension as the space from the mast to the rear element is the fact that a reflector tends to act as a screen between the antenna and the mast or other antennas to the rear. However, what the reflector cannot prevent is interaction between the tips of elements in adjacent antennas in the collection. (A vertically oriented polling array is not faced with tip-to-tip coupling, but it does encounter coupling by the parallel orientation of elements in adjacent antennas within the collection.) Since our subject antennas have quite different geometries, let's see what we may learn about them one at a time.</p>
+  <p><b>Some Basic Moxon Rectangle Properties in Polling Arrays</b></p>
+  <p>Since our main concern involves an active antenna and the inactive antennas adjacent to it, we may simplify our initial study by creating only 3 Moxon rectangles. We shall use 72 degrees as the angular separation of the antennas, and the active antenna will be the middle of the 3. We shall proceed by stepping the distance between the mast and the rear element in 1/8 wavelength increments, since an eighth wavelength is just about 10" at 2 meters.</p>
+  <center>
+    <img src="hpoll-5.gif" width="370" height="275" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If we begin with 1/4 wavelength between the mast and the rear element, we end up with the outline shown in <b>Fig. 5</b>. The rear corners of the arrays nearly touch. The coupling is so great that we arrive at a 3-lobe pattern rather than with a single Moxon main lobe. The gain of the main lobe is about 2-dB lower than for an isolated Moxon, and the front-to-back ratio is negligible. The beamwidth has also shrunk to an unusable level.</p>
+  <p>If we increase the mast-to-rear-element space by 1/8 wavelength (another 10"), we obtain the pattern shown in <b>Fig. 6</b>.</p>
+  <center>
+    <img src="hpoll-6.gif" width="400" height="320" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The increased spacing places the rear elements at a respectable distance from each other. As well, we see a return to the single-lobe forward pattern. In fact, the gain is a small amount higher than for the antenna in isolation. The front-to-back ratio, while still below the value for an isolated Moxon, is above 20 dB. The added gain comes largely as a result of the narrowing of the beamwidth for a Moxon with adjacent antennas. The beamwidth has shrunk from over 79 degrees to just over 70 degrees. The new beamwidth is below the angular separation between antennas in the system. As a consequence, the lowest gain value where patterns overlap will be an additional dB lower than for the ideal patterns shown in <b>Fig. 2</b>.</p>
+  <p>The Moxon with 3/8 wavelength spacing between the mast and the rear element is usable. However, let's see if we garner any significant improvements by increasing the spacing by another eighth wavelength to 1/2 wavelength.</p>
+  <center>
+    <img src="hpoll-7.gif" width="420" height="360" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As shown in <b>Fig. 7</b>, the additional spacing does not change the gain by much. The front-to-back ratio increases by about 3 dB. The beamwidth shows a small growth to just over 72 degrees, just above the level necessary to achieve a maximum pattern gain variation of 3 dB. Whether the increased beamwidth justifies the added 10" of required boom length is a user decision.</p>
+  <p>These models go some distance in showing that the proximity of inactive adjacent antennas of the same design can reduce the beamwidth of the active antenna unless we use a sufficient distance between the mast and the rear element. Of course, for a fixed angular separation, every increase in mast-to-antenna spacing sets the individual antennas in the array farther apart, with a consequent reduction in coupling. In the UHF region, we can easily use much greater mast-to-antenna spacing values without incurring much mechanical stress. However, at 2 meters, we are pressing the limits of what we might achieve with common materials. Hence, looking for the minimal values that also promise to be practical values is a sensible exercise.</p>
+  <p><b>Some Basic 6-Element Yagi Properties in Polling Arrays</b></p>
+  <p>Before we increase the Moxon array to full size, let's explore the comparable properties that might accompany a set of 3 6-element Yagis in a polling array. Due to the narrower beamwidth, the required angular separation is 51.43 degrees. As a consequence, we obtain element overlap for considerably larger spacing values from the mast to the rear element. In addition, the Moxon elements side-to-side are only about 70% of the length of the fully extended (unbent) elements of the subject Yagi. As one consequence, we must use a bit of vertical separation between adjacent Yagis if we are to explore potential interactions with fairly short mast-to-antenna distances. Therefore, wherever necessary in this 3-antenna exercise, I have increased the height of the inactive antennas by 6" to prevent element inter-penetration within the models.</p>
+  <p>Our first model uses 1/4 wavelength spacing between the mast and the rear element. Our experience with the Moxon at this distance suggests that we may end up with an unusable situation. <b>Fig. 8</b> confirms our expectations.</p>
+  <center>
+    <img src="hpoll-8.gif" width="440" height="420" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As we found in the case of the Moxon, the Yagi array yields a pattern with 3 forward lobes due to coupling between elements, even with the 6" vertical spacing. The front-to-back ratio is quite usable, but the forward gain is 3 dB below the value for the Yagi in isolation. In addition, the beamwidth is down to 32 degrees, an unacceptable value for the intended service.</p>
+  <p>Moving the mast-to-antenna spacing up to 3/8 wavelength does not remove element overlap, as it did for the Moxon. Hence, this model also uses a 6" vertical separation. <b>Fig. 9</b> shows the results of this modeling experiment.</p>
+  <center>
+    <img src="hpoll-9.gif" width="460" height="425" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The main lobe has re-appeared, but the gain is still about 1 dB shy of the value in isolation. The 180-degree front-to-back ratio is a respectable 26.5 dB, but the rearward sidelobes are strong enough to fall below the desired 20-dB limit. In addition, the forward lobe is not well-shaped and shows only a 44-degree beamwidth, well under the desired 51.4-degree value. As a result of this exercise, we may view the 3/8 wavelength spacing value as still short of being acceptable.</p>
+  <p>When we increase the spacing to 1/2 wavelength, we still encounter some element overlap. Therefore, the model shown in <b>Fig. 10</b> still requires the 6" vertical spacing between adjacent Yagis.</p>
+  <center>
+    <img src="hpoll-10.gif" width="465" height="430" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Under the specified conditions, the forward gain has returned to a nearly normal level. Reduced rearward side lobes accompany the outstanding 180-degree front-to-back ratio so that we obtain the desired 20-dB minimum to the rear. The small forward sidelobes are of no great import to polling performance. However, the beamwidth is still under 50 degrees. At best, this step in the progression of increasing mast-to-antenna distances is marginal.</p>
+  <p>By taking the next step, we will increase the mast-to-antenna space beyond the amount required by the Moxon rectangle. <b>Fig. 11</b> shows what happens when we use 5/8 wavelength (50") as the spacing value.</p>
+  <center>
+    <img src="hpoll-11.gif" width="490" height="460" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The elements now are clear of each other and do not require vertical separation. The pattern has a more normal look, with good gain and only some insignificant side lobes to distort the overall appearance. The front-to-back value has returned to nearly the value for the isolated Yagi with rearward sidelobes well below 20-dB down from the main forward lobe. The beamwidth has increased to 50.8 degrees, a growth of 1 degree. Since we are close to the desired mark (51.43 degrees), perhaps we should take another step in increasing the mast-to-antenna spacing.</p>
+  <p>The next step places the rear element of the antenna 3/4 wavelength from the mast (60"). Hence, the total boom length is about 120" (10') to include both the antenna and the spacing. <b>Fig. 12</b> shows what emerges.</p>
+  <center>
+    <img src="hpoll-12.gif" width="500" height="470" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In fact, we gain almost nothing for our efforts. The gain and front-to-back ratio have leveled off. The side lobes have shrunk a bit, but in this service, they are not a concern. Perhaps the most disappointing fact is that the beamwidth has grown only 0.2 degrees, still shy of the desired value.</p>
+  <p>Let's make one more step and see if the beamwidth comes up to expected values. By increasing the mast-to-rear-element spacing to 7/8 wavelength (70"), we obtain the results shown in <b>Fig. 13</b>.</p>
+  <center>
+    <img src="hpoll-13.gif" width="520" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Once more, hope gives way to disappointment. The patterns grow a bit cleaner, but the beamwidth remain at 51 degrees. For polling service, the 3-antenna exercise suggests that distances between the mast and the antenna of 5/8 wavelength to 7/8 wavelength are just about equivalent. When we consider that every increase in spacing increase the stress on the boom with the antenna on its outer half, a tradeoff may be acceptable. We would find an increased variation in signal strength created by the failure to achieve the full desired beamwidth.</p>
+  <p>This part of the exercise has demonstrated that adjacent antennas in a polling array narrow the beamwidth of the active antenna relative to its value in isolation. That fact is important to consider when designing an array for this service. Even with a considerable separation between the central mast and the rear of each antenna, the beamwidth values do not reach their isolated values.</p>
+  <p>However, we have two deficiencies to overcome in this exploration. First, we have not examined what happens when we provide a full set of antennas in the array. Second, we have not yet determined the actual number of antennas that we need for either the Moxon or the Yagi array. These two tasks will become the final steps in our journey through horizontally oriented polling arrays.</p>
+  <p><b>The Full Circle</b></p>
+  <p>The 3-antenna models acquaint us with some basic properties of antennas used in polling arrays, but they do not establish what happens when we have a complete circle of antennas. Rather than try to replicate every variation in the progression that we have just examined, I shall select one variation from each of the two antenna types and work through the complete array models. Since the antenna designs are only examples and unlikely to be the actual antennas that someone uses, the principles of the task outweigh a voluminous data collection.</p>
+  <p>Perhaps the first matter to strike us from a practical or building perspective is the fact that both idealized arrays called for odd numbers of antennas in the array. For most builders, an even number of antennas simplifies construction, since each boom may extend in opposite directions through (or past) the boom and carry two antennas. For example, compare the 5- and 6-antenna arrays shown for Moxon rectangles in <b>Fig. 14</b>. The array uses 1/2 wavelength spacing between the mast and the rear element of each antenna.</p>
+  <center>
+    <img src="hpoll-14.gif" width="780" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The angular separation differs between the two array, of course. From 72 degrees, the 6-antenna version drops to 60 degrees. Although we find a slight drop in forward gain--too small by be significant--we also find that the beamwidth has increased marginally by nearly 1 degree. Rather than falling under the desired value, in the 6-antenna array, the beamwidth is actually nearly 12 degrees wider than the minimum required value.</p>
+  <p>The increase in beamwidth combined with the higher number of antennas in the array does reduce gain variation between maximum and minimum values. However, the improvement may not be as great as one might expect. <b>Fig. 15</b> shows the overlapping patterns of the circle of antennas, not as an idealized rendering of the type in <b>Fig. 2</b>, but as a model of the full set of antennas activated sequentially.</p>
+  <center>
+    <img src="hpoll-15.gif" width="660" height="336" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Because the forward lobes are nearly circular, the gain must decrease toward the positions where patterns overlap. The decrease is only 2 dB. If we combine the decrease in gain variation with the probable improvement in construction ease for the assembly, then the enhancements very likely justify building the 6th rectangle for the collection.</p>
+  <p>The 6-element Yagi presents us with a different sort of situation. 7 antennas may be more difficult to mechanically stabilize than an array of 8. The angular separation would drop from 51.43 degrees to 45 degrees, allowing the use of 4 booms for the entire set. Since each Yagi is nearly 5' long, I selected the minimally adequate distance from the mast for the model: 5/8 wavelength. With the 3-antenna models we found very little difference in performance as we moved from a 5/8 wavelength distance to a 7/8 wavelength distance. Hence, 5/8 wavelength seems natural at first sight. The outline and pattern on the left in <b>Fig. 16</b> for the 7-antenna array shows very little practical performance difference relative to the 3-antenna model.</p>
+  <center>
+    <img src="hpoll-16.gif" width="860" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, if we reduce the angular separation to 45 degrees and still retain the 5/8 wavelength (50") spacing between the mast and the rear element, then we obtain the outline and pattern on the right in <b>Fig. 16</b>. Note that shrinking the angular separation pulls the elements tips closer together. As a consequence, the interactions increase. The performance figures for each antenna in the 8-antenna array--on the far right--show decreases in gain and front-to-back ratio relative to the individual antennas in the 7-antenna array. As well, we see an increase in the side-lobe structure, although the side lobes are not strong enough to be troublesome in this type of service. Equally, we see a bit of squaring in the forward lobe pattern, despite an increase in the beamwidth.</p>
+  <center>
+    <img src="hpoll-17.gif" width="660" height="336" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As a consequence of the pattern squaring, we find only a half-dB reduction in gain variation between maximum and minimum gain values, despite the fact that we have decreased the angular separation to 45 degrees. <b>Fig. 17</b> shows the differences in the full-circle 7-antenna and 8-antenna patterns for the 6-element Yagi. In order to smooth the forward pattern and to reduce the gain variation further, we would require additional distance between the mast and the rear elements in the 8-antenna array. It is likely that a distance between 7/8 wavelength and 1 wavelength would be necessary. Again, since the actual antennas planned for such an array should be the subjects of analytical modeling exercises, I have brought the present set of models to a close. These notes have not tried to present a pair of arrays calling for replication. Rather, they have striven to show the principles involved and some antenna behaviors for which the modeler should be alert.</p>
+  <p><b>Conclusion</b></p>
+  <p>These notes have shown how antenna behavior may change between a single antenna in isolation and that same antenna as part of a polling array designed to cover the entire horizon. They have focused on horizontally oriented antennas, specifically, 2-meter beams design for such applications as PSK and other digital modes. The two beams chosen for the study offer contrasts in gain and beamwidth--not to mention antenna size. The Moxon rectangle is an example of a compact 2-element antenna with a small front-to-rear dimension as well as a side-to-side dimension that is only about 70% of the length of a linear 2-meter element. The 6-element Yagi offers significantly more gain, but with a wider side-to-side dimension and a much longer boom requirement.</p>
+  <p>Planning for a polling array of horizontal antennas requires an initial decision of the gain required by the anticipated communication paths. Higher gain automatically increases boomlength and equally automatically decreases beamwidth. Hence, the higher the gain that we select, the more antennas that our array must have for full horizon coverage with a user-selected limit to the gain variation around the horizon.</p>
+  <p>We have also seen that placing the antenna in an outward-pointing circle tends to reduce the beamwidth relative to the value shown by the same antenna in isolated use. Moreover, arrays calling for odd number of antennas to cover the horizon may prove more difficulty to construct (for stability and durability) than arrays with an even number of antennas. Increasing the number of antennas to an even number decreases the angular separation between antennas.</p>
+  <p>For some antennas--including virtually all Yagis with linear elements--increasing the number of antennas within the total array may require an increase in the distance between the mast and the rear element in order to avoid excessive interaction between the active unit and the adjacent inert units. The Moxon array of 6 antennas proved satisfactory within its gain class with a distance of 1/2 wavelength. In contrast, the longer-boom, longer-element Yagis required perhaps 3/4 wavelength as the spacing that might yield well-behaved patterns in an array of 8.</p>
+  <p>Each builder will have a set of physical limits to the structure that he or she constructs with confidence. The structure must also match up with the desired gain level, as well as the allowable amount of gain variation. These notes cannot make such decisions for the builder, but only show how to gather some of the data necessary to make them.</p>
+  <p>In addition, each polling-array builder must have access to the appropriate sequencing, controlling, and locking circutry necessary to make the system effective. As in almost all of the history of radio communications, it is likely that the control circuitry will become commonplace long before most folks who desire a polling array become familiar with the antenna constraints involved. These notes are an effort to fill--if only partially--a few of the gaps on the antenna side of the issues involved.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><i>Updated 07-01-2006. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for Jun, 2006. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40"> Return to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#moxon'>Moxon</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a>, <a href='../topics.html#yagi'>Yagi</a></p><br>
+</body>
+</html>

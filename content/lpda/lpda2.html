@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, HF Upper">
+  <title>A 10-Meter LPDA Phase 2: A Low Impedance Version</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/yagicad.gif" align="left" width="125" height="62" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">A 10-Meter LPDA<br>
+    Notes on a Work in Progress<br>
+    Phase 2: A Low Impedance Version</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  My initial modeling trials for a compact (8' boom) LPDA to cover all of 10 meters with short-boom 3-element Yagi performance used the recommended higher-impedance antenna transmission line. These notes look at some low- impedance models derived from calculations from LPCAD.
+  <h3>200-Ohm vs. 75-Ohm Antenna Transmission Line</h3>General recommendations for LPDAs include a warning about the use of low impedance antenna transmission lines. For wide-band LPDAs, unwanted resonances can occur with low impedance lines. As N7CL, Eric Gustafson, reminded me, these problems usually do not occur with monoband LPDAs.
+  <p>The models so far cited have used a 200-Ohm antenna transmission line, which permits the use of a double boom for antenna construction (similar in principle to the type used by Tennadyne LPDAs). A matching section is required to provide a 50-Ohm match, since the source impedance of an LPDA in the element length-to-diameter ratio range used by this model is about 0.6 to 0.7 the antenna transmission line characteristic impedance. For a direct 50-Ohm match, a transmission line in the neighborhood of 72-75 Ohms can work well, although it will require alternative construction methods.</p>
+  <p>One of the interesting features of the LPDA using a low impedance transmission line is that the velocity factor (VF) of the line makes very little difference to the actual performance of the antenna. Since I have done the initial modeling using a VF of 1.0, I went back and checked VFs of 0.79 and 0.66 as representative numbers that we might call mid-range and low. The 75-Ohm models use open-rear construction (no stub) and also extend the rear element to the initially calculated value of nearly 219". The results are reported in the following table. (I use a table because of the illegible overlap of lines on a standard graph.)</p>
+  <pre>Freq MHz      28            28.5          29            29.5          30
+
+Antenna Transmission Line:  72-Ohm; VF = 1.00
+Gain          6.82          7.04          7.18          7.21          7.16
+F-B           20.15         26.72         31.27         24.75         21.07
+R             66.54         56.88         50.84         49.29         51.52
+X             -2.536        -6.026        -4.532        -1.792        -0.8594
+SWR-50        1.335         1.187         1.096         1.04          1.035
+
+Antenna Transmission Line:  72-Ohm; VF = 0.79
+Gain          6.84          7.04          7.15          7.16          7.09
+F-B           19.47         25.32         29.68         24.41         20.69
+R             66.48         59.32         56.93         58.36         61.66
+X             -9.031        -5.494        -1.561        0.478         -1.601
+SWR-50        1.383         1.219         1.142         1.168         1.236
+
+Antenna Transmission Line:  72-Ohm; VF = 0.66
+Gain          6.84          7.02          7.11          7.11          7.03
+F-B           19.22         24.71         28.22         23.62         20.03
+R             65.41         63.6          65.16         68.6          70.85
+X             -11.02        -5.16         -1.666        -2.093        -7.4
+SWR-50        1.391         1.293         1.305         1.375         1.447
+
+Antenna Transmission Line:  75-Ohm; VF = 1.00
+Gain          6.81          7.04          7.17          7.21          7.15
+F-B           20.07         26.63         31.74         25            21.21
+R             69.26         59.15         53.07         51.68         54.1
+X             -3.87         -6.84         -4.99         -2.124        -1.353
+SWR-50        1.394         1.233         1.12          1.055         1.087
+
+Antenna Transmission Line:  75-Ohm; VF = 0.79
+Gain          6.83          7.04          7.14          7.16          7.09
+F-B           19.42         25.3          30.04         24.64         20.83
+R             68.36         61.44         59.36         61.08         64.44
+X             -10.54        -6.493        -2.383        -0.4839       -2.994
+SWR-50        1.434         1.267         1.194         1.222         1.296
+
+Antenna Transmission Line:  75-Ohm; VF = 0.66
+Gain          6.83          7.01          7.1           7.1           7.02
+F-B           19.21         24.77         28.57         23.83         20.15
+R             66.95         65.65         67.61         71.2          73.17
+X             -12.12        -6.196        -2.904        -3.788        -9.612
+SWR-50        1.431         1.34          1.358         1.432         1.51</pre>
+  <p>Since the 75-Ohm, 0.66 VF line represents the worst case of the group (showing the lowest 28-MHz front-to-back ratio and the highest SWR), we may fairly use it in comparison with the 200-Ohm line open-rear model. The curve trends are so consistent within the groups above that the chosen comparison will stand for all the tabular entries.</p>
+  <center>
+    <img src="lpda-11.gif" width="653" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain comparison shows the displacement of the 75-Ohm gain peak upward in frequency relative to the 200-Ohm peak at mid-band. The 75-Ohm curve also shows a much wider variation in gain across the band, so that the 75-Ohm gain at 28 MHz, while entirely acceptable for this project, is noticeably lower than the 200-Ohm gain at the same frequency.</p>
+  <center>
+    <img src="lpda-12.gif" width="653" height="531" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The front-to-back curves of the 75-Ohm and 200-Ohm models are congruent, although the 75-Ohm curve is several dB lower. At 28 MHz, the 75-Ohm front-to-back ratio marginally approaches the 20- dB level set as the project goal.</p>
+  <center>
+    <img src="lpda-13.gif" width="654" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 50-Ohm SWR curve of the 75-Ohm model reaches a value of 1.5 only at the upper end of the band. However, it is consistently higher than the comparable 200-Ohm model curve. Of course, the 200-Ohm curve is based on the use of a custom 75-Ohm matching section, adjusted in length downward from 1/4 wl to compensate for the capacitive reactance at the antenna feedpoint. Although some builders do not favor the use of matching sections, their use can save losses in long lines from the antenna to the shack by providing the main 50-Ohm line with a lower SWR across a wider operating bandwidth. The losses due to higher SWR levels--even marginally higher--are confined to the short length of matching section line. In the present case, however, the direct match values of the low impedance transmission line model LPDA are low enough to be of little concern.</p>
+  <h3>A Redesign Exercise</h3>Because the gain curve peak was pushed upward in frequency with the change to a low-impedance antenna transmission line, it seemed useful to try to redesign the antenna using a slightly different set of upper and lower frequencies. The original set that yielded a well centered curve with the 200- Ohm antenna transmission line used 27.5 MHz as the low frequency and 29.5 as the upper frequency. I tried (among others) two tactics: 1. simply shifting the frequency range down by 25 kHz, and 2. shifting the low end down but widening the overall frequency range by leaving the upper frequency at its original level. The calculations were based on 0.5" elements, but the models used a combination of 0.5" and 0.375" aluminum elements (with the half inch sections a constant +/- 54" from the center line and the smaller tips of variable length).
+  <p>Just for the record, here are the calculated element lengths and spacings for the three models in question.</p>
+  <pre>Frequency Range:  27.5--29.5
+Element Length (")          Cumulative Spacing (")      L/D Ratio
+218.985                     00.000                      438.0
+196.006                     35.605
+175.439                     67.475
+157.030                     96.000                      314.1
+
+Frequency Range:  27.25--29.25
+Element Length (")          Cumulative Spacing (")
+220.994                     00.000                      442.0
+197.763                     35.612
+176.975                     67.481
+158.372                     96.000                      316.7
+
+Frequency Range:  27.25--29.5
+Element Length (")          Cumulative Spacing (")
+220.994                     00.000                      442.0
+197.203                     35.706
+175.974                     67.568
+157.030                     96.000                      314.1</pre>
+  <p>The first notable fact is that the amount of adjustment is small, especially when thought of in terms of physical construction. The spacing of the intermediate elements changes by about 0.1" overall throughout the range. This fact places some limitations on the final antenna being able to hit the desired performance curves in a precise manner. Nonetheless, the resulting model performance changes are interesting (at least to me). Let's look at some comparative curves for 75-Ohm, VF 0.66 antenna transmission line models. First, the gain.</p>
+  <center>
+    <img src="lpda-14.gif" width="654" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The red line is the gain curve for the 27.5-29.5 model, while the green line is the gain curve for the 27.25-29.25 model. The latter (green) is better centered in the frequency span covered, although the extrapolated peak value is a bit less than for the former (red). It is not yet clear if this reduction in gain peak is a function of the greater length-to-diameter ratio of the elements for the lower frequency span.</p>
+  <p>The blue line represents the gain curve of the expanded frequency span model. While generally centered in the frequency span, its end values are as low as the worst case for each of the other two curves. Moreover, its peak value is noticeably below that of the other two curves. both these phenomena are likely functions of the wider frequency span covered by the model.</p>
+  <p>Value differences are visually and mathematically noticeable. However, the differences would make little operational difference, amounting in the worst case to under 0.1 dB. Their chief use for me is in helping me understand the consequences of various changes that might be made in the selection of variables for the monoband LPDA.</p>
+  <center>
+    <img src="lpda-15.gif" width="654" height="527" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The front-to-back curves are equally interesting in principle, although not very significant operationally. Before making an descriptive interpretations, we should note that the 5-point curves are incomplete pictures of the actual front-to-back value changes. However, if you understand that the front-to-back ratio peaks somewhat symmetrically, then you can adjust the curves accordingly. For example, the 27.5-29.5 curve (red) actually peaks a bit below 29.0 MHz and a bit above the 28+ dB value shown. The 27.25-29.25 curve (green) peaks between 28.5 and 28.75 MHz. The 27.25-29.5 curve (blue) peaks just above 28.75 MHz.</p>
+  <p>The wider frequency range curve has the highest peak value, while the other two have similar peaks. The peak value numbers are actually the least interesting on the graph. The more interesting values are at the band edges, indicating the minimal level of performance across the band. Both of the revised models have a front-to-back ratio greater than 20 dB at the low end of the band. Although they dip below 20 dB at 30 MHz, at 29.7 MHz, both are greater than 20 dB. Hence, with respect to front-to-back ratio, there is virtually nothing to choose between the two revised models.</p>
+  <center>
+    <img src="lpda-16.gif" width="655" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For a 75-Ohm antenna transmission line using a material with a 0.66 velocity factor, the 50-Ohm SWR curves tell a story of passing interest. The two revised models show improvements in SWR at the low end of the band, most likely a direct result of the lower low-frequency limit in both cases. At the upper end of the band, the original and the wide-band models, with identical upper frequency limits, have virtually identical values. However, the model with limits of 27.25 and 29.25 MHz shows an increase in 50-Ohm SWR at the upper end of the band. In short, the changes in 50-Ohm SWR corresponding directly to the changes in the frequency range limits used for the element calculations. Although, once more, the changes are not too significant operationally, they are instructive in terms of understanding the consequences of design changes one might make.</p>
+  <p>An alternative way of viewing the same data (minus the SWR values) is to examine the collection of free space azimuth patterns that might accumulate from gathering the information in the graphs. Two features are of special note. First is the amount of gain variation across the band, remembering that the actual peak gain value may elude the collection of patterns. Second is the variation in the rear lobes across the band, with an eye toward not only the direct 180-degree front-to-back ratio, but as well the entire front-to-rear performance.</p>
+  <center>
+    <img src="lpda-17.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As this figure for the 27.5-29.5 MHz model shows (along with the ones to follow), gain variation will make virtually no operational difference in antenna performance. However, the centered front-to- back curve is evident in the pattern of rear lobes.</p>
+  <center>
+    <img src="lpda-18.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 27.25-29.25 MHz model shows the shift in rear lobes which leaves the weakest rear performance at the upper end of the frequency span. The 30 MHz curve, of course, will be worse than the upper 10-meter value at 29.7 MHz.</p>
+  <center>
+    <img src="lpda-19.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wide-band (27.25-29.5 MHz) model reveals some further shifting of values, but no very significant changes from the previous model.</p>
+  <p>The utility of the azimuth curves is to reinforce the reminder that value changes that are important in understanding design principles do not always result in changes of actual performance that one might even be able to measure using practical devices available to hams. Actually, all three antenna versions would be acceptable as practical antennas, as would be the 200-Ohm antenna transmission line model. Low impedance LPDA design provides one more alternative in the collection of decisions to be made about which antenna to construct.</p>
+  <h3>Why A 75-Ohm Antenna Transmission Line</h3>In the process of looking at low impedance LPDA models, none has yet proven satisfactory with a stub. However, the process of looking is far from over.
+  <p>The calculating and modeling I did in connection with low-impedance antenna transmission lines employed a 72-75-Ohm transmission line. Part of the reason for using the 75-Ohm line in the graphs is that, with a 0.66 VF, it provides a worst case analysis. The other reason for the use of lines in this range is the fact that I have some Belden 72-Ohm transmitting cable left over from another project. However, its use may be a bit marginal.</p>
+  <center>
+    <img src="lpda-20.gif" width="648" height="526" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The graph of the source resistance values for the three low-impedance line models shows that, with 72-75 Ohm lines, the resistance varies between about 66 and 73 Ohms. Once more, the high frequency end shows a closer correspondence between the antenna transmission line and the source resistance. It is at this end of the antenna that the L/D ratio of the elements is lower as well.</p>
+  <p>These facts present a conflict in directions in which to take the investigation. First, I have seen some design reports using a variety of techniques for achieving lines of lower impedance. It would be tempting to investigate first the use of lower impedance lines.</p>
+  <p>However, the question of the effect of the L/D ratio of the elements seems to arise at almost every turn. Will a lower L/D ratio a. increase gain, b. smooth out performance curves, c. flatten the source resistance curves? As well, I can ask the same questions of an element diameter schedule that preserves a relatively constant L/D ratio from one end of the antenna to the other (within the limits of eventually using tapered-diameter elements.</p>
+  <p>Since doing everything at once is out of the question, I think I might next tackle the L/D questions-- trying to see what happens when we turn calculations into models. Then I shall return to the direct- feed question.</p>
+  <p>My notes are not designed to be a finished product. Instead, they are a record of how one question leads to another in the design process I am using. It would have been easy to quit as soon as an acceptable model arose. However, I might then have built an antenna and understood far less about it. An antenna that I build is mostly an exercise in testing my understanding of its principles, since, if it fails to work properly, there must be something I have misunderstood. (That fact does not preclude misunderstandings even if it does work as predicted.) If the result is something that someone else can replicate in the garage, so much the better. Still, I tend not to build until I believe I can predict the outcome of every adjustment I might make to the actual physical structure. That is where modeling and calculation software come in handy--by aiding the process of understanding. If nothing else, they shorten the time I need to stand in the wind, rain, and cold wondering what will happen if I change something by a little bit.</p>
+  <p>So if these notes get a little tedious at times, by all means read something more exciting. This record is, after all, more an account of a process than it is a report of a product.<br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><i>Updated 11-12-98. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i><br>
+  <br></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><a href="lpda3.html"><img src="../images/yagismbt.gif" align="bottom" width="36" height="33"> Go to Part 3: Notes on Length/Diameter Ratios for an LPDA for 10 Meters</a></p>
+  <p><a href="lpda.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to LPDA Index</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Amateur Radio Page</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#lpda'>LPDA</a></p><br>
+</body>
+</html>

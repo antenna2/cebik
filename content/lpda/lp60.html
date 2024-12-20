@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="LPDA, HF Multi Band">
+  <title>A 3.5 Octave LPDA of High Potential Performance Part 1: No One Will Build</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/lpda.gif" align="left" width="150" height="83" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">A 3.5 Octave LPDA of High Potential Performance<br>
+    Part 1: But an Antenna that No One Will Build</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In my <a href="lp330.html">two part series</a> in QEX (May and July, 2000) of relatively short boom 3.5 octave LPDAs (60 to 160 feet), I had occasion to note the shortcomings of such antennas. Lest anyone think that a good LPDA that covers 3 to 30 MHz is not possible, I employed LPCAD 2.7 by Roger Cox to begin design of a high performance LPDA for the entire HF range. This note presents a kind of picture show of the antenna performance as modeled on NEC-4. Since the graphics tell the story, commentary will be limited.</p>
+  <h3>An Almost Adequate Design</h3>The first design was a 60-element LPDA array of standard design with little or no modification. The normal modeling care went into element segmentation to ensure adequate numbers of segments on all elements on all frequencies within the passband. As well, element diameters were staggered from 6" for the longest elements to 0.5" for the shortest ones. Since most designs show a fall-off in gain at the higher end of the frequency range, I designed the first model for an upper limit of 35 MHz, and the software automatically calculated elements for up to 1.3 times this frequency. As we shall see, even this buffer was not fully sufficient for even performance across the entire working passband.
+  <p>Modeling tests were done using transmission line characteristic impedances from 75 to 200 Ohms, with the last value being set as the standard. For an antenna with this much frequency coverage, pattern instabilities appeared whenever the phase line Zo was lowered to the 100-Ohm region or below. As a result, the feedpoint SWR values for selected frequencies checked are referenced to 160 Ohms, and a balun (transmission line transformer) would be required for use with a 50-Ohm feedline.</p>
+  <p>For reference, the EZNEC-4 model description of the first design follows.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3-35 MHz Tau=.955 Sigma=.18                   Frequency = 3.5  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+
+1            0.000,-83.640,  0.000         0.000, 83.640,  0.000 6.00E+00 111
+2           60.221,-79.876,  0.000        60.221, 79.876,  0.000 5.88E+00 107
+3          117.732,-76.282,  0.000       117.732, 76.282,  0.000 5.75E+00 101
+4          172.654,-72.849,  0.000       172.654, 72.849,  0.000 5.62E+00  97
+5          225.106,-69.571,  0.000       225.106, 69.571,  0.000 5.50E+00  93
+6          275.197,-66.440,  0.000       275.197, 66.440,  0.000 5.38E+00  89
+7          323.034,-63.450,  0.000       323.034, 63.450,  0.000 5.25E+00  85
+8          368.718,-60.595,  0.000       368.718, 60.595,  0.000 5.12E+00  81
+9          412.347,-57.868,  0.000       412.347, 57.868,  0.000 5.00E+00  77
+10         454.012,-55.264,  0.000       454.012, 55.264,  0.000 4.88E+00  73
+11         493.802,-52.777,  0.000       493.802, 52.777,  0.000 4.75E+00  71
+12         531.802,-50.402,  0.000       531.802, 50.402,  0.000 4.62E+00  67
+13         568.091,-48.134,  0.000       568.091, 48.134,  0.000 4.50E+00  63
+14         602.748,-45.968,  0.000       602.748, 45.968,  0.000 4.38E+00  61
+15         635.845,-43.900,  0.000       635.845, 43.900,  0.000 4.25E+00  59
+16         667.453,-41.924,  0.000       667.453, 41.924,  0.000 4.12E+00  57
+17         697.638,-40.038,  0.000       697.638, 40.038,  0.000 4.00E+00  53
+18         726.465,-38.236,  0.000       726.465, 38.236,  0.000 3.88E+00  51
+19         753.995,-36.515,  0.000       753.995, 36.515,  0.000 3.75E+00  49
+20         780.286,-34.872,  0.000       780.286, 34.872,  0.000 3.62E+00  47
+21         805.394,-33.303,  0.000       805.394, 33.303,  0.000 3.50E+00  45
+22         829.372,-31.804,  0.000       829.372, 31.804,  0.000 3.38E+00  43
+23         852.271,-30.373,  0.000       852.271, 30.373,  0.000 3.25E+00  41
+24         874.140,-29.006,  0.000       874.140, 29.006,  0.000 3.12E+00  39
+25         895.024,-27.701,  0.000       895.024, 27.701,  0.000 3.00E+00  37
+26         914.969,-26.454,  0.000       914.969, 26.454,  0.000 2.88E+00  35
+27         934.016,-25.264,  0.000       934.016, 25.264,  0.000 2.75E+00  33
+28         952.206,-24.127,  0.000       952.206, 24.127,  0.000 2.75E+00  33
+29         969.578,-23.041,  0.000       969.578, 23.041,  0.000 2.62E+00  31
+30         986.167,-22.004,  0.000       986.167, 22.004,  0.000 2.50E+00  29
+31         1002.01,-21.014,  0.000       1002.01, 21.014,  0.000 2.38E+00  27
+32         1017.14,-20.069,  0.000       1017.14, 20.069,  0.000 2.25E+00  27
+33         1031.59,-19.166,  0.000       1031.59, 19.166,  0.000 2.12E+00  25
+34         1045.39,-18.303,  0.000       1045.39, 18.303,  0.000 2.12E+00  25
+35         1058.57,-17.479,  0.000       1058.57, 17.479,  0.000 2.00E+00  23
+36         1071.15,-16.693,  0.000       1071.15, 16.693,  0.000 2.00E+00  23
+37         1083.17,-15.942,  0.000       1083.17, 15.942,  0.000 1.87E+00  21
+38         1094.65,-15.224,  0.000       1094.65, 15.224,  0.000 1.87E+00  21
+39         1105.61,-14.539,  0.000       1105.61, 14.539,  0.000 1.75E+00  19
+40         1116.08,-13.885,  0.000       1116.08, 13.885,  0.000 1.75E+00  19
+41         1126.08,-13.260,  0.000       1126.08, 13.260,  0.000 1.62E+00  17
+42         1135.62,-12.663,  0.000       1135.62, 12.663,  0.000 1.62E+00  17
+43         1144.74,-12.094,  0.000       1144.74, 12.094,  0.000 1.50E+00  17
+44         1153.45,-11.549,  0.000       1153.45, 11.549,  0.000 1.50E+00  15
+45         1161.77,-11.030,  0.000       1161.77, 11.030,  0.000 1.38E+00  15
+46         1169.71,-10.533,  0.000       1169.71, 10.533,  0.000 1.38E+00  13
+47         1177.29,-10.059,  0.000       1177.29, 10.059,  0.000 1.25E+00  13
+48         1184.53, -9.607,  0.000       1184.53,  9.607,  0.000 1.25E+00  13
+49         1191.45, -9.174,  0.000       1191.45,  9.174,  0.000 1.12E+00  13
+50         1198.06, -8.762,  0.000       1198.06,  8.762,  0.000 1.12E+00  11
+51         1204.36, -8.367,  0.000       1204.36,  8.367,  0.000 1.00E+00  11
+52         1210.39, -7.991,  0.000       1210.39,  7.991,  0.000 1.00E+00  11
+53         1216.14, -7.631,  0.000       1216.14,  7.631,  0.000 8.75E-01  11
+54         1221.64, -7.288,  0.000       1221.64,  7.288,  0.000 8.75E-01   9
+55         1226.88, -6.960,  0.000       1226.88,  6.960,  0.000 7.50E-01   9
+56         1231.89, -6.647,  0.000       1231.89,  6.647,  0.000 7.50E-01   9
+57         1236.68, -6.347,  0.000       1236.68,  6.347,  0.000 6.25E-01   9
+58         1241.25, -6.062,  0.000       1241.25,  6.062,  0.000 6.25E-01   9
+59         1245.61, -5.789,  0.000       1245.61,  5.789,  0.000 5.00E-01   9
+60         1249.78, -5.529,  0.000       1249.78,  5.529,  0.000 5.00E-01   7
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           4    60 / 50.00   ( 60 / 50.00)      0.707       0.000       V
+
+No loads specified
+
+                -------- TRANSMISSION LINES ---------
+
+Line  Wire #/% From End 1   Wire #/% From End 1    Length       Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)                Ohms Fact Norm
+
+1      1/50.0  (  1/50.0)    2/50.0  (  2/50.0)  Actual dist  200.0  1.00  R
+2      2/50.0  (  2/50.0)    3/50.0  (  3/50.0)  Actual dist  200.0  1.00  R
+3      3/50.0  (  3/50.0)    4/50.0  (  4/50.0)  Actual dist  200.0  1.00  R
+4      4/50.0  (  4/50.0)    5/50.0  (  5/50.0)  Actual dist  200.0  1.00  R
+5      5/50.0  (  5/50.0)    6/50.0  (  6/50.0)  Actual dist  200.0  1.00  R
+6      6/50.0  (  6/50.0)    7/50.0  (  7/50.0)  Actual dist  200.0  1.00  R
+7      7/50.0  (  7/50.0)    8/50.0  (  8/50.0)  Actual dist  200.0  1.00  R
+8      8/50.0  (  8/50.0)    9/50.0  (  9/50.0)  Actual dist  200.0  1.00  R
+9      9/50.0  (  9/50.0)   10/50.0  ( 10/50.0)  Actual dist  200.0  1.00  R
+10    10/50.0  ( 10/50.0)   11/50.0  ( 11/50.0)  Actual dist  200.0  1.00  R
+11    11/50.0  ( 11/50.0)   12/50.0  ( 12/50.0)  Actual dist  200.0  1.00  R
+12    12/50.0  ( 12/50.0)   13/50.0  ( 13/50.0)  Actual dist  200.0  1.00  R
+13    13/50.0  ( 13/50.0)   14/50.0  ( 14/50.0)  Actual dist  200.0  1.00  R
+14    14/50.0  ( 14/50.0)   15/50.0  ( 15/50.0)  Actual dist  200.0  1.00  R
+15    15/50.0  ( 15/50.0)   16/50.0  ( 16/50.0)  Actual dist  200.0  1.00  R
+16    16/50.0  ( 16/50.0)   17/50.0  ( 17/50.0)  Actual dist  200.0  1.00  R
+17    17/50.0  ( 17/50.0)   18/50.0  ( 18/50.0)  Actual dist  200.0  1.00  R
+18    18/50.0  ( 18/50.0)   19/50.0  ( 19/50.0)  Actual dist  200.0  1.00  R
+19    19/50.0  ( 19/50.0)   20/50.0  ( 20/50.0)  Actual dist  200.0  1.00  R
+20    20/50.0  ( 20/50.0)   21/50.0  ( 21/50.0)  Actual dist  200.0  1.00  R
+21    21/50.0  ( 21/50.0)   22/50.0  ( 22/50.0)  Actual dist  200.0  1.00  R
+22    22/50.0  ( 22/50.0)   23/50.0  ( 23/50.0)  Actual dist  200.0  1.00  R
+23    23/50.0  ( 23/50.0)   24/50.0  ( 24/50.0)  Actual dist  200.0  1.00  R
+24    24/50.0  ( 24/50.0)   25/50.0  ( 25/50.0)  Actual dist  200.0  1.00  R
+25    25/50.0  ( 25/50.0)   26/50.0  ( 26/50.0)  Actual dist  200.0  1.00  R
+26    26/50.0  ( 26/50.0)   27/50.0  ( 27/50.0)  Actual dist  200.0  1.00  R
+27    27/50.0  ( 27/50.0)   28/50.0  ( 28/50.0)  Actual dist  200.0  1.00  R
+28    28/50.0  ( 28/50.0)   29/50.0  ( 29/50.0)  Actual dist  200.0  1.00  R
+29    29/50.0  ( 29/50.0)   30/50.0  ( 30/50.0)  Actual dist  200.0  1.00  R
+30    30/50.0  ( 30/50.0)   31/50.0  ( 31/50.0)  Actual dist  200.0  1.00  R
+31    31/50.0  ( 31/50.0)   32/50.0  ( 32/50.0)  Actual dist  200.0  1.00  R
+32    32/50.0  ( 32/50.0)   33/50.0  ( 33/50.0)  Actual dist  200.0  1.00  R
+33    33/50.0  ( 33/50.0)   34/50.0  ( 34/50.0)  Actual dist  200.0  1.00  R
+34    34/50.0  ( 34/50.0)   35/50.0  ( 35/50.0)  Actual dist  200.0  1.00  R
+35    35/50.0  ( 35/50.0)   36/50.0  ( 36/50.0)  Actual dist  200.0  1.00  R
+36    36/50.0  ( 36/50.0)   37/50.0  ( 37/50.0)  Actual dist  200.0  1.00  R
+37    37/50.0  ( 37/50.0)   38/50.0  ( 38/50.0)  Actual dist  200.0  1.00  R
+38    38/50.0  ( 38/50.0)   39/50.0  ( 39/50.0)  Actual dist  200.0  1.00  R
+39    39/50.0  ( 39/50.0)   40/50.0  ( 40/50.0)  Actual dist  200.0  1.00  R
+40    40/50.0  ( 40/50.0)   41/50.0  ( 41/50.0)  Actual dist  200.0  1.00  R
+41    41/50.0  ( 41/50.0)   42/50.0  ( 42/50.0)  Actual dist  200.0  1.00  R
+42    42/50.0  ( 42/50.0)   43/50.0  ( 43/50.0)  Actual dist  200.0  1.00  R
+43    43/50.0  ( 43/50.0)   44/50.0  ( 44/50.0)  Actual dist  200.0  1.00  R
+44    44/50.0  ( 44/50.0)   45/50.0  ( 45/50.0)  Actual dist  200.0  1.00  R
+45    45/50.0  ( 45/50.0)   46/50.0  ( 46/50.0)  Actual dist  200.0  1.00  R
+46    46/50.0  ( 46/50.0)   47/50.0  ( 47/50.0)  Actual dist  200.0  1.00  R
+47    47/50.0  ( 47/50.0)   48/50.0  ( 48/50.0)  Actual dist  200.0  1.00  R
+48    48/50.0  ( 48/50.0)   49/50.0  ( 49/50.0)  Actual dist  200.0  1.00  R
+49    49/50.0  ( 49/50.0)   50/50.0  ( 50/50.0)  Actual dist  200.0  1.00  R
+50    50/50.0  ( 50/50.0)   51/50.0  ( 51/50.0)  Actual dist  200.0  1.00  R
+51    51/50.0  ( 51/50.0)   52/50.0  ( 52/50.0)  Actual dist  200.0  1.00  R
+52    52/50.0  ( 52/50.0)   53/50.0  ( 53/50.0)  Actual dist  200.0  1.00  R
+53    53/50.0  ( 53/50.0)   54/50.0  ( 54/50.0)  Actual dist  200.0  1.00  R
+54    54/50.0  ( 54/50.0)   55/50.0  ( 55/50.0)  Actual dist  200.0  1.00  R
+55    55/50.0  ( 55/50.0)   56/50.0  ( 56/50.0)  Actual dist  200.0  1.00  R
+56    56/50.0  ( 56/50.0)   57/50.0  ( 57/50.0)  Actual dist  200.0  1.00  R
+57    57/50.0  ( 57/50.0)   58/50.0  ( 58/50.0)  Actual dist  200.0  1.00  R
+58    58/50.0  ( 58/50.0)   59/50.0  ( 59/50.0)  Actual dist  200.0  1.00  R
+59    59/50.0  ( 59/50.0)   60/50.0  ( 60/50.0)  Actual dist  200.0  1.00  R
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The model was spot-checked at the HF region limits (3.0 and 30.0 MHz) and within each amateur band. The following table summarizes the results, with gain being the free space value.</p>
+  <pre>Frequency         Gain        Front-to-Back     Source Impedance        160-Ohm
+  Mhz             dBi           dB              R +/- jX Ohms            VSWR
+ 3.0              11.27       53.01             162.1 - j 0.8           1.014
+ 3.5              11.28       55.40             163.2 - j 0.0           1.020
+ 4.0              11.30       64.09             163.6 - j 2.3           1.027
+ 7.15             11.31       59.19             164.6 - j 3.4           1.036
+10.125            11.34       53.86             167.5 - j 6.4           1.062
+14.175            11.32       50.29             161.8 - j 6.0           1.039
+18.118            11.21       47.28             159.1 - j15.7           1.104
+21.225            11.16       45.26             158.1 - j21.5           1.145
+24.94             10.99       43.31             161.4 - j31.3           1.215
+28.0              10.25       31.80             142.0 - j 8.7           1.142
+28.5              10.25       32.59             156.6 - j 4.4           1.036
+29.0              10.30       34.20             172.3 - j11.7           1.107
+29.5              10.44       37.65             179.5 - j27.1           1.218
+30.0              10.56       42.41             178.1 - j40.7           1.301</pre>
+  <p>First, we shall display on this page only the 3 MHz and 30 MHz free-space azimuth patterns and the relative magnitudes of currents on the LPDA elements. However, you may examine similar graphics for each of the frequencies sampled by the <a href="lp60g.html">"<b>Gallery</b>"</a> link at the end of this note.</p>
+  <p><b>3 MHz:</b></p>
+  <center>
+    <img src="lp-3p.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="lp-3c.gif" width="633" height="395" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>30 MHz:</b></p>
+  <center>
+    <img src="lp-30p.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="lp-30c.gif" width="631" height="392" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Let's just note two principle facts that you can derive from the table. First, above 12 meters, the gain and front-to-back ratios begin to drop relative to the lower HF values. Second, from 28 MHz up, the impedance values lose their systematic progression and begin to vary erratically. Now add in the relative current magnitude graphic for 30 MHz and see how many (or how few) elements are active at 30 MHz, compared to the 3 MHz graphic of the same data. At the upper end of the spectrum, there are still too few elements to achieve full performance from the LPDA, despite the 0.955 Tau and 0.18 Sigma values.</p>
+  <h3>A More Nearly Adequate Design</h3>Some redesign was certainly in order. I have elsewhere outline many of the techniques by which one can raise the performance of an LPDA at the higher frequency range. Due to the tediousness of some, I opted simply to add 4 more elements to the front end of the LPDA. The highest frequency (shortest) element is now independently resonant at approximately 50 MHz, and the array is now 64 elements long. Here is the model description.
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3-35 MHz Tau=.955 Sigma=.18                             Frequency = 3  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+
+1            0.000,-83.640,  0.000         0.000, 83.640,  0.000 6.00E+00 111
+2           60.221,-79.876,  0.000        60.221, 79.876,  0.000 5.88E+00 107
+3          117.732,-76.282,  0.000       117.732, 76.282,  0.000 5.75E+00 101
+4          172.654,-72.849,  0.000       172.654, 72.849,  0.000 5.62E+00  97
+5          225.106,-69.571,  0.000       225.106, 69.571,  0.000 5.50E+00  93
+6          275.197,-66.440,  0.000       275.197, 66.440,  0.000 5.38E+00  89
+7          323.034,-63.450,  0.000       323.034, 63.450,  0.000 5.25E+00  85
+8          368.718,-60.595,  0.000       368.718, 60.595,  0.000 5.12E+00  81
+9          412.347,-57.868,  0.000       412.347, 57.868,  0.000 5.00E+00  77
+10         454.012,-55.264,  0.000       454.012, 55.264,  0.000 4.88E+00  73
+11         493.802,-52.777,  0.000       493.802, 52.777,  0.000 4.75E+00  71
+12         531.802,-50.402,  0.000       531.802, 50.402,  0.000 4.62E+00  67
+13         568.091,-48.134,  0.000       568.091, 48.134,  0.000 4.50E+00  63
+14         602.748,-45.968,  0.000       602.748, 45.968,  0.000 4.38E+00  61
+15         635.845,-43.900,  0.000       635.845, 43.900,  0.000 4.25E+00  59
+16         667.453,-41.924,  0.000       667.453, 41.924,  0.000 4.12E+00  57
+17         697.638,-40.038,  0.000       697.638, 40.038,  0.000 4.00E+00  53
+18         726.465,-38.236,  0.000       726.465, 38.236,  0.000 3.88E+00  51
+19         753.995,-36.515,  0.000       753.995, 36.515,  0.000 3.75E+00  49
+20         780.286,-34.872,  0.000       780.286, 34.872,  0.000 3.62E+00  47
+21         805.394,-33.303,  0.000       805.394, 33.303,  0.000 3.50E+00  45
+22         829.372,-31.804,  0.000       829.372, 31.804,  0.000 3.38E+00  43
+23         852.271,-30.373,  0.000       852.271, 30.373,  0.000 3.25E+00  41
+24         874.140,-29.006,  0.000       874.140, 29.006,  0.000 3.12E+00  39
+25         895.024,-27.701,  0.000       895.024, 27.701,  0.000 3.00E+00  37
+26         914.969,-26.454,  0.000       914.969, 26.454,  0.000 2.88E+00  35
+27         934.016,-25.264,  0.000       934.016, 25.264,  0.000 2.75E+00  33
+28         952.206,-24.127,  0.000       952.206, 24.127,  0.000 2.75E+00  33
+29         969.578,-23.041,  0.000       969.578, 23.041,  0.000 2.62E+00  31
+30         986.167,-22.004,  0.000       986.167, 22.004,  0.000 2.50E+00  29
+31         1002.01,-21.014,  0.000       1002.01, 21.014,  0.000 2.38E+00  27
+32         1017.14,-20.069,  0.000       1017.14, 20.069,  0.000 2.25E+00  27
+33         1031.59,-19.166,  0.000       1031.59, 19.166,  0.000 2.12E+00  25
+34         1045.39,-18.303,  0.000       1045.39, 18.303,  0.000 2.12E+00  25
+35         1058.57,-17.479,  0.000       1058.57, 17.479,  0.000 2.00E+00  23
+36         1071.15,-16.693,  0.000       1071.15, 16.693,  0.000 2.00E+00  23
+37         1083.17,-15.942,  0.000       1083.17, 15.942,  0.000 1.87E+00  21
+38         1094.65,-15.224,  0.000       1094.65, 15.224,  0.000 1.87E+00  21
+39         1105.61,-14.539,  0.000       1105.61, 14.539,  0.000 1.75E+00  19
+40         1116.08,-13.885,  0.000       1116.08, 13.885,  0.000 1.75E+00  19
+41         1126.08,-13.260,  0.000       1126.08, 13.260,  0.000 1.62E+00  17
+42         1135.62,-12.663,  0.000       1135.62, 12.663,  0.000 1.62E+00  17
+43         1144.74,-12.094,  0.000       1144.74, 12.094,  0.000 1.50E+00  17
+44         1153.45,-11.549,  0.000       1153.45, 11.549,  0.000 1.50E+00  15
+45         1161.77,-11.030,  0.000       1161.77, 11.030,  0.000 1.38E+00  15
+46         1169.71,-10.533,  0.000       1169.71, 10.533,  0.000 1.38E+00  13
+47         1177.29,-10.059,  0.000       1177.29, 10.059,  0.000 1.25E+00  13
+48         1184.53, -9.607,  0.000       1184.53,  9.607,  0.000 1.25E+00  13
+49         1191.45, -9.174,  0.000       1191.45,  9.174,  0.000 1.12E+00  13
+50         1198.06, -8.762,  0.000       1198.06,  8.762,  0.000 1.12E+00  11
+51         1204.36, -8.367,  0.000       1204.36,  8.367,  0.000 1.00E+00  11
+52         1210.39, -7.991,  0.000       1210.39,  7.991,  0.000 1.00E+00  11
+53         1216.14, -7.631,  0.000       1216.14,  7.631,  0.000 8.75E-01  11
+54         1221.64, -7.288,  0.000       1221.64,  7.288,  0.000 8.75E-01   9
+55         1226.88, -6.960,  0.000       1226.88,  6.960,  0.000 7.50E-01   9
+56         1231.89, -6.647,  0.000       1231.89,  6.647,  0.000 7.50E-01   9
+57         1236.68, -6.347,  0.000       1236.68,  6.347,  0.000 6.25E-01   9
+58         1241.25, -6.062,  0.000       1241.25,  6.062,  0.000 6.25E-01   9
+59         1245.61, -5.789,  0.000       1245.61,  5.789,  0.000 5.00E-01   9
+60         1249.78, -5.529,  0.000       1249.78,  5.529,  0.000 5.00E-01   7
+61         1253.76, -5.280,  0.000       1253.76,  5.280,  0.000 5.00E-01   7
+62         1257.57, -5.042,  0.000       1257.57,  5.042,  0.000 5.00E-01   7
+63         1261.20, -4.815,  0.000       1261.20,  4.815,  0.000 5.00E-01   7
+64         1264.67, -4.599,  0.000       1264.67,  4.599,  0.000 5.00E-01   7
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           4    64 / 50.00   ( 64 / 50.00)      0.707       0.000       V
+
+No loads specified
+
+                -------- TRANSMISSION LINES ---------
+
+Line  Wire #/% From End 1   Wire #/% From End 1    Length       Z0   Vel Rev/
+      Actual  (Specified)   Actual  (Specified)                Ohms Fact Norm
+
+1      1/50.0  (  1/50.0)    2/50.0  (  2/50.0)  Actual dist  200.0  1.00  R
+2      2/50.0  (  2/50.0)    3/50.0  (  3/50.0)  Actual dist  200.0  1.00  R
+3      3/50.0  (  3/50.0)    4/50.0  (  4/50.0)  Actual dist  200.0  1.00  R
+4      4/50.0  (  4/50.0)    5/50.0  (  5/50.0)  Actual dist  200.0  1.00  R
+5      5/50.0  (  5/50.0)    6/50.0  (  6/50.0)  Actual dist  200.0  1.00  R
+6      6/50.0  (  6/50.0)    7/50.0  (  7/50.0)  Actual dist  200.0  1.00  R
+7      7/50.0  (  7/50.0)    8/50.0  (  8/50.0)  Actual dist  200.0  1.00  R
+8      8/50.0  (  8/50.0)    9/50.0  (  9/50.0)  Actual dist  200.0  1.00  R
+9      9/50.0  (  9/50.0)   10/50.0  ( 10/50.0)  Actual dist  200.0  1.00  R
+10    10/50.0  ( 10/50.0)   11/50.0  ( 11/50.0)  Actual dist  200.0  1.00  R
+11    11/50.0  ( 11/50.0)   12/50.0  ( 12/50.0)  Actual dist  200.0  1.00  R
+12    12/50.0  ( 12/50.0)   13/50.0  ( 13/50.0)  Actual dist  200.0  1.00  R
+13    13/50.0  ( 13/50.0)   14/50.0  ( 14/50.0)  Actual dist  200.0  1.00  R
+14    14/50.0  ( 14/50.0)   15/50.0  ( 15/50.0)  Actual dist  200.0  1.00  R
+15    15/50.0  ( 15/50.0)   16/50.0  ( 16/50.0)  Actual dist  200.0  1.00  R
+16    16/50.0  ( 16/50.0)   17/50.0  ( 17/50.0)  Actual dist  200.0  1.00  R
+17    17/50.0  ( 17/50.0)   18/50.0  ( 18/50.0)  Actual dist  200.0  1.00  R
+18    18/50.0  ( 18/50.0)   19/50.0  ( 19/50.0)  Actual dist  200.0  1.00  R
+19    19/50.0  ( 19/50.0)   20/50.0  ( 20/50.0)  Actual dist  200.0  1.00  R
+20    20/50.0  ( 20/50.0)   21/50.0  ( 21/50.0)  Actual dist  200.0  1.00  R
+21    21/50.0  ( 21/50.0)   22/50.0  ( 22/50.0)  Actual dist  200.0  1.00  R
+22    22/50.0  ( 22/50.0)   23/50.0  ( 23/50.0)  Actual dist  200.0  1.00  R
+23    23/50.0  ( 23/50.0)   24/50.0  ( 24/50.0)  Actual dist  200.0  1.00  R
+24    24/50.0  ( 24/50.0)   25/50.0  ( 25/50.0)  Actual dist  200.0  1.00  R
+25    25/50.0  ( 25/50.0)   26/50.0  ( 26/50.0)  Actual dist  200.0  1.00  R
+26    26/50.0  ( 26/50.0)   27/50.0  ( 27/50.0)  Actual dist  200.0  1.00  R
+27    27/50.0  ( 27/50.0)   28/50.0  ( 28/50.0)  Actual dist  200.0  1.00  R
+28    28/50.0  ( 28/50.0)   29/50.0  ( 29/50.0)  Actual dist  200.0  1.00  R
+29    29/50.0  ( 29/50.0)   30/50.0  ( 30/50.0)  Actual dist  200.0  1.00  R
+30    30/50.0  ( 30/50.0)   31/50.0  ( 31/50.0)  Actual dist  200.0  1.00  R
+31    31/50.0  ( 31/50.0)   32/50.0  ( 32/50.0)  Actual dist  200.0  1.00  R
+32    32/50.0  ( 32/50.0)   33/50.0  ( 33/50.0)  Actual dist  200.0  1.00  R
+33    33/50.0  ( 33/50.0)   34/50.0  ( 34/50.0)  Actual dist  200.0  1.00  R
+34    34/50.0  ( 34/50.0)   35/50.0  ( 35/50.0)  Actual dist  200.0  1.00  R
+35    35/50.0  ( 35/50.0)   36/50.0  ( 36/50.0)  Actual dist  200.0  1.00  R
+36    36/50.0  ( 36/50.0)   37/50.0  ( 37/50.0)  Actual dist  200.0  1.00  R
+37    37/50.0  ( 37/50.0)   38/50.0  ( 38/50.0)  Actual dist  200.0  1.00  R
+38    38/50.0  ( 38/50.0)   39/50.0  ( 39/50.0)  Actual dist  200.0  1.00  R
+39    39/50.0  ( 39/50.0)   40/50.0  ( 40/50.0)  Actual dist  200.0  1.00  R
+40    40/50.0  ( 40/50.0)   41/50.0  ( 41/50.0)  Actual dist  200.0  1.00  R
+41    41/50.0  ( 41/50.0)   42/50.0  ( 42/50.0)  Actual dist  200.0  1.00  R
+42    42/50.0  ( 42/50.0)   43/50.0  ( 43/50.0)  Actual dist  200.0  1.00  R
+43    43/50.0  ( 43/50.0)   44/50.0  ( 44/50.0)  Actual dist  200.0  1.00  R
+44    44/50.0  ( 44/50.0)   45/50.0  ( 45/50.0)  Actual dist  200.0  1.00  R
+45    45/50.0  ( 45/50.0)   46/50.0  ( 46/50.0)  Actual dist  200.0  1.00  R
+46    46/50.0  ( 46/50.0)   47/50.0  ( 47/50.0)  Actual dist  200.0  1.00  R
+47    47/50.0  ( 47/50.0)   48/50.0  ( 48/50.0)  Actual dist  200.0  1.00  R
+48    48/50.0  ( 48/50.0)   49/50.0  ( 49/50.0)  Actual dist  200.0  1.00  R
+49    49/50.0  ( 49/50.0)   50/50.0  ( 50/50.0)  Actual dist  200.0  1.00  R
+50    50/50.0  ( 50/50.0)   51/50.0  ( 51/50.0)  Actual dist  200.0  1.00  R
+51    51/50.0  ( 51/50.0)   52/50.0  ( 52/50.0)  Actual dist  200.0  1.00  R
+52    52/50.0  ( 52/50.0)   53/50.0  ( 53/50.0)  Actual dist  200.0  1.00  R
+53    53/50.0  ( 53/50.0)   54/50.0  ( 54/50.0)  Actual dist  200.0  1.00  R
+54    54/50.0  ( 54/50.0)   55/50.0  ( 55/50.0)  Actual dist  200.0  1.00  R
+55    55/50.0  ( 55/50.0)   56/50.0  ( 56/50.0)  Actual dist  200.0  1.00  R
+56    56/50.0  ( 56/50.0)   57/50.0  ( 57/50.0)  Actual dist  200.0  1.00  R
+57    57/50.0  ( 57/50.0)   58/50.0  ( 58/50.0)  Actual dist  200.0  1.00  R
+58    58/50.0  ( 58/50.0)   59/50.0  ( 59/50.0)  Actual dist  200.0  1.00  R
+59    59/50.0  ( 59/50.0)   60/50.0  ( 60/50.0)  Actual dist  200.0  1.00  R
+60    60/50.0  ( 60/50.0)   61/50.0  ( 61/50.0)  Actual dist  200.0  1.00  R
+61    61/50.0  ( 61/50.0)   62/50.0  ( 62/50.0)  Actual dist  200.0  1.00  R
+62    62/50.0  ( 62/50.0)   63/50.0  ( 63/50.0)  Actual dist  200.0  1.00  R
+63    63/50.0  ( 63/50.0)   64/50.0  ( 64/50.0)  Actual dist  200.0  1.00  R
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The performance table tells most of the story.</p>
+  <pre>Frequency         Gain        Front-to-Back     Source Impedance        160-Ohm
+  Mhz             dBi           dB              R +/- jX Ohms            VSWR
+ 3.0              11.27       52.92             163.5 - j 0.3           1.022
+ 3.5              11.29       55.73             165.4 - j 0.1           1.034
+ 4.0              11.30       64.98             164.4 - j 2.6           1.031
+ 7.15             11.31       60.12             165.8 - j 6.3           1.054
+10.125            11.31       54.81             161.4 - j11.8           1.077
+14.175            11.29       50.03             161.3 - j16.9           1.111
+18.118            11.21       46.71             161.1 - j16.9           1.111
+21.225            11.10       44.48             158.8 - j19.0           1.127
+24.94             11.00       43.87             159.2 - j22.9           1.154
+28.0              10.75       37.12             158.0 - j16.8           1.112
+28.5              10.73       37.90             163.7 - j18.6           1.124
+29.0              10.77       39.74             166.8 - j25.9           1.178
+29.5              10.85       43.39             163.6 - j33.4           1.230
+30.0              10.93       46.74             157.8 - j36.2           1.256</pre>
+  <p>The upper HF gain increase averages about a half dB, with about an average of 8 dB high front-to-back ratio. The original model resistive impedance varied by 37.5 Ohms: that value is down to 11 Ohms. In short, the LPDA is now better behaved (but not perfectly behaved) across its passband. <b>30 MHz:</b></p>
+  <center>
+    <img src="lp-430p.gif" width="640" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <center>
+    <img src="lp-430c.gif" width="632" height="381" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The 30 MHz graphics demonstrate the improvement. (The 3.0 MHz through 18.118 MHz graphics are virtual replicas of those for the original model. The entire set of graphics for 21.225 MHz and up appear on the <a href="lp60g.html"><b>Gallery</b></a> page for comparison with those for the first model.)</p>
+  <h3>Conclusion</h3>Needless to say, no ham will ever build either of these LPDAs, despite their high performance potential from 80 through 10 meters. Arrays between 1250' and 1265' long, with elements up to 167' long at the rear are too big for the average ham back yard. Although the array can be lightened by the use of multiple wires for elements rather than simple heavy tubular elements, it would still take an old railroad roundhouse turntable with several support towers at least 135' tall to handle and rotate the array.
+  <p>However, the figures here and on the Gallery page make a few interesting points. First, the exceptional front-to-back ratio and the overall rear pattern gives us an understanding of one of the LPDA advantages: almost no power radiated to the rear. I have yet to model an antenna design with anything near to these rear patterns.</p>
+  <p>Second, we can see that the LPDA gain and front-to-back ratio are intimately connected. Although both values undulate and their peaks do not coincide relative to frequency, the general trend holds: the higher the gain, the higher the front-to-back ratio.</p>
+  <p>Third, the LPDA acquires its performance from the elements ahead of the element with the highest relative current. Every element in the array is active at 3.0 MHz, with only a few acting as the correlates to reflectors in parasitic beams. At the high end of the design spectrum, the rear elements are largely inert. Hence, to achieve high performance at the upper frequencies, one must ensure an adequate supply of "director-correlate" elements. (Otherwise, one must resort to one or more of the techniques of design revision that depart from standard LPDA design.)</p>
+  <p>Fourth, from 20 meters on up, notice how few of the elements are active. More than half of the array is active only at the lowest frequencies and above 14 MHz, only about 20% of the array is active. Therefore, a 14-30 MHz high performance LPDA might require perhaps 200-220' feet of boom--a considerably more manageable length. A rotating 1 acre plot might easily handle the array for just the 5 upper-end bands.</p>
+  <p>From a construction point of view, this has been an idle exercise. However, from a study perspective, the design illustrates the degree to which amateur-size LPDAs are deficient in performance relative to what an LPDA can do.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="lp60g.html"><b>A Gallery of LPDA Graphics for 3-30 MHz</b></a></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 04-14-2000. &COPY; L. B. Cebik, W4RNL. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-multi-band'>HF Multi Band</a>, <a href='../topics.html#lpda'>LPDA</a></p><br>
+</body>
+</html>

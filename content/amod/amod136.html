@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AM BC Modeling with NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>AM BC Modeling with NEC<br>
+    6. Grounds</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>We have essentially completed our journey through modeling broadcast towers with respect to the basic dimensions of modeling them. In many of the later episodes, we used NAB-recommended single-wire substitutes for full tower structures to maintain the clarity of the modeling suggestions in question. Of course, one may choose to model a full structure or a multi-leg alternative to the single-wire monopole. These notes only represent the barest of starts along the AM BC tower modeling task using NEC.
+  <p>Nevertheless, as we look back over our work, we may harbor questions based on one facet of the modeling work: the use of a perfect ground for all models. Actual AM BC antennas use extensive radial fields, normally with each of 120 radials about 1/4 wavelength long at the assigned frequency. (Many actual fields include intervening shorter radials, but we shall not work with them here.) The radials are buried within the earth's surface in soils of highly variable quality as we move from one site to another. Hence, some folks may question the ability of a perfect ground to replicate accurately the conditions. In one sense, the questions are otiose, since standard practice is to refer such towers to perfect ground. However, there remain for some a few nagging questions about correlating site measured values of feedpoint current magnitude and phase and field-strength measures as well to modeled values using perfect ground.</p>
+  <p>NEC-4 allows us to explore this questions to a limited degree. Like NEC-2, it uses the Sommerfeld-Norton (SN) ground calculating system, which many refer to as the "high accuracy" ground compared to the reflection coefficient approximation (RCA) system. To use the SN ground calculation system accurately requires that we create a buried radial field of actual wires (GW entries), a task only available in NEC-4. As we saw in an early episode, we may assign a radial field to the RCA ground calculating system, but that system does not create actual wires. Instead, it adjusts the ground losses in the ground calculations. If we add enough radials to the specification, the RCA ground calculating system will return source impedance values that are identical to those we obtain with a perfect ground. An open questions here is what values of source impedance we might obtain with true buried radials. Allied to this question is whether we can expect differences in either the far-field gain or the field-strength between models using the RCA system and models using the SN system with buried radials.</p>
+  <p><b>Ground and Buried Radial Models</b></p>
+  <p>All NEC modeling systems share some common traits. First, we specify ground quality in terms of two basic properties: conductivity (in S/m) and relative permittivity (no unit). From these entries, NEC calculates a complex permittivity value used in ground calculations. Conductivity values--as measured or taken from tables--generally range from 0.001 S/m up to about 0.05 S/m for land locations. One accepted value for salt water's conductivity is 5.0 S/m. Permittivity usually tracks conductivity in the sense that soils with high conductivity tend to have high values of permittivity. The range of permittivity values ranges roughly from 3 to 25 for land locations. Water locations may show values as high as 80. The direct parallel between conductivity and permittivity increases is not universal, and there are odd locations with respect to the general progression.</p>
+  <p>For our sampling purposes, we may resort to 3 values taken from very old (1939) tables.</p>
+  <pre>
+Sample Ground Qualities
+Label        Conductivity (S/m)     Permittivity
+Very Good     0.0303                 20
+Average       0.005                  13
+Very Poor     0.001                   5
+</pre>
+  <p>For many kinds of modeling studies, very good soil yields data results about as distant from those emerging from average soil as very poor soil data depart from average soil values, although the directions are opposite.</p>
+  <p>NEC, however, regardless of the ground calculating system selected (except for perfect ground) has a limitation suggested by <b>Fig. 1</b>. The ground medium is homogenous and unlimited below the Z=0 level. As we increase the operating frequency of an antenna or as we make use of horizontal antennas, this feature becomes insignificant. However, using a relatively low frequency (1 MHz in all examples) and vertical monopoles, the NEC ground medium is subject to some degree of error based on two facts. First, real soils tend to be stratified, as suggested on the right in <b>Fig. 1</b>. Second, the lower the operating frequency, the deeper will be the penetration of RF energy into the ground. With a radial system, the penetration in the immediate vicinity of the antenna is limited, presumably controlled by the extensive radial field. However, in the region beyond the radial field, outside the control of antenna site builders, stratified soil may have an affect on the far field of an antenna that even SN models cannot fully calculate.</p>
+  <center>
+    <img src="amod136-1.gif" border="2" height="371" hspace="9" vspace="5" width="585">
+  </center>
+  <p>Within this limitation, we may still look at models using buried radials for the general purpose of comparing them with other kind of models. For this enterprise, we shall use 120 radials, each about 1/4 wavelength long at 1 MHz (245'), as shown in <b>Fig. 2</b>. We shall use a wire diameter of about 0.1", roughly corresponding to AWG #10 wire. Since our dimensions are in feet, we shall round the radius to 0.004'.</p>
+  <center>
+    <img src="amod136-2.gif" border="2" height="340" hspace="9" vspace="5" width="350">
+  </center>
+  <p>If we assign each radial 10 segments, we shall end up with 1200 segments in the radial field alone. (The 10-segment per radial assignment is not critical in this application, since the radials will be symmetrically arranged around the monopole that extends through the surface to make contact with the ultimate junction. As well, as we change the soil quality and hence the complex permittivity generated by NEC, the program will change the length of each segment in the current calculations based upon calculated affects of a medium that is not a vacuum or dry air.) We shall also wish to use the same set of 3 radial fields, each with a different soil quality, one more than one antenna. Under these conditions, we may wish to simplify the modeling by using Numerical Greens Files. For 1200 segments a Green's file may be exceedingly large. However, if we confine ourselves to entering only the radials in the Green's file models, we may shorten both calculating time and file size by the use of rotational symmetry. The GR command permits us to specify a single radial and to replicate it rotationally as many times as necessary while invoking symmetry. The resulting file for a 120-radial field in average soil appears in the following lines.</p>
+  <pre>
+CM 120 radials, average ground
+CE
+GW 1 10 0 0 -1.5 245 0 -1.5 .004
+GR 1 120
+GS 1 0 0
+GE -1 -1 0
+FR 0 1 0 0 1 1
+GN 2 0 0 0 13 .005
+LD 5 0 0 0 5.8E7 1
+WG ave120r5.wgf
+</pre>The WG command writes the results of initial calculations to a file. Different implementations of NEC may allow only some file-name extensions. The model itself must contain the features shown in the sample. The GW entry lists one radial although the geometry to be replicated may be more complex. The GR command produces a total of 120 versions of the radial with equal angular spacing between them. The GR command will always produce the wires and segments specified. However, the model run will not invoke symmetry if the GR command is followed by a succeeding geometry command, such as another wire (GW). The GS command uses NEC-4 shorthand for converting feet to meters, while the GE command is set up for buried wires.
+  <p>In addition to the geometry elements, the Green's file model must also contain the overall specifications for the frequency and the ground quality. In these files, we must specify a single frequency. With respect to ground (GN), the only difference between this model and its counterparts for very good and very poor soils are the values for conductivity and relative permittivity. I have added an LD 5 command to construct the radials from copper wire. Any LD command within the model will apply only to the wires in the structure shown. It will not apply to wires that we later add to complete the modeling task. Finally, the WG command adds the file name for storing the results that we shall later call upon. The file name must begin with an alphabetic character, and a number at the start of the file name will generally produce an error message.</p>
+  <p>We shall produce three files, one for each type of ground. Each requires about 6 second to run and produces a file that is less than 600KB long. Unlike the NEC output file, the Green's file is not itself meaningfully readable by a user. Notable in these files is the depth of the buried radials: 1.5'. We shall discuss this aspect of the modeling as we complete our buried radial system monopole modeling work.</p>
+  <p><b>Completing the Model</b></p>
+  <p>The monopole that we use for these calculations is simplest and most reliable if a single-wire is brought to ground and then extended to meet the junction of the radials. To achieve this goal, we need to write a simple new model that first calls up the Green's file and then adds further model refinements, such as a source (EX) and output requests (RP). The following lines sample the model for a near resonant NAB-recommended single-wire monopole substituting for a triangular tower with an 18" (1.5') face.</p>
+  <pre>
+CM near-resonant monopole, perfect ground
+CM NAB substitute single-wire monopole
+CM buried 120 radials
+CE
+GF 0 ave120r5.wgf
+GW 301 41 0 0 0 0 0 234 0.555
+GW 302 1 0 0 -1.5 0 0 0 .555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE -1 0 0
+EX 0 30901 1 0 0.0 7.3971
+NT 30901 1 301 1 0 0 0 1 0 0
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Following the comment lines, the first geometry command (GF) calls the Green's file. Then we add our monopole, at least the portion that is above ground. NEC-4 requires that an element that passes through Z=0 must do so at either a wire junction or a segment junction. In most cases, we may best avoid errors later on by making Z=0 a position for a wire junction. Therefore, we place a second wire that runs from the junction with the radials to the ground end of the monopole. We assign the wires arbitrarily large tag numbers, large enough to assure us that the tag numbers of the radials do not overrun the monopole tag numbers. (NEC will not normally mind the overlap, but reading the NEC output file becomes much more difficult.)</p>
+  <p>Although in reality, we might make such connections with one or more wires that are considerably thinner than the tower legs or the single-wire substitute for the tower, NEC shows various degrees of inaccuracy when joining wires of different diameters. Therefore, the wire radius for the extension should be the same as for the aboveground portion of the assembly.</p>
+  <center>
+    <img src="amod136-3.gif" border="2" height="360" hspace="9" vspace="5" width="350">
+  </center>
+  <p>How long we should make this wire and therefore how deeply the model should bury the wires presents us with a bit of a problem. As shown in <b>Fig. 3</b>, the new model view shows only the new wires of the extended monopole. Since we cannot bring the wires together and replicate the dual medium in the AGT test, it cannot help us to determine the model adequacy. However, if we recall some basic NEC guidelines, we can perform a substitute test. The radius of the monopole and its extension is 0.555'. As the segment length (here the extension-wire length) approaches a ratio of 2:1 or less, the results of NEC calculations become less certain. The goal then becomes arriving at a balance between the ideal segment length (equal to the segments in the upper part of the monopole) and the shortest segment length that will not yield readily detectable drifts in the output reports.</p>
+  <p>To test the situation, I created radial fields at depths of 1' and 1.5'. Next I created a series of 234' monopole, beginning with a radius of 0.5" (0.04') and gradually increasing the radius to 4.5" (0.375'). With the radials at 1' below ground, the trend in the progression of impedance reports reversed direction in the final step between 0.375' and 0.555'. However, by increasing the depth of the radials (and the monopole extension) to 1.5', I obtained a normal progression of impedance values. Since the effects of different radial depths with the thinnest monopoles in the series were minimal, I chose the 1.5' radial depth for this exercise.</p>
+  <p>The model that calls the Green's file contains a set of control commands that do not replicate those of the Green's file model. Hence, we find no ground or frequency specification. Had we added an LD command for the monopole, it would appear in this file and apply only to the wires shown in this model. It would not apply to the wires in the Green's file. Of course, our completion model contains source information, including the added wire and network to invoke a current source and the adjustment to the current level to effect a power of 1 kW. Finally, we find output requests for an elevation/theta pattern and for a field-strength report at 1 mile at ground level.</p>
+  <p>We are now ready to look at the results of our models and compare them to models over perfect ground and over the RCA ground.</p>
+  <p><b>Near-Resonant and Long Monopoles over Various Grounds</b></p>
+  <p>The model format for all of the near-resonant monopoles over buried radials is identical except for the file name of the Green's file. The root or reference model over perfect ground uses the same monopole, but a different and simpler format.</p>
+  <pre>
+CM near-resonant monopole, perfect ground
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 234 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 7.4897
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Over the RCA ground, the NEC-4 model looks very much like the model over perfect ground, except for the entries in the GN command line. (Note: a NEC-2 model--as described in an earlier episode--will require an RP4 entry for the far-field pattern.) The entry not only specifies the ground quality, but as well the radial system (expressed in meters). Hence, we have 120 radials with a wire radius of 0.00127 m (which is the metric equivalent to the 0.1" diameter wires used with the SN system) and 75 meters (246') long each. We may use fatter radials in the RCA model since we do not construct them of individual wires and therefore need not be concerned about wire interpenetrations at angular junctions.</p>
+  <pre>
+CM resonant monopole, RCA ave ground
+CM NEC-4 procedures
+CE
+GW 1 41 0 0 234 0 0 0 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 0 120 0 0 13.0000 0.0050 75 .00127
+EX 0 30901 1 0 0.0 7.4897
+NT 30901 1 1 41 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>We may tabulate the results of the modeling as follows.
+  <pre>
+Model Reports for a Near Resonant (234') 1-MHz Monopole with Varying Ground Situations
+System    Ground Quality  Impedance Ohms)   Current A(pk)   Max. Gain (dBi) TO Angle (Deg)  F-S @ 1 mile
+Perfect   Perfect         35.65 - j 1.29    7.4897          5.14            0               275.1 mV/m @ -45.6 deg
+SN        Very Good       37.29 + j 2.30    7.3235          3.37            16              263.3        -64.1
+          Average         36.55 + j 2.10    7.3971          2.00            21              234.8        -85.8
+          Very Poor       33.09 + j 1.82    7.7742          0.16            26              153.6        -121.3
+RCA       Very Good       35.65 - j 1.29    7.4897          3.89            15              268.8        115.5
+          Average         35.65 - j 1.29    7.4897          3.22            21              238.4        92.2
+          Very Poor       35.65 - j 1.29    7.4897          2.62            27              150.1        52.8
+</pre>
+  <p>The table is revelatory in several respects. Over the SN ground, the impedance of the antenna system decreases as the soil quality decreases. For some people, this result is counter-intuitive, especially if we over-stress the idea that ground losses increase with a decrease in soil quality. To a large but incomplete degree, the size of the radial system overcomes this fact. However, the radials do not counteract all ground effects. As we lower the conductivity toward zero and decrease the relative permittivity toward 1, the ground increasingly acts like free space. In free space, a monopole with ground radials having the same dimensions as the system in the models will show lower feedpoint impedance values than we obtain over perfect ground using the image assumption that underlies the calculations. Even over very poor ground, the lower impedance appears. Of course, the radial system does not counteract the RF losses in the region beyond the radials that is responsible for the bulk of the reflected energy that combines with the incident energy.</p>
+  <center>
+    <img src="amod136-4.gif" border="2" height="240" hspace="9" vspace="5" width="800">
+  </center>
+  <p><b>Fig. 4</b> overlays the elevation patterns for the three ground qualities for each of the ground calculating systems. We may correlate the patterns to the maximum gain values in the table. The RCA system overestimates the maximum far-field gain with increasing calculational optimism as the ground quality decreases. Moreover, the figure shows that the RCA ground calculating system result in stronger high-angle radiation (in the 60-degree elevation angle region) than the SN system. In fact, the patterns for the 3 ground qualities in the RCA system are identical for elevation angles of 40 degrees or more. The SN system shows weaker radiation at every angle (except perhaps at 90 degrees elevation) as we decrease the ground quality.</p>
+  <p>For most AM BC applications, we are less interested in the higher angle radiation, except perhaps when calculating the consequences for skip in periods of darkness. More interesting are the field-strength reports. Here we find only small differences (3 to 5 mV/m) as we move from one ground system to the other.</p>
+  <p>To confirm that the results of the initial modeling sequence are not anomalous, I repeated the exercise using the 273' or 90-degree monopole. Since all of the models are identical to those already shown, the model over perfect ground may serve as a stand-in for the entire collection. The only differences will appear in the GW line specifying the monopole and in the EX line specifying the current necessary for a 1-kW power level. These models should show sufficient off-resonance qualities to detect anomalies, if present.</p>
+  <pre>
+CM 273' monopole, perfect ground
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 273 0.555
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 5.7606
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+RP 1 1 1 0000 0 0 1.00000 1.00000 3218.688
+EN
+</pre>
+  <p>The result can be tabulated in parallel to those shown for the shorter monopole.</p>
+  <pre>
+Model Reports for a 273' 1-MHz Monopole with Varying Ground Situations
+System    Ground Quality  Impedance Ohms)   Current A(pk)   Max. Gain (dBi) TO Angle (Deg)  F-S @ 1 mile
+Perfect   Perfect         60.27 + j84.91    5.7606          5.30            0               280.0 mV/m @ -47.7 deg
+SN        Very Good       62.30 + j88.31    5.6657          3.49            15              268.7        -66.2
+          Average         60.98 + j87.85    5.7268          2.04            20              239.1        -87.8
+          Very Poor       55.10 + j87.63    6.0246          0.13            25              156.2        -122.8
+RCA       Very Good       60.27 + j84.91    5.7606          3.89            16              272.8        113.4
+          Average         60.27 + j84.91    5.7606          3.01            22              241.2        90.4
+          Very Poor       60.27 + j84.91    5.7606          2.22            28              151.3        52.0
+</pre>
+  <center>
+    <img src="amod136-5.gif" border="2" height="240" hspace="9" vspace="5" width="800">
+  </center>
+  <p><b>Fig. 5</b> shows no aberrations relative to the patterns in <b>Fig. 4</b>. However, the table has some oddities relative to the maximum far field strength of the signals as modeled over the different ground calculating systems. The SN ground gives the taller monopole slightly more gain over very good ground than its 234' counterpart. However, the gain increase grows smaller over decreasing ground quality so that the gain over very poor ground is a tiny amount less for the 273' tower. We find a similar trend, but with quite different numbers, over the RCA ground. With very good soil, the two monopoles report the same far-field gain. For all lesser quality soils, the taller tower actually reports a smaller value for maximum gain. Whatever the values for maximum far-field gain, the field-strength reports for any level of soil quality show a much smaller difference between systems--about 2-5 mV/m. However, in both tables, we find very different phase-angle reports between the two systems, with the SN reports more in accord with the value for perfect ground.</p>
+  <p>The source impedance reports replicate the results for the near-resonant monopole very closely. With 120 radials, the RCA system returns the same impedance as the model over perfect ground. The SN system shows a resistive component that decreases as the ground quality decreases. By the time we reach very poor ground, the source resistance is lower than the value reported for perfect ground.</p>
+  <p>The consistency of the source impedance reports between the two tables for system using monopoles of different length only confirms that the reports are true to the system of modeling employed.</p>
+  <p><b>Conclusion</b></p>
+  <p>With this episode, we can bring the series of notes on modeling AM BC monopoles to a close. Our focus has been on the modeling that goes into such systems, not on theory and practice within the design and engineering of AM BC towers. Hence, all of the models are very much simplified to allow us to see certain aspects of the process more clearly.</p>
+  <p>Even in this final section, it is not possible to suggest that one or another modeling system is superior. Such a conclusion is only possible if we bring to such a discussion the task-specific specifications in which modeling plays a role, but not the only role.</p>
+  <p>Nevertheless, the various episodes have shown that we may derive from NEC models the entire data set that AM BC modelers have traditionally derived from MININEC software--and some other things as well.</p>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" height="40" width="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

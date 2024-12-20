@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Developing Antenna Expectations Using Modeling Software</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>78. Developing Antenna Expectations Using Modeling Software<br>
+    2A: Vertical Dipoles</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The second basic antenna type that we should systematically investigate through our modeling software is the vertical dipole. We shall look at the vertical monopole in the next column, but for now, the familiar dipole--turned on end--will be our subject. Although the exact parameters that we shall look at will differ in part from those we explored with the horizontal wire, we shall follow a similar procedure. The antenna properties that will interest us fall into the following categories.</p>
+  <blockquote>
+    A. Model convergence
+    <p>B. Element diameter</p>
+    <p>C. Element material</p>
+    <p>D. Height above ground</p>
+    <p>E. Element length</p>
+    <p>F. Ground quality</p>
+  </blockquote>
+  <p>As we have done before, we shall define resonance as a source impedance whose reactance is less than +/-j1 Ohm.</p>
+  <p><b>A. Model Convergence</b> We may begin with a free-space model. Because we shall be working with the antenna--when we place it over ground--in wholly positive numbers that indicate its length, we may construct our free-space model in the same manner. <b>Fig. 1</b> shows the general outlines of the model.</p>
+  <center>
+    <img src="amod78-1.gif" width="229" height="283" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The figure does not indicate a specific length, because we shall soon look at several element diameters. However, to begin the process, let's consider the number of segments we need to use in the model. We shall begin by specifying a 1" (25.4-mm) element made from copper. (We shall look at alternative materials shortly.) Although the exact resonant free-space length may vary slightly depending upon the program used, we should also note that it may vary slightly with the number of segments used in the model--at least until the models converge. The following table shows the lengths and source impedance reports for the use of 11, 21, and 31 segments in a NEC-4 model. All models in this exercise will use 7.15 MHz as the test frequency.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                      Vertical Dipole Model Convergence
+
+No. of               Resonant Length              Free-Space            Source Impedance
+Segments             Feet           Meters        Gain dBi              R +/- jX Ohms
+11                   66.10          20.147        2.12                  71.96 - j 0.08
+21                   66.06          20.135        2.13                  71.95 - j 0.09
+31                   66.05          20.132        2.13                  71.99 + j 0.02
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Convergence is fairly simple, but worth looking at anyway. The 21-segment model is sufficiently converged with models using more segments to suffice for our purposes. Although the degree of convergence demanded is greater than would be operationally necessary under any conditions, it serves to indicate how model reports may vary slightly among otherwise identical models using different levels of segmentation.</p>
+  <p>I based my judgment of convergence upon the gain and the relative constancy of the resonant length. The impedance shows variations in resistance that are consistent with the different resonant points between the last two models. Because the second version shows a reactance slightly more negative than the first, we expect the resistance also to be slightly lower. In contrast, the reactance of the 31-segment model is (in relative terms) considerably higher than for either preceding model, and we expect the resistance to by a bit higher. Had I used 1 more decimal in the length determination, we could have easily brought the reactance to a level comparable to the 11- and 21-segment models. All such further maneuvering would likely have been of little value, since we shall simply adopt the 21-segment standard for all vertical dipole in these notes. However, we shall note in passing that the more complex the geometry of any antenna, the more important it becomes to go through the convergence process early on during the modeling task to ensure the greatest reliability possible for our results.</p>
+  <p>There is no need to show free-space E-plane and H-plane patterns for the vertical dipole, since they are the same as those shown for the free-space horizontal dipole. Relative to modeling software, there is a slight change of labels. For a horizontal wire, the E-plane pattern corresponds to the software designation of the azimuth pattern, while the H-plane pattern occurs on what the software calls the elevation pattern. However, we must reverse the software labels--and software place to look--for the patterns. For a vertical dipole, the E-plane pattern shows up when we request the elevation (or theta) pattern, while the H-plane pattern emerges when we call for the azimuth (or phi) pattern.</p>
+  <p><b>B. Element Diameter</b></p>
+  <p>While we are in free space, we may also confirm our expectations regarding changes in element length as we change the diameter of our vertical dipole element. Verticals for 40 meters come in many versions--some using tower structures and others using stepped-diameter tubing. Some even use wires suspended beneath tree limbs or other supports. For our checks, we may confine our sample to just a few sizes, perhaps 1" (25.4 mm), 0.5" (12.7 mm), and AWG #12 wire (0.0808" or 2.05 mm). For the test, we shall stay at 7.15 MHz and use 21 segments per element. Your results should resemble the ones in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                      Varying Vertical Dipole Diameter
+
+El. Dia.                     Resonant Length                     Free-Space           Source Impedance
+" (mm)               Feet           Meters        WL             Gain dBi             R +/- jX Ohms
+1" (25.4 mm)         66.06'         20.135 m      0.480 wl       2.13                 71.95 - j 0.09
+0.5" (12.7 mm)       66.37'         20.230 m      0.482 wl       2.12                 72.11 - j 0.05
+AWG #12              66.88'         20.385 m      0.486 wl       2.07                 73.18 - j 0.04
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Consistent with our experience derived from looking at horizontal wires, the fatter the element, the shorter the resonant length. As well, fatter wires have slightly lower resistance values, since their losses are less than for thin wires. The effects are almost negligible for the move from a 1" to a 0.5" element. However, the differences are much more noticeable with the move from either of those two elements down to the thin #12 element.</p>
+  <p>The table lists the element length in 3 forms, adding the wavelength-measure to our normal lengths in feet and in meters. The underlying reason is that we shall be performing some essential tests of the vertical dipole in height increments measured in fractions of a wavelength. Knowing the antenna length as a fraction of a wavelength will let you easily calculate how far the bottom of the antenna is above the ground.</p>
+  <p><b>C. Element Material</b></p>
+  <p>Before moving our vertical dipole out of free space, let's examine the effects of selecting different materials for the element. Performing the exercise in free space will accustom you to seeing the differences in a different context than the one used for the horizontal dipole (which was 1 wavelength above good ground). We may also shrink the table of materials to give us a few widely separated materials from the longer list.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  Some Values of Conductivity and Resistivity for Representative Conductors
+
+Material                            Conductivity                 Resistivity
+                                    S/m                          Ohms/m
+Perfect                             ----                         ----
+Copper                              5.747E7                      1.740E-8
+6061-T6 Aluminum                    2.500E7                      4.000E-8
+Tin                                 8.772E6                      1.140E-7
+Type 302 Stainless Steel            1.389E6                      7.200E-7
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>If we look at both the free-space gain and the source impedance, we can tabulate the values. However, in examining the following table, remember that the resonant length of each vertical dipole came from the copper model.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                       Changes in Dipole Performance with Changes in Wire Conductivity
+
+Material                            Maximum Gain for Each Wire Diameter
+                                    Source Impedance (R +/- jX Ohms)
+                                    AWG #12               0.5"                 1"
+Perfect                             2.14                  2.14                 2.13
+                                    71.97 - j 1.11        71.91 - j 0.22       71.85 - j 0.85
+Copper                              2.07                  2.12                 2.13
+                                    73.18 - j 0.04        72.11 - j 0.05       71.95 - j 0.09
+6061-T6 Aluminum                    2.03                  2.12                 2.13
+                                    73.81 + j 0.52        72.21 + j 0.04       72.00 - j 0.05
+Tin                                 1.96                  2.11                 2.12
+                                    75.12 + j 1.63        72.41 + j 0.22       72.10 + j 0.04
+Type 302 Stainless Steel            1.69                  2.06                 2.10
+                                    80.26 + j 5.73        73.19 + j 0.88       72.48 + j 0.36
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The table shows us everything that we should have expected. The thinner the element, the greater the loss in gain (from a perfect or lossless conductor) due to the lower conductivity value. With a 1" element, the losses through stainless steel are insignificant. However, the losses of an AWG #12 stainless steel wire become significant.</p>
+  <p>We may also notice a pattern to the impedance values in the table. First, the greater the material losses, the higher the source resistance. Second, as we increase the level of material losses, we also may notice a move to positive values of reactance, which would translate into a very slightly shorter resonant length for each element diameter. These effects are also related to the element diameter.</p>
+  <p>The final item for notice in the table is the gain of the dipole, even when using a perfect conductor. Both the AWG #12 and the 0.5" diameter dipoles show a gain of 2.14 dBi, but the 1" element shows a gain of 2.13 dBi. Because of the very small difference, it is easy to pass off the difference as a simple function of mathematical processing procedures for the core used. Indeed, in some programs, all 3 gains may be the same and in others, the 1" and 1/2" elements may show the same value.</p>
+  <p>However, the difference is real, even if not operationally significant. Dipole gain is also a function of the wire length. We saw with horizontal dipoles that if we lengthened a dipole beyond resonance, we encountered a slight increase in gain--and shrinking the dipole below resonance yielded a slightly lesser gain. Now compare the resonant lengths of the three vertical dipoles in free space. The 1" dipole is more than a quarter-foot shorter than the AWG #12 version, just about enough to make numerically visible the dependency of a dipole's gain on the dipole's length.</p>
+  <p>Perhaps a more important lesson emerges from the exercises. The gain of a wire element is not a function of its being resonant or non-resonant. Resonance is handy for numerous purposes, such as matching an antenna directly to a coaxial cable or--as in these exercise--for establishing a certain order of equivalence among models or for seeing clearly the effects of certain changes that we can make in the antenna or its operating environment. But the property of antenna gain is independent of the source impedance.</p>
+  <p><b>D. Height Above Ground</b></p>
+  <p>For our remaining trials, we shall place the 1" (25.4-mm) vertical dipole over good ground (with changes in ground quality coming a bit later). We shall not change the length from its free-space resonant value (66.06' or 20.135 m). However, we shall be placing the antenna at different heights above ground, as shown in <b>Fig. 2</b>.</p>
+  <center>
+    <img src="amod78-2.gif" width="352" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To effect the height changes, we need only add or subtract the required amount from both ends of the dipole. The key point in the height designations will be the source position, which is the center of the dipole. To ascertain that the source position is exactly where we need it, we can employ a second wire. The wire should be short--perhaps 0.001 wavelength long--and very thin--about AWG #20 or thinner. The wire position is at least 5' (1.52 m) away from the test antenna, but even with the source height. This wire is at right angles to the vertical dipole and too small to affect any of the performance report data from the main model. However, by changing the height of both the short wire and the vertical dipole together, we obtain a confirmation that the dipole center is precisely where we want it.</p>
+  <p>We shall move the vertical dipole from a source or center height of 0.25 wavelength above the ground to 1.25 wavelengths above the ground. Because not all software can move a model in terms of wavelengths, the following table provides the 7.15-MHz source-point heights for the trials. For reference, 1 wavelength at 7.15 MHz is 137.56' or 41.93 m.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                         Trial Source-Point Heights
+
+              Height in      Wavelengths          Feet           Meters
+                             0.25                  34.39         10.48
+                             0.35                  48.15         14.68
+                             0.45                  61.90         18.87
+                             0.55                  75.66         23.06
+                             0.65                  89.42         27.25
+                             0.75                 103.17         31.45
+                             0.85                 116.93         35.64
+                             0.95                 130.69         39.83
+                             1.05                 144.44         44.03
+                             1.15                 158.20         48.22
+                             1.25                 171.95         52.41
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The lowest height is sufficient to place the bottom of the dipole less than a half-meter (1.36') above ground, since each side of the dipole is about 0.24 wavelength long. Since the azimuth pattern of the vertical dipole will be a circle, we may confine our interest in patterns to elevation. We shall record the maximum gain, the TO angle, and the source impedance of the antenna at each new source-point height. Results should resemble the following NEC-4 table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                   Vertical Dipole Trial Performance Data
+
+              Height         Gain          TO angle              Source Impedance
+              WL             dBi           degrees               R +/- jX Ohms
+              0.25           -.11          18                    98.16 + j 5.20
+              0.35           0.32          15                    73.52 - j 7.43
+              0.45           0.30          14                    68.44 - j 1.80
+              0.55           0.67          46                    70.32 + j 1.72
+              0.65           1.97          41                    72.82 + j 1.33
+              0.75           2.72          36                    73.13 - j 0.39
+              0.85           3.20          32                    72.00 - j 1.03
+              0.95           3.45          29                    71.26 - j 0.36
+              1.05           3.52          26                    71.57 + j 0.36
+              1.15           3.48          23                    72.21 + j 0.31
+              1.25           3.43          21                    72.34 - j 0.20
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Let's begin with the source impedance data, since it is perhaps the simplest. <b>Fig. 3</b> shows the data in graphical form. Once we elevate a vertical dipole's center above about 0.4 wavelength, the impedance curves smooth out. In fact, for any height above about 0.4 wavelength, it would make no operational sense to adjust the length of the dipole to effect a more precise resonance. Only when the center of the dipole is lower than about 0.4 wavelength does the impedance show significant change, and the difference from resonance (within +/- j1 Ohm) remains small. Contrast this impedance behavior with the behavior of a horizontal dipole at comparable heights, as noted in the preceding episode of this series.</p>
+  <center>
+    <img src="amod78-3.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Much more interesting is the gain and TO angle information in the table. If we examine only the gain column, we see a steady rise in gain until we reach 1.05 wavelengths above ground. However, if we combine the gain and TO data, we discover a much more varied situation. Between the 0.45- and 0.55 wavelength level, the TO angle jumps from 14 degrees to 46 degrees. Since very little in antenna work shows a sudden large change, there must be an explanation to account for the change in the numbers, one that shows an evolution to the elevation pattern of the vertical dipole as we increase its height.</p>
+  <center>
+    <img src="amod78-4.gif" width="600" height="450" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> samples the elevation pattern at various interesting heights, and you may fill in the missing heights with your own software. Only at 0.25 wavelength does the vertical dipole elevation pattern show a single lobe. At 0.35 wavelength, a second lobe emerges, initially as a bulge that is just recognizable as a second lobe. However, by 0.45 wavelength, the lobe has grown to serious proportions. We may pause here to note that this type of pattern evolution is common to many, if not most, vertically polarized antennas, not just to the vertical dipole. Many of the users of such antennas have two goals for the installation: to emphasize the low angle radiation (and reception), and to eliminate as much interferences as possible arriving at high angles from shorter distances. Hence, they prefer patterns like those at the two lower levels over the pattern for 0.45 wavelength, despite the lower gain level. The exact wire height required for a given vertically polarized array may differ somewhat from the one required for a vertical dipole. Hence, each vertical array needs careful planning (and modeling) to assure that it is at a height within the range of desirable heights.</p>
+  <p>If we extrapolate from the 0.45 wavelength level, we can imagine the secondary lobe continuing to grow until it becomes the lobe with maximum gain. <b>Fig. 4</b> skips to the 0.75 wavelength level to illustrate a second elevation pattern phenomenon: the merging of elevation lobes. As the elevation angle of the secondary lobe decreases, its vertical beamwidth does not narrow appreciably. Nor does the beamwidth of the lowest lobe decrease either in angle or beamwidth by any large amount. (Again, contrast this lobe behavior with lobe behavior for the horizontal wire in the preceding column.) The result is a merging of lobes into a "butterfly wing" appearance, which reaches it peak for 2 lobes at about 0.75 wavelength for our vertical dipole.</p>
+  <p>Above 0.75 wavelength, we see the emergence of a 3rd lobe, already well developed in the 1.05 wavelength pattern. This height, relative to our trial heights, shows the maximum gain for the second lobe. By 1.25 wavelengths above ground, the 3rd lobe is large enough that the gain in the second lobe is reduced by a small amount. However, we should note one more phenomenon. The lower two lobes are merging almost into one. The differential in gain between the two lobes is very small. At 10 degrees above ground, the gain is 2.61 dBi, well above the gain levels with the antenna closer to ground. Of course, elevating a vertical dipole to a center height of 1.25 wavelengths is not practical at 40 meters. However, much higher center heights are common at VHF, where a vertical dipole gives a good account of itself in omni-directional point-to-point communications.</p>
+  <p>Let's return to heights closer to the ground. We saw two interesting items in the table below the 0.55 wavelength mark. First was the sudden transition of maximum gain from the lower lobe to the upper lobe, a transition we now know to be a gradual transition in lobe development. Second, was the fact that at a height of 0.45 wavelength, the gain was lower than at 0.35 wavelength. Whenever we encounter such phenomena, we should take a more detailed look at the region. The following table gives the results every 0.05 wavelength from 0.25- to 0.50 wavelength above ground.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                            Vertical Dipole Trial Performance Data at Low Heights
+
+              Height         Gain          TO angle              Source Impedance
+              WL             dBi           degrees               R +/- jX Ohms
+              0.25           -.11          18                    98.16 + j 5.20
+              0.30           0.12          17                    81.52 - j 7.39
+              0.35           0.32          15                    73.52 - j 7.43
+              0.40           0.35          14                    69.62 - j 4.78
+              0.45           0.30          14                    68.44 - j 1.80
+              0.50           0.22          13                    68.98 + j 0.50
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The source impedance information follows the curves shown in <b>Fig. 3</b>. Let's focus on the gain and TO angle data and graph it. See <b>Fig. 5</b>. The gain peaks at a height of 0.4 wavelength. Although the TO angle continues to descend slowly above that level, the gain decreases.</p>
+  <center>
+    <img src="amod78-5.gif" width="677" height="508" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> provides 3 elevation patterns that show why this decrease occurs. The second lobe of a vertical dipole does not emerge as a narrow-beamwidth lobe, but instead as a large region of radiation (or reception sensitivity). At a height of 0.5 wavelength, the second lobe--even though weaker in terms of maximum gain--contains a great deal of the antenna's energy, as indicated by its large area. Remember that this elevation pattern would be the same regardless of the azimuth bearing, so in 3-dimensional terms, the second lobe already dominates the vertical dipole radiation pattern. The only source for that large increase in energy is from the lower lobe.</p>
+  <center>
+    <img src="amod78-6.gif" width="600" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Lobe development for vertically polarized antennas is so different from the lobe development of horizontally polarized antennas that it requires detailed study, if one is to acquire reasonable expectations of vertical antenna behavior. These initial systematic exercises only form a start to the process.</p>
+  <p><b>E. Element Length</b></p>
+  <p>When we examined horizontal wires, we explored length changes in small increments. For our vertical dipole, we shall use much larger increments. First, set the center of the 1" (25.4-mm) dipole at a height of 0.8 wavelength (110.05' or 33.54 m). This height will allow us to extend each end of the antenna in 0.125 wavelength (17.20' or 5.24-m) increments, thus extending the total antenna length in quarter wavelength increments. We shall start with the free-space resonant length, which is 0.48 wavelength, just shy of the perfect 0.5 wavelength mark, but using the resonant length will start us on familiar ground. The longest antenna length that we shall examine, 1.5 wavelength, will still clear the ground by 0.05 wavelength without moving the antenna center point.</p>
+  <p>For each change of length, we shall increase the number of segments by 10. The resulting segment lengths will therefore be close to the same for each new model. If we perform the exercise, we obtain a table that should resemble the following one.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                    Extending the Vertical Dipole Length
+
+                     Length         Gain          TO Angle       Source Impedance
+                     WL             dBi           degrees        R +/- jX Ohms
+                     0.50           2.99          34             72.62 - j 0.09
+                     0.75           2.45          32             497.0 - j 829.9
+                     1.00           2.05          10             1922  - j 1621
+                     1.25           2.62           9             144.6 - j 612.8
+                     1.50           5.65          41             135.8 + j 35.85
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <center>
+    <img src="amod78-7.gif" width="600" height="390" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 7</b> can assist us in interpreting the data by relating it to the corresponding elevation patterns. The first two antenna lengths have high elevation angles, indicating that the maximum gain is in the second lobe. However, by a length of 1 wavelength, the maximum gain lies in the lowest lobe. Maximum low-angle gain appears with a length of about 1.25 wavelengths. When we extend the length further, the lowest lobe almost disappears, and virtually all of the energy appears in the upper lobe that we just saw emerging with the 1.25 wavelength version of the antenna.</p>
+  <p>We may correlate in a general way the information in this table and figure with what we may already know about horizontal wires. In that arena, antennas maintained a broadside azimuth lobe up through and past a length of 1 wavelength. As we increase the length of the horizontal antenna, the broadside lobe continues to increase in strength and to narrow in beamwidth, although new lobes gradually appear at angles to the main broadside bearing. By the time we reach a length of 1.5 wavelengths, the broadside lobe has severely diminished as the angular lobes dominate the pattern.</p>
+  <p>Turning the array on end to make a center-fed vertical antenna creates a comparable set of radiation phenomena, but translated to the elevation pattern and taking ground reflections into account in lobe formation. We achieve maximum low-angle gain at about 1.25 wavelengths. At a length of 1.5 wavelengths, the antenna becomes almost useless for low angle communications. Since vertical doublets are sometimes used as multi-band antennas, the lesson is not to use one that is longer than about 1.25 wavelengths at the frequency of operation. If you find it necessary to operate where the antenna would be longer, it is likely time to set up a second vertical dipole.</p>
+  <p><b>F. Ground Quality</b></p>
+  <p>Because vertically polarized radiation tends to enter more deeply into the ground than horizontally polarized antenna radiation, verticals tend to be more sensitive to changes in the quality of the ground. Therefore, let's do a small survey of the effects of ground quality on antenna performance with our 1" (25.4-mm) vertical dipole. We shall use the same categories of ground quality that we employed for the horizontal wire.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                           Some Useful Soil Types
+
+              Soil Type                    Conductivity                 Permittivity
+                                           S/m                          (Dielectric Constant)
+              Very Poor                    0.001                         5
+              Poor                         0.002                        13
+              Good                         0.005                        13
+              Very Good                    0.0303                       20
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>To see whether height above ground makes a difference in the range of performance from the best to the worst soils, we shall perform the trial twice, once with the center of the dipole at a height of 0.25 wavelength, and again with the center at a height of 0.5 wavelength (the highest level at which the lower lobe dominates over good ground). We shall record the gain, TO angle, and source impedance and arrive at a table that resembles the following one.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                         Changes of Vertical Dipole Performance with Ground Quality
+
+Center Height: 0.25-Wavelength
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -.74          21                    91.80 + j 1.63
+              Poor                  0.22          19                    96.04 + j 5.35
+              Good                  -.11          18                    98.16 + j 5.20
+              Very Good             1.94          15                    101.7 + j 8.80
+
+Center Height: 0.5-Wavelength
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             1.37          16                    69.97 + j 0.60
+              Poor                  1.13          14                    69.26 + j 0.35
+              Good                  0.22          13                    68.98 + j 0.49
+              Very Good             1.25          10                    68.13 + j 0.21
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>At the lower height, the source impedances show a maximum variation of 10 Ohms resistance and j7 Ohms reactance. At the higher level, the source impedance differences are under 2 Ohms resistive and less than j0.5 Ohm reactive. This data provides the suggestion that the higher above ground that we place a vertical dipole, the less the effect of the ground in the immediate area of the antenna on the source impedance.</p>
+  <center>
+    <img src="amod78-8.gif" width="376" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>To gain a handhold on the gain and TO angle data, <b>Fig. 8</b> provides overlaid patterns of the lower-level antenna over the 4 ground types. We can clearly see the increase in TO angle with a decrease in soil quality. The gain is another matter, since the table shows shifts above and below 0 dBi. However, except for the gain over very good soil, the actual patterns are tightly clustered. However, the gain over good soil is lower than the gain over poor soil, which may initially seem unexpected. NEC calculates the effects of ground quality by creating a single composite value from the conductivity and permittivity values in the tables. The method of combining them results in a slightly higher far-field loss for good soil than for poor soil. Operationally, the difference could not be noticed, assuming that we could ascertain that our soil in fact met the condition for either good or poor soil in the table.</p>
+  <center>
+    <img src="amod78-9.gif" width="376" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> overlays the elevation patterns for the upper-level antenna over each of the 4 soil types. The entire series is interesting, since it samples patterns with two elevation lobes. Perhaps the first notable feature is the face that, if the soil is very good, then the lobe structure of the elevation pattern is more distinct than for any of the lesser soil qualities. We see the familiar increase in TO angle with decreasing soil quality. As well, the good soil pattern has lower gain than the poor soil pattern. However, what may surprise us most is that the highest gain occurs with the antenna over very poor soil. The advantages of finding a location with very good soil dwindle as we elevate the antenna further above the ground.</p>
+  <p>We may fairly ask whether a ground radial system beneath the vertical dipole will improve its performance. Unfortunately, neither NEC-2 nor MININEC permit buried radials. The closest that we can come in these programs is to place a radial system at about 0.001 wavelength above ground, a procedure available in NEC, but generally not recommended for MININEC. We shall use 64 radials to create a radial system about as large as amateurs ever use, larger than most in operation, but shy of commercial broadcast standards. Smaller radial systems will have lesser effects than those shown, but larger ones will not change the results significantly. With the radials in place, we can re-run the trials for both the lower and higher antenna positions over the 4 soil types. The table we develop will be similar to the following one.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  Changes of Vertical Dipole (Plus Radials) Performance with Ground Quality
+
+Center Height: 0.25-Wavelength
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -.20          21                    85.88 + j 11.60
+              Poor                  0.56          19                    90.60 + j 10.75
+              Good                  0.18          18                    91.68 + j  8.88
+              Very Good             1.95          15                    98.69 + j  8.00
+
+Center Height: 0.5-Wavelength
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             1.41          16                    70.33 + j 0.71
+              Poor                  1.17          14                    69.50 + j 0.44
+              Good                  0.26          13                    69.17 + j 0.64
+              Very Good             1.25          10                    68.14 + j 0.32
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>In no case did the radial system model change the TO angle of any of our trials. At the higher level, the maximum impedance difference made by the radials was about 1/3-Ohm. The maximum gain difference was 0.04 dB. Hence, the radials prove to be ineffective in improving the performance of a vertical dipole placed a half wavelength over ground at its center, with the tip about 1/4 wavelength above ground.</p>
+  <p>The lower antenna shows some signs of improvement for soils worse than very good, where differences are not significant with and without the radials. Gain increases with decreasing soil quality, with a maximum improvement of about 0.5-dB for very poor soil. We would expect more significant changes in source impedance, since it is largely a function of soil in the immediate antenna area. Here we find that the source resistance decreases by about 6 Ohms on average, suggesting lower ground losses.</p>
+  <p>As a side note, we may re-run the lower-level antenna over a 64-radial field buried a half-foot under the soil, if we have NEC-4. I am adding this exercise, since it provides a check on the adequacy of the model that uses a slightly elevated field to simulate buried radials. Our buried radial version produces the following results.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              Changes of Vertical Dipole (Plus Buried Radials) Performance with Ground Quality
+
+Center Height: 0.25-Wavelength
+              Soil Type             Gain          TO Angle              Source Impedance
+                                    dBi           degrees               R +/- jX Ohms
+              Very Poor             -.02          22                    89.42 + j 15.40
+              Poor                  0.71          19                    95.29 + j 15.00
+              Good                  0.35          18                    96.14 + j 13.16
+              Very Good             2.09          15                    100.7 + j 11.75
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The buried radial system show less change in source resistance relative to the antenna with no radials than did the system with elevated radials. However, the effects upon the reactance result in a relatively uniform "detuning" effect, with similar reactance levels for all 4 soil types. Gain increases vary from 0.15 dB for very good soil to 0.72 dB for very poor soil. These values do not change for moderate changes in the depth of the radial field.</p>
+  <p>The result is that the NEC-2 simulated buried radial field only partially captures the effects of buried radials as modeled in NEC-4. For some operational planning and analysis needs, the NEC-2 radials may be perfectly satisfactory; for other needs, they may fall short. A final reminder is in order: the 64-radial field is large. Any smaller fields will have lesser affects upon the performance of the low-level vertical dipole.</p>
+  <p><b>Conclusion</b></p>
+  <p>We have run a number of systematic modeling studies on vertical dipoles to become familiar with their properties. A more complete set of exercises would include the same trials for vertical dipoles for many frequencies, from MF through at least high HF. As well, the are numerous other systematic tests that are possible with the modeling software for this basic antenna. This episode simply shows a few of the many paths of study that are possible in the process of developing reasonable expectations of the vertical dipole--and antennas based upon it.</p>
+  <p>However, as incomplete as the work may be, we shall move on. There is another basic vertical antenna type that needs attention long before we look at more complex antennas: the vertical monopole. That will be our subject next time.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

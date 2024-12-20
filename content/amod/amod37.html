@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verticals: Using the MININEC Ground</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>37. Verticals: Using the MININEC Ground</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>Many vertical antennas and arrays require extensive ground radial systems. A model of the radial system very often requires many times the number of segments as the antenna wires themselves. Many modelers resort to the use of MININEC or a MININEC ground system attached to a version of NEC-2 (for example, EZNEC) to avoid modeling the radials system. The run times are shorter, for starters. Additionally, some popular programs in the low- end range do not have a sufficient number of segments available to fully model a radial system and the antenna atop it.</p>
+  <p>For reasons that are not altogether clear, the MININEC ground system with a 1/4 wavelength monopole directly connected to ground has achieved a reputation for accuracy that is denied to NEC using the same modeling scheme and the Sommerfeld-Norton ground calculation system. If the intrinsic gain figures are not themselves useful, so the reasoning goes, the comparative figures for a baseline monopole and a more complex array will be useable using a consistent MININEC ground.</p>
+  <p>One disturbing tendency that has appeared in more than one volume containing otherwise impeccable technical information has been to combine or compare without caution the results of modeling using the simplified MININEC grounding system and modeling over Sommerfeld-Norton ground, with or without radials. In addition, a second disturbing tendency has emerged: to treat any predominantly vertical array as if it were purely vertical, even if some of the elements (driven or parasitic) slope.</p>
+  <p>The MININEC ground system becomes inaccurate for some wire antennas when some or all of the height of wires in the array is below about 0.2 wavelengths. The Sommerfeld-Norton ground calculation scheme, a part of the basic NEC core, can be accurate to within about 0.001 wavelength of the ground, so long as the wire surface does not go below that level. Some research indicates that a closer approach is possible. NEC-2 calls for a limit of about 30 wires for any one junction, although with relatively thin wires, that limitation can be pressed without inaccuracies arising. Therefore, a 32-radial system is well within NEC-2 capabilities. Some low-end NEC programs (such as EZNEC and NEC-Win Plus) have facilities for automated radial system construction. With these abilities, it is surprising that few modelers actually model the radial systems, but opt instead to use a MININEC ground with a monopole directly connected to ground.</p>
+  <p>Therefore, it would appear to be useful if we return to basics and find out what the modeling results would be for various situations involving vertical antennas and arrays using a number of different ground systems for the modeling task. In the following exercises, all of which at conducted at 7.15 MHz, I shall use a 2" diameter copper main element. All radials (where used) and guy wires employed as parasitic elements will be 0.25" in diameter and also copper. I shall use a segment length of close to 1'/segment to assure convergence of the models. Since I shall be looking at antenna over various ground qualities, the following table summarizes the categories and their related conductivity and permittivity.</p>
+  <pre>Ground Quality          Conductivity            Permittivity
+  Label                    S/m                  (relative dielectric constant)
+Very Poor               0.001                     5
+Poor                    0.002                    13
+Good (Average)          0.005                    13
+Very Good               0.0303                   20
+Salt Water              5.0                      81</pre>
+  <p>With this data to ensure uniform treatment of each example, we can proceed. Most of the modeling data presented in these exercises will be in tabular form. One note of caution: the exercises will be wholly in the realm of comparing one type of model with another. No claims are made for the accuracy of the data with respect to test range measurements.</p>
+  <p><b>1. The 1/4 Wavelength Monopole</b></p>
+  <center>
+    <img src="amod37-1.gif" width="501" height="291" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> illustrates the two forms of our first exercise. I begin with a 1/4 wavelength monopole directly connected to ground. The antenna is 32.9' long and uses 33 segments. The antenna model is tested using the categories of ground quality shown in the table above.</p>
+  <p>In the first model test table, there are two columns of data. Column 1 represents the results of modeling within MININEC (3.13), which places the source directly at the ground connection point. The MININEC ground system always uses perfect ground as the basis of the source impedance report, so impedance is listed only for the "perfect" ground entry. Column 2 is the data from the use of the MININEC ground within a NEC-2 system (EZNEC). The numbers given represent the far field gain in dBi and the elevation angle of maximum radiation (TO angle). The slight differences, where they exist, result from the placement of the source in NEC within the lowest segment, rather than at its end, as is done in MININEC 3.13.</p>
+  <pre>Ground            MININEC                       NEC/w/MIN Gnd
+Perfect            5.14   0  35.9 - j 0.3        5.15   0  36.4 + j 1.7
+Very Poor         -1.76  29                     -1.76  29
+Poor              -0.28  27                     -0.28  26
+Good/Average      -0.04  26                     -0.04  26
+Very Good          1.94  21                      1.94  21
+Salt Water         4.61   9                      4.61   9</pre>
+  <p>In the following table, we have similar data in the first column, including the source impedance (R +/- jX in Ohms), for the same antenna connected to ground using the Sommerfeld-Norton (S-N) ground calculation system. In the final column is data for the same antenna placed over a 32-radial ground plane that is 2" above ground. This height is close to, but not on, the conservative limit for minimum wire height above ground. The order of data is gain/TO angle/Source Z (if given). The "perfect" line is omitted.</p>
+  <pre>Ground            NEC/w/S-N Gnd                 NEC/w/Radial System
+Very Poor         -2.20  29  40.1 + j 3.1       -1.15  29  30.7 - j 8.0
+Poor              -1.29  27  45.8 + j 5.5        0.01  26  32.6 - j 5.4
+Good/Average      -1.18  26  47.1 + j 4.9        0.14  26  34.2 - j 5.5
+Very Good          0.89  21  46.3 + j 7.1        1.48  21  37.5 - j 2.8
+Salt Water         4.57   9  36.7 + j 1.5             --------</pre>
+  <p>NEC does not yield valid data for the "salt water" case for the ground plane system close to ground. Of interest in the tables are the following items.</p>
+  <p>1. With no ground plane, the NEC impedance entries are out of line with both the MININEC ground and the ground plane values. This variance represents one reason why some modelers prefer the MININEC ground for "no-radial" modeling.</p>
+  <p>2. The source impedance varies somewhat as the ground quality is changed, a feature that the MININEC ground modeling system cannot show.</p>
+  <p>3. There is no constant that one can use for all the systems to pre-estimate the change in gain value as one moves from one ground quality to another.</p>
+  <p>4. The value for the TO angle for any given ground quality is consistent for all of the ground systems examined.</p>
+  <p>The chief use of this data, however, will become apparent with the next exercise. The values shown here represent what a modeler might use as a baseline for estimating the advantages of a more complex array.</p>
+  <p><b>2. Two 1/4 Wavelength Monopoles Fed In-Phase</b></p>
+  <center>
+    <img src="amod37-2.gif" width="480" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 2</b>, we have 2 monopoles spaced just a bit more than 1/2 wavelength apart. For each case that we shall examine, we record the same data as in the first exercise, except that the impedance figures are understood as applying to each of the two sources, which are fed in phase with each other. Although Fig. 2 shows the dual ground radial system, set up to avoid an intersection for this exercise, the first three data sets employ a direct connection of each monopole to ground. Not listed in the tables are horizontal -3 dB beamwidths, which are completely consistent from one model to the next at any ground quality level.</p>
+  <pre>Ground            MININEC                       NEC/w/MIN Gnd
+Perfect            9.06   0  27.8 - j13.4        9.06   0  28.3 - j11.7
+Very Poor          2.15  29                      2.15  29
+Poor               3.64  27                      3.63  26
+Good/Average       3.88  26                      3.88  26
+Very Good          5.85  21                      5.85  21
+Salt Water         8.52   9                      8.52   9
+
+Ground            NEC/w/S-N Gnd                 NEC/w/Radial System
+Very Poor          1.77  29  31.4 - j 2.3        3.05  29  23.4 - j16.5
+Poor               2.61  27  36.3 - j 2.2        4.22  27  24.7 - j15.1
+Good/Average       2.80  26  36.6 - j 3.3        4.10  26  25.6 - j15.4
+Very Good          4.87  21  35.8 - j 4.2        5.61  21  28.0 - j14.6
+Salt Water         8.50   9  28.5 - j11.7             --------</pre>
+  <p>Once more, salt water data for the ground plane system is not valid. However, the more important use that is made of numbers from this chart set is to estimate the advantage of the phase-fed system over a single monopole. Therefore, the next chart compares the gain advantage for each system (combining the MININEC direct ground systems into a single column).</p>
+  <pre>Ground            NEC/w/MIN Gnd           NEC/w/S-N Gnd           NEC/w/Radial System
+Very Poor          3.91                    3.97                    4.20
+Poor               3.91                    3.90                    4.21
+Good/Average       3.92                    3.98                    4.24
+Very Good          3.91                    3.98                    4.13
+Salt Water         3.91                    3.93                    -----</pre>
+  <p>The relative internal consistency of each system as we vary ground quality is interesting. The consistency between the use of the MININEC ground system and the S-N system suggests that for the purposes of gain comparisons, there is no reason to prefer the MININEC system.</p>
+  <p>However, the radial system provides an advantage figure that is 0.2 to 0.3 dB higher than those that emerged from the direct-ground connection systems. This difference is significant. A full analysis would need to survey many more complex arrays than the simple one used here before arriving at any general conclusions. However, the difference is notable. The initial conclusion is that gain advantage claims over a standard (such as the monopole used in this role) must always be given with the full particulars of the modeling conditions that produced them. Moreover, gain advantages produced by different ground systems for the models involved may not be directly comparable.</p>
+  <p>Once more the radial system provides a range of source impedance figures specific to the ground quality.</p>
+  <p><b>3. A Tilting 1/2 Wavelength Dipole</b></p>
+  <center>
+    <img src="amod37-3.gif" width="639" height="340" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Our third exercise is designed to serve as a reminder of the limitations inherent in the MININEC ground system. As suggested in Fig. 3, we shall use a 1/2 wavelength 2" copper dipole. In successive steps, we shall tilt the vertical by 30, 45, 60, and 90 degrees. In each case, the left end of the dipole will be 1' off the ground. Thus, the final position will place the entire dipole at a height of 1'.</p>
+  <p>As before, we shall compare MININEC ground with S-N ground. We shall omit the separate columns for MININEC and NEC using the MININEC ground, since the results coincide almost exactly. The main differences that we shall examine lie between the MININEC and S-N ground systems in their handling of the tilting element. In each case, we shall use a dipole length that has been resonated within the MININEC ground system and then record the source impedance that results from switching to the S-N system. All values are taken broadside to the dipole, not in line with the tilt.</p>
+  <pre>A. Dipole Vertical: Length--64.9'; MIN Source Z: 99.8 - j 0.4
+
+Ground            NEC/w/MIN Gnd                 NEC/w/S-N Gnd
+Very Poor         -1.20  22                     -0.88  22   90.0 - j13.9
+Poor              -0.03  20                      0.13  20   94.4 - j 9.1
+Good/Average      -0.21  19                     -0.17  19   96.8 - j 9.3
+Very Good          1.96  15                      1.92  15  100.0 - j 4.9
+Salt Water         5.91   7                      5.91   7   99.9 - j 0.7
+
+B. Dipole 30-Degrees Off Vertical: Length--64.0'; MIN Source Z: 93.0 - j 0.1
+
+Ground            NEC/w/MIN Gnd                 NEC/w/S-N Gnd
+Very Poor         -0.44  29                     -0.38  29   88.4 - j20.8
+Poor               0.33  26                      0.30  26   91.4 - j13.8
+Good/Average       0.31  25                      0.15  25   94.3 - j12.8
+Very Good          1.83  20                      1.66  20   96.0 - j 5.9
+Salt Water         4.96   8                      4.94   8   93.3 - j 0.5
+</pre>
+  <p>To a small, but detectable, degree, the MININEC ground is beginning to overestimate the gain of the dipole, especially over better ground qualities.</p>
+  <pre>C. Dipole 45-Degrees Off Vertical: Length--63.1'; MIN Source Z: 77.3 + j 0.4
+
+Ground            NEC/w/MIN Gnd                 NEC/w/S-N Gnd
+Very Poor          0.74  42                      0.18  42   84.1 - j26.1
+Poor               1.15  40                      0.66  40   84.1 - j17.2
+Good/Average       1.38  43                      0.77  43   86.9 - j14.6
+Very Good          2.12  34                      1.68  34   84.9 - j 5.3
+Salt Water         4.02  10                      3.98  10   78.0 + j 0.0</pre>
+  <p>As we move to the 45-degree angle, the over-estimation of gain by the MININEC ground system becomes serious, averaging about a half dB. As well, the sensitivity of the element to the ground quality with respect to source impedance becomes apparent using the S-N ground system, but is invisible with a MININEC ground.</p>
+  <pre>D. Dipole 60-Degrees Off Vertical: Length--62.6'; MIN Source Z: 49.2 - j 0.2
+
+Ground            NEC/w/MIN Gnd                 NEC/w/S-N Gnd
+Very Poor          2.89  88                      0.73  88   77.6 - j25.4
+Poor               3.09  90                      1.31  90   72.3 - j16.6
+Good/Average       3.63  90                      1.81  90   73.4 - j11.8
+Very Good          4.27  90                      3.12  90   63.9 - j 1.9
+Salt Water         4.37  90                      4.26  90   50.5 - j 0.1</pre>
+  <p>As we tilt the element within 30 degrees of ground, almost the entire antenna lies below the so-called 0.2 wavelength limit for MININEC ground accuracy. The inaccuracies show up in two ways. First, the MININEC ground system gain is much too high. Second, the MININEC source impedance is much too low. The figures for the S-N ground for very good ground and better might well bear scrutiny as well.</p>
+  <pre>E. Dipole 90-Degrees Off Vertical: Length--68.5'; MIN Source Z: 0.2 - j 0.3
+
+Ground            NEC/w/MIN Gnd                 NEC/w/S-N Gnd
+Very Poor         24.26  90                     -4.13  90  147.8 + j132.8
+Poor              21.40  90                     -6.76  90  141.5 + j134.6
+Good/Average      20.91  90                     -6.88  90  130.3 + j137.6
+Very Good         16.95  90                     -8.85  90   78.1 + j107.5
+Salt Water         8.77  90                     -9.38  90   11.4 + j 16.2</pre>
+  <p>The MININEC values for the case of the dipole 1' off the ground clearly reveal the inadequacy of the ground system for wires very close to ground. In addition to the wholly unrealistic gain and source impedance values, the length of the required dipole is also a clue to the situation. Using the S-N ground system over very poor ground, the required modeled dipole length for resonance is 58.3' and the source impedance is 104.3 - j 0.5 Ohms, with -4.88 dBi gain. Hence, the use of a MININEC ground does not even provide rudimentary guidance as to the required length of the element.</p>
+  <p>As the antenna becomes more horizontal and as more of its structure moves closer to the ground, the MININEC ground system creates increased errors and serves less and less as an adequate guide to the likely performance of the antenna modeled. Although this lesson is fundamental to almost any modeler when horizontal wires and arrays are in question, the message appears to dim when the antenna bears the label "vertical array" or when sloping wires are part of the antenna structure, whether or not directly driven. Essentially, if any part of an antenna structure has a horizontal component to its radiation field and if that part falls below the threshold of accuracy for the MININEC ground system, then the use of the MININEC ground becomes untrustworthy.</p>
+  <p><b>4. A Vertical Monopole with a Simple Ground Radial System</b></p>
+  <center>
+    <img src="amod37-4.gif" width="381" height="297" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There is one exception to the general rule just noted. Where a horizontal structure is symmetrical such that its radiation can be viewed as self-cancelling, the MININEC ground system remains quite reasonably accurate. Such an antenna appears in Fig. 4. The monopole with a 4-radial system, if elevated, shows quite similar results over a MININEC and a S-N ground calculation system.</p>
+  <p>The 7.15 MHz model has a set of 34.4' radials, 0.25" in diameter. The 2" diameter main element varies in length to establish resonance at each height. The test heights begin at 1/4 wavelength and halve in steps down to 1/32 wavelength. The following table compares NEC using a MININEC and a S-N ground. As well, figures are included for the same model directly handled in MININEC 3.13.</p>
+  <pre>Height:  34.4' (1/4 WL)
+Program           Monopole          Gain        TO Angle          Source Z
+                  Length            dBi         degrees           R +/- jX Ohms
+MININEC           34.6'              0.24       15                21.5 + j 0.7
+NEC/w/MIN         34.2'              0.15       15                21.4 - j 0.4
+NEC/w/S-N         34.2'              0.20       15                21.2 + j 1.0
+
+Height:  17.2' (1/8 WL)
+Program           Monopole          Gain        TO Angle          Source Z
+                  Length            dBi         degrees           R +/- jX Ohms
+MININEC           34.6'             -0.15       19                28.8 - j 1.0
+NEC/w/MIN         34.3'             -0.23       19                28.9 - j 0.7
+NEC/w/S-N         34.3'              0.22       19                26.1 - j 0.7
+
+Height:   8.6' (1/16 WL)
+Program           Monopole          Gain        TO Angle          Source Z
+                  Length            dBi         degrees           R +/- jX Ohms
+MININEC           34.4'             -0.27       22                34.4 - j 0.1
+NEC/w/MIN         34.1'             -0.36       22                34.5 + j 0.4
+NEC/w/S-N         34.3'              0.04       22                31.7 + j 0.4
+
+Height:  4.3' (1/32 WL)
+Program           Monopole          Gain        TO Angle          Source Z
+                  Length            dBi         degrees           R +/- jX Ohms
+MININEC           34.1'             -0.25       24                36.7 + j 0.4
+NEC/w/MIN         33.7'             -0.34       24                36.5 - j 0.7
+NEC/w/S-N         34.1'             -0.11       24                35.2 + j 0.9</pre>
+  <p>Despite the close approach to ground by the horizontal members of the monopole-plus- radials assembly, the figures comparing MININEC ground--used with either the NEC or MININEC algorithms--and the S-N ground are remarkably consistent. Field-cancelling symmetrical structures are remarkably resistant to the error-producing aspects of the MININEC ground structure.</p>
+  <p><b>5. A Parasitic Vertical Array with Sloping Parasitic Elements</b></p>
+  <center>
+    <img src="amod37-5.gif" width="411" height="424" border="2" vspace="5" hspace="9">
+  </center>
+  <p>I found a parasitical array that has the general appearance of Fig. 5 in a reputable handbook with the notation that it had been modeled using a MININEC ground because the NEC program lacked sufficient segment capacity to permit modeling the radial system. The present model is only like the original in appearance, since it is not a direct scaling of the MF array for 7.15 MHz. I have placed the lowest wires at the 1' level, corresponding to the lowest height in our third exercise. The parasitic element wires slope somewhat more than the originals. However, all that these modifications achieve is to make the results a bit more dramatic.</p>
+  <p>The following table provides the dimensions of the array used in this example.</p>
+  <pre>40-m vertical array                            Frequency = 7.15  MHz.
+
+Wire Loss: Copper -- Resistivity = 1.74E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+Wire Conn. --- End 1 (x,y,z : ft)  Conn. --- End 2 (x,y,z : ft)   Dia(in) Segs
+1            0.000,  0.000, 29.000  W2E1   0.000,  0.000,  0.167 2.00E+00  28
+2     W3E1   0.000,  0.000,  0.167        34.400,  0.000,  0.167 2.50E-01  33
+3     W4E1   0.000,  0.000,  0.167        33.739,  6.711,  0.167 2.50E-01  33
+4     W5E1   0.000,  0.000,  0.167        31.781, 13.164,  0.167 2.50E-01  33
+5     W6E1   0.000,  0.000,  0.167        28.603, 19.112,  0.167 2.50E-01  33
+6     W7E1   0.000,  0.000,  0.167        24.324, 24.324,  0.167 2.50E-01  33
+7     W8E1   0.000,  0.000,  0.167        19.112, 28.603,  0.167 2.50E-01  33
+8     W9E1   0.000,  0.000,  0.167        13.164, 31.781,  0.167 2.50E-01  33
+9    W10E1   0.000,  0.000,  0.167         6.711, 33.739,  0.167 2.50E-01  33
+10   W11E1   0.000,  0.000,  0.167       2.6E-06, 34.400,  0.167 2.50E-01  33
+11   W12E1   0.000,  0.000,  0.167        -6.711, 33.739,  0.167 2.50E-01  33
+12   W13E1   0.000,  0.000,  0.167       -13.164, 31.781,  0.167 2.50E-01  33
+13   W14E1   0.000,  0.000,  0.167       -19.112, 28.603,  0.167 2.50E-01  33
+14   W15E1   0.000,  0.000,  0.167       -24.324, 24.324,  0.167 2.50E-01  33
+15   W16E1   0.000,  0.000,  0.167       -28.603, 19.112,  0.167 2.50E-01  33
+16   W17E1   0.000,  0.000,  0.167       -31.781, 13.164,  0.167 2.50E-01  33
+17   W18E1   0.000,  0.000,  0.167       -33.739,  6.711,  0.167 2.50E-01  33
+18   W19E1   0.000,  0.000,  0.167       -34.400,5.2E-06,  0.167 2.50E-01  33
+19   W20E1   0.000,  0.000,  0.167       -33.739, -6.711,  0.167 2.50E-01  33
+20   W21E1   0.000,  0.000,  0.167       -31.781,-13.164,  0.167 2.50E-01  33
+21   W22E1   0.000,  0.000,  0.167       -28.603,-19.112,  0.167 2.50E-01  33
+22   W23E1   0.000,  0.000,  0.167       -24.324,-24.324,  0.167 2.50E-01  33
+23   W24E1   0.000,  0.000,  0.167       -19.112,-28.603,  0.167 2.50E-01  33
+24   W25E1   0.000,  0.000,  0.167       -13.164,-31.781,  0.167 2.50E-01  33
+25   W26E1   0.000,  0.000,  0.167        -6.711,-33.739,  0.167 2.50E-01  33
+26   W27E1   0.000,  0.000,  0.167       4.1E-07,-34.400,  0.167 2.50E-01  33
+27   W28E1   0.000,  0.000,  0.167         6.711,-33.739,  0.167 2.50E-01  33
+28   W29E1   0.000,  0.000,  0.167        13.164,-31.781,  0.167 2.50E-01  33
+29   W30E1   0.000,  0.000,  0.167        19.112,-28.603,  0.167 2.50E-01  33
+30   W31E1   0.000,  0.000,  0.167        24.324,-24.324,  0.167 2.50E-01  33
+31   W32E1   0.000,  0.000,  0.167        28.603,-19.112,  0.167 2.50E-01  33
+32   W33E1   0.000,  0.000,  0.167        31.781,-13.164,  0.167 2.50E-01  33
+33    W1E2   0.000,  0.000,  0.167        33.739, -6.711,  0.167 2.50E-01  33
+34           0.853,  0.000, 26.448 W35E1   0.853,  0.000, 29.000 2.50E-01   3
+35   W34E2   0.853,  0.000, 29.000 W36E1  35.000,  0.000,  1.000 2.50E-01  44
+36   W35E2  35.000,  0.000,  1.000        21.500,  0.000,  1.000 2.50E-01  13
+37          -0.853,  0.000, 26.448 W38E1  -0.853,  0.000, 29.000 2.50E-01   3
+38   W37E2  -0.853,  0.000, 29.000 W39E1 -35.000,  0.000,  1.000 2.50E-01  44
+39   W38E2 -35.000,  0.000,  1.000       -19.000,  0.000,  1.000 2.50E-01  15
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+1          28     1 / 98.21   (  1 /100.00)      1.000       0.000       I
+
+Ground type is Real, high-accuracy analysis
+Conductivity = .005 S/m    Diel. Const. = 13</pre>
+  <p>The following table lists the results for directly connecting the 1/4 wavelength driver to ground using the MININEC ground system. Direct connection using the S-N system is also shown for reference. The last entry shows the results of placing the monopole on a 32-radial system with the S-N ground. All models use average (good) ground.</p>
+  <pre>Ground      Gain        TO Angle    Front-to-Back     Beamwidth   Source Z
+System      dBi         degrees     Ratio dB          degrees     R +/- jX Ohms
+
+Direct Connection:
+MININEC      6.28       37          24.99             110.6        9.2 + j  9.1
+S-N         -1.50       34           9.55              98.2       30.1 + j 21.6
+Radial System:
+S-N          1.18       34          11.38              99.5       14.8 + j  3.8</pre>
+  <p>Compared to a radial system over S-N ground, the MININEC system not only overestimates performance figures, but as well, provides dimensions that are at odds with those which might yield maximum gain and front-to-back ratio in the radial configuration. If optimization is performed, along with the use of additional radials, available in NEC-4, the performance of the array over radials might show better numbers, but still, nowhere near those provided by the MININEC ground analysis.</p>
+  <center>
+    <img src="amod37-6.gif" width="640" height="270" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 6</b> provides a view of the MININEC and Radial system elevation patterns for comparison. <b>Fig. 7</b> provides a similar comparison of the azimuth patterns at the 34-degree elevation angle of maximum radiation.</p>
+  <center>
+    <img src="amod37-7.gif" width="640" height="480" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The array uses near ground horizontal portions of the parasitic elements, along with sloping elements at about a 45-degree angle. Both of these conditions incur the typical MININEC ground errors. I have modeled the lowest wires very close to ground to accentuate the error potential of using the MININEC ground in arrays with the listed problematical structures. However, placing any part of the structure below 0.2 wavelengths and having a horizontal component to either driven or parasitic elements will leave the results equally untrustworthy.</p>
+  <p><b>Conclusion</b></p>
+  <p>The selection of a ground system for modeling vertical arrays requires considerable care. In general, any serious model--that is, one used for design, analysis, or publication--should employ a radial system as close as possible to the structure of the physical system to be used. If that requires borrowing or upgrading software and the structuring of models with well over 1000 segments, than that is the cost for internal consistency of modeling comparisons. (The largest models in these exercises used close to 2,200 segments.)</p>
+  <p>Models using different ground systems are not especially comparable, at least not on a simple viewing of their report numbers. Even within the same system, there are differences in comparison numbers for larger arrays and whatever simpler standard might be used; hence, such comparisons should be made with reference to the actual ground quality of the antenna site.</p>
+  <p>The MININEC ground shortcut to vertical array modeling should generally be avoided or used sparingly and under very limited conditions. At the very least, the modeler should avoid using the MININEC ground system whenever any part of a radiating structure has a horizontal component and is below the 0.2 wavelength accuracy threshold. Better yet, the model should include the radial system that will be used at the site using the S-N ground calculation system. Although these measures would not guarantee the accuracy of performance figures from vertical array models relative to the actual installation, at the very least, they would ensure that internal consistency among modeled results is sustained.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

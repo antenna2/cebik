@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Within the Lines: NEC-2</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>3. Within the Lines: NEC-2</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  Last month, we looked at some of the limitations of MININEC and how to model effectively within those limits. This month, we shall give NEC-2 equal time. Virtually all of the limits we shall look at occur on all commercial implementations of NEC-2.
+  <p>The chief sources of commercial implementations of NEC-2 are the following:</p>
+  <ul>
+    <li>NEC-Win Pro / Plus -- <a href="https://web.archive.org/web/20120722052143/http://www.nittany-scientific.com/" target="_blank">Nittany Scientific</a> (web.archive.org)
+    </li>
+    <li>
+      <a href="https://eznec.com/" target="_blank">EZNEC</a>
+    </li>
+    <li>
+      <a href="https://www.nec2go.com/" target="_blank">NEC2GO</a>
+    </li>
+    <li>
+      <a href="https://www.qsl.net/4nec2/" target="_blank">4NEC2</a>
+    </li>
+    <li>
+      <a href="https://web.archive.org/web/20130917054923/https://www.supernec.com/" target="_blank">SuperNEC</a> (web.archive.org)
+    </li>
+    <li>
+      Also see the <a href="../model/nec.html">Antenna Modeling Programs</a> page for more information.
+    </li>
+  </ul>
+  <p>NEC-Win programs are for Windows 95, while NEC-Wires and EZNEC are DOS-based programs.</p>
+  <p>The basic reference for NEC-2 is J. Burke, A. J. Pogio, "Numerical Electromagnetic Code (NEC) Method of Moments, a User Oriented Code," Vol. 2 (Part III: User's Guide), Tech. Doc. 116, Naval Systems Center, San Diego, 1982. For those desiring to create their own input and output systems, NEC-2 is public domain and available in FORTRAN and compiled versions. Ray Anderson, WB6TPU, maintains a site for downloading basic NEC-2 materials: URL: http://www.si-list.org/swindex.html (broken link not found in web.archive.org)</p>
+  <h4>Segmentation Limitations</h4>Although the segmentation limitations of NEC-2 are similar to those of MININEC, they differ just enough so that the transition from one program to the other sometimes creates unanticipated difficulties. First, NEC places the equivalent of a MININEC pulse in the center (or distributed throughout) a wire segment. Hence, in NEC, you should think in terms of segmenting antenna lengths, especially those holding sources and loads, in odd numbers. Although many references speak of segmenting a center-fed half wavelength dipole into at least 10 segments, 9 or 11 are the proper numbers, as shown in Figure 1.
+  <center>
+    <img src="amod3-1.gif" width="464" height="155" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Segment length should be under 0.1 wavelength long, with 0.05 wavelength preferred (about 10-11 segments per half wavelength). Segments shorter than 0.001 wavelength should also be avoided. For reference, the following table provides a ham band list of the maximum and minimum recommended segments lengths.</p>
+  <pre>Frequency      Segment Length in inches    Shortest Segment
+               for 0.05 wl segments        Length in inches
+1.8                 327.9                    6.657
+3.5                 168.6                    3.372
+7.0                  84.3                    1.686
+10.1                 58.4                    1.169
+14.0                 42.2                    0.843
+18.068               32.7                    0.653
+21.0                 28.1                    0.562
+24.89                23.7                    0.474
+28.0                 21.1                    0.422
+50.0                 11.8                    0.236
+144.0                 4.1                    0.082</pre>
+  <p>Thin-wire segments are preferred: as with MININEC, the wire circumference divided by the wavelength should be much less than 1 for accurate results. Moreover, the ratio of segment length to diameter should be greater than 4 for errors less than 1%. If the model demands a smaller ratio, it should be approached cautiously by shortening segment lengths gradually with an eye toward results taking off on a tangent.</p>
+  <p>Maintaining a larger segment length to diameter ratio at corners is also necessary to keep the center of one segment from falling within the radius of the other segment. Again, approaching this limit produces nothing sudden, so that it can be pressed, but cautiously.</p>
+  <p>Unlike MININEC, angled antenna elements do not require special treatment other than the warning about very short segment-length-to-wire-diameter ratios. NEC-2 will model equally segmented wires in a quad quite handily.</p>
+  <p>However, prevent wires from physically touching or coming in very close proximity when crossing. There is no hard and fast rule on where the proximity limits occurs, but separation by several wire diameters is recommended.</p>
+  <p>Another NEC-2 limitation is the inability to model small loops, less the about 0.1 wavelength in circumference.</p>
+  <p>NEC-2 documentation specifically recommends that closely space parallel wires be arranged so that the segments are carefully matched, as shown in Figure 2. As noted in the last episode, this practice is a good one to follow with all models.</p>
+  <center>
+    <img src="amod3-2.gif" width="489" height="219" border="2" vspace="5" hspace="9">
+  </center>
+  <h4>Junction Limitations</h4>There are two junction limitations of note. The first limits the number of wires joined at a signal junction to 30. This limitation is especially applicable to models involving base-fed vertical antennas with radial systems modeled above ground. Extending the ground radial system to larger numbers with a direct connection to the vertical segment holding the source should be approached with caution by examining the sensibleness of the outputs as the limit is approached. A further note on elevated ground radial systems appears later in the discussion of grounds.
+  <p>The second junction limitation concerns feeding multiple antennas at a common source point. This problems differs from feeding a single bent element (such as inverted Vee) at the apex. In this case, the modeler can often use a split feed, feeding with separate sources the segments on each side of the wire junction. If the segments are short, the resulting sum of the two impedances will yield an accurate overall source impedance for the antenna. Some programs provide for a split voltage or current feed and report the source conditions (voltage, current, and impedance) as a single set of values.</p>
+  <p>When multiple antenna elements join at a single point, it is no longer possible to employ a split feed effectively. The simplest case is the spread dipole for two bands with a single feedpoint, as shown in Figure 3.</p>
+  <center>
+    <img src="amod3-3.gif" width="561" height="229" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The simple work-around is also shown in Figure 3: adding a small common section of wire for the source and joining the diverging elements to the ends of this wire. Recommendations for these segments include a minimum length of 0.02 wavelength and 3 segments. Equally important, the adjoining segments of the diverging wires should be about the same length as those in the center section.</p>
+  <h4>Diameter Limitations</h4>The key "diameter" limitation is much better known by most NEC-2 users: the stepped wire-diameter limitation. NEC-2 produces inaccurate results when an antenna element is composed of wires of differing diameters, as is commonly the case with HF Yagis using several sizes of aluminum tubing. The basic situation is shown in Figure 4.
+  <center>
+    <img src="amod3-4.gif" width="613" height="402" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If an element is constructed on each side of center by, say, only 2 wires of different diameters and the junction of these wires is past the mid-point on each side, modeled results will be more accurate than with elements having multiple diameter steps closer to the center. Large steps in diameter also increase the accuracy problem.</p>
+  <p>Most commercial implementations of NEC-2 have incorporated a technique to overcome this problem effectively. Using equations developed by Dr. David Leeson, the programs calculate the antenna properties with substitute elements having a constant diameter. The resulting models have proven quite reliable. However, you must use caution in constructing the model to ensure that the stepped diameter element is continuous or collinear, with no bends or intervening geometric oddities along the way. For example, adding a mid-element capacity hat structure will disable the correction feature in some programs. Likewise, the source must be at the center of an element with open ends (such as a dipole), and loads must be symmetrically placed. Transmission lines are sometimes disallowed. Moreover, the element may be required to be within a certain percentage of resonance, which may complicate attempts to model in NEC-2 multi-band HF Yagis with stepped-diameter elements throughout.</p>
+  <p>Let's take a closer look at the effects of using and not using the substitute elements in place of the stepped diameter elements. The following table shows several aluminum dipole elements for 14 MHz, ranging from a uniform 1" wire to a highly stepped set of wires. Lengths and diameters are from the end to center, with the other side symmetrical to the given side. Except for the uniform element, NEC-2 outputs are shown for both the substitute and the uncorrected elements.</p>
+  <pre>
+Length(s) from center in inches     Free Space Gain    Source Impedance
+  Diameter(s) in inches                 in dBi         (R +/- jX Ohms)
+1.  Uniform element (no corrective needed)
+     -201.25...0                         2.12            71.8 - j 0.6
+            1.0
+2.  One step, far out
+     -204...-150...0       No Cor.       2.14            73.0 + j 4.4
+        0.75    1.0
+     -201.45...0           Cor.          2.12            72.0 + j 0.4
+          0.966
+3.  One step, near center
+     -204...-50...0        No Cor.       2.22            72.4 + j 5.2
+        0.75   1.0
+     -201.661...0          Cor.          2.13            71.8 - j 0.5
+           0.792
+4.  Two steps, modest taper
+-205.75...-100...-20...0   No Cor.       2.32            72.5 + j10.6
+      0.75    1.0  1.25
+-201.49...0                Cor.          2.13            71.9 + j 0.1
+     0.889
+5.  Two steps, more extreme taper
+-208.5...-100...-20...0    No Cor.       2.82            67.6 + j17.1
+     0.75    1.0   2.5
+-201.63...0                Cor.          2.13            72.1 + j 0.9
+     0.895</pre>
+  <p>The corrected substitute models ("Cor.") are those generated by the program as replacement elements for the original model, which reflects the intended tapered diameter structure. With only moderate levels of diameter stepping, uncorrected NEC-2 reports of gain rapidly become unreliably large, while source impedances improperly show the elements to be too long relative to resonance.</p>
+  <h4>Corner Dissimilar Wire-Diameter Limitations</h4>Although linear stepped-diameter elements are correctable, non-linear elements with changes of diameter are not. In many instances, NEC-2 will produce unusable results. Two such cases are the quad loop and the folded dipole, each with wires of unequal diameter.
+  <center>
+    <img src="amod3-5.gif" width="458" height="281" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Consider the single quad loops in Figure 5. If we construct such a loop for 28.5 MHz of #14 wire, then about 9.13' of wire per side (1041/f) will yield a loop with a free space gain of about 3.24 dBi and a source impedance of 126-127 Ohms resistive. This is true whether we model the antenna as a fully length-tapered MININEC item or as a NEC-2 wire antenna with reasonable segmentation. If we make the element 1" in diameter, then 9.5' per side (1083/f) in both programs yields a gain of about 3.4 dBi with a resonant source impedance close to 132 Ohms.</p>
+  <p>However, if we change the construction so that the horizontal portions are "fat" while keeping the vertical portions of "thin" wire, the results are far different. The following table shows how.</p>
+  <pre>Antenna Dimensions                 Free Space Gain     Source Impedance
+                                        dBi            (R+/-jX Ohms)
+
+1.  0.5" dia hor/#12 vert:  10.15' per side
+     MININEC tapered                    3.61           136.7 - j 2.3
+     NEC-2                              3.57           175.4 + j140
+2.  1.0" dia hor/#14 vert:  10.7' per side
+     MININEC tapered                    3.80           141.6 - j 5.7
+3.  1.0" dia hor/#14 vert:  9.68' per side
+     NEC-2                              3.46           138.4 - j 0.5</pre>
+  <p>The first antenna uses the same model in both programs. Compared to the materials of antennas 2 and 3, this model has a less extreme difference in wire diameters between the horizontal and vertical portions. Although the gain figures produced are close, the source impedance are radically different, as NEC-2 suggests a far smaller loop size for resonance.</p>
+  <p>Antennas 2. and 3. use a larger difference between the horizontal and vertical wire diameters. The two models use the same horizontal to vertical wire diameter ratios, and each is each brought close to resonance. Although the source impedances are now comparable between MININEC and NEC- 2, the loop sizes for resonance are very far apart.</p>
+  <p>Divergent results of this order require empirical verification before either modeling system can be trusted for dissimilar diameter materials meeting at the corners of an antenna element. So I modeled a 50-Ohm fat-horizontal, thin-vertical wire loop for 146 MHz. The 0.75" diameter horizontal bars were 16" long. For resonance, NEC-2 called for 29.15" #14 (0.064" diameter) vertical wires, while NEC-4 called for 32.2" wires. Uncorrected MININEC resonated the loop with 33.7" vertical wires. The test antenna resonated with 33.75" vertical wires. The real antenna result can be up to about +/- 3/8" in error due to possible variances from the model created by screw heads and short leads to the antenna coax fitting. However, the dimensions are sufficiently accurate to demonstrate the greater reliability of MININEC results and the problems of modeling corner junctions of dissimilar diameter wires in NEC-4 and NEC-2.</p>
+  <p>An interesting deviation from this pattern occurs when right-angle junctions of dissimilar diameter wires involve symmetrical arrangements of one size of the wires. These models include vertical antennas with elevated ground radial systems, dipoles or verticals with "capacity hats," and similar structures. In these cases, the apparent cancellation of radiation from the elements of the symmetrical portion of the structure yields accurate gain and source impedance reports. A series of experimental models, verified by measurements with antennas built from the models, showed an agreement between NEC-2 and MININEC models within 1 to 2 percent for the radial length in capacity hats on 10-meter dipoles and 2-element Yagis.</p>
+  <h4>Folded Dipole Limitations</h4>
+  <center>
+    <img src="amod3-6.gif" width="474" height="318" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Folded dipoles using dissimilar diameter wires add another dimension to the NEC-2 limitations. Consider two folded dipoles, as shown in Figure 6. One consists of 2 parallel wires 0.5" in diameter spaced 0.25' apart and 16.1' long for 28.5 MHz. The other consists of one 0.5" diameter wire and one #12 (0.808" diameter) wire, also 0.25' apart and 16.2' long for 28.5 MHz. The results of modeling these antennas in both MININEC and NEC-2 are as follows:</p>
+  <pre>Antenna Dimensions                 Free Space Gain     Source Impedance
+                                        dBi            (R+/-jX Ohms)
+
+1.  2 x 0.5" dia; 16.1' long
+     MININEC                            2.22           285.7 + j 0.9
+     NEC-2                              2.22           285.9 + j 4.1
+2.  0.5" dia and #12; 16.2' long
+     MININEC                            2.21           530.5 + j 1.5
+     NEC-2                              0.69           375.2 + j25.8</pre>
+  <p>Both systems model the standard folded dipole with very reasonable accuracy. The second, non-standard, folded dipole with dissimilar wire diameters is another matter. Standard textbook equations for calculating the impedance of folded dipoles with dissimilar diameters yield a projected ratio for the source impedance of the folded dipole relative to a single-wire dipole of nearly 7.5:1, or between 530 and 535 Ohms. While the MININEC model falls in the ball park (considering that the formula does not account for antenna shortening or end connections between the two wires), the NEC- 2 model is clearly unusable.</p>
+  <p>The end result of exploring these limitations is this: wherever NEC-2 is to be used with wire junctions or closely spaced wires of dissimilar diameters, extreme caution must be used to independently check the reliability of the reported performance specifications.</p>
+  <h4>Sommerfeld-Norton Ground</h4>Unlike MININEC, NEC-2 has provision for a highly accurate ground effect calculation system variously called Sommerfeld-Norton, SOMNEC, and other names. Although NEC-2 also has a "fast" ground calculation algorithm (6-8 times faster in solutions than the S-N system), it is far more limited and less accurate than the S-N system. Hence, wherever calculation of ground effects is critical to antenna design, only the more accurate system should be used. This applies to such modeling tasks as low dipoles (under 0.2 wavelengths up), elevated ground planes, and Beverage antennas.
+  <p>The contrast between the results of the MININEC ground system and the S-N system are sufficiently vivid with low dipoles, that I shall repeat a table presented in the last episode. The following table compares NEC-2 (S-N) and MININEC data for a 3.5 MHz dipole (resonated in free space) at heights from 0.05 to 0.30 wavelengths above medium or "average" earth (conductivity = 0.005 Siemans/meter; dielectric constant = 13).</p>
+  <pre>                         MININEC                  NEC-2 (S-N Ground)
+Antenna                  137.2' #12 copper        136.9' #12 copper
+Height                   Gain      Source Z       Gain      Source Z
+ W/L      Feet           dBi       R +/- jX       dBi       R +/- jX
+0.05      14.05          9.4        7.4 - j 4.9   1.2       48.9 + j15.4
+0.10      28.10          8.4       23.3 + j20.5   5.1       49.8 + j21.1
+0.15      42.15          7.7       45.9 + j35.1   6.4       62.5 + j26.9
+0.20      56.20          7.0       62.3 + j37.0   6.5       77.0 + j25.3
+0.25      70.26          6.2       87.7 + j28.3   6.2       87.8 + j17.3
+0.30      84.31          5.9       97.4 + j13.5   6.1       92.3 + j 6.1</pre>
+  <p>Despite the clearly more reliable figures produce in NEC-2, the use of the S-N is not without some limitations. For example, NEC-2 is sometimes used to simulate surface ground radial systems with vertical antennas by placing the radial wires very close to the ground. One recommendation sets the minimum height at 0.0001 wavelength, with segment-length tapering techniques applied between that height up to 0.001 wavelength. For frequencies below the 80-meter ham band, some ground-wave measurements suggest that elevated radial models yield overly optimistic gain figures. Consequently, the limits of the S-N ground system should be approached cautiously.</p>
+  <h4>Another NEC-2 Potential: Transmission Lines</h4>In addition to providing a more accurate ground modeling system than MININEC, NEC-2 also offers the modeler another unique provision: the introduction of transmission lines into the antenna structure. Transmission lines can be used to connect antenna elements, as in phased arrays or log periodics. They can also be shown as feedlines to an antenna by the addition of a very short, remote wire to provide the line with a terminating point and for placement of the antenna source. Transmission lines can also be shorted or left open by various techniques and thus used as inductively or capacitively reactive stubs.
+  <p>The transmission line models used in NEC-2 are mathematical, in contrast to the wire elements, which can be classified as "physical." Wire elements enter into the matrix calculations and contribute to far-field and other antenna performance specifications. However, transmission lines do not enter into far-field calculations. For example, providing a dipole with a transmission line will not yield results that show any radiation from the line.</p>
+  <p>In addition, transmission lines in NEC-2 are lossless. Therefore, models using them will not reflect losses incurred in phasing lines, load lines, and similar applications. Determination of those losses must be done by separate calculations. Feedline losses, for example, can be calculated by such programs as N6BV's TLA, which is readily available.</p>
+  <p>As with the sampling of MININEC limitations, our purpose in surveying some of NEC-2's limitations is not to cast doubt on the utility of the program as a highly competent antenna modeling software core. Quite the opposite: by being alert to the program's limitations, we can avoid producing and relying upon models that cross the limit lines. Staying within the lines is one key to productive and satisfying antenna modeling.</p>
+  <p>Although NEC-4 is beyond the scope of this series, due to its sparse use in amateur circles, an account of some NEC-4 limitations appears in the May- June, 1998, issue of <i>QEX</i>.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

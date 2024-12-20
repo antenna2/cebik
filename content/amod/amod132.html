@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AM BC Modeling with NEC</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>AM BC Modeling with NEC<br>
+    2. Quandaries: How Many Legs? How Good is Good?</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>In the preceding episode, we moved step-by-step through the process needed in NEC to obtain most of the basic information required for simple monopoles in AM BC service. For simplicity, we used the NAB-recommended substitute for the complex interlaced pieces of a physical tower: a single wire with a diameter that was 0.72 times the face width of a presumed triangular tower 2' across. The simplification was justified in that episode because we wanted to feature the steps in the process, not the geometry of the monopole tower.
+  <p>In this set of notes, we shall consider in more detail the structure of towers, at least in the abstract. Most currently available new towers use a triangular structure, although many 4-sided towers still exist. We shall retain the presumed 24" spacing between vertical legs, even though 18" may be more common in practice. Our goal remains the illustration of modeling situations and techniques rather than a replication of actual engineering efforts.</p>
+  <p>In fact, for reference, we shall use one of the last of our models, a 234' tower composed of a single lossless wire that is 17.76" in diameter as a substitute for a 2' tower face. As the model listing shows, we have placed the antenna over perfect ground and requested both an elevation pattern and a ground wave reading for field strength at a design frequency of 1.0 MHz. The model uses a current source and includes the remote wire and network to achieve this goal. The source current in peak Amps is set for a power level of 1 kilowatt. The only difference between this model and those in the preceding episode is that the new one grows from the ground upward. It uses 41 segments to assure that the source is as close as feasible to the actual ground level. In this and subsequent models, I shall use NEC-4, although applying NEC-2 to the models should produce reasonably consistent results.</p>
+  <pre>
+CM resonant monopole, perfect ground
+CM NAB substitute single-wire monopole
+CE
+GW 1 41 0 0 0 0 0 234 0.74
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1 0 0
+GN 1
+EX 0 30901 1 0 0.0 7.4515
+NT 30901 1 1 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>The following table summarizes the essential information in which we are interested in these notes. F-S indicates the field strength, and I have left the value in the NEC-report form of showing peak milliVolt/meter.</p>
+  <pre>
+Resonant Single-Wire Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+36.02 + j0.31     7.4515          5.15         1.999   0.00     275.2 mV/m @ -45.9 deg
+</pre>
+  <p>The source impedance provides a means of correlating our standard model against what we obtain from succeeding models. The required current will reflect the same comparison from a different perspective. The combination of the gain and Average Gain Test (AGT) score, shown in both basic and dB form) will give us a measure of the model's adequacy as a model. (Note that for a monopole over perfect ground, an ideal AGT value is 2.000. Some programs such as EZNEC pre-convert this value to 1.000 so that results coincide with free-space applications of the AGT test.) The field strength reading provides an additional check on how severely a model may deviate from the standard form in terms of data that may be critical for some applications.</p>
+  <p>My reason for a somewhat elaborate set-up emerges from a collection of models that I have seen over the years. Many NEC modelers wish to model multi-legged towers as multi-legged geometry structures within the model. There are two general questions that such models pose. Are they necessary? Are they adequate? However, perhaps the most fundamental question is how we should source or feed multi-leg models.</p>
+  <p><b>Feeding 3-Legged Towers</b></p>
+  <p>We shall begin with the simplest possible multi-leg model: three 2"-diameter legs 2' apart center-to-center. The tower height remains 234' for this and all succeeding models. The model omits all crosspieces. Hence, it requires attention to the feedpoint.</p>
+  <p>As the model shows, we use 3 separate source segments, one per leg on the lowest segment of that leg. We adjust the current so that the total power fed to the model--summing all three legs--is 1 kW. The source impedance requires a post-run calculation that essentially takes any one of the source impedance values and divides it by 3 to obtain the net source impedance. The technique is equivalent to a centered physical feedpoint with negligible distance between that point and each leg. It also presumes that the legs in operation have equal current levels at any height, a situation relatively assured by the actual cross pieces on a tower.</p>
+  <p>One significant reason for using the 3-source technique is to avoid a large collection of very short wires in the base region of the model. The shortest length that a NEC segment should be for accuracy in the reported data is 0.001 wavelength. At 1 MHz, that length is 11.803". Even though shorter segments may still meet segment-length-to-diameter ratio guidelines, their presence jeopardizes the trustworthiness of some results. The 3-source method (which would become a 4-source method for a square tower) avoids both the problem of very short segments and a companion problem of adjacent segments in the model having very different lengths.</p>
+  <pre>
+CM resonant 3-leg monopole, perfect ground
+CM 3 sources
+CE
+GW 1 41 1.1547 0 0 1.1547 0 234 0.085
+GW 2 41 -0.5774 1 0 -0.5774 1 234 0.085
+GW 3 41 -0.5774 -1 0 -0.5774 -1 234 0.085
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.4928
+EX 0 30902 1 0 0.0 2.4928
+EX 0 30903 1 0 0.0 2.4928
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>The three tower legs in the model are set in a triangular pattern so that the center of the 3 legs is at X=0 and Y=0 in the coordinate system. <b>Fig. 1</b> shows the handy relationships that make such arrangements routine.</p>
+  <center>
+    <img src="amod132-1.gif" border="2" height="300" hspace="9" vspace="5" width="300">
+  </center>
+  <p>Of course, to feed the 3 legs with separate current sources, we require 3 separate remote wires and networks. The following data provide the results of our modeling exercise. The impedance value shown is the calculated value derived from the 3 reported values.</p>
+  <pre>
+Resonant 3-Leg, 3-Source Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+35.76 - j0.76     2.4928/leg      5.15         1.999   0.00     275.2 mV/m @ -45.8 deg
+</pre>
+  <p>The impedance is within a quarter-Ohm of the single-wire standard model, and all other data are virtually identical.</p>
+  <p>If a modeler wishes to obtain a composite or net source impedance without the need for a post-run calculation, there is a straightforward technique to obtain it. Let's use the very same 3 tower legs. However, instead of placing current sources on the lowest segment of the legs, we shall add a remote wire that is far enough away not to interact with the basic structure. The one-segment wire will be short and thin and will act as the source segment plus a terminal point for transmission lines running to each of the 3 legs, more specifically, to the segments formerly used as the source points. The physically modeled distance between the new wire and the tower legs does not determine the electrical distance between the points. The TL control command allows the user to specify that distance. If we select a very short distance, such a 0.001', the impedance cannot undergo any significant transformation. In effect, we have created a short circuit between each leg and the new wire. Since TL constructs are not part of the model geometry, they do not enter the calculations for the output data except for the source information.</p>
+  <pre>
+CM resonant 3-leg monopole, perfect ground
+CM 1 source segment, 3 TLs
+CE
+GW 1 41 1.1547 0 0 1.1547 0 234 0.085
+GW 2 41 -0.5774 1 0 -0.5774 1 234 0.085
+GW 3 41 -0.5774 -1 0 -0.5774 -1 234 0.085
+GW 4 1 5000 0 0.1 5000 0 1.1 0.005
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 7.4783
+NT 30901 1 4 1 0 0 0 1 0 0
+TL 1 1 4 1 50 .0001 0 0 0 0  ! User Defined VF = 1
+TL 2 1 4 1 50 .0001 0 0 0 0  ! User Defined VF = 1
+TL 3 1 4 1 50 .0001 0 0 0 0  ! User Defined VF = 1
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1 1
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>One difficulty with using the remote source wire is that visualization becomes difficult. <b>Fig. 2</b> shows that we will not be able to visually inspect the tower legs, even at the maximum limits of viewer magnification.</p>
+  <center>
+    <img src="amod132-2.gif" border="2" height="100" hspace="9" vspace="5" width="370">
+  </center>
+  <p>Nevertheless, as shown in the data table, we are able to draw the desired information from the NEC output report and from program selections from that table. The current value is for the source segment and not for each leg. The current at each former source point on the tower legs is 2.4928 Apk, and the phase shift is only -0.007 degrees due to the use of the transmission-line connections.</p>
+  <pre>
+Resonant 3-Leg, 1-Source Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+35.76 - j0.76     7.4780          5.15         1.999   0.00     275.1 mV/m @ -45.8 deg
+</pre>
+  <p>Since the legs are identical except for their position, we need not model all three. Instead, we may simplify the modeling by replicating 1 leg. Since we took the initial trouble to place the legs so that the coordinate center falls at the center of the triangle formed by the legs, we may simple replicate and rotate the first leg by 120 degrees. In the model, I have returned to the 3-source system to allow a visualization of the result.</p>
+  <pre>
+CM resonant 3-leg monopole, perfect ground
+CM 3 sources
+CM GM for legs 2 and 3
+CE
+GW 1 41 1.1547 0 0 1.1547 0 234 0.085
+GM 1 2 0 0 120 0 0 0
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.4928
+EX 0 30902 1 0 0.0 2.4928
+EX 0 30903 1 0 0.0 2.4928
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <center>
+    <img src="amod132-3.gif" border="2" height="340" hspace="9" vspace="5" width="200">
+  </center>
+  <p>Since the GM command also increments the tag number by 1 for each added replication of the original wire, nothing else in the model requires change. In fact, the data for the model is identical to the data for the original 3-leg, 3-source model. Although the application of the GM command is fairly trivial in this application, it will play a more significant role in subsequent models. Our models, whose primary use has been to illustrate methods of feeding multi-leg towers, have used a highly simplified structure. Many modelers wish to show all of the towers pieces. Even when we keep the segment length above the NEC minimum, we may easily have 2000 or more segments. Modeling those segments as individual GW entries can result in some very large model files.</p>
+  <p><b>Modeling Tower Bits and Pieces</b></p>
+  <p>So far, we have looked at towers composed only of 3 legs and found them to yield results that are consistent with those produced by the NAB-recommended substitute single-wire tower model. However, many modelers wish to include all or some of the typical horizontal and sloping members that compose actual towers. Therefore, we should look in a progressive succession at constructing such models--and see what consequences emerge.</p>
+  <p>The first example is simple. We shall subdivide the 234' tower into 3 equal 58.5' sections. In addition to the vertical legs, we shall add a horizontal cross element at the top of each section, as shown in the partial model view in <b>Fig. 4</b>. For ease of viewing, we shall retain the 3-source method of feeding the tower, although the TL method of combining the sources into a single source always remains available.</p>
+  <center>
+    <img src="amod132-4.gif" border="2" height="340" hspace="9" vspace="5" width="200">
+  </center>
+  <p>Our first version of the model uses only wires (GW commands) to construct the tower.</p>
+  <pre>
+CM resonant 3-leg monopole  perfect ground
+CM 3 sources
+CM 4 sections with cross braces
+CE
+GW 1 10 1.1547 0 0 1.1547 0 58.5 0.085
+GW 2 10 -0.5774 1 0 -0.5774 1 58.5 0.085
+GW 3 10 -0.5774 -1 0 -0.5774 -1 58.5 0.085
+GW 4 1 1.1547 0 58.5 -0.5774 1 58.5 0.085
+GW 5 1 -0.5774 1 58.5 -0.5774 -1 58.5 0.085
+GW 6 1 -0.5774 -1 58.5 1.1547 0 58.5 0.085
+GW 7 10 1.1547 0 58.5 1.1547 0 117 0.085
+GW 8 10 -0.5774 1 58.5 -0.5774 1 117 0.085
+GW 9 10 -0.5774 -1 58.5 -0.5774 -1 117 0.085
+GW 10 1 1.1547 0 117 -0.5774 1 117 0.085
+GW 11 1 -0.5774 1 117 -0.5774 -1 117 0.085
+GW 12 1 -0.5774 -1 117 1.1547 0 117 0.085
+GW 13 10 1.1547 0 117 1.1547 0 175.5 0.085
+GW 14 10 -0.5774 1 117 -0.5774 1 175.5 0.085
+GW 15 10 -0.5774 -1 117 -0.5774 -1 175.5 0.085
+GW 16 1 1.1547 0 175.5 -0.5774 1 175.5 0.085
+GW 17 1 -0.5774 1 175.5 -0.5774 -1 175.5 0.085
+GW 18 1 -0.5774 -1 175.5 1.1547 0 175.5 0.085
+GW 19 10 1.1547 0 175.5 1.1547 0 234 0.085
+GW 20 10 -0.5774 1 175.5 -0.5774 1 234 0.085
+GW 21 10 -0.5774 -1 175.5 -0.5774 -1 234 0.085
+GW 22 1 1.1547 0 234 -0.5774 1 234 0.085
+GW 23 1 -0.5774 1 234 -0.5774 -1 234 0.085
+GW 24 1 -0.5774 -1 234 1.1547 0 234 0.085
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.479
+EX 0 30902 1 0 0.0 2.479
+EX 0 30903 1 0 0.0 2.479
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Even with only 4 sections, the model file size has grown considerably. Since each of the 4 sections is identical, we can shorten the file by using the GM command after completing the lowest section with GW commands. We simply replicate the section three more times, translating each new section 58.5' higher (+Z) than the preceding one.</p>
+  <pre>
+CM resonant 3-leg monopole  perfect ground
+CM 3 sources
+CM 4 sections with cross braces
+CE Section 1 = GW, Sections 2-4 = GM
+CE
+GW 1 10 1.1547 0 0 1.1547 0 58.5 0.085
+GW 2 10 -0.5774 1 0 -0.5774 1 58.5 0.085
+GW 3 10 -0.5774 -1 0 -0.5774 -1 58.5 0.085
+GW 4 1 1.1547 0 58.5 -0.5774 1 58.5 0.085
+GW 5 1 -0.5774 1 58.5 -0.5774 -1 58.5 0.085
+GW 6 1 -0.5774 -1 58.5 1.1547 0 58.5 0.085
+GM 6 3 0 0 0 0 0 58.5
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.479
+EX 0 30902 1 0 0.0 2.479
+EX 0 30903 1 0 0.0 2.479
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>Both model files yield identical data output reports, summarized in the following table.</p>
+  <pre>
+Resonant 3-Leg, 3-Source 4-Section (with Simple Cross Pieces) Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+36.16 + j1.09     2.479/leg       5.15         1.999   0.00     275.2 mV/m @ -45.8 deg
+</pre>
+  <p>The impedance of the 4-section model is about as much higher than the single-wire version as the 3-leg versions without cross pieces were lower. Resistive values all fall within a 1-Ohm range, while reactive values have a 2-Ohm range. Otherwise, the data are identical. The reason for the lack of difference is the exceptionally low current carried by the cross members. The current magnitude is at least 6 orders of magnitude lower than the current in the vertical legs, making the cross members superfluous in this arrangement.</p>
+  <p>Towers usually also contain sloping elements. When modeling such arrangements, the lowest section should omit the sloping wires. The current division below the source at Z=0 will lead to unusable values of impedance and other calculation inaccuracies.</p>
+  <p>As a first trial of adding sloping tower pieces, we shall retain the simple 4-section structure, with only horizontal cross pieces in the lowest section. Then we shall add sloping wires to the second section and replicate it twice more to reach the 234' top height. The model will prove instructive in several ways.</p>
+  <pre>
+CM resonant 3-leg monopole  perfect ground
+CM 3 sources
+CM 4 sections with cross braces
+CE
+GW 1 10 1.1547 0 0 1.1547 0 58.5 0.085
+GW 2 10 -0.5774 1 0 -0.5774 1 58.5 0.085
+GW 3 10 -0.5774 -1 0 -0.5774 -1 58.5 0.085
+GW 4 1 1.1547 0 58.5 -0.5774 1 58.5 0.085
+GW 5 1 -0.5774 1 58.5 -0.5774 -1 58.5 0.085
+GW 6 1 -0.5774 -1 58.5 1.1547 0 58.5 0.085
+GW 7 10 1.1547 0 58.5 1.1547 0 117 0.085
+GW 8 10 -0.5774 1 58.5 -0.5774 1 117 0.085
+GW 9 10 -0.5774 -1 58.5 -0.5774 -1 117 0.085
+GW 10 1 1.1547 0 117 -0.5774 1 117 0.085
+GW 11 1 -0.5774 1 117 -0.5774 -1 117 0.085
+GW 12 1 -0.5774 -1 117 1.1547 0 117 0.085
+GW 13 10 1.1547 0 58.5 -0.5774 1 117 0.085
+GW 14 10 -0.5774 1 58.5 -0.5774 -1 117 0.085
+GW 15 10 -0.5774 -1 58.5 1.1547 0 117 0.085
+GM 1 2 0 0 0 0 0 58.5 7 1 15 10
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.488
+EX 0 30902 1 0 0.0 2.488
+EX 0 30903 1 0 0.0 2.488
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <center>
+    <img src="amod132-5.gif" border="2" height="340" hspace="9" vspace="5" width="350">
+  </center>
+  <p>The ease of replicating upper sections that are identical to lower sections is clear from the GM command line entry. <b>Fig. 5</b> shows the lowest section and the beginning of the second section, with its added sloping wires. The right side of the figure shows a transition between upper sections in more detail. Initially, to avoid NEC's well-known accuracy slippage when we have angular junctions of wires with different diameters, I have modeled everything with 2" diameter (0.085' radius) wires.</p>
+  <pre>
+Resonant 3-Leg, 3-Source 4-Section (with Sloping and Horizontal Cross Pieces) Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+35.90 + j7.77     2.047/leg       5.25         2.047   +0.10    278.5 mV/m @ -45.8 deg
+</pre>
+  <p>The data departs noticeably from the data from preceding models. The reactive component of the source impedance has increased, as has the gain value and the field-strength report (still in peak mV/m for easy comparison with other data tables). The key variance in the data is the AGT score. Although a value of 2.047 seems only a small deviation from the ideal value of 2.000, it results in a 0.1-dB error in the gain report. It is not possible from the data stream to know whether the impedance report is reliable in comparison to the reports for the other models. The last statement, of course, rests on a presumption that the difference is sufficient to make a difference to a modeling task. For tasks in which the difference makes no differences, there would be no reason to resort to the more complex model.</p>
+  <p>One key reason for the variance in AGT scores is the very shallow angle of the sloping wires at the intersection with the vertical model wires. The two wires inter-penetrate in the region of current sensitivity in the joining segments, although not enough to trigger NEC-4 warnings. To counter this problem, we need to better reflect reality and to use smaller tower sections.</p>
+  <center>
+    <img src="amod132-6.gif" border="2" height="340" hspace="9" vspace="5" width="300">
+  </center>
+  <p><b>Fig. 6</b> shows the outline of the lowest section without any sloping wires, along with the next section--prior to the use of the GM command to add 115 more 2' section to arrive at the 234' total tower height. Each 2' section, also 2' wide, uses 2 segments per wires to remain within the NEC minimum segment length. As well, all wires are 0.17' in diameter, consistent with preceding models of multi-leg towers in this exercise set. The total model has the following lines.</p>
+  <pre>
+CM resonant 3-leg monopole  perfect ground
+CM 3 sources
+CM 117 sections with cross braces (diameter = to legs)
+CE
+GW 1 2 1.1547 0 0 1.1547 0 2 0.085
+GW 2 2 -0.5774 1 0 -0.5774 1 2 0.085
+GW 3 2 -0.5774 -1 0 -0.5774 -1 2 0.085
+GW 4 2 1.1547 0 2 -0.5774 1 2 0.085
+GW 5 2 -0.5774 1 2 -0.5774 -1 2 0.085
+GW 6 2 -0.5774 -1 2 1.1547 0 2 0.085
+GW 7 2 1.1547 0 2 1.1547 0 4 0.085
+GW 8 2 -0.5774 1 2 -0.5774 1 4 0.085
+GW 9 2 -0.5774 -1 2 -0.5774 -1 4 0.085
+GW 10 2 1.1547 0 4 -0.5774 1 4 0.085
+GW 11 2 -0.5774 1 4 -0.5774 -1 4 0.085
+GW 12 2 -0.5774 -1 4 1.1547 0 4 0.085
+GW 13 2 1.1547 0 2 -0.5774 1 4 0.085
+GW 14 2 -0.5774 1 2 -0.5774 -1 4 0.085
+GW 15 2 -0.5774 -1 2 1.1547 0 4 0.085
+GM 9 115 0 0 0 0 0 2 7 1 15 2
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.472
+EX 0 30902 1 0 0.0 2.472
+EX 0 30903 1 0 0.0 2.472
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <p>The model takes all reasonable precautions to arrive at a balance between reflecting a realistic physical structure and meeting modeling guidelines. The following table shows the data that emerges from the 1053-wire, 2103-segment model.</p>
+  <pre>
+Resonant 3-Leg, 3-Source 117-Section (with Sloping and Horizontal Cross Pieces) Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+36.36 + j5.94     2.472/leg       5.21         2.028   +0.06    277.2 mV/m @ -46.5 deg
+</pre>
+  <p>The AGT score, while more ideal than the preceding model, still departs from a perfect 2.000 value. The result is a gain value that is too high, and a corresponding field-strength value. The degree by which the model departs from the ideal is noticeable. Whether it is significant to a modeling task is a user-decision, largely created by the standards brought to the exercise. Again, if the differences are too small to make a difference to the enterprise, using the complex model loses its rationale.</p>
+  <p>To complete our sequence of hypothetical models, let's revise the complex model by showing one further modeler urge. The sloping and horizontal members of a tower generally are smaller in diameter than the legs. Although it is a technical violation of recommended NEC practice to have angular junctions of wires with dissimilar diameters, we shall reduce the diameter values of these linking pieces to 1" (0.0425' radius). The visual appearance of the model does not change, but the changes are noticeable in the model file.</p>
+  <pre>
+CM resonant 3-leg monopole  perfect ground
+CM 3 sources
+CM 117 sections with cross braces (1/2-diameter of legs)
+CE
+GW 1 2 1.1547 0 0 1.1547 0 2 0.085
+GW 2 2 -0.5774 1 0 -0.5774 1 2 0.085
+GW 3 2 -0.5774 -1 0 -0.5774 -1 2 0.085
+GW 4 2 1.1547 0 2 -0.5774 1 2 0.0425
+GW 5 2 -0.5774 1 2 -0.5774 -1 2 0.0425
+GW 6 2 -0.5774 -1 2 1.1547 0 2 0.0425
+GW 7 2 1.1547 0 2 1.1547 0 4 0.085
+GW 8 2 -0.5774 1 2 -0.5774 1 4 0.085
+GW 9 2 -0.5774 -1 2 -0.5774 -1 4 0.085
+GW 10 2 1.1547 0 4 -0.5774 1 4 0.0425
+GW 11 2 -0.5774 1 4 -0.5774 -1 4 0.0425
+GW 12 2 -0.5774 -1 4 1.1547 0 4 0.0425
+GW 13 2 1.1547 0 2 -0.5774 1 4 0.0425
+GW 14 2 -0.5774 1 2 -0.5774 -1 4 0.0425
+GW 15 2 -0.5774 -1 2 1.1547 0 4 0.0425
+GM 9 115 0 0 0 0 0 2 7 1 15 2
+GW 30901 1 9901.0000 9901.0000 9901.0000 9901.0001 9901.0001 9901.0001 .00001
+GW 30902 1 9902.0000 9902.0000 9902.0000 9902.0001 9902.0001 9902.0001 .00001
+GW 30903 1 9903.0000 9903.0000 9903.0000 9903.0001 9903.0001 9903.0001 .00001
+GS 0 0 .3048
+GE 1
+GN 1
+EX 0 30901 1 0 0.0 2.4733
+EX 0 30902 1 0 0.0 2.4733
+EX 0 30903 1 0 0.0 2.4733
+NT 30901 1 1 1 0 0 0 1 0 0
+NT 30902 1 2 1 0 0 0 1 0 0
+NT 30903 1 3 1 0 0 0 1 0 0
+FR 0 1 0 0 1 1
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+RP 1 1 1 0000 0 0 1.00000 1.00000 1609.344
+EN
+</pre>
+  <pre>
+Resonant 3-Leg, 3-Source 117-Section (with Sloping and Horizontal Cross Pieces) Monopole Model Data
+
+Impedance (Ohms)  Current (Apk)   Gain (dBi)   AGT     AGT-dB   F-S @ 1 mile
+36.33 + j6.02     2.4733/leg       5.21        2.029   +0.06    277.3 mV/m @ -46.5 deg
+</pre>
+  <p>As the table shows, the numerical degradation of the model due to the changes is minuscule. In large measure, this small change is a function of the fact that vertical legs carry about 3 times the current of the sloping sections. Hence, they remain the dominant factors within the model, with the cross members having only a relatively small supporting role. Once more, if the numerical differences between the models are not significant to a modeling task, we lose any reason for constructing excessively complex tower models.</p>
+  <p><b>Conclusion</b></p>
+  <p>Our set of exercise models has shown that we may construct straightforward multi-leg tower models in lieu of using the NAB-recommended substitute single-wire tower model. For models using a uniform diameter or face-width for the total height, the simple 3-leg models, even with periodic horizontal crosspieces, show a very good correlation to the single-wire model. The feeding or sourcing method is easy to implement, whether we employ separate sources for each tower leg or develop a composite source using near-zero-length transmission lines.</p>
+  <p>When we increased the complexity of the tower models to include both horizontal and sloping cross members, we encountered some interesting results that raise questions that one cannot answer from a perspective wholly within modeling. The complex models depart somewhat from ideal AGT scores. Although the scores are in many contexts perfectly acceptable, in the present comparative context, they show variations in the data reports. The AGT value allows only a correction of the raw gain report. However, variations in the impedance value, especially relative to the reactive component, are not directly correctable.</p>
+  <p>The quandary left behind by these results is whether to use the data from the complex model or to use the data from one of the simpler models with a virtually ideal AGT score. (The AGT scores may or may not be as good when using NEC-2.) The quandary only becomes one if the report differences are sufficiently large to make a difference to the larger task within which the model plays a role. If the differences are not significant, then we have no reason to resort to excessively complex models of towers.</p>
+  <p>The correlations among impedance and other data values among the models is overall very tight. One may legitimately raise the question of whether the tight grouping of values is at least a partial function of the use of resonant tower sizes--234' at 1 MHz. A 90-degree tower for FCC is taller--about 273'. Many towers used in the AM BC service are considerable shorter. Before closing the book on tower modeling in NEC (with special reference to NEC-4), we should do a small survey of what happens when we have tower lengths with a considerable reactive component in their source impedance.</p>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" height="40" width="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

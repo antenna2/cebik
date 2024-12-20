@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Orientation to Near Fields</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>91. An Orientation to NEC Near Fields<br>
+    Part 2. Some Refinements and NEC-4 Additions</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The preceding episode had a simple goal: to orient you to the specifications of a location for a near-field reading using either Cartesian or spherical coordinates. The reading can be for either the electric or the magnetic field. In the process, we also explored the basics of setting up the reading or observation location at multiple points. As indicated in <b>Fig. 1</b>, we learned that if we need multiple observation points at linear intervals, the Cartesian coordinate system of entry may be more useful. If we need observation points at equal-angle increments, then spherical coordinates may prove simpler.</p>
+  <center>
+    <img src="amod91-1.gif" width="551" height="200" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Once we have become oriented to obtaining near-field readings, we are in a better position to appreciate some refinements in the command and its output. We hinted at a number of these items, but the time has come to set them forth explicitly.</p>
+  <p>1. <i>Near-Field Execution</i>: When we request a far-field radiation pattern (RP0), NEC automatically executes the request. If we need a frequency sweep for a single RP0 request, the RP0 automatically executes it. However, if we make multiple RP0 requests and wish the same frequency sweep for each pattern, then we must repeat the FR command specifications prior to each RP0 entry.</p>
+  <p>Near-field request operate differently. As we saw in the preceding episode, when we request a single frequency, the NE and NH commands will self-execute, similarly to the RP0 request. The following model provides us with a concrete example of this situation. You may extract and run the model. Then check the output tables to ensure that results for both the NE and NH command appear.</p>
+  <pre>
+CM NE/NH test
+CM 1-step, Cartesian coordinates
+CM 1 Frequency
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 0 1 1 1 5 10 5 1.0 1.0 1.0
+NH 0 1 1 1 5 10 5 1.0 1.0 1.0
+EN
+</pre>
+  <p>Let's modify only the FR command to set up a 2-step frequency sweep. As the extract from the model shows, we retain the NE and the NH commands, but ask for a 2-step sweep. If you run the model, no near-field outputs will appear.</p>
+  <pre>
+FR 0 2 0 0 295 10
+NE 0 1 1 1 5 10 5 1.0 1.0 1.0
+NH 0 1 1 1 5 10 5 1.0 1.0 1.0
+EN
+</pre>
+  <p>When we request multiple frequencies, each NE or NH command must have a request for execution (normally XQ) somewhere after each request. So the following model puts the requests in place.</p>
+  <pre>
+FR 0 2 0 0 295 10
+NE 0 1 1 1 5 10 5 1.0 1.0 1.0
+XQ
+NH 0 1 1 1 5 10 5 1.0 1.0 1.0
+XQ
+EN
+</pre>
+  <p>However, we are still deficient, since the output will show near electric field readings for both frequencies, but near magnetic fields only for the higher frequency. What we forgot was that the FR command forms a loop relative to the most immediately following execution command (such as XQ or RP). Subsequent execution requests make use only of the highest or final frequency in the sweep. In order to obtain data for both frequencies for both near-field requests, we must repeat the FR loop, as in the final model of this series.</p>
+  <pre>
+FR 0 2 0 0 295 10
+NE 0 1 1 1 5 10 5 1.0 1.0 1.0
+XQ
+FR 0 2 0 0 295 10
+NH 0 1 1 1 5 10 5 1.0 1.0 1.0
+XQ
+EN
+</pre>
+  <p>Now the output report will show a pair of entries each for the near electric and magnetic fields.</p>
+  <p>2. <i>The Peak Field Value Reading</i>: Because many beginning modelers are interested only on the peak field value reading from a given set of near-field requests, we called attention to that entry in the near-field output tables in the preceding episode. We also noted in passing that the value is not the simple vector sum of the values specified in the X, Y, and Z columns. Let's pause a moment to see what that remark meant. We may begin with the single entry tables for our basic model at the beginning of this episode.</p>
+  <pre>
+**** NEAR ELECTRIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\91-1.nec
+
+            -  LOCATION  -                     -  EX  -               -  EY  -               -  EZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS        VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES     VOLTS/M
+     5.000000  10.000000   5.000000     6.6689E-03    25.21    1.3338E-02    25.21    3.8323E-02  -149.78    4.1105E-02
+
+**** NEAR MAGNETIC FIELDS ****
+**** Frequency = 299.79, File: C:\ant\NE-NH\91-1.nec
+
+            -  LOCATION  -                     -  HX  -               -  HY  -               -  HZ  -       - PEAK FLD -
+        X          Y          Z          MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS     METERS     METERS         AMPS/M   DEGREES       AMPS/M   DEGREES       AMPS/M   DEGREES      AMPS/M
+     5.000000  10.000000   5.000000     9.7519E-05  -150.52    4.8760E-05    29.48    5.0537E-11    18.32    1.0903E-04
+</pre>
+  <p>If we create vector sums for EX, EY, and EZ, and then for HX, HY, and HZ, we arrive at two values: 4.1122E-2 V/m for the electric field and 1.0903E-4 A/m for the magnetic field. The fact that the square root of the sum of the squares of the magnitudes appears to give a precise result for the magnetic near field often leads us to believe that something must be wrong with the core when it calculates the value for the other field.</p>
+  <p>What is wrong is our geometric interpretation of what is essentially a temporal calculation. If the phase angles were identical or if one component dominates, then the simple vector sum would be a good approximation of the peak voltage or current. Otherwise, the peak value will be equal to or less than the result of the geometric calculation. The phase differences among the component values tell us that each reaches its magnitude at a different time during a cycle, and so the calculation of a peak value must take that fact into account.</p>
+  <p>The actual calculation of the peak value is a multi-step procedure found in the NEC routine called NFPAT. It proceeds approximately as follows:</p>
+  <p>For either NE or NH, for a given field point defined by X, Y, and Z, let</p>
+  <ul>
+    <li>EXM, EYM, EZM = magnitude of EX, EY, EZ (given in peak volts/m or peak amps/m)</li>
+    <li>EXP, EYP, EZP = phase angle of EX, EY, EZ (degrees or radians)</li>
+  </ul>
+  <p>"E" is a stand-in for either the voltage or the current. There is no difference in the calculation procedures. Next, let's calculate some intermediate terms involving the phase angles, finally arriving at a term called "TP."</p>
+  <center>
+    <img src="amod91e1.gif" width="412" height="26">
+  </center>
+  <center>
+    <img src="amod91e2.gif" width="392" height="26">
+  </center>
+  <center>
+    <img src="amod91e3.gif" width="106" height="24">
+  </center>
+  <p>Now we may include TP in the final calculation involving the squares of the component magnitudes.</p>
+  <center>
+    <img src="amod91e4.gif" width="277" height="31">
+  </center>
+  <p>The resulting peak voltage or current reading (called "Epeak") in V/m or A/m is also in peak units.</p>
+  <p>3. <i>NEC-2 vs. NEC-4 Spherical Coordinate Entries</i>: When entering rectangular coordinates (NE0/NH0), there is no difference between the NEC-2 and NEC-4 entries. However, there is an important difference between the two cores when entering spherical coordinates. The two cores swap places between the phi and theta entries. Consider the following model in NEC-2 format.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 1 1 1 1 12.247449 63.434949 65.905157 1.0 1.0 1.0
+NH 1 1 1 1 12.247449 63.434949 65.905157 1.0 1.0 1.0
+EN
+</pre>
+  <p>The format for the NE and the NH lines is as follows:</p>
+  <pre>
+     I1     I2    I3    I4     F1         F2         F3           F4    F5    F6
+Cmd  Cart/  No. of Points      Coordinate                         Step Size
+     Spher  r     phi   theta  r (radius) phi angle  theta angle  r     phi   theta
+NE   1      1     1     1      12.247449  63.434949  65.905157    1.0   1.0   1.0
+NH   1      1     1     1      12.247449  63.434949  65.905157    1.0   1.0   1.0
+</pre>
+  <p>To achieve the same goal in NEC-4, we must use the following model.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 .25 0 0 .75 .001
+GE 1 0 0
+GN 2 0 0 0 13.0000 0.0050
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 1 1 1 1 12.247449 65.905157 63.434949 1.0 1.0 1.0
+NH 1 1 1 1 12.247449 65.905157 63.434949 1.0 1.0 1.0
+EN
+</pre>The terms of the NE and NH lines have changed position with respect to phi and theta.
+  <pre>
+     I1     I2    I3    I4     F1         F2           F3           F4    F5    F6
+Cmd  Cart/  No. of Points      Coordinate                           Step Size
+     Spher  r     phi   theta  r (radius) theta angle  phi angle    r     phi   theta
+NE   1      1     1     1      12.247449  65.905157    63.434949    1.0   1.0   1.0
+NH   1      1     1     1      12.247449  65.905157    63.434949    1.0   1.0   1.0
+</pre>In programs like GNEC and NEC-Win Pro, the assist screens will appear identical, as in <b>Fig. 2</b>.
+  <center>
+    <img src="amod91-2.gif" width="597" height="544" border="2" vspace="5" hspace="9">
+  </center>
+  <p>However, each screen will create the required NE or NH entry correctly for the core in use. Since there is nothing in the NE or NH entries to create an error in the core run, NEC will not warn you if you accidentally mis-enter the phi and theta angles when creating the line without assistance. The results will simply be wrong. You may block copy the two versions of the model and run them on the same core to examine the disparity of the results.</p>
+  <p>4. <i>The Antenna Structure and the Ground</i>: The safest procedure to obtain controlled results is to ensure that no selected field point falls within the wires of the antenna, that is, along the segment line or within its radius. If a field point does fall within these confines, NEC will move it an amount equivalent to the wire radius outside the wire in a direction normal to the plane for a reading and along the vector from the source segment to the observation point. Because the results may not include that segment's contribution to the H field or to the radial component of the E field, it is always wise to pre-plan the observation points so that they all fall outside the wire segments of the model.</p>
+  <p>The preferred ground calculation system for near-field analysis is the Sommerfeld-Norton (SN) system. However, there are restrictions. To minimize errors that tend to appear at very low frequencies, no observation point should be exactly at ground level. In fact, the minimum distance above ground in NEC-2 should be 0.001 wavelength. The reflection coefficient approximation (RCA) system, sometimes called the "fast" ground calculation system, may produce errors in the magnetic field calculations for observation points at some distance from the source. The RCA system does not include surface-wave contributions for this calculation and so may underestimate the field strength.</p>
+  <p>As noted in the previous episode, NEC differs from textbook treatments of near field calculations. Most texts introduce near-field calculations by extracting from a total field equation those elements that are most influential relative to the near field strength and then ignoring the remaining elements. NEC includes the near-field and the total field elements and so will take into account influences by the near field and the ground-wave factors.</p>
+  <p><b>NE/NH and LE/LH</b></p>
+  <p>NEC-4 introduced a new pair of near-field commands to the pair that it inherited from NEC-2. So you have a choice between using the pair that best suits the requirement of the modeling task. (Of course, you have no requirement to use either NE and NH or LE and LH in pairs, and you may use both within the same model.) NE and NH are general abbreviations for near-electric and near-magnetic fields. LE and LH indicate near-electric and near-magnetic fields along a line. The differences between the two systems of calculating near fields may prove useful, not only in understanding the new NEC-4 commands, but as well in better appreciating the terms of the NE and NH output reports.</p>
+  <p>The NE/NH command set calculates its observation positions based upon either Cartesian or spherical coordinates, but it always reports its results in terms of field strength in Cartesian coordinates. However, it does not initially yield a single field strength value for the X, Y, and Z coordinate marking the observation position. Instead, it yields 3 values, each of which applies to that position in a plane parallel to the indicated axis. The components of the peak field strength are individual field strengths related to the axes of the coordinate system itself. See the left side of <b>Fig. 3</b> for a rough representation.</p>
+  <center>
+    <img src="amod91-3.gif" width="600" height="300" border="2" vspace="5" hspace="9">
+  </center>
+  <p>On the right in <b>Fig. 3</b> is a similar situation. An observation point has a bearing from the source that is identical to the one on the left. However, the LE and LH command pair request output data along a defined line, in this case, running from the source to the final observation point. The data returned by the request provides electric or magnetic field strength using the axial direction of the line as the primary field component. Also provided are two transverse components, one horizontal and the other vertical. If we define the axial vector as a-cap, and we may let h-cap and v-cap be the horizontal and vertical transverse components, respectively, as roughly represented on the right side of <b>Fig. 3</b>. The actual vectors use the following equations.</p>
+  <center>
+    <img src="amod91e5.gif" width="312" height="26">
+  </center>
+  <p>The key entry data for both the LE and LH command are the number of points along the line to use for field strength reports and the starting and ending coordinates of the line. Hence, the pair of commands has the following structure.</p>
+  <pre>
+CMD     I1     I2     I3     I4     F1     F2     F3     F4     F5     F6
+        RSET   NPTS   0      0      X1     Y1     Z1     X2     Y2     Z2
+LE      0      16     0      0      0      0      0      0      1.5    .5
+LH      0      16     0      0      0      0      0      0      1.5    .5
+</pre>
+  <p>Both of the sample lines request a report using 16 points along a line defined by 0, 0, 0 at end 1 and by 0, 1.5, and 0.5 at end 2. The command uses the same execution rules as the NE/NH pair. It will self execute if there is only one frequency requested. However, for multiple frequencies in the FR command, it requires either a following RP or XQ command to execute. As well, if there are multiple requests as well as multiple frequencies, then the FR command requires repetition before each LE or LH command to ensure that data is available for all requests at all frequencies. As well LE and LH are subject to the same ground and boundary conditions as NE and NH.</p>
+  <p>It is possible to set up NE/NH models so that they cover the same observation points as corresponding LE/LH models. Consider the following conventional near-field model. It uses spherical coordinates and is set up for NEC-4.</p>
+  <pre>
+CM NE/NH test
+CE
+GW 1 11 0 0 -.5 0 0 .5 .001
+GE 0 0 0
+GN -1
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+NE 1 16 1 1 0 71.565051 90 .10540932 0 0
+NH 1 16 1 1 0 71.565051 90 .10540932 0 0
+EN
+</pre>
+  <p>The model requests 16 observation point along a line defined by a phi angle of 90 degrees and a theta angle of 71.565 degrees. The selection is not accidental, since the line formed has regularly spaced observation points that terminate at round numbers. The electric field report from NEC-4 is as follows.</p>
+  <pre>
+***************************************** NEAR ELECTRIC FIELDS *****************************************
+**** Frequency = 299.79, File: C:\ant\NE-NH\91-3.nec
+
+              -  LOCATION  -                     -  EX  -               -  EY  -               -  EZ  -       - PEAK FLD -
+        X           Y           Z           MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE     MAGNITUDE
+      METERS      METERS      METERS         VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES     VOLTS/M
+      0.000000    0.000000    0.000000     0.0000E+00     0.00    0.0000E+00     0.00    1.1000E+01  -180.00    1.1000E+01
+      0.000000    0.100000    0.033333     3.3698E-09    -3.88    2.7694E-01    -3.88    8.1373E-01   147.90    8.5038E-01
+      0.000000    0.200000    0.066667     1.0570E-09    -4.90    8.6864E-02    -4.90    3.9996E-01   101.89    4.0078E-01
+      0.000000    0.300000    0.100000     2.9706E-10    20.67    2.4413E-02    20.67    3.0347E-01    58.81    3.0408E-01
+      0.000000    0.400000    0.133333     2.9407E-10    79.32    2.4168E-02    79.32    2.5943E-01    21.14    2.5974E-01
+      0.000000    0.500000    0.166667     4.0556E-10    75.92    3.3330E-02    75.92    2.2690E-01   -14.38    2.2690E-01
+      0.000000    0.600000    0.200000     4.5147E-10    56.32    3.7103E-02    56.32    1.9972E-01   -49.58    1.9999E-01
+      0.000000    0.700000    0.233333     4.5907E-10    31.00    3.7728E-02    31.00    1.7694E-01   -85.08    1.7774E-01
+      0.000000    0.800000    0.266667     4.4839E-10     2.55    3.6850E-02     2.55    1.5796E-01  -120.99    1.5932E-01
+      0.000000    0.900001    0.300000     4.2974E-10   -27.93    3.5317E-02   -27.93    1.4217E-01  -157.27    1.4399E-01
+      0.000000    1.000001    0.333334     4.0824E-10   -59.84    3.3550E-02   -59.84    1.2897E-01   166.13    1.3114E-01
+      0.000000    1.100001    0.366667     3.8636E-10   -92.79    3.1752E-02   -92.79    1.1785E-01   129.29    1.2026E-01
+      0.000000    1.200001    0.400000     3.6526E-10  -126.55    3.0018E-02  -126.55    1.0840E-01    92.25    1.1097E-01
+      0.000000    1.300001    0.433334     3.4543E-10  -160.93    2.8389E-02  -160.93    1.0029E-01    55.07    1.0296E-01
+      0.000000    1.400001    0.466667     3.2706E-10   164.19    2.6879E-02   164.19    9.3273E-02    17.77    9.5988E-02
+      0.000000    1.500001    0.500000     3.1014E-10   128.92    2.5488E-02   128.92    8.7149E-02   -19.63    8.9880E-02
+</pre>
+  <p>A corresponding LE/LH model set up for the same observation points has the following appearance.</p>
+  <pre>
+CM LE/LH test
+CE NEC-4 only
+GW 1 11 0 0 -.5 0 0 .5 .001
+GE 0 0 0
+GN -1
+EX 0 1 6 00 1 0
+FR 0 1 0 0 299.7925 1
+LE 0 16 0 0 0 0 0 0 1.5 .5
+LH 0 16 0 0 0 0 0 0 1.5 .5
+EN
+</pre>
+  <p>It produces (on NEC-4 only) the following electric field report.</p>
+  <pre>
+********************************** NEAR ELECTRIC FIELDS ALONG A LINE ***********************************
+**** Frequency = 299.79, File: C:\ant\NE-NH\91-3a-nec4.nec
+
+ Unit Vectors:      X        Y        Z
+ Axial       =   0.00000  0.94868  0.31623
+ Transverse1 =  -1.00000  0.00000
+ Transverse2 =   0.00000 -0.31623  0.94868
+
+              -  LOCATION  -                    - Axial -           - Transverse1 -       - Transverse2 -
+        X           Y           Z           MAGNITUDE   PHASE      MAGNITUDE   PHASE      MAGNITUDE   PHASE
+      METERS      METERS      METERS         VOLTS/M   DEGREES      VOLTS/M   DEGREES      VOLTS/M   DEGREES
+        0.0000      0.0000      0.0000     3.4785E+00  -180.00    0.0000E+00     0.00    1.0436E+01  -180.00
+        0.0000      0.1000      0.0333     1.2688E-01    69.64    0.0000E+00     0.00    8.5015E-01   150.69
+        0.0000      0.2000      0.0667     1.2948E-01    64.35    0.0000E+00     0.00    3.8826E-01   105.77
+        0.0000      0.3000      0.1000     1.1507E-01    51.67    0.0000E+00     0.00    2.8186E-01    59.78
+        0.0000      0.4000      0.1333     9.6121E-02    32.83    0.0000E+00     0.00    2.4217E-01    19.60
+        0.0000      0.5000      0.1667     7.8259E-02     9.45    0.0000E+00     0.00    2.1557E-01   -17.18
+        0.0000      0.6000      0.2000     6.3321E-02   -17.26    0.0000E+00     0.00    1.9302E-01   -52.93
+        0.0000      0.7000      0.2333     5.1490E-02   -46.44    0.0000E+00     0.00    1.7343E-01   -88.62
+        0.0000      0.8000      0.2667     4.2284E-02   -77.42    0.0000E+00     0.00    1.5660E-01  -124.54
+        0.0000      0.9000      0.3000     3.5128E-02  -109.74    0.0000E+00     0.00    1.4222E-01  -160.75
+        0.0000      1.0000      0.3333     2.9527E-02  -143.07    0.0000E+00     0.00    1.2995E-01   162.77
+        0.0000      1.1000      0.3667     2.5097E-02  -177.16    0.0000E+00     0.00    1.1945E-01   126.06
+        0.0000      1.2000      0.4000     2.1553E-02   148.14    0.0000E+00     0.00    1.1039E-01    89.16
+        0.0000      1.3000      0.4333     1.8685E-02   112.98    0.0000E+00     0.00    1.0254E-01    52.12
+        0.0000      1.4000      0.4667     1.6337E-02    77.44    0.0000E+00     0.00    9.5684E-02    14.95
+        0.0000      1.5000      0.5000     1.4395E-02    41.59    0.0000E+00     0.00    8.9652E-02   -22.32
+
+
+ Line integral of E       = -1.45652E-01 3.06530E-02 Volts
+ Cumulative line integral = -1.45652E-01 3.06530E-02 Volts
+</pre>
+  <p>The coordinates of each observation point are the same. However, the electric field strength values are nowhere the same, due to the differences in the way in which each command calculates the field component values. The only conditions that will yield the same values for both commands is a model in which the observation point extend along one of the axes.</p>
+  <p>Note that within the LE (and LH) report are supplemental data. At the top of the report, we find the axial, horizontal, and vertical vectors that define the components listed as axial, transverse 1, and transverse 2. For each line, the square root of the sum of the squares of the values is, of course, 1.0. You may use the arc-cosine of axial Z value to obtain the theta angle used in the NE/NH version of the model (71.656 degrees). Given that we have a vertical dipole in free space, the zero-readout for the horizontal vector should not be surprising.</p>
+  <p>At the end of the report, we find the line integral of E, as well as a cumulative integral. We may add to this model additional LE and LH requests so that the end of one line is the beginning of the next. The next line may run in any direction and even return to the series starting point. Each subsequent LE or LH command, as appropriate, will show its own line integral and a new cumulative value. However, the lines must form a continuous string with no breaks; that is, the end-2 coordinates of one line must be the end-1 coordinates of the next line. In addition, the LE and LH commands must form a group with no intervening control commands.</p>
+  <p>These models will serve to both introduce the LE and LH commands within NEC-4 and to show some of the differences between them and the NE/NH commands that are common to both NEC-2 and NEC-4. By no means is this a complete treatment of near-field analysis. In fact, we have not mentioned such fundamental textbook matters as the limit of the near field and the relationship of that limit to the longest dimension of the antenna. These are matters for study outside of the context of the ways to obtain near-field strength calculations within NEC-2 and NEC-4.</p>
+  <p>Instead, our goal has been to orient you to the near-field commands in terms of locating observation points relative to the input options and the output data. In most cases, you will wish to set the voltage source (EX0) for a value that will provide a set input power in order to make the near-field strength data more relevant. We covered such adjustments in past episodes. Indeed, the more you delve into the wide array of available control commands within NEC, the more you realize how inter-related they are in terms of making the most of a modeling endeavor.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

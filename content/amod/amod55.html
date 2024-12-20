@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parallel Sources, Angular Junctions, and Average Gain: Correcting "Weaknesses"</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>55. Parallel Sources, Angular Junctions, and Average Gain: Correcting "Weaknesses"</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The following notes emerged from conversations with Dean Straw of ARRL over a problematical model. By the time I finished investigating the problem, NEC had involved me with several problems simultaneously:</p>
+  <ul>
+    <li>1. The parallel sourcing of two wires simultaneously, as the model attempted to capture the geometry that might actually be used in the physical antenna;</li>
+    <li>2. The angular junction of the two wires as they might meet at a common wire section on which we might place the source; and</li>
+    <li>3. The results of the average gain test and what they might indicate about the model and its improvement.</li>
+  </ul>
+  <p>Let's begin with a review, starting with the Average Gain Test.</p>
+  <p><b>AGT</b></p>
+  <p>Essentially, we only need two numbers to perform the Average Gain Test: the input power and radiated power. For a lossless antenna, the input power and the average radiated power should be equal. Whatever the gain in one or more favored directions, it will be offset by nulls in other directions. Over the entire sphere of free space, the total amount of radiated power can never exceed the power supplied to the antenna. Hence, the ratio of average radiated power to supplied power should be 1. If the ratio differs by more than a small amount from 1, then the model may be considered suspect.</p>
+  <p>The conditions under which an adequate model will show an Average Power Gain (Gave) of 1 also establishes the conditions for performing the Average Gain test. The model is set in free space for a k of 1 and over perfect ground for a k of 2. The wire material must be perfect or lossless. All "real" or resistive parts of loads, networks, and transmission lines must also be set to zero (which may require in a parallel R-L-C load a very high value for the parallel resistance).</p>
+  <p>For test purposes, the model is run by taking a regular sample of the radiation pattern every few degrees, and the results are averaged. The result is a fair reading of the average radiated power. To calculate the average power gain, we simply apply the following simple equation:</p>
+  <center>
+    <img src="amod55e1.gif" width="517" height="87">
+  </center>
+  <p>where Prad is the radiated power as averaged and Pin is the input power as calculated from source information.</p>
+  <p>The average gain figure that results from the test may be higher or lower than 1.0. One proposed gradation of model merit uses the following dividing points:</p>
+  <pre>Gave Value Range                    Significance
+0.95 - 1.05                   Model is considered to have passed the test
+                                    and is likely to be highly accurate.
+0.90 - 0.95 and 1.05 - 1.10   Model is quite usable for most purposes.
+0.80 - 0.90 and 1.10 - 1.20   Model may be useful, but adequacy can be
+                                    improved.
+&lt;0.80 and &gt;1.20               Model is subject to question and should be
+                                    refined.</pre>
+  <p>The user may develop more strict limits for the adequacy of a model based on the specific tasks within which the model plays a role.</p>
+  <p>Most models that deviate in the test from an average gain of 1 show an inverse correlation between errors in gain and in the resistive component of the source impedance. As the gain climbs, the source impedance decreases, and vice versa. For limited purposes, the average gain value derived from the test can be used to correct both figures, using the following equations:</p>
+  <center>
+    <img src="amod55e2.gif" width="586" height="79">
+  </center>
+  <p>and</p>
+  <center>
+    <img src="amod55e3.gif" width="504" height="72">
+  </center>
+  <p>Obviously, an average gain values that is greater than 1 will increase the input resistance and decrease the gain. Values less than 1 will do the opposite.</p>
+  <p><b>Parallel-Fed Driven Elements</b></p>
+  <p>When we develop a model of two or more elements that use a common source, the most common modeling configuration appears at the top of <b>Fig. 1</b>. We bring the element wires together at a common wire. Normally, we use 3 segments to ensure that the source segment and the adjacent segments have the same length. This technique is especially apt for center feeding, since the current levels on the segments on either side of the source segment will be equal.</p>
+  <center>
+    <img src="amod55-1.gif" width="490" height="365" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> also shows an alternative source scheme. We create independent elements, each with its own source wire, with the two wires closely spaced and parallel to each other. However, we place the source on only one wire. From that wire, we run a TL transmission line from one ostensible source segment to the true source segment. By making the TL length very short--for example a fraction of an inch--we obtain negligible impedance transformation, effectively connecting the two source segments in parallel. Moving the actual source from one wire to the other normally yields a difference in impedance that show up only in the hundredths columns of the resistance and reactance. Although the TL length may be only a small fraction of an inch, the actual spacing of the parallel source wires may be somewhat larger. How much larger is part of the story to come.</p>
+  <p>The question that emerges from this abstract presentation is this: when do we need to resort to the second mode of feeding parallel sources? The answer is not simple, but the Average Gain Test can help us decide on a case-by-case basis.</p>
+  <p><b>Some NEC Limitations</b></p>
+  <p>The alternative parallel source systems and the AGT come together in guiding our modeling, because NEC has some limitations. Moreover, some of those limitations may affect NEC-2 more than NEC-4. The two most important limitations for the present situation are these:</p>
+  <ul>
+    <li>1. The sensitivity of NEC to very closely spaced wires, especially where we cannot practically establish exacting parallelism between the segment junctions of the wires; and</li>
+    <li>2. Angular junctions of wires, as we decrease the angle between them.</li>
+  </ul>
+  <p>NEC-2 and NEC-4 appear to be equally susceptible to the first limitation. However, NEC-2 is much more sensitive than NEC-4 to the second limitation. As a foreshadowing of notes to come, in numerous cases of the type we are dealing with, NEC-2 and NEC-4 will yield divergent output reports and AGT values using the upper configuration in Fig. 1. In some cases, we shall be able to achieve a better AGT value and a close coincidence of NEC-2 and NEC-4 reports by using the alternative feed system. Since I have no specific formula to offer as to when we might benefit from moving from one feed system to the other, a set of test cases may have to suffice to give fair warning instead.</p>
+  <p><b>Dipole Elements</b></p>
+  <p>Let's first look at a series of models of dipole elements. Each model will consist of a 28.5-MHz dipole in free space. However, each antenna will have two dipoles fed in parallel. The differences among the models will consist of the angle that each of the two dipoles takes toward the other. In all of the examples, the angular divergence of wires will occur on the X-Y plane.</p>
+  <center>
+    <img src="amod55-2.gif" width="681" height="430" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows our initial case, where the two dipole elements are at 90 degrees to each other. The outline and the wire table show the modeling convention used. A leg from each dipole meets its counterpart at a common section of wire, using the technique at the top of <b>Fig. 1</b>. From this model, we obtained the following NEC-2 and NEC-4 results. (In all dipole listings, gain is the free-space gain and the source resistance is in Ohms.)</p>
+  <pre>DP10-90     Max Gain          Source            AGT Values
+            dBi               Resistance        Ratio       dB
+NEC-4       1.17              34.62             0.997       -0.01
+NEC-2       1.24              34.07             1.013        0.06</pre>
+  <p>Both AGT ratings fall well within the highly accurate range. However, let's perform the corrective calculations as an exercise. The NEC-4 reading is 0.01 dB low, for a corrected value of 1.18 dBi. The NEC-2 reading is 0.06 dB high, for a corrected reading of 1.18 dBi. Using the AGT ratio as a multiplier on the resonant source resistance, we get a correct NEC-4 source resistance of 34.52 Ohms and a NEC-2 correct value of 34.51 Ohms. One could not wish for a better starting example.</p>
+  <center>
+    <img src="amod55-3.gif" width="681" height="437" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 3</b>, we have a model that closes the angle between dipole wires to about 60 degrees, with the element lengths adjusted for resonance within +/-1 Ohm of remnant reactance. Again, the model uses the single common wire system of parallel feeding. In this case, we obtain the following results.</p>
+  <pre>DP10-60     Max Gain          Source            AGT Values
+            dBi               Resistance        Ratio       dB
+NEC-4       1.65              49.37             0.999       -0.00
+NEC-2       1.86              47.05             1.049        0.21</pre>
+  <p>Although the NEC-2 AGT value of 1.049 appears to fall within the highly accurate range, it represents a 0.21 dB over-estimate of the maximum gain. Corrected, the gain become 1.65 dBi, the same value as reported by NEC-4. Correcting the NEC-2 source resistance yields a value of 49.36 Ohms, a match for the NEC-4 value. Whether or not the differences in NEC-2 and NEC-4 reports makes any operational difference, the example provides some insight into the fact that as we close the angle between the dipole element wires, NEC-2 more rapidly departs from a perfect AGT report than does NEC-4.</p>
+  <center>
+    <img src="amod55-4.gif" width="681" height="331" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 4</b> closes the angle still further--to between 19 and 20 degrees. Once more, the element lengths have changed to obtain resonance. From this model, still using the single common feed wire, we obtain the following reports.</p>
+  <pre>DP10-20     Max Gain          Source            AGT Values
+            dBi               Resistance        Ratio       dB
+NEC-4       2.32              57.45             1.069        0.29
+NEC-2       2.96              49.62             1.238        0.93</pre>
+  <p>The 20-degree angle between element wires yields gain values that exceed the possible gain of a dipole in free space for both cores. Moreover, we see a continuing more rapid departure from an ideal AGT value in the NEC-2 report than the NEC-4 report. However, even the NEC-4 report has fallen out of the ostensible "highly accurate" range.</p>
+  <p>Corrected, the NEC-4 maximum gain is 2.03 dBi, the same value as the corrected NEC-2 maximum gain value. The corrected NEC-4 source resistance is 61.41 Ohms, while correcting NEC-2 yield 61.42 Ohms. Once more, the AGT permits us to correct the values listed, but we have a remnant difficulty. The NEC-4 source impedance shows a reactance of +0.33 Ohms, while the NEC-2 report shows +1.40 Ohms. The AGT provides no guidance on handling the reactance.</p>
+  <p>The divergence of the initially reported values for the two cores for the 20-degree dipole case suggests that it is time to try the alternative feed system. See <b>Fig. 5</b>.</p>
+  <center>
+    <img src="amod55-5.gif" width="681" height="350" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The figure shows only the feed portion of the model. The AWG #8 wires are 0.1285" in diameter and are spaced 0.5" apart. Because this model is highly symmetrical, the close spacing is possible, but wider spacing may be necessary for other types of models. The element ends remained at their original positions, even though separating the two feed sections slightly shortens each modeled element's total length. The transmission line length is 0.01". From this model, we obtain the following results.</p>
+  <pre>DP10-20A    Max Gain          Source            AGT Values              Remnant
+            dBi               Resistance        Ratio       dB          Reactance
+NEC-4       2.07              60.72             1.010        0.04       -j 5.39
+NEC-2       2.07              60.74             1.009        0.04       -j 5.31</pre>
+  <p>Most notable in the table is the exacting coincidence of NEC-2 and NEC-4 reports, including the AGT values. Correction of the gain to 2.03 dBi and the source resistance to 61.3 Ohms in both cases is simple. However, with slightly wider spacing, one can bring the AGT value close to 1.000 for the model on both cores.</p>
+  <p>The alternative parallel source system, then, can overcome some of the divergence in reports between NEC-2 and NEC-4. In this case, the greater sensitivity of NEC-2 to small angular junctions of wires disappears in the alternative system, because it removes the tight angular junctions altogether.</p>
+  <p><b>Closed Geometry Cases</b></p>
+  <p>A second test that we might perform on the angular junction situation occurs with multi-band quad beams that use a common feedpoint. Let's look at two cases, the first of which involves quads for 14 and 28 MHz. <b>Fig. 6</b> shows the basic layout where the drivers come together in a single 3-segment wire that lies in the plane of the 10-meter driver loop wire. Hence, only the 20-meter loop shows significant departure from a standard square quad loop.</p>
+  <center>
+    <img src="amod55-6.gif" width="681" height="760" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wire table reveals that the two quads are concentric and spaced from driver to reflector at 0.16 wavelength. Thus, the 20-meter reflector is behind the 10-meter reflector and the 20-meter driver is forward of the 10-meter driver. The angle made by the lower (fed) 20-meter wire is correspondingly complex.</p>
+  <p>The following table of results gives both 14 and 28 MHz values for both cores. Since the antenna is 35' over real ground, the gain value includes a Take-Off angle or elevation angle of maximum radiation. The driven elements are not resonant, so the source impedance gives an R +/- jX value in Ohms.</p>
+  <pre>QU10-20     Freq.       Max Gain          Source            AGT Values
+            MHz         dBi               Impedance         Ratio       dB
+NEC-4       14          11.49/24           97.6-j43.6       1.005        0.02
+            28           6.57/33          211.4+j14.3       1.006        0.03
+NEC-2       14          11.86/24           90.3-j36.6       1.089        0.37
+            28           6.93/33          195.1+j21.0       1.095        0.39</pre>
+  <p>According to gradation scales, the NEC-4 model is highly accurate, while the NEC-2 model is reasonably accurate. The corrected gain is 6.54 and 6.55 dBi for NEC-2 and NEC-4 at 28 MHz and 11.49 and 11.47 dBi for NEC-2 and -4 at 14 MHz. Corrected source resistances are about 213 Ohms at 28 MHz and 98 Ohms at 14 MHz for both cores.</p>
+  <p>The question we might pose is to what degree we can trust these corrected values, since the model deals with a closed geometry. To perform a test, I developed the alternative feed structure for the drivers, as shown in <b>Fig. 7</b>.</p>
+  <center>
+    <img src="amod55-7.gif" width="681" height="571" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The trial spacing of the source wires, using AWG #14 (0.0641" diameter) wire, was 0.05' or 0.6". This spacing had proven adequate for the 20-degree dipoles and was worth a try. The TL line was set at 0.01' or 0.12". Swapping feedpoints at the ends of the line yielded difference in the source impedance only in the 4th significant digit. The results that emerged are in the following table.</p>
+  <pre>QU10-20A    Freq.       Max Gain          Source            AGT Values
+            MHz         dBi               Impedance         Ratio       dB
+NEC-4       14          11.11/24          101.8-j43.2       0.920       -0.36
+            28           6.30/33          247.8-j15.4       0.915       -0.38
+NEC-2       14          11.13/24          101.9-j43.5       0.920       -0.36
+            28           6.29/33          248.4-j15.6       0.915       -0.38</pre>
+  <p>The coincidence of all reports between the two cores confirms that the use of separate feed wires with a very short TL overcomes the differential sensitivity between NEC-2 and NEC-4 to the angular junction of wires. However, the AGT values suggests that a problem that is common to both cores remains, relative to an ideal report. The most likely culprit is the spacing between the source/TL wires. Therefore, I increased the spacing from 0.6" to 3", while leaving the TL length at 0.12". The reports that emerged were as follows.</p>
+  <pre>QU10-20B    Freq.       Max Gain          Source            AGT Values
+            MHz         dBi               Impedance         Ratio       dB
+NEC-4       14          11.47/24           93.0-j44.1       1.000        0.00
+            28           6.69/33          228.9-j30.5       1.000        0.00
+NEC-2       14          11.49/24           93.1-j44.4       1.000        0.00
+            28           6.69/33          229.5-j30.8       1.000        0.00</pre>
+  <p>The 20-meter gain values from this version of the model coincide exactly with the corrected values for the original model and for the first try at using the alternative feed system. The 10-meter gain values are slightly higher than the original model corrected values and in line with the correct values for the first try at the alternative system. As we expected, the NEC-2 and NEC-4 models remained closely coincident.</p>
+  <p>As well, the corrected first try and the second try source resistance values are closely aligned. However, they both depart somewhat from the common feed-wire system model, even when corrected. As well, we have no guidance as to what set of reactance values may apply. However, the major changes toward capacitive reactance occur at 14 MHz, and that wire has grown shorter with each alternative feed system maneuver.</p>
+  <p>In general, this exercise on the original 14-28-MHz model has aimed to identify aspects of the source situation that are divergent between cores and those that are common to both cores. Nothing in the original model was so far out of line with reality to make it wholly unusable. However, we may sample a more extreme case.</p>
+  <center>
+    <img src="amod55-8.gif" width="681" height="560" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 8</b> shows the driver feed section and wire table for a combined 2-element quad for both 12 and 10 meters. The principles are identical to those of the 14-28-MHz original model with one exception. The angular junction of feed wires is much smaller. The results clearly show what happens. Once more, the antenna is centered 35' above real ground.</p>
+  <pre>QU10-12     Freq.       Max Gain          Source            AGT Values
+            MHz         dBi               Impedance         Ratio       dB
+NEC-4       24.94       12.04/15          109.9-j 3.0       1.095        0.40
+            28.5        10.43/13          1378 +j1644       1.198        0.78
+NEC-2       24.94       12.96/15           89.8+j15.4       1.356        1.32
+            28.5        11.31/13          1042 +j1315       1.464        1.66</pre>
+  <p>The corrected gain values for each core show 11.64 dBi at 24.94 MHz and 9.65 dBi at 28.5 MHz. However, the 28.5-MHz impedance values are almost unbelievable. Therefore, I introduced the alternate feed system, shown in <b>Fig. 9</b>.</p>
+  <center>
+    <img src="amod55-9.gif" width="681" height="571" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The feed-wire spacing is 0.045' or .54", with a TL length of 0.01' or 0.12". Using this system, the model returned the following results.</p>
+  <pre>QU10-12A    Freq.       Max Gain          Source            AGT Values
+            MHz         dBi               Impedance         Ratio       dB
+NEC-4       24.94       11.67/15          118.9-j30.8       1.002        0.01
+            28.5        12.04/13          134.3+j71.7       1.001        0.01
+NEC-2       24.94       11.65/15          119.7-j31.0       1.002        0.01
+            28.5        12.04/13          134.4+j71.8       1.001        0.01</pre>
+  <p>The alternate feed system is a necessity in this case to yield values that are sensible. However, had we not had the AGT to alert us to the distortions in the model reports occasioned by the very narrow angle at the driver wire junctions, we might well have interpreted the results as suggesting that interactions among the elements in a physical antenna would make the combination quad impossible to construct.</p>
+  <center>
+    <img src="amod55-10.gif" width="376" height="338" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The differences show up most clearly in the overlaid NEC-4 azimuth patterns for 28.5 MHz for the two versions of the model, shown in <b>Fig. 10</b>. The disparity between the patterns calls for little comment.</p>
+  <p><b>Conclusion</b></p>
+  <p>The exercises included in these notes only sample the many facets of modeling that we have touched upon so far. We have looked at differential sensitivities between NEC-2 and NEC-4. We have also looked at sample problems common to both cores. We have used the Average Gain Test to uncover both types of difficulties. And we have employed an alternative scheme for parallel feeding elements from a common source as one route to overcoming those problems.</p>
+  <p>The variations on the many themes are endless. In the end, the individual modeler must use all of the tests at hand to detect problems and to devise solutions that offer a route to more precise and accurate models. As we have seen in at least one case, a failure to exercise such care may lead to completely misleading results.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Archimedes and Log Spirals for the NEC-4 GH Command</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>89. A Note on Archimedes and Log Spirals for the NEC-4 GH Command</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>The GH command in NEC-4 permits two kinds of spirals having different initial and terminal radii: Archimedes and log spirals. The user makes his or her selection by a simple choice in the last floating point decimal entry, F7. The following notes are for those who have never encountered spirals of different type or who may have cut the class in which they were introduced. To see what sort of coordinates NEC will produce for each type of spiral requires only that we have a hand calculator with a y^x (y to the x-power) key in addition to the other usual keys. A spreadsheet will be handier in the long run, especially for log spiral calculations.</p>
+  <p>In columns 61 and 62, we examined the basic formation of helices with regular structures in both the NEC-2 and the NEC-4 versions of the GH command. NEC-2 permitted regular spirals of a single sort, along with the potential for oval turns in which the radius along the X-axis differed from the radius along the Y-axis. NEC-4 reduced the options to circular turns, but offered a choice between spiral types. NEC-4 is able to create flat spirals by setting the height to zero. However, many implementations of the NEC-2 GH command, which was an unofficial addition to the command set, do not allow truly flat spirals.</p>
+  <p>A typical but simple helical antenna over perfect ground might result in the following model. Note that NEC builds a helix under a single tag #, with all individual segments using the same tag number, whatever the number of segments. As well, NEC builds the helix from Z=0 upward to some positive value of Z. If the modeler desires a different orientation or a wholly different position, the GM command is available to move or rotate the structure--or both.</p>
+  <pre>
+CM General Helix over Perfect Ground
+CE
+GH 1 100 5 1 1 2 .001 .001 0
+GE 1 -1 0
+GN 1
+EX 0 1 1 0 1 0
+FR 0 1 0 0 299.7925 1
+RP 0 181 1 1000 -90 90 1.00000 1.00000
+RP 0 181 1 1000 -90 0 1.00000 1.00000
+EN
+</pre>
+  <p>The GH line has the following structure.</p>
+  <pre>
+    I1    I2    F1     F2      F3      F4     F5       F6       F7
+GH  1     100   5      1       1       2      .001     .001     0
+Cmd Tag   # of  No of  Length  Initial Final  Initial  Final    Spiral
+    #     Segs  Turns          Radius  Radius Wire Rad Wire Rad Type
+</pre>
+  <p>Most of the command entries are self-explanatory with the brief notations. However, F1, the number of turns, is a bit special. The number of turns need not be an integer, but may be fractional. As well, if the value for F1 is positive, the helix is right-handed, and if negative, the helix is left-handed. (In NEC-2, the left vs. right option is implemented in F2, the total length of the helix.) If the initial and final helix radii and wire radii are the same, then the entry in F7 makes no difference. However, if F3 and F4 are different, then the spiral-type entry makes a considerable difference in the resulting helix. Here is a table of values for the start-end radii of each turn in terms of coordinates (where Y=0 in all cases) for the sample model shown earlier.</p>
+  <pre>
+Turn--Seg       Archimedes                Log
+Numbers         X          Z              X          Z
+  1      1      0.0        0.0            0.0        0.0
+1-2  20-21      1.2        0.2            1.14869    0.14869
+2-3  40-41      1.4        0.4            1.31950    0.31950
+3-4  60-61      1.6        0.6            1.51571    0.51571
+4-5  80-81      1.8        0.8            1.74110    0.74110
+5    100        2.0        1.0            2.0        1.0
+</pre>
+  <p>Note that the rise in value along the Z-axis is exactly proportional to the increase in radius. Of course, the two spirals do not have the same electrical properties as radiators. However, the purpose of our model and its two variations is not to establish a working antenna, but to sample the two types of available spirals.</p>
+  <p>The simpler spiral is the Archimedes, with its arithmetically regular structure. In an Archimedes spiral, the radius (R) at any wire junction is given by a simple equation:</p>
+  <ul>
+    <li><b>R = Ri + (a * theta)</b></li>
+  </ul>
+  <p>where R is the radius under consideration, Ri is the initial radius, a is a constant, and theta is an angle.</p>
+  <p>Because the change of radius is uniform, we can formulate values for a and theta in a variety of ways, so long as the product of the two yields a progression of values that steps by an increment of 0.01 per segment. (In the model, the units are meters, but the same considerations apply to any system of units.) Theoretically, we should devise a single value for the constant a and vary the value of theta in radians to continuously increase from zero through 5 * 2 * pi or 31.415927. However, our interest in the spiral is only to check the coordinates that the NEC core will assign to wire junctions. So we can change procedures without loss. Every turn has 20 segments in the model, so every radius will occur in increments of 0.05 (turn) of a complete circle. The entire helix will reach a value of 1.0 (turn) at the start of each new turn. The radius will increase by 0.01 per segment or 0.2 per turn (a). At the start of turn 3 (end 1 of segment 41), the angle will have increased through 2.0 cycles (turns) or 40 segments. Theta is 40 * 0.05 = 2.0, and a*theta is 2.0 * 0.2 = 0.4. Added to the initial radius, 1.0, the new radius is 1.4, and the new Z value is 0.4. (In this simple example, I have set the total height to equal the total increase in radius. The change in height, however, will always be proportional to the change in radius.)</p>
+  <p>We can short-circuit the complexities even further once we know how much the radius and height change for each segment. With 100 segments and a total radius increase of 1.0, along with a total height of 1.0, each segment will increase the radius and the height by 0.01 of the total. Hence, 40 segments times 0.01 = 0.4. Since the height begins at zero, the new height is 0.4. Since the radius begins at 1.0, the new height is 1.0 + 0.4 or 1.4. If all that we ever use are Archimedes spirals, then the simplified method of checking coordinates will suffice.</p>
+  <p>For those who have lost--or never had--an introduction to log spirals--the basic formulation may seem deceptively simple:</p>
+  <ul>
+    <li><b>R = Ri*a^theta</b></li>
+  </ul>
+  <p>where R is the radius under consideration, Ri is the initial radius, a is a constant, and theta is an angle. The constant, a, is not the same constant as it is for an Archimedes spiral with its regular or uniform variation along the length of the helix. <b>Fig. 1</b> compares the appearance of both types of spirals. Both spirals have the same initial and end radii and the same overall length from bottom to top. The uniformity of the increase of the Archimedes spiral is readily apparent both in the top view (or the bottom, depending on your position) and in the side view. In contrast, the log spiral not only increases in diameter as we move upward, but the rate of radius increase and the rate of height increase also go up along the progression from bottom to top.</p>
+  <center>
+    <img src="amod89-1.gif" width="500" height="375" border="2" vspace="5" hspace="9">
+  </center>
+  <p>As a side note, we shall maintain a GH-orientation in all that follows. GH helices initially form from the plane of the X and Y coordinates, that is, from Z=0. In addition, GH helices in NEC-4 have radii centered at X=0 and at Y=0. The GM command is available in NEC to allow the modeler to move the helix or to turn it to any angle possible within the Cartesian coordinate system, so we shall make a like assumption. Hence, all spirals that will appear in these notes will begin with their initial or minimum radius at the bottom and the maximum radius at the top, and the spiral length will be measured from Z=0 upward.</p>
+  <p>A modeling caution to observe is that both types of spiral increase the length of segments as they move upwards toward a larger radius. The increase from one segment to the next is normally quite small for helices with at least 20 segments per turn. In many cases is is more critical to keep the segments aligned from turn-to-turn, especially if the spiral is tight.</p>
+  <center>
+    <img src="amod89-2.gif" width="500" height="280" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 2</b> shows a well-aligned spiral with an even number of segments along side a less-well aligned spiral. In all spirals, performing an average gain test (AGT) will reveal whether segment misalignment introduces any significant degree of model inadequacy. The very close spacing of turns in the sample model results in rather inadequare models over perfect ground, with the bulk of the poor AGT values resulting from placing the source (EX) on the segment adjacent to ground. It fails to have segments on each side of the source segment that are as equal in length to the source segment as possible, and the segment meets the perfect ground at an oblique angle rather than vertically. Nevertheless, these faults do not affect our calculation of the running dimensions of a spiral of either the log or Archimedes sort. To check the effects of the spiral itself, without the effects of the source position, place the source on a segment other than the first segment.</p>
+  <p>The calculation of both a and theta in the equations for the radius at any point along a log spiral is intrinsically interesting, especially if we adapt it to models of such spirals formed from straight wires under the NEC-4 GH command. The procedure to follow is independent of the system used within the core itself. Any system of calculations that yields values for a and theta should yield radius values or their equivalent in X and Y coordinates that are numerically precise relative to those produced by the core To obtain a complete report on the spiral, we need to be prepared to enter the following information (all within the same units of measure, of course).</p>
+  <ul>
+    <li><b>Rmax--the maximum radius of the spiral.</b></li>
+    <li><b>Rmin=Ri--the initial or minimum radius of the spiral.</b></li>
+    <li><b>s--the number of segments per turn of the helix.</b></li>
+    <li><b>t--the total number of turns in the helix.</b></li>
+    <li><b>Lt--the total length of the spiral.</b></li>
+    <li><b>theta--the segment of interest, using end 2 of the segment.</b></li>
+  </ul>
+  <p>Since end 1 of the first segment is at a helix length of zero, and the radius at zero length is Rmin, extended along the +X direction. Therefore, all further segment references apply to end 2 of the segment. Hence, the last segment calculated will yield the final radius and the final height of the spiral.</p>
+  <p>To obtain a progression of radii, we need to obtain values for both a and theta. Finding theta is the easier task, since we have already entered it as the total number of segments in the spiral. However, we may also define theta' as the increment or step around the circle taken by each segment. Because we are working with increments of the circle defined by the segments, we may bypass degrees and radians and take theta' in terms of the amount of the circle intersected by the ends of any given segment.</p>
+  <ul>
+    <li><b>theta' = 1/s</b></li>
+  </ul>
+  <p>This is one step in the process of finding the value of a from the data that we are ready to enter. The next step requires that we find the ratio of maximum to minimum radius, Rr.</p>
+  <ul>
+    <li><b>Rr = Rmax/Rmin</b></li>
+  </ul>
+  <p>We also need the ratio of the segments per turn (s) to the total number of turns (t) to define an intermediate term, n.</p>
+  <ul>
+    <li><b>n = s/t</b></li>
+  </ul>
+  <p>Now let m be a function of Rr and n.</p>
+  <ul>
+    <li><b>m = Rr^n</b></li>
+  </ul>
+  <p>Then a becomes a function of m and theta'. We use the square of theta' as the exponent for m to arrive at a, which is also the radius increment for the first segment of the series forming the spiral.</p>
+  <ul>
+    <li><b>a = m^(theta'^2)</b></li>
+  </ul>
+  <p>The composite form of the equation sequence is</p>
+  <ul>
+    <li><b>a = ((Rmax/Rmin)^(s/t))^((1/s)^2)</b></li>
+  </ul>
+  <p>I have used spreadsheet notation because progressive superscripts are almost impossible to read and because the form allows direct transfer to a spreadsheet of your choice. Having values for all of the needed terms, Ri (or Rmin), a, and theta, we may calculate the new radius anywhere along the spiral. All that we need to do is to enter theta, the segment number in which we are interested.</p>
+  <ul>
+    <li><b>R = Ri*a^theta</b></li>
+  </ul>
+  <p>As well we can easily determine at what turn (or fraction of a turn) the segment occurs.</p>
+  <ul>
+    <li><b>turns = theta'*theta</b></li>
+  </ul>
+  <p>For any spiral length, we can determine the length up to segment theta (Lth) by beginning with the total length of the spiral, Lt, which we entered initially. Theoretically, the spiral rises in height in exact proportion to the increase in the radius.</p>
+  <ul>
+    <li><b>R-Rmin/Rmax-Rmin = L-Lmin/Lmax-Lmin</b></li>
+  </ul>
+  <p>R is the radius at any segment, theta, and L is the spiral length up to that same segment. Lmax is the total length, Lt. Since Lmin is zero in the GH formation of a spiral, then Lth, the length at segment theta, is readily determined.</p>
+  <ul>
+    <li><b>Lth = ((R-Rmin)*Lt)/(Rmax-Rmin)</b></li>
+  </ul>
+  <p>The calculations given for the radius in these notes result in values that exactly coincide with those generated by the NEC-4D core that I use. However, the values produced by that core for the length of the spiral up to end 2 of any segment sometimes show a slight variance, suggesting that the core uses another approach to length determination (or the Z coordinate). The variance is greatest in the first turn of the spiral and appears in the third significant digit. Beyond that point, the variance appears in the fourth significant digit. There are certain ratios of Rmax to Rmin where no variance appears at all. Functionally, the differences do not make a difference, but the numerical variance needs to be noted.</p>
+  <p>Finally, we can easily calculate the end-2 coordinates of the segment that we have entered as theta. First define the angle (A) of the specified segment in radians.</p>
+  <ul>
+    <li><b>A = 2*pi*theta*theta' = (2*pi*theta)/s</b></li>
+  </ul>
+  <p>Then the X, Y, and Z coordinates follow.</p>
+  <ul>
+    <li><b>X = R cosA</b></li>
+    <li><b>Y = R sinA</b></li>
+    <li><b>Z = Lth</b></li>
+  </ul>
+  <center>
+    <img src="amod89-3.gif" width="513" height="433" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If it were not easy to place this progression of straightforward calculations into a spreadsheet page, the exercise would perhaps have only academic interest as a means to checking some particular set of coordinates of a modeled log spiral formed by the GH command. <b>Fig. 3</b> shows a typical spreadsheet from my collection. I normally keep two working columns of data for entry and calculation, where a label indicates the entered data. I could lock the column marked sample, since I do not vary it. Instead, I use it for reference, that is, to remind myself of the calculation procedures and what data that I need to enter for a spiral under analysis. I also retain the Sample model on file to refresh myself from time to time. Those who deal daily with spirals can, of course, omit these memory aids. The following two lines are the GH entries for the Sample and the Work spirals in <b>Fig. 3</b>. The remaining model lines are identical to those in the initial example.</p>
+  <pre>
+Sample:  GH 1 120 6 1 1 3 .001 .001 0
+
+Work:    GH 1 300 6 4 3 4 .001 .001 0
+</pre>
+  <p>The added utility of the spreadsheet is for modelers who wish to model a spiral but who have only the GH entry of NEC-2 with which to work. Most helix-makers attached to NEC-2 programs only create uniform helices in which the radius at the top and the bottom are the same. However, one might expand the spreadsheet to create a list of wires and coordinates for each value of theta, that is for each segment comprising a spiral of any size whatsoever. Since the equations for creating an Archimedes spiral are so straightforward, I did not include them in this spreadsheet, but if the modeler is interested in both Archimedes and log spirals, the additions are simple enough to make. With judicious spreadsheet planning, one might even create columns for either direct or indirect transfer to a NEC file as a set of wire coordinates. Of course, such a construct would consist of a separate 1-segment wire for each new straight-wire section of the spiral. (In contrast, the GH entry produces a new wire segment for each spiral section, all under a single tag number.) However, the end result would not differ in appearance from the helices created by existing uniform-radius helix makers associated with commercial implementations of NEC--except, of course, for the coordinates that transform a helix into a spiral.</p>
+  <p>The spreadsheet table of wires might have the following appearance, with variations customized to the input system of the version of NEC being used.</p>
+  <pre>
+                             Transfer Data                      Reference
+                     End 1                   End 2               Radius
+Cmd   Wire#   X       Y       Z       X       Y       Z       End 1   End 2
+GW    1       1.0000  0.0000  0.0000  0.9598  0.3119  0.0046  1.0000  1.0092
+GW    2       0.9598  0.3119  0.0046  0.8240  0.5986  0.0092  1.0092  1.0185
+GW    3       0.8240  0.5986  0.0092  0.6042  0.8315  0.0139  1.0185  1.0278
+GW    4       0.6042  0.8315  0.0139  0.3205  0.9865  0.0187  1.0278  1.0373
+GW    5       0.3205  0.9865  0.0187  0.0000  1.0468  0.0234  1.0373  1.0468
+etc. . . .
+</pre>
+  <p>Transfer of the spread sheet data will depend upon the input system of the NEC implementation. A standard ASCII input system will require entry of the command name (GW) as well as the wire number, the number of segments for each wire (1), the End-1 and End-2 coordinates, and a wire radius. You can place these on the spreadsheet list and transfer complete lines of entry without need for later "touch-up." Other systems may not need either the command name or the wire number, although almost all will need the number of segments and a wire radius or diameter. In some systems, you can add these later with block operations.</p>
+  <p>Most spreadsheets separate data columns with Tabs. Some NEC implementations will accept Tabs; others will not. If you need to get rid of the Tabs, you can transfer the blocked data to a word processor. Often, the "unformatted text" or similar option will prevent the inclusion of the spreadsheet cell outlines while preserving the Tabs. Whether the word processor retains the Tabs or replaces them with multiple Spaces, you may use the global replace function to convert either one to a single space between entries on a line. (Using the same number of digits per entry, even if zeroes, simplifies the replacement procedure.) If some of these steps sound involved, compare the process to hand entering dozens of individual numbers without error. The bottom line is that it is possible to create wire lists that form either Archimedes or log spirals (flat or extended) in NEC implementations that lack the NEC-4 GH command.</p>
+  <p>Since each application is likely to differ in needs, I shall leave further extensions of the spreadsheet calculations to you. If these notes have acquainted you with the differences between an Archimedes and a log spiral in both visual and calculation terms, they have served their purpose. The NEC-4 GH entry offers considerable flexibility in creating helical shapes. Having a choice of spiral types is an advantage over the usual NEC-2 GH entry offerings, although the NEC-4 entry did give up the ability to directly create oval helices in the process.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

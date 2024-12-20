@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Batwing">
+  <title>Notes on the Batwing Part 3: Modeling Issues with the Batwings</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>Notes on the Batwing<br>
+    Part 3: Modeling Issues with the Batwings</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>In most antenna articles, we usually encounter models used for design or analysis. In most cases, we receive the models as if they were perfect, with the possible exception of a few minor variables related to the construction side of the ledger.</p>
+  <p>However, few models are perfect, not only relative to the physical implementation of the antenna, but as models themselves. Antennas with linear and uniform-diameter elements come closest to perfection, but when we complicate the geometry, model adequacy--as a model--becomes a question that we cannot--or at least, should not--ignore. The batwing antenna is a case in point. Its complexity--both physically and electrically--demands that we examine how good the models are on which we have based our discussion.</p>
+  <p><b>Some Basic Modeling Issues</b></p>
+  <p>Throughout this series, we have presented the models of the batwing as "proof-of-principle" models. That is, we developed a model adequate for certain analytical purposes, but without some of the details of the usual physical batwing antennas. A minor variant is the pointed corners on the model, when most implementations use rounded corners. A far more major item is the omission of the central mounting mast common to most implementations. As a result of these changes and omissions, the models can show us the potentials of the antenna, but they are not adequate design vehicles, except for sharp-cornered batwings that use a non-conductive support mast.</p>
+  <p>The basic model that we used throughout Parts 1 and 2 of this series used a 435-MHz design frequency and had the following physical specifications, with all dimensions on this EZNEC model description in inches.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+batwing 435                                     Frequency = 435  MHz.
+
+Wire Loss: Aluminum -- Resistivity = 4E-08 ohm-m, Rel. Perm. = 1
+
+              --------------- WIRES ---------------
+
+Wire Conn. --- End 1 (x,y,z : in)  Conn. --- End 2 (x,y,z : in)   Dia(in) Segs
+
+1    W15E1  -6.500,  0.000,  8.830 W21E1  -0.250,  0.000,  8.830 1.25E-01  12
+2    W15E2  -5.180,  0.000,  5.880 W21E2  -0.250,  0.000,  5.880 1.25E-01  10
+3    W16E2  -3.880,  0.000,  2.940 W22E2  -0.250,  0.000,  2.940 1.25E-01   7
+4    W17E2  -2.560,  0.000,  0.000 W23E2  -0.250,  0.000,  0.000 1.25E-01   4
+5    W18E2  -3.880,  0.000, -2.940 W24E2  -0.250,  0.000, -2.940 1.25E-01   7
+6    W19E2  -5.180,  0.000, -5.880 W25E2  -0.250,  0.000, -5.880 1.25E-01  10
+7    W20E2  -6.500,  0.000, -8.830 W26E2  -0.250,  0.000, -8.830 1.25E-01  12
+8    W27E1   0.250,  0.000,  8.830 W33E1   6.500,  0.000,  8.830 1.25E-01  12
+9    W27E2   0.250,  0.000,  5.880 W33E2   5.180,  0.000,  5.880 1.25E-01  10
+10   W28E2   0.250,  0.000,  2.940 W34E2   3.880,  0.000,  2.940 1.25E-01   7
+11   W29E2   0.250,  0.000,  0.000 W35E2   2.560,  0.000,  0.000 1.25E-01   4
+12   W30E2   0.250,  0.000, -2.940 W36E2   3.880,  0.000, -2.940 1.25E-01   7
+13   W31E2   0.250,  0.000, -5.880 W37E2   5.180,  0.000, -5.880 1.25E-01  10
+14   W32E2   0.250,  0.000, -8.830 W38E2   6.500,  0.000, -8.830 1.25E-01  12
+15    W1E1  -6.500,  0.000,  8.830 W16E1  -5.180,  0.000,  5.880 1.25E-01   6
+16    W2E1  -5.180,  0.000,  5.880 W17E1  -3.880,  0.000,  2.940 1.25E-01   6
+17    W3E1  -3.880,  0.000,  2.940 W18E1  -2.560,  0.000,  0.000 1.25E-01   6
+18    W4E1  -2.560,  0.000,  0.000 W19E1  -3.880,  0.000, -2.940 1.25E-01   6
+19    W5E1  -3.880,  0.000, -2.940 W20E1  -5.180,  0.000, -5.880 1.25E-01   6
+20    W6E1  -5.180,  0.000, -5.880  W7E1  -6.500,  0.000, -8.830 1.25E-01   6
+21   W39E1  -0.250,  0.000,  8.830 W22E1  -0.250,  0.000,  5.880 1.25E-01   6
+22    W2E2  -0.250,  0.000,  5.880 W23E1  -0.250,  0.000,  2.940 1.25E-01   6
+23    W3E2  -0.250,  0.000,  2.940 W24E1  -0.250,  0.000,  0.000 1.25E-01   6
+24   W41E1  -0.250,  0.000,  0.000 W25E1  -0.250,  0.000, -2.940 1.25E-01   6
+25    W5E2  -0.250,  0.000, -2.940 W26E1  -0.250,  0.000, -5.880 1.25E-01   6
+26    W6E2  -0.250,  0.000, -5.880 W40E1  -0.250,  0.000, -8.830 1.25E-01   6
+27   W39E2   0.250,  0.000,  8.830 W28E1   0.250,  0.000,  5.880 1.25E-01   6
+28    W9E1   0.250,  0.000,  5.880 W29E1   0.250,  0.000,  2.940 1.25E-01   6
+29   W10E1   0.250,  0.000,  2.940 W30E1   0.250,  0.000,  0.000 1.25E-01   6
+30   W41E2   0.250,  0.000,  0.000 W31E1   0.250,  0.000, -2.940 1.25E-01   6
+31   W12E1   0.250,  0.000, -2.940 W32E1   0.250,  0.000, -5.880 1.25E-01   6
+32   W13E1   0.250,  0.000, -5.880 W40E2   0.250,  0.000, -8.830 1.25E-01   6
+33    W8E2   6.500,  0.000,  8.830 W34E1   5.180,  0.000,  5.880 1.25E-01   6
+34    W9E2   5.180,  0.000,  5.880 W35E1   3.880,  0.000,  2.940 1.25E-01   6
+35   W10E2   3.880,  0.000,  2.940 W36E1   2.560,  0.000,  0.000 1.25E-01   6
+36   W11E2   2.560,  0.000,  0.000 W37E1   3.880,  0.000, -2.940 1.25E-01   6
+37   W12E2   3.880,  0.000, -2.940 W38E1   5.180,  0.000, -5.880 1.25E-01   6
+38   W13E2   5.180,  0.000, -5.880 W14E2   6.500,  0.000, -8.830 1.25E-01   6
+39    W1E2  -0.250,  0.000,  8.830  W8E1   0.250,  0.000,  8.830 1.25E-01   1
+40    W7E2  -0.250,  0.000, -8.830 W14E1   0.250,  0.000, -8.830 1.25E-01   1
+41    W4E2  -0.250,  0.000,  0.000 W11E1   0.250,  0.000,  0.000 1.25E-01   1
+
+              -------------- SOURCES --------------
+
+Source    Wire      Wire #/Pct From End 1    Ampl.(V, A)  Phase(Deg.)  Type
+          Seg.     Actual      (Specified)
+
+1           1    41 / 50.00   ( 41 / 50.00)      1.000       0.000       V
+
+Ground type is Free Space
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The model is a NEC model, with all modeling done on NEC-4 (both EZNEC and GNEC). It has 41 wires and 271 segments. Of course, when we stacked and turnstiled batwings, we multiplied the number of segments and wires. Adding wire-grid reflectors produced some models with well over 1,000 segments. Hence, adequate study of a batwing antenna system requires a modeling program with a considerable segment limit.</p>
+  <center>
+    <img src="bwc-1.gif" width="390" height="455" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 1</b> shows the outline of the model that corresponds to the description above. From the beginning, we have a number of modeling decision that we must make. First, we must choose a segment length. The smallest gap between the two halves of the antenna sets the segment length at about 0.5". Since it is advisable to have all segments within an inter-connected model the same length, we used 0.5" as the standard segment length. It is especially important to keep the segment number and length the same on the wires that parallel each other at the array center, since they are closely spaced. However, the dipoles within the array are not so far apart that we can completely ignore alignment.</p>
+  <p>Because we wished to center the source on the most central wire in the antenna, we used a single segment for it. It would have been better to have 3 segments on this wire in order to separate the 4-way junctions from the source segment by at least one segment. But here, we encounter another limitation. It is desirable to keep segment length at least the same, and preferably longer, than the maximum wire diameter used in the model. Some models used up to 0.25" diameter wire (and some trial models used even fatter wire). 3 segments on a 0.5" wire reduces the segment length to 0.167", too short for the larger wire sizes--indeed too short for wires above about 1/8" in diameter. As well, the more complex the geometry, the more important it usually is to keep the segment length considerably longer than the wire diameter. So the decision to use a single segment for the 3 connecting wires between the wings is a compromise, and we shall examine the consequences of that compromise as we proceed.</p>
+  <center>
+    <img src="bwc-2.gif" width="497" height="472" border="2" vspace="5" hspace="9">
+  </center>
+  <p>We not only modeled the batwing in NEC, but also in MININEC, using Antenna Model. <b>Fig. 2</b> shows the MININEC version of the model. Since MININEC requires that we place a source at a segment junction or pulse, the connecting wires use 2 segments. As the diagram shows, we restricted the MININEC models to versions of the array in which the spacing between the central wires is wider, thus achieving close to a 1:1 length ratio for the segments in those wires and the segments in adjacent wires. However, in some models, we were forced to press the desired limit of having segments at least 1.25 times the wire diameter. Otherwise, the models are the same in terms of the dimensions, coordinates, and segmentation of the other 38 wires.</p>
+  <p>In both models, straight wires terminate at junctions to simplify the process of modifying a model. It is permissible to terminate one wire at the segment junction within another. However, any slight change to the wire whose segment junctions form termination points results in a requirement to change many wires. Using wire junctions exclusively tends to simplify the modification procedure.</p>
+  <p>UHF models present a limitation we normally do not encounter with HF antennas. Small diameter elements are quite large when viewed in terms of a fraction of a wavelength. The use of short segments (here, about 0.5") can result in surpassing NEC limitations at corners. See <b>Fig. 3</b> for samples of acceptable and unacceptable corner treatments.</p>
+  <center>
+    <img src="bwc-3.gif" width="432" height="427" border="2" vspace="5" hspace="9">
+  </center>
+  <p>If the outer surface of one wire penetrates to the inner third or thereabouts of another wire, the results will either be inaccurate for that junction or the program will flag an error and refuse to run (depending upon the implementation). As we increase the diameter of a wire beyond about 5/16" (0.3125"), we incur this problem. The net result is to limit the range of wire diameters that we can use effectively with the 435-MHz batwing.</p>
+  <p>A similar problem occurs in NEC and MININEC if we try to increase just the diameter of the vertical central feed/phase line wires. In NEC, we must be cautious of angular junctions between wires having dissimilar diameters, and so all of the NEC models changed wire diameter uniformly throughout the model. However, MININEC is less sensitive to this situation, allowing us to increase the diameter of just those wires making up the central feed/phase lines (wires 21-32 in the model description). For a given spacing (always center-to-center in a model), there is a limit to the size we may use. <b>Fig. 4</b> shows why.</p>
+  <center>
+    <img src="bwc-4.gif" width="403" height="261" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Modeling programs based on round wires do not permit one wire to penetrate to the centerline of the other and, indeed, do not permit even shallow penetration of one wire surface into the surface of the other. Even very close wire proximity tends to yield errors. Some MININEC programs, such as Antenna Model, have correctives for very closely spaced wires, but NEC will yield systematic errors under these conditions. The result is that an adequate model should maintain a good space (several radii) between the surfaces of two parallel wires in addition to keeping the segment junctions as well aligned as feasible.</p>
+  <p>The batwing antenna is an electrically complex affair, consisting of several dipoles that are closely coupled and connected at their outer ends, along with a feed/phase line that has a characteristic impedance based upon the wire diameter and the spacing between wires. It is not just a mass of wires soldered together to make an odd-shaped antenna.</p>
+  <p>Since the antenna is a broad-band array, it is natural for us to perform frequency sweeps of its characteristics across a band of interest. In this case, we are interested in the 70-cm band from 420-450 MHz (and possibly beyond). By using program supplements, such as EZPlots by Dan Maguire, AC6LA, we can obtain impressive graphs.</p>
+  <center>
+    <img src="bwc-5.gif" width="744" height="473" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the gain and front-to-side ratio--as relevant data for a dipole--across the band for the 0.125" version of the array. In <b>Fig. 6</b>, we find the feedpoint resistance and reactance data, along with the 75-Ohm SWR curve for the antenna model.</p>
+  <center>
+    <img src="bwc-6.gif" width="744" height="473" border="2" vspace="5" hspace="9">
+  </center>
+  <p>What I neglected to add to the preceding paragraph was that the graphs are of data directly reported by the program. However, we may well ask how reliable the data may be relative to the model used to generate it. (This is not the same question as asking how accurate a model is to physical reality. At this stage, we are asking for an adequacy of model evaluation--as a model.) One of the tools that we have at our disposal for making an evaluation is the Average Gain Test (AGT).</p>
+  <p><b>Some AGT Test and Design Strategy Exercises</b></p>
+  <p>The AGT tests a lossless model either in free space (used here) or over perfect ground (useful with monopoles and arrays of them) to record from a fair number of equally spaced samples the ratio of the average of the power reported as radiated to the power supplied to the model. We can receive this value as a simple number--the ratio. We can also convert it into dB by taking the log of the AGT number and multiplying by 10.</p>
+  <p>If and only if the AGT value is 1.0 will the numbers that we derive from the graphs be reliable modeling reports. However, we may use the AGT values to correct some of those figures. In general, if the AGT in dB is greater than 0, then the reported gain of the antenna is too high and we must subtract the AGT in dB from the reported value to arrive at a more nearly correct value. Likewise, if the AGT value in dB is less than 0, we must add its absolute value to the reported gain to have our more nearly correct figure.</p>
+  <p>The AGT score given as a unit-less ratio is also useful. When the reactance at the feedpoint is not too high, we may use the AGT score to correct the resistive portion of the impedance. Simply multiply the AGT value times the resistive component of the impedance to arrive at a more nearly correct value. If we perform this calculation on the impedance values with the AGT score for the 0.125" batwing, we shall discover that the SWR curve must also change. As well, the AGT impedance corrective does not tell us by how much the reactance may be off the mark.</p>
+  <p>I should note that none of the models used in the first two parts of this series scored a perfect 1.0 on the AGT test. However, as we shall see, the scores were sufficiently close that the trends shown in those parts are quite reliable. Difficulties only emerge when we require fine shading of results to determine whether a particular design maneuver will yield an improvement or when we compare models made on two different systems of modeling.</p>
+  <p>Let's go through a small exercise, one relevant to the batwing. I increased the wire size successively on the batwing from 0.125" through 0.1875" to 0.25" (1/8" to 3/16" to 1/4"). In the process, I widened the spacing between the feed/phase lines in an attempt to see if that process would equalize the feedpoint impedances among models. Here is the raw data for this exploration.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                Batwing Performance with Various Wire Diameters
+
+0.125" Wire with 0.5" Feed/Phase Line Spacing
+Freq MHz                      420               435               450
+Gain dBi                      5.09              5.22              5.36
+Feed Z R+/-jX Ohms            76.9 - j15.6      80.2 - j 8.8      83.9 - j 4.3
+75-Ohm SWR                    1.23              1.14              1.13
+
+0.1875" Wire with 0.7" Feed/Phase Line Spacing
+Freq MHz                      420               435               450
+Gain dBi                      5.29              5.43              5.56
+Feed Z R+/-jX Ohms            75.6 - j14.1      77.9 - j 7.6      80.6 - j 3.0
+75-Ohm SWR                    1.21              1.11              1.09
+
+0.25" Wire with 0.9" Feed/Phase Line Spacing
+Freq MHz                      420               435               450
+Gain dBi                      5.46              5.59              5.72
+Feed Z R+/-jX Ohms            75.4 - j11.3      77.2 - j 4.9      79.5 - j 0.3
+75-Ohm SWR                    1.21              1.11              1.09
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>At first sight, it appears that the experiment was a grand success, since the impedances do achieve a fair degree of equalization. However, note the great gain increases with wire size--over a third of a dB just from increasing the wire size by a factor of 2.</p>
+  <p>When we go back and perform an AGT test on the three models, we obtain--from thinnest to thickest wire--the following values: 0.964 (-0.16 dB), 1.005 (0.02 dB), and 1.043 (0.18 dB). Now, let's go back and correct the gain and resistance values in a new table.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+       Batwing Performance with Various Wire Diameters:  AGT Corrections
+
+0.125" Wire with 0.5" Feed/Phase Line Spacing            AGT: 0.964 (-0.16 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.25              5.38              5.52
+Feed R Ohms                   74.1              77.3              80.9
+
+0.1875" Wire with 0.7" Feed/Phase Line Spacing            AGT: 1.005 (0.02 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.27              5.41              5.54
+Feed R Ohms                   76.0              78.7              81.0
+
+0.25" Wire with 0.9" Feed/Phase Line Spacing              AGT: 1.043 (0.18 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.28              5.41              5.54
+Feed R Ohms                   78.8              80.5              82.9
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>First, we may notice that the gain advantage of the 0.25" diameter wire batwing has shrunk to a couple of hundredths of a dB at most. Gain would not be a reason for moving from one wire diameter to another with the batwing--although there might be others reasons for doing so.</p>
+  <p>Second, the resistive components of the impedances are not quite so close together as we had at first suspected from the raw data. The disparity may lead us in another direction of investigation.</p>
+  <p>Using standard parallel transmission line calculations, we can find the characteristic impedance (Zo) of the feed/phase line for each model. The basic 0.125" wire model with a 0.5" line spacing shows a Zo of 247 Ohms. The 0.1875" wire model with a wire spacing of 0.7" gives a Zo of 239 Ohms. The fattest (0.25") model with a spacing of 0.9" yields 234 Ohms. What would happen if we equalized the impedances, using the 0.125" model as a baseline with a Zo of 247 Ohms. If we retain the same line spacing for the larger models (0.7" and 0.9"), we obtain two new wire diameters: 0.175" (instead of 0.1875") and 0.225" (instead of 0.25"). The following table provides the corrected results for the new feed/phase lines, remembering that in these NEC models, all of the wires change diameter as the feed/phase lines change diameter.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+       Batwing Performance with Various Wire Diameters:  AGT Corrections
+
+0.125" Wire with 0.5" Feed/Phase Line Spacing            AGT: 0.964 (-0.16 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.25              5.38              5.52
+Feed R Ohms                   74.1              77.3              80.9
+
+0.175" Wire with 0.7" Feed/Phase Line Spacing             AGT: 1.003 (0.01 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.26              5.40              5.54
+Feed R Ohms                   76.9              79.6              82.7
+
+0.225" Wire with 0.9" Feed/Phase Line Spacing             AGT: 1.037 (0.16 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.27              5.40              5.53
+Feed R Ohms                   79.8              82.2              85.0
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The exercise initially tells us that increasing the Zo of the larger model feed/phase lines actually sends the feedpoint impedances farther apart than the initial descending values for these numbers. However, the initial readout is not the whole story. For we now know that we have two design strategies for bringing those values closer together--and closer to a 75-Ohm design-frequency value. As we increase the wire diameter in the model, we may decrease the feed/phase line Zo and/or we may adjust the outer dimension of the batwing. There is no such thing as a failed test, but only test from which we fail to learn.</p>
+  <p>We may also ask what might happen if we increased the diameter of the feed/phase line without increasing the diameter of the dipole and outer perimeter wires. For this task, we must use MININEC (Antenna Model, in this case), since NEC become erroneous when faced with junctions of wires with dissimilar diameters.</p>
+  <p>For the test, I used the 0.25" wire diameter model as a baseline, since it used a feed/phase line separation of 0.9", adequate for having 2 segments at the crossing wires. The combination of 0.25" wire and 0.9" separation yields a Zo of 234 Ohms. Keeping the spacing but increasing the wire diameter to 0.35" for just the feed/phase line gives a Zo of 192 Ohms. With 0.45" diameter wire, the Zo is 158 Ohms. For these three cases, MININEC returned the following uncorrected data.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+          Batwing Performance with Various Feed/Phase Line Diameters
+
+0.25" Wire with 0.9" Feed/Phase Line Spacing
+Freq MHz                      420               435               450
+Gain dBi                      5.11              5.23              5.35
+Feed Z R+/-jX Ohms            84.1 - j18.8      85.6 - j13.7      87.3 - j 9.4
+75-Ohm SWR                    1.30              1.23              1.21
+
+0.35" Wire with 0.9" Feed/Phase Line Spacing
+Freq MHz                      420               435               450
+Gain dBi                      5.06              5.19              5.32
+Feed Z R+/-jX Ohms            78.9 - j22.1      79.7 - j16.7      80.6 - j13.3
+75-Ohm SWR                    1.34              1.26              1.21
+
+0.45" Wire with 0.9" Feed/Phase Line Spacing
+Freq MHz                      420               435               450
+Gain dBi                      5.05              5.16              5.27
+Feed Z R+/-jX Ohms            73.6 - j23.8      73.8 - j18.6      74.2 - j15.2
+75-Ohm SWR                    1.38              1.28              1.23
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The decreasing gain values with no changes in the dipole diameters should make us suspicious that something is amiss with the modeling. If the actual gain values were relatively constant, then the reported values would indicate a decreasing AGT value. In fact, this is the case, as the following table of corrected gain and resistance values shows.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+ Batwing Performance with Various Feed/Phase Line Diameters:  AGT Corrections
+
+0.25" Wire with 0.9" Feed/Phase Line Spacing            AGT: 0.9524 (-0.21 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.32              5.44              5.56
+Feed R Ohms                   80.1              81.5              83.1
+
+0.35" Wire with 0.9" Feed/Phase Line Spacing            AGT: 0.9437 (-0.25 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.31              5.44              5.57
+Feed R Ohms                   74.5              75.2              76.1
+
+0.45" Wire with 0.9" Feed/Phase Line Spacing            AGT: 0.9348 (-0.29 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.34              5.45              5.56
+Feed R Ohms                   68.8              69.0              69.4
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>We should never expect perfect agreement, even when employing correction factors, between NEC and MININEC results. However, within a very small ballpark, the MININEC exercise permits us to extend our design strategies. The reduction in feed/phase line Zo results in a consequential reduction in the feedpoint impedance. In fact, the feedpoint resistance reduction is about 1/6 the reduction in Zo for a constant set of dipole diameters. We now have another means of controlling the feedpoint impedance of the batwing.</p>
+  <p><b>The Conductive Mast Question</b></p>
+  <p>All of our models have omitted the central conductive mast that is part of most commercial implementations of the batwing antenna, especially in dipole or turnstile applications. Modeling such a mast presents both NEC and MININEC with difficulties. The mast ordinarily has a diameter that is several times the diameter of the wire diameter used in the antenna proper. With the short segment lengths required for the antenna, the mast diameter is usually larger than the antenna segment length. Even smaller masts are limited by virtue of the corner junction penetration into the center portion of NEC segments.</p>
+  <p>At most, then, NEC models might give us an indication of the effect of a central mast simply by modeling a center wire between the two sets of wires used as the feed/phase lines of the antenna. However, even this model requires some special treatment, since the central mast wire joins only the top and bottom of the batwing horizontal wires. The source wire must be allowed to cross between the feed/phase lines without interruption or junction with the mast wire.</p>
+  <center>
+    <img src="bwc-7.gif" width="400" height="584" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since the aim of the model is to get an indication of the likely effect of the central mast, precision is not the goal. <b>Fig. 7</b> indicates in an edge and a face view how I built the model for this goal. The mast wires are vertical as they extend above the top horizontal and below the bottom horizontal wires in the array. Between those points, the mast consists of two wires that join in the vicinity of the source wire, but displaced 0.5" to avoid contact with the source wire. Despite the distortions from a physical implementation that would use a straight mast and wrap the feedpoint contacts around the mast, we ought to be able to see some effect. Indeed, by varying the diameter of the mast wire, we might even observe some trends.</p>
+  <p>For the test, I used the 3/16" (0.1875") diameter wire model of the batwing antenna. The reasoning behind this choice is that this version has the best AGT rating, 1.005. I first used a 3/16" mast wire so that there would be no wire junctions between dissimilar diameter wires. However, I then increased the mast wire diameter to 0.25" and then to 0.3125" (5/16"). Beyond this diameter, I encountered warnings concerning the angular penetration of one wire into the central region of another.</p>
+  <p>The following table summarizes the outcome of these models.</p>
+  <pre> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+                 Batwing Performance with a Central Mast Wire
+
+0.1875" Wire with 0.7" Feed/Phase Line Spacing and No Mast Wire
+AGT:  1.005 (0.02 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.29              5.43              5.56
+Feed Z R+/-jX Ohms            75.6 - j14.1      77.9 - j 7.6      80.6 - j 3.0
+75-Ohm SWR                    1.21              1.11              1.09
+
+0.1875" Wire with 0.7" Feed/Phase Line Spacing and a 0.1875" Mast Wire
+AGT:  1.007 (0.03 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.31              5.44              5.58
+Feed Z R+/-jX Ohms            75.7 - j15.6      77.9 - j 9.0      80.5 - j 4.3
+75-Ohm SWR                    1.23              1.13              1.09
+
+0.1875" Wire with 0.7" Feed/Phase Line Spacing and a 0.25" Mast Wire
+AGT:  1.007 (0.03 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.31              5.44              5.58
+Feed Z R+/-jX Ohms            75.7 - j15.6      77.9 - j 9.0      80.5 - j 4.3
+75-Ohm SWR                    1.23              1.13              1.09
+
+0.1875" Wire with 0.7" Feed/Phase Line Spacing and a 0.3125" Mast Wire
+AGT:  1.007 (0.03 dB)
+Freq MHz                      420               435               450
+Gain dBi                      5.31              5.44              5.58
+Feed Z R+/-jX Ohms            75.7 - j15.6      77.9 - j 9.0      80.5 - j 4.3
+75-Ohm SWR                    1.23              1.13              1.09
+
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>The data shown is uncorrected for the AGT. However, the difference between the AGT with and without the mast wire is too small to make a difference in the results.</p>
+  <p>The first comparison should be between the top two entries, with and without a central mast wire. The differential between the two data sets is too slight to see that a thin wire makes a difference to the performance of the batwing model.</p>
+  <p>The second comparison should be between the second and third data sets. Because the wire junctions between the 0.1875" antenna wires and the 0.25" mast occur at points that make no difference in the currents within the mast or the antenna wires, the junction of wires having different diameters creates no problems. The constant AGT between these two data sets provides the evidence of this, as does the identity of the gain and impedance values. (A similar effect is noticeable with symmetrical sets of radials forming ground planes or element end hats for monopoles or dipoles.)</p>
+  <p>The final comparison should be among all three sets of data for the changing diameter of the central mast wire. If a central mast is to have some effect on the overall performance of the array, it should show in some variations in the performance data. However, there is no change of performance at all across the 70-cm band.</p>
+  <p>There are, of course, limitations to the model. The mast extends only 10" above and below the antenna proper. Nevertheless, there is negligible mast current (less than 5E-6 relative to a source current of 1.0). Although there may be a "magic" mast length (or diameter) that shows significant increases in antenna currents, that length (or diameter) is likely avoidable.</p>
+  <p>The key limiting factor in the use of a central conductive mast will be physical. Such a mast will force the two lines making up the feed/phase system farther part, calling for a recalculation of the line Zo to achieve, with a given set of batwing dimensions, a desired feedpoint impedance. Hence, the strategies developed earlier in this modeling exercise would prove useful in the ultimate design of a practical batwing array.</p>
+  <p>Of course, one may use a non-conductive mast that is slightly offset from the arrays to permit more freedom in the design of the feed/phase line system. Conductive mounting brackets connecting the support mast to the central tower mast may have connections to the center of the batwing top and bottom horizontal elements for lightning protection.</p>
+  <p><b>Conclusion--or a Beginning</b></p>
+  <p>We have focused in this episode on the modeling issues. The limitations of the modeling software may preclude an absolutely precise model of an ultimate batwing design for a particular application. However, they can offer design strategies so that the field adjustments that we make have some initial sense of direction and potential result.</p>
+  <p>Translating the potentials of the batwing antenna into physical implementations offers too many turns for inclusion in this series of short notes on the antenna. If the modeling exercises have given some indication of the potential for this antenna, then perhaps they have done its work. The batwing has a large variety of possible wide-band applications beyond the television transmitting industry that it has long served. For amateur and commercial directional point-to-point communications or omni-directional horizontally polarized service, the batwing antenna may be among the best very wide-band antennas available. Especially at UHF, where we tend to lose more power in cable runs than anywhere else, the ability to achieve very low SWR values across a wide frequency range, when combined with the wide-band gain performance of the batwing, may give this antenna renewed life in many incarnations.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 04-01-2004. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>Mar., 2004. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a><br></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#batwing'>Batwing</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

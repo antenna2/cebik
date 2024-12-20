@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="VHF / UHF, Corner Reflector">
+  <title>Corner Reflectors Revisited Again Part 4: Variations on Standard Corner Reflectors</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1><img src="../images/cornbut.gif" align="left" width="84" height="83" border="2" vspace="5" hspace="10"><img src="../images/w4rnlwwr.gif" align="right" width="99" height="83" border="2" vspace="5" hspace="10">Corner Reflectors Revisited Again<br>
+    <br>
+    Part 4: Variations on Standard Corner Reflectors</h1>
+  </center>
+  <p><br></p>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p>Our next foray into corner reflectors will actually be a sampler of sorts. As we move away from the standard 90-degree reflector with plane sides, whether modeled as wire grids or as a set of rods, the individual topics become more specific, each with a smaller set of design interests. On the other hand each topic might well expand into the semi-complete coverage that I have extended to the standard corner. Remember, though, that the coverage of even the standard corner has restricted itself to 50-Ohm drivers in order to be able to track various performance variations over a large range of reflector sizes. The bottom line is that, no matter how extensive I might make a modeling compendium for corner reflectors, the coverage would still be incomplete. There is always a variant that deserves coverage but remains uncovered.</p>
+  <p>Nevertheless, the coverage may be sufficient to provide a useful level of general guidance. Based on that guidance, perhaps the samples that we shall explore in this session will be enough to allow you to expand any topic of interest by specific modeling or field experiments of your own.</p>
+  <p>In this exercise, we shall take brief looks at the following topics.</p>
+  <blockquote>
+    1. Narrowing the corner reflector angle.
+    <p>2. Enhancing parasitic effects of reflector bars.</p>
+    <p>3. Aperture fold-in.</p>
+    <p>4. Trough reflectors</p>
+    <p>5. Collinear dipole drivers</p>
+  </blockquote>
+  <p>The rationale for the selection and order of the topics will become apparent as we scurry through them. To level the sampling field, I shall continue to use 50-Ohm drivers throughout. As well, I shall largely restrict the reflector size used in the sampling to a vertical dimension of 1.4 m (wavelengths) and a side length of 2.4 m (wavelengths), at our test frequency of 299.7925 MHz, where 1 m = 1 wavelength. My selection of the reflector size is not arbitrary. For 90-degree rod reflectors, this reflector size yields the peak performance, and the wire-grid reflectors peak about 0.2 m taller. As a result, improvements and degradations of performance should show up with minimal ambiguity. In some cases, however, we shall be left with unanswered questions concerning whether a longer side length might have yielded better performance. This question is but one part of the unfinished business that I must leave to your own modeling.</p>
+  <p><b>Narrowing the Corner Reflector Angle</b></p>
+  <p>Classic corner reflector literature tends to focus upon the standard or 90-degree reflector, but also notes that this angle may be too large to produce the maximum gain that we might achieve from the angled array. Therefore, the first sampling calls for a brief survey of some possibilities, as sketched in <b>Fig. 1</b>. I actually carried the survey down to 50 degrees, starting from 90 degrees and working in 10-degree increments.</p>
+  <center>
+    <img src="corner4-1.gif" width="310" height="410" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The survey involved, for this case only among our present topics, using both wire-grid and rod-based reflectors in order to determine if there might be any significant variations. The modeling used the reflectors saved from earlier investigations simply by modifying two lines in the Green's file model. The following sample will show the ease of setting up new corner angles.</p>
+  <pre>CM Rod Corner Reflector: 299.7925 MHz; 1 m = 1 wl
+CM Size = v1.4 m x h4.8 m (2.4-m side)
+CM 70-degree apex angle
+CE
+GW 1 14 0 0 -.7 0 0 .7 .015
+GW 2 14 0 -.1 -.7 0 -.1 .7 .015
+GM 0 23 0 0 0 0 -.1 0 2 1 2 14
+GM 0 0 0 0 55 0 0 0 2 1 0 0
+GW 3 14 0 .1 -.7 0 .1 .7 .015
+GM 0 23 0 0 0 0 .1 0 3 1 3 14
+GM 0 0 0 0 -55 0 0 0 3 1 0 0
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+WG cr70-v14-h48.WGF
+EN </pre>
+  <p>The final GM entries for each side of the rod reflector simply change the angle of tilt from a true planar reflector to enclose an angle of 70 degrees. The treatment of the wire-grid reflector is identical. The dipole model making use of this partial result simply changes the GF entry to record the proper Green's file that it will access.</p>
+  <p>Let's begin by summarizing the survey results in a table. For each new angle, I adjusted the apex-to-dipole spacing (listed as "Space") and the dipole length (listed as "Length") for 50-Ohm resonance, as registered by an SWR report of 1.00:1. The performance figures are the same as presented in all other tables in this series, where the free-space gain is in dBi, the 180-degree front-to-back ratio is in dB, and the beamwidths (E-BW and H-BW) are for the dipole/array E- and H-planes.</p>
+  <pre>
+Wire-Grid Reflectors
+Space     Length     Angle      Gain     Front-Back     E-BW       H-BW        Impedance        50-Ohm
+m/wl      m/wl       degrees    dBi      Ratio dB       degrees    degrees     R +/- jX Ohms    SWR
+0.325     0.4248     90         13.49    38.00          40         34          50.10 + j0.20    1.00
+0.364     0.4226     80         14.19    46.29          38         30          50.11 + j0.20    1.00
+0.4135    0.4202     70         14.27    45.35          38         28          50.10 + j0.03    1.00
+0.480     0.4174     60         14.15    43.40          38         32          50.20 + j0.03    1.00
+0.573     0.4140     50         13.66    32.86          40         36          50.03 + j0.03    1.00
+
+Rod Reflectors
+Space     Length     Angle      Gain     Front-Back     E-BW       H-BW        Impedance        50-Ohm
+m/wl      m/wl       degrees    dBi      Ratio dB       degrees    degrees     R +/- jX Ohms    SWR
+0.323     0.4248     90         13.70    34.05          42         36          50.22 - j0.03    1.00
+0.361     0.4226     80         14.25    36.69          40         32          50.18 - j0.11    1.00
+0.410     0.4202     70         14.63    40.55          38         30          50.08 + j0.02    1.00
+0.4765    0.4172     60         14.70    43.41          38         30          50.09 - j0.21    1.00
+0.569     0.4140     50         14.46    38.77          38         34          49.88 + j0.03    1.00
+</pre>
+  <p>The first noticeable trends involve the dipole length and spacing from the apex. As we shrink the angle of the reflector, the dipole requires more spacing from the apex and decreases its length. Both phenomena are natural, since the dipole will have a closer approach to and increased mutual coupling with the reflector planes. In this region of reflector size, the dimensions make virtually no distinction between the wire grid or the rod reflectors, as indicated by the trend graphs in <b>Fig. 2</b>. The tightness of the dimensional fit for both space and length is clearly evident.</p>
+  <center>
+    <img src="corner4-2.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Because the reflector size used in the survey is more optimal for rod reflectors than for wire-grid reflectors, as recorded in the surveys in preceding sections of this study, we should expect some difference in the gain curves for the two types as we shrink the angle. The table and the gain graph in <b>Fig. 3</b> show the differences.</p>
+  <center>
+    <img src="corner4-3.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The wire-grid version peaks with an angle of 70 degrees, while the rod reflector peaks at 60 degrees. The table data on the front-to-back ratio also shows a wire-grid reflector peak at a wider angle than for the rod reflector. In addition, we also find that the minimum beamwidth values tend to correspond with the maximum gain values. Whether the wire-grid would also show a peak in gain at 60 degrees with its more optimal reflector vertical dimension (1.8 m) is one of those remnant unanswered question.</p>
+  <p>Changing the corner reflector angle apparently has a limit in its ability to increase gain for a given set of reflector dimensions. Both types of reflector show significant gain reductions as we decrease the reflector angle below 60 degrees. Whether there is a more optimal reflector size for narrower angle is also a question left to specific design interests.</p>
+  <p>The corner reflector angle also has a bearing on the exact pattern shapes that we obtain from the array. <b>Fig. 4</b> provides wire-grid samples for 90, 70, and 50 degrees in both the E-plane and the H-plane.</p>
+  <center>
+    <img src="corner4-4.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the E-plane, we do not see the beginnings of side "bulges" (incipient secondary forward lobes) until we pass the reflector angle for maximum gain. However, comparable bulges are an inherent part of the H-plane pattern. As we decrease the reflector angle, these side lobes increase in strength and move forward. The 50-degree pattern comes close to being pear-shape.</p>
+  <center>
+    <img src="corner4-5.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> provides the comparable patterns for the rod reflector series of models. In both the E-plane and the H-plane, the patterns show similar but less-developed side lobe bulges. In part, the slow development is the result of the fact that the size of the reflector (especially the vertical dimension) coincides more closely with the optimal size for this type of reflector.</p>
+  <p>One facet of performance does not change with the type of reflector: the SWR bandwidth. SWR bandwidth is largely a function of the dipole spacing and length, although these parameters are influenced by the reflector angle. However, just as the graph of dimensions showed a very close overlap of values, so too do the 50-Ohm SWR curves for the two types of reflectors. Therefore, <b>Fig. 6</b> shows the curves only for the rod reflector.</p>
+  <center>
+    <img src="corner4-6.gif" width="592" height="386" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For both reflector types, the 2:1 SWR bandwidth shrinks from 9.0% with a 90-degree reflector angle down to 8.3% with a 50-degree angle. The shrinkage, although small, runs contrary to our experience with the 90-degree reflector when we moved the dipole further from the reflector apex. However, in that case, increasing the spacing decreased the dipole's coupling to the reflector surfaces. In the present survey of shrinking angles, the increased spacing still results in increased coupling and a narrowing of the SWR bandwidth.</p>
+  <p><b>Enhancing Parasitic Effects of Reflector Bars</b></p>
+  <p>Although the survey of shrinking angles for 50-Ohm corner reflectors leaves numerous unanswered questions, let's turn to a different technique of changing corner reflector performance. Here, I shall report on the work (with permission) of John Regnault (G3SWX) and John Sager (G0ONH), as conveyed in private correspondence. Beginning with a rod reflector that uses a 75-degree angle, they systematically altered the length of the reflector rods for a reflector that is close to the general size that we are using as are sample: 1.4-m vertically by 2.4 m for each side. The end result was a reflector that used different lengths for virtually every reflector rod.</p>
+  <p>In a preceding part of this series, I showed a typical rod reflector in terms of its current distribution. Except for the region immediately behind the dipole driver, the remaining portions of the reflector show so little current variation that it does not register on the color scale used for the relative current magnitude display: 5e-003 down to 1e-005. Compare that illustration with <b>Fig. 7</b>, which uses the very same scale of relative current magnitudes and the same level of excitation.</p>
+  <center>
+    <img src="corner4-7.gif" width="672" height="557" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The location of the all-red driver dipole differs slightly in each case, since I tilted the original graphics to slightly different angle in order to reveal the state of relative current distribution on the apex rod. However, more striking is the fact that in both cases, the reflector rods show a range of current distribution that is a product of the careful selection of reflector rod lengths.</p>
+  <pre>CM corn6a.nec
+CM G4SWX 2001 design
+CM Corner reflector center freq 299.8MHz
+CM 75 degree apex corner 2.4WL panels 1.4WL wide
+CM corn6a.nec: 0.3WL rod spacing design
+CM Rods spaced .2 .1 .1 .2 .3 .3 .3 .3 .3 .3
+CM single dipole drive 50 ohm optimized
+CE
+GW 0 40 0.0793 -.690 0.0609 0.0793 0.690 0.0609 0.0108
+GW 0 40 0.2380 -.695 0.1826 0.2380 0.695 0.1826 0.0108
+GW 0 40 0.3173 -.689 0.2435 0.3173 0.689 0.2435 0.0108
+GW 0 40 0.4760 -.676 0.3653 0.4760 0.676 0.3653 0.0108
+GW 0 40 0.7140 -.682 0.5479 0.7140 0.682 0.5479 0.0108
+GW 0 40 0.9520 -.702 0.7306 0.9520 0.702 0.7306 0.0108
+GW 0 40 1.1900 -.697 0.9132 1.1900 0.697 0.9132 0.0108
+GW 0 40 1.4280 -.700 1.0958 1.4280 0.700 1.0958 0.0108
+GW 0 40 1.6660 -.689 1.2784 1.6660 0.689 1.2784 0.0108
+GW 0 40 1.9040 -.692 1.3200 1.9040 0.692 1.3200 0.0108
+GW 0 40 0.0793 -.690 -0.0609 0.0793 0.690 -0.0609 0.0108
+GW 0 40 0.2380 -.695 -0.1826 0.2380 0.695 -0.1826 0.0108
+GW 0 40 0.3173 -.689 -0.2435 0.3173 0.689 -0.2435 0.0108
+GW 0 40 0.4760 -.676 -0.3653 0.4760 0.676 -0.3653 0.0108
+GW 0 40 0.7140 -.682 -0.5479 0.7140 0.682 -0.5479 0.0108
+GW 0 40 0.9520 -.702 -0.7306 0.9520 0.702 -0.7306 0.0108
+GW 0 40 1.1900 -.697 -0.9132 1.1900 0.697 -0.9132 0.0108
+GW 0 40 1.4280 -.700 -1.0958 1.4280 0.700 -1.0958 0.0108
+GW 0 40 1.6660 -.689 -1.2784 1.6660 0.689 -1.2784 0.0108
+GW 0 40 1.9040 -.692 -1.3200 1.9040 0.692 -1.3200 0.0108
+GW 0 40 0.0 -.710 0.0 0.0 0.710 0.0 0.0108
+GW 1 15 0.363 -.199 0.0 0.363 0.199 0.0 0.0108
+GE
+GN-1
+FR 0,1,0,0,299.8,0.
+EX 0 1 8 1 1.00000 0.00000
+RP  0, 1, 361, 1001, 90., 0., 1., 1.,10000.
+RP  0, 361, 1, 1001, 0., 0., 1., 1.,10000.
+EN</pre>
+  <p>The model shown above is for the reflector on the left in <b>Fig. 7</b>. It uses what I tend to call a mild or modest set of variations in the reflector rod length. However, notice also that the rod spacing also changes to enhance the parasitic effects. The dipole used in these models is fatter than the ones on our survey (0.0216 m vs. 0.008 m), but the rod diameters are a bit smaller (0.0216 m vs. 0.03 m). The only adjustments that I made to the model are 2. First, I strung out the reflector wires as individual units rather than using the symmetry entries in the original. Second, I adjusted the dipole spacing and length for a 50-Ohm SWR of 1.00:1 on NEC-4.</p>
+  <p>The second model uses a much more radical set of reflector rod adjustments in an attempt to squeeze a bit more gain from the system. <b>Fig. 7</b> on the right shows not only the relative current magnitude distribution, but also the fact that certain rods have been reduced in length to approximate parasitic reflectors. The following lines provide the model (with similar adjustments to the first one) and its relevant dimensions. You may identify the short reflector rods as the ones with only 15 segments, the same number as used in the driving dipole.</p>
+  <pre>CM corn6b.nec
+CM G4SWX 2001 design
+CM Corner reflector center freq 299.8MHz
+CM 75 degree apex corner 2.4WL panels 1.4WL wide
+CM corn6b.nec: 0.3WL rod spacing design
+CM Rods spaced .2 .1 .1 .2 .3 .3 .3 .3 .3 .3
+CM Rods 1 and 4 0.5WL others 1.5WL
+CM single dipole drive 50 ohm optimized
+CE
+GW 0 15 0.0793 -.260 0.0609 0.0793 0.260 0.0609 0.0108
+GW 0 45 0.2380 -.702 0.1826 0.2380 0.702 0.1826 0.0108
+GW 0 45 0.3173 -.717 0.2435 0.3173 0.718 0.2435 0.0108
+GW 0 15 0.4760 -.252 0.3653 0.4760 0.252 0.3653 0.0108
+GW 0 45 0.7140 -.691 0.5479 0.7140 0.691 0.5479 0.0108
+GW 0 45 0.9520 -.702 0.7306 0.9520 0.702 0.7306 0.0108
+GW 0 45 1.1900 -.697 0.9132 1.1900 0.697 0.9132 0.0108
+GW 0 45 1.4280 -.700 1.0958 1.4280 0.700 1.0958 0.0108
+GW 0 45 1.6660 -.689 1.2784 1.6660 0.689 1.2784 0.0108
+GW 0 45 1.9040 -.692 1.3200 1.9040 0.692 1.3200 0.0108
+GW 0 15 0.0793 -.260 -0.0609 0.0793 0.260 -0.0609 0.0108
+GW 0 45 0.2380 -.702 -0.1826 0.2380 0.702 -0.1826 0.0108
+GW 0 45 0.3173 -.717 -0.2435 0.3173 0.718 -0.2435 0.0108
+GW 0 15 0.4760 -.252 -0.3653 0.4760 0.252 -0.3653 0.0108
+GW 0 45 0.7140 -.691 -0.5479 0.7140 0.691 -0.5479 0.0108
+GW 0 45 0.9520 -.702 -0.7306 0.9520 0.702 -0.7306 0.0108
+GW 0 45 1.1900 -.697 -0.9132 1.1900 0.697 -0.9132 0.0108
+GW 0 45 1.4280 -.700 -1.0958 1.4280 0.700 -1.0958 0.0108
+GW 0 45 1.6660 -.689 -1.2784 1.6660 0.689 -1.2784 0.0108
+GW 0 45 1.9040 -.692 -1.3200 1.9040 0.692 -1.3200 0.0108
+GW 0 45 0.0 -.720 0.0 0.0 0.720 0.0 0.0108
+GW 1 15 0.378 -.1955 0.0 0.378 0.1955 0.0 0.0108
+GE
+GN-1
+FR 0,1,0,0,299.8,0.
+EX 0 1 8 1  1.00000  0.00000
+RP 0 1 361 1001 90. 0. 1.00000 1.00000
+RP 0 361 1 1001 0. 0. 1.00000 1.00000
+EN</pre>
+  <p>The following brief table will show some of what we derive from the difficult and likely tedious task of optimizing the length of each reflector rod. The 70-degree standard rod reflector appears as a point of reference.</p>
+  <pre>
+Array       Angle     Gain     Front-Back     E-BW        H-BW        Impedance        50-Ohm
+            degrees   dBi      Ratio dB       degrees     degrees     R +/- jX Ohms    SWR
+Standard    70        14.63    40.55          38          30          50.08 + j0.02    1.00
+Corn6A      75        15.66    32.13          34          22          49.91 - j0.04    1.00
+Corn6B      75        15.78    26.26          34          22          49.99 - j0.08    1.00
+</pre>
+  <p>Both reflectors with optimized rods provide better than a dB of additional gain over the standard reflector with a nearly optimum angle. In the process, they lose a bit of front-to-back ratio, although virtually any communications service would be satisfied with the levels achieved. In addition, both arrays effect additional and quite noticeable reductions in the E-plane and the H-plane beamwidths. In fact, the beamwidth reductions are so sizable that we need to examine the patterns of the arrays to see how they emerge. Since the original models use a horizontal orientation relative to the modeling coordinate system (in contrast to our standardized vertical orientation), the individual patterns will point in different directions from the remainder in this part of the series.</p>
+  <center>
+    <img src="corner4-8.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The cost associated with adjusting individual reflector rods for better parasitic performance is the emergence of sidelobes, both fore and aft. The E-plane pattern in <b>Fig. 8</b> for Corn6A, the mild adjustment, shows that the worst-case front-to-back ratio is closer to about 25 dB due to rearward sidelobes. E-plane bulges that appear only when standard reflectors pass the angle of optimal gain are plainly appearing in this optimized model. The H-plane shows the most significant departure from the well-behaved patterns associated with standard reflectors. Once more, the sidelobes that appear in strength only when a standard reflector has passed the angle of optimal performance are a standard part of the optimized model. In addition, the pattern shows ripples indicating a whole cluster of incipient sidelobes, undoubtedly the result of the variable length of the reflector rods. Having noted the variations from the norm for standard reflectors, I should add that these phenomena are not inherent drawbacks to the design. That judgment rests on comparing standard and optimized patterns against a set of design criteria for a particular communications task.</p>
+  <center>
+    <img src="corner4-9.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 9</b> shows the patterns for the more radically altered version of the reflector with optimized rod lengths. The use of some reflector rods that function more distinctly as parasitic reflector elements creates some significant changes in the patterns. Both the 180-degree and the worst-case front-to-back ratios show further reductions, as illustrated both by the performance table and by the H-plane pattern. The H-plane pattern also shows that the rippled side bulges of Corn6A are now a pair of distinct forward sidelobes on each side of the main forward lobe of Corn6B. In the E-plane pattern as well, the incipient sidelobes of Corn6A are now fully fledged secondary forward side lobes in Corn6B.</p>
+  <p>Whatever the fine points of the performance figures and patterns, the fact remains that Regnault and Sager have demonstrated that by optimizing the length and spacing of the reflector rods in a corner reflector that is 1.4 m (wavelengths) vertically with 2.4-m (wavelength) sides, we can gain at least a full dB of further gain from the structure. It remains somewhat a moot point whether we call the reflector a modified corner or a hybrid parasitic-corner reflector.</p>
+  <p>Perhaps more significant is another seemingly minor detail in the two corner reflectors that we have just noted. The most forward rod in each reflector does not continue the straight line formed by the preceding rods back to the apex rod. Instead, the rod forms a "fold-in," a shift in position that effects a slight reduction in the expected aperture. Since this represents a third way in which we may modify a standard reflector, we should add it to our survey.</p>
+  <p><b>Aperture Fold-In</b></p>
+  <p><b>Fig. 10</b> shows the general concept of side-length fold-in. Essentially, the fold-in portion of the reflector adds a reflector plane that is parallel with the line formed by the dipole driver and the apex. Although we can implement a fold-in with either wire-grid or rod reflectors, our survey will limit itself to a sampling of rod reflector steps.</p>
+  <center>
+    <img src="corner4-10.gif" width="353" height="304" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Each new rod in the reflector maintains the same inter-rod spacing: 0.1 m. Hence, for a given starting side length, each rod increases the side length without changing the aperture. In order for us to have a relevant stand of comparison to see what happens as we add rods to a fold-in, let's re-examine some older data for standard 90-degree corner reflectors that are 1.4 m vertically with several side lengths.</p>
+  <pre>
+Reference Values for 90-Degree Corner Reflectors 1.4-M Vertically
+Side-Length     Free-Space    Front-to-Back     E-BW        H-BW       Impedance       50-Ohm
+m/wl            Gain dBi      Ratio dB          degrees     degrees    R +/- jX Ohms   SWR
+2.3             13.66         35.78             42          36         50.22 - j0.02   1.00
+2.4             13.70         34.05             42          36         50.20 - j0.03   1.00
+2.5             13.70         34.84             42          36         50.20 - j0.03   1.00
+2.6             13.73         34.71             40          36         50.20 - j0.01   1.00
+2.7             13.68         35.59             42          36         50.22 - j0.02   1.00
+</pre>
+  <p>When adjusted to have a 50-Ohm SWR of 1.00:1, the performance shows a mild peak with a side length of 2.6 m, although the entire region from 2.4 m to 2.6 m might be considered as virtually identical in performance. Note that the free-space gain peaks at about 13.7 dBi. The beamwidths are comparable throughout the entire range of side lengths in the small table.</p>
+  <p>Next, let's take a reflector with a 2.4-m side length and begin to add fold-in rods, one at a time to each side of the reflector. The reflector aperture remains 3.39 m, but the distance from the apex to the aperture line grows from 1.70 m up to 2.10 m as we add up to 4 fold-in rods. The following table shows the modeling results for each additional fold-in rod.</p>
+  <pre>
+Adding a fold-in to a 90-Degree Corner Reflector 1.4-M Vertically With a Basic
+Side Length of 2.4 M:  Each fold-in step is 0.1-m forward, but no wider than the initial
+aperture (3.39 m).
+
+No. of Fold-    Free-Space    Front-to-Back     E-BW        H-BW       Impedance       50-Ohm
+In rods         Gain dBi      Ratio dB          degrees     degrees    R +/- jX Ohms   SWR
+No added rods   13.70         34.05             42          36         50.20 - j0.03   1.00
+1 fold-in rod   13.76         35.31             42          34         50.21 - j0.07   1.00
+2 fold-in rods  13.98         43.45             40          32         50.08 - j0.14   1.00
+3 fold-in rods  14.00         44.27             40          30         50.10 - j0.15   1.00
+4 fold-in rods  14.23         33.60             40          28         50.03 - j0.03   1.00
+</pre>
+  <p>Most notable is the fact that gain continues to increase even through the 4th added fold-in rod, with no signs of decrease. The front-to-back ratio remains strong. Although the E-plane beamwidth shows a marginal decrease, the H-plane beamwidth shows a much sharper curve downward.</p>
+  <p>Let's take one more step and begin with a reflector that is 2.3 m per side. Then we may add fold-in reflector rods up to a total of 4. The aperture for the slightly smaller initial reflector is 3.25 m. The distance from the apex to the aperture line will grow from 1.63 m to 2.03 m.</p>
+  <pre>
+Adding a fold-in to a 90-Degree Corner Reflector 1.4-M Vertically With a Basic
+Side Length of 2.3 M:  Each fold-in step is 0.1-m forward, but no wider than the initial
+aperture (3.25 m).
+
+No. of Fold-    Free-Space    Front-to-Back     E-BW        H-BW       Impedance       50-Ohm
+In rods         Gain dBi      Ratio dB          degrees     degrees    R +/- jX Ohms   SWR
+No added rods   13.66         35.78             42          36         50.22 - j0.02   1.00
+1 fold-in rod   13.79         32.97             42          34         50.26 - j0.03   1.01
+2 fold-in rods  13.88         35.43             42          32         50.30 - j0.13   1.01
+3 fold-in rods  14.13         38.59             40          30         50.12 - j0.29   1.01
+4 fold-in rods  14.47         31.40             38          26         50.01 - j0.07   1.00
+</pre>
+  <p>The second case is interesting because it begins with a lower gain value than the first. However, by the time we add a single rod, the array has a higher gain then the first case, and with 4 fold-in rods, the difference has grown to about a quarter dB, with no signs of impending decrease. As well, the final case in the list, even though technically smaller than the final case in the first list, has narrower beamwidth values.</p>
+  <p>If we draw lines from the aperture limits back to the apex, the largest array on the first list forms an effective angle of just about 80 degrees. For the second and smaller array, the angle becomes a little over 77 degrees. Now let's go all the way back in this exercise to the beginning. The gain of an 80-degree corner array with 2.4-m sides was about 14.25 dBi, virtually the same value as the largest fold-in model using 1.4-m initial sides. The gain value for a 70-degree array was 14.63 dBi, somewhat higher than for our 77-degree (effective) fold-in model that began with 2.3-m sides. In effect, the fold-in technique does more than just hold the aperture at some fixed final value. It also narrows the effective angle of an array, whatever its starting angle.</p>
+  <p>To test this way of looking at the fold-in structure on corner arrays, let's perform one more test. The 60-degree corner using 2.4-m sides yielded the highest gain of the set of shrinking corners tested. Let's use the 60-degree angle and go in two directions. First, we shall extend the sides by one increment to 2.5 m. Second, we shall move the new rods inboard instead to create a 2.5-m side length, but retain the aperture of the original model with 2.4-m sides. The following table shows what we get.</p>
+  <pre>
+Options for a 60-Degree Corner Reflector 1.4-M Vertically With a Basic
+Side Length of 2.4 M:  A. Extending the side length to 2.5 M, or B. Adding a fold-in rod.
+Each fold-in step is 0.1-m forward, but no wider than the initial aperture (3.0 m).
+
+No. of Fold-           Free-Space    Front-to-Back     E-BW        H-BW       Impedance       50-Ohm
+In rods                Gain dBi      Ratio dB          degrees     degrees    R +/- jX Ohms   SWR
+60 deg, 2.4-m side     14.70         43.40             38          30         50.37 + j0.15   1.01
+60-deg, 2.5-m side     14.80         42.65             38          30         50.43 + j0.17   1.01
+60-deg, 2.4 + fold-in  14.80         39.41             38          30         50.47 + j0.17   1.01
+</pre>
+  <p>I chose the case specifically to be at the edge of performance increase with changes of the corner angle. Adding 0.1-m to each side increased the gain by about 0.1 dB. Note that the fold-in did no better, but actually shows a slight reduction in the front-to-back ratio. The beamwidths do not change for either modification relative to their initial values.</p>
+  <p>The data suggest strongly that there is a limit to the amount by which fold-in structures can improve the performance of a corner array. When the effective angle produced by the fold in approaches or reaches the corner angle of optimal performance for a plane-sided corner array, improvements will disappear. Since a 90-degree corner is distant from the smaller angle that marks the maximum gain that might be achieved for a given side-length, fold-ins show excellent potential for improved performance. However, if we begin with the optimal angle, there will be little difference between a fold-in and a simple side extension.</p>
+  <p>One might question the wisdom of using a fold-in, since it complicates reflector construction. However, a wide corner, such as the 90-degree reflector, does allow for easy implementation of a wide-band driver, such as a fan dipole. In such cases, preserving the wide-band characteristic while obtaining additional gain may call for the use of a fold-in. Its complications may be less than trying to implement a fan with a narrow corner angle.</p>
+  <p><b>Trough Reflectors</b></p>
+  <p>As the side length needed for best corner reflector performance increases, the array grows more ungainly, especially in view of its 3-dimensional nature. One solution offered to counteract this effect is the trough reflector. The basic principle appears in <b>Fig. 11</b>. We replace the pointed apex end of the reflector with a flat region that simply cuts off the apex. The result is supposed to preserve, if not enhance gain, while sustaining the other major characteristics of the corner reflector.</p>
+  <center>
+    <img src="corner4-11.gif" width="350" height="325" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Guidance on the creation of trough reflectors seems somewhat vague, general, and perhaps even misguided. At the very least, it seems directed toward corner designs other than the 50-Ohm driver that is and has been our standard system throughout this study. To test the merits of trough reflectors, I modified the 90-degree 1.4-m high rod reflector in the following ways. I replaced the apex and sidebars in steps of 2 rods on each side of the apex bar for a series of test models. Keeping the spacing between bars in the flat part of the trough at 0.1 m actually widens the overall size, although not enough to jeopardize the results. The following sample model, labeled T4, provides an example of the process.</p>
+  <pre>CM Trough Reflector and Dipole
+CM Version T4
+CE
+GW 1 14 .4 0 -.7 .4 0 .7 .015
+GW 2 14 .4 -.1 -.7 .4 -.1 .7 .015
+GW 3 14 .4 -.2 -.7 .4 -.2 .7 .015
+GW 4 14 .4 -.3 -.7 .4 -.3 .7 .015
+GW 5 14 .4 -.4 -.7 .4 -.4 .7 .015
+GM 0 19 0 0 0 .07071 -.07071 0 5 1 5 14
+GW 12 14 .4 .1 -.7 .4 .1 .7 .015
+GW 13 14 .4 .2 -.7 .4 .2 .7 .015
+GW 14 14 .4 .3 -.7 .4 .3 .7 .015
+GW 15 14 .4 .4 -.7 .4 .4 .7 .015
+GM 0 19 0 0 0 .07071 .07071 0 15 1 15 14
+GW 101 11 .572 0 -.2188 .572 0 .2188 .004
+GE 0 -1 0
+FR 0 1 0 0 299.7925 1
+GN -1
+EX 0 101 6 0 1 0
+RP 0 361 1 1000 -90 0 1.00000 1.00000
+RP 0 1 361 1000 90 0 1.00000 1.00000
+EN </pre>
+  <p>The 14-segment reflector rods confirm that the vertical dimension is 1.4 m. The flatted part of the trough has been moved 0.4 m from the former apex. Hence, it must extend 0.4 m each side of the apex rod (GW 1) to preserve the 90-degree angle toward the virtual apex point at X=0. The 19 rods in each GM entry complete the structure that is very close to 2.4 m on each total side (angled portion plus 1/2 of the trough). Obviously, T2 would move the trough only 0.2 m from the former apex, while T10 would move the trough "bottom" 1.0 m from the apex. Twice the displacement measures the width of the flat part of the trough reflector. For each case, I adjusted the spacing of the dipole from the trough centerline to yield a 50-Ohm impedance.</p>
+  <p>The models of trough reflectors provided the following performance reports--in the format with which we have grown familiar. T0 is a standard 90-degree rod reflector and forms a reference point for comparing the various trough models.</p>
+  <pre>
+Trough       Free-Space    Front-to-Back     E-BW        H-BW       Impedance       50-Ohm
+Model        Gain dBi      Ratio dB          degrees     degrees    R +/- jX Ohms   SWR
+T0           13.70         34.05             42          36         50.22 - j0.03   1.00
+T2           13.56         30.45             42          34         49.97 - j0.10   1.00
+T4           13.74         27.75             44          30         49.88 - j0.16   1.00
+T6           12.80         27.84             42          36         50.01 - j0.22   1.00
+T8           11.12 split   23.89             56          68         49.97 + j0.04   1.00
+T10          11.51 split   18.00 (approx)    88          68         49.95 - j0.23   1.00
+</pre>
+  <p>The trough reflector obviously has very limited applications for a 50-Ohm driver. Above the T4 level, the gain decreases severely, and by the T8 level, the H-plane pattern has split into two lobes, each displaced from the centerline with a large null between them. The high H-plane beamwidths represent the sum of the two lobes, although each is about 20 to 25 degrees wide and significantly more than 3 dB down at the H-plane forward heading.</p>
+  <center>
+    <img src="corner4-12.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 12</b> shows that even the T4 version of the trough offers no improvement in the 50-Ohm 2:1 SWR passband. The reason is fundamental to the trough design and its relationship to the dipole driver. Note the dimensions in the following table for the test models. All dimensions are in meters.</p>
+  <pre>
+Trough       X-axis        Space between     Net space       Dipole
+Model        Displacement  dipole & apex     dipole to ref.  length
+T0           0             0.323             0.323           0.4248
+T2           0.2           0.378             0.178           0.4310
+T4           0.4           0.572             0.172           0.4376
+T6           0.6           0.778             0.178           0.4367
+T8           0.8           0.975             0.175           0.4367
+T10          1.0           1.176             0.176           0.4367
+</pre>
+  <p>Once we create even a small fatted portion of a trough, the required spacing of the driver from the reflector no longer corresponds in any way to the results that we obtain from either a wire-grid or a rod corner reflector. Instead, the spacing is almost exactly the spacing required from a dipole to a planar reflector. The dipole no longer has its closest approach to the plane surface of the angled reflector.</p>
+  <p>However, up to the T4 level, a trough reflector makes a viable alternative to a standard corner reflector. To check on the stability of performance, I swept both the standard corner and the T4 trough--both represented in <b>Fig. 12</b>--through their passband and a little beyond to end up with 5-MHz increments. <b>Fig. 13</b> shows the results of a gain comparison of the two arrays from 285 through 320 MHz.</p>
+  <center>
+    <img src="corner4-13.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The gain changes so little across the passband in either case (about 0.5 dB), that we have very little to choose between the two models. However, the front-to-back curve in <b>Fig. 14</b> suggests that the true corner reflector is consistently 3 dB or more superior to the trough reflector. The beamwidths for the T4 and the true corner show virtually no difference at any frequency.</p>
+  <center>
+    <img src="corner4-14.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>For 50-Ohm driver systems, the trough design has very limited application. A T4 trough reflector is viable and may provide one kind of mechanical advantage over the true corner. You may attach a mounting mast directly to the rear side of the flat area and achieve a more secure installation than with a true corner. However, do not expect improvements in performance. If you use a basic reflector size that significantly differs from the size used in our sample survey, you will need to subject the array to considerable modeling and field testing before pronouncing it optimal in any sense of the term.</p>
+  <p><b>Collinear Dipole Drivers</b></p>
+  <p>To this point, we have focused on modifications that we may perform on the reflector structure, focusing on a standardized rod-reflector that is 1.4 m vertically and that has a side length of 2.4 m. Before we close the book on 50-Ohm corner reflector arrays, we should note one driver modification that we can perform. We have noted throughout that alternative drivers having a significant H-plane dimensions (across the aperture) tend to perform erratically or poorly compared to their performance with planar reflectors. When we examined planar arrays, we discovered that phased dipoles side-by-side and 1/2 wavelength apart provided good broadside gain. When fed in phase, they also provided a considerable bandwidth compared to a single dipole driver.</p>
+  <p>Although we cannot place a similar driver across the H-plane of a corner reflector, we can devise a collinear form of dipole driver where we feed the dipoles in phase. <b>Fig. 15</b> shows the general outline of the system.</p>
+  <center>
+    <img src="corner4-15.gif" width="497" height="431" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In the test models, the inner dipole ends are 1/4 wavelength apart. The spacing from the apex is 0.393 m to give each dipole a resonant 100-Ohm impedance. In concert with the broadside planar array, the individual feedpoints connect to a central feedpoint via 100-Ohm transmission lines. The parallel combination at the junction provides a good match for 50-Ohm cable. Each dipole is 0.433-m long, and so the overall length of the driver assembly is 1.116 m. The dipoles use the 8-mm diameter also used for single dipole drivers.</p>
+  <p>The separation of the dipoles is not designed to provide the maximum gain possible. Instead, my focus is upon other properties of the overall array. For example, with a single dipole driver, the 1.4-m vertical reflector extended nearly 0.49 m beyond the end of the driver. Will we need a similar extension to derive maximum gain from the collinear pair of dipoles? To find an answer, I tested reflectors with vertical dimensions ranging from 1.4 m to 2.4 m. Each rod reflector used a side length of 2.4 m.</p>
+  <center>
+    <img src="corner4-16.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 16</b> provides a graph of the results in terms of both gain and front-to-back ratio. Note that the X-axis of the graph records the vertical dimension of the reflector. The free-space gain increases until it reaches 14.95 dBi with a 2.2-m high reflector. The extension of the reflector beyond the collinear dipole limit is about 0.54 m, close to the extension value required for a single dipole. Additional extension space for the 2.4-m rod reflector shows a small decrease in gain. Interestingly, the 180-degree front-to-back ratio shows a small dip at the maximum gain point with respect to array vertical size. However, the values (36-42 dB) are already so high that differences no longer make much of a difference.</p>
+  <center>
+    <img src="corner4-17.gif" width="852" height="415" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 17</b> illustrates the degree to which the rearward radiation of the collinear dipole array is approaching total insignificance in both planes. As well, the patterns are extremely well behaved, with no detectable forward sidelobes or bulges. The quality of the patterns holds up very well across the 2:1 50-Ohm SWR passband, shown in <b>Fig. 18</b>. The acceptable SWR level exists from 275 to 350 MHz, a 75-MHz passband. Expressed in other terms, we have a 25% passband with respect to the 2:1 50-Ohm SWR standard.</p>
+  <center>
+    <img src="corner4-18.gif" width="592" height="394" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The collinear array maintains its performance across the SWR passband. The free-space gain peaks at about 15.2 dBi at 310 MHz, just above the design frequency, with a very slow roll-off above that frequency. On the low-frequency side, we have a steeper curve, but the total gain variation is about 0.7 dB. As shown in <b>Fig. 19</b> the 180-degree front-to-back ratio displays its usual variations, but no value goes below about 37 dB.</p>
+  <center>
+    <img src="corner4-19.gif" width="717" height="538" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Although the sample array makes no pretense of achieving the maximum performance from a collinear dipole driver system, it does establish a few important characteristics. First, the collinear systems requires--like a single dipole--about 0.5 m of reflector beyond the dipole ends to achieve maximum gain. As a result, the system shown here requires a 2.2-m tall reflector. At some size, and especially if one enlarges the spacing between dipoles, the system might better be served by two independent corner reflectors.</p>
+  <p>Second, the passband of the phase-fed collinear dipoles is similar to that of the broadside driver used in the study of planar reflectors. Combined with other techniques, such as the use of fan dipoles, one might increase the passband even further. However, in all cases, the designer will have to balance the operating passband against any rates of decrease in gain, front-to-back ratio, or desired pattern shape.</p>
+  <p>However, we are not done with the quest for increased operating bandwidth using corner reflectors.</p>
+  <p><b>Almost Done, But Not Complete</b></p>
+  <p>The survey of modification techniques to corner reflectors and their drivers provides a number of techniques by which a designer might reliably squeeze the last modicum of performance from a corner array. Some techniques, such as the collinear driver scheme, seem broadly based. Others, such as the use of a trough reflector, appear to have limited utility. Still others, such as modifying reflector rod length and spacing for maximum gain, require painstaking care, not to mention trial and error. Combining techniques, such as adding fold-ins to the collinear driver array, may well break new ground in corner reflector design. Still others, such as developing a collinear array with a narrower angle, may require special attention to the mechanical aspects of the resulting antenna.</p>
+  <p>This episode of my exploration of corner arrays has a slightly different purpose than the other parts of the series. They were designed to provide general guidance of what is likely to work and what is likely not to work within the realm of standard corner reflector designs. This session has been devoted to some very general guidance of where one might next go in corner reflector design. There is no telling how much we have yet to learn about this fascinating hybrid of optical and parasitic properties.</p>
+  <p>One continuing challenge is the quest to expand the operating passband of a corner array beyond the 25% value achieved by both the collinear driver and by the fan dipole driver from past episodes. So we might well spend one more episode seeing just how far we can stretch a 50-Ohm feedpoint in a corner array and still have both an SWR under 2:1 and some usable performance.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 09-01-2005. &COPY; L. B. Cebik, W4RNL. This item originally appeared in</i> antenneX <i>August, 2005. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="corner5.html"><img src="../images/fwdrd.gif" align="bottom" width="36" height="33"> Go to Part 5</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#corner-reflector'>Corner Reflector</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Developing Antenna Expectations Using Modeling Software</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>76. Developing Antenna Expectations Using Modeling Software<br>
+    1: Horizontal Wires in the Lower to Medium HF Range</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p><b>Preamble</b></p>
+  <p>On numerous occasions, I have suggested that antenna modeling software (using either NEC or MININEC) is a good self-instruction tool for learning to have proper expectations of many type of antennas. In this and the next few columns, I shall illustrate how you can accomplish this goal. Each column will focus on a basic antenna type and develop a set of modeling exercises for exploring the basic properties of that type of antenna. Most of the exercises will be simple and in no way challenge either your software or your modeling ingenuity. However, the lack of challenge does not make the exercises any less important if you have not already been through them (or any number of variations on them).</p>
+  <p>Modeling software continues to grow easier to obtain for the individual who is relatively new to antennas, that is, who has not done systematic studies in basic antenna properties. I have discovered over the years that this group of folks includes many old-time as well as new radio amateurs, short-wave listeners, and others. This group of individuals is my target for these exercises. Modeling itself will not tell you exactly why--in terms derived from Maxwell's laws and supplemental research and engineering findings--antennas act as they do. Still, easily accessed modeling programs will help you develop a reasonable and extensive set of correct expectations from the types of antennas that you may encounter.</p>
+  <p>For the most part, our notes will by aimed at the antenna under discussion. I shall assume that you have mastered the basic operation of your software program. As well, I shall assume that you are familiar with the basic terminology that such programs use, although I shall include a few brief reminders as we go along. However, each basic type of antenna has many variables attached to it, each of which deserves exploration. So I shall remain focused on the modeling application rather than on the programs themselves.</p>
+  <p><b>The Center-Fed Horizontal Wire at Low to Medium High Frequencies</b></p>
+  <p>Let's begin by thinking about a particular type of antenna and the number of variables that attach to it. Our subject is the center-fed wire antenna, commonly used at lower to medium high frequencies (HF). Here is a list of basic variables that we shall explore.</p>
+  <blockquote>
+    A. The antenna environment (free space or over ground)
+    <p>B. The length</p>
+    <dl>
+      <dd>
+        <dl>
+          <dt>1. Resonant vs. non-resonant lengths</dt>
+          <dt>2. Physical length vs. electrical length</dt>
+          <dd>
+            <dl>
+              <dt>a. Changing the physical length</dt>
+              <dt>b. Changing the frequency of operation</dt>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+    </dl>C. Wire diameter
+    <dl>
+      <dd>
+        <dl>
+          <dt>1. Effect on the feedpoint impedance</dt>
+          <dt>2. Length required for resonance</dt>
+        </dl>
+      </dd>
+    </dl>D. Height above ground
+    <dl>
+      <dd>
+        <dl>
+          <dt>1. Effect on the feedpoint impedance with a constant length</dt>
+          <dt>2. Length required for feedpoint resonance</dt>
+        </dl>
+      </dd>
+    </dl>
+    <p>E. Ground quality</p>
+    <p>F. Wire conductivity</p>
+    <p>G. Operating (SWR) bandwidth vs. wire (element) diameter</p>
+  </blockquote>
+  <p>In each case, I have paired up common variables encountered in basic antenna work, and the method of pairing means that we shall overlook some potential combinations. Nevertheless, with this beginning, you may go on to pair other sets of variables and explore more of the territory on your own.</p>
+  <p>Antenna modeling software has many forms and implementations, despite the fact that NEC-2 and MININEC are the most common calculating cores. Therefore, I shall not present models so much as describe them. They are all simple, so you may create your own model within the set-up of the software that you have. You will encounter minor differences between the results that you obtain from your model and the sample results that I shall show. Nevertheless, you will be able easily to see the same trends in the results, and that is the most important factor in developing correct expectations of an antenna. For this initial exercise set, the models will be super-simple, consisting of a single horizontal wire. We shall specify all lengths in terms of both feet and meters. Wire diameters will use AWG gauge numbers, along with their diameters in inches and millimeters. Heights above ground will be listed in wavelengths, feet, and meters. Except where I shall try to focus your attention on some special aspect of a unit of measure, pick the one most comfortable for you.</p>
+  <p>With so many variables attached to the horizontal center-fed wire, we need to move from these preliminaries to the actual work involved.</p>
+  <p><b>A. The Antenna Environment (Free Space or Over Ground</b>)</p>
+  <p>Let's begin by setting our software for free space (or "no ground"). We shall create a 1/2 wavelength resonant dipole for 3.6 MHz. The wire will be AWG #12 (0.0808" or 2.052 mm). We shall set the conductivity of the wire for copper, using either a pre-set value in the program of a user-inserted conductivity of about 5.8E7 S/m (or a resistivity of 1.7E-8 Ohms/m). We may specify a source (feedpoint) voltage of 1.0 at 0 degrees phase angle at the center of the 11-segment NEC wire (10 or 12 segments in MININEC). To set up the wire, as shown in <b>Fig. 1</b>, we shall run it from -Y to +Y, leaving both the X values and the Z values at zero. On my version of NEC-4, the Y-coordinates were -66.55 and +66.55 feet (+/-20.284 m).</p>
+  <center>
+    <img src="amod76-1.gif" width="406" height="124" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first step is to learn why I used the length indicated. If I look at the source impedance, it reads 73.73 - j0.27 Ohms. Since we want resonance, we need to define the term. For our purposes, we can set resonance as any source impedance where the reactance (or imaginary term) is less than +/-1.0. This limit is much tighter than you would need in a practical antenna and much looser than we can obtain by juggling the length value. However, it is just about right for determining trends in the source (feedpoint) impedance. Depending on your program, you may have to adjust the values of +/-Y to obtain resonance within the limits indicated, and your remaining impedance value may drift a bit from the result listed.</p>
+  <center>
+    <img src="amod76-2.gif" width="400" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Having established a resonant center-fed wire at 3.6 MHz in free space, let's examine the patterns. Modeling programs use the terms "azimuth" and "elevation" for all patterns. However, the terms strictly apply only when we have a ground surface against which to measure an elevation angle. In free space, for a horizontal wire, the azimuth pattern corresponds to the E-plane pattern, and the elevation pattern corresponds to the H-plane pattern. Both appear in <b>Fig. 2</b>. The E-plane pattern is the figure-8 that we see in texts, while the H-plane pattern is a perfect circle. For reference, we can record the maximum free-space gain as 2.03 dBi (where your program my show a smidgen more or less, and where we remember that we are using copper wire, not a perfect conductor). We shall explore this value further on when we take up different values of wire conductivity.</p>
+  <p>Now let's make a few changes and re-run the model. First, we shall insert in each of the Z boxes a value of 1 wavelength (273.214' or 83.276 m). Next, we shall specify the use of a real ground. If using NEC, specify the Sommerfeld or "high accuracy" ground. Set the values for this ground at "good" (sometimes called "average"), that is, with a conductivity of 0.005 S/m and a permittivity (relative dielectric constant) or 13. Now set the pattern for elevation.</p>
+  <p>Run the model and check the source impedance. You should discover that the antenna is no longer strictly resonant, with an impedance of 71.34 - j6.42 Ohms. It is merely near-resonant. Next, check the elevation pattern at an azimuth bearing of 0 degrees. It is no longer circular, but shows the effects of ground reflection. Hence, the pattern breaks into elevation lobes and nulls. Since the lowest lobe is the one of main interest, we can record its elevation angle (14 degrees) and its strength, 7.85 dBi. (We shall take a closer look at that elevation angle a bit further onward.) Now check the azimuth pattern at the elevation angle of maximum radiation--the Take-Off (TO) angle. The pattern is no longer a tightly pinched figure-8, but more of a peanut. Ground reflections not only increase the azimuth gain at the TO angle, they also reduce the side nulls relative to a free-space pattern. See <b>Fig. 3</b>.</p>
+  <center>
+    <img src="amod76-3.gif" width="400" height="250" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>B. The Length: 1. Resonant vs. Non-Resonant Lengths</b></p>
+  <p>Let's use the 3.6-MHz wire antenna model that is 1 wavelength above good or average ground as our starting point. First, we should make it resonant within the limits we have set for that term. With the Y-values at +/-66.8' (20.361 m), we can obtain resonance. Next, let's see what happens as we change the wire in 1' (0.3048 m) increments, going up two notches and then down two notches. Hence, our total antenna length will change by 2' (.6096 m) for each change. Within the limits of program differences, your table of results should resemble the one that follows.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                           Changing Antenna Length
+
+       Length        Length                Source Impedance             Gain at 14-deg.
+       +/-feet       +/-meters             R +/- jX Ohms                Elevation dBi
+       64.8          19.751                66.29 - j51.74               7.82
+       65.8          20.056                69.13 - j25.89               7.83
+       66.8          20.361                72.09 - j 0.07               7.85
+       67.8          20.665                75.16 + j25.74               7.86
+       68.8          20.970                78.35 + j51.56               7.87
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Each 2' of antenna length change is about a 0.007 wavelength change--not a lot, but noticeable. Despite that fact that the total change in length from the shortest to the longest wire is 8' (2.438 m), the antenna gain has changed by only 0.005 dB--a truly insignificant amount. This explains why, for antennas using antenna tuners, we do not need lengths to be precise. Only when the exact source impedance is of some importance do we need to concern ourselves with precision pruning.</p>
+  <p>Our example presumes that some precision is useful, as shown by the changing values of the source impedance. But the table of values also has more to tell us. First, note the change in reactance. Allowing for the fact that we had j0.07 Ohm reactance at the so-called resonant point, we can see that the reactance curve would be very nearly equal each side of resonance over the small span that we have covered. The very slightly higher change below the resonant length is due to the fact that each 1' (0.3048 m) of change below the resonant length is a slightly higher percentage of length reduction relative to the preceding length than each increment is a percentage of length increase above the resonant length.</p>
+  <p>The resistive portion of the source impedance tells a different story. The resistance increases more rapidly above the resonant length than below it. As the resistance decreases, it has only a small range to cover. However, as we increase the length toward 1 wavelength, the range over which the resistance may climb is monumental, suggesting that even for our small changes, we should expect more change per increment. Both the resistance and reactances changes--and their differences above and below the resonant antenna length--do not amount to anything noticeable for a broadband antenna like a center-fed wire, but for other antenna types with more rapid changes in source impedance with element length changes, we often clearly see non-symmetrical changes in the impedance curves. When we see reversals in the non-symmetry, we have a good occasion to examine the antenna in order to understand why.</p>
+  <p><b>B. The Length: 2. Physical Length vs. Electrical Length</b></p>
+  <p>Let's now see what happens to the performance parameters when we increase the electrical length of our center-fed wire. We have sometimes referred to our wire as a dipole. This term is shorthand for a more complete but very unwieldy label: a resonant (or near-resonant) 1/2 wavelength center-fed dipole. The question of resonance, of course, refers to the feedpoint impedance and to what degree it is contained wholly in the resistive component, with no reactance. The antenna is about 1/2 wavelength long. A wavelength at 3.6 MHz is 273.214' (83.276 m) long, so a true half wavelength will be 136.607' (41.638 m). Our actual wire length was 133.6' (40.721 m) for the version that is resonant at 1 wavelength above average ground. We know that the physical length is less than the electrical length, which is--by the standard of resonance--almost exactly 1/2 wavelength. The physical length is 97.80% of the electrical length.</p>
+  <p>We shall look again at the amount of shortening later, but for now we need only note that the difference results from what some call "end-effect." The surface at the end of the wire adds electrical length to the wire without adding any further physical length.</p>
+  <center>
+    <img src="amod76-4.gif" width="542" height="288" border="2" vspace="5" hspace="9">
+  </center>
+  <p>Since we feed the antenna at its precise center, it is center-fed. We call the antenna a dipole because there are exactly two transitions from maximum current (at the wire center) to minimum current (at the wire ends). When we change the length of the wire so that there are more than two such transitions, we technically no longer have a dipole. Center-fed antennas used on frequencies where they are no longer have only two transitions go under an unofficial but useful label: doublets. See <b>Fig. 4</b> for the contrast between a dipole and a doublet. A wire antenna becomes a doublet even if some frequencies at which we use it might qualify for the dipole label.</p>
+  <p><b>a. Changing the physical length</b></p>
+  <p>Now here is the exercise--or at least the first of two. Let's exactly double the length of the antenna. Then let's triple it. Finally, let's quadruple the original length. We shall retain the frequency and the height above ground. We need only be certain that the feedpoint remains in the exact center and that we have enough segments for the new length. To preserve the segment length, lets increase the NEC segments from 11 to 21 to 31 and finally to 41. MININEC segmentation, using even numbers, calls simply for multipliers of 2, 3, and 4.</p>
+  <p>We shall record the source impedance for each step. When it comes to looking at patterns and finding maximum gain, we shall have to go back and forth between elevation and azimuth pattern to find the azimuth heading as well as the elevation angle of maximum radiation. If we do the job correctly, we shall end up with a table like the one that follows. Note that the lengths shown are for my resonant model. Apply the multipliers to the length of your own resonant dipole when 1 wavelength above ground. All wires remain AWG #12 copper.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                     Performance of Wire Antennas 1 Wavelength Above Average/Good Ground
+
+Length        Length         Length        Az hdg         TO angle      Gain          Source Impedance
+wl*           feet           meters        degrees        degrees       dBi           R +/- jX Ohms
+0.5           133.6           40.72         0             14            7.85          72.09 - j 0.07
+1.0           267.2           81.44         0             14            9.62          6629 + j 1367
+1.5           400.8          122.16        49             14            8.56          105.0 - j 69.08
+2.0           534.4          162.88        34             14            9.15          4488 + j 1324
+
+* Since we are multiplying times the physical length, the lengths in wavelengths are approximate.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Without looking at the patterns themselves, the table already tells us something important about them. For antennas in the range of 1/2 wavelength to 1 wavelength, the pattern is bi-directional, with the strongest (only) lobes broadside to the wire. However, as we further increase the length, the strongest lobe is at an angle relative to the broadside heading. How much depends on the wire length.</p>
+  <center>
+    <img src="amod76-5.gif" width="450" height="650" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 5</b> shows the patterns for the three new wire lengths. A 1 wavelength wire acquires its gain mostly from narrowing the beamwidth. We still have a 2-lobe pattern. Let's skip to the pattern for the 2 wavelength antenna. Now we have 4 lobes, each quartering (but not exactly) to the broadside heading. Radiation broadside to the wire is negligible. This pattern gives you an intuition of what happens if we extend the wire to 3 wavelengths: 6 lobes. You can check this for yourself and find that you are correct. In fact, with wire close to a any multiple of a full wavelength, the number of lobes will be double the element length in wavelengths.</p>
+  <p>However, let's move back to the case where the wire is 1.5 wavelengths long. We find 6 azimuth lobes. Lobes do not suddenly appear and disappear as we increase a wire's length. They grow and shrink. At a length of 1.5 wavelengths, the pair of lobes for a 1 wavelength wire are shrinking and the ones for a 2 wavelength antenna are growing. Hence we see all six lobes. (A 3.5 wavelength antenna would have the 6 lobes for 3 wavelengths and the 8 for 4 wavelengths, for a total of 14 lobes.) As we increase the number of lobes, the beamwidth for each one tends to become narrower.</p>
+  <p>Since the 1.5 wavelength wire has more lobes that either the 1 wavelength or the 2 wavelength wire, but only the same amount of power, we would expect the power in the strongest lobe to be somewhat less than for either of the other cases. If we look in the gain column, we can see the fulfillment of our expectation. The differential is not especially operationally significant, but it is noticeable.</p>
+  <p>Now let's turn to the feedpoint impedance column. The impedances for the lengths close to a multiple of a full wavelength are high, while those close to an odd multiple of a half wavelength are low. But in all three cases, the antenna plays shorter than resonance. (As we approach but do not reach resonance for a multiple of a full wavelength, the inductive reactance indicates the antenna's shortness. As a side exercise, try to play with the length of the 1 wavelength antenna to achieve resonance as defined for our exploration. The range is extremely narrow, as the reactance changes from a very high value of inductive reactance to a very high value of capacitive reactance just past the resonant point.) The reason for the antenna being short is, again, the end effect. By simply multiplying our physical length, we effectively added in an end effect for each new length. However, the wire itself has only one set of ends. Hence, it needs to be longer than shown for true resonance.</p>
+  <p><i>Special note</i>: although we changed the length of the wire radically, we did not change its height above ground. Therefore, the TO angle remained constant throughout the exercise. Increasing the length of a single wire does not lower (or raise) the elevation angle of maximum radiation.</p>
+  <p><b>b. Changing the frequency of operation</b></p>
+  <p>We can perform the same exercise in a second way. Instead of doubling the length of the antenna, we may instead simply double the frequency. If we use the 2, 3, and 4 multipliers, we obtain frequencies of 7.2, 10.8, and 14.4 MHz. If we perform the experiment in this manner, we shall have to change the physical height of the antenna each time so that it is exactly 1 wavelength up for each new frequency. As we did in the first experiment, we shall increase the number of segments for each trial to the same value used the first time (11, 21, 31, and 41 for the NEC model).</p>
+  <p>If we perform the trials in the manner just described, our new table will look like the one that follows.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                     Performance of Wire Antennas 1 Wavelength Above Average/Good Ground
+
+Frequency     Length         Az hdg        TO angle       Gain          Source Impedance
+MHz           wl*            degrees       degrees        dBi           R +/- jX Ohms
+ 3.6          0.5             0            14             7.85          72.09 - j 0.07
+ 7.2          1.0             0            14             9.49          5886 + j 703.2
+10.8          1.5            49            14             8.45          103.5 - j 56.48
+14.4          2.0            34            14             9.02          3644 + j 528.7
+
+* Since we are multiplying frequency relative to the physical length, the lengths in wavelengths
+are approximate.)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Some things did not change at all. The TO angle remained the same, because it is a function of the wire's height above ground as measured in wavelengths. The patterns that we produced are virtually identical to those from the previous exercise, and <b>Fig. 5</b> remains a proper portrayal of both the elevation and azimuth patterns.</p>
+  <p>We can notice a few changes in the table. For example, the impedance values appear to be a bit closer to resonance for each of the steps above the original frequency, relative to the values for doubling the wire length. The wire diameter is the source of this phenomenon. As we multiplied our frequency, we also divided the wavelength so that it became a smaller quantity. However, we kept our AWG #12 copper wire. Hence, relative to a wavelength, the wire became fatter with each multiplication. For straight-wire elements, the fatter the wire, the shorter the required physical length for resonance. Even though the frequency-multiplied versions of the antenna are the same relative physical lengths as in the first trials, they are electrically longer due to element fattening.</p>
+  <p>The second change to notice is the set of gain values. They are lower than in the earlier table. Wire size cannot be the culprit, since we would expect a fatter wire to have slightly lower losses than a thinner one. In fact, the radiation efficiency of the 14.14 version of the antenna appears as 98.83% in the NEC output file, whereas the efficiency of the 2.0 wavelength 3.6-MHz model shows as 97.70%. So we cannot even blame skin effect, which increases with frequency.</p>
+  <p>The source of the lower gain in the models that multiply frequency is actually the ground. Although we did not change any of the ground constants, losses due to the ground increase with frequency (as well as with proximity to it). Once more, even though the differentials make no operational difference that anyone could detect, they are numerically visible and give us indications of the influence of various factors on the actual gain of a given antenna.</p>
+  <p><b>C. Wire Diameter: 1. Effect on the Feedpoint Impedance</b></p>
+  <p>We noted in passing that changing the diameter of a wire had an effect upon its resonant length. We can get a small handhold on this phenomena in two ways, and we shall sample them both. This is a good exercise to perform with a wire in free space to minimize the number of possible variables at work. So let's return to our resonant 3.6-MHz center-fed wire that was +/-66.5 feet (20.284 m) long in <b>Fig. 1</b>. (Of course, you should begin with whatever length turned out to be resonant in free space within your own software.) The AWG #12 copper wire will be our center-point for the chart. Let's sample AWG wire sizes from #4 through #20 in steps of 4 gauges. We shall preserve the wire length and see what happens to the source impedance.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                            Changing Wire Diameter:  Effect Upon Source Impedance
+
+       AWG #                 Diameter             Diameter              Source Impedance
+                             Inches               mm                    R +/- jX Ohms
+        4                    0.2043               5.189                 73.22 + j 3.57
+        8                    0.1285               3.264                 73.34 + j 1.53
+       12                    0.0808               2.052                 73.73 - j 0.27
+       16                    0.0508               1.290                 74.53 - j 1.73
+       20                    0.0320               0.813                 75.99 - j 2.64
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Over the 6.38:1 diameter range in our set of trials, we find a small but definite progression of impedance values. As we increase the copper wire diameter, the resistance component of the source impedance goes down. The reactive component becomes less capacitive and more inductive, indicating that the diameter increase is also increasing the electrical length for the same physical length of wire.</p>
+  <p><b>C. Wire Diameter: 2. Length Required for Resonance</b></p>
+  <p>We may alter the trial by aiming toward the wire length that will yield a resonant 3.6-MHz antenna. If we do the job, the results will look similar to those in the following table.</p>
+  <pre>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                          Changing Wire Diameter:  Effect Upon Resonant Wire Length
+
+       AWG #         Diameter       Diameter      Resonant Length       Source Impedance
+                     Inches         mm            Feet           Meters        R +/- jX Ohms
+        4            0.2043         5.189         132.80         40.477        72.76 + j 0.05
+        8            0.1285         3.264         133.00         40.538        73.19 + j 0.29
+       12            0.0808         2.052         133.10         40.569        73.73 - j 0.27
+       16            0.0508         1.290         133.20         40.599        74.69 - j 0.36
+       20            0.0320         0.813         133.30         40.630        76.31 + j 0.23
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</pre>
+  <p>Between the largest conductor and the smallest, we find about 0.5' (0.153 m) difference in length. The trend is perfectly visible, but the effect on a practical 80-meter antenna in terms of selecting #12 or #14 wire is negligible. The change in the resistive (resonant) impedance is also quite visible as it changes by nearly 4 Ohms. Once more, the change is more visible than significant for practical antenna building. Still, we need to be aware of small systematic changes as well as large ones.</p>
+  <p>The changes are a guide to the likely consequences of using fatter wires. We may simulate widely space wire pairs (with either open or closed ends) and of cages of wires used by some lower HF antenna designers to simulate truly fat elements and to obtain a wider operating bandwidth. However, the concept of operating bandwidth is farther down the list of properties that we wish to examine in our systematic survey of properties.</p>
+  <p>In fact, we have run out of space for this column. So we shall have to reserve the remaining exercises for next month.</p>
+  <center>
+    <img src="../images/colorbar.gif" width="591" height="3">
+  </center><br>
+  <p><a href="modeling.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> <b>Go to Main Index</b></a></p>
+</body>
+</html>

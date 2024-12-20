@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="Quad, VHF / UHF, HF Upper, HF Lower">
+  <title>2-Element Quads as a Function of Wire Diameter Part 1</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <center>
+    <h1>2-Element Quads as a Function of Wire Diameter<br>
+    Part 1: Understanding Some Quad Properties</h1>
+  </center>
+  <center>
+    <h3>L. B. Cebik, W4RNL</h3>
+  </center><br>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center><br>
+  <br>
+  <p>There are some very old formulas for cutting the lengths of 2-element (and larger) quad beam elements, formulas that have persisted since at least the 70s, if not before. The driven element should be 1005/f(MHz) feet long, while the reflector should be 1030/f(MHz) feet long. Spacing should be between 0.14 and 0.2 wavelengths. (<i>ARRL Antenna Book</i>, p. 12-1) Moreover, the quad has been called a very "low-Q" antenna, meaning that it is wide-banded compared to other beam antennas, presumably including Yagis.</p>
+  <p>Unfortunately, using the formulas will result in a relatively poor 2-element quad at any spacing. As well, we should not be too attracted by the so-called low Q of the quad, because that feature has very restricted application.</p>
+  <p>In fact, we should very likely start all over again, beginning with the one piece of information that early quad builders thought was too insignificant to notice: the wire size. In this short series, we shall examine the properties of 2-element quad beams using a driver and reflector based on the wire size we select for the elements. In this part, we shall look at quad properties based on very careful modeling with NEC. In Part 2, we shall provide a way of automating the design process. In the final part, we shall look at a way to improve the operating performance bandwidth of wire quads.</p>
+  <p>There are many operating specifications that we might emphasize for the design frequency we choose. For this exercise, I shall pick two, letting the others become what they will in the designs. First, the driven element will be resonant at the design frequency. Before we are done, we shall show how and why to vary that parameter without significantly affecting the reflector. Second, we shall select a spacing between elements and a reflector length that provides maximum 180-degree front-to-back ratio at the design frequency. These choices are consistent with work done on VHF models by Dan Handelsman and David Jefferies and generally provide the widest operating bandwidth for most of the quad beam's other parameters. <b>Fig. 1</b> shows the critical 2-element quad dimensions for our work.</p>
+  <center>
+    <img src="q2l1-1.gif" width="449" height="363" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In order to generalize the results, we shall deal with the wire size, element lengths, and element spacing in terms of fractions of a wavelength. This procedure will allow us later to develop a general set of design equations that will be accurate to within 0.5% for wire sizes greater than 0.0003 wl and within about 1% for wires down to about 0.00003 wl, with resonance and peak front-to-back ratios occurring within about 10 kHz of actual detailed models.</p>
+  <p>To get an idea of how wire diameters when expressed in terms of a wavelength coincide with common physical measures, the following table may be useful. Numbers in () indicate the closest AWG wire gauge, where applicable.</p>
+  <pre>Dia. in WL               Physical diameter in inches
+               3.5 MHz        14 MHz         30 MHz         144 MHz
+0.00001        0.0337 (20)    0.0084 (32)    0.0039 (38)    0.00082
+0.0000316      0.1066 (10)    0.0267 (24)    0.0124 (29)    0.0026 (40)
+0.0001         0.3372         0.0843 (12)    0.0393 (18)    0.0082 (32)
+0.000316       1.0664         0.2666 (2)     0.1244 (8)     0.0259 (22)
+0.001          3.372          0.841          0.3934         0.0820 (12)
+0.00316        10.664         2.666          1.244          0.2592 (2)
+0.01           33.722         8.431          3.934          0.8964</pre>
+  <p>Obviously, few 80 meter quads will be constructed using 0.01 wl wire. However, 2-meter quads using 1" diameter elements are quite feasible. Likewise, a 2-meter quad from 1E-5 (shorthand for 0.00001) wl wire is unlikely, but 3.16E-5 wire is already #10 AWG at 80 meters.</p>
+  <p>The wire diameter steps used in this exercise may seem peculiar. Most antenna characteristics dependent upon wire size tend to vary with the common logarithm of the diameter. The progression of steps in the diameter column translate into a linear progression of logarithms from -5 to -2, with the "316" steps representing -x.5 log values. (A more exact value for the intermediate diameters would be 31622777.)</p>
+  <p>Models for each wire diameter were developed to obtain element lengths and spacing to resonate with driver within +/-j1 Ohm of remnant reactance. As well, the front-to-back peak value had to exceed 50 dB. NEC-2 or -4 are equally adept at this task, since the quad presents no pressure on either core's limitations until the wire size exceeds 0.01 wl. The models used 21 segments per side to ensure good convergence.</p>
+  <p>The models were calibrated for the most common material used in quad beam construction: copper. Test aluminum models showed little change in characteristics relative to the baseline copper models, but the slightly higher wire losses can add roughly an Ohm to the feedpoint impedance--less than 1% of the actual value. The test frequency was 28.5 MHz, about the geometric mean for the combined HF and VHF frequency range.</p>
+  <p>Since copper wire material losses vary with frequency, but at a rate that differs from the changes in wire diameter, there will be slight variations from the results to be shown at the extremes of the frequency range. At very low HF frequencies, the gain will be higher, but only by a maximum of a few tenths of a dB. Since the gain increase results from lower material losses, the source impedance will be lower--perhaps as much a 5 Ohms at 80 meters. Conversely, gain at VHF for a given wire size will be very slightly lower than at 28.5 MHz, while the feedpoint impedance will be correspondingly higher. However, these slight variations occasion no significant changes in the physical dimensions of the quad as a function of a wavelength.</p>
+  <p>Before examining the properties of 2-element quad beams in detail, let's take a summary view of the modeling results in the form of a table. All sizes and lengths are in wavelengths. We shall use our shorthand notation for wire sizes. Gain is the free-space value.</p>
+  <pre>Wire dia.      DE-Ref Space        DE Length      Ref Length     Gain dBi
+1E-5           0.650               0.99920        1.02248        2.95
+3.16E-5        0.142               1.00600        1.05224        6.67
+1E-4           0.156               1.01060        1.06560        6.99
+3.16E-4        0.160               1.01424        1.07976        7.08
+1E-3           0.164               1.01984        1.10000        7.11
+3.16E-3        0.167               1.02744        1.12992        7.16
+1E-2           0.170               1.05016        1.18432        7.21</pre>
+  <p>The key element in this table is the value set for the thinnest wire. Notice the gain associated with this wire size. As the wire size increases--given our design criteria of resonance and peak front-to-back value--the frequency at which peak gain occurs decreases. For a wire size of about 3.16E-5, the maximum front-to-back value and the peak gain value occur at about the same frequency. For all wire sizes greater than 3.16E-5, the peak gain frequency is below the design frequency and grows more distant from it with increasing wire size.</p>
+  <p>In contrast, for wire sizes below 3.16E-5, the peak gain value occurs at a frequency higher than the design frequency. At the design frequency the gain value may be quite low, since the gain decreases more rapidly at frequency below that at which peak gain occurs. The result is that 2-element quad beams with any performance potential at all and designed to the criteria used in this exercise are not feasible in wire sizes below 3.16E-5. As a result, model results for the thinnest wire in the table have been removed from the graphs to follow.</p>
+  <center>
+    <img src="q2l1-2.gif" width="648" height="499" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The first significant feature appears in <b>Fig. 2</b>, which plots the required element spacing for maximum front-to-back ratio against the wire sizes. The thinner the wire, the closer that spacing must be to achieve maximum front-to-back values at the design frequency. Notice that the curve becomes nearly linear with wire sizes above 1E-4, which is thinner than #14 at 10 meters. The shallowness of the curve above this value indicates that for most practical monoband beam designs, 0.17 wl spacing represents a limit. However, since tuning a 2-element quad for peak front-to-back also tends to result in the widest operating bandwidth for most parameters, it becomes advisable to use the spacing that is correct for the selected wire size.</p>
+  <center>
+    <img src="q2l1-3.gif" width="646" height="525" border="2" vspace="5" hspace="9">
+  </center>
+  <p><b>Fig. 3</b> presents the driver and reflector element circumference lengths. Of special note is the fact that the reflector length increases at a faster rate than the driver length. In practical terms, the fatter the wire, the more the length of the reflector must exceed the length of the driver for peak performance.</p>
+  <p>Combining the results for spacing and element length yields the conclusion that inter-element coupling increases with wire size. Arriving at the correct value for a given wire size involves both element length and spacing so that the parasitic element currents have the correct magnitude and phase for maximum front-to-back performance. This performance will only be achieved if both the upper and lower wires of the reflector have close to optimal currents at their centers--and thus an optimal current distribution along their length. Part of the reflector sizing curve is a result of this function.</p>
+  <center>
+    <img src="q2l1-4.gif" width="645" height="501" border="2" vspace="5" hspace="9">
+  </center>
+  <p>In <b>Fig. 4</b> we have the resonant feedpoint impedances of the modeled quads. The general increase in value is apparent. Part of the stair-step nature of the curve results from the fact that close to resonance, the resistive component of the impedance can show significant changes as we change the remnant reactance from close to j-1 Ohm to +j1 Ohm. In the value range of the graph (125-155 Ohms), the stair-step result is visually apparent, but not operationally significant. However, the overall difference between the thinnest and the fattest wire values may be significant for the method chosen to match an optimized quad beam to a given main feed line.</p>
+  <center>
+    <img src="q2l1-5.gif" width="648" height="507" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The change of gain with respect to wire size, shown in <b>Fig. 5</b>, must be read with great care. For wire sizes greater than 1E-4, the gain increase with additional wire thickness would not itself justify using a larger wire size. However, remember that as the wire thickness increases, the frequency of maximum gain becomes increasing lower than the design frequency. One consequence of this fact is that for thicker wires, the amount of gain change across a given amateur band will be less than for thinner wires. For example, consider a 2-element quad at 10 meters with a 28.5 MHz design frequency. Using #14 wire, the gain at 29 MHz will drop to under 6.5 dB, despite the 7+ dB value at the design frequency. With 0.5" elements, the gain at 29 MHz will be above 6.7 dB. In general, fatter elements provide both higher and smoother performance across the ham bands.</p>
+  <center>
+    <img src="q2l1-6.gif" width="647" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>There are other dimensions to operating bandwidth that are worth noticing. Two are included in <b>Fig. 6</b>. The graph shows clearly the VSWR bandwidth as a percentage of the design frequency. Even the thinnest wire on the graph shows a 6.2% operating bandwidth, while the span from 28 to 29 MHz is only about 3.5% of the design frequency. It is the wide SWR range that has given the 2-element quad beam the illusion of being a low-Q antenna.</p>
+  <p>However, notice the second curve on the graph, which provides the front-to-back operating bandwidth. Because a 20-dB front-to-back ratio can be commonly achieved with Yagi design across a relatively wide frequency range--that is, a range covering all or almost all of a ham band--the operating bandwidth was defined as the percentage of design frequency over which the model had a front-to-back ratio in excess of 20 dB. These percentages are very low and do not reach the 3.5% level until we have a wire size of about 3.16E-3. This value represents a wire over 1" in diameter at 10 meters. Since quads are rarely made from wires this thick at HF, the quad user will generally have to be content with front-to-back performance at the band edges that is inferior to that which a well-designed Yagi may provide.</p>
+  <p>The narrowness of the operating bandwidth relative to front-to-back performance for the 2-element quad beam demonstrates a number of cautions. First, VSWR operating bandwidth is often a misleading indicator of the operating bandwidth of other antenna properties. The 2-element quad beam is in fact a high-Q (or narrow-band) antenna with respect to its front-to-back performance. Essentially, the loop construction of 2 1/2 wl elements connected at the ends makes the inter-relationship of the driver and the reflector more frequency critical in terms of arriving at the correct current magnitude, phase, and distribution on the reflector for high front-to-back performance--relative to the linear elements of the Yagi.</p>
+  <p>(Note: this comparison only suggests that the rate of change of a 2-element driver-reflector Yagi optimally spaced for maximum front-to-back ratio will be less than for a 2-element quad. However, such a Yagi may have a peak front-to-back ratio of only about 12 dB, with lesser values away from the design frequency. As well, the 2-element Yagi will have a lower gain--with a considerable variance across a band as wide as 10 meters. Hence, the 2-element quad will generally outperform a 2-element Yagi when both are designed to the same criteria. The point of these notes about quad performance is not to assess the overall superiority of one antenna type over the other. Instead, these notes call attention to the specific properties of the quad that must be taken into account when designing one or when reaching an overall evaluation of the quad's performance--especially, when considering options within quad design factors.)</p>
+  <center>
+    <img src="q2l1-7.gif" width="646" height="503" border="2" vspace="5" hspace="9">
+  </center>
+  <p>When we initially examined the gain of quads relative to wire size, we noted the frequency position of the gain peak and its influence on the rate of change of gain across an intended band of operation. <b>Fig. 7</b> formalizes those notes by showing the rate of gain change per 1% of design frequency in terms of dB. Let us use the 1E-4 wire size as a marker, since it is the first data point where peak gain is significantly lower in frequency that the maximum front-to-back frequency. The curve is nearly linear from that point through 1E-2 wire sizes. In fact, for each decrease of wire size by a factor of 10, the rate of gain change across a working passband increases by nearly 1/2 dB. Wherever stable gain is required across a passband, the fattest element diameter feasible is the order of the day.</p>
+  <p>Although the graphs based on element wire size have much to teach us about the performance of 2-element quads, they cannot teach everything. For example, once one has designed a 2-element quad for a chosen wire size, it is usually a good procedure to reresonate the driver from the mid-band design frequency to a lower frequency--somewhere between 1/4 and 1/3 the way up from the lower limit of the passband. The obvious questions is this: how do we arrive at such a recommendation?</p>
+  <p>The answer can be found by performing a frequency sweep of a given design and looking at selected properties. For an example, let's take one of our 28.5 MHz designs using 3.16E-4 wl wire (about 0.12" in diameter, between #10 and #8 AWG) and sweep it between 27.8 and 30.8 MHz. Then, let's record the results for VSWR and front-to-back ratio on a graph, such as <b>Fig. 8</b>.</p>
+  <center>
+    <img src="q2l1-8.gif" width="645" height="528" border="2" vspace="5" hspace="9">
+  </center>
+  <p>The design frequency values can be easily identified. Let's begin with the VSWR curve. Note that the SWR value increases much more rapidly below the design frequency than above it. If we wish to have roughly equal SWR values at the band edges of a chosen operating passband, then it will be necessary to reduce the resonant frequency of the driver. In fact, the small change in element size needed to effect this change will have negligible effect on the performance of the reflector or the frequency of maximum front-to-back. For example, reducing the resonant driver frequency to about 28.3 MHz will move the front-to-back ratio peak by only a few kHz.</p>
+  <p>Such a move will likely be beneficial (although minimally so) to the overall front-to-back performance within the passband--for example 28 to 29 MHz. Similarly to the SWR performance, but to a lesser degree, the front-to-back value changes more slowly above the design frequency than below it. From the graph, you may determine that 0.3 MHz above design frequency, the front-to-back ratio is above 20 dB, while 0.3 MHz below design frequency, the value is only about 18.5 dB. In fact, using the span from 28 to 29 MHz as a passband definition, there is a 3 dB difference in the front-to-back ratios at the passband edges.</p>
+  <p>It is possible from the graph in <b>Fig. 8</b> to create an illusion--namely, that there is good performance to be had from the antenna above 29 MHz. However, remember that across the passband, the antenna gain is steadily decreasing, and it continues to decrease as we raise the frequency further. By the frequency at which the SWR approaches 2:1 on the high side of the design frequency, the gain has dropped to about 5.5 dBi, and the front-to- back ratio is only about 7.4 dB. At 29.7 MHz, the gain is down to 6 dB, with a front-to-back ratio of about 10.6 dB. Although usable for some purposes, these figures are down considerably from the design frequency values.</p>
+  <p>The point of the exercise has been to demonstrate the changes in 2-element quad performance as we change wire size. I noted early on that one would have to make some adjustments as we change frequency, since the graphs are calibrated to copper wire. To give you a better sense of the degree of change, let's sample our 3.16E-4 wl diameter wire quad at a number of frequencies. Note that 28.5 MHz is the original design frequency. All of the quads use the same length elements and spacing in terms of fractions of a wavelength.</p>
+  <pre>Frequency      Gain dBi       Front-to-Back       Feedpoint Z
+  MHz                           Ratio dB          R +/- jX Ohms
+  3.5          7.12           45.37               136.7 + j 0.4
+ 28.5          7.08           51.33               137.4 + j 0.2
+144.0          7.02           47.67               138.6 - j 0.1
+223.0          6.99           43.33               139.2 - j 0.3</pre>
+  <p>For thinner wire sizes, the variance will be greater, while fatter wires will show less variance.</p>
+  <p>The small range of the variance should tell us two things. First, the general properties of 2-element quads are indeed largely a function of the diameter of the wire we use for the elements. In general, performance--especially the operating bandwidth of most essential performance specifications--improves with the use of larger diameter elements. Unfortunately, this fact is at odds with the conventional ways in which we construct quads. The supporting structure for quad elements will handle thinner wire but certainly not aluminum tubing. However, there are alternative ways of simulating fat elements that make use of wire. Remember that the inter-element coupling is the key contribution of thicker elements. Material losses are secondary. Hence, if we can increase the coupling through the use of light-weight simulated fat elements, we may generally ignore their slightly higher material losses. We shall defer that task to Part 3 of the series.</p>
+  <p>Second, the general reliability of the modeling results as we alter frequency gives rise to the possibility of automating the design process. Suppose that we could simply specify a wire size and a design frequency and have a program that will complete all of the remaining electrical design steps. That will be our project for Part 2 of this short series.</p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><i>Updated 11-01-2000. &COPY; L. B. Cebik, W4RNL. The original item appeared in</i> AntenneX <i>for October, 2000. Data may be used for personal purposes, but may not be reproduced for publication in print or any other medium without permission of the author.</i></p>
+  <center>
+    <img src="../images/colorbar.gif" align="middle" width="540" height="4">
+  </center>
+  <p><a href="quadlist.html"><img src="../images/rtnhome.gif" align="bottom" width="40" height="40">Go to Quad List</a></p>
+  <p><a href="../radio.html"><img src="../images/return.gif" align="bottom" width="40" height="40"> Go to Main Index</a></p>
+  <p class="topics-footer">Topics: <a href='../topics.html#hf-lower'>HF Lower</a>, <a href='../topics.html#hf-upper'>HF Upper</a>, <a href='../topics.html#quad'>Quad</a>, <a href='../topics.html#vhf-uhf'>VHF / UHF</a></p><br>
+</body>
+</html>
