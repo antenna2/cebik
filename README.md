@@ -38,7 +38,7 @@ A combination of custom Python scripts (written with help from ChatGPT) [https:/
 3. Add CSS link to each page, the relative path is calculated and used.
 4. Image de-duplication, navigation and header image files were found throughout the directory structure. Image names were identified, script moved them into an /images folder, updated the paths with relative links, then instances of that image then deleted.
 
-This sequence of scripts were run dozens of times by making a copy of the source HTML, and checking the results, fixing small issues, and repating until no more issues were found.
+This sequence of scripts were run dozens of times by making a copy of the source HTML, and checking the results, fixing small issues, and repeating until no more issues were found.
 
 ### File Structure
 
