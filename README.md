@@ -9,7 +9,7 @@ There were two versions - one appears to be from an antenneX CDROM mostly as-is,
 The Cebik website style and layout is very dated by today's standards, it appears most of the pages were created with HTMLed Pro which dates back to the 90s, some from Word documents, and others possibly written by hand in a text editor.
 
 - Some missing/orphaned modeling, VHF, and wire antenna content found and added.
-- For better readability, background [image](content/images/lightppr.gif) replaced with similar solid background color, preformatted text no longer bold and has a different background color set with borders.
+- For better readability, background [image](content/images/lightppr.gif) replaced with similar solid background color, pre-formatted text no longer bold and has a different background color set with borders.
 - De-duplicated symposiums and magazine articles, linked original HTML pages the PDFs were created from.
 - Broken internal links have been fixed, and where possible external broken links have been updated with copies stored by the Internet Archive.
 - The online Moxon Rectangle calculator has been updated and moved to the top of the page.
@@ -20,7 +20,7 @@ The Cebik website style and layout is very dated by today's standards, it appear
 
 ## Update Process for Reference
 
-Basically what I did over serveral months.
+Basically what I did over several months.
 
 ### Broken Links
 
@@ -28,7 +28,7 @@ An application called [Deep Trawl](https://github.com/htacg/tidy-html5/releases/
 
 ### Moxon Javascript Calculator
 
-The [Online Moxon Calculator](https://www.antenna2.net/cebik/content/moxon/moxpage.html) relied on a second `<body>` tag part way down the page to function. Code was updated (using ChatGPT) to remove this depdance, add the 93 ohm option and a calculate button.
+The [Online Moxon Calculator](https://www.antenna2.net/cebik/content/moxon/moxpage.html) relied on a second `<body>` tag part way down the page to function. Code was updated (using ChatGPT) to remove this dependance, add the 93 ohm option and a calculate button.
 
 ### HTML Syntax Issues
 
@@ -38,10 +38,10 @@ A combination of custom Python scripts (written with help from ChatGPT) [https:/
    - HTML doctype line matching `<!DOCTYPE HTML PUBLIC` (case insensitive).
    - Elements from the body tag simplifying to `<body>`.
    - Opening and closing font tags `<font> </font>`.
-   - Alt attribute from `<img>` tags (case-insensitive), these contained the img name and size (not useful).
+   - Alt attribute from `<img>` tags (case-insensitive), these contained the image name and size (not useful).
    - Bold tags `<b> </b>` from around the `<pre> </pre>` tags.
-   - Hyphens `-` from infront of the words `wavelegth` and `degrees`.
-2. HTML Tidy run with out CSS option, output encoding US-ACSII - this converts non standard characters to HTML entities. This tidies the HTML and corrects syntax errors, HTML tidy has bugs which dont handle every situation, a number of manual edits were made to the HTML to allow for this.
+   - Hyphens `-` from in-front of the words `wavelength` and `degrees`.
+2. HTML Tidy run with out CSS option, output encoding US-ACSII - this converts non standard characters to HTML entities. This tidies the HTML and corrects syntax errors, HTML tidy has bugs which don't handle every situation, a number of manual edits were made to the HTML to allow for this.
 3. Add CSS link to each page, the relative path is calculated and used.
 4. Image de-duplication, navigation and header image files were found throughout the directory structure. Image names were identified, script moved them into an /images folder, updated the paths with relative links, then instances of that image then deleted.
 
@@ -55,7 +55,7 @@ The file structure was tidied, images relocated from content/ root, PVC page and
 
 - Magazines page: Find better/smaller file size PDF copies of "NEC and MININEC Guide to Further Information" (4.4 mb), and "NEC-4.1.
 - Limitations of Importance to Hams" (22mb) - these are images.
-- Edit PDF files to remove references to defunt cebik and antennex domains.
+- Edit PDF files to remove references to defunct Cebik and antenneX domains.
 - Finish updating page titles and set meta keywords on the magazine column pages (around 250 pages), and add them into the Topic Index.
 - Add linked navigation footer and index pages based on directory structure.
 - Improve viewing on mobile devices.
@@ -79,7 +79,7 @@ python3 -m http.server 8000
 
 I decided to use nested repos at this time with .gitignore configured to ignore the nested or sub repo(s) with-in.
 
-This seemed to be the simpelst way to do it with out more complex git commands I found in other examples.
+This seemed to be the simplest way to do it with out more complex git commands I found in other examples.
 
 To replicate the same setup I use, clone www-live first, then cd into www-live and clone cebik.
 
