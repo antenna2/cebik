@@ -25,7 +25,7 @@ Basically what I did over several months.
 
 ### Broken Links
 
-An application called [Deep Trawl](https://github.com/htacg/tidy-html5/releases/tag/5.8.0) and a combination of find and grep queries were used to find broken links. Internal broken links corrected, external broken links point to [Internet Web Archive](https://www.archive.org/) copies, external links updated to use https where possible and open in a new tab (target="_blank").
+An application called [Deep Trawl](https://sites.google.com/view/deeptrawl) and a combination of find and grep queries were used to find broken links. Internal broken links corrected, external broken links point to [Internet Web Archive](https://www.archive.org/) copies, external links updated to use https where possible and open in a new tab (target="_blank").
 
 ### Moxon Javascript Calculator
 
