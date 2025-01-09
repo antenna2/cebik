@@ -2,22 +2,29 @@
 
 This is the version hosted at [www.antenna2.net/cebik](https://www.antenna2.net/cebik/)
 
-Updates include:
+The version of Cebik's site hosted here is derived from what Marcel had hosted at [http://www.on5au.be](http://www.on5au.be).
 
-- Pages updated to compliant HTML with CSS setting the styling.
-- Books and model sets added (included with additional downloads with purchase of ON5AU's AAM book).
+There were two versions - one appears to be from an antenneX CDROM mostly as-is, and another with different index pages. This one is the antenneX version as it was the most original, with additional and missing content merged into it to create the most up-to-date version possible.
+
+The Cebik website style and layout is very dated by today's standards, it appears most of the pages were created with HTMLed Pro which dates back to the 90s, some from Word documents, and others possibly written by hand in a text editor.
+
 - Some missing/orphaned modeling, VHF, and wire antenna content found and added.
-- For better readability, background image replaced with similar solid background color, preformatted text no longer bold and has a different background color set with borders.
+- For better readability, background [image](content/images/lightppr.gif) replaced with similar solid background color, preformatted text no longer bold and has a different background color set with borders.
 - De-duplicated symposiums and magazine articles, linked original HTML pages the PDFs were created from.
 - Broken internal links have been fixed, and where possible external broken links have been updated with copies stored by the Internet Archive.
-- The online Moxon Rectangle calculator has been moved to the top of the page, and includes a 93 ohm option used in the Turnstile Moxon Rectangle Fixed-Position Satellite Antennas page.
-- Otherwise the overall look and feel of the Cebik pages is maintained.
+- The online Moxon Rectangle calculator has been updated and moved to the top of the page.
+- Topic index, page title updates (used for the link names in the topic index).
+- Page header text and formatting (some pages), and switching from h2 to h1 tag (SEO).
+- A combination of custom Python scripts (written with help from ChatGPT) and [HTML Tidy](https://www.html-tidy.org/) were used to tidy and update the HTML with styling set by one CSS file. As a result the pages load and render faster. A copy of the scripts can be found on Github [here](https://github.com/lonney9/HTML-Scripts).
+- Otherwise the overall look and feel of the Cebik site is maintained.
 
-## Update Process
+## Update Process for Reference
+
+Basically what I did over serveral months.
 
 ### Broken Links
 
-An application called Deep Trawl and a combination of find and grep queries were used to find broken links. Internal broken links corrected, external broken links point to [Internet Web Archive](https://www.archive.org/) copies, external links updated to use https where possible and open in a new tab (target="_blank").
+An application called [Deep Trawl](https://github.com/htacg/tidy-html5/releases/tag/5.8.0) and a combination of find and grep queries were used to find broken links. Internal broken links corrected, external broken links point to [Internet Web Archive](https://www.archive.org/) copies, external links updated to use https where possible and open in a new tab (target="_blank").
 
 ### Moxon Javascript Calculator
 
@@ -57,24 +64,25 @@ The file structure was tidied, images relocated from content/ root, PVC page and
 
 [https://github.com/lonney9/Go-Access](https://github.com/lonney9/Go-Access).
 
-### Sitemap.xml
+## Serve over Local Network
 
-Shell script used generate sitemap.xml
+With Python installed run the following from with-in the top level, and it will serve it over http.
 
-### Robots.txt
-
-Disallows indexing PDF books and magazine articles that were not part of the original Cebik site.
-
-## Nested Repos www-live and cebik
-
-Useful if you want to serve the site over the local network.
-
-With Python installed run the following from with-in the web root level, e.g. www-live:
+E.g. to serve cebik/ after cloning it:
 
 ```bash
+cd cebik
 python3 -m http.server 8000
 ```
 
+## Nested Repos www-live and cebik
+
+I decided to use nested repos at this time with .gitignore configured to ignore the nested or sub repo(s) with-in.
+
+This seemed to be the simpelst way to do it with out more complex git commands I found in other examples.
+
 To replicate the same setup I use, clone www-live first, then cd into www-live and clone cebik.
 
-.gitignore in www-live handles not including the nested cebik repo.
+This is only useful to test the entire site locally if needed.
+
+.gitignore in www-live handles ignoring the nested cebik repo.
