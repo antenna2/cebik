@@ -8,6 +8,7 @@ There were two versions - one appears to be from an antenneX CDROM mostly as-is,
 
 The Cebik website style and layout is very dated by today's standards, it appears most of the pages were created with HTMLed Pro which dates back to the 90s, some from Word documents, and others possibly written by hand in a text editor.
 
+- Pages updated to syntax correct HTML with CSS setting the styling. However they still contain obsolete HTML3 elements.
 - Some missing/orphaned modeling, VHF, and wire antenna content found and added.
 - For better readability, background [image](content/images/lightppr.gif) replaced with similar solid background color, pre-formatted text no longer bold and has a different background color set with borders.
 - De-duplicated symposiums and magazine articles, linked original HTML pages the PDFs were created from.
@@ -28,7 +29,7 @@ An application called [Deep Trawl](https://github.com/htacg/tidy-html5/releases/
 
 ### Moxon Javascript Calculator
 
-The [Online Moxon Calculator](https://www.antenna2.net/cebik/content/moxon/moxpage.html) relied on a second `<body>` tag part way down the page to function. Code was updated (using ChatGPT) to remove this dependance, add the 93 ohm option and a calculate button.
+The [Online Moxon Calculator](content/moxon/moxpage.html) relied on a second `<body>` tag part way down the page to function. Code was updated (using ChatGPT) to remove this dependance, add the 93 ohm option and a calculate button.
 
 ### HTML Syntax Issues
 
