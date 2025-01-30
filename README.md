@@ -2,7 +2,7 @@
 
 This is the version hosted at [www.antenna2.net/cebik](https://www.antenna2.net/cebik/)
 
-The version of Cebik's site hosted here is derived from what Marcel had hosted at [http://www.on5au.be](http://www.on5au.be).
+The version of Cebik's site hosted here is derived from what Marcel had hosted at [www.on5au.be/Cebik%20documents.html](http://www.on5au.be/Cebik%20documents.html).
 
 There were two versions - one appears to be from an antenneX CDROM mostly as-is, and another with different index pages. This one is the antenneX version as it was the most original, with additional and missing content merged into it to create the most up-to-date version possible.
 
@@ -29,7 +29,7 @@ An application called [Deep Trawl](https://sites.google.com/view/deeptrawl) and 
 
 ### Moxon Javascript Calculator
 
-The [Online Moxon Calculator](content/moxon/moxpage.html) relied on a second `<body>` tag part way down the page to function. Code was updated (using ChatGPT) to remove this dependance, add the 93 ohm option and a calculate button.
+The [Online Moxon Calculator](content/moxon/moxpage.html#L105) (JavaScript by Joe KG4UHP) relied on a second `<body>` tag part way down the page to function. Code was updated (using ChatGPT) to remove this dependance, add the 93 ohm option and a calculate button.
 
 ### HTML Syntax Issues
 
@@ -45,6 +45,7 @@ A combination of custom Python scripts (written with help from ChatGPT) [https:/
 2. HTML Tidy run with out CSS option, output encoding US-ACSII - this converts non standard characters to HTML entities. This tidies the HTML and corrects syntax errors, HTML tidy has bugs which don't handle every situation, a number of manual edits were made to the HTML to allow for this.
 3. Add CSS link to each page, the relative path is calculated and used.
 4. Image de-duplication, navigation and header image files were found throughout the directory structure. Image names were identified, script moved them into an /images folder, updated the paths with relative links, then instances of that image then deleted.
+5. Something at some point converted the encoding to UTF-8 which is better for html files, but the non standard characters to HTML entities are retained.
 
 This sequence of scripts were run dozens of times by making a copy of the source HTML, and checking the results, fixing small issues, and repeating until no more issues were found.
 
