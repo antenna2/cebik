@@ -55,7 +55,7 @@ The file structure was tidied, images relocated from content/ root, PVC page and
 
 ## To Do List
 
-- Magazines page: Find better/smaller file size PDF copies of "NEC and MININEC Guide to Further Information" (4.4 mb), and "NEC-4.1.
+- Add navigation footer and indexes.
 - Limitations of Importance to Hams" (22mb) - these are images.
 - Edit PDF files to remove references to defunct Cebik and antenneX domains.
 - Finish updating page titles and set meta keywords on the magazine column pages (around 250 pages), and add them into the Topic Index.
