@@ -2,7 +2,7 @@
 
 This is the version hosted at [www.antenna2.net/cebik](https://www.antenna2.net/cebik/)
 
-The version of Cebik's site hosted here is derived from what Marcel had hosted at www.on5au.be while online. A copy can be viewed in the internet archive at [https://web.archive.org/web/20240526234616/http://on5au.be/Cebik%20documents.html](https://web.archive.org/web/20240526234616/http://on5au.be/Cebik%20documents.html).
+The version of Cebik's site hosted here is derived from what Marcel had hosted at on5au.be while online. A copy can be viewed in the internet archive at [https://web.archive.org/web/20240526234616/http://on5au.be/Cebik%20documents.html](https://web.archive.org/web/20240526234616/http://on5au.be/Cebik%20documents.html).
 
 There were two versions - one appears to be from an antenneX CDROM mostly as-is, and another with different index pages. This one is the antenneX version as it was the most original, with additional and missing content merged into it to create the most up-to-date version possible.
 
