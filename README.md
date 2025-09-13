@@ -1,6 +1,6 @@
 # Cebik W4RNL (SK) Website and Document Collection
 
-This is the version hosted at [www.antenna2.net/cebik](https://www.antenna2.net/cebik/)
+This is the version hosted at [antenna2.github.io/cebik](https://antenna2.github.io/cebik/)
 
 The version of Cebik's site hosted here is derived from what Marcel had hosted at on5au.be while online. A copy can be viewed in the internet archive at [https://web.archive.org/web/20240526234616/http://on5au.be/Cebik%20documents.html](https://web.archive.org/web/20240526234616/http://on5au.be/Cebik%20documents.html).
 
@@ -62,10 +62,6 @@ The file structure was tidied, images relocated from content/ root, PVC page and
 - Add linked navigation footer and index pages based on directory structure.
 - Improve viewing on mobile devices.
 
-## Visitor Statistics
-
-[https://github.com/lonney9/Go-Access](https://github.com/lonney9/Go-Access).
-
 ## Serve over Local Network
 
 With Python installed run the following from with-in the top level, and it will serve it over http.
@@ -77,14 +73,16 @@ cd cebik
 python3 -m http.server 8000
 ```
 
-## Nested Repos www-live and cebik
+## Nested Repos [antenna2.github.io](https://github.com/antenna2/antenna2.github.io) repo and cebik
 
 I decided to use nested repos at this time with .gitignore configured to ignore the nested or sub repo(s) with-in.
 
 This seemed to be the simplest way to do it with out more complex git commands I found in other examples.
 
-To replicate the same setup I use, clone www-live first, then cd into www-live and clone cebik.
+To replicate the same setup I use, clone web root first, then cd into it and clone/move cebik repo.
 
 This is only useful to test the entire site locally if needed.
 
-.gitignore in www-live handles ignoring the nested cebik repo.
+It also holds the favicon and apple-touch icons, robots.txt, sitemap.xml, and the script to generate the sitemap.
+
+.gitignore handles ignoring the nested cebik repo.
